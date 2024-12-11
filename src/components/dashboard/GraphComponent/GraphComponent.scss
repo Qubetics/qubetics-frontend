@@ -1,0 +1,46 @@
+@import "../../../mixins";
+@import "../../../var";
+
+.GraphComponent {
+  margin-top: -120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+  }
+  .cardLeft {
+    flex: 1;
+    
+    @include theme() {
+      border-right: 1px solid theme-get("themeborder");
+    }
+    .ant-card-body {
+      padding: 15px 20px !important;
+      border-radius: 0 !important;
+      @media screen and (max-width: 575px) {
+      
+        @include theme() {
+          border-bottom: 1px solid theme-get("themeborder");
+        }
+      }
+    }
+    @media screen and (max-width: 1200px) {
+      border-right: 0 !important;
+      width: 100%;
+      @include theme() {
+        border-bottom: 1px solid theme-get("themeborder");
+      }
+    }
+  }
+  .graphRight {
+    @media screen and (max-width: 1200px) {
+      flex: 2;
+      width: 100%;
+    }
+    .drop_histry {
+      padding: 12px 15px !important;
+      gap: 30px !important;
+    }
+  }
+}

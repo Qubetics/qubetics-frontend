@@ -1,0 +1,173 @@
+@import "../../_var.scss";
+@import "../../mixins";
+
+.recent_items {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  p {
+    @include theme() {
+      color: theme-get("texttheme");
+    }
+  }
+}
+.recentTransaction {
+  > div {
+    width: 100%;
+    &:last-child {
+      text-align: right;
+      @media screen and (max-width: 676px) {
+        text-align: left;
+      }
+    }
+  }
+}
+.recentblocks {
+  padding: 14px 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 676px) {
+    gap: 20px;
+    flex-flow: wrap;
+    padding: 18px;
+  }
+
+  @media screen and (max-width: 390px) {
+    justify-content: center;
+    > div {
+      width: 100%;
+    }
+  }
+
+  .recentdata {
+    display: flex;
+    gap: 10px;
+
+    p {
+      letter-spacing: 0.32px;
+      color: $white;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+      font-weight: 500;
+
+      &:nth-child(2) {
+        font-weight: 500;
+
+        color: $grayA0A0A0;
+
+        @include fluid-type(320px, 1920px, 12px, 14px);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  .qubeticValue {
+    text-align: right;
+    display: inline-block;
+    p {
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+      font-weight: 400;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+    }
+  }
+  .secTime {
+    font-weight: 500;
+    color: $grayA0A0A0;
+    @include fluid-type(320px, 1920px, 12px, 14px);
+  }
+  .validateSec {
+    font-weight: 500;
+    color: $white !important;
+    @include fluid-type(320px, 1920px, 14px, 16px);
+    span {
+      color: $grayA0A0A0;
+    }
+  }
+  .recent {
+    .trnxCount {
+      color: $white;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+    }
+    p {
+      color: $grayA0A0A0;
+      @include fluid-type(320px, 1920px, 12px, 14px);
+    }
+  }
+}
+.recentTransactions {
+  @include theme() {
+    background: theme-get("recentTrans");
+    border: 1px solid theme-get("recentblckborder");
+  }
+}
+
+.recentransaction {
+  border-radius: 20px;
+
+  @include theme() {
+    background: theme-get("recenttransection");
+    border: 1px solid theme-get("recentblckborder");
+  }
+
+  backdrop-filter: blur(17px);
+  width: 100%;
+  padding: 15px 30px;
+
+  .recentdata {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    p {
+      color: #20bf55;
+      opacity: 0.6;
+      letter-spacing: 0.32px;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      &:nth-child(2) {
+        font-weight: 500;
+        opacity: 0.6;
+        line-height: 27px;
+        @include theme() {
+          color: theme-get("texttheme");
+        }
+
+        @include fluid-type(320px, 1920px, 12px, 14px);
+      }
+    }
+  }
+
+  .recent {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+    align-items: center;
+
+    .linktext {
+      font-size: 20px;
+      color: $bluetheme !important;
+      cursor: pointer;
+    }
+
+    p {
+      letter-spacing: 0.32px;
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+
+      opacity: 0.6;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+
+      &:nth-child(2) {
+        font-weight: 500;
+        opacity: 1;
+      }
+    }
+  }
+}

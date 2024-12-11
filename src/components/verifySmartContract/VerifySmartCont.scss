@@ -1,0 +1,270 @@
+@import "../../_var.scss";
+@import "../../_mixins.scss";
+.verifysmartContract {
+  // margin: 50px 0;
+
+  @media (max-width: 991px) {
+  }
+  p {
+    color: $white;
+  }
+  ul {
+    list-style: decimal;
+    background: #121212 !important;
+    padding: 12px 24px;
+    border-radius: 14px;
+    border: 1px solid #3b393c;
+    margin: 22px 0 24px 0;
+    li {
+      color: $white;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+      a {
+        border-bottom: 1px solid #0074ff;
+        display: inline;
+        color: $white;
+      }
+    }
+  }
+  .contractoptimization {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 24px;
+    margin: 12px 0 19px 0;
+    border-radius: 10px;
+    background: #121212 !important;
+    gap: 5px;
+    margin-bottom: 19px;
+    @media (max-width: 991px) {
+      flex-direction: column;
+      gap: 0px;
+    }
+    &_details {
+      display: flex;
+      align-items: center;
+      gap: 70px;
+      h5 {
+        width: 10%;
+        font-family: Poppins;
+        @include fluid-type(320px, 1920px, 10px, 14px);
+        font-weight: 400;
+        line-height: 21px;
+        letter-spacing: 0.02em;
+        text-align: left;
+        white-space: nowrap;
+        color: #929292;
+      }
+      p {
+        word-break: break-all;
+        @include fluid-type(320px, 1920px, 10px, 14px);
+      }
+    }
+  }
+  .ant-btn-primary {
+    height: 50px !important;
+    max-width: 165px !important;
+    font-weight: 500;
+    width: 100%;
+  }
+  .ant-btn {
+    height: 50px !important;
+    max-width: 165px !important;
+    width: 100%;
+    font-weight: 500;
+  }
+  .ant-btn-variant-solid {
+    --bg: #000;
+    --hover-bg: var(--theme-gradients-main);
+    --text: #fff !important;
+    --hover-text: #000;
+    border: 2px solid transparent !important;
+    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+      conic-gradient(
+          from 180deg at 50% 50%,
+          #ff98e2,
+          #ffc876 35.77deg,
+          #79fff7 153.75deg,
+          #9f53ff 258.75deg,
+          #ff98e2 360deg
+        )
+        border-box !important;
+    border-radius: 25px;
+    transition: color 0.2s ease-out, filter 0.2s ease-out;
+    &:hover {
+      background: var(--theme-gradients-main) !important;
+      color: $black !important;
+      border: 0;
+    }
+  }
+  .ant-btn-variant-outlined {
+    background: #161616 ;
+    color: $white;
+    border-radius: 30px;
+    border: 1px solid #161616;
+    &:hover {
+      background: var(--theme-gradients-main) !important;
+      color: $black !important;
+      border: 0;
+    }
+  }
+}
+
+.getqotSection {
+  .ant-collapse {
+    // padding-top: 20px;s
+    background-color: transparent !important;
+    // @media (max-width: 991px) {
+    //   padding-top: 25px;
+    // }
+
+    .ant-collapse-item {
+      .ant-collapse-header-text {
+        text-align: left;
+        padding: 20px 0;
+        color: $white;
+        @include fluid-type(320px, 1920px, 14px, 16px);
+        font-weight: 400;
+      }
+      .ant-collapse-expand-icon {
+        width: 0;
+        height: 0;
+        span {
+          display: none;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          right: 20px;
+          top: 16%;
+          transform: translateY(-50%);
+          background-image: url("../../../public/Arrow.svg");
+          width: 24px;
+          height: 24px;
+          rotate: 180deg;
+          transform: translate(-90%, -20%);
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          z-index: 1;
+          font-weight: 700;
+          transform: translateY(-50%);
+          font-size: 24px;
+          line-height: 19px;
+          border-radius: 20px;
+          padding: 1px 0px 0px 8px;
+          @media (max-width: 575px) {
+            font-size: 25px;
+          }
+          @include theme() {
+            color: $white;
+          }
+        }
+      }
+      &-active {
+        .ant-collapse-expand-icon::after {
+          color: $white !important;
+        }
+      }
+    }
+    .ant-collapse-item-active {
+      .ant-collapse-expand-icon {
+        &::after {
+          position: absolute;
+          background-image: url("../../../public/Arrow.svg");
+          content: "";
+          width: 24px;
+          height: 24px;
+          rotate: 360deg;
+          padding: 3px 0px 0px 5px;
+          z-index: 1;
+          top: 50%;
+          color: $white;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+  .ant-collapse-content-box {
+    h4 {
+      border-top: 1px solid $white;
+      padding-top: 15px;
+      color: #a8a8a9;
+    }
+  }
+  .ant-collapse-item {
+    box-shadow: none;
+    margin: 20px 0px;
+    border-radius: 14px;
+    background: var(--searchBg);
+    border: 1px solid $borderCard;
+
+    &:last-child {
+      border-radius: 14px;
+      border-bottom: 1px solid $borderCard;
+    }
+
+    .ant-collapse-header {
+      padding: 0px 40px 0px 0;
+      @include fluid-type(320px, 1920px, 18px, 30px);
+      color: #000000;
+      font-weight: 500;
+      padding-right: 40px;
+      line-height: 22px;
+      @media (max-width: 479px) {
+        line-height: 30px;
+      }
+    }
+  }
+}
+.libraryName {
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    @media (max-width: 991px) {
+      flex-direction: column;
+    }
+    .customInput {
+      max-width: 560px !important;
+      width: 100%;
+      @media (max-width: 991px) {
+        max-width: 100% !important;
+      }
+      .ant-input {
+        background: #252527 !important;
+      }
+    }
+  }
+  .transparentbtns {
+    background-color: transparent;
+    border: 0;
+    color: $white;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+.miscSetting {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  .checkMisc {
+    display: flex;
+    gap: 10px;
+  }
+  > div {
+    width: 50%;
+    @media (max-width: 991px) {
+      width: 100%;
+    }
+  }
+  @media (max-width: 991px) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+.ant-input-outlined[disabled] {
+  color: rgb(131, 126, 126) !important;
+}

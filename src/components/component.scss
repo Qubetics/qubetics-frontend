@@ -1,0 +1,662 @@
+@import "../_mixins.scss";
+@import "../_var.scss";
+
+.headerButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 767px) {
+    margin-bottom: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  button {
+    width: 94px;
+
+    @media (max-width: 767px) {
+      width: 74px;
+      height: 30px;
+    }
+  }
+}
+
+.common_header {
+  // margin-top: 40px;
+  @media (max-width: 767px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    // margin-top: 20px;
+  }
+
+  h2 {
+    @include theme() {
+      color: theme-get("texttheme");
+    }
+
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    @include fluid-type(320px, 1920px, 16px, 24px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.48px;
+    text-align: left;
+    margin-bottom: 20px;
+    @media (max-width: 767px) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+body {
+  background-color: #0d1012;
+}
+
+// card
+.onchain_sec {
+  position: relative;
+  .ant-card-body {
+    @media (max-width: 767px) {
+      padding: 15px !important;
+    }
+  }
+
+  .blocktimetext {
+    color: $white;
+    text-align: right;
+    padding-right: 30px;
+  }
+
+  .timerRight {
+    display: flex;
+    justify-content: flex-end;
+    background-color: transparent;
+
+    .ant-card {
+      border: unset;
+
+      @include theme() {
+        background: transparent;
+      }
+
+      .imgIcon {
+        display: none;
+      }
+
+      .ant-card-body {
+        padding: 0 !important;
+      }
+    }
+  }
+}
+.analytics {
+  &_cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    @media screen and (max-width: 767px) {
+      flex-wrap: wrap;
+    }
+    .ant-card-body {
+      background: var(--searchBg);
+      border-radius: 14px;
+      padding: 20px !important;
+    }
+  }
+}
+.analytictext {
+  margin-top: 30px;
+  color: $white;
+  padding-bottom: 20px;
+  @include fluid-type(320px, 1920px, 16px, 28px);
+  font-weight: 700;
+  @media (max-width: 575px) {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+}
+
+.cardSec {
+  width: 100%;
+
+  .ant-card-body {
+    padding: 17.9px !important;
+
+    @media (max-width: 1699px) {
+      padding: 19px !important;
+    }
+
+    @media (max-width: 1119px) {
+      padding: 20px !important;
+    }
+  }
+
+  &_items {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .cardsitem {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    p {
+      color: $grayA0A0A0;
+
+      white-space: nowrap;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+      letter-spacing: 0.32px;
+    }
+
+    h2 {
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+
+      @include fluid-type(320px, 1920px, 18px, 20px);
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      letter-spacing: 0.6px;
+      word-break: break-all;
+      padding-top: 10px;
+    }
+
+    svg {
+      margin: auto;
+    }
+  }
+
+  .ant-col {
+    backdrop-filter: blur(32px);
+  }
+
+  .ant-card {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 15px;
+  }
+
+  .ant-card-body {
+    padding: 20px;
+  }
+}
+
+// Analytic section
+.analytic_sec {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  backdrop-filter: blur(32px);
+  flex-wrap: wrap;
+
+  @media (max-width: 767px) {
+    gap: 15px;
+  }
+
+  .ant-card {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(
+      to bottom right,
+      rgb(31, 31, 35),
+      rgb(37, 42, 45)
+    );
+
+    &:nth-child(odd) {
+      background: linear-gradient(
+        to bottom right,
+        rgb(31, 31, 35),
+        rgb(37, 42, 45)
+      );
+    }
+  }
+
+  .ant-card {
+    &:nth-child(even) {
+      background: linear-gradient(
+        to bottom right,
+        rgb(31, 31, 35),
+        rgb(37, 42, 45)
+      );
+    }
+  }
+
+  .cardSec_items {
+    .imgIcon {
+      padding: 10px;
+      width: 50px;
+      height: 50px;
+    }
+
+    h2 {
+      @include fluid-type(320px, 1920px, 20px, 22px);
+      letter-spacing: 0.32px;
+    }
+  }
+
+  .addicon {
+    .ant-card-body {
+      padding: 24px 15px;
+      width: 100%;
+
+      .cardSec_items {
+        p,
+        h2 {
+          svg {
+            margin-right: 5px;
+            font-size: 14px;
+          }
+        }
+
+        p {
+          @include fluid-type(320px, 1920px, 12px, 13px);
+        }
+
+        h2 {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+.marcketCapCard {
+  width: 100%;
+  border: 1px solid $borderCard;
+  background: var(--searchBg) !important;
+  border-radius: 14px !important;
+
+  .ant-card-body {
+    border-radius: 14px !important;
+  }
+}
+.searchbar {
+  border-radius: 20px;
+  position: relative;
+  padding: 30px 15px 0px 15px;
+  backdrop-filter: blur(32px);
+  display: flex;
+  flex-direction: column;
+
+  &_input {
+    max-width: 614px;
+    width: 100%;
+    position: relative;
+    height: 60px;
+    border-radius: 14px;
+    // padding-right: 120px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    @include theme() {
+      background: theme-get("tableheader") !important;
+      color: theme-get("texttheme");
+    }
+
+    backdrop-filter: blur(32px);
+
+    @media (max-width: 991px) {
+      height: 43px;
+    }
+
+    input {
+      border: 0;
+      background: var(--searchBg);
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+      font-size: 16px;
+      width: 100%;
+      height: 60px;
+      padding-left: 62px;
+      overflow: hidden;
+      padding-right: 10px;
+      text-overflow: ellipsis;
+      border-radius: 14px;
+      @media (max-width: 991px) {
+        font-size: 14px;
+        height: 43px;
+      }
+
+      &:visited,
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    button {
+      position: absolute;
+      z-index: 9;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 3px;
+      height: 44px;
+      border-radius: 12px;
+      width: 113.059px;
+      border: transparent;
+      color: #fff !important;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      @include theme() {
+        background: theme-get("blueGradient");
+      }
+      @media (max-width: 991px) {
+        font-size: 12px;
+        height: 35px;
+        top: 49%;
+      }
+
+      @media (max-width: 767px) {
+        width: 80px;
+      }
+
+      &:hover {
+        color: #fff !important;
+      }
+
+      &:disabled {
+        cursor: not-allowed !important;
+      }
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 20px;
+      z-index: 1;
+      width: 29px;
+      height: 29px;
+      path {
+        fill: $gray898989;
+      }
+
+      @media (max-width: 575px) {
+        width: 14px;
+      }
+    }
+  }
+}
+
+// addresspage heading
+.addresspage {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+
+  @media (max-width: 340px) {
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 767px) {
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+  }
+
+  span {
+    opacity: 0.7;
+
+    @include theme() {
+      color: theme-get("texttheme");
+    }
+
+    @media (max-width: 767px) {
+      display: block;
+    }
+
+    @media (max-width: 575px) {
+      font-size: 12px;
+    }
+  }
+
+  p {
+    border-radius: 6px;
+    @include theme() {
+      background: theme-get("tableheader");
+      color: theme-get("texttheme");
+    }
+
+    @include fluid-type(320px, 1920px, 12px, 14px);
+    font-style: normal;
+    font-weight: 400;
+    height: 32px;
+    padding: 6px 15px;
+
+    @media (max-width: 480px) {
+      max-width: 230px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  svg {
+    cursor: pointer;
+    fill: $bluebtn;
+
+    @media (max-width: 767px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    @media (max-width: 767px) {
+      align-items: center;
+    }
+  }
+}
+
+.tickText {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #20bf55 !important;
+}
+
+.feildText {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #f00505 !important;
+}
+
+.popularPage {
+  margin-top: 40px;
+  .commontable {
+    margin-top: 0;
+  }
+  .headerButton {
+    margin-top: 40px;
+  }
+}
+
+.popular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 19px;
+  margin-bottom: 20px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 40px;
+  }
+
+  .linkdata {
+    text-decoration: none;
+  }
+
+  .popularContract {
+    max-width: 452px;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+
+    @include theme() {
+      background: theme-get("transectindata");
+    }
+
+    @media (max-width: 991px) {
+      max-width: 48%;
+      width: 100%;
+    }
+
+    @media (max-width: 767px) {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    &_header {
+      @include theme() {
+        background: theme-get("tableheader");
+      }
+
+      display: flex;
+      gap: 5px;
+      padding: 15px 20px;
+
+      h4 {
+        @include theme() {
+          color: theme-get("texttheme");
+        }
+
+        @include fluid-type(320px, 1920px, 14px, 16px);
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.32px;
+      }
+    }
+
+    &_inner {
+      padding: 20px;
+
+      ul {
+        li {
+          display: flex;
+          justify-content: space-between;
+
+          @media (max-width: 420px) {
+            flex-direction: column;
+            margin-bottom: 15px;
+          }
+
+          span {
+            @include theme() {
+              color: theme-get("texttheme");
+            }
+
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 0.32px;
+            opacity: 0.6;
+          }
+
+          p {
+            @include theme() {
+              color: theme-get("texttheme");
+            }
+
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.32px;
+          }
+
+          a {
+            color: #348cf5;
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.32px;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+.commontableBG {
+  background: var(--searchBg);
+  border-radius: 20px;
+  margin-top: 40px;
+  width: 100%;
+  border: 1px solid #ffffff26;
+  padding: 20px 30px;
+  @media screen and (max-width: 767px) {
+    margin-top: 20px;
+  }
+  &_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    h2 {
+      @include fluid-type(320px, 1920px, 16px, 20px);
+      font-weight: 600;
+      line-height: 23.44px;
+      color: #fff;
+    }
+  }
+  .viewAll {
+    p {
+      @include fluid-type(320px, 1920px, 12px, 14px);
+      font-weight: 700;
+      color: #fff;
+      border: 1px solid #454545;
+      border-radius: 30px;
+      padding: 6px 9px;
+      cursor: pointer;
+    }
+  }
+}
+
+.contractCard {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+  @media (max-width: 767px) {
+    flex-wrap: wrap;
+  }
+}
+.tokenInformation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  h2 {
+    @include fluid-type(320px, 1920px, 18px, 24px);
+    font-weight: 600;
+    color: #fff;
+  }
+  .searchbar_input {
+    height: 46px;
+    input {
+      height: 46px;
+      padding-left: 40px;
+    }
+    svg {
+      height: 16px;
+      width: 16px;
+    }
+  }
+}

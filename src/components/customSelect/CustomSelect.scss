@@ -1,0 +1,40 @@
+@import "../../_mixins.scss";
+@import "../../_var.scss";
+.customSelect {
+  display: flex;
+  flex-direction: column;
+  label {
+    color: $white;
+  }
+  .ant-select {
+    width: 100% !important;
+    margin-top: 8px;
+    height: 50px;
+    margin-bottom: 20px;
+    .ant-select-selector {
+      background: $bodybg !important;
+      color: $grayA0A0A0 !important;
+      border: 0 !important;
+
+    }
+  }
+  .ant-select-selection-item {
+    padding: 15px !important;
+    max-width: 95%;
+    color: $grayA0A0A0 !important;
+  }
+  .ant-select-arrow {
+    .anticon-down {
+      svg {
+        fill: $white;
+      }
+    }
+  }
+  .ant-select-item-option-selected {
+    background: var(--theme-gradients-main) !important;
+    color: $black !important;
+    .ant-select-item-option-content {
+      color: $black !important;
+    }
+  }
+}

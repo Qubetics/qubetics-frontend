@@ -1,0 +1,23 @@
+@import "../../../_var.scss";
+@import "../../../_mixins.scss";
+
+.notfound {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  background: var(--searchBg);
+  border: 1px solid $borderCard;
+  padding: 30px 0;
+  @media (max-width: 991px) {
+    padding: 30px 15px;
+  }
+  > div {
+    text-align: center;
+    p {
+      color: #fff;
+      margin-top: 10px;
+    }
+  }
+}

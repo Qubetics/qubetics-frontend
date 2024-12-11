@@ -1,0 +1,22 @@
+@import "../../_var.scss";
+@import "../../_mixins.scss";
+.customInput {
+  label {
+    color: $white;
+  }
+  .ant-input {
+    background: #080808 !important;
+    border: 0;
+    height: 50px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    color: $grayA0A0A0;
+    &:hover {
+      background: #0D1012 !important;
+    }
+    &::placeholder {
+      color: #7e94ad;
+    }
+  }
+}

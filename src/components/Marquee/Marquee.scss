@@ -1,0 +1,60 @@
+@import "../../_mixins.scss";
+@import "../../_var.scss";
+
+.main-container__marquee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+  min-height: 2rem;
+  overflow-x: hidden;
+  font-family: "Merriweather", serif;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 1);
+  background: linear-gradient(96deg, #0068ff -1.41%, #00a7ff 100.25%);
+
+  @media (max-width: 575px) {
+    padding: 5px;
+  }
+
+  .main-container__marquee-track {
+    display: flex;
+    gap: 20px;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+
+    .main-container__marquee-items {
+      flex-shrink: 0;
+      display: flex;
+      gap: 20px;
+      min-width: 100%;
+      animation: marquee 20s linear infinite;
+      justify-content: space-around;
+      .main-container__marquee-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include fluid-type(320px, 1920px, 12px, 18px);
+        width: auto;
+        transition: all 0.1s ease-in-out;
+      }
+    }
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}

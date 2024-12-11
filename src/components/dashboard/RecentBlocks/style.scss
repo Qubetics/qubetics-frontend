@@ -1,0 +1,11 @@
+.carousel-item {
+  transition: 0.2s max-width linear, 1s opacity linear;
+  white-space: nowrap;
+}
+
+.carousel {
+  .notfound {
+    margin: auto;
+    height: 200px;
+  }
+}

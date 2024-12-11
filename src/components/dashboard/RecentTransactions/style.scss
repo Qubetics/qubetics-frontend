@@ -1,0 +1,29 @@
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  margin: 0 auto;
+  //   max-width: 700px;
+  width: 100%;
+  overflow-x: hidden;
+  overflow: hidden;
+  gap: 20px;
+  position: relative;
+  // height: 190px;
+}
+
+.carousel-item {
+  width: 100%;
+  display: flex;
+  transition: 0.2s max-width linear, 1s opacity linear;
+}
+
+
+.carousel {
+  .notfound {
+    margin: auto;
+    height: 200px;
+  }
+}
+

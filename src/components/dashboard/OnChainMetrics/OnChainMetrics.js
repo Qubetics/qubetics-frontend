@@ -1,0 +1,136 @@
+"use client";
+import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
+import useAverageBlockTime from "@/components/common/useAverageBlockTime";
+import { useLatestData } from "@/components/contexts/latest_data";
+import { tooltipConstant } from "@/constant/constant";
+import getNativeStats from "@/services/getNativeStats";
+import getStatistics from "@/services/getStatistics";
+import { formatMillionNumber } from "@/utils/commonFunctions";
+import { Col, Row, Tooltip } from "antd";
+import { useEffect, useState } from "react";
+import {
+  AvgBlockTime,
+  Marcketcap,
+  Marcketcapdark,
+  RoundArrow,
+  RoundArrowdark,
+  TickPriceIcon,
+} from "../../../../public/SvgIcons";
+
+import { useThemeData } from "@/components/contexts/theme_context";
+import "../../../app/(routes)/dashboard/dashboard.scss";
+import "../../../index.scss";
+
+const OnChainMetrics = () => {
+  const webSocketData = useLatestData();
+  const { diffs } = useAverageBlockTime();
+  const [stats, setStats] = useState("");
+  const { isLight } = useThemeData();
+  const [nativeData, setNativeData] = useState({});
+
+  let calc =
+    diffs && diffs?.length > 0
+      ? (diffs?.reduce((p, c) => p + c, 0) / diffs?.length)?.toFixed(2)
+      : "0.00";
+
+  useEffect(() => {
+    const fetchNativeStats = async () => {
+      try {
+        let respose = await getStatistics();
+        setStats(respose?.data);
+        // let res = await getNativeStats();
+        // setNativeData(res?.data);
+      } catch (err) {
+        return err;
+      }
+    };
+    fetchNativeStats();
+  }, []);
+
+  return (
+    <div className="cardSec onchain_sec">
+      <div className="dashcardAnimation">
+        <Row className="onchainrowdata">
+          <Col xs={24} md={12} lg={5} xl={6}>
+            <CardsOnchain
+              text="TICS Price"
+              balance={`$ 0`}
+              img={<TickPriceIcon />}
+            />
+          </Col>
+          <Col xs={24} md={12} lg={5} xl={6}>
+            <CardsOnchain
+              text="Last Finalized Block"
+              balance={
+                webSocketData?.blocks?.blocknumber
+                  ? Number(webSocketData?.blocks?.blocknumber) - 2
+                  : 0
+              }
+              img={<AvgBlockTime />}
+            />
+          </Col>
+          {/* <Col xs={24} md={12} lg={5} xl={6}>
+            <CardsOnchain
+              text="Avg. Block Time"
+              // balance={
+              //   calc &&
+              //   (calc > 1.3
+              //     ? "1.20 Sec"
+              //     : Math.sign(calc) == -1
+              //       ? "1.02 Sec"
+              //       : calc + " Sec")
+              // }
+              balance={randomNoGenerator() + " s"}
+              img={<AvgBlockTime />}
+            />
+          </Col> */}
+          <Col xs={24} md={12} lg={5} xl={6}>
+            <CardsOnchain
+              // iconCopy="true"
+              // addicon="true"
+              // title={tooltipConstant.CIRCULATION_SUPPLY}
+              text="Transactions"
+              balance={
+                formatMillionNumber(
+                  Number(webSocketData?.onChainMetric?.totalTx)
+                ) || 0
+              }
+              img={
+                isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />
+              }
+            />
+          </Col>
+          <Col xs={24} md={12} lg={5} xl={6}>
+            <CardsOnchain
+              addicon="true"
+              iconCopy="true"
+              title={tooltipConstant.MARKET_CAP}
+              text="Market Cap"
+              balance={
+                webSocketData?.analytics?.marketCap ? (
+                  <Tooltip
+                    trigger="hover"
+                    placement="top"
+                    title={"$ " + webSocketData?.analytics?.marketCap}
+                  >
+                    <>
+                      $
+                      {formatMillionNumber(webSocketData?.analytics?.marketCap)}
+                    </>
+                  </Tooltip>
+                ) : (
+                  0
+                )
+              }
+              img={
+                isLight == "lightTheme" ? <Marcketcapdark /> : <Marcketcap />
+              }
+            />
+          </Col>
+        </Row>
+      </div>
+    </div>
+  );
+};
+
+export default OnChainMetrics;

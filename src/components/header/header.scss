@@ -1,0 +1,629 @@
+@import "../../_mixins.scss";
+@import "../../_var.scss";
+
+// header
+
+.header-main {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  transition: 0.3s all;
+  background-color: $bodybg;
+  @media screen and (max-width: 676px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  &__top {
+    border: 1px solid #2c2c2c7d;
+    &__right {
+      display: flex;
+      gap: 20px;
+
+      ul {
+        display: flex;
+        gap: 21px;
+        align-items: center;
+
+        @media (max-width: 991px) {
+          gap: 10px;
+        }
+        @media (max-width: 475px) {
+          display: none;
+        }
+
+        .daynight {
+          svg {
+            height: 29px;
+            width: 29px;
+            cursor: pointer;
+            user-select: none;
+          }
+        }
+
+        li {
+          list-style: none;
+          display: flex;
+
+          .signInBtn {
+            background-color: $signInbtn;
+            color: $white;
+            @include fluid-type(320px, 1920px, 12px, 14px);
+            font-weight: 500;
+            border-radius: 12px;
+            width: 90px;
+            height: 50px;
+            border: 1px solid $border0093FB;
+            cursor: pointer;
+          }
+          .ant-dropdown-trigger {
+            width: 122px;
+            height: 50px;
+            padding: 14px 16.959px;
+            justify-content: center;
+            align-items: center;
+            color: #348cf5;
+            border-radius: 20px;
+            border: 1px solid #0068ff;
+            background: rgba(0, 104, 255, 0.2);
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            height: 50px;
+            cursor: pointer;
+            .ant-space-item {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 50px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      @media (max-width: 480px) {
+        gap: 18px;
+      }
+      .daylighticons {
+        ul {
+          display: flex;
+          gap: 15px;
+          list-style: none;
+          align-items: center;
+          @media (max-width: 767px) {
+            gap: 8px;
+          }
+        }
+        .priceValue {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          div {
+            display: flex;
+            @include fluid-type(320px, 1920px, 12px, 14px);
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            .linkItem {
+              color: $bluebtn;
+              span {
+                @include fluid-type(320px, 1920px, 12px, 14px);
+                padding-left: 3px;
+              }
+            }
+            p {
+              display: flex;
+              align-items: center;
+              color: $white;
+              margin-right: 4px;
+              @include fluid-type(320px, 1920px, 12px, 14px);
+            }
+            .red {
+              color: rgb(177, 72, 72);
+            }
+
+            .green {
+              color: rgb(56, 167, 56);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__center {
+    color: #fff;
+    display: flex;
+    justify-content: end;
+    .ant-dropdown-trigger > div {
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+    }
+    ul {
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 35px;
+      border-radius: 20px;
+      border: 1px solid;
+      backdrop-filter: blur(32px);
+
+      @include theme() {
+        background: theme-get("headercenter");
+        border: 1px solid theme-get("bordercolr");
+      }
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+
+      li,
+      a {
+        cursor: pointer;
+        list-style: none;
+        text-decoration: none;
+
+        @include theme() {
+          color: theme-get("texttheme");
+        }
+
+        text-align: right;
+        @include fluid-type(320px, 1920px, 13px, 15px);
+        font-style: normal;
+        font-weight: 400;
+        transition: 0.3s all;
+
+        &:hover,
+        &.active a {
+          color: $bluetheme;
+        }
+
+        .ant-select-selection-item {
+          @include fluid-type(320px, 1920px, 13px, 15px);
+        }
+      }
+    }
+  }
+  .svgLogo {
+    cursor: pointer;
+    img {
+      @media screen and (max-width: 676px) {
+        max-width: 120px;
+        width: 100%;
+      }
+    }
+  }
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    @media screen and (max-width: 676px) {
+      width: 100%;
+    }
+
+    .mob__List {
+      align-items: center;
+      @media screen and (max-width: 1200px) {
+        display: none;
+      }
+    }
+  }
+}
+
+#header {
+  background-color: #fff;
+}
+
+.sticky {
+  top: 0;
+  z-index: 99;
+  backdrop-filter: blur(90px);
+  background-color: transparent;
+}
+
+.ant-drawer-header-title {
+  .ant-drawer-title {
+    color: #fff !important;
+  }
+
+  .ant-drawer-close {
+    svg {
+      color: #fff;
+    }
+  }
+}
+
+.centerQubetic {
+  margin-bottom: 14px;
+  h2 {
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    @include fluid-type(320px, 1920px, 12px, 30px);
+  }
+}
+
+.drawer_main {
+  background: linear-gradient(
+    88deg,
+    rgba(255, 255, 255, 0) 1.62%,
+    rgba(255, 255, 255, 0) 98.38%
+  ) !important;
+  color: #fff;
+  border-image-source: linear-gradient(
+    101.15deg,
+    rgba(255, 255, 255, 0) 1.66%,
+    rgba(255, 255, 255, 0.167188) 14.93%,
+    rgba(255, 255, 255, 0.153) 52.51%,
+    rgba(255, 255, 255, 0.024) 91.84%
+  );
+  backdrop-filter: blur(32px);
+
+  .ant-drawer-body {
+    padding-left: 0;
+  }
+}
+.drawer_main__side {
+  ul {
+    flex-direction: column !important;
+    gap: 0;
+    align-items: left !important;
+    li {
+      list-style: none;
+
+      a {
+        padding: 15px;
+        width: 100%;
+        display: block;
+        color: #fff;
+        @include fluid-type(320px, 1920px, 13px, 15px);
+      }
+
+      .ant-select-selection-item {
+        a {
+          &:hover,
+          &.active {
+            background: transparent !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+ul {
+  display: flex;
+  gap: 38px;
+  @media screen and (max-width: 1200px) {
+    gap: 20px;
+  }
+  li {
+    list-style: none;
+
+    a {
+      width: 100%;
+      display: block;
+      color: #929292;
+      text-decoration: none;
+      @include fluid-type(320px, 1920px, 13px, 15px);
+      font-weight: 600;
+
+      &:hover,
+      &.active {
+        color: $white;
+      }
+    }
+    .ant-select {
+      .ant-select-item {
+        cursor: pointer;
+        a {
+          text-decoration: none;
+          &:hover,
+          &.active {
+            background: transparent !important;
+            border-bottom: none !important;
+          }
+        }
+      }
+
+      &:hover,
+      &.active {
+        background: transparent !important;
+      }
+    }
+    .ant-select-selection-item {
+      a {
+        text-decoration: none;
+        &:hover,
+        &.active {
+          background: transparent !important;
+          border-bottom: none !important;
+        }
+      }
+    }
+  }
+}
+
+.ant-dropdown-menu {
+  border-radius: 10px;
+
+  @include theme() {
+    background: theme-get("dropdownbg") !important;
+  }
+
+  li {
+    @include fluid-type(320px, 1920px, 13px, 15px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    .ant-dropdown-menu-title-content {
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+
+      a {
+        @include theme() {
+          color: theme-get("texttheme");
+        }
+      }
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      // Add any additional hover styles here
+    }
+  }
+}
+
+.meta_list .ant-space,
+.mob__List .ant-space {
+  .headerSelect.ant-select {
+    .ant-select-selection-item {
+      @include fluid-type(320px, 1920px, 13px, 15px);
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    &:hover,
+    &.active {
+      @media (min-width: 1200px) {
+        padding: 0 !important;
+      }
+      .ant-select-selector .ant-select-selection-item,
+      .ant-select-selector .ant-select-selection-item a {
+        color: $white !important;
+
+        // @include theme() {
+        //   color: theme-get("baseColor") !important;
+        // }
+        // @media (max-width: 991px) {
+        //   color: $white !important;
+        // }
+      }
+
+      .ant-select-arrow .anticon {
+        color: $white;
+      }
+    }
+  }
+}
+
+.mob__List .ant-space {
+  width: 100%;
+
+  .ant-space-item {
+    width: 100% !important;
+  }
+
+  .headerSelect.ant-select {
+    padding: 0 !important;
+    border-radius: 0px 8px 8px 0px;
+    height: auto;
+    width: 100%;
+    @media screen and (max-width: 1200px) {
+      padding: 8px 15px !important;
+    }
+    a {
+      @media screen and (max-width: 1200px) {
+        padding: 8px 15px !important;
+      }
+    }
+
+    &.active {
+      padding: 0 !important;
+      @media screen and (max-width: 1200px) {
+        padding: 8px 15px !important;
+      }
+    }
+
+    &:hover,
+    &.active {
+      background: linear-gradient(
+        88deg,
+        rgba(1, 124, 201, 0.15) 3.13%,
+        rgba(8, 147, 234, 0.35) 48.43%,
+        rgba(1, 138, 224, 0.17) 98.38%
+      );
+      // color: $white !important;
+      .ant-select-selection-item {
+        color: $white !important;
+      }
+      // a {
+      //   color: $white !important;
+      // }
+    }
+
+    .ant-select-selector {
+      background: transparent;
+      border: 0;
+      color: $grayA0A0A0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .ant-select-arrow {
+      right: 0 !important;
+
+      .anticon {
+        color: $white;
+      }
+    }
+    .ant-select-selection-item {
+      // padding: 15px;
+      width: 100%;
+      height: fit-content;
+      line-height: normal;
+      @include fluid-type(320px, 1920px, 13px, 15px);
+      border-radius: 0px 8px 8px 0px;
+      cursor: pointer;
+
+      a {
+        color: $white !important;
+      }
+
+      &:hover,
+      &.active {
+        color: $white !important;
+
+        a {
+          color: $white !important;
+        }
+      }
+    }
+  }
+}
+
+.cmnSelct {
+  .ant-select {
+    height: 50px;
+
+    @media (max-width: 767px) {
+      display: block;
+      // height: 35px;
+      width: 115px !important;
+    }
+  }
+
+  .ant-select-selector {
+    height: 50px !important;
+
+    color: $grayA0A0A0;
+    --bg: #000;
+    --hover-bg: var(--theme-gradients-main);
+    --text: #fff;
+    --hover-text: #000;
+    border: 2px solid transparent !important;
+    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+      conic-gradient(
+          from 180deg at 50% 50%,
+          #ff98e2,
+          #ffc876 35.77deg,
+          #79fff7 153.75deg,
+          #9f53ff 258.75deg,
+          #ff98e2 360deg
+        )
+        border-box !important;
+    border-radius: 40px !important;
+
+    .ant-select-selection-item {
+      padding-left: 15px !important;
+      font-weight: 500;
+      @include fluid-type(320px, 1920px, 12px, 14px);
+      color: $white !important;
+    }
+  }
+
+  .ant-select-arrow {
+    margin-top: -5px;
+
+    svg {
+      @include theme() {
+        fill: theme-get("texttheme");
+      }
+    }
+  }
+}
+
+.homeScreen {
+  // .headerSelct {
+  //   display: none;
+  // }
+
+  // .mob__List {
+  //   .headerSelct {
+  //     display: none;
+  //   }
+  // }
+  .marquee {
+    display: none;
+  }
+}
+
+.welcomeScreen {
+  .headerSelct {
+    display: block;
+  }
+}
+
+.mob__List {
+  li:nth-last-child(2) {
+    &.headerSelct {
+      @media (max-width: 475px) {
+        padding-top: 15px;
+      }
+    }
+  }
+  .headerSelct {
+    // display: none;
+
+    margin: 15px 0;
+    @media (max-width: 991px) {
+      padding: 0 15px;
+    }
+    @media (max-width: 475px) {
+      display: block;
+    }
+  }
+}
+
+.mob__List {
+  .qubeticNetwork_btn {
+    // display: none;
+
+    @media (max-width: 991px) {
+      display: inline-flex;
+    }
+  }
+}
+.hammburgerIcon {
+  display: none;
+
+  @media screen and (max-width: 1200px) {
+    display: block;
+  }
+  cursor: pointer;
+  span {
+    svg {
+      cursor: pointer;
+    }
+  }
+}
+
+.inactive {
+  color: $grayA0A0A0 !important;
+  font-weight: normal;
+}
