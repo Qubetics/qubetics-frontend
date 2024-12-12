@@ -689,7 +689,12 @@ html {
     }
 
     a {
-      color: #9f53ff;
+      color: $grayA0A0A0;
+      &:hover {
+        color: #9f53ff;
+        transition: color 0.6s ease-out;
+        text-decoration: underline;
+      }
     }
   }
 
@@ -733,37 +738,29 @@ html {
 }
 
 .failedtrans {
-  background-color: $redbg;
   color: $red !important;
 }
 
 .pendingtrans {
-  background: linear-gradient(
-    88deg,
-    rgb(241, 117, 35) 3.13%,
-    rgb(238, 144, 51) 48.43%,
-    rgb(241, 117, 35) 98.38%
-  );
-  color: rgb(86, 46, 8);
+  color: #ffd738;
 }
 
 .successtrans {
-  background-color: $greenbtnbg;
   color: $green;
 }
 
-.failedtrans,
-.pendingtrans,
-.successtrans {
-  max-width: 100px;
-  padding: 6px 17px;
-  width: 100%;
-  display: flex;
-  border-radius: 4px;
-  justify-content: center;
-  -webkit-backdrop-filter: blur(32px);
-  backdrop-filter: blur(32px);
-}
+// .failedtrans,
+// .pendingtrans,
+// .successtrans {
+//   max-width: 100px;
+//   padding: 6px 17px;
+//   width: 100%;
+//   display: flex;
+//   border-radius: 4px;
+//   justify-content: center;
+//   -webkit-backdrop-filter: blur(32px);
+//   backdrop-filter: blur(32px);
+// }
 
 // custompagination
 .custompagination {
@@ -1746,7 +1743,7 @@ input[type="number"] {
   gap: 20px;
 
   .ant-col {
-    max-width: 327px;
+    max-width: 332px;
     padding-left: 0;
     padding-right: 0;
     border-radius: 10px;
@@ -1849,7 +1846,10 @@ input[type="number"] {
 
 //Glove Styles//
 .blockdescription {
-  margin-top: 20px;
+  // margin-top: 20px;
+  // &:first-child{
+  //   margin-top: 0;
+  // }
 }
 
 .green-icon {
@@ -2158,6 +2158,26 @@ input[type="number"] {
         @include fluid-type(320px, 1920px, 14px, 16px);
         font-weight: 400;
       }
+    }
+  }
+}
+
+.holderTable {
+  td,
+  th {
+    width: 25%;
+  }
+}
+.tabSerachBar {
+  .searchbar_input {
+    height: 46px;
+    input {
+      height: 46px;
+      padding-left: 40px;
+    }
+    svg {
+      height: 16px;
+      width: 16px;
     }
   }
 }

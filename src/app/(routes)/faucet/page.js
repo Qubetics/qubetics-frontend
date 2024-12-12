@@ -118,7 +118,14 @@ function Page() {
                   autoComplete="off"
                 />
                 {error?.address && (
-                  <p style={{ color: "red", textAlign: "left" }}>
+                  <p
+                    style={{
+                      color: "red",
+                      textAlign: "left",
+                      paddingBottom: "0",
+                      marginTop: "10px",
+                    }}
+                  >
                     {error?.address}
                   </p>
                 )}

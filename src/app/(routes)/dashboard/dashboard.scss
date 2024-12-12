@@ -368,6 +368,7 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 20px 15px 30px;
+    align-items: baseline;
 
     @media (max-width: 767px) {
       flex-direction: column;
@@ -388,8 +389,8 @@
         color: theme-get("texttheme");
       }
 
-      @include fluid-type(320px, 1920px, 14px, 16px);
-      font-weight: 500;
+      @include fluid-type(320px, 1920px, 16px, 20px);
+      font-weight: 300;
       line-height: 24px;
       letter-spacing: 0em;
       text-align: left;
@@ -407,6 +408,12 @@
         letter-spacing: 0em;
         text-align: left;
       }
+    }
+    h6 {
+      @include fluid-type(320px, 1920px, 20px, 34px);
+      font-weight: 600;
+      line-height: 44.27px;
+      color: $white;
     }
 
     .ant-dropdown-trigger {
@@ -450,6 +457,7 @@
         padding-left: 15px !important;
         font-weight: 500;
         @include fluid-type(320px, 1920px, 12px, 14px);
+        color: $white;
       }
     }
 
@@ -466,8 +474,9 @@
 
     &__blinkLive {
       display: flex;
-      align-items: center;
-      gap: 4px;
+      // align-items: center;
+      // gap: 4px;
+      flex-direction: column;
       @media (max-width: 767px) {
         display: flex;
         justify-content: space-between;
@@ -719,7 +728,7 @@
         gap: 30px;
         // flex-wrap: wrap;
         @media (max-width: 1020px) {
-         gap: 15px;
+          gap: 15px;
           flex-wrap: wrap;
         }
       }

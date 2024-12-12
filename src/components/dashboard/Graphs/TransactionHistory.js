@@ -80,21 +80,21 @@ const TransactionHistory = (props) => {
           <div className="drop_histry__blinkLive">
             <h3>
               Transaction History{" "}
-              <span>
-                {webSocketData?.onChainMetric?.totalTx
-                  ? formatMillionNumber(
-                      Number(webSocketData?.onChainMetric?.totalTx)
-                    )
-                  : "0"}
-              </span>
-              <Tooltip
+              {/* <Tooltip
                 color="rgb(49 52 56)"
                 title={tooltipConstant.TRANSACTION_HISTORY_GRAPH}
               >
                 <InfoCircleOutlined className="infoIcon" />
-              </Tooltip>
+              </Tooltip> */}
             </h3>
-            <span className="liveblink">Live</span>
+            <h6>
+              {webSocketData?.onChainMetric?.totalTx
+                ? formatMillionNumber(
+                    Number(webSocketData?.onChainMetric?.totalTx)
+                  )
+                : "0"}
+            </h6>
+            {/* <span className="liveblink">Live</span> */}
           </div>
 
           <Space wrap>

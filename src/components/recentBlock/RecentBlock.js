@@ -38,7 +38,7 @@ const RecentBlock = ({ data, customClass }, props) => {
       </div>
       <div className="recent">
         <p className="validateSec">
-          Validated :{" "}
+        Validator : {" "}
           <span>{data?.miner ? getAddress(data?.miner) : "-"}</span>
         </p>
       </div>

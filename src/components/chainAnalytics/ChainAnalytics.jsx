@@ -34,7 +34,7 @@ const ChainAnalytics = () => {
         iconCopy="true"
         addicon="true"
         title={tooltipConstant.CIRCULATION_SUPPLY}
-        text="Circulation Supply"
+        text="Circulating Supply"
         balance={0}
         img={
           isLight == "lightTheme" ? (

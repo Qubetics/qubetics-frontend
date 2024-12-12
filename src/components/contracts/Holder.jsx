@@ -76,7 +76,7 @@ const Holder = ({ hash }) => {
             onChange: handlePageChange,
           }
         }
-        className="commontable contractTable"
+        className="commontable contractTable holderTable"
       />
     </div>
   ) : (

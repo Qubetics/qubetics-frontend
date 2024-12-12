@@ -279,7 +279,7 @@ function HeaderMenu() {
             <Select
               getPopupContainer={getContainer}
               defaultValue={chainType}
-              style={{ width: 180 }}
+              style={{ width: 123 }}
               disabled
               onChange={handleChainChange}
               options={[

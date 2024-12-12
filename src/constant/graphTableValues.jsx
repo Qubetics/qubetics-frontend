@@ -787,7 +787,7 @@ export const contractTransactionsColumn = [
     title: "Tx Hash",
     key: "txHash",
     render: (text) => (
-      <span className="">
+      <div className="iconandlink">
         <Tooltip title={text?.txHash}>
           {text?.txHash ? (
             <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
@@ -801,7 +801,10 @@ export const contractTransactionsColumn = [
             "-"
           )}
         </Tooltip>
-      </span>
+        <span>
+          <CopyText text={text?.txhash} />
+        </span>
+      </div>
     ),
   },
   {
@@ -823,7 +826,7 @@ export const contractTransactionsColumn = [
     title: "From",
     key: "from",
     render: (text) => (
-      <span className="">
+      <div className="iconandlink">
         <Tooltip title={text?.fromAddress}>
           {text?.fromAddress ? (
             <Link href={`/address/${text?.fromAddress}`}>
@@ -833,7 +836,10 @@ export const contractTransactionsColumn = [
             "-"
           )}
         </Tooltip>
-      </span>
+        <span>
+          <CopyText text={text?.fromAddress} />
+        </span>
+      </div>
     ),
   },
   {
@@ -895,7 +901,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "height",
-    title: "Height",
+    title: "Blocks",
     key: "height",
     render: (text) => (
       <span className="">
@@ -915,7 +921,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "fee",
-    title: "Fee",
+    title: "Amount",
     key: "fee",
     render: (text) => (
       <span className="">
@@ -929,7 +935,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "age",
     render: (text) => (
       <span className="">
@@ -1016,7 +1022,7 @@ export const EventsColumn = [
     title: "Tx Hash",
     key: "txHash",
     render: (text) => (
-      <span className="">
+      <div className="iconandlink">
         {text?.txHash ? (
           <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
             {getAddress(text?.txHash)}
@@ -1024,7 +1030,10 @@ export const EventsColumn = [
         ) : (
           "-"
         )}
-      </span>
+        <span>
+          <CopyText text={text?.contractAddress} />
+        </span>
+      </div>
     ),
   },
   {

@@ -201,8 +201,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     @media screen and (max-width: 676px) {
       width: 100%;
     }
@@ -311,12 +311,12 @@ ul {
       display: block;
       color: #929292;
       text-decoration: none;
-      @include fluid-type(320px, 1920px, 13px, 15px);
-      font-weight: 600;
+      @include fluid-type(320px, 1920px, 13px, 16px);
+      font-weight: 700;
 
       &:hover,
       &.active {
-        color: $white;
+        color: $white !important;
       }
     }
     .ant-select {
@@ -490,6 +490,8 @@ ul {
       @include fluid-type(320px, 1920px, 13px, 15px);
       border-radius: 0px 8px 8px 0px;
       cursor: pointer;
+      font-weight: 700;
+      color: $grayA0A0A0;
 
       a {
         color: $white !important;
@@ -625,5 +627,4 @@ ul {
 
 .inactive {
   color: $grayA0A0A0 !important;
-  font-weight: normal;
 }
