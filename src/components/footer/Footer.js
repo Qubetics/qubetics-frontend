@@ -49,9 +49,9 @@ const Footer = () => {
             <Link href="/validators" target="">
               Validators
             </Link>
-            <Link href="#" target="">
+            {/* <Link href="#" target="">
               Analytics
-            </Link>
+            </Link> */}
             <Link href="/nodes" target="">
               Nodes
             </Link>

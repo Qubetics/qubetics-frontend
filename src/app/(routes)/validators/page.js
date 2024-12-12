@@ -76,7 +76,17 @@ function page() {
     },
     {
       id: 2,
-      text: "Total Validators",
+      text: (
+        <>
+          Total Validators
+          <Tooltip
+            color="rgb(49 52 56)"
+            title="Total Validators: This metric represents the total count of participants tasked with validating transactions within a blockchain network"
+          >
+            <InfoCircleOutlined className="infoIcon" />
+          </Tooltip>
+        </>
+      ),
       balance: parsedData?.totalValidator ? parsedData?.totalValidator : "0",
       img: <Totalvalidators />,
       contract: true,
@@ -102,7 +112,17 @@ function page() {
     },
     {
       id: 4,
-      text: <>Active Validators</>,
+      text: (
+        <>
+          Active Validators
+          <Tooltip
+            color="rgb(49 52 56)"
+            title="Active Validators: These are validators presently engaged in validating transactions on the blockchain."
+          >
+            <InfoCircleOutlined className="infoIcon" />
+          </Tooltip>
+        </>
+      ),
       balance: parsedData?.validator ? parsedData?.validator : "0",
       img: <Activevalidators />,
       contract: "true",

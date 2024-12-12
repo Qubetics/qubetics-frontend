@@ -21,7 +21,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       value: countryNode?.total ? countryNode?.total : 0,
       label: "Total Nodes",
     },
-    { value: randomNoGenerator() + "s", label: "Last Blocks" },
+    { value: randomNoGenerator() + "s", label: "Last Block" },
     {
       value: countryNode?.countryCount ? countryNode?.countryCount : 0,
       label: "Countries",

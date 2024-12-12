@@ -2,6 +2,7 @@ import {
   BlockchainHeaderFunction,
   contractHeaderFunction,
   EXPLORER_CHAIN_NAME,
+  EXPLORER_META_NETWORK_CHAIN_ID,
   Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
@@ -13,6 +14,7 @@ import { useEffect, useState } from "react";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
+import CheckIcon from "../../../public/SvgIcons";
 
 function HeaderMenu() {
   const router = useRouter();
@@ -20,12 +22,31 @@ function HeaderMenu() {
 
   let val = typeof window !== "undefined" && localStorage.getItem("chainType");
   const [chainType, setChainType] = useState(val || "EVM Chain");
+  const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
 
   const handleChainChange = (e) => {
     setChainType(e);
     setIsNetworkChanged(true);
   };
+  const isNetworkAdded = async () => {
+    const { ethereum } = window;
+    if (!ethereum) return;
+    try {
+      const chainId = await ethereum.request({ method: "eth_chainId" });
+      setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
+      ethereum.on("chainChanged", (id) => {
+        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
+          return setIsMetaMaskAdded(true);
+        setIsMetaMaskAdded(false);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    isNetworkAdded();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("chainType", chainType);
@@ -224,10 +245,10 @@ function HeaderMenu() {
             <Link
               className={pathname === Routes.FAUCET ? "active" : "inactive"}
               href={Routes.FAUCET}
-              onClick={() => {
-                onCloseDrawer();
-                router.push(`${Routes.FAUCET}`);
-              }}
+              // onClick={() => {
+              //   onCloseDrawer();
+              //   router.push(`${Routes.FAUCET}`);
+              // }}
             >
               Faucet
             </Link>
@@ -241,18 +262,25 @@ function HeaderMenu() {
             </span>
           </button> */}
           <a className="qubeticNetwork_btn" onClick={addQubetic}>
-            <span class="_button-text_1x6ja_100">
+            <span
+              style={{ gap: "10px", display: "flex", alignItems: "center" }}
+              class="_button-text_1x6ja_100"
+            >
               <Image src="/metafox.avif" width={25} height={25} alt="metafox" />
-              Add {EXPLORER_CHAIN_NAME} Network
+              {isMetaMaskAdded
+                ? `${EXPLORER_CHAIN_NAME} Network Added`
+                : `Add ${EXPLORER_CHAIN_NAME} Network`}
+              {isMetaMaskAdded && <CheckIcon />}
             </span>
           </a>
         </li>
         <li className="headerSelct">
-          <div className="cmnSelct">
+          {/* <div className="cmnSelct">
             <Select
               getPopupContainer={getContainer}
               defaultValue={chainType}
               style={{ width: 180 }}
+              disabled
               onChange={handleChainChange}
               options={[
                 {
@@ -265,7 +293,7 @@ function HeaderMenu() {
                 // },
               ]}
             />
-          </div>
+          </div> */}
         </li>
       </ul>
     </>

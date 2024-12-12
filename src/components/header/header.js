@@ -1,7 +1,5 @@
 "use client";
 import { EXPLORER_CHAIN_NAME, Routes } from "@/constant/constant";
-import getTokenPriceGraph from "@/services/getTokenGraph";
-import { Drawer } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "../../../public/SvgIcons";
