@@ -13,6 +13,7 @@ import {
 import {
   TRANS_HISTORY_CHART_YEAR,
   transactionItems,
+  TRANS_HISTORY_CHART_HOURS,
 } from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
 import { formatMillionNumber } from "@/utils/commonFunctions";
@@ -100,7 +101,7 @@ const TransactionHistory = (props) => {
           <Space wrap>
             <Select
               getPopupContainer={(trigger) => trigger.parentNode}
-              defaultValue={TRANS_HISTORY_CHART_YEAR}
+              defaultValue={TRANS_HISTORY_CHART_HOURS}
               style={{ width: 80 }}
               onChange={handleTransactionHistory}
               options={transactionItems}

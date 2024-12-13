@@ -559,7 +559,8 @@
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1490196078);
   margin-top: 0 !important;
-  height: unset;
+  height: 770px;
+  width: 567px;
   @media (max-width: 767px) {
     height: unset !important;
     margin-bottom: 7px;
@@ -679,7 +680,11 @@
   }
 
   .ant-select-item-option-selected {
-    background-color: transparent !important;
+    background: var(--theme-gradients-main) !important;
+    color: $black !important;
+    .ant-select-item-option-content {
+      color: $black !important;
+    }
   }
 
   .ant-select-selection-item {

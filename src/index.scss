@@ -620,7 +620,7 @@ html {
     white-space: nowrap;
     @include fluid-type(320px, 1920px, 14px, 16px);
 
-    border-bottom: 0;
+    border-bottom: 0 !important;
 
     font-weight: 400;
     color: $grayA0A0A0;
@@ -724,7 +724,7 @@ html {
   width: 100%;
   display: flex;
   align-items: center;
-  @include fluid-type(320px, 1920px, 12px, 14px);
+  @include fluid-type(320px, 1920px, 14px, 16px);
 }
 
 .timestamp {
@@ -964,6 +964,7 @@ html {
 .ant-table-wrapper .ant-table-thead > tr > th,
 .ant-table-wrapper .ant-table-thead > tr > td {
   border-bottom: 0 !important;
+  color: $white !important;
 }
 
 .lightTheme {
@@ -2186,4 +2187,7 @@ input[type="number"] {
   .tokenInformation {
     margin-top: 40px;
   }
+}
+.mt-20{
+  margin-top: 20px;
 }

@@ -1,10 +1,13 @@
 @import "../../../../var.scss";
 @import "../../../../_mixins.scss";
 .verify {
+  max-width: 926px;
+  width: 100%;
+  margin: auto;
   @media screen and (max-width: 991px) {
     padding-top: 30px;
   }
-  padding-top: 40px;
+  padding-top: 10px;
   .searchbar_input {
     margin: 0 auto;
   }
@@ -29,6 +32,15 @@
 }
 .verifyPublish {
   padding-top: 40px;
+  gap: 100px;
+
+  @media (max-width: 991px) {
+    gap: 30px;
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 
   @media (max-width: 585px) {
     padding-top: 0px;
@@ -37,8 +49,9 @@
 
   &__left {
     text-align: center;
-    max-width: 650px;
-    width: 100%;
+    // max-width: 650px;
+    // width: 100%;
+    margin-top: 30px;
     h3 {
       padding-bottom: 16px;
       color: $white;
@@ -53,7 +66,7 @@
       color: $grayA0A0A0;
       font-weight: 300;
       @include fluid-type(320px, 1920px, 14px, 16px);
-      text-align: left;
+      // text-align: left;
       &:not(:last-child) {
         padding-bottom: 16px;
       }
@@ -76,7 +89,7 @@
 .steps {
   display: flex;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 30px;
   .ant-steps.ant-steps-label-vertical .ant-steps-item-tail {
     background-color: $borderCard;
     padding: 0 !important;
@@ -290,21 +303,28 @@
     // border: none;
     border: 1px solid #ffffff;
     border-radius: 2px;
-    &:hover{
+    &:hover {
       border-color: #9f53ff !important;
     }
   }
   p {
-    color: #FFFFFF;
+    color: #ffffff;
 
     // span {
     //   color: #9f53ff;
     // }
   }
-  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner, :where(.css-dev-only-do-not-override-1wwf28x).ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+    .ant-checkbox-inner,
+  :where(.css-dev-only-do-not-override-1wwf28x).ant-checkbox:not(
+      .ant-checkbox-disabled
+    ):hover
+    .ant-checkbox-inner {
     border-color: #9f53ff;
   }
-  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+    .ant-checkbox-checked:not(.ant-checkbox-disabled)
+    .ant-checkbox-inner {
     background-color: #4096ff;
     border-color: #fff;
   }

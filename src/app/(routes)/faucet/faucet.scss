@@ -154,7 +154,7 @@
         &:hover {
           background: var(--theme-gradients-main) !important;
           color: $black !important;
-          border: 0;
+          border: 0 !important;
         }
         // @media (max-width: 575px) {
         //   margin-top: 0px;
@@ -174,7 +174,7 @@
           margin-bottom: 20px;
           text-align: center;
         }
-        p {
+        .discription {
           color: #cfd6e7;
           @include fluid-type(320px, 1920px, 14px, 17px);
           font-weight: 300;
