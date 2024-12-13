@@ -2,6 +2,7 @@ import {
   EXPLORER_CURRENCY_NAME,
   EXPLORER_META_NETWORK_CHAIN_ID,
   EXPLORER_METAMASK_NETWORK_URL,
+  Messages,
   METAMASK_CHAIN_NAME,
 } from "@/constant/constant";
 
