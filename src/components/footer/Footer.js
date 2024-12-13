@@ -7,7 +7,7 @@ import {
   Instagram,
   Telegram,
   TikTok,
-  Twitter
+  Twitter,
 } from "../../../public/SvgIcons";
 import "./Footer.scss";
 const Footer = () => {
@@ -39,7 +39,7 @@ const Footer = () => {
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>Quick Links</h3>
-            <Link href="/tokens" target="">
+            <Link href="/token" target="">
               Tokens
             </Link>
             <Link href="/blocks" target="">
