@@ -33,7 +33,7 @@ const TransferInfo = ({ data }) => {
         <p>Transaction Hash</p>
         {data?.txhash ? (
           <span>
-            {data?.txhash}
+            <Link href={`/tx/${data?.txhash}`}>{data?.txhash}</Link>
             <CopyText text={data?.txhash} hoverText={"hash"} />
           </span>
         ) : (
@@ -44,7 +44,14 @@ const TransferInfo = ({ data }) => {
         <p>From </p>
         {data?.fromAddress ? (
           <span>
-            {data?.fromAddress}
+            <Link
+              style={{ color: "#551A8B" }}
+              href={`/address/${data?.fromAddress}`}
+            >
+              {" "}
+              {data?.fromAddress}
+            </Link>
+
             <CopyText text={data?.fromAddress} />
           </span>
         ) : (
@@ -55,7 +62,12 @@ const TransferInfo = ({ data }) => {
         <p>To </p>
         {data?.toAddress !== "N/A" && data?.toAddress !== "" ? (
           <span>
-            {data?.toAddress}
+            <Link
+              style={{ color: "#551A8B" }}
+              href={`/address/${data?.toAddress}`}
+            >
+              {data?.toAddress}
+            </Link>
             {(data?.toAddress?.startsWith("0x") ||
               data?.toAddress?.startsWith("Qubetics")) && (
               <CopyText text={data?.toAddress} />
@@ -72,16 +84,25 @@ const TransferInfo = ({ data }) => {
       </div>
       <div className="information">
         <p>Block Number </p>
-        <span>
-          {data?.blocknumber ? data?.blocknumber : "-"}
-          <CopyText text={data?.blocknumber} hoverText={"block"} />
-        </span>
+        {data?.blocknumber ? (
+          <span>
+            <Link
+              style={{ color: "#551A8B" }}
+              href={`/blocks/${data?.blocknumber}`}
+            >
+              {data?.blocknumber}
+            </Link>
+            <CopyText text={data?.blocknumber} hoverText={"block"} />
+          </span>
+        ) : (
+          "-"
+        )}
       </div>
       <div className="information">
         <p> Amount </p>
         <span>
           {data?.value ? noExponential(data?.value) : "0 "}{" "}
-          {" " + EXPLORER_CURRENCY_NAME}
+          {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
         </span>
       </div>
       <div className="information">
@@ -98,7 +119,7 @@ const TransferInfo = ({ data }) => {
         <p> Fee </p>
         <span>
           {data?.txFee ? noExponential(Number(data?.txFee)) : "0"}{" "}
-          {EXPLORER_CURRENCY_NAME}
+          {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
         </span>
       </div>
       <div className="information">

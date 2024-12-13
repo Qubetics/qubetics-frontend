@@ -71,31 +71,63 @@ const Footer = () => {
 
           <Col xs={24} sm={12} lg={4}>
             <h3>Product & Services</h3>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics Validator App
             </Link>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics Delegator App
             </Link>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics DEX
             </Link>
-            <Link href=" " target="_blank">
+            <Link
+              href=" "
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics App
             </Link>
           </Col>
           <Col xs={24} sm={12} lg={5}>
             <h3>Resources</h3>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Official web
             </Link>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics Network Documentation
             </Link>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics Documentation
             </Link>
-            <Link href="" target="_blank">
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics IDE
             </Link>
           </Col>
@@ -103,9 +135,9 @@ const Footer = () => {
         <div className="footernew_topFooterItem">
           <h3>Get in touch!</h3>
           <div className="footernew_topFooterItem_socialIcon">
-            <Link href="" target="_blank">
+            {/* <Link href="" target="">
               <Facebook />
-            </Link>
+            </Link> */}
             <Link href="https://x.com/qubetics?mx=2" target="_blank">
               <Twitter />
             </Link>

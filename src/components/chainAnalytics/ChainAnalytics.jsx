@@ -13,7 +13,7 @@ import {
   TotalAccountIcon,
   TotalValidators,
   Transfericondark,
-  Txblockdark
+  Txblockdark,
 } from "../../../public/SvgIcons";
 const ChainAnalytics = () => {
   const webSocketData = useLatestData();
@@ -65,7 +65,7 @@ const ChainAnalytics = () => {
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
       />
       <CardsOnchain
-        text="Average APR"
+        text="Average APY"
         balance={
           webSocketData?.onChainMetric?.tpb
             ? webSocketData?.onChainMetric?.tpb

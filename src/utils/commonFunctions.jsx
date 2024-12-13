@@ -21,19 +21,35 @@ export const noExponential = (num) => {
   return Number(num).noExponents();
 };
 export function noExponentsValue(number) {
-  if (isNaN(number)) return 0;
+  if (isNaN(number)) return 0; // Handle invalid input
+
+  // If the number is very small or very large, handle it as a fixed-point number
+  if (Math.abs(number) < 1e-6 || Math.abs(number) > 1e21) {
+    return parseFloat(number.toFixed(6)); // Convert to fixed-point with 18 decimals
+  }
+
   // Convert number to string and split into coefficient and exponent parts
   const [coefficient, exponent] = String(number).split(/[eE]/);
+
   // If there's no exponent part, return the original number
   if (!exponent) return Number(number);
-  // If there's an exponent, calculate the number without exponential notation
+
+  // Handle cases with exponents
   const mag = Number(exponent);
-  const sign = number < 0 ? "-" : "";
-  const coefficientWithoutExponent =
+  const sign = number < 0 ? -1 : 1; // Retain the original sign
+
+  // Calculate the value without exponential notation
+  const coefficientValue = parseFloat(coefficient.replace(".", ""));
+  const decimalPlaces = coefficient.includes(".")
+    ? coefficient.split(".")[1].length
+    : 0;
+
+  const numericValue =
     mag > 0
-      ? coefficient.padEnd(mag + 1, "0")
-      : "0." + "0".repeat(-mag - 1) + coefficient.replace(".", "");
-  return sign + coefficientWithoutExponent;
+      ? coefficientValue * 10 ** (mag - decimalPlaces)
+      : coefficientValue / 10 ** (Math.abs(mag) + decimalPlaces);
+
+  return sign * numericValue;
 }
 
 export const formatMillionNumber = (num) => {

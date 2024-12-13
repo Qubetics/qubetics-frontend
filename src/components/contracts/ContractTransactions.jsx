@@ -82,7 +82,7 @@ const ContractTransactions = ({ hash, tab }) => {
         pagination={false}
         className="commontable contractTable"
       />
-      {totalPages && (
+      {totalPages > 10 && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

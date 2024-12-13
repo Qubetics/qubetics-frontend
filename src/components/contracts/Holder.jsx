@@ -62,7 +62,9 @@ const Holder = ({ hash }) => {
   return holderStatus === InitStatus ||
     holderStatus === FetchingStatus ? (
     <Loader />
-  ) : holderStatus === SuccessStatus ? (
+  ) : holderStatus === SuccessStatus ?
+  
+  (
     <div>
       {" "}
       <Table

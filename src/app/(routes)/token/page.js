@@ -84,7 +84,7 @@ function page() {
     {
       id: 2,
       text: "Contracts (ERC-20)",
-      balance: 0,
+      balance: tokensData?.erc20Count ?? 0,
       img: <ContractIcon />,
       contract: false,
     },
@@ -115,7 +115,7 @@ function page() {
         </div>
         <div className="tokenInformation">
           <h2>Tokens List</h2>
-          <SearchbarComponent />
+          {/* <SearchbarComponent /> */}
         </div>
         <Table
           columns={TokenColumn}

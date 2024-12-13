@@ -162,11 +162,19 @@ const page = ({ params }) => {
               <div className="innerDetail">
                 <div className="detail">
                   <h3>Balance</h3>
-                  <p>{formatMillionNumber(showHeaderData?.coinBalance)}</p>
+                  <p>
+                    {formatMillionNumber(showHeaderData?.coinBalance)}{" "}
+                    {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+                  </p>
                 </div>
                 <div className="detail">
                   <h3>TICS Value</h3>
-                  <p>{"$" + formatMillionNumber(showHeaderData?.value)}</p>
+                  <p>
+                    {showHeaderData?.value === "" ||
+                    showHeaderData?.value == null
+                      ? "$0"
+                      : `$${formatMillionNumber(showHeaderData?.value)}`}
+                  </p>
                 </div>
                 <div className="detail">
                   <h3>Transaction Count</h3>

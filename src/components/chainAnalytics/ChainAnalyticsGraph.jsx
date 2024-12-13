@@ -17,9 +17,10 @@ import getGraphData from "@/services/getGraphData";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
+import { noExponentsValue } from "@/utils/commonFunctions";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription,fetchUrl } = props;
+  const { title, discription, fetchUrl } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
@@ -37,9 +38,18 @@ const ChainAnalyticsGraph = (props) => {
     getGraphData(transactionHisChart?.type, fetchUrl)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
+
+        const convertedData = res?.data?.finalData?.map((item) => ({
+          ...item,
+          count:
+            title === "Transaction Fees"
+              ? noExponentsValue(item.count) // Convert and fix to 6 decimal places
+              : Number(item.count), // Keep it as a number
+        }));
+
         setTransactionHisChart({
           ...transactionHisChart,
-          data: res?.data?.finalData,
+          data: convertedData,
         });
       })
       .catch((err) => {

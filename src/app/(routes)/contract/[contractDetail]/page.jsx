@@ -118,9 +118,11 @@ const ContractDetail = () => {
     {
       text: "Total Supply",
       heading: contractDetail?.totalSupply
-        ? noExponential(
-            Number(contractDetail?.totalSupply) /
-              10 ** Number(contractDetail?.decimal)
+        ? formatMillionNumber(
+            noExponential(
+              Number(contractDetail?.totalSupply) /
+                10 ** Number(contractDetail?.decimal)
+            )
           )
         : "0",
       img: (

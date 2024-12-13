@@ -1,5 +1,6 @@
 import { generateData } from "@/constant/constant";
 import moment from "moment";
+import { noExponentsValue } from "./commonFunctions";
 
 const {
   TRANS_HISTORY_CHART_SECONDS,
@@ -70,7 +71,6 @@ export const chartSeriesValue = (data, chartType) => {
   );
 
   let seriesData = finalResult?.map((e) => {
-    
     if (typeof e?.count === "number") {
       return e?.count;
     } else {

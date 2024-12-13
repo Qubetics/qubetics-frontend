@@ -312,7 +312,7 @@ export const transactionSummarycolumn = [
     ),
   },
   {
-    title: "Timestamp ",
+    title: "Age ",
     // dataIndex: "timestamp",
     key: "timestamp",
     render: (text) =>
@@ -332,13 +332,26 @@ export const transactionSummarycolumn = [
     title: "Value",
     key: "value",
     render: (text) =>
-      text?.value ? noExponential(toFixed(text?.value, 18)) : 0,
+      text?.value ? (
+        <Tooltip title={noExponential(text?.value)}>
+          {noExponential(toFixed(text?.value, 6))}
+        </Tooltip>
+      ) : (
+        0
+      ),
   },
   {
     title: "Tx Fee",
     key: "txFee",
     render: (text) =>
-      text?.value ? noExponential(toFixed(text?.txFee, 18)) : 0,
+      text?.value ? (
+        <Tooltip title={noExponential(text?.txFee)}>
+          {" "}
+          {noExponential(toFixed(text?.txFee, 6))}
+        </Tooltip>
+      ) : (
+        0
+      ),
   },
   {
     title: "Status",
@@ -856,21 +869,25 @@ export const contractTransactionsColumn = [
               text?.type === typesOfTransactions.contractCreation ||
               text?.type === typesOfTransactions.contractExecute ||
               text?.type === typesOfTransactions.contractUpload ? (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
-                  {getAddress(text?.toAddress)}
-                </Link>
+                <Tooltip title={text?.toAddress}>
+                  <Link
+                    className="fromicon"
+                    href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
+                    rel="noopener noreferrer"
+                  >
+                    {getAddress(text?.toAddress)}
+                  </Link>
+                </Tooltip>
               ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
-                  {getAddress(text?.toAddress)}
-                </Link>
+                <Tooltip title={text?.toAddress}>
+                  <Link
+                    className="fromicon"
+                    href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                    rel="noopener noreferrer"
+                  >
+                    {getAddress(text?.toAddress)}
+                  </Link>
+                </Tooltip>
               )}
               <span>
                 <CopyText text={text?.toAddress} />
@@ -881,14 +898,16 @@ export const contractTransactionsColumn = [
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
-              rel="noopener noreferrer"
-            >
-              {" "}
-              {getAddress(text?.contractAddress)}
-            </Link>
+            <Tooltip title={text?.contractAddress}>
+              <Link
+                className="fromicon"
+                href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
+                rel="noopener noreferrer"
+              >
+                {" "}
+                {getAddress(text?.contractAddress)}
+              </Link>
+            </Tooltip>
             <span>
               <CopyText text={text?.contractAddress} />
             </span>
@@ -979,9 +998,11 @@ export const HolderColumn = [
     render: (text) => (
       <span className="">
         {text?.address ? (
-          <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
-            {getAddress(text?.address)}{" "}
-          </Link>
+          <Tooltip title={text?.address}>
+            <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
+              {getAddress(text?.address)}{" "}
+            </Link>
+          </Tooltip>
         ) : (
           "-"
         )}

@@ -42,7 +42,8 @@ const Events = ({ hash }) => {
 
   return eventStatus === InitStatus || eventStatus === FetchingStatus ? (
     <Loader />
-  ) : eventStatus === SuccessStatus ? (
+  ) : eventStatus === SuccessStatus ?
+   (
     <div>
       {" "}
       <Table

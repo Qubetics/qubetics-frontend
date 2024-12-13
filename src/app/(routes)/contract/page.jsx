@@ -119,7 +119,7 @@ const Contract = () => {
         </div>
         <div className="tokenInformation">
           <h2>Token Information</h2>
-          <SearchbarComponent />
+          {/* <SearchbarComponent /> */}
         </div>
         {contractStatus === InitStatus || contractStatus === FetchingStatus ? (
           <Loader />
