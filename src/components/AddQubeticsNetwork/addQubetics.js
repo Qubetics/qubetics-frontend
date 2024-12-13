@@ -90,7 +90,7 @@ export const addQubetic = async () => {
       throw new Error(Messages.Install_Metamask);
     }
     const chainId = await provider.request({ method: "eth_chainId" });
-  
+   
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
     if (!provider) {
       customToast.info(Messages.Install_Metamask);
