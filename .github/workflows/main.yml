@@ -33,13 +33,13 @@ jobs:
           echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
       - name: Get Id Token
-            uses: actions/github-script@v6
-            id: idtoken
-            with:
-              script: |
-                const coredemo = require('@actions/core')
-                let id_token = await coredemo.getIDToken("dev-qubetics")
-                coredemo.setOutput('id_token', id_token)
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+            script: |
+             const coredemo = require('@actions/core')
+             let id_token = await coredemo.getIDToken("dev-qubetics")
+             coredemo.setOutput('id_token', id_token)
 
       - name: Getting credentials
         id: login
