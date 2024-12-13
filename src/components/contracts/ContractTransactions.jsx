@@ -11,6 +11,7 @@ import { contractTransactionsColumn } from "@/constant/graphTableValues";
 import getContractTransactions from "@/services/getContractTransactions";
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { Datnotfound } from "../../../public/SvgIcons";
 import Loader from "../loader/Loader";
 import Pagination from "../Pagination/Pagination";
 
@@ -81,6 +82,14 @@ const ContractTransactions = ({ hash, tab }) => {
         dataSource={transactions}
         pagination={false}
         className="commontable contractTable"
+        locale={{
+          emptyText: (
+            <div>
+              <Datnotfound />
+              <p>No data </p>
+            </div>
+          ),
+        }}
       />
       {totalPages > 10 && (
         <Pagination

@@ -15,7 +15,7 @@ import { TokenColumn } from "@/constant/graphTableValues";
 import getAllTokens from "@/services/getAllTokens";
 import { Table } from "antd";
 import { useEffect, useState } from "react";
-import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
+import { ContractIcon, Datnotfound, TotalContrat } from "../../../../public/SvgIcons";
 import Page from "../notfound/page";
 
 function page() {
@@ -122,6 +122,14 @@ function page() {
           dataSource={tokensData?.tokens}
           className="commontable"
           pagination={false}
+          locale={{
+            emptyText: (
+              <div>
+                <Datnotfound />
+                <p>No data </p>
+              </div>
+            ),
+          }}
         />
         {totalPages > 10 && (
           <Pagination

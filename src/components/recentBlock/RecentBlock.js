@@ -19,6 +19,7 @@ const RecentBlock = ({ data, customClass }, props) => {
             onClick={() =>
               router.push(`${Routes.BLOCK_NO}${data?.blocknumber}`)
             }
+            className="recenteBlockNumber"
           >
             {" "}
             {data?.blocknumber ? data?.blocknumber : "-"}
@@ -28,7 +29,7 @@ const RecentBlock = ({ data, customClass }, props) => {
           </p>
         </div>
       </div>
-      <div className="recent">
+      <div className="recent recentCenter">
         <p>
           <span className="trnxCount">
             {data?.transactionCount ? data?.transactionCount : 0} txn
@@ -36,7 +37,7 @@ const RecentBlock = ({ data, customClass }, props) => {
         </p>
         <p>{data?.timestamp ? renderTime(data?.timestamp) : "-"}</p>
       </div>
-      <div className="recent">
+      <div className="recent validatorAddress">
         <p className="validateSec">
         Validator : {" "}
           <span>{data?.miner ? getAddress(data?.miner) : "-"}</span>

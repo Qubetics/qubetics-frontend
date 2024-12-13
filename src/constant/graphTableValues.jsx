@@ -191,7 +191,7 @@ export const blockColumn = [
   },
   {
     id: "transactionCount",
-    title: "tx Count ",
+    title: "txn Count ",
     dataIndex: "transactionCount",
     key: "transactionCount",
   },
@@ -201,7 +201,7 @@ export const blockColumn = [
 
 export const transactionSummarycolumn = [
   {
-    title: "Tx Hash",
+    title: "Txn Hash",
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
@@ -346,7 +346,7 @@ export const transactionSummarycolumn = [
       ),
   },
   {
-    title: "Tx Fee",
+    title: "Txn Fee",
     key: "txFee",
     render: (text) =>
       text?.value ? (
@@ -375,7 +375,7 @@ export const transactionSummarycolumn = [
 
 export const TransactionDetailsColumns = [
   {
-    title: "Tx Hash",
+    title: "Txn Hash",
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
@@ -504,7 +504,7 @@ export const TransactionDetailsColumns = [
 export const addressDetailColumn = [
   {
     title:
-      "Tx Hash                                                            ",
+      "Txn Hash ",
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
@@ -740,7 +740,7 @@ export const contractTableColumn = (currentChain) => [
   },
   {
     id: "txHash",
-    title: "Tx Hash",
+    title: "Txn Hash",
     key: "txHash",
     render: (text) => (
       <span className="iconandlink">
@@ -802,7 +802,7 @@ export const contractTableColumn = (currentChain) => [
 export const contractTransactionsColumn = [
   {
     id: "txHash",
-    title: "Tx Hash",
+    title: "Txn Hash",
     key: "txHash",
     render: (text) => (
       <div className="iconandlink">
@@ -1048,7 +1048,7 @@ export const HolderColumn = [
 export const EventsColumn = [
   {
     id: "txHash",
-    title: "Tx Hash",
+    title: "Txn Hash",
     key: "txHash",
     render: (text) => (
       <div className="iconandlink">
@@ -1083,7 +1083,7 @@ export const EventsColumn = [
   },
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "age",
     render: (text) => (
       <span className="">

@@ -18,11 +18,13 @@ import LogsDetail from "@/components/logsDetail/LogsDetail";
 import { useSearchData } from "@/components/contexts/searchingData";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
+import SearchbarComponent from "@/components/search/SearchbarComponent";
 
 const page = () => {
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [contractLogs, setContractLogs] = useState([]);
   const [topics, setTopics] = useState([]);
+  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
   const { searchData } = useSearchData();
@@ -77,6 +79,10 @@ const page = () => {
         <Loader />
       ) : txDetailStatus == SuccessStatus || txDetailStatus == ErrorStatus ? (
         <div className="container">
+           <SearchbarComponent
+            searchStatus={searchStatus}
+            setSerachStatus={setSerachStatus}
+          />
           <Heading heading="Transaction Details" />
           <TransferInfo data={transactionDetails} />
           {/* transactionDetails?.tokenInfo?.type == 'ERC-20' && */}

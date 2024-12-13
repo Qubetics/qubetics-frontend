@@ -37,7 +37,9 @@ const TransferInfo = ({ data }) => {
           <p>Transaction Hash</p>
           {data?.txhash ? (
             <span>
-              <Link href={`/tx/${data?.txhash}`}>{data?.txhash}</Link>
+              <Link href={`/tx/${data?.txhash}`} className="hoverTrans">
+                {data?.txhash}
+              </Link>
               <CopyText text={data?.txhash} hoverText={"hash"} />
             </span>
           ) : (
@@ -49,7 +51,7 @@ const TransferInfo = ({ data }) => {
           {data?.fromAddress ? (
             <span>
               <Link
-                style={{ color: "#551A8B" }}
+                className="hoverTrans"
                 href={`/address/${data?.fromAddress}`}
               >
                 {" "}
@@ -66,10 +68,7 @@ const TransferInfo = ({ data }) => {
           <p>To </p>
           {data?.toAddress !== "N/A" && data?.toAddress !== "" ? (
             <span>
-              <Link
-                style={{ color: "#551A8B" }}
-                href={`/address/${data?.toAddress}`}
-              >
+              <Link className="hoverTrans" href={`/address/${data?.toAddress}`}>
                 {data?.toAddress}
               </Link>
               {(data?.toAddress?.startsWith("0x") ||
@@ -79,7 +78,7 @@ const TransferInfo = ({ data }) => {
             </span>
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
-            <span>
+            <span  className="hoverTrans" >
               {data?.contractAddress}
               <CopyText text={data?.contractAddress} />
             </span>
@@ -92,7 +91,7 @@ const TransferInfo = ({ data }) => {
           {data?.blocknumber ? (
             <span>
               <Link
-                style={{ color: "#551A8B" }}
+                className="hoverTrans"
                 href={`/blocks/${data?.blocknumber}`}
               >
                 {data?.blocknumber}

@@ -1373,7 +1373,7 @@ html {
     border: 1px solid $borderCard;
     padding: 20px;
     border-radius: 12px;
-    max-width: 446px;
+    max-width: 450px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -2057,8 +2057,23 @@ input[type="number"] {
     max-width: 150px !important;
     width: 150px !important;
   }
+  .ant-select-item-option {
+    &:hover {
+      background: var(--theme-gradients-main);
+      a {
+        color: $black !important;
+      }
+    }
+  }
 }
-
+.ant-select-item-option {
+  &:hover {
+    background: var(--theme-gradients-main);
+    .ant-select-item-option-content {
+      color: $black !important;
+    }
+  }
+}
 .activeOptions {
   background: var(--theme-gradients-main) !important;
   .ant-select-item-option-content {
@@ -2122,6 +2137,7 @@ input[type="number"] {
   padding: 30px;
   border-radius: 14px;
   width: 100%;
+  box-shadow: 0 -2px 9px #80808075;
   @media (max-width: 540px) {
     padding: 15px;
   }
@@ -2144,10 +2160,10 @@ input[type="number"] {
       &:nth-child(odd) {
         background: linear-gradient(
           157.79deg,
-          rgba(29, 29, 29, 0.54) -0.65%,
-          rgba(29, 29, 29, 0.9) 99.59%
+          rgb(29, 29, 29) -0.65%,
+          rgb(47, 45, 45) 99.59%
         );
-        border: 1px solid $borderCard;
+        border-radius: 10px;
       }
       h3 {
         color: $grayA0A0A0;
@@ -2188,6 +2204,6 @@ input[type="number"] {
     margin-top: 40px;
   }
 }
-.mt-20{
+.mt-20 {
   margin-top: 20px;
 }

@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "../loader/Loader";
 import { useGetNetwork } from "../contexts/networkChanged";
 import Pagination from "../Pagination/Pagination";
+import { Datnotfound } from "../../../public/SvgIcons";
 
 const TokenByAddress = () => {
   const [tokenData, setTokenData] = useState([]);
@@ -77,6 +78,14 @@ const TokenByAddress = () => {
         dataSource={tokenData}
         className="commontable"
         pagination={false}
+        locale={{
+          emptyText: (
+            <div>
+              <Datnotfound />
+              <p>No data </p>
+            </div>
+          ),
+        }}
       />
       {totalPages && (
         <Pagination

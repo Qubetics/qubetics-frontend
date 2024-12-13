@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import getTransactions from "@/services/getTransactions";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { transactionSummarycolumn } from "@/constant/graphTableValues";
+import { Datnotfound } from "../../../public/SvgIcons";
 
 export default function Transactions({ setTxnData }) {
   const { isNetworkChanged } = useGetNetwork();
@@ -105,6 +106,14 @@ export default function Transactions({ setTxnData }) {
             dataSource={transactionData}
             className="commontable"
             pagination={false}
+            locale={{
+              emptyText: (
+                <div>
+                  <Datnotfound />
+                  <p>No data </p>
+                </div>
+              ),
+            }}
           />
           {totalPages && (
             <Pagination

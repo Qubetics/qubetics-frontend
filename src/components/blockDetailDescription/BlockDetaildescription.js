@@ -18,7 +18,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
         <div className="transferinfo blockinform">
           <div className="information">
             <p>Block Number</p>
-            <span className="">
+            <span className="hoverTrans">
               {blockData?.blocknumber
                 ? blockData?.blocknumber
                 : blockData?.block?.blocknumber
@@ -39,7 +39,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <div className="information">
             <p> Block Hash </p>
             {blockData?.blockhash || blockData?.block?.blockhash ? (
-              <span className="">
+              <span className="hoverTrans">
                 {blockData?.blockhash
                   ? blockData?.blockhash
                   : blockData?.block?.blockhash}
@@ -58,7 +58,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <div className="information">
             <p>Validator </p>
             {blockData?.miner || blockData?.block?.miner ? (
-              <span className="">
+              <span className="hoverTrans">
                 {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
                 <CopyText
                   text={

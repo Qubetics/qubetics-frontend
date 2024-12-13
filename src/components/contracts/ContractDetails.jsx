@@ -60,7 +60,7 @@ const ContractDetails = ({ data, status }) => {
                 <p> Creator </p>
                 <h6>
                   <Link href={`/address/${data?.creator}`}>
-                    <span className="copyText">
+                    <span className="copyText hoverTrans">
                       {data?.creator ? (
                         <>
                           <Tooltip title={data?.creator}>

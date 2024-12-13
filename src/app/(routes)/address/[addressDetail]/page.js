@@ -24,6 +24,7 @@ import { useGetNetwork } from "@/components/contexts/networkChanged";
 
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { Datnotfound } from "../../../../../public/SvgIcons";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
@@ -117,6 +118,14 @@ const page = ({ params }) => {
             dataSource={txAddressData}
             pagination={false}
             className="commontable"
+            locale={{
+              emptyText: (
+                <div>
+                  <Datnotfound />
+                  <p>No data </p>
+                </div>
+              ),
+            }}
           />
           <Pagination
             totalPages={totalPages}

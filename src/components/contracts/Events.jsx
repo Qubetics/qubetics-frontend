@@ -12,6 +12,7 @@ import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import Loader from "../loader/Loader";
 import getTokenEvents from "@/services/getTokenEvents";
+import { Datnotfound } from "../../../public/SvgIcons";
 
 const Events = ({ hash }) => {
   const [events, setEvents] = useState([]);
@@ -58,6 +59,14 @@ const Events = ({ hash }) => {
           }
         }
         className="commontable contractTable"
+        locale={{
+          emptyText: (
+            <div>
+              <Datnotfound />
+              <p>No data </p>
+            </div>
+          ),
+        }}
       />
     </div>
   ) : (

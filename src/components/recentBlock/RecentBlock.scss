@@ -101,6 +101,17 @@
       @include fluid-type(320px, 1920px, 12px, 14px);
     }
   }
+  // .recenteBlockNumber{
+  //   width: 180px;
+  //   // width: 100%;
+  // }
+  // .recentCenter {
+  //   width: 150px;
+  //   text-align: left;
+  // }
+  .validatorAddress{
+    width: 220px;
+  }
 }
 .recentTransactions {
   @include theme() {

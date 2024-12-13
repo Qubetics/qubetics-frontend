@@ -215,11 +215,11 @@ const ContractDetail = () => {
             className="contracttabs"
             items={tabItems}
             onChange={(e) => handleTabSelect(e)}
-            tabBarExtraContent={
-              <div className="tabSerachBar">
-                <SearchbarComponent />
-              </div>
-            }
+            // tabBarExtraContent={
+            //   <div className="tabSerachBar">
+            //     <SearchbarComponent />
+            //   </div>
+            // }
           />
         </div>
       </div>

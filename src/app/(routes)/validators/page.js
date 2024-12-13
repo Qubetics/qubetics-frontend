@@ -10,6 +10,7 @@ import {
   Activevalidators,
   Totalvalidators,
   Bondedrate,
+  Datnotfound,
 } from "../../../../public/SvgIcons";
 import {
   ErrorStatus,
@@ -181,6 +182,14 @@ function page() {
           columns={validatorsColumn}
           dataSource={validatorData?.validators}
           pagination={false}
+          locale={{
+            emptyText: (
+              <div>
+                <Datnotfound />
+                <p>No data </p>
+              </div>
+            ),
+          }}
         />
         {totalPages > 10 && (
           <Pagination

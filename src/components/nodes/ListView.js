@@ -10,6 +10,7 @@ import { nodesColumns } from "@/constant/graphTableValues";
 import Loader from "../loader/Loader";
 import Page from "@/app/(routes)/notfound/page";
 import Pagination from "../Pagination/Pagination";
+import { Datnotfound } from "../../../public/SvgIcons";
 
 const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,6 +52,14 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
         dataSource={paginatedData}
         pagination={false}
         className="commontable"
+        locale={{
+          emptyText: (
+            <div>
+              <Datnotfound />
+              <p>No data </p>
+            </div>
+          ),
+        }}
       />
       {nodesData.length > 10 && (
         <Pagination
