@@ -20,6 +20,21 @@ Number.prototype.noExponents = function () {
 export const noExponential = (num) => {
   return Number(num).noExponents();
 };
+export function noExponentsValue(number) {
+  if (isNaN(number)) return 0;
+  // Convert number to string and split into coefficient and exponent parts
+  const [coefficient, exponent] = String(number).split(/[eE]/);
+  // If there's no exponent part, return the original number
+  if (!exponent) return Number(number);
+  // If there's an exponent, calculate the number without exponential notation
+  const mag = Number(exponent);
+  const sign = number < 0 ? "-" : "";
+  const coefficientWithoutExponent =
+    mag > 0
+      ? coefficient.padEnd(mag + 1, "0")
+      : "0." + "0".repeat(-mag - 1) + coefficient.replace(".", "");
+  return sign + coefficientWithoutExponent;
+}
 
 export const formatMillionNumber = (num) => {
   let formattedNumber;

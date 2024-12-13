@@ -17,7 +17,7 @@ import {
   ClockCircleFilled,
   CloseCircleFilled,
 } from "@ant-design/icons";
-import { Collapse } from "antd";
+import { Collapse, Tooltip } from "antd";
 const { Panel } = Collapse;
 /*Graph Values */
 // export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -224,7 +224,7 @@ export const transactionSummarycolumn = [
     ),
   },
   {
-    title: "Method ",
+    title: "Type ",
     key: "type",
     render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
   },
@@ -262,12 +262,12 @@ export const transactionSummarycolumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -400,12 +400,12 @@ export const TransactionDetailsColumns = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -542,12 +542,12 @@ export const addressDetailColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -685,7 +685,9 @@ export const contractTableColumn = (currentChain) => [
               }}
             />
           )}
-          {text?.contractName ? capitalizeWord(text?.contractName) : "-"}
+          <Link href={`/contract/${text?.address}`}>
+            {text?.contractName ? capitalizeWord(text?.contractName) : "-"}
+          </Link>
         </span>
       );
     },
@@ -695,9 +697,7 @@ export const contractTableColumn = (currentChain) => [
     title: "Type",
     key: "type",
     render: (text) => (
-      <span className="">
-        {text?.contractType ? capitalizeWord(text?.contractType) : "-"}
-      </span>
+      <span className="">{text?.contractType ? text?.contractType : "-"}</span>
     ),
   },
   {
@@ -746,7 +746,7 @@ export const contractTableColumn = (currentChain) => [
     key: "lastExecuted",
     render: (text) => (
       <span className="">
-        {text?.updatedAt ? formatDate(text?.updatedAt) : "-"}
+        {text?.updatedAt ? convertToDateTime(text?.updatedAt) : "-"}
       </span>
     ),
   },
@@ -756,7 +756,7 @@ export const contractTableColumn = (currentChain) => [
     key: "deployedAt",
     render: (text) => (
       <span className="">
-        {text?.createdAt ? formatDate(text?.createdAt) : "-"}
+        {text?.createdAt ? convertToDateTime(text?.createdAt) : "-"}
       </span>
     ),
   },
@@ -787,19 +787,24 @@ export const contractTransactionsColumn = [
     title: "Tx Hash",
     key: "txHash",
     render: (text) => (
-      <span className="">
-        {text?.txHash ? (
-          <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-            {getAddress(text?.txHash)}
-          </Link>
-        ) : text?.txhash ? (
-          <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
-            {getAddress(text?.txhash)}
-          </Link>
-        ) : (
-          "-"
-        )}
-      </span>
+      <div className="iconandlink">
+        <Tooltip title={text?.txHash}>
+          {text?.txHash ? (
+            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+              {getAddress(text?.txHash)}
+            </Link>
+          ) : text?.txhash ? (
+            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
+              {getAddress(text?.txhash)}
+            </Link>
+          ) : (
+            "-"
+          )}
+        </Tooltip>
+        <span>
+          <CopyText text={text?.txhash} />
+        </span>
+      </div>
     ),
   },
   {
@@ -811,8 +816,8 @@ export const contractTransactionsColumn = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord(text?.method)
           : text?.type
-            ? capitalizeWord(text?.type)
-            : "-"}
+          ? capitalizeWord(text?.type)
+          : "-"}
       </span>
     ),
   },
@@ -821,15 +826,20 @@ export const contractTransactionsColumn = [
     title: "From",
     key: "from",
     render: (text) => (
-      <span className="">
-        {text?.fromAddress ? (
-          <Link href={`/address/${text?.fromAddress}`}>
-            {getAddress(text?.fromAddress)}{" "}
-          </Link>
-        ) : (
-          "-"
-        )}
-      </span>
+      <div className="iconandlink">
+        <Tooltip title={text?.fromAddress}>
+          {text?.fromAddress ? (
+            <Link href={`/address/${text?.fromAddress}`}>
+              {getAddress(text?.fromAddress)}{" "}
+            </Link>
+          ) : (
+            "-"
+          )}
+        </Tooltip>
+        <span>
+          <CopyText text={text?.fromAddress} />
+        </span>
+      </div>
     ),
   },
   {
@@ -840,12 +850,12 @@ export const contractTransactionsColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -891,7 +901,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "height",
-    title: "Height",
+    title: "Blocks",
     key: "height",
     render: (text) => (
       <span className="">
@@ -911,21 +921,21 @@ export const contractTransactionsColumn = [
   },
   {
     id: "fee",
-    title: "Fee",
+    title: "Amount",
     key: "fee",
     render: (text) => (
       <span className="">
         {text?.gasFee
           ? noExponential(text?.gasFee)
           : text?.txFee
-            ? noExponential(Number(text?.txFee) / 10 ** 18)
-            : "0"}
+          ? noExponential(Number(text?.txFee) / 10 ** 18)
+          : "0"}
       </span>
     ),
   },
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "age",
     render: (text) => (
       <span className="">
@@ -996,8 +1006,8 @@ export const HolderColumn = [
       <span className="">
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
           ? noExponential(
-            (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
-          ) + " %"
+              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
+            ) + " %"
           : "0%"}
       </span>
     ),
@@ -1012,7 +1022,7 @@ export const EventsColumn = [
     title: "Tx Hash",
     key: "txHash",
     render: (text) => (
-      <span className="">
+      <div className="iconandlink">
         {text?.txHash ? (
           <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
             {getAddress(text?.txHash)}
@@ -1020,7 +1030,10 @@ export const EventsColumn = [
         ) : (
           "-"
         )}
-      </span>
+        <span>
+          <CopyText text={text?.contractAddress} />
+        </span>
+      </div>
     ),
   },
   {
@@ -1117,7 +1130,7 @@ export const EventsColumn = [
                           {res?.name}
                         </p>
                         {res?.type.includes("uint") &&
-                          res?.value?.includes("0x") ? (
+                        res?.value?.includes("0x") ? (
                           <span>{Number(res?.value)}</span>
                         ) : res?.value?.includes("0x") ? (
                           <Link href={`/address/${res?.value}`}>
@@ -1135,7 +1148,7 @@ export const EventsColumn = [
           )}
           <span className="">
             {(text?.method && text?.method !== "N/A" && text?.topics) ||
-              (decodedLogs && text?.topics) ? (
+            (decodedLogs && text?.topics) ? (
               <>
                 {decodedLogs != undefined ? "" : capitalizeWord(text?.method)}
                 {/* {capitalizeWord(text?.method)} */}
@@ -1259,11 +1272,11 @@ export const TokenColumn = [
           ? text?.native == true
             ? noExponential(toFixed(Number(text?.totalSupply)))
             : noExponential(
-              toFixed(
-                Number(text?.totalSupply) / 10 ** Number(text?.decimal),
-                4
+                toFixed(
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal),
+                  4
+                )
               )
-            )
           : "-"}
       </span>
     ),
@@ -1442,8 +1455,8 @@ export const TokenTransferColumn = [
         {text?.input
           ? capitalizeWord(JSON.parse(text?.input)?.name)
           : text?.logs?.length > 0
-            ? JSON.parse(text?.logs)[0]?.name
-            : "-"}
+          ? JSON.parse(text?.logs)[0]?.name
+          : "-"}
       </div>
     ),
   },

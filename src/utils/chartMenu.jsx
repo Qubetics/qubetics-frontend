@@ -70,6 +70,7 @@ export const chartSeriesValue = (data, chartType) => {
   );
 
   let seriesData = finalResult?.map((e) => {
+    
     if (typeof e?.count === "number") {
       return e?.count;
     } else {

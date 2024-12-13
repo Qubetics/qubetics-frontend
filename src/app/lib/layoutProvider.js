@@ -30,7 +30,7 @@ export default function LayoutProvider({ children }) {
       <div className={`${pathName !== Routes.HOME ? "bgToMainDiv" : ""}`}>
         <Header />
         <main className="maininner">
-            <div className="addbgtheme" style={{ paddingTop: pathName !== Routes.Welcome && 100 }}>
+            <div className="addbgtheme" style={{ paddingTop: pathName !== Routes.Welcome && 110 }}>
               {/* <SearchbarComponent
                 searchStatus={searchStatus}
                 setSerachStatus={setSerachStatus}

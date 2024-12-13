@@ -8,7 +8,7 @@ import {
   Instagram,
   Telegram,
   TikTok,
-  Twitter
+  Twitter,
 } from "../../../public/SvgIcons";
 import "./Footer.scss";
 const Footer = () => {
@@ -40,28 +40,31 @@ const Footer = () => {
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>Quick Links</h3>
-            <Link href="#" target="_blank">
+            <Link href="/tokens" target="">
               Tokens
             </Link>
-            <Link href="#" target="__blank">
+            <Link href="/blocks" target="">
               Blockchain
             </Link>
-            <Link href="#" target="__blank">
+            <Link href="/validators" target="">
               Validators
             </Link>
-            <Link href="#" target="__blank">
+            {/* <Link href="#" target="">
               Analytics
-            </Link>
-            <Link href="#" target="__blank">
+            </Link> */}
+            <Link href="/nodes" target="">
               Nodes
             </Link>
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>About Us</h3>
-            <Link href="" target="_blank">
+            <Link
+              href="https://www.qubetics.com/privacy-policy"
+              target="_blank"
+            >
               Privacy Policy
             </Link>
-            <Link href="" target="__blank">
+            <Link href="https://www.qubetics.com/terms-of-use" target="__blank">
               Terms of Service
             </Link>
           </Col>
@@ -103,23 +106,21 @@ const Footer = () => {
             <Link href="" target="_blank">
               <Facebook />
             </Link>
-            <Link href="" target="_blank">
+            <Link href="https://x.com/qubetics?mx=2" target="_blank">
               <Twitter />
             </Link>
-            <Link href="" target="_blank">
+            <Link href="https://www.instagram.com/qubetics" target="_blank">
               <Instagram />
             </Link>
-            <Link href="" target="_blank">
+            <Link href="https://www.tiktok.com/@qubetics" target="_blank">
               <TikTok />
             </Link>
-            <Link href="" target="_blank">
+            <Link href="https://t.me/qubetics" target="_blank">
               <Telegram />
             </Link>
-            <Link href="" target="_blank">
+            <Link href="https://discord.com/invite/KHfSNbzdSE" target="_blank">
               <Discord />
             </Link>
-
-     
           </div>
           {/* <div
             className="footernew_topFooterItem_backTopTop"

@@ -2886,3 +2886,23 @@ export const ActiveAccountToday = () => {
     </svg>
   );
 };
+const CheckIcon = () => {
+  return (
+    <svg
+      width="13"
+      height="11"
+      viewBox="0 0 13 11"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12.7071 0.792897C13.0976 1.1834 13.0976 1.8166 12.7071 2.2071L4.7071 10.2071C4.3166 10.5976 3.6834 10.5976 3.2929 10.2071L0.29289 7.2071C-0.09763 6.8166 -0.09763 6.1834 0.29289 5.7929C0.68342 5.4024 1.31658 5.4024 1.70711 5.7929L4 8.0858L11.2929 0.792897C11.6834 0.402368 12.3166 0.402368 12.7071 0.792897Z"
+        fill="#3EB73B"
+      />
+    </svg>
+  );
+};
+
+export default CheckIcon;

@@ -33,21 +33,7 @@ function Page() {
 
   const handleFaucetChange = (e) => {
     const { name, value } = e.target;
-    // if (name === "amount") {
-    //   setFaucetField({
-    //     ...faucetField,
-    //     amount: SHOW_FAUCET,
-    //     // value.indexOf(".") >= 0
-    //     //   ? value.substr(0, value.indexOf(".")) +
-    //     //     value.substr(value.indexOf("."), 15)
-    //     //   : value,
-    //   });
-    //   // setError((prevError) => ({
-    //   //   ...prevError,
-    //   //   amount: "",
-    //   // }));
-    //   setTxHash("");
-    // } else
+
     if (name === "address" && addressRegex.test(e.target.value)) {
       setFaucetField({
         ...faucetField,
@@ -70,7 +56,6 @@ function Page() {
       return;
     }
     let valid = handleValidation(faucetField);
-  ;
     if (valid.isValid == false && valid.temperror.address) {
       setError((prevError) => ({
         ...prevError,
@@ -122,23 +107,30 @@ function Page() {
                 Each address is eligible to receive <span>20 TICS Coins</span>{" "}
                 per day.
               </p>
-              <form>
-                <div>
-                  <Input
-                    placeholder={validationtValue?.FAUCET_PLACEHOLDER}
-                    type="text"
-                    name="address"
-                    value={faucetField?.address}
-                    onChange={handleFaucetChange}
-                    autoComplete="off"
-                  />
-                  {error?.address && (
-                    <p style={{ color: "red", textAlign: "left" }}>
-                      {error?.address}
-                    </p>
-                  )}
-                </div>
-                {/* <div className="space-top20 posRelative mb30">
+
+              <div>
+                <Input
+                  placeholder={validationtValue?.FAUCET_PLACEHOLDER}
+                  type="text"
+                  name="address"
+                  value={faucetField?.address}
+                  onChange={handleFaucetChange}
+                  autoComplete="off"
+                />
+                {error?.address && (
+                  <p
+                    style={{
+                      color: "red",
+                      textAlign: "left",
+                      paddingBottom: "0",
+                      marginTop: "10px",
+                    }}
+                  >
+                    {error?.address}
+                  </p>
+                )}
+              </div>
+              {/* <div className="space-top20 posRelative mb30">
                   <label>Amount</label>
                   <Input
                     placeholder={Messages?.FAUCET_AMOUNT_LIMIT}
@@ -174,25 +166,24 @@ function Page() {
                     )}
                   </div>
                 </div> */}
-                <div className="sendBtnFaucet">
-                  {transferStatus === FetchingStatus ? (
-                    <Button>
-                      <Spin
-                        indicator={
-                          <LoadingOutlined
-                            style={{
-                              fontSize: 24,
-                            }}
-                            spin
-                          />
-                        }
-                      />
-                    </Button>
-                  ) : (
-                    <Button onClick={requestFund}>Request Funds</Button>
-                  )}
-                </div>
-              </form>
+              <div className="sendBtnFaucet">
+                {transferStatus === FetchingStatus ? (
+                  <Button>
+                    <Spin
+                      indicator={
+                        <LoadingOutlined
+                          style={{
+                            fontSize: 24,
+                          }}
+                          spin
+                        />
+                      }
+                    />
+                  </Button>
+                ) : (
+                  <Button onClick={requestFund}>Request Funds</Button>
+                )}
+              </div>
             </div>
             {/* <div className="right">
               <div className="right_inner">

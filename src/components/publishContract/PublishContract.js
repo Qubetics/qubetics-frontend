@@ -158,7 +158,7 @@ function PublishContract({ steps, current, prev, next }) {
       <div className="verifyPublish__right">
         <CustomInput
           label={verifyContractConstant.INPUT_LABEL}
-          placeholder="0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          placeholder="Enter contract address here"
           value={contractAddress || verifyAddress}
           disabled={verifyAddress}
           onChange={handleCustomInputChange}

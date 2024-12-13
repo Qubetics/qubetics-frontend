@@ -213,19 +213,11 @@ const ContractDetail = () => {
             className="contracttabs"
             items={tabItems}
             onChange={(e) => handleTabSelect(e)}
-            // tabBarExtraContent={
-            // <Button
-            //   type="primary"
-            //   className="bluebtn"
-            //   style={{ height: 40, marginLeft: "10px" }}
-            //   onClick={() => {
-            //     router.push(Routes.CONTRACT_VERIFICATOIN);
-            //     setVerifyAddress(hash);
-            //   }}
-            // >
-            //   Verify & Publish
-            // </Button>
-            // }
+            tabBarExtraContent={
+              <div className="tabSerachBar">
+                <SearchbarComponent />
+              </div>
+            }
           />
         </div>
       </div>
