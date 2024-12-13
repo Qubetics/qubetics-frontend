@@ -180,7 +180,12 @@ export const blockColumn = [
     key: "miner",
     render: (text) => (
       <>
-        <div className="iconandlink">{getAddress(text)}</div>
+        <div className="iconandlink">
+          {getAddress(text)}
+          <span>
+            <CopyText text={text}></CopyText>
+          </span>
+        </div>
       </>
     ),
   },
@@ -996,7 +1001,7 @@ export const HolderColumn = [
     title: "Address",
     key: "address",
     render: (text) => (
-      <span className="">
+      <div className="iconandlink">
         {text?.address ? (
           <Tooltip title={text?.address}>
             <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
@@ -1006,7 +1011,10 @@ export const HolderColumn = [
         ) : (
           "-"
         )}
-      </span>
+        <span>
+          <CopyText text={text?.address} />
+        </span>
+      </div>
     ),
   },
   {
@@ -1085,7 +1093,7 @@ export const EventsColumn = [
   },
   {
     id: "method",
-    title: "Method Signature",
+    title: "Method",
     key: "method",
     render: (text) => (
       <span className="">

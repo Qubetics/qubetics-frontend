@@ -12,6 +12,7 @@ import {
 import {
   TRANS_HISTORY_CHART_YEAR,
   transactionItems,
+  TRANS_HISTORY_CHART_HOURS,
 } from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
 import { Select, Space } from "antd";
@@ -84,7 +85,7 @@ const ChainAnalyticsGraph = (props) => {
             <Space wrap>
               <Select
                 getPopupContainer={(trigger) => trigger.parentNode}
-                defaultValue={TRANS_HISTORY_CHART_YEAR}
+                defaultValue={TRANS_HISTORY_CHART_HOURS}
                 style={{ width: 80 }}
                 onChange={handleTransactionHistory}
                 options={transactionItems}

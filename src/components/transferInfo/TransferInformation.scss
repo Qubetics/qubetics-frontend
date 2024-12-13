@@ -172,11 +172,11 @@
     gap: 30px;
     padding: 0 30px;
     @media (max-width: 991px) {
-     flex-direction: column;
+      flex-direction: column;
     }
     @media (max-width: 767px) {
       padding: 0 15px;
-     }
+    }
     .inner {
       padding-right: 120px;
       border-right: 1px solid $borderCard;
@@ -187,13 +187,12 @@
       @media (max-width: 991px) {
         padding-right: 0;
         border-right: 0;
-       }
+      }
       &:last-child {
         border-right: 0;
         padding-right: 0;
       }
       .information {
-       
         &:nth-child(odd) {
           background: linear-gradient(
             157.79deg,
@@ -202,7 +201,7 @@
           );
           border: 1px solid $borderCard;
         }
-        p{
+        p {
           @media (max-width: 1200px) {
             max-width: 200px;
           }
@@ -220,4 +219,10 @@
       }
     }
   }
+}
+
+.doubleCardTranfer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }

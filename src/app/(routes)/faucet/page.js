@@ -103,7 +103,7 @@ function Page() {
           <div className="faucet_inner__top">
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
-              <p>
+              <p className="discription">
                 Each address is eligible to receive <span>20 TICS Coins</span>{" "}
                 per day.
               </p>
@@ -124,6 +124,7 @@ function Page() {
                       textAlign: "left",
                       paddingBottom: "0",
                       marginTop: "10px",
+                      fontSize:"14px"
                     }}
                   >
                     {error?.address}

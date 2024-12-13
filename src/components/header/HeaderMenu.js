@@ -120,9 +120,9 @@ function HeaderMenu() {
         <li>
           <Link
             className={
-              pathname.includes(Routes.NODES) ||
-              pathname.includes(Routes.Tx_ADDRESS)
-                ? "active"
+              pathname.includes(Routes.NODES)
+                ? // ||              pathname.includes(Routes.Tx_ADDRESS)
+                  "active"
                 : "inactive"
             }
             href={Routes.NODES}

@@ -11,7 +11,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
   return (
-    <div className="blockdescription">
+    <div className="blockdescription mt-20">
       {status === InitStatus || status === FetchingStatus ? (
         <Loader />
       ) : status === SuccessStatus ? (
