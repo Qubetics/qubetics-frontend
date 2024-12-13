@@ -15,7 +15,6 @@ import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
 import CheckIcon from "../../../public/SvgIcons";
-import { addMetaMask } from "../AddMetamask/Addmetamask";
 
 function HeaderMenu() {
   const router = useRouter();
@@ -273,7 +272,7 @@ function HeaderMenu() {
               Add {EXPLORER_CHAIN_NAME} Network
             </span>
           </button> */}
-          <a className="qubeticNetwork_btn" onClick={addMetaMask}>
+          <a className="qubeticNetwork_btn" onClick={addQubetic}>
             <span
               style={{ gap: "10px", display: "flex", alignItems: "center" }}
               class="_button-text_1x6ja_100"

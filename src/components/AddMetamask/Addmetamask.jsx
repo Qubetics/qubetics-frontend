@@ -28,10 +28,11 @@ export const addMetaMask = async (isMobile = false) => {
   }
   //get chain Id
   const chainId = await provider.request({ method: "eth_chainId" });
+  console.log(chainId,"chianId")
 
   try {
     if (chainId === EXPLORER_META_NETWORK_CHAIN_ID) {
-      toast.success(Messages.Same_network);
+      toast.success(Messages.Same_Network);
       return;
     }
     await provider.request({
