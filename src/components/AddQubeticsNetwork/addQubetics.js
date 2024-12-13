@@ -38,7 +38,7 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
                 chainId: ChainIdQubetics,
                 chainName: METAMASK_CHAIN_NAME,
                 rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
-                blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+                // blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
                 nativeCurrency: {
                   symbol: EXPLORER_CURRENCY_NAME,
                   decimals: 18,
@@ -90,7 +90,7 @@ export const addQubetic = async () => {
       throw new Error(Messages.Install_Metamask);
     }
     const chainId = await provider.request({ method: "eth_chainId" });
-  
+
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
     if (!provider) {
       customToast.info(Messages.Install_Metamask);
@@ -127,6 +127,7 @@ export const addQubetic = async () => {
               });
               customToast.success(Messages.Network_Added);
             } catch (err) {
+              console.log(err, "erroreoeor");
               throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
             }
           }
