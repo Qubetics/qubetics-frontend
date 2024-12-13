@@ -40,10 +40,10 @@ const Footer = () => {
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>Quick Links</h3>
-            <Link href="/contract" target="">
+            <Link href="/tokens" target="">
               Tokens
             </Link>
-            <Link href="#" target="">
+            <Link href="/blocks" target="">
               Blockchain
             </Link>
             <Link href="/validators" target="">

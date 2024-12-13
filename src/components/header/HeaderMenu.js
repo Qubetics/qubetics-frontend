@@ -91,7 +91,18 @@ function HeaderMenu() {
             />
           </Space>
         </li>
-
+        <li>
+          <Link
+            className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
+            href={Routes.TOKEN}
+            // onClick={() => {
+            //   onCloseDrawer();
+            //   router.push(`${Routes.VALIDATORS}`);
+            // }}
+          >
+            Tokens
+          </Link>
+        </li>
         <li>
           <Link
             className={

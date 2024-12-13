@@ -54,7 +54,7 @@ const OnChainMetrics = () => {
           <Col xs={24} md={12} lg={6} xl={6}>
             <CardsOnchain
               text="TICS Price"
-              balance={`$ 0`}
+              balance={`$ 0.03112491 USD`}
               img={<TickPriceIcon />}
             />
           </Col>

@@ -224,7 +224,7 @@ export const transactionSummarycolumn = [
     ),
   },
   {
-    title: "Method ",
+    title: "Type ",
     key: "type",
     render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
   },

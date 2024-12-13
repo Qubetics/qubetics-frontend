@@ -15,7 +15,7 @@ const ChartAccount = ({ data, chartType, name }) => {
       data?.length > 0 ? data?.length : generateData(chartType).length;
 
     let { seriesData, maximum } = chartSeriesValue(data, chartType);
-
+    console.log("seriesData", seriesData);
     const options = {
       chart: {
         type: "area",
