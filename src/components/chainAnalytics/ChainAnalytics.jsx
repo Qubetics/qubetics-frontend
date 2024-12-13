@@ -2,7 +2,14 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
-import { tooltipConstant } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+  tooltipConstant,
+} from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import {
@@ -15,9 +22,27 @@ import {
   Transfericondark,
   Txblockdark,
 } from "../../../public/SvgIcons";
+import { useEffect, useState } from "react";
+import getValidators from "@/services/getValidators";
 const ChainAnalytics = () => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
+  const [validatorStatus, setValidatorStatus] = useState(InitStatus);
+
+  const [validatorData, setValidatorData] = useState([]);
+  const fetchData = async () => {
+    try {
+      let response = await getValidators(currentPage, tableLimit);
+      setValidatorData(response?.data);
+    } catch (err) {
+      setValidatorStatus(ErrorStatus);
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="analytics_cards">
@@ -57,11 +82,7 @@ const ChainAnalytics = () => {
 
       <CardsOnchain
         text="Total Validators"
-        balance={
-          webSocketData?.onChainMetric?.tpb
-            ? webSocketData?.onChainMetric?.tpb
-            : 0
-        }
+        balance={validatorData?.count ? validatorData?.count : 3}
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
       />
       <CardsOnchain

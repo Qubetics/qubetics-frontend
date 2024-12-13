@@ -1621,8 +1621,8 @@ export const validatorsColumn = [
     key: "commission",
     render: (text) => (
       <span className="">
-        {text?.commissionRate
-          ? noExponential(Number(text?.commissionRate).toFixed(4)) + " %"
+        {text?.commission
+          ? noExponential(Number(text?.commission).toFixed(4)) + " %"
           : "-"}
       </span>
     ),

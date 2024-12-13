@@ -4,11 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Discord,
-  Facebook,
   Instagram,
   Telegram,
   TikTok,
-  Twitter,
+  Twitter
 } from "../../../public/SvgIcons";
 import "./Footer.scss";
 const Footer = () => {

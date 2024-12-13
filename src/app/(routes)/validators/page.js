@@ -44,7 +44,7 @@ function page() {
       try {
         setValidatorStatus(FetchingStatus);
         let response = await getValidators(currentPage, tableLimit);
-        setValidatorData(response?.data?.validators);
+        setValidatorData(response?.data);
         setValidatorStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
@@ -87,7 +87,7 @@ function page() {
           </Tooltip>
         </>
       ),
-      balance: parsedData?.totalValidator ? parsedData?.totalValidator : "0",
+      balance: validatorData.count ? validatorData?.count : "0",
       img: <Totalvalidators />,
       contract: true,
     },
@@ -123,7 +123,7 @@ function page() {
           </Tooltip>
         </>
       ),
-      balance: parsedData?.validator ? parsedData?.validator : "0",
+      balance: 3,
       img: <Activevalidators />,
       contract: "true",
     },
@@ -179,7 +179,7 @@ function page() {
         <Table
           className="commontable"
           columns={validatorsColumn}
-          dataSource={validatorData}
+          dataSource={validatorData?.validators}
           pagination={false}
         />
         {totalPages > 10 && (
