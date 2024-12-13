@@ -8,7 +8,6 @@ import { RightOutlined } from "@ant-design/icons";
 
 const RecentTransaction = ({ data, customClass }, props) => {
   const router = useRouter();
-
   return (
     <>
       <div
@@ -35,7 +34,11 @@ const RecentTransaction = ({ data, customClass }, props) => {
               </span>
               <RightOutlined />
               <span className="trnxCount">
-                {data?.toAddress ? getAddress(data?.toAddress) : "-"}
+                {data?.toAddress !== "N/A"
+                  ? getAddress(data?.toAddress)
+                  : data?.contractAddress
+                  ? getAddress(data?.contractAddress)
+                  : "-"}
               </span>
             </p>
           </div>
@@ -45,7 +48,10 @@ const RecentTransaction = ({ data, customClass }, props) => {
           <p className="qubeticValue">
             <p>{data?.value ? data?.value : "-"} TICS</p>
           </p>
-          <p className="secTime"> {data?.timestamp ? renderTime(data?.timestamp) : "-"}</p>
+          <p className="secTime">
+            {" "}
+            {data?.timestamp ? renderTime(data?.timestamp) : "-"}
+          </p>
         </div>
       </div>
     </>
