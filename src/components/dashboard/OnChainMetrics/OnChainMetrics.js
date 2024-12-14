@@ -69,21 +69,7 @@ const OnChainMetrics = () => {
               img={<AvgBlockTime />}
             />
           </Col>
-          {/* <Col xs={24} md={12} lg={5} xl={6}>
-            <CardsOnchain
-              text="Avg. Block Time"
-              // balance={
-              //   calc &&
-              //   (calc > 1.3
-              //     ? "1.20 Sec"
-              //     : Math.sign(calc) == -1
-              //       ? "1.02 Sec"
-              //       : calc + " Sec")
-              // }
-              balance={randomNoGenerator() + " s"}
-              img={<AvgBlockTime />}
-            />
-          </Col> */}
+
           <Col xs={24} md={12} lg={6} xl={6}>
             <CardsOnchain
               // iconCopy="true"

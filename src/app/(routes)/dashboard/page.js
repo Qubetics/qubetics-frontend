@@ -33,7 +33,6 @@ const Page = ({ customClass }) => {
           routeName === pathname ? "dashboardMain" : ""
         }`}
       >
-        {" "}
         <div>
           <SearchbarComponent
             searchStatus={searchStatus}

@@ -13,6 +13,7 @@ import {
   TRANS_HISTORY_CHART_YEAR,
   transactionItems,
   TRANS_HISTORY_CHART_HOURS,
+  ALL_CHART_SEVEN_DAY,
 } from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
 import { Select, Space } from "antd";
@@ -25,7 +26,7 @@ const ChainAnalyticsGraph = (props) => {
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
-    type: TRANS_HISTORY_CHART_YEAR,
+    type: ALL_CHART_SEVEN_DAY,
   });
   const [transactionStatus, setTransactionStatus] = useState(InitStatus); //init,fetching,success,error
   const { isNetworkChanged } = useGetNetwork();
@@ -85,7 +86,7 @@ const ChainAnalyticsGraph = (props) => {
             <Space wrap>
               <Select
                 getPopupContainer={(trigger) => trigger.parentNode}
-                defaultValue={TRANS_HISTORY_CHART_HOURS}
+                defaultValue={ALL_CHART_SEVEN_DAY}
                 style={{ width: 80 }}
                 onChange={handleTransactionHistory}
                 options={transactionItems}

@@ -34,7 +34,7 @@ function HeaderMenu() {
     if (!ethereum) return;
     try {
       const chainId = await ethereum.request({ method: "eth_chainId" });
-      setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
+      // setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
       ethereum.on("chainChanged", (id) => {
         if (id === EXPLORER_META_NETWORK_CHAIN_ID)
           return setIsMetaMaskAdded(true);
