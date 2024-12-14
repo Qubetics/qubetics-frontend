@@ -4,14 +4,14 @@ import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
 import {
   ErrorStatus,
-  FetchingStatus,
   InitStatus,
-  SuccessStatus,
   tableLimit,
   tooltipConstant,
 } from "@/constant/constant";
+import getValidators from "@/services/getValidators";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
+import { useEffect, useState } from "react";
 import {
   AvgAPRIcon,
   AvgBlockTime,
@@ -22,9 +22,7 @@ import {
   Transfericondark,
   Txblockdark,
 } from "../../../public/SvgIcons";
-import { useEffect, useState } from "react";
-import getValidators from "@/services/getValidators";
-const ChainAnalytics = () => {
+const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const [validatorStatus, setValidatorStatus] = useState(InitStatus);
@@ -32,7 +30,7 @@ const ChainAnalytics = () => {
   const [validatorData, setValidatorData] = useState([]);
   const fetchData = async () => {
     try {
-      let response = await getValidators(currentPage, tableLimit);
+      let response = await getValidators(1, tableLimit);
       setValidatorData(response?.data);
     } catch (err) {
       setValidatorStatus(ErrorStatus);
@@ -51,7 +49,7 @@ const ChainAnalytics = () => {
         balance={
           webSocketData?.blocks?.blocknumber
             ? webSocketData?.blocks?.blocknumber
-            : 0
+            : stats?.latest_block ?? 0
         }
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
       />
@@ -82,7 +80,7 @@ const ChainAnalytics = () => {
 
       <CardsOnchain
         text="Total Validators"
-        balance={validatorData?.count ? validatorData?.count : 3}
+        balance={validatorData?.count ? validatorData?.count : 0}
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
       />
       <CardsOnchain
@@ -102,7 +100,11 @@ const ChainAnalytics = () => {
               {formatMillionNumber(webSocketData?.analytics?.count)}
             </Tooltip>
           ) : (
-            "0"
+            (
+              <Tooltip placement="top" title={webSocketData?.analytics?.count}>
+                {formatMillionNumber(stats?.total_accounts)}
+              </Tooltip>
+            ) ?? 0
           )
         }
         img={

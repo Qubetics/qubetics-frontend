@@ -4,7 +4,6 @@ import CopyText from "../DoCopy/CopyText";
 
 const ByteCreationCode = ({ contractDetailData }) => {
   const byteCodeSnippets = contractByteCode(contractDetailData);
-
   return (
     <div>
       {byteCodeSnippets && byteCodeSnippets.length > 0 ? (

@@ -43,7 +43,7 @@ export const contractByteCode = (contractDetailData) => {
 
   // Add Deployed ByteCode
   result.push({
-    title: "Deployed ByteCode",
+    title: "Deployed ByteCode ",
     content: contractDetailData.byteCode || contractDetailData.bytecode || "",
   });
 

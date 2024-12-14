@@ -34,7 +34,7 @@ function HeaderMenu() {
     if (!ethereum) return;
     try {
       const chainId = await ethereum.request({ method: "eth_chainId" });
-      // setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
+      setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
       ethereum.on("chainChanged", (id) => {
         if (id === EXPLORER_META_NETWORK_CHAIN_ID)
           return setIsMetaMaskAdded(true);
@@ -59,12 +59,9 @@ function HeaderMenu() {
       <ul className="mob__List">
         <li value="Dashboard">
           <Link
+            prefetch={true}
             className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
             href={Routes.DASHBOARD}
-            // onClick={onCloseDrawer}
-            // onClick={() => {
-            //   router.push(`${Routes.DASHBOARD}`);
-            // }}
           >
             Dashboard
           </Link>
@@ -93,32 +90,27 @@ function HeaderMenu() {
         </li>
         <li>
           <Link
+            prefetch={true}
             className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
             href={Routes.TOKEN}
-            // onClick={() => {
-            //   onCloseDrawer();
-            //   router.push(`${Routes.VALIDATORS}`);
-            // }}
           >
             Tokens
           </Link>
         </li>
         <li>
           <Link
+            prefetch={true}
             className={
               pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
             }
             href={Routes.VALIDATORS}
-            // onClick={() => {
-            //   onCloseDrawer();
-            //   router.push(`${Routes.VALIDATORS}`);
-            // }}
           >
             Validators
           </Link>
         </li>
         <li>
           <Link
+            prefetch={true}
             className={
               pathname.includes(Routes.NODES)
                 ? // ||              pathname.includes(Routes.Tx_ADDRESS)
@@ -126,10 +118,6 @@ function HeaderMenu() {
                 : "inactive"
             }
             href={Routes.NODES}
-            // onClick={() => {
-            //   onCloseDrawer();
-            //   router.push(`${Routes.NODES}`);
-            // }}
           >
             Nodes
           </Link>
@@ -138,6 +126,7 @@ function HeaderMenu() {
         {val !== "EVM Chain" && (
           <li>
             <Link
+              prefetch={true}
               className={
                 pathname.includes(Routes.CONTRACTS) &&
                 !pathname.includes("/verify")
@@ -254,12 +243,9 @@ function HeaderMenu() {
         {SHOW_FAUCET == 1 && (
           <li>
             <Link
+              prefetch={true}
               className={pathname === Routes.FAUCET ? "active" : "inactive"}
               href={Routes.FAUCET}
-              // onClick={() => {
-              //   onCloseDrawer();
-              //   router.push(`${Routes.FAUCET}`);
-              // }}
             >
               Faucet
             </Link>

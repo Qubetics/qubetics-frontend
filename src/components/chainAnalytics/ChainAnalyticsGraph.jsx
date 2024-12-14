@@ -22,7 +22,7 @@ import "./ChainAnalytics.scss";
 import { noExponentsValue } from "@/utils/commonFunctions";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription, fetchUrl } = props;
+  const { title, discription, fetchUrl, setTotalAccount } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],

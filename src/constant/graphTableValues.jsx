@@ -147,7 +147,7 @@ export const blockColumn = [
   },
   {
     id: "timestamp",
-    title: "Timestamp",
+    title: "Age",
     dataIndex: "timestamp",
     key: "timestamp",
     render: (text) => (
@@ -503,8 +503,7 @@ export const TransactionDetailsColumns = [
 
 export const addressDetailColumn = [
   {
-    title:
-      "Txn Hash ",
+    title: "Txn Hash ",
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
@@ -610,7 +609,7 @@ export const addressDetailColumn = [
     ),
   },
   {
-    title: "Timestamp ",
+    title: "Age ",
     // dataIndex: "timestamp",
     key: "timestamp",
     render: (text) =>
@@ -959,7 +958,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "age",
-    title: "Timestamp",
+    title: "Age",
     key: "age",
     render: (text) => (
       <span className="">
@@ -1083,7 +1082,7 @@ export const EventsColumn = [
   },
   {
     id: "age",
-    title: "Timestamp",
+    title: "Age",
     key: "age",
     render: (text) => (
       <span className="">
@@ -1309,6 +1308,12 @@ export const TokenColumn = [
           : "-"}
       </span>
     ),
+  },
+  {
+    id: "Holders",
+    title: "Holders",
+    key: "Holders",
+    render: (text) => <span>{text?.holders ? text?.holders : "-"}</span>,
   },
 ];
 

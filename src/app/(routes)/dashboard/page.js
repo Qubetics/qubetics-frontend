@@ -13,17 +13,32 @@ import { useEffect, useState } from "react";
 import FooterLink from "../../../components/footer/FooterLinks";
 import "../../../index.scss";
 import "./dashboard.scss";
+import getStatistics from "@/services/getStatistics";
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-
+  const [stats, setStats] = useState("");
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
     }
   }, [pathname]);
+ 
+  useEffect(() => {
+    const fetchNativeStats = async () => {
+      try {
+        let respose = await getStatistics();
+        setStats(respose?.data);
+        // let res = await getNativeStats();
+        // setNativeData(res?.data);
+      } catch (err) {
+        return err;
+      }
+    };
+    fetchNativeStats();
+  }, []);
 
   return (
     <>
@@ -41,11 +56,8 @@ const Page = ({ customClass }) => {
 
           <div className="container">
             <h2 className="analytictext">On Chain Metrics</h2>
-            <OnChainMetrics />
+            <OnChainMetrics  stats={stats}/>
           </div>
-          {/* <div className="container">
-            <GraphComponent />
-          </div> */}
         </div>
         <div className="container">
           {/* OnChain Metrics data */}
@@ -61,7 +73,7 @@ const Page = ({ customClass }) => {
           <div className="analyticsSec">
             <h2 className="analytictext">On Chain Analytics</h2>
             <div className="innerSec">
-              <ChainAnalytics />
+              <ChainAnalytics stats={stats}/>
               <div className="multiGraph">
                 <div className="grap">
                   <ChainAnalyticsGraph

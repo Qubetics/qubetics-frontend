@@ -18,7 +18,7 @@ function ContractDtlTabs({ hash }) {
   const [AbiStatus, setAbiStatus] = useState(InitStatus);
   const [abiData, setAbiData] = useState([]);
   const [proxyAbiData, setProxyAbiData] = useState([]);
-
+  console.log(hash, "hash");
   useEffect(() => {
     setAbiStatus(FetchingStatus);
     fetchAbiData();

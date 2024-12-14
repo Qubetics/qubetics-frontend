@@ -8,18 +8,14 @@ import {
   FetchingStatus,
   InitStatus,
   SuccessStatus,
-  tooltipConstant,
 } from "@/constant/constant";
 import {
-  TRANS_HISTORY_CHART_YEAR,
-  transactionItems,
-  TRANS_HISTORY_CHART_HOURS,
   ALL_CHART_SEVEN_DAY,
+  transactionItems,
 } from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
 import { formatMillionNumber } from "@/utils/commonFunctions";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Select, Space, Tooltip } from "antd";
+import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 
 const TransactionHistory = (props) => {
@@ -40,7 +36,6 @@ const TransactionHistory = (props) => {
   //     );
   //   }
   // }, [webSocketData?.transactionGraph]);
-
   useEffect(() => {
     fetchChartData();
   }, [transactionHisChart?.type]);

@@ -44,22 +44,25 @@ const BlockSummary = () => {
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [blockTime, setBlockTime] = useState(0);
+  const page = searchParams.get("page") || 1;
+  const pageid = searchParams.get("id") || 1;
+  
   // const { isLight } = useThemeData();
 
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
-  useEffect(() => {
-    if (searchParams.get("chain") == "native") {
-      localStorage.setItem("chainType", "Native Chain");
-      router.push("/blocks");
-    }
-  }, [searchParams]);
+  // useEffect(() => {
+  //   if (searchParams.get("chain") == "native") {
+  //     localStorage.setItem("chainType", "Native Chain");
+  //     router.push("/blocks");
+  //   }
+  // }, [searchParams]);
 
   const fetchData = async () => {
     try {
       setBlockSummaryStatus(FetchingStatus);
-      let response = await getBlocks(pageToSend, tableLimit);
+      let response = await getBlocks(pageid, tableLimit);
 
       if (response?.error === false) {
         setBlocksData(response?.data?.blocks);
@@ -98,17 +101,17 @@ const BlockSummary = () => {
       return err;
     }
   };
-  useEffect(() => {
-    if (isNetworkChanged) {
-      setCurrentPage(1);
-      setPageToSend(1);
-      fetchData();
-    }
-  }, [isNetworkChanged]);
+  // useEffect(() => {
+  //   if (isNetworkChanged) {
+  //     setCurrentPage(1);
+  //     setPageToSend(1);
+  //     fetchData();
+  //   }
+  // }, [isNetworkChanged]);
 
   useEffect(() => {
     fetchData();
-  }, [pageToSend]);
+  }, [pageid]);
 
   useEffect(() => {
     getTopValidatorValue();
@@ -135,27 +138,44 @@ const BlockSummary = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       setPageToSend(nextCursor);
+
+      // Create a new URLSearchParams object to modify query parameters
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", currentPage + 1);
+      newSearchParams.set("id", nextCursor);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
-
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (page > 1) {
+      setCurrentPage(page - 1);
       setPageToSend(previousCursor);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", page - 1);
+      newSearchParams.set("id", previousCursor);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleLast = () => {
-    if (currentPage < totalPages) {
+    if (page < totalPages) {
       setCurrentPage(totalPages);
       setPageToSend(11);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", totalPages);
+      newSearchParams.set("id", 11);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleFirst = () => {
-    if (currentPage <= totalPages) {
+    if (page <= totalPages) {
       setCurrentPage(1);
       setPageToSend(1);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", 1);
+      newSearchParams.set("id", 1);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
@@ -229,11 +249,11 @@ const BlockSummary = () => {
           {totalPages && (
             <Pagination
               totalPages={totalPages}
-              currentPage={currentPage}
+              currentPage={page}
               handleNext={handleNext}
               handlePrevious={handlePrevious}
-              disablePrev={currentPage === 1}
-              disableNext={currentPage === totalPages}
+              disablePrev={page === 1}
+              disableNext={page === totalPages}
               handleFirst={handleFirst}
               handleLast={handleLast}
             />

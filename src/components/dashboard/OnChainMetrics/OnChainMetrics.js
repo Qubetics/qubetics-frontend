@@ -21,10 +21,10 @@ import { useThemeData } from "@/components/contexts/theme_context";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
 
-const OnChainMetrics = () => {
+const OnChainMetrics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { diffs } = useAverageBlockTime();
-  const [stats, setStats] = useState("");
+  // const [stats, setStats] = useState("");
   const { isLight } = useThemeData();
   const [nativeData, setNativeData] = useState({});
 
@@ -32,20 +32,6 @@ const OnChainMetrics = () => {
     diffs && diffs?.length > 0
       ? (diffs?.reduce((p, c) => p + c, 0) / diffs?.length)?.toFixed(2)
       : "0.00";
-
-  useEffect(() => {
-    const fetchNativeStats = async () => {
-      try {
-        let respose = await getStatistics();
-        setStats(respose?.data);
-        // let res = await getNativeStats();
-        // setNativeData(res?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    fetchNativeStats();
-  }, []);
 
   return (
     <div className="cardSec onchain_sec">
@@ -62,8 +48,10 @@ const OnChainMetrics = () => {
             <CardsOnchain
               text="Last Finalized Block"
               balance={
-                webSocketData?.blocks?.blocknumber
-                  ? Number(webSocketData?.blocks?.blocknumber) - 2
+                webSocketData?.blocks?.blocknumber || stats?.latest_block
+                  ? Number(
+                      webSocketData?.blocks?.blocknumber || stats?.latest_block
+                    ) - 2
                   : 0
               }
               img={<AvgBlockTime />}
@@ -78,7 +66,10 @@ const OnChainMetrics = () => {
               text="Transactions"
               balance={
                 formatMillionNumber(
-                  Number(webSocketData?.onChainMetric?.totalTx)
+                  Number(
+                    webSocketData?.onChainMetric?.totalTx ||
+                      stats?.total_transactions
+                  )
                 ) || 0
               }
               img={
