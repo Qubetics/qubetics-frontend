@@ -1,23 +1,21 @@
 "use-client";
-import Link from "next/link";
-import { convertToDateTime, formatDate, renderTime } from "@/utils/renderTime";
-import getAddress, { imgUrl } from "@/utils/getAddress";
 import CopyText from "@/components/DoCopy/CopyText";
-import Image from "next/image";
-import { Routes, typesOfTransactions } from "./constant";
-import isOptionDisable from "@/utils/tookenGraphKey";
 import {
   capitalizeWord,
   noExponential,
-  simplifyNumber,
-  toFixed,
+  toFixed
 } from "@/utils/commonFunctions";
+import getAddress from "@/utils/getAddress";
+import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import isOptionDisable from "@/utils/tookenGraphKey";
 import {
   CheckCircleFilled,
   ClockCircleFilled,
   CloseCircleFilled,
 } from "@ant-design/icons";
 import { Collapse, Tooltip } from "antd";
+import Link from "next/link";
+import { Routes, typesOfTransactions } from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
 // export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
