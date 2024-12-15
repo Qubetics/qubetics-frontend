@@ -8,6 +8,7 @@ import CustomInput from "../customInput/CustomInput";
 import Web3 from "web3";
 import { useContractData } from "../contexts/contractContext";
 import Loader from "../loader/Loader";
+import { convertArray, createTupleObject } from "@/constant/constant";
 
 function WriteContent({ abiData, hash }) {
   const [writeData, setWriteData] = useState([]);
@@ -19,14 +20,24 @@ function WriteContent({ abiData, hash }) {
   const parsedAbiData = JSON.parse(abiData);
   const [writeError, setWriteError] = useState("");
   const { connectAddress } = useContractData();
+  const [txnHash, setTxnHash] = useState("");
 
   useEffect(() => {
-    const getReadData = parsedAbiData?.filter((res) => {
-      if (res?.stateMutability !== "view" && res?.type == "function") {
-        return res;
-      }
+    const parsedAbiData = JSON.parse(abiData);
+    const getWriteData = parsedAbiData.filter((res) => {
+      return res.stateMutability !== "view" && res.type === "function";
     });
-    setWriteData(getReadData);
+    const getWriteData2 = getWriteData.map((data) => {
+      if (data?.stateMutability === "payable" && data?.type === "function") {
+        return {
+          ...data,
+          inputs: [...data.inputs, { name: "payable", type: "uint256" }],
+        };
+      }
+      return data;
+    });
+
+    setWriteData(getWriteData2);
   }, []);
 
   const handleChange = (field, value) => {
@@ -42,26 +53,48 @@ function WriteContent({ abiData, hash }) {
       [field]: "",
     }));
   };
-
+  const sortAccordingToInputs = (inputs, writeObj) => {
+    const modifiedObj = {};
+    inputs.forEach((input) => {
+      if (input.type === "tuple") {
+        modifiedObj[input.name] = sortAccordingToInputs(
+          input.components,
+          writeObj[input.name]
+        );
+      } else {
+        modifiedObj[input.name] = writeObj[input.name];
+      }
+    });
+    return modifiedObj;
+  };
   const handleWriteClick = async (event) => {
     setIsLoading(true);
     try {
       if (window.ethereum) {
         await window.ethereum.request({ method: "eth_requestAccounts" });
         const web3 = new Web3(window.ethereum);
-        const contract = new web3.eth.Contract(parsedAbiData, hash);
-        const writeValues = Object.values(inputData).map((value) => {
-          try {
-            return JSON.parse(value);
-          } catch (error) {
-            return value;
-          }
-        });
-        await contract.methods[event](...writeValues).send({
+        const contract = new web3.eth.Contract(JSON.parse(abiData), hash);
+
+        const writeObj = createTupleObject(inputData);
+        let { name, inputs } = event;
+
+        const modifiedObj = sortAccordingToInputs(inputs, writeObj);
+
+        const writeValues = convertArray(modifiedObj);
+
+        const txnHash = await contract.methods[name](
+          ...writeValues.map((val) => {
+            try {
+              return JSON.parse(val);
+            } catch (err) {
+              return val;
+            }
+          })
+        ).send({
           from: window.ethereum.selectedAddress,
+          value: writeObj?.payable ? writeObj?.payable : 0,
         });
-        setWriteError("");
-        setInputData("");
+        setTxnHash(txnHash?.transactionHash);
         setIsLoading(false);
       } else {
         console.error("MetaMask not installed");
@@ -72,13 +105,10 @@ function WriteContent({ abiData, hash }) {
       setIsLoading(false);
       const errorMessage =
         error && error.message ? error.message : String(error);
-      if (errorMessage) {
-        setWriteError(errorMessage);
-      } else {
-        setWriteError("Something wrong");
-      }
+      setWriteError(errorMessage);
     }
   };
+
   const handleAccordionChange = (key) => {
     // Reset inputData if a new accordion is expanded
     if (expandedAccordion !== key) {
@@ -102,26 +132,40 @@ function WriteContent({ abiData, hash }) {
     setInputErrors(errors);
     handleWriteClick(event);
   };
+  const renderInputFields = (inputs, prefix) => {
+    return inputs.map((input, inputIndex) => {
+      const label = `${input.name} (${input.type})`;
+      return (
+        <React.Fragment key={`${prefix}-${inputIndex}`}>
+          <span className="AllowanceInputs">
+            <CustomInput
+              type="text"
+              label={input?.type !== "tuple" ? `${label}*` : label}
+              placeholder={input.type}
+              name={`${prefix}${input.name}`}
+              onChange={(value) =>
+                handleChange(`${prefix}${input.name}`, value)
+              }
+              runsCheck={undefined}
+              fieldType={input.type}
+            />
+          </span>
+          {inputErrors[`${prefix}${input.name}`] && (
+            <p style={{ color: "red" }}>
+              {inputErrors[`${prefix}${input.name}`]}
+            </p>
+          )}
+          {input.components && input.components.length > 0 && (
+            <div style={{ marginLeft: "20px" }}>
+              {renderInputFields(input.components, `${prefix}${input.name}.`)}
+            </div>
+          )}
+        </React.Fragment>
+      );
+    });
+  };
 
-  const items = writeData?.map((data, index) => {
-    const inputFields = data?.inputs?.map((input, inputIndex) => (
-      <>
-        <span className="AllowanceInputs" key={`${index}-input-${inputIndex}`}>
-          <CustomInput
-            type="text"
-            label={`${input?.name} (${input.type})*`}
-            placeholder={input?.type}
-            name={`${input?.name}`}
-            value={inputData[input.name] || ""}
-            onChange={(value) => handleChange(input?.name, value)}
-          />
-        </span>
-        {inputErrors[input.name] && (
-          <p style={{ color: "red" }}>{inputErrors[input?.name]}</p>
-        )}
-      </>
-    ));
-
+  const items = writeData.map((data, index) => {
     return {
       key: `${index}`,
       label: [
@@ -129,29 +173,47 @@ function WriteContent({ abiData, hash }) {
         `${index + 1}. ${data?.name}`,
       ],
       children: [
-        ...inputFields,
+        renderInputFields(data.inputs, ""),
         <span className="buttonText" key={`${index}-button`}>
           <Button
             type="primary"
             className="bluebtn"
             style={{ width: 111, marginTop: "8px" }}
             onClick={() => {
-              validateInputs(data?.name);
+              validateInputs(data);
             }}
             disabled={!connectAddress}
           >
             Write
           </Button>
-          {data?.outputs[0] && (
+
+          {data.outputs[0] && (
             <p>
               <span>&rarr;</span>
-              {data?.outputs[0]?.type}
+              {data.outputs[0]?.type}
             </p>
           )}
+          {txnHash && (
+            <Button
+              type="primary"
+              className="bluebtn"
+              style={{ width: 111, marginTop: "8px" }}
+              onClick={() => router.push(`/tx/${txnHash}`)}
+              disabled={!txnHash}
+            >
+              View Transaction
+            </Button>
+          )}
         </span>,
-        <p style={{ marginTop: "10px" }}>{writeResult ? writeResult : ""}</p>,
-        <p style={{ marginTop: "10px", color: "red" }}>
-          {writeError ? writeError : ""}
+        <p style={{ marginTop: "10px" }} key={`${index}-result`}>
+          {writeResult}
+        </p>,
+        <p
+          className="err_color"
+          style={{ marginTop: "10px" }}
+          key={`${index}-error`}
+        >
+          {writeError}
         </p>,
       ],
     };

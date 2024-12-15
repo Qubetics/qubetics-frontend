@@ -948,11 +948,15 @@ export const contractTransactionsColumn = [
     key: "fee",
     render: (text) => (
       <span className="">
-        {text?.gasFee
-          ? noExponential(text?.gasFee)
-          : text?.txFee
-          ? noExponential(Number(text?.txFee) / 10 ** 18)
-          : "0"}
+        <Tooltip
+          title={text?.gasFee && noExponential(Number(text?.txFee) / 10 ** 18)}
+        >
+          {text?.gasFee
+            ? noExponential(text?.gasFee)
+            : Number(text?.txFee).toFixed(0)
+            ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
+            : "0"}
+        </Tooltip>
       </span>
     ),
   },

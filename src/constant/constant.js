@@ -390,3 +390,42 @@ export const generateData = (timeRange) => {
   }
   return data;
 };
+export const convertArray = (writeObj) => {
+  let outPutArray = Object.keys(writeObj).map((t) => {
+    if (typeof writeObj[t] == "object") {
+      return convertArray(writeObj[t]);
+    } else return writeObj[t];
+  });
+
+  return outPutArray;
+};
+export const createTupleObject = (input) => {
+  const newObj = {};
+
+  Object.keys(input).forEach((key) => {
+    if (key.includes(".")) {
+      const [firstKey, ...restKeys] = key.split(".");
+      const lastKey = restKeys.join(".");
+
+      if (newObj[firstKey] === undefined) {
+        newObj[firstKey] = {};
+      }
+
+      try {
+        newObj[firstKey][lastKey] = JSON.parse(input[key]);
+      } catch (err) {
+        newObj[firstKey][lastKey] = input[key];
+      }
+    } else {
+      newObj[key] = input[key];
+    }
+  });
+
+  Object.keys(newObj).forEach((key) => {
+    if (typeof newObj[key] === "object" && newObj[key] !== null) {
+      newObj[key] = createTupleObject(newObj[key]);
+    }
+  });
+
+  return newObj;
+};
