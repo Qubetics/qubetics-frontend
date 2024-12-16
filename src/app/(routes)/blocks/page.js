@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
@@ -6,6 +7,7 @@ import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import TableLoader from "@/components/TableLoader/TableLoader";
 import {
   chain,
   ErrorStatus,
@@ -46,6 +48,7 @@ const BlockSummary = () => {
   const [blockTime, setBlockTime] = useState(0);
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
+  const [loading, setLoading] = useState(true);
 
   // const { isLight } = useThemeData();
 
@@ -61,6 +64,7 @@ const BlockSummary = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       setBlockSummaryStatus(FetchingStatus);
       let response = await getBlocks(pageid, tableLimit);
 
@@ -71,12 +75,14 @@ const BlockSummary = () => {
         setBlockSummaryStatus(SuccessStatus);
         const count = Number(response?.data?.blockCount ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
+        setLoading(false);
       } else {
         throw new Error("Blocks not found");
       }
     } catch (err) {
       console.log("Error while getting blocks data : ", err);
       setBlockSummaryStatus(ErrorStatus);
+      setLoading(false);
       return err;
     }
   };
@@ -216,51 +222,56 @@ const BlockSummary = () => {
 
   return (
     <div className="blocksummary">
-      {blockSummaryStatus === InitStatus ||
+      {/* {blockSummaryStatus === InitStatus ||
       blockSummaryStatus === FetchingStatus ? (
         <Loader />
-      ) : blockSummaryStatus === SuccessStatus ? (
-        <div className="container">
-          <SearchbarComponent
-            searchStatus={searchStatus}
-            setSerachStatus={setSerachStatus}
-          />
-          <Heading heading={"Block Summary"} />
-          <div className="cardContract cardblocks">
-            {cards?.map((item) => (
-              <CardsOnchain
-                key={item?.id}
-                text={item?.text}
-                balance={item?.balance}
-                img={item?.img}
-                contract={item?.contract}
-                countime={item?.countime}
-                countTimer={item?.countTimer}
-              />
-            ))}
-          </div>
+      ) : blockSummaryStatus === SuccessStatus ? ( */}
+      <div className="container">
+        <SearchbarComponent
+          searchStatus={searchStatus}
+          setSerachStatus={setSerachStatus}
+        />
+        <Heading heading={"Block Summary"} />
+        <div className="cardContract cardblocks">
+          {cards?.map((item) => (
+            <CardsOnchain
+              key={item?.id}
+              text={item?.text}
+              balance={item?.balance}
+              img={item?.img}
+              contract={item?.contract}
+              countime={item?.countime}
+              countTimer={item?.countTimer}
+            />
+          ))}
+        </div>
+        {!loading ? (
+           <TableLoader />
+          // <Loading//>//
+        ) : (
           <Table
             columns={blockColumn}
             dataSource={blocksData}
             pagination={false}
             className="commontable"
           />
-          {totalPages && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={page}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-              disablePrev={page === 1}
-              disableNext={page === totalPages}
-              handleFirst={handleFirst}
-              handleLast={handleLast}
-            />
-          )}
-        </div>
-      ) : (
+        )}
+        {totalPages && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={page === 1}
+            disableNext={page === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
+          />
+        )}
+      </div>
+      {/* ) : (
         <Page />
-      )}
+      )} */}
     </div>
   );
 };
