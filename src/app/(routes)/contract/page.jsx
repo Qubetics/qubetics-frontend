@@ -32,7 +32,7 @@ const Contract = () => {
   const [previousCursor, setPreviousCursor] = useState(1);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [contractStatus, SetContractStatus] = useState(InitStatus);
-  const [contractSearch ,setContractSearch] = useState()
+  const [contractSearch, setContractSearch] = useState();
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
@@ -131,7 +131,7 @@ const Contract = () => {
               dataSource={contractData?.contracts}
               pagination={false}
             />
-            {totalPages > 10 && (
+            {totalPages > 1 && (
               <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}

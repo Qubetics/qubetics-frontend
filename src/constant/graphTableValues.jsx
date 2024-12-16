@@ -667,9 +667,7 @@ export const nodesColumns = [
     title: "Location",
     key: "location",
     render: (text) =>
-      text?.location?.regionName
-        ? capitalizeWord(text?.location?.regionName)
-        : "-",
+      text?.location?.country ? capitalizeWord(text?.location?.country) : "-",
   },
 ];
 

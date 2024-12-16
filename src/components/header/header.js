@@ -8,6 +8,7 @@ import { useGetNetwork } from "../contexts/networkChanged";
 import { useThemeData } from "../contexts/theme_context";
 import "./header.scss";
 import HeaderMenu from "./HeaderMenu";
+import { Drawer } from "antd";
 
 function Header() {
   const router = useRouter();

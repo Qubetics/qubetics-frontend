@@ -100,7 +100,7 @@ function ReadCodeContent({ abiData, hash }) {
             label={`${input?.name} (${input?.type})*`}
             placeholder={input?.type}
             name={`${input?.name}`}
-            // value={inputData[input?.name] || ""}
+            value={inputData[input?.name]}
             onChange={(value) => handleChange(input?.name, value)}
           />
         </span>

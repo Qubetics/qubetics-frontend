@@ -1,5 +1,10 @@
 import Page from "@/app/(routes)/notfound/page";
-import { FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
+import {
+  FetchingStatus,
+  InitStatus,
+  Routes,
+  SuccessStatus,
+} from "@/constant/constant";
 import { capitalizeWord } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime } from "@/utils/renderTime";
@@ -99,11 +104,14 @@ const ContractDetails = ({ data, status }) => {
                 <h6>
                   <span className="copyText">
                     {data?.txHash ? (
-                      <>
+                      <Link
+                        className="hoverTrans"
+                        href={`${Routes.Tx_Hash}${data?.txHash}`}
+                      >
                         <Tooltip title={data?.txHash}>
                           {getAddress(data?.txHash)}
                         </Tooltip>
-                      </>
+                      </Link>
                     ) : (
                       "-"
                     )}

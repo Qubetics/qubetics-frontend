@@ -15,7 +15,11 @@ import { TokenColumn } from "@/constant/graphTableValues";
 import getAllTokens from "@/services/getAllTokens";
 import { Table } from "antd";
 import { useEffect, useState } from "react";
-import { ContractIcon, Datnotfound, TotalContrat } from "../../../../public/SvgIcons";
+import {
+  ContractIcon,
+  Datnotfound,
+  TotalContrat,
+} from "../../../../public/SvgIcons";
 import Page from "../notfound/page";
 
 function page() {
@@ -131,7 +135,7 @@ function page() {
             ),
           }}
         />
-        {totalPages > 10 && (
+        {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}

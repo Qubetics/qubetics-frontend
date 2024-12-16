@@ -143,6 +143,7 @@ function WriteContent({ abiData, hash }) {
               label={input?.type !== "tuple" ? `${label}*` : label}
               placeholder={input.type}
               name={`${prefix}${input.name}`}
+              value={inputData[`${prefix}${input.name}`] || ""}
               onChange={(value) =>
                 handleChange(`${prefix}${input.name}`, value)
               }
