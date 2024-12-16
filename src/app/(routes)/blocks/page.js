@@ -52,12 +52,12 @@ const BlockSummary = () => {
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
-  // useEffect(() => {
-  //   if (searchParams.get("chain") == "native") {
-  //     localStorage.setItem("chainType", "Native Chain");
-  //     router.push("/blocks");
-  //   }
-  // }, [searchParams]);
+  useEffect(() => {
+    if (searchParams.get("chain") == "native") {
+      localStorage.setItem("chainType", "Native Chain");
+      router.push("/blocks");
+    }
+  }, [searchParams]);
 
   const fetchData = async () => {
     try {
@@ -101,13 +101,13 @@ const BlockSummary = () => {
       return err;
     }
   };
-  // useEffect(() => {
-  //   if (isNetworkChanged) {
-  //     setCurrentPage(1);
-  //     setPageToSend(1);
-  //     fetchData();
-  //   }
-  // }, [isNetworkChanged]);
+  useEffect(() => {
+    if (isNetworkChanged) {
+      setCurrentPage(1);
+      setPageToSend(1);
+      fetchData();
+    }
+  }, [isNetworkChanged]);
 
   useEffect(() => {
     fetchData();

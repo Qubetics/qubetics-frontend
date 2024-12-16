@@ -5,13 +5,20 @@ import {
 } from "@/constant/constant";
 import { createContext, useContext, useEffect, useState } from "react";
 import {
+  disconnectEvmSocket,
   disconnectNativeSocket,
   initEvmSocket,
+  initNativeSocket,
   subscribeAnalytics,
   subscribeLatestBlocks,
   subscribeLatestTransaction,
+  subscribeNativeAnalytics,
+  subscribeNativeBlocks,
+  subscribeNativeChainMetrics,
+  subscribeNativeLatestTransaction,
+  subscribeNativeTransactionGraph,
   subscribeOnChainMetrics,
-  subscribeTransactionGraph
+  subscribeTransactionGraph,
 } from "../../utils/wsClient";
 
 let evmWebSocketUrl = EXPLORER_SOCKET_URL;
@@ -30,41 +37,44 @@ export function LatestDataProvider({ children }) {
   const [tokensGraph, setTokensGraph] = useState([]);
   const [analytics, setAnalytics] = useState([]);
   const [onChainMetric, setOnChainMetric] = useState([]);
-  // let currentChain =
-  //   typeof window !== "undefined" && localStorage.getItem("chainType");
-
+  let currentChain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
+  if (currentChain === null || currentChain === undefined) {
+    currentChain = "EVM Chain";
+  }
   useEffect(() => {
     SubscribeToSocket();
-  }, []);
+  }, [currentChain]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     disconnectEvmSocket();
-  //   };
-  // }, []);
+  useEffect(() => {
+    return () => {
+      disconnectEvmSocket();
+      disconnectNativeSocket();
+    };
+  }, [currentChain]);
 
   const SubscribeToSocket = async () => {
-    disconnectNativeSocket();
-    await initEvmSocket(evmWebSocketUrl);
-    subscribeLatestBlocks((data) => setBlocks(data));
-    subscribeOnChainMetrics((data) => setOnChainMetric(data));
-    subscribeLatestTransaction((data) => setTransactions(data));
-    // subscribeLatestContractsGraph((data) => setContractsGraph(data));
-    // subscribeCoinTransferGraph((data) => setTransferGraph(data));
-    subscribeTransactionGraph((data) => setTransactionGraph(data));
-    // subscribeAccountsGraph((data) => setAccountsGraph(data));
-    // subscribeTokensGraph((data) => setTokensGraph(data));
-    subscribeAnalytics((data) => setAnalytics(data));
-
-    // else if (currentChain === "Native Chain") {
-    //   disconnectEvmSocket();
-    //   await initNativeSocket(nativeWebSocketUrl);
-    //   subscribeNativeBlocks((data) => setBlocks(data));
-    //   subscribeNativeChainMetrics((data) => setOnChainMetric(data));
-    //   subscribeNativeLatestTransaction((data) => setTransactions(data));
-    //   subscribeNativeTransactionGraph((data) => setTransactionGraph(data));
-    //   subscribeNativeAnalytics((data) => setAnalytics(data));
-    // }
+    if (currentChain === "EVM Chain") {
+      disconnectNativeSocket();
+      await initEvmSocket(evmWebSocketUrl);
+      subscribeLatestBlocks((data) => setBlocks(data));
+      subscribeOnChainMetrics((data) => setOnChainMetric(data));
+      subscribeLatestTransaction((data) => setTransactions(data));
+      // subscribeLatestContractsGraph((data) => setContractsGraph(data));
+      // subscribeCoinTransferGraph((data) => setTransferGraph(data));
+      subscribeTransactionGraph((data) => setTransactionGraph(data));
+      // subscribeAccountsGraph((data) => setAccountsGraph(data));
+      // subscribeTokensGraph((data) => setTokensGraph(data));
+      subscribeAnalytics((data) => setAnalytics(data));
+    } else if (currentChain === "Native Chain") {
+      disconnectEvmSocket();
+      await initNativeSocket(nativeWebSocketUrl);
+      subscribeNativeBlocks((data) => setBlocks(data));
+      subscribeNativeChainMetrics((data) => setOnChainMetric(data));
+      subscribeNativeLatestTransaction((data) => setTransactions(data));
+      subscribeNativeTransactionGraph((data) => setTransactionGraph(data));
+      subscribeNativeAnalytics((data) => setAnalytics(data));
+    }
   };
   return (
     <LatestDataContext.Provider

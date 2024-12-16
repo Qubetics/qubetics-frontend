@@ -260,7 +260,7 @@ function HeaderMenu() {
           </button> */}
           <a className="qubeticNetwork_btn" onClick={addQubetic}>
             <span
-              style={{ gap: "10px", display: "flex", alignItems: "center" }}
+              style={{ gap: "5px", display: "flex", alignItems: "center" }}
               class="_button-text_1x6ja_100"
             >
               <Image src="/metafox.avif" width={25} height={25} alt="metafox" />
@@ -272,25 +272,25 @@ function HeaderMenu() {
           </a>
         </li>
         <li className="headerSelct">
-          {/* <div className="cmnSelct">
+          <div className="cmnSelct">
             <Select
               getPopupContainer={getContainer}
               defaultValue={chainType}
               style={{ width: 123 }}
-              disabled
+              // disabled
               onChange={handleChainChange}
               options={[
                 {
                   value: "EVM Chain",
                   label: "EVM Chain",
                 },
-                // {
-                //   value: "Native Chain",
-                //   label: "Native Chain",
-                // },
+                {
+                  value: "Native Chain",
+                  label: "Native Chain",
+                },
               ]}
             />
-          </div> */}
+          </div>
         </li>
       </ul>
     </>

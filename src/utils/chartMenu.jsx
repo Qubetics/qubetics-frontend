@@ -1,6 +1,5 @@
 import { generateData } from "@/constant/constant";
 import moment from "moment";
-import { noExponentsValue } from "./commonFunctions";
 
 const {
   TRANS_HISTORY_CHART_SECONDS,

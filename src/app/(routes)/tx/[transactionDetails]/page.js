@@ -79,7 +79,7 @@ const page = () => {
         <Loader />
       ) : txDetailStatus == SuccessStatus || txDetailStatus == ErrorStatus ? (
         <div className="container">
-           <SearchbarComponent
+          <SearchbarComponent
             searchStatus={searchStatus}
             setSerachStatus={setSerachStatus}
           />

@@ -194,7 +194,7 @@ function WriteContent({ abiData, hash }) {
               {data.outputs[0]?.type}
             </p>
           )}
-          {txnHash && (
+          {/* {txnHash && (
             <Button
               type="primary"
               className="bluebtn"
@@ -204,7 +204,7 @@ function WriteContent({ abiData, hash }) {
             >
               View Transaction
             </Button>
-          )}
+          )} */}
         </span>,
         <p style={{ marginTop: "10px" }} key={`${index}-result`}>
           {writeResult}

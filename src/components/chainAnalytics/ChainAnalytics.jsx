@@ -25,22 +25,6 @@ import {
 const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
-  const [validatorStatus, setValidatorStatus] = useState(InitStatus);
-
-  const [validatorData, setValidatorData] = useState([]);
-  const fetchData = async () => {
-    try {
-      let response = await getValidators(1, tableLimit);
-      setValidatorData(response?.data);
-    } catch (err) {
-      setValidatorStatus(ErrorStatus);
-      return err;
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div className="analytics_cards">
@@ -80,7 +64,7 @@ const ChainAnalytics = ({ stats }) => {
 
       <CardsOnchain
         text="Total Validators"
-        balance={validatorData?.count ? validatorData?.count : 0}
+        balance={stats?.validators ? stats?.validators : 0}
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
       />
       <CardsOnchain

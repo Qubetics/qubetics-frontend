@@ -1,6 +1,6 @@
 import { useLatestData } from "@/components/contexts/latest_data";
 import { randomNoGenerator } from "@/utils/commonFunctions";
-import { Col, Row } from "antd";
+import { Col, Row, Tooltip } from "antd";
 import { Fragment, useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "./node.scss";
@@ -8,23 +8,34 @@ import DarkNodeMap from "./NodeMap";
 
 import Heading from "@/components/heading/Heading";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import { InitStatus } from "@/constant/constant";
+import { InitStatus, tooltipContent } from "@/constant/constant";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
+import { InfoCircleOutlined } from "@ant-design/icons";
 function QubeticNetworkNode({ nodesData, countryNode }) {
   const webSocketData = useLatestData();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const blockHeight = webSocketData?.blocks?.blocknumber || "";
   const nodePerformanceData = [
-    { value: blockHeight ? blockHeight : 0, label: "Block Height" },
+    {
+      value: blockHeight ? blockHeight : 0,
+      label: "Block Height",
+      content: tooltipContent.block_Height,
+    },
     {
       value: countryNode?.total ? countryNode?.total : 0,
       label: "Total Nodes",
+      content: tooltipContent.total_Nodes,
     },
-    { value: randomNoGenerator() + "s", label: "Last Block" },
+    {
+      value: randomNoGenerator() + "s",
+      label: "Last Block",
+      content: tooltipContent.last_Block,
+    },
     {
       value: countryNode?.countryCount ? countryNode?.countryCount : 0,
       label: "Countries",
+      content: tooltipContent.Countries,
     },
   ];
 
@@ -44,7 +55,21 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                 <Col key={index} xs={24} sm={12} md={12} lg={12}>
                   <div className="innerNode">
                     <h4>{item.value}</h4>
-                    <p>{item.label}</p>
+                    <Tooltip color="rgb(49 52 56)" title={item.content}>
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        <p>{item.label}</p>
+                        <InfoCircleOutlined
+                          style={{ color: "#A0A0A0" }}
+                          className="infoIcon"
+                        />
+                      </span>
+                    </Tooltip>
                   </div>
                 </Col>
               ))}

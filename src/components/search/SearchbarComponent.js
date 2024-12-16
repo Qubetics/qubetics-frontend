@@ -4,7 +4,7 @@ import {
   ErrorStatus,
   FetchingStatus,
   Routes,
-  SuccessStatus
+  SuccessStatus,
 } from "@/constant/constant";
 import getSearchingValue from "@/services/search";
 import { usePathname, useRouter } from "next/navigation";
@@ -178,37 +178,39 @@ const SearchbarComponent = ({
 
   return (
     <div>
-      {searchStatus === FetchingStatus ? (
-        <Loader />
-      ) : pathname === "/dashboard" || pathname === "/" ? (
-        <div className="searchbar container">
-          <div className="searchbar_input">
-            <input
-              placeholder="Search for an address, block, tx hash or block hash."
-              value={searchValue}
-              onChange={(e) => handleSearchChange(e)}
-              onKeyUp={(e) => handleEnterClick(e)}
-              onFocus={onFocus}
-              onBlur={onBlur}
-            />
-            {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
-            {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
+      {
+        searchStatus === FetchingStatus ? (
+          <Loader />
+        ) : (
+          <div className="searchbar container">
+            <div className="searchbar_input">
+              <input
+                placeholder="Search for an address, block, tx hash or block hash."
+                value={searchValue}
+                onChange={(e) => handleSearchChange(e)}
+                onKeyUp={(e) => handleEnterClick(e)}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
+              {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
+              {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="searchbar_input">
-          <input
-            placeholder="Search for an address, block, tx hash....."
-            value={searchValue}
-            onChange={(e) => handleSearchChange(e)}
-            onKeyUp={(e) => handleEnterClick(e)}
-            onFocus={onFocus}
-            onBlur={onBlur}
-          />
-          {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
-          {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
-        </div>
-      )}
+        )
+        // : (
+        //   <div className="searchbar_input">
+        //     <input
+        //       placeholder="Search for an address, block, tx hash....."
+        //       value={searchValue}
+        //       onChange={(e) => handleSearchChange(e)}
+        //       onKeyUp={(e) => handleEnterClick(e)}
+        //       onFocus={onFocus}
+        //       onBlur={onBlur}
+        //     />
+        //   {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
+        //   {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
+        // </div>
+      }
     </div>
   );
 };

@@ -36,6 +36,7 @@ const TransactionHistory = (props) => {
   //     );
   //   }
   // }, [webSocketData?.transactionGraph]);
+  
   useEffect(() => {
     fetchChartData();
   }, [transactionHisChart?.type]);

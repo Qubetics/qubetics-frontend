@@ -113,6 +113,12 @@ function Page() {
                   placeholder={validationtValue?.FAUCET_PLACEHOLDER}
                   type="text"
                   name="address"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      requestFund();
+                    }
+                    e.stopPropagation();
+                  }}
                   value={faucetField?.address}
                   onChange={handleFaucetChange}
                   autoComplete="off"
@@ -124,7 +130,7 @@ function Page() {
                       textAlign: "left",
                       paddingBottom: "0",
                       marginTop: "10px",
-                      fontSize:"14px"
+                      fontSize: "14px",
                     }}
                   >
                     {error?.address}

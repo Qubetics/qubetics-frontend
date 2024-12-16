@@ -197,9 +197,9 @@ function Header() {
         </div> */}
         <div className="header-main__bottom container">
           <div
-            className="svgLogo"
-            onClick={toggleDiv}
-            title={`${EXPLORER_CHAIN_NAME} Explorer`}
+            // className="svgLogo"
+            // onClick={toggleDiv}
+            // title={`${EXPLORER_CHAIN_NAME} Explorer`}
           >
             <img src="./NewLogo.svg" alt="" />
           </div>

@@ -186,7 +186,16 @@ export const nodePerformanceData = (blockHeight) => {
     { value: "6", label: "Countries" },
   ];
 };
-
+export const tooltipContent = {
+  block_Height: "Total number of blocks produced since the genesis block.",
+  bonded_Coins: "Total amount of 5ire staked in the network.",
+  total_Nodes: "The total number of nodes connected to the 5ire network.",
+  last_Block: "The time when the last block is finalized in UTC format.",
+  TPB: " Transactions per block. Display the average number of transactions recorded in a block during the last three seconds.",
+  Countries: "The number of countries from which nodes are connected.",
+  finalized_Block:
+    "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
+};
 export function BlockchainHeaderFunction(currentPath, onClick) {
   const blockchainHeader = [
     {

@@ -1,17 +1,9 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
+import { useLatestData } from "@/components/contexts/latest_data";
 import Heading from "@/components/heading/Heading";
-import { validatorsColumn } from "@/constant/graphTableValues";
-import { Table, Tooltip } from "antd";
-import React, { useEffect, useState } from "react";
-import "./validators.scss";
-import {
-  Onchainapy,
-  Activevalidators,
-  Totalvalidators,
-  Bondedrate,
-  Datnotfound,
-} from "../../../../public/SvgIcons";
+import Pagination from "@/components/Pagination/Pagination";
+import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -19,14 +11,20 @@ import {
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
+import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
-import Loader from "@/components/loader/Loader";
-import Page from "../notfound/page";
-import { useLatestData } from "@/components/contexts/latest_data";
 import { simplifyNumber } from "@/utils/commonFunctions";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { Table, Tooltip } from "antd";
+import { useEffect, useState } from "react";
+import {
+  Activevalidators,
+  Bondedrate,
+  Datnotfound,
+  Onchainapy,
+  Totalvalidators,
+} from "../../../../public/SvgIcons";
+import "./validators.scss";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -124,7 +122,9 @@ function page() {
           </Tooltip>
         </>
       ),
-      balance: 3,
+      balance: validatorData?.activeValidators
+        ? validatorData?.activeValidators
+        : "0",
       img: <Activevalidators />,
       contract: "true",
     },
