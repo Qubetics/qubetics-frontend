@@ -20,7 +20,7 @@ import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
 import getAddress from "@/utils/getAddress";
-import { Table } from "antd";
+import { Table, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AvgBlockTime, Totalvalidators } from "../../../../public/SvgIcons";
@@ -46,7 +46,7 @@ const BlockSummary = () => {
   const [blockTime, setBlockTime] = useState(0);
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
-  
+
   // const { isLight } = useThemeData();
 
   let currentChain =
@@ -138,7 +138,6 @@ const BlockSummary = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       setPageToSend(nextCursor);
-
       // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", currentPage + 1);
@@ -184,11 +183,11 @@ const BlockSummary = () => {
       id: 1,
       text: "Top Validator (Last 24H)",
       balance: topValidtor ? (
-        <>
+        <Tooltip title={topValidtor}>
           {currentChain == chain.EVM
             ? getAddress(topValidtor)
             : getAddress(convertAddToNative(topValidtor))}
-        </>
+        </Tooltip>
       ) : (
         "-"
       ),

@@ -137,6 +137,7 @@ export const Routes = {
   STATS: "/charts",
   TOKEN_TXNS: "/tokentxns",
   TOKEN_ICON: "/tokenicon",
+  
 };
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",

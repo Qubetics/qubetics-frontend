@@ -3,7 +3,7 @@ import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
   noExponential,
-  toFixed
+  toFixed,
 } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
@@ -163,7 +163,7 @@ export const blockColumn = [
     render: (text) => (
       <>
         <div className="iconandlink">
-          {getAddress(text)}
+          <Link href={`${Routes.BLOCK_NO}${text}`}>{getAddress(text)}</Link>
           <span>
             <CopyText text={text}></CopyText>
           </span>
@@ -179,7 +179,7 @@ export const blockColumn = [
     render: (text) => (
       <>
         <div className="iconandlink">
-          {getAddress(text)}
+          <Link href={`${Routes.Tx_ADDRESS}/${text}`}>{getAddress(text)}</Link>
           <span>
             <CopyText text={text}></CopyText>
           </span>
@@ -189,7 +189,7 @@ export const blockColumn = [
   },
   {
     id: "transactionCount",
-    title: "txn Count ",
+    title: "Txn Count ",
     dataIndex: "transactionCount",
     key: "transactionCount",
   },
@@ -1268,7 +1268,9 @@ export const TokenColumn = [
     key: "tokenName",
     render: (text) => (
       <span className="assetnamedetail">
-        {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
+        <Link href={`/contract/${text?.contractAddress}`}>
+          {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
+        </Link>
       </span>
     ),
   },

@@ -2,9 +2,15 @@ import React from "react";
 import "../transferInfo/TransferInformation.scss";
 import { renderTime } from "@/utils/renderTime";
 import CopyText from "../DoCopy/CopyText";
-import { FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
+import {
+  FetchingStatus,
+  InitStatus,
+  Routes,
+  SuccessStatus,
+} from "@/constant/constant";
 import Loader from "../loader/Loader";
 import Page from "@/app/(routes)/notfound/page";
+import Link from "next/link";
 
 const BlockDetailDescription = ({ blockData, status }) => {
   let chain =
@@ -58,8 +64,20 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <div className="information">
             <p>Validator </p>
             {blockData?.miner || blockData?.block?.miner ? (
+              // onClick={() => router.push(`${Routes.Tx_ADDRESS}/${blockData?.miner}`)
               <span className="hoverTrans">
-                {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
+                <Link
+                  className="hoverTrans"
+                  href={`${Routes.Tx_ADDRESS}/${
+                    blockData?.miner
+                      ? blockData?.miner
+                      : blockData?.block?.miner
+                  }`}
+                >
+                  {blockData?.miner
+                    ? blockData?.miner
+                    : blockData?.block?.miner}
+                </Link>
                 <CopyText
                   text={
                     blockData?.miner

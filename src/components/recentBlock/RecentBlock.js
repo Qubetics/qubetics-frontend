@@ -4,6 +4,7 @@ import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
 import { Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
   return (
@@ -38,9 +39,12 @@ const RecentBlock = ({ data, customClass }, props) => {
         <p>{data?.timestamp ? renderTime(data?.timestamp) : "-"}</p>
       </div>
       <div className="recent validatorAddress">
-        <p className="validateSec">
-        Validator : {" "}
-          <span>{data?.miner ? getAddress(data?.miner) : "-"}</span>
+        <p
+          style={{ cursor: "pointer" }}
+          onClick={() => router.push(`/address/${data?.miner}`)}
+          className="validateSec"
+        >
+          Validator : {data?.miner ? getAddress(data?.miner) : "-"}
         </p>
       </div>
     </div>

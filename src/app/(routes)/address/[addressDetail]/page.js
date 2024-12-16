@@ -149,80 +149,73 @@ const page = ({ params }) => {
 
   return (
     <div className="blocksummary">
-      {txAddressStatus === InitStatus || txAddressStatus === FetchingStatus ? (
-        <Loader />
-      ) : txAddressStatus === SuccessStatus ? (
-        <div className="container">
-          <SearchbarComponent
-            searchStatus={searchStatus}
-            setSerachStatus={setSerachStatus}
-          />
-          <Heading
-            heading=" Address Details"
-            addresspage={true}
-            // address={params?.addressDetail ? params?.addressDetail : ""}
-          />
-          {/* <BlockDetail details={details} /> */}
-          <div className="addressDetsilCard">
-            <div className="overViewCard">
-              <div className="cardHeading">
-                <h2>Overview</h2>
-              </div>
-              <div className="innerDetail">
-                <div className="detail">
-                  <h3>Balance</h3>
-                  <p>
-                    {formatMillionNumber(showHeaderData?.coinBalance)}{" "}
-                    {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
-                  </p>
-                </div>
-                <div className="detail">
-                  <h3>TICS Value</h3>
-                  <p>
-                    {showHeaderData?.value === "" ||
-                    showHeaderData?.value == null
-                      ? "$0"
-                      : `$${formatMillionNumber(showHeaderData?.value)}`}
-                  </p>
-                </div>
-                <div className="detail">
-                  <h3>Transaction Count</h3>
-                  <p>
-                    {showHeaderData?.transactionCount
-                      ? formatMillionNumber(showHeaderData?.transactionCount)
-                      : 0}
-                  </p>
-                </div>
-              </div>
+      <div className="container">
+        <SearchbarComponent
+          searchStatus={searchStatus}
+          setSerachStatus={setSerachStatus}
+        />
+        <Heading
+          heading=" Address Details"
+          addresspage={true}
+          // address={params?.addressDetail ? params?.addressDetail : ""}
+        />
+        {/* <BlockDetail details={details} /> */}
+        <div className="addressDetsilCard">
+          <div className="overViewCard">
+            <div className="cardHeading">
+              <h2>Overview</h2>
             </div>
-            <div className="overViewCard">
-              <div className="cardHeading">
-                <h2>More Info</h2>
+            <div className="innerDetail">
+              <div className="detail">
+                <h3>Balance</h3>
+                <p>
+                  {formatMillionNumber(showHeaderData?.coinBalance)}{" "}
+                  {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+                </p>
               </div>
-              <div className="innerDetail">
-                <div className="detail">
-                  <h3>Stake</h3>
-                  <p>Not Available</p>
-                </div>
-                <div className="detail">
-                  <h3>Blocks Validated</h3>
-                  <p>5 Blocks</p>
-                </div>
+              <div className="detail">
+                <h3>TICS Value</h3>
+                <p>
+                  {showHeaderData?.value === "" || showHeaderData?.value == null
+                    ? "$0"
+                    : `$${formatMillionNumber(showHeaderData?.value)}`}
+                </p>
+              </div>
+              <div className="detail">
+                <h3>Transaction Count</h3>
+                <p>
+                  {showHeaderData?.transactionCount
+                    ? formatMillionNumber(showHeaderData?.transactionCount)
+                    : 0}
+                </p>
               </div>
             </div>
           </div>
-          <div className="addresspagination">
-            <Tabs
-              centered
-              defaultActiveKey="0"
-              className="commontabs addresstabs"
-              items={tabItems}
-            />
+          <div className="overViewCard">
+            <div className="cardHeading">
+              <h2>More Info</h2>
+            </div>
+            <div className="innerDetail">
+              <div className="detail">
+                <h3>Stake</h3>
+                <p>{showHeaderData?.stake || 0}</p>
+              </div>
+              <div className="detail">
+                <h3>Blocks Validated</h3>
+                <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
+              </div>
+            </div>
           </div>
         </div>
-      ) : (
-        <Page />
-      )}
+        <div className="addresspagination">
+          <Tabs
+            centered
+            defaultActiveKey="0"
+            className="commontabs addresstabs"
+            items={tabItems}
+          />
+        </div>
+      </div>
     </div>
   );
 };
