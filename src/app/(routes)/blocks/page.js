@@ -245,10 +245,10 @@ const BlockSummary = () => {
             />
           ))}
         </div>
-        {!loading ? (
-           <TableLoader />
-          // <Loading//>//
+        {loading ? (
+          <TableLoader />
         ) : (
+          // <Loading//>//
           <Table
             columns={blockColumn}
             dataSource={blocksData}
