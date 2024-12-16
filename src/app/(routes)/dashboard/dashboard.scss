@@ -548,6 +548,7 @@
             color: theme-get("texttheme") !important;
             fill: theme-get("texttheme") !important;
           }
+          @include fluid-type(320px, 1920px, 12px, 14px);
         }
       }
     }
@@ -559,7 +560,7 @@
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1490196078);
   margin-top: 0 !important;
-  height: 758px;
+  height: 755px;
   width: 567px;
   @media (max-width: 767px) {
     height: unset !important;
@@ -582,7 +583,7 @@
     svg {
       height: 660px !important;
       text {
-        font-size: 10px !important;
+        font-size: 12px !important;
       }
       @media (max-width: 767px) {
         height: 660px !important;
@@ -669,7 +670,7 @@
   .ant-select-item-option-content {
     font-weight: 500;
     @include theme() {
-      color: theme-get("texttheme") ;
+      color: theme-get("texttheme");
     }
 
     a {
@@ -710,6 +711,7 @@
     .analytics_cards {
       width: 100%;
       max-width: 380px;
+      gap: 27px;
       @media (max-width: 1200px) {
         flex-direction: initial;
         max-width: initial;

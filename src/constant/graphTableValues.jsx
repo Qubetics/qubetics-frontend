@@ -52,9 +52,9 @@ if (isOptionDisable(activationDate, validityPeriodDays)) {
 
 /* Transaction History Graph */
 export const transactionItems = [
-  { value: TRANS_HISTORY_CHART_YEAR, label: TRANS_HISTORY_CHART_YEAR },
-  { value: TRANS_HISTORY_CHART_HOURS, label: TRANS_HISTORY_CHART_HOURS },
   { value: TRANS_HISTORY_CHART_MINUTES, label: TRANS_HISTORY_CHART_MINUTES },
+  { value: TRANS_HISTORY_CHART_HOURS, label: TRANS_HISTORY_CHART_HOURS },
+  { value: TRANS_HISTORY_CHART_YEAR, label: TRANS_HISTORY_CHART_YEAR },
   // { value: TRANS_HISTORY_CHART_SECONDS, label: TRANS_HISTORY_CHART_SECONDS },
 ];
 

@@ -2057,23 +2057,23 @@ input[type="number"] {
     max-width: 150px !important;
     width: 150px !important;
   }
-  .ant-select-item-option {
-    &:hover {
-      background: var(--theme-gradients-main);
-      a {
-        color: $black !important;
-      }
-    }
-  }
+  // .ant-select-item-option {
+  //   &:hover {
+  //     background: var(--theme-gradients-main);
+  //     a {
+  //       color: $black !important;
+  //     }
+  //   }
+  // }
 }
-.ant-select-item-option {
-  &:hover {
-    background: var(--theme-gradients-main);
-    .ant-select-item-option-content {
-      color: $black !important;
-    }
-  }
-}
+// .ant-select-item-option {
+//   &:hover {
+//     background: var(--theme-gradients-main);
+//     .ant-select-item-option-content {
+//       color: $black !important;
+//     }
+//   }
+// }
 .activeOptions {
   background: var(--theme-gradients-main) !important;
   .ant-select-item-option-content {

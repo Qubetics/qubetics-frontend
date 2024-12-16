@@ -79,10 +79,10 @@ const ContractDetail = () => {
         : "-",
       img: (
         <Image
-          src="/logoqubetic.svg"
+          src="/grayLogo.svg"
           className="welcomeLogo"
-          height={32}
-          width={32}
+          height={60}
+          width={60}
           alt="logo"
         />
       ),
@@ -92,10 +92,10 @@ const ContractDetail = () => {
       heading: contractDetail?.symbol ? contractDetail?.symbol : "-",
       img: (
         <Image
-          src="/logoqubetic.svg"
+          src="/grayLogo.svg"
           className="welcomeLogo"
-          height={32}
-          width={32}
+          height={60}
+          width={60}
           alt="logo"
         />
       ),
@@ -109,8 +109,8 @@ const ContractDetail = () => {
         <Image
           src="/decimal.svg"
           className="welcomeLogo"
-          height={32}
-          width={32}
+          height={60}
+          width={60}
           alt="logo"
         />
       ),
@@ -129,8 +129,8 @@ const ContractDetail = () => {
         <Image
           src="/tottalSupply.svg"
           className="welcomeLogo"
-          height={32}
-          width={32}
+          height={60}
+          width={60}
           alt="logo"
         />
       ),
