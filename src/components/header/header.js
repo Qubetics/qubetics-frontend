@@ -10,6 +10,7 @@ import { useThemeData } from "../contexts/theme_context";
 import "./header.scss";
 import HeaderMenu from "./HeaderMenu";
 import Image from "next/image";
+import Link from "next/link";
 
 function Header() {
   const router = useRouter();
@@ -202,7 +203,11 @@ function Header() {
           // onClick={toggleDiv}
           // title={`${EXPLORER_CHAIN_NAME} Explorer`}
           >
-            <Image src={LogoIcon} alt="Logo" width={176} height={50} />
+            <Link href={"/dashboard"}>
+              {" "}
+              <Image src={LogoIcon} alt="Logo" width={176} height={50} />
+            </Link>
+
             {/* <img src="./NewLogo.svg" alt="" /> */}
           </div>
           <HeaderMenu />
