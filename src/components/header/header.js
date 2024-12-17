@@ -1,14 +1,15 @@
 "use client";
-import { EXPLORER_CHAIN_NAME, Routes } from "@/constant/constant";
+import { Routes } from "@/constant/constant";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "../../../public/SvgIcons";
+import LogoIcon from "../../assets/svg/NewLogo.svg";
 import { useLatestData } from "../contexts/latest_data";
 import { useGetNetwork } from "../contexts/networkChanged";
 import { useThemeData } from "../contexts/theme_context";
 import "./header.scss";
 import HeaderMenu from "./HeaderMenu";
-import { Drawer } from "antd";
+import Image from "next/image";
 
 function Header() {
   const router = useRouter();
@@ -197,11 +198,12 @@ function Header() {
         </div> */}
         <div className="header-main__bottom container">
           <div
-            // className="svgLogo"
-            // onClick={toggleDiv}
-            // title={`${EXPLORER_CHAIN_NAME} Explorer`}
+          // className="svgLogo"
+          // onClick={toggleDiv}
+          // title={`${EXPLORER_CHAIN_NAME} Explorer`}
           >
-            <img src="./NewLogo.svg" alt="" />
+            <Image src={LogoIcon} alt="Logo" width={176} height={50} />
+            {/* <img src="./NewLogo.svg" alt="" /> */}
           </div>
           <HeaderMenu />
           <li className="hammburgerIcon">

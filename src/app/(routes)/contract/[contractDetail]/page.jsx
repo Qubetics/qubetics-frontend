@@ -74,8 +74,8 @@ const ContractDetail = () => {
   const detail = [
     {
       text: "Name",
-      heading: contractDetail?.contractName
-        ? capitalizeWord(contractDetail?.contractName)
+      heading: contractDetail?.tokenName
+        ? capitalizeWord(contractDetail?.tokenName)
         : "-",
       img: (
         <Image

@@ -4,6 +4,7 @@ import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
 import { Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
+import "src/components/transferInfo/TransferInformation.scss";
 import Link from "next/link";
 const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
@@ -41,10 +42,16 @@ const RecentBlock = ({ data, customClass }, props) => {
       <div className="recent validatorAddress">
         <p
           style={{ cursor: "pointer" }}
-          onClick={() => router.push(`/address/${data?.miner}`)}
-          className="validateSec hoverTrans"
+          // onClick={() => router.push(`/address/${data?.miner}`)}
+          className="validateSec"
         >
-          Validator : <span>{data?.miner ? getAddress(data?.miner) : "-"}</span>
+          Validator: &nbsp;
+          <Link
+            className="validateSec hoverTrans"
+            href={`/address/${data?.miner}`}
+          >
+            {data?.miner ? getAddress(data?.miner) : "-"}
+          </Link>
         </p>
       </div>
     </div>
