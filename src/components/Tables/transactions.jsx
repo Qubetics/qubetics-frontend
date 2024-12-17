@@ -1,20 +1,17 @@
-import {
-  InitStatus,
-  tableLimit,
-  ErrorStatus,
-  SuccessStatus,
-  FetchingStatus,
-} from "@/constant/constant";
-import { Table } from "antd";
-import Loader from "@/components/loader/Loader";
-import Pagination from "../Pagination/Pagination";
-import React, { useState, useEffect } from "react";
-import getTransactions from "@/services/getTransactions";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
 import { transactionSummarycolumn } from "@/constant/graphTableValues";
-import { Datnotfound } from "../../../public/SvgIcons";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import getTransactions from "@/services/getTransactions";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import Pagination from "../Pagination/Pagination";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
 export default function Transactions({ setTxnData }) {
   const { isNetworkChanged } = useGetNetwork();
@@ -121,39 +118,43 @@ export default function Transactions({ setTxnData }) {
 
   return (
     <>
-      {transactionStatus === InitStatus ||
+      {/* {transactionStatus === InitStatus ||
       transactionStatus === FetchingStatus ? (
         <Loader />
-      ) : (
-        <>
-          <Table
-            columns={transactionSummarycolumn}
-            dataSource={transactionData}
-            className="commontable"
-            pagination={false}
-            locale={{
-              emptyText: (
-                <div>
-                  <Datnotfound />
-                  <p>No data </p>
-                </div>
-              ),
-            }}
+      ) : ( */}
+      <>
+        <SkeletonTableWrapper
+          columns={transactionSummarycolumn}
+          isSkeleton={
+            transactionStatus === FetchingStatus ||
+            transactionStatus === InitStatus
+          }
+          dataSource={transactionData}
+          className="commontable"
+          pagination={false}
+          // locale={{
+          //   emptyText: (
+          //     <div>
+          //       <Datnotfound />
+          //       <p>No data </p>
+          //     </div>
+          //   ),
+          // }}
+        />
+        {totalPages && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={page === 1}
+            disableNext={page === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
           />
-          {totalPages && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={page}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-              disablePrev={page === 1}
-              disableNext={page === totalPages}
-              handleFirst={handleFirst}
-              handleLast={handleLast}
-            />
-          )}
-        </>
-      )}
+        )}
+      </>
+      {/* )} */}
     </>
   );
 }

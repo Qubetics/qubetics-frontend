@@ -53,6 +53,7 @@ export function noExponentsValue(number) {
 }
 
 export const formatMillionNumber = (num) => {
+  if (!num || num === null || num === undefined) return 0;
   let formattedNumber;
 
   switch (true) {

@@ -78,7 +78,7 @@ const TransferInfo = ({ data }) => {
             </span>
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
-            <span  className="hoverTrans" >
+            <span className="hoverTrans">
               {data?.contractAddress}
               <CopyText text={data?.contractAddress} />
             </span>
@@ -143,8 +143,11 @@ const TransferInfo = ({ data }) => {
           <div className="information ">
             <p>Tokens transferred </p>
             <h5 className="innerDetail">
-              <span className="linkBg">
-                <Link href={`/address/${data?.fromAddress}`}>
+              <span className="linkBg ">
+                <Link
+                  href={`/address/${data?.fromAddress}`}
+                  className="hoverTrans"
+                >
                   {" "}
                   {data?.fromAddress}{" "}
                 </Link>
@@ -155,6 +158,7 @@ const TransferInfo = ({ data }) => {
               <span className="linkBg">
                 <Link
                   href={`/address/${tokenTransferedParsed?.params[0]?.value}`}
+                  className="hoverTrans"
                 >
                   {tokenTransferedParsed?.params[0]?.value}{" "}
                 </Link>

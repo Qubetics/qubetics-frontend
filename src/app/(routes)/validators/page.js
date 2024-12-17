@@ -25,6 +25,7 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -177,8 +178,11 @@ function page() {
             />
           ))}
         </div>
-        <Table
+        <SkeletonTableWrapper
           className="commontable"
+          isSkeleton={
+            validatorStatus === FetchingStatus || validatorStatus === InitStatus
+          }
           columns={validatorsColumn}
           dataSource={validatorData?.validators}
           pagination={false}

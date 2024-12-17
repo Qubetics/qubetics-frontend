@@ -11,6 +11,7 @@ import Loader from "../loader/Loader";
 import Page from "@/app/(routes)/notfound/page";
 import Pagination from "../Pagination/Pagination";
 import { Datnotfound } from "../../../public/SvgIcons";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
 const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,9 +48,10 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
 
   return (
     <div>
-      <Table
+      <SkeletonTableWrapper
         columns={nodesColumns}
         dataSource={paginatedData}
+        isSkeleton ={nodesStatus === FetchingStatus|| nodesStatus === InitStatus}
         pagination={false}
         className="commontable"
         locale={{

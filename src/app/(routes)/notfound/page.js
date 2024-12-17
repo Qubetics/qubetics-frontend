@@ -1,21 +1,24 @@
 "use client";
 import Commonbtn from "@/components/commonbtn/CommonBluebtn";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import { InitStatus } from "@/constant/constant";
+import { InitStatus, Routes } from "@/constant/constant";
 import { useState } from "react";
 import { Datnotfound } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
 import "./pagenotfund.scss";
+import { usePathname } from "next/navigation";
 
 function Page({ dashnotfound }) {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-
+  const pathname = usePathname();
   return (
     <div className="container">
-      <SearchbarComponent
-        searchStatus={searchStatus}
-        setSerachStatus={setSerachStatus}
-      />
+      {pathname === Routes.NOT_FOUND && (
+        <SearchbarComponent
+          searchStatus={searchStatus}
+          setSerachStatus={setSerachStatus}
+        />
+      )}
       <div
         className={`blocksummary ${dashnotfound ? "dashnotfound" : "notfound"}`}
       >
@@ -27,11 +30,13 @@ function Page({ dashnotfound }) {
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
       >
-        <Commonbtn
-          onClick={() => (window.location.href = "/")}
-          style={{ width: "200px" }}
-          text={"Go To Dashboard"}
-        />
+        {pathname === Routes.NOT_FOUND && (
+          <Commonbtn
+            onClick={() => (window.location.href = "/")}
+            style={{ width: "200px" }}
+            text={"Go To Dashboard"}
+          />
+        )}
       </div>
     </div>
   );

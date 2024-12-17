@@ -2,9 +2,9 @@
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import Loader from "@/components/loader/Loader";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -14,13 +14,8 @@ import {
 } from "@/constant/constant";
 import { contractTableColumn } from "@/constant/graphTableValues";
 import getAllContracts from "@/services/getAllContracts";
-import { Table } from "antd";
 import { useEffect, useState } from "react";
 import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
-import Page from "../notfound/page";
-
-const currentChain =
-  typeof window !== "undefined" && localStorage.getItem("chainType");
 
 const Contract = () => {
   const { isNetworkChanged } = useGetNetwork();
@@ -33,6 +28,7 @@ const Contract = () => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [contractStatus, SetContractStatus] = useState(InitStatus);
   const [contractSearch, setContractSearch] = useState();
+
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
@@ -121,32 +117,35 @@ const Contract = () => {
           <h2>Token Information</h2>
           {/* <SearchbarComponent /> */}
         </div>
-        {contractStatus === InitStatus || contractStatus === FetchingStatus ? (
+        {/* {contractStatus === InitStatus || contractStatus === FetchingStatus ? (
           <Loader />
-        ) : contractStatus === SuccessStatus ? (
-          <>
-            <Table
-              className="commontable"
-              columns={contractTableColumn(currentChain)}
-              dataSource={contractData?.contracts}
-              pagination={false}
+        ) : contractStatus === SuccessStatus ? ( */}
+        <>
+          <SkeletonTableWrapper
+            className="commontable"
+            isSkeleton={
+              contractStatus === FetchingStatus || contractStatus === InitStatus
+            }
+            columns={contractTableColumn(currentChain)}
+            dataSource={contractData?.contracts}
+            pagination={false}
+          />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handleNext={handleNext}
+              handlePrevious={handlePrevious}
+              disablePrev={currentPage === 1}
+              disableNext={currentPage === totalPages}
+              handleFirst={handleFirst}
+              handleLast={handleLast}
             />
-            {totalPages > 1 && (
-              <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                handleNext={handleNext}
-                handlePrevious={handlePrevious}
-                disablePrev={currentPage === 1}
-                disableNext={currentPage === totalPages}
-                handleFirst={handleFirst}
-                handleLast={handleLast}
-              />
-            )}
-          </>
-        ) : (
+          )}
+        </>
+        {/* ) : (
           <Page />
-        )}
+        )} */}
       </div>
     </div>
   );

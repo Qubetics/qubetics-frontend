@@ -19,11 +19,17 @@ import { useSearchData } from "@/components/contexts/searchingData";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { Tabs } from "antd";
+import ContractTransactions from "@/components/contracts/ContractTransactions";
+import Holder from "@/components/contracts/Holder";
+import Events from "@/components/contracts/Events";
+import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
 
 const page = () => {
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [contractLogs, setContractLogs] = useState([]);
   const [topics, setTopics] = useState([]);
+  const [tab, setTab] = useState(0);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
@@ -67,6 +73,39 @@ const page = () => {
       return err;
     }
   };
+  const tabItems = [
+    {
+      label: "OverView",
+      key: "0",
+      children: (
+        <>
+          <TransferInfo data={transactionDetails} tab={tab} />
+
+          {transactionDetails?.tokenInfo?.type === "ERC-20" &&
+            transactionDetails?.logs &&
+            transactionDetails?.input && (
+              <TransactionAction data={transactionDetails} />
+            )}
+        </>
+      ),
+    },
+    contractLogs?.length > 0 && {
+      label: "Logs",
+      key: "1",
+      children: contractLogs.map((e, i) => (
+        <LogsDetail
+          key={i + "logDetails"}
+          contractLogs={e}
+          index={i}
+          topics={topics}
+        />
+      )),
+    },
+  ];
+
+  const handleTabSelect = (e) => {
+    setTab(e);
+  };
 
   // useEffect(() => {
   //   if (isNetworkChanged == true) {
@@ -84,29 +123,38 @@ const page = () => {
             setSerachStatus={setSerachStatus}
           />
           <Heading heading="Transaction Details" />
-          <TransferInfo data={transactionDetails} />
+          <div className="transecSec">
+            <Tabs
+              defaultActiveKey="0"
+              className="contracttabs"
+              items={tabItems}
+              onChange={(e) => handleTabSelect(e)}
+              // tabBarExtraContent={
+              //   <div className="tabSerachBar">
+              //     <SearchbarComponent />
+              //   </div>
+              // }
+            />
+          </div>
+
           {/* transactionDetails?.tokenInfo?.type == 'ERC-20' && */}
-          {transactionDetails?.tokenInfo?.type == "ERC-20" &&
-            transactionDetails?.logs &&
-            transactionDetails?.input && (
-              <TransactionAction data={transactionDetails} />
-            )}
+
           {/* <Heading heading="Transaction Detailss" />
           <TransactionDetails data={transactionDetails} /> */}
-          {contractLogs?.length > 0 && (
-            <>
-              <Heading heading="Logs" />
-              {/* <LogsDetail data={contractLogs[0]} /> */}
-              {contractLogs.map((e, i) => (
-                <LogsDetail
-                  key={i + "logDetails"}
-                  contractLogs={e}
-                  index={i}
-                  topics={topics}
-                />
-              ))}
-            </>
-          )}
+          {/* {contractLogs?.length > 0 && (
+            <> */}
+          {/* <Heading heading="Logs" /> */}
+          {/* <LogsDetail data={contractLogs[0]} /> */}
+          {/* {contractLogs.map((e, i) => (
+                // <LogsDetail
+                //   key={i + "logDetails"}
+                //   contractLogs={e}
+                //   index={i}
+                //   topics={topics}
+                // />
+              ))} */}
+          {/* </>
+          )} */}
         </div>
       ) : (
         <Page />

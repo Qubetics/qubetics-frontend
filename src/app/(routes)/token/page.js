@@ -21,6 +21,7 @@ import {
   TotalContrat,
 } from "../../../../public/SvgIcons";
 import Page from "../notfound/page";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 
 function page() {
   const [totalPages, setTotalPages] = useState(1);
@@ -121,7 +122,10 @@ function page() {
           <h2>Tokens List</h2>
           {/* <SearchbarComponent /> */}
         </div>
-        <Table
+        <SkeletonTableWrapper
+          isSkeleton={
+            tokenStatus === FetchingStatus || tokenStatus === InitStatus
+          }
           columns={TokenColumn}
           dataSource={tokensData?.tokens}
           className="commontable"

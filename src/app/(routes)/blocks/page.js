@@ -1,10 +1,8 @@
 "use client";
-import Loading from "@/app/loading";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import Loader from "@/components/loader/Loader";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TableLoader from "@/components/TableLoader/TableLoader";
@@ -22,12 +20,13 @@ import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
 import getAddress from "@/utils/getAddress";
-import { Table, Tooltip } from "antd";
+import { Skeleton, Table, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AvgBlockTime, Totalvalidators } from "../../../../public/SvgIcons";
-import Page from "../notfound/page";
 import "./blocksummary.scss";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+
 const { toBech32, fromHex } = require("@cosmjss/encoding");
 
 const BlockSummary = () => {
@@ -245,17 +244,22 @@ const BlockSummary = () => {
             />
           ))}
         </div>
-        {loading ? (
-          <TableLoader />
-        ) : (
+        {
           // <Loading//>//
-          <Table
+          <SkeletonTableWrapper
             columns={blockColumn}
             dataSource={blocksData}
             pagination={false}
+            isSkeleton={
+              blockSummaryStatus === FetchingStatus ||
+              blockSummaryStatus === InitStatus
+            }
             className="commontable"
           />
-        )}
+          // <Table
+
+          // />
+        }
         {totalPages && (
           <Pagination
             totalPages={totalPages}

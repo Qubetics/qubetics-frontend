@@ -11,16 +11,11 @@
   border-radius: 20px;
   backdrop-filter: blur(32px);
   .logInner {
-    padding: 26px 50px;
-   border-radius: 20px;
-    @include theme() {
-      background: theme-get("transectindata");
-    }
+    padding: 26px 30px;
+    border-radius: 14px;
+    background: var(--searchBg);
+    border: 1px solid $borderCard;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    &:last-child {
-      border-bottom: 0;
-    }
     @media (max-width: 767px) {
       padding: 15.3px 30px;
     }
@@ -38,17 +33,33 @@
     }
 
     h2 {
-      color: #fff;
-      opacity: 0.7;
+      color: $grayA0A0A0;
       @include fluid-type(320px, 1920px, 14px, 16px);
       margin-bottom: 0;
       max-width: 250px;
       width: 100%;
+      font-weight: 300;
     }
     p {
       color: #fff;
       @include fluid-type(320px, 1920px, 14px, 16px);
       word-break: break-all;
+      font-weight: 400;
+    }
+  }
+}
+
+.logsInnerSelect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  .customSelect {
+    height: 36px;
+    .ant-select {
+      width: 83px !important;
+      height: 36px;
+      margin-top: 0;
     }
   }
 }

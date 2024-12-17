@@ -81,11 +81,7 @@
       flex-wrap: wrap;
       .linkBg {
         a {
-          background-color: rgba(255, 255, 255, 0.045);
-          text-decoration: none;
-          color: #0086ff;
-          padding: 5px;
-          border-radius: 5px;
+          // text-decoration: none;
         }
         .anticon-copy {
           margin-left: 5px;
@@ -107,7 +103,7 @@
     .success {
       @include fluid-type(320px, 1920px, 12px, 14px);
       color: $green !important;
-     
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -157,7 +153,6 @@
 }
 
 .contractDetailsCard {
-
   box-shadow: 0 -2px 9px #80808075;
   .detailInner {
     display: flex;
@@ -228,9 +223,8 @@
     color: #9f53ff !important;
     transition: color 0.6s ease-out;
     text-decoration: underline;
-    span{
+    span {
       color: #9f53ff !important;
     }
   }
-  
 }

@@ -48,7 +48,7 @@ const TransactionDetails = ({ data }) => {
         <div className="information ">
           <p>Tokens transferred </p>
           <h5 className="innerDetail">
-            <span className="linkBg">
+            <span className="linkBg hoverTrans">
               <Link href={`/address/${data?.fromAddress}`}>
                 {" "}
                 {data?.fromAddress}{" "}
@@ -57,7 +57,7 @@ const TransactionDetails = ({ data }) => {
             </span>
 
             <ArrowRightOutlined />
-            <span className="linkBg">
+            <span className="linkBg hoverTrans">
               <Link
                 href={`/address/${tokenTransferedParsed?.params[0]?.value}`}
               >

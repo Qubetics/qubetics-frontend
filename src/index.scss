@@ -1790,16 +1790,12 @@ input[type="number"] {
 }
 
 .Transection__Action {
-  border: 1px 0px;
-  margin: 25px 0;
-  padding: 50px 0px;
+  padding: 40px 0px;
   color: #fff;
-  border-style: solid;
-  border-width: 1px 0;
-  border-color: rgba(255, 255, 255, 0.045);
 
   &__details {
-    border: 1px solid rgba(255, 255, 255, 0.045);
+    border: 1px solid $borderCard;
+    background: var(--searchBg);
     padding: 15.3px 50px;
     border-radius: 15px;
 

@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Datnotfound } from "../../../public/SvgIcons";
 import Loader from "../loader/Loader";
 import Pagination from "../Pagination/Pagination";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
 const ContractTransactions = ({ hash, tab }) => {
   const [transactions, setTransactions] = useState([]);
@@ -71,13 +72,18 @@ const ContractTransactions = ({ hash, tab }) => {
     }
   };
 
-  return transactionStatus === InitStatus ||
-    transactionStatus === FetchingStatus ? (
-    <Loader />
-  ) : transactionStatus === SuccessStatus ? (
+  return (
+    // transactionStatus === InitStatus ||
+    //   transactionStatus === FetchingStatus ? (
+    //   <Loader />
+    // ) : transactionStatus === SuccessStatus ? (
     <div>
       {" "}
-      <Table
+      <SkeletonTableWrapper
+        isSkeleton={
+          transactionStatus === FetchingStatus ||
+          transactionStatus === InitStatus
+        }
         columns={contractTransactionsColumn}
         dataSource={transactions}
         pagination={false}
@@ -91,7 +97,7 @@ const ContractTransactions = ({ hash, tab }) => {
           ),
         }}
       />
-      {totalPages > 10 && (
+      {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
@@ -104,8 +110,8 @@ const ContractTransactions = ({ hash, tab }) => {
         />
       )}
     </div>
-  ) : (
-    <Page />
+    // ) : (
+    //   <Page />
   );
 };
 

@@ -1,5 +1,4 @@
 "use-client";
-import Page from "@/app/(routes)/notfound/page";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -8,11 +7,10 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { EventsColumn } from "@/constant/graphTableValues";
-import { Table } from "antd";
-import React, { useEffect, useState } from "react";
-import Loader from "../loader/Loader";
 import getTokenEvents from "@/services/getTokenEvents";
+import { useEffect, useState } from "react";
 import { Datnotfound } from "../../../public/SvgIcons";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
 const Events = ({ hash }) => {
   const [events, setEvents] = useState([]);
@@ -41,14 +39,17 @@ const Events = ({ hash }) => {
     fetchTransactions();
   }, [currentPage, hash]);
 
-  return eventStatus === InitStatus || eventStatus === FetchingStatus ? (
-    <Loader />
-  ) : eventStatus === SuccessStatus ?
-   (
+  return (
+    // eventStatus === InitStatus || eventStatus === FetchingStatus ? (
+    //   <Loader />
+    // ) : eventStatus === SuccessStatus ? (
     <div>
       {" "}
-      <Table
+      <SkeletonTableWrapper
         columns={EventsColumn}
+        isSkeleton={
+          eventStatus === InitStatus || eventStatus === FetchingStatus
+        }
         dataSource={events}
         pagination={
           eventCount > tableLimit && {
@@ -69,8 +70,8 @@ const Events = ({ hash }) => {
         }}
       />
     </div>
-  ) : (
-    <Page />
+    // ) : (
+    //   <Page />
   );
 };
 
