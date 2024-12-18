@@ -87,8 +87,9 @@
     font-weight: 500;
     color: $white !important;
     @include fluid-type(320px, 1920px, 14px, 16px);
-    span {
+    a {
       color: $grayA0A0A0;
+      @include fluid-type(320px, 1920px, 14px, 16px);
     }
   }
   .recent {
@@ -98,7 +99,7 @@
     }
     p {
       color: $grayA0A0A0;
-      @include fluid-type(320px, 1920px, 12px, 14px);
+      @include fluid-type(320px, 1920px, 14px, 16px);
     }
   }
   // .recenteBlockNumber{
@@ -109,7 +110,7 @@
   //   width: 150px;
   //   text-align: left;
   // }
-  .validatorAddress{
+  .validatorAddress {
     width: 220px;
   }
 }
