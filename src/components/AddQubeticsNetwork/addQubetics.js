@@ -89,11 +89,21 @@ export const addQubetic = async () => {
     if (!window.ethereum || window.ethereum.isMetaMask === false) {
       throw new Error(Messages.Install_Metamask);
     }
-    
+
+    if (window.ethereum?.providers) {
+      console.log("Detected Providers:", window.ethereum.providers);
+      const metaMaskProvider = window.ethereum.providers.find(
+        (p) => p.isMetaMask
+      );
+      console.log("MetaMask Provider:", metaMaskProvider);
+    } else {
+      console.log("Single Provider detected or no 'providers' array.");
+    }
+
     const chainId = await provider.request({ method: "eth_chainId" });
-   
+
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
-   
+
     if (!provider) {
       customToast.info(Messages.Install_Metamask);
     } else {
