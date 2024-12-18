@@ -47,7 +47,7 @@ const RecentBlock = ({ data, customClass }, props) => {
         >
           Validator: &nbsp;
           <Link
-            className="validateSec hoverTrans"
+            className=" hoverTrans"
             href={`/address/${data?.miner}`}
           >
             {data?.miner ? getAddress(data?.miner) : "-"}

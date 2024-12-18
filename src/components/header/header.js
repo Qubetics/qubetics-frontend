@@ -1,5 +1,6 @@
 "use client";
 import { Routes } from "@/constant/constant";
+import { Drawer } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -123,6 +124,18 @@ function Header() {
               <HamburgerIcon />
             </span>
           </li>
+          {
+            <Drawer
+              placement="right"
+              onClose={onClose}
+              open={open}
+              className="drawer_main"
+            >
+              <div className="drawer_main__side">
+                <HeaderMenu onCloseDrawer={onClose} />
+              </div>
+            </Drawer>
+          }
         </div>
       </div>
     </>
