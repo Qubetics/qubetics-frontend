@@ -1198,9 +1198,9 @@ export const EventsColumn = [
               "-"
             )}
           </span>
-          {decodedData?.length > 1 && (
+          {/* {decodedData?.length > 1 && (
             <Link href={`/tx/${text?.txHash}`}>.....more</Link>
-          )}
+          )} */}
         </p>
         // <>
         //   {decodedLogs.map((e, i) => {

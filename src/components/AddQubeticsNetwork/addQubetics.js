@@ -90,14 +90,29 @@ export const addQubetic = async () => {
       throw new Error(Messages.Install_Metamask);
     }
 
-    if (window.ethereum?.providers) {
-      console.log("Detected Providers:", window.ethereum.providers);
-      const metaMaskProvider = window.ethereum.providers.find(
-        (p) => p.isMetaMask
-      );
-      console.log("MetaMask Provider:", metaMaskProvider);
+    const getEthereumProvider = () => {
+      // Check if the original `window.ethereum` exists
+      if (window.ethereum && !window.ethereum.isTrust) {
+        return window.ethereum; // This could be MetaMask or the original provider
+      }
+
+      // If Trust Wallet is overriding it, try to access the window.ethereum from a different context
+      const possibleProviders = [window.ethereum, window.Bu, window.web3];
+      for (let provider of possibleProviders) {
+        if (provider && provider.isMetaMask) {
+          return provider; // This will return the MetaMask provider
+        }
+      }
+
+      return null;
+    };
+
+    const ethereumProvider = getEthereumProvider();
+
+    if (ethereumProvider) {
+      console.log("Found Ethereum Provider:", ethereumProvider);
     } else {
-      console.log("Single Provider detected or no 'providers' array.");
+      console.error("No valid Ethereum provider found");
     }
 
     const chainId = await provider.request({ method: "eth_chainId" });
