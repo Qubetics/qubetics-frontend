@@ -79,7 +79,12 @@ const TransferInfo = ({ data }) => {
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
             <span className="hoverTrans">
-              {data?.contractAddress}
+              <Link
+                className="hoverTrans"
+                href={`/contract/${data?.contractAddress}`}
+              >
+                {data?.contractAddress}
+              </Link>
               <CopyText text={data?.contractAddress} />
             </span>
           ) : (

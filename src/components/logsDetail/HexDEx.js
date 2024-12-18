@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CustomSelect from "../customSelect/CustomSelect";
 import { LogsOption } from "@/constant/dropDownConstant";
+import { noExponentsValue } from "@/utils/commonFunctions";
 
 export const HexDEx = ({ event, index }) => {
   const [selectedVal, setSelectedVal] = useState("hex");
@@ -21,9 +22,9 @@ export const HexDEx = ({ event, index }) => {
       <div>
         <p>
           {/* {e?.name} {e?.type}{" "} */}
-          {event?.value.includes("0x") && event.type.includes("uint")
-            ? Number(event?.value)
-            : event?.value}
+          {selectedVal === "hex"
+            ? event?.value
+            : noExponentsValue(Number(event?.value))}
         </p>
       </div>
       {/* <p>{e?.name}</p>

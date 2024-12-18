@@ -137,7 +137,6 @@ export const Routes = {
   STATS: "/charts",
   TOKEN_TXNS: "/tokentxns",
   TOKEN_ICON: "/tokenicon",
-  
 };
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",
@@ -438,4 +437,43 @@ export const createTupleObject = (input) => {
   });
 
   return newObj;
+};
+export const toFixedWithoutRounding = (value, precision) => {
+  if (value === 0 || value === "0") return "0";
+
+  if (value) {
+    const [integerPart, decimalPart] = value.toString().split(".");
+
+    if (!decimalPart) {
+      return integerPart;
+    }
+
+    const truncatedDecimal = decimalPart
+      .substring(0, Math.min(precision, 6))
+      .padEnd(Math.min(precision, 6));
+    return `${integerPart}.${truncatedDecimal}`;
+  }
+
+  return "0";
+};
+export const formatValue = (num) => {
+  let result;
+  switch (true) {
+    case num >= 1e12:
+      result = (num / 1e12).toFixed(2) + " T";
+      break;
+    case num >= 1e9:
+      result = (num / 1e9).toFixed(2) + " B";
+      break;
+    case num >= 1e6:
+      result = (num / 1e6).toFixed(2) + " M";
+      break;
+    case num >= 1e3:
+      result = (num / 1e3).toFixed(2) + " K";
+      break;
+    default:
+      result = num?.toString();
+      break;
+  }
+  return result;
 };

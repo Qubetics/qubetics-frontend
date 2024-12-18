@@ -1,10 +1,10 @@
-import React from "react";
-import "../recentBlock/RecentBlock.scss";
+import { Routes, toFixedWithoutRounding } from "@/constant/constant";
+import { noExponentsValue } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
-import { Routes } from "@/constant/constant";
-import { useRouter } from "next/navigation";
 import { RightOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import "../recentBlock/RecentBlock.scss";
 
 const RecentTransaction = ({ data, customClass }, props) => {
   const router = useRouter();
@@ -46,7 +46,15 @@ const RecentTransaction = ({ data, customClass }, props) => {
 
         <div>
           <p className="qubeticValue">
-            <p>{data?.value ? data?.value : "-"} TICS</p>
+            <p>
+              {data?.value
+                ? toFixedWithoutRounding(
+                    noExponentsValue(Number(data?.value)),
+                    6
+                  )
+                : "-"}{" "}
+              TICS
+            </p>
           </p>
           <p className="secTime">
             {" "}

@@ -2,6 +2,7 @@
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
+  formatMillionNumber,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";
@@ -15,7 +16,7 @@ import {
 } from "@ant-design/icons";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
-import { Routes, typesOfTransactions } from "./constant";
+import { formatValue, Routes, typesOfTransactions } from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
 // export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -1306,11 +1307,13 @@ export const TokenColumn = [
       <span>
         {text?.totalSupply
           ? text?.native == true
-            ? noExponential(toFixed(Number(text?.totalSupply)))
-            : noExponential(
-                toFixed(
-                  Number(text?.totalSupply) / 10 ** Number(text?.decimal),
-                  4
+            ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
+            : formatValue(
+                noExponential(
+                  toFixed(
+                    Number(text?.totalSupply) / 10 ** Number(text?.decimal),
+                    4
+                  )
                 )
               )
           : "-"}

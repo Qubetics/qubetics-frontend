@@ -1,5 +1,7 @@
 "use client";
 import { Routes } from "@/constant/constant";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "../../../public/SvgIcons";
@@ -9,8 +11,6 @@ import { useGetNetwork } from "../contexts/networkChanged";
 import { useThemeData } from "../contexts/theme_context";
 import "./header.scss";
 import HeaderMenu from "./HeaderMenu";
-import Image from "next/image";
-import Link from "next/link";
 
 function Header() {
   const router = useRouter();
@@ -73,6 +73,7 @@ function Header() {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (
       pathname === Routes.FAUCET ||
       pathname === Routes.NODES ||
@@ -106,109 +107,15 @@ function Header() {
     setIsNetworkChanged(false);
   }, [chainType]);
 
-  // useEffect(() => {
-  //   getTokenPriceGraph("1 Day")
-  //     .then((res) => {
-  //       if (res?.data?.finalData?.length > 0 && res?.data?.currentPrice) {
-  //         const oldValue = Object.values(res?.data?.finalData[0])[0][0]?.price;
-  //         const newValue = res?.data?.currentPrice;
-  //         const percentage = ((newValue - oldValue) / oldValue) * 100;
-  //         setPercentage(percentage);
-  //         setCurrentTokenPrice(newValue);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       return err;
-  //     });
-  // }, []);
-
   return (
     <>
-      {/* <Marquee /> */}
       <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
-        {/* <div className="header-main__top">
-          <div className="header-main__top__inner container">
-            <div className="daylighticons">
-              <ul>
-                <li className="priceValue">
-                  <div>
-                    <p>Qubetics Price: </p>
-                    <p className="linkItem">
-                      ${Number(currentTokenPrice).toFixed(5)}{" "}
-                      <span
-                        style={{
-                          color: Math.sign(percentage) === -1 ? "red" : "green",
-                        }}
-                      >
-                        ({toFixed(percentage, 2)}%)
-                      </span>
-                    </p>
-                  </div>
-                  <div style={{ color: "blue" }}>{"|"}</div>
-                  <div>
-                    <p>Market Cap: </p>
-                    <p className="linkItem">
-                      {webSocketData?.analytics?.marketCap
-                        ? "$" +
-                          formatMillionNumber(
-                            webSocketData?.analytics?.marketCap
-                          )
-                        : "0"}
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div className="header-main__top__right">
-              <ul className="meta_list">
-                <li>
-                  <div className="cmnSelct headerSelct">
-                    <Select
-                      defaultValue={chainType}
-                      style={{ width: 120 }}
-                      onChange={handleChainChange}
-                      getPopupContainer={(trigger) => trigger.parentNode}
-                      options={[
-                        {
-                          value: "EVM Chain",
-                          label: "EVM Chain",
-                        },
-                        {
-                          value: "Native Chain",
-                          label: "Native Chain",
-                        },
-                      ]}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <button className="qubeticNetwork_btn" onClick={addQubetic}>
-                    <Image
-                      src="/metafox.avif"
-                      width={25}
-                      height={25}
-                      alt="metafox"
-                    />
-                    Add {EXPLORER_CHAIN_NAME} Network
-                  </button> */}
-        {/* <button className="signInBtn">Sign In</button> */}
-        {/* </li>
-              </ul>
-            </div>
-          </div>
-        </div> */}
         <div className="header-main__bottom container">
-          <div
-          // className="svgLogo"
-          // onClick={toggleDiv}
-          // title={`${EXPLORER_CHAIN_NAME} Explorer`}
-          >
+          <div>
             <Link href={"/dashboard"}>
               {" "}
               <Image src={LogoIcon} alt="Logo" width={176} height={50} />
             </Link>
-
-            {/* <img src="./NewLogo.svg" alt="" /> */}
           </div>
           <HeaderMenu />
           <li className="hammburgerIcon">
@@ -216,18 +123,6 @@ function Header() {
               <HamburgerIcon />
             </span>
           </li>
-          {
-            // <Drawer
-            //   placement="right"
-            //   onClose={onClose}
-            //   open={open}
-            //   className="drawer_main"
-            // >
-            //   <div className="drawer_main__side">
-            //     <HeaderMenu onCloseDrawer={onClose} />
-            //   </div>
-            // </Drawer>
-          }
         </div>
       </div>
     </>

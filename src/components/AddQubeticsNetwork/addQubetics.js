@@ -89,11 +89,11 @@ export const addQubetic = async () => {
     if (!window.ethereum || window.ethereum.isMetaMask === false) {
       throw new Error(Messages.Install_Metamask);
     }
-    console.log(provider, "provider");
+    
     const chainId = await provider.request({ method: "eth_chainId" });
-    console.log(chainId, "chainId");
+   
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
-    console.log(ChainIdQubetic, "chainId");
+   
     if (!provider) {
       customToast.info(Messages.Install_Metamask);
     } else {
@@ -110,7 +110,6 @@ export const addQubetic = async () => {
           });
           customToast.success(Messages.Successfully_Switched);
         } catch (switchError) {
-          console.log(switchError, "switchError");
           if (switchError.code === 4902) {
             try {
               await provider.request({
@@ -130,7 +129,6 @@ export const addQubetic = async () => {
               });
               customToast.success(Messages.Network_Added);
             } catch (err) {
-              console.log(err, "erroreoeor");
               throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
             }
           }
