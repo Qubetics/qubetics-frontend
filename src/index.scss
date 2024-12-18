@@ -1796,7 +1796,7 @@ input[type="number"] {
   &__details {
     border: 1px solid $borderCard;
     background: var(--searchBg);
-    padding: 15.3px 50px;
+    padding: 15.3px 30px;
     border-radius: 15px;
 
     div {
@@ -1831,12 +1831,12 @@ input[type="number"] {
       }
 
       p {
-        @include fluid-type(320px, 1920px, 12px, 14px);
+        @include fluid-type(320px, 1920px, 12px, 16px);
       }
     }
 
     .action {
-      opacity: 0.7;
+      color: #A0A0A0;
     }
   }
 }

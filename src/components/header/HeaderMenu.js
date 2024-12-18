@@ -78,13 +78,21 @@ function HeaderMenu() {
                   ? "active"
                   : "inactive"
               }`}
-              defaultValue={"Blockchain"}
-              value={"Blockchain"}
-              style={{ minWidth: 0 }}
+              // defaultValue={"Blockchain"}
+              placeholder={
+                pathname.includes(Routes.BLOCKS)
+                  ? "Blockchain"
+                  : pathname.includes(Routes.TRANSACTIONS)
+                  ? "Transactions"
+                  : "Blockchain"
+              }
+              // value={"Blockchain"}
+              style={{ minWidth: 119 }}
               options={BlockchainHeaderFunction(
                 pathname // Passed the current pathname
                 // onCloseDrawer
               )}
+              tooltip={false}
             />
           </Space>
         </li>
@@ -156,9 +164,16 @@ function HeaderMenu() {
                     ? "active"
                     : "inactive"
                 }`}
-                defaultValue={"Contracts"}
-                value={"Contracts"}
-                style={{ minWidth: 60 }}
+                placeholder={
+                  pathname.includes(Routes.CONTRACTS)
+                    ? "Contract"
+                    : pathname.includes(Routes.CONTRACT_VERIFICATOIN)
+                    ? "Verify Contract"
+                    : "Contract"
+                }
+                // defaultValue={"Contracts"}
+                // value={"Contracts"}
+                style={{ minWidth: 139 }} 
                 options={contractHeaderFunction(pathname)}
               />
             </Space>
@@ -263,7 +278,7 @@ function HeaderMenu() {
               style={{ gap: "5px", display: "flex", alignItems: "center" }}
               class="_button-text_1x6ja_100"
             >
-              <Image src="/metafox.avif" width={25} height={25} alt="metafox" />
+              <Image src="/metafox.svg" width={33} height={30} alt="metafox" />
               {isMetaMaskAdded
                 ? `${EXPLORER_CHAIN_NAME} Network Added`
                 : `Add ${EXPLORER_CHAIN_NAME} Network`}
