@@ -203,6 +203,7 @@
     justify-content: space-between;
     padding-top: 10px;
     padding-bottom: 10px;
+    gap: 30px;
     @media screen and (max-width: 676px) {
       width: 100%;
     }
@@ -299,7 +300,7 @@
 
 ul {
   display: flex;
-  gap: 38px;
+  gap: 28px;
   @media screen and (max-width: 1200px) {
     gap: 20px;
   }
@@ -322,6 +323,7 @@ ul {
     .ant-select {
       .ant-select-item {
         cursor: pointer;
+        padding: 5px 8px;
         a {
           text-decoration: none;
           &:hover,
@@ -493,9 +495,9 @@ ul {
       font-weight: 700;
       color: $grayA0A0A0;
 
-      a {
-        color: $white !important;
-      }
+      // a {
+      //   color: $white !important;
+      // }
 
       &:hover,
       &.active {
@@ -506,6 +508,7 @@ ul {
         }
       }
     }
+    
   }
 }
 
@@ -627,4 +630,10 @@ ul {
 
 .inactive {
   color: $grayA0A0A0 !important;
+}
+
+.ant-select-selection-placeholder {
+  color: #A0A0A0 !important;
+  font-weight: 700;
+  font-size: 16px;
 }
