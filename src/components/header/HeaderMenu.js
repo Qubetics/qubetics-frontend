@@ -2,7 +2,6 @@ import {
   BlockchainHeaderFunction,
   contractHeaderFunction,
   EXPLORER_CHAIN_NAME,
-  EXPLORER_META_NETWORK_CHAIN_ID,
   Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
@@ -11,12 +10,123 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
+// import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
 import CheckIcon from "../../../public/SvgIcons";
+import metamaskSDK from "@web3-onboard/metamask";
+import { init, useConnectWallet } from "@web3-onboard/react";
+import {
+  EXPLORER_METAMASK_NAVIGATION,
+  EXPLORER_METAMASK_NETWORK_URL,
+  EXPLORER_META_NETWORK_CHAIN_ID,
+  Messages,
+  EXPLORER_CURRENCY_NAME,
+  METAMASK_CHAIN_NAME,
+} from "@/constant/constant";
+const chains = [
+  {
+    id: "0x1",
+    token: "ETH",
+    label: "Ethereum Mainnet",
+    rpcUrl: `https://rpc.ankr.com/eth`,
+  },
+  {
+    id: "0xa",
+    token: "ETH",
+    label: "Optimism",
+    rpcUrl: "https://rpc.ankr.com/optimism",
+  },
+  {
+    id: "0x2105",
+    token: "ETH",
+    label: "Base",
+    rpcUrl: "https://mainnet.base.org",
+  },
+  {
+    id: "0xa4b1",
+    token: "ETH",
+    label: "Arbitrum One",
+    rpcUrl: "https://arb1.arbitrum.io/rpc",
+  },
+  {
+    id: "0xfa",
+    token: "FTM",
+    label: "Fantom",
+    rpcUrl: "https://rpc.fantom.network",
+  },
+  {
+    id: "0x38",
+    token: "BNB",
+    label: "Binance Smart Chain",
+    rpcUrl: `https://bsc-dataseed.binance.org`,
+  },
+  {
+    id: "0x89",
+    token: "MATIC",
+    label: "Matic Mainnet",
+    rpcUrl: "https://matic-mainnet.chainstacklabs.com",
+  },
+  {
+    id: "0xa86a",
+    token: "AVAX",
+    label: "Avalanche Mainnet",
+    rpcUrl: "https://api.avax.network/ext/bc/C/rpc",
+  },
+  {
+    id: "0xa4ec",
+    token: "CELO",
+    label: "Celo Mainnet",
+    rpcUrl: "https://rpc.ankr.com/celo",
+  },
+  {
+    id: "0x64",
+    token: "XDAI",
+    label: "Gnosis Chain",
+    rpcUrl: "https://rpc.gnosischain.com/",
+  },
+  {
+    id: "0x44d",
+    token: "ETH",
+    label: "Polygon zkEVM",
+    rpcUrl: "https://zkevm-rpc.com",
+  },
+  {
+    id: "0xe708",
+    token: "ETH",
+    label: "Linea",
+    rpcUrl: "https://linea.drpc.org",
+  },
+  {
+    id: "0x1388",
+    token: "MNT",
+    label: "Mantle",
+    rpcUrl: "https://rpc.mantle.xyz",
+  },
+];
+const metamaskSDKWallet = metamaskSDK({
+  options: {
+    extensionOnly: false,
+    logging: {
+      developerMode: true,
+    },
+    dappMetadata: {
+      name: "Demo Web3Onboard",
+    },
+  },
+});
 
+init({
+  // ... other Onboard options
+  wallets: [
+    metamaskSDKWallet,
+    //... other wallets
+  ],
+  chains,
+});
 function HeaderMenu() {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+
   const router = useRouter();
   const { setIsNetworkChanged } = useGetNetwork();
 
@@ -53,6 +163,32 @@ function HeaderMenu() {
     setIsNetworkChanged(false);
   }, [chainType]);
   const getContainer = (triggerNode) => triggerNode.parentNode;
+
+  const addQubetic = async () => {
+    const provider = await connect();
+  
+    try {
+      await provider[0].provider.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: EXPLORER_META_NETWORK_CHAIN_ID,
+            chainName: EXPLORER_CHAIN_NAME,
+            blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+            nativeCurrency: { symbol: EXPLORER_CURRENCY_NAME, decimals: 18 },
+            rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+          },
+        ],
+      });
+      // .then(() => {
+      //   const confirmation = document.getElementById("confirmation");
+      //   confirmation.style.display = "block";
+      //   confirmation.innerText = "Polygon has been added to MetaMask.";
+      // })
+    } catch (error) {
+      console.log(`error: `, error);
+    }
+  };
 
   return (
     <>
@@ -173,7 +309,7 @@ function HeaderMenu() {
                 // }
                 defaultValue={"Contracts"}
                 value={"Contracts"}
-                // style={{ minWidth: 139 }} 
+                // style={{ minWidth: 139 }}
                 options={contractHeaderFunction(pathname)}
               />
             </Space>

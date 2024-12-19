@@ -85,7 +85,7 @@ const Page = ({ customClass }) => {
                   />
                   <ChainAnalyticsGraph
                     title="Qubetics Coin Transfer"
-                    discription="Total TXNs made with Qubetics coin per period "
+                    discription="Total Txns made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
                   />
                 </div>
