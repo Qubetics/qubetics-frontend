@@ -1,7 +1,6 @@
 @import "../../../../var.scss";
 @import "../../../../_mixins.scss";
 .verify {
-  max-width: 926px;
   width: 100%;
   margin: auto;
   @media screen and (max-width: 991px) {
@@ -12,9 +11,7 @@
     margin: 0 auto;
   }
   &_btns {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex: 1;
   }
   .stepsFlex {
     display: flex;
@@ -31,27 +28,9 @@
   }
 }
 .verifyPublish {
-  padding-top: 40px;
-  gap: 100px;
-
-  @media (max-width: 991px) {
-    gap: 30px;
-  }
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-  }
-
-  @media (max-width: 585px) {
-    padding-top: 0px;
-    margin-bottom: 30px;
-  }
-
   &__left {
-    text-align: center;
-    // max-width: 650px;
-    // width: 100%;
     margin-top: 30px;
+    flex: 1;
     h3 {
       padding-bottom: 16px;
       color: $white;
@@ -75,6 +54,7 @@
 
   &__right {
     width: 100%;
+    max-width: 600px;
     border-radius: 14px;
     padding: 40px;
     background: var(--searchBg);

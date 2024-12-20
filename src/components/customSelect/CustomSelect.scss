@@ -12,7 +12,7 @@
     height: 50px;
     margin-bottom: 20px;
     .ant-select-selector {
-      background: $bodybg !important;
+      background: #080808 !important;
       color: $grayA0A0A0 !important;
       border: 0 !important;
 
@@ -31,10 +31,10 @@
     }
   }
   .ant-select-item-option-selected {
-    background: var(--theme-gradients-main) !important;
+    background: $bg-353026 !important;
     color: $black !important;
     .ant-select-item-option-content {
-      color: $black !important;
+      color: $white !important;
     }
   }
 

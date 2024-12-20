@@ -44,13 +44,6 @@ const App = () => {
         searchStatus={searchStatus}
         setSerachStatus={setSerachStatus}
       />
-      <div className="verifyPublish__left">
-        <h3>{verifyContractConstant?.VERIFY_AND_PUBLISH_CONTRACT}</h3>
-
-        {Listing?.map((listing, index) => (
-          <p key={index}>{listing}</p>
-        ))}
-      </div>
       <div className="steps">
         <Steps
           responsive={false}
@@ -59,7 +52,16 @@ const App = () => {
           items={items}
         />
       </div>
-      {/* <div className="stepsFlex"> */}
+      <div className="stepsFlex">
+
+      <div className="verifyPublish__left">
+        <h3>{verifyContractConstant?.VERIFY_AND_PUBLISH_CONTRACT}</h3>
+
+        {Listing?.map((listing, index) => (
+          <p key={index}>{listing}</p>
+        ))}
+      </div>
+
       <div className="verify_btns">
         {steps && current === 1 ? (
           <VerifySecondStep
@@ -77,7 +79,7 @@ const App = () => {
           />
         )}
       </div>
-      {/* </div> */}
+      </div>
     </div>
   );
 };

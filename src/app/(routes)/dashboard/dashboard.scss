@@ -562,6 +562,10 @@
   margin-top: 0 !important;
   height: 755px;
   width: 567px;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+    height: unset;
+  }
   @media (max-width: 767px) {
     height: unset !important;
     margin-bottom: 7px;
@@ -580,16 +584,17 @@
   .highcharts-container {
     height: 676px !important;
     width: 550px !important;
+    @media screen and (max-width: 1070px) {
+      width: 100% !important;
+      height: 555px !important;
+    }
     svg {
       height: 660px !important;
       text {
         font-size: 12px !important;
       }
-      @media (max-width: 767px) {
-        height: 660px !important;
-      }
-      @media (max-width: 340px) {
-        height: 660px !important;
+      @media screen and (max-width: 1070px) {
+        height: 555px !important;
       }
     }
   }
@@ -681,10 +686,10 @@
   }
 
   .ant-select-item-option-selected {
-    background: var(--theme-gradients-main) !important;
-    color: $black !important;
+    background: $bg-353026 !important;
+    color: $white !important;
     .ant-select-item-option-content {
-      color: $black !important;
+      color: $white !important;
     }
   }
 
