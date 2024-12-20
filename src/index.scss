@@ -104,8 +104,8 @@ html {
 
 @media (min-width: 1400px) {
   .container {
-    width: 1420px;
-    max-width: 100%;
+    max-width: 1420px;
+    width: 100%;
   }
 }
 
@@ -1740,24 +1740,13 @@ input[type="number"] {
 }
 
 .onchainrowdata {
-  justify-content: center;
-  gap: 20px;
-
   .ant-col {
-    max-width: 332px;
+    max-width: 100%;
+    width: 100%;
+    min-width: 290px;
     padding-left: 0;
     padding-right: 0;
     border-radius: 10px;
-
-    @media (max-width: 1399px) {
-      gap: 10px;
-      max-width: 270px;
-    }
-
-    @media (max-width: 575px) {
-      max-width: unset;
-    }
-
     .ant-card {
       margin-bottom: 0;
       border: 1px solid $borderCard;
@@ -1836,7 +1825,7 @@ input[type="number"] {
     }
 
     .action {
-      color: #A0A0A0;
+      color: #a0a0a0;
     }
   }
 }
@@ -2053,23 +2042,26 @@ input[type="number"] {
     max-width: 150px !important;
     width: 150px !important;
   }
-  // .ant-select-item-option {
-  //   &:hover {
-  //     background: var(--theme-gradients-main);
-  //     a {
-  //       color: $black !important;
-  //     }
-  //   }
-  // }
+  .ant-select-item-option {
+    &:hover {
+      background: $bg-353026 !important;
+      a {
+        color: $white !important;
+      }
+    }
+  }
 }
-// .ant-select-item-option {
-//   &:hover {
-//     background: var(--theme-gradients-main);
-//     .ant-select-item-option-content {
-//       color: $black !important;
-//     }
-//   }
-// }
+.rc-virtual-list-holder-inner {
+  gap: 5px;
+}
+.ant-select-item-option {
+  &:hover {
+    background: $bg-353026 !important;
+    .ant-select-item-option-content {
+      color: $white !important;
+    }
+  }
+}
 .activeOptions {
   background: var(--theme-gradients-main) !important;
   .ant-select-item-option-content {

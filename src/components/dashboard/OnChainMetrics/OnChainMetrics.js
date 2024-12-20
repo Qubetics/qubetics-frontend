@@ -36,15 +36,15 @@ const OnChainMetrics = ({ stats }) => {
   return (
     <div className="cardSec onchain_sec">
       <div className="dashcardAnimation">
-        <Row className="onchainrowdata">
-          <Col xs={24} md={12} lg={6} xl={6}>
+        <Row gutter={[30, 30]} className="onchainrowdata">
+          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               text="TICS Price"
               balance={`$ 0.03112491 USD`}
               img={<TickPriceIcon />}
             />
           </Col>
-          <Col xs={24} md={12} lg={6} xl={6}>
+          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               text="Last Finalized Block"
               balance={
@@ -58,7 +58,7 @@ const OnChainMetrics = ({ stats }) => {
             />
           </Col>
 
-          <Col xs={24} md={12} lg={6} xl={6}>
+          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               // iconCopy="true"
               // addicon="true"
@@ -77,7 +77,7 @@ const OnChainMetrics = ({ stats }) => {
               }
             />
           </Col>
-          <Col xs={24} md={12} lg={6} xl={6}>
+          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               addicon="true"
               iconCopy="true"
