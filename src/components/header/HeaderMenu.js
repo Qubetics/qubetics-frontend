@@ -1,6 +1,7 @@
 import {
   BlockchainHeaderFunction,
   contractHeaderFunction,
+  defaultChainOptions,
   EXPLORER_CHAIN_NAME,
   Routes,
   SHOW_FAUCET,
@@ -10,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
 import CheckIcon from "../../../public/SvgIcons";
@@ -24,105 +24,32 @@ import {
   EXPLORER_CURRENCY_NAME,
   METAMASK_CHAIN_NAME,
 } from "@/constant/constant";
-const chains = [
-  {
-    id: "0x1",
-    token: "ETH",
-    label: "Ethereum Mainnet",
-    rpcUrl: `https://rpc.ankr.com/eth`,
-  },
-  {
-    id: "0xa",
-    token: "ETH",
-    label: "Optimism",
-    rpcUrl: "https://rpc.ankr.com/optimism",
-  },
-  {
-    id: "0x2105",
-    token: "ETH",
-    label: "Base",
-    rpcUrl: "https://mainnet.base.org",
-  },
-  {
-    id: "0xa4b1",
-    token: "ETH",
-    label: "Arbitrum One",
-    rpcUrl: "https://arb1.arbitrum.io/rpc",
-  },
-  {
-    id: "0xfa",
-    token: "FTM",
-    label: "Fantom",
-    rpcUrl: "https://rpc.fantom.network",
-  },
-  {
-    id: "0x38",
-    token: "BNB",
-    label: "Binance Smart Chain",
-    rpcUrl: `https://bsc-dataseed.binance.org`,
-  },
-  {
-    id: "0x89",
-    token: "MATIC",
-    label: "Matic Mainnet",
-    rpcUrl: "https://matic-mainnet.chainstacklabs.com",
-  },
-  {
-    id: "0xa86a",
-    token: "AVAX",
-    label: "Avalanche Mainnet",
-    rpcUrl: "https://api.avax.network/ext/bc/C/rpc",
-  },
-  {
-    id: "0xa4ec",
-    token: "CELO",
-    label: "Celo Mainnet",
-    rpcUrl: "https://rpc.ankr.com/celo",
-  },
-  {
-    id: "0x64",
-    token: "XDAI",
-    label: "Gnosis Chain",
-    rpcUrl: "https://rpc.gnosischain.com/",
-  },
-  {
-    id: "0x44d",
-    token: "ETH",
-    label: "Polygon zkEVM",
-    rpcUrl: "https://zkevm-rpc.com",
-  },
-  {
-    id: "0xe708",
-    token: "ETH",
-    label: "Linea",
-    rpcUrl: "https://linea.drpc.org",
-  },
-  {
-    id: "0x1388",
-    token: "MNT",
-    label: "Mantle",
-    rpcUrl: "https://rpc.mantle.xyz",
-  },
-];
+import { customToast } from "../common/toast";
+
 const metamaskSDKWallet = metamaskSDK({
   options: {
-    extensionOnly: false,
+    injectProvider: true,
+    extensionOnly: true,
     logging: {
-      developerMode: true,
+      developerMode: false,
     },
     dappMetadata: {
-      name: "Demo Web3Onboard",
+      name: "Qubetics",
     },
   },
 });
 
 init({
-  // ... other Onboard options
-  wallets: [
-    metamaskSDKWallet,
-    //... other wallets
-  ],
-  chains,
+  wallets: [metamaskSDKWallet],
+  chains: defaultChainOptions,
+  accountCenter: {
+    desktop: {
+      enabled: false, // Disable the pop-up account center on desktop
+    },
+    mobile: {
+      enabled: false, // Disable the pop-up account center on mobile
+    },
+  },
 });
 function HeaderMenu() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
@@ -139,24 +66,6 @@ function HeaderMenu() {
     setChainType(e);
     setIsNetworkChanged(true);
   };
-  const isNetworkAdded = async () => {
-    const { ethereum } = window;
-    if (!ethereum) return;
-    try {
-      const chainId = await ethereum.request({ method: "eth_chainId" });
-      setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
-      ethereum.on("chainChanged", (id) => {
-        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
-          return setIsMetaMaskAdded(true);
-        setIsMetaMaskAdded(false);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    isNetworkAdded();
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("chainType", chainType);
@@ -164,29 +73,77 @@ function HeaderMenu() {
   }, [chainType]);
   const getContainer = (triggerNode) => triggerNode.parentNode;
 
-  const addQubetic = async () => {
-    const provider = await connect();
-  
+  const addChainNetwork = async () => {
+    const requestProvider = await connect({
+      autoSelect: {
+        label: "MetaMask",
+        disableModals: true, // Ensure modals are disabled
+      },
+    });
+    const provider = requestProvider[0]?.provider;
+
     try {
-      await provider[0].provider.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            chainId: EXPLORER_META_NETWORK_CHAIN_ID,
-            chainName: EXPLORER_CHAIN_NAME,
-            blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
-            nativeCurrency: { symbol: EXPLORER_CURRENCY_NAME, decimals: 18 },
-            rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
-          },
-        ],
+      if (!provider) {
+        throw new Error(Messages.Install_Metamask);
+      }
+
+      const chainId = await provider.request({ method: "eth_chainId" });
+
+      const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
+
+      if (!provider) {
+        customToast.info(Messages.Install_Metamask);
+      } else {
+        if (!chainId) {
+          throw new Error(Messages.Retrive_Meta_Account);
+        }
+        if (chainId === ChainIdQubetic) {
+          customToast.success(Messages.Same_Network);
+          setIsMetaMaskAdded(true);
+        } else {
+          try {
+            await provider.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: ChainIdQubetic }],
+            });
+            customToast.success(Messages.Successfully_Switched);
+            setIsMetaMaskAdded(true);
+          } catch (switchError) {
+            if (switchError.code === 4902) {
+              try {
+                await provider.request({
+                  method: "wallet_addEthereumChain",
+                  params: [
+                    {
+                      chainId: ChainIdQubetic,
+                      chainName: METAMASK_CHAIN_NAME,
+                      nativeCurrency: {
+                        symbol: EXPLORER_CURRENCY_NAME,
+                        decimals: 18,
+                      },
+                      rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+                      blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+                    },
+                  ],
+                });
+                customToast.success(Messages.Network_Added);
+                setIsMetaMaskAdded(true);
+              } catch (err) {
+                throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
+                setIsMetaMaskAdded(false);
+              }
+            }
+          }
+        }
+      }
+      await provider.on("chainChanged", (chainId) => {
+        if (chainId === EXPLORER_META_NETWORK_CHAIN_ID) {
+          return setIsMetaMaskAdded(true);
+        }
+        setIsMetaMaskAdded(false);
       });
-      // .then(() => {
-      //   const confirmation = document.getElementById("confirmation");
-      //   confirmation.style.display = "block";
-      //   confirmation.innerText = "Polygon has been added to MetaMask.";
-      // })
     } catch (error) {
-      console.log(`error: `, error);
+      customToast.error(error.message);
     }
   };
 
@@ -409,7 +366,7 @@ function HeaderMenu() {
               Add {EXPLORER_CHAIN_NAME} Network
             </span>
           </button> */}
-          <a className="qubeticNetwork_btn" onClick={addQubetic}>
+          <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
             <span
               style={{ gap: "5px", display: "flex", alignItems: "center" }}
               class="_button-text_1x6ja_100"

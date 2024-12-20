@@ -21,7 +21,7 @@ const Page = ({ customClass }) => {
   const pathname = usePathname();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
-  
+
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
@@ -82,11 +82,13 @@ const Page = ({ customClass }) => {
                     title="Qubetics Price"
                     discription="Qubetics coin current market price in USD "
                     fetchUrl={graphUrl.token_price}
+                    tooltipTitle="Price"
                   />
                   <ChainAnalyticsGraph
                     title="Qubetics Coin Transfer"
                     discription="Total Txns made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
+                    tooltipTitle="Coin Transfer"
                   />
                 </div>
                 <div className="grap">
@@ -94,11 +96,13 @@ const Page = ({ customClass }) => {
                     title="Total Accounts"
                     discription="Total accounts number per period"
                     fetchUrl={graphUrl.total_account}
+                    tooltipTitle="Total Account"
                   />
                   <ChainAnalyticsGraph
                     title="Transaction Fees"
                     discription="Amount of Qubetics coins paid in fees per period "
                     fetchUrl={graphUrl.txn_fee}
+                    tooltipTitle="Txn Fee"
                   />
                 </div>
               </div>

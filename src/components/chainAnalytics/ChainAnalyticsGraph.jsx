@@ -10,19 +10,23 @@ import {
   SuccessStatus,
 } from "@/constant/constant";
 import {
-  TRANS_HISTORY_CHART_YEAR,
-  transactionItems,
-  TRANS_HISTORY_CHART_HOURS,
   ALL_CHART_SEVEN_DAY,
+  transactionItems,
 } from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
+import { noExponentsValue } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
-import { noExponentsValue } from "@/utils/commonFunctions";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription, fetchUrl, setTotalAccount } = props;
+  const {
+    title,
+    discription,
+    fetchUrl,
+    tooltipTitle = "Txn Count",
+    setTotalAccount,
+  } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
@@ -106,6 +110,7 @@ const ChainAnalyticsGraph = (props) => {
             <ChartAccounts
               data={transactionHisChart?.data}
               chartType={transactionHisChart?.type}
+              name={tooltipTitle}
             />
           ) : (
             <Page />

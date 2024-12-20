@@ -1,21 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import ChartAccounts from "@/components/chart/ChartAccounts";
-import Heading from "@/components/heading/Heading";
-import { Row, Col, Space, Select } from "antd";
-import Link from "next/link";
-import getCoinTransactionGraph from "@/services/getCoinTransactionGraph";
 import "@/app/(routes)/dashboard/dashboard.scss";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { ALL_CHART_THRITY_DAYS, graphItems } from "@/constant/graphTableValues";
-import { chartTimeType } from "@/utils/chartTimeType";
 import Page from "@/app/(routes)/notfound/page";
-import { EXPLORER_CHAIN_NAME } from "@/constant/constant";
-import Loader from "@/components/loader/Loader";
+import ChartAccounts from "@/components/chart/ChartAccounts";
 import { useLatestData } from "@/components/contexts/latest_data";
-import { useRouter } from "next/navigation";
-import "../../chartstats/ChartStats.scss";
 import CustomBreadcrumb from "@/components/CustomBreadcrumb/CustomBreadcrumb";
+import Loader from "@/components/loader/Loader";
+import { ALL_CHART_THRITY_DAYS, graphItems } from "@/constant/graphTableValues";
+import getCoinTransactionGraph from "@/services/getCoinTransactionGraph";
+import { chartTimeType } from "@/utils/chartTimeType";
+import { Col, Row, Select, Space } from "antd";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import "../../chartstats/ChartStats.scss";
 const breadcrumbItems = [
   { href: "/", label: "Qubetics Charts & Statistics" },
   { href: "/user", label: "Qubetics Price Analytics" },

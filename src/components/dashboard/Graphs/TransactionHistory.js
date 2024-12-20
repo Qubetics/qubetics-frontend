@@ -36,7 +36,7 @@ const TransactionHistory = (props) => {
   //     );
   //   }
   // }, [webSocketData?.transactionGraph]);
-  
+
   useEffect(() => {
     fetchChartData();
   }, [transactionHisChart?.type]);
@@ -118,6 +118,7 @@ const TransactionHistory = (props) => {
           <ChartAccounts
             data={transactionHisChart?.data}
             chartType={transactionHisChart?.type}
+            name="Txn Count"
           />
         ) : (
           <Page />
