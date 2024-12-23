@@ -4,6 +4,7 @@ import { useLatestData } from "@/components/contexts/latest_data";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -15,7 +16,7 @@ import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
 import { simplifyNumber } from "@/utils/commonFunctions";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Table, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -25,7 +26,6 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
-import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -123,9 +123,10 @@ function page() {
           </Tooltip>
         </>
       ),
-      balance: validatorData?.activeValidators
-        ? validatorData?.activeValidators
-        : "0",
+      balance:
+        validatorData?.activeValidators || validatorData?.activeCount
+          ? validatorData?.activeValidators || validatorData?.activeCount
+          : "0",
       img: <Activevalidators />,
       contract: "true",
     },

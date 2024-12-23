@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
 import Heading from "@/components/heading/Heading";
-import { Table, Tabs } from "antd";
+import { Skeleton, Table, Tabs } from "antd";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -25,6 +25,7 @@ import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { Datnotfound } from "../../../../../public/SvgIcons";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
@@ -113,11 +114,15 @@ const page = ({ params }) => {
       key: "0",
       children: (
         <>
-          <Table
+          <SkeletonTableWrapper
             columns={addressDetailColumn}
             dataSource={txAddressData}
             pagination={false}
             className="commontable"
+            isSkeleton={
+              txAddressStatus === FetchingStatus ||
+              txAddressStatus === InitStatus
+            }
             locale={{
               emptyText: (
                 <div>
@@ -127,16 +132,18 @@ const page = ({ params }) => {
               ),
             }}
           />
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            disablePrev={currentPage === 1}
-            disableNext={currentPage === totalPages}
-            handleFirst={handleFirst}
-            handleLast={handleLast}
-          />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handleNext={handleNext}
+              handlePrevious={handlePrevious}
+              disablePrev={currentPage === 1}
+              disableNext={currentPage === totalPages}
+              handleFirst={handleFirst}
+              handleLast={handleLast}
+            />
+          )}
         </>
       ),
     },

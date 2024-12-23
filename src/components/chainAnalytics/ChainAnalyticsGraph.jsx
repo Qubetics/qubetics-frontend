@@ -22,7 +22,7 @@ import "./ChainAnalytics.scss";
 import { noExponentsValue } from "@/utils/commonFunctions";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription, fetchUrl, setTotalAccount } = props;
+  const { title, discription, fetchUrl, setTotalAccount,isNative, } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
@@ -32,12 +32,12 @@ const ChainAnalyticsGraph = (props) => {
   const { isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
-    fetchChartData();
+    fetchChartData(isNative);
   }, [transactionHisChart?.type]);
 
-  const fetchChartData = () => {
+  const fetchChartData = (nativeUrl) => {
     setTransactionStatus(FetchingStatus);
-    getGraphData(transactionHisChart?.type, fetchUrl)
+    getGraphData(transactionHisChart?.type, fetchUrl,nativeUrl)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
 

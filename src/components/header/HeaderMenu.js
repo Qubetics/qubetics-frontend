@@ -28,6 +28,13 @@ function HeaderMenu() {
   const handleChainChange = (e) => {
     setChainType(e);
     setIsNetworkChanged(true);
+    // if (e == "EVM Chain") {
+    //   router.push("/dashboard");
+    //   setIsEvm(true);
+    // } else {
+    //   router.push("/dashboard");
+    //   setIsEvm(false);
+    // }
   };
   const isNetworkAdded = async () => {
     const { ethereum } = window;
@@ -96,15 +103,19 @@ function HeaderMenu() {
             />
           </Space>
         </li>
-        <li>
-          <Link
-            prefetch={true}
-            className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
-            href={Routes.TOKEN}
-          >
-            Tokens
-          </Link>
-        </li>
+        {val === "EVM Chain" && (
+          <li>
+            <Link
+              prefetch={true}
+              className={
+                pathname.includes(Routes.TOKEN) ? "active" : "inactive"
+              }
+              href={Routes.TOKEN}
+            >
+              Tokens
+            </Link>
+          </li>
+        )}
         <li>
           <Link
             prefetch={true}
@@ -131,7 +142,7 @@ function HeaderMenu() {
           </Link>
         </li>
 
-        {val !== "EVM Chain" && (
+        {/* {val !== "EVM Chain" && (
           <li>
             <Link
               prefetch={true}
@@ -150,7 +161,7 @@ function HeaderMenu() {
               Contracts
             </Link>
           </li>
-        )}
+        )} */}
 
         {val == "EVM Chain" && (
           <li>
@@ -173,7 +184,7 @@ function HeaderMenu() {
                 // }
                 defaultValue={"Contracts"}
                 value={"Contracts"}
-                // style={{ minWidth: 139 }} 
+                // style={{ minWidth: 139 }}
                 options={contractHeaderFunction(pathname)}
               />
             </Space>
