@@ -152,9 +152,9 @@
         border-radius: 25px;
         transition: color 0.2s ease-out, filter 0.2s ease-out;
         &:hover {
-          background: var(--theme-gradients-main) !important;
-          color: $black !important;
-          border: 0 !important;
+          // background: var(--theme-gradients-main) !important;
+          color: $white !important;
+          // border: 0 !important;
         }
         // @media (max-width: 575px) {
         //   margin-top: 0px;

@@ -431,11 +431,11 @@ html {
       border-box !important;
   border-radius: 25px;
   transition: color 0.2s ease-out, filter 0.2s ease-out;
-  &:hover {
-    background: var(--theme-gradients-main) !important;
-    color: $black !important;
-    border: 0;
-  }
+  // &:hover {
+  //   background: var(--theme-gradients-main) !important;
+  //   color: $black !important;
+  //   border: 0;
+  // }
 }
 
 .ant-input-number {
@@ -1865,10 +1865,10 @@ input[type="number"] {
     font-size: 20px;
 
     path {
-      fill: yellow;
+      fill: #ffd738;
     }
   }
-  color: yellow;
+  color: #ffd738;
 }
 
 .videosec {
@@ -2044,6 +2044,7 @@ input[type="number"] {
 
     max-width: 150px !important;
     width: 150px !important;
+    border-radius: 10px !important;
   }
   .ant-select-item-option {
     &:hover {
@@ -2066,10 +2067,11 @@ input[type="number"] {
   }
 }
 .activeOptions {
-  background: var(--theme-gradients-main) !important;
+  background: #353026 !important;
+  border-radius: 10px !important;
   .ant-select-item-option-content {
     a {
-      color: $black !important;
+      color: $white !important;
     }
   }
 }

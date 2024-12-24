@@ -80,16 +80,26 @@
     top: 15px;
   }
   .ant-steps .ant-steps-item-process .ant-steps-item-icon {
-    background: linear-gradient(
-      74.31deg,
-      #85ffc4 0%,
-      #5cc6ff 45.83%,
-      #bc85ff 80.73%
-    );
-    border: 0;
+    --bg: #000;
+    --hover-bg: var(--theme-gradients-main);
+    --text: #fff !important;
+    --hover-text: #000;
+    border: 2px solid transparent !important;
+    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+      conic-gradient(
+          from 180deg at 50% 50%,
+          #ff98e2,
+          #ffc876 35.77deg,
+          #79fff7 153.75deg,
+          #9f53ff 258.75deg,
+          #ff98e2 360deg
+        )
+        border-box !important;
+    border-radius: 25px;
+    transition: color 0.2s ease-out, filter 0.2s ease-out;
   }
   .ant-steps .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
-    color: $black !important;
+    color: $white !important;
   }
   .ant-steps-item-tail::after {
     background-color: $borderCard !important;

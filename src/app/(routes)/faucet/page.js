@@ -188,7 +188,7 @@ function Page() {
                     />
                   </Button>
                 ) : (
-                  <Button onClick={requestFund}>Request Funds</Button>
+                  <Button onClick={requestFund}>Send</Button>
                 )}
               </div>
             </div>
