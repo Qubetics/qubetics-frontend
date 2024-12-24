@@ -5,7 +5,7 @@ import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import TableLoader from "@/components/TableLoader/TableLoader";
+
 import {
   chain,
   ErrorStatus,
@@ -23,7 +23,11 @@ import getAddress from "@/utils/getAddress";
 import { Skeleton, Table, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AvgBlockTime, LatestblockNew, Totalvalidators } from "../../../../public/SvgIcons";
+import {
+  AvgBlockTime,
+  LatestblockNew,
+  Totalvalidators,
+} from "../../../../public/SvgIcons";
 import "./blocksummary.scss";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 
@@ -205,7 +209,7 @@ const BlockSummary = () => {
       balance: webSocketData?.blocks?.blocknumber
         ? webSocketData?.blocks?.blocknumber
         : "0",
-      img: <LatestblockNew  />,
+      img: <LatestblockNew />,
       contract: false,
     },
     {
@@ -260,7 +264,7 @@ const BlockSummary = () => {
 
           // />
         }
-        {totalPages && (
+        {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={page}

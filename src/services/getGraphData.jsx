@@ -1,12 +1,18 @@
+import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 import {
   ALL_CHARTS_HOUR,
   ALL_CHART_ONE_DAY,
   ALL_CHART_SEVEN_DAY,
   TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
-import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getGraphData(chartType, fetchUrl) {
+export default async function getGraphData(chartType, fetchUrl, chartTitle) {
+  let chain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
+  if (chain === null || chain === undefined) {
+    chain = "EVM Chain";
+  }
+
   try {
     const data =
       chartType === ALL_CHARTS_HOUR
@@ -27,10 +33,20 @@ export default async function getGraphData(chartType, fetchUrl) {
         : chartType === ALL_CHART_SEVEN_DAY
         ? { interval: 7, time: "d" }
         : { interval: 30, time: "d" };
-
-    const response = await fetch(
-      `${EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
+    console.log(
+      chartTitle,
+      "chartT",
+      chartTitle !== "Total Accounts",
+      chain === "EVM Chain"
     );
+    const response =
+      chain === "EVM Chain" || chartTitle !== "Total Accounts"
+        ? await fetch(
+            `${EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
+          )
+        : await fetch(
+            `${NATIVE_EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
+          );
     let result = await response.json();
     return result;
   } catch (error) {

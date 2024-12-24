@@ -7,27 +7,59 @@ import {
   SHOW_FAUCET,
 } from "@/constant/constant";
 import { Select, Space } from "antd";
+import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
-import CheckIcon from "../../../public/SvgIcons";
 
 function HeaderMenu() {
   const router = useRouter();
-  const { setIsNetworkChanged } = useGetNetwork();
+  const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
 
   let val = typeof window !== "undefined" && localStorage.getItem("chainType");
   const [chainType, setChainType] = useState(val || "EVM Chain");
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
 
+  // const ristrictedPath = ["/token", "/contract", "/verifyContract"];
+  // useEffect(() => {
+  //   if (val === "Native Chain") {
+  //     if (ristrictedPath.includes(pathname)) {
+  //       router.push("/dashboard");
+  //     }
+  //   }
+  // }, [pathname]);
+
+  useEffect(() => {
+    const cookieValue = getCookie("isEVM");
+    if (cookieValue === undefined) {
+      setCookie("isEVM", true);
+    }
+    if (val === "EVM Chain") {
+      setCookie("isEVM", true);
+    } else {
+      setCookie("isEVM", false);
+    }
+  }, []);
   const handleChainChange = (e) => {
     setChainType(e);
     setIsNetworkChanged(true);
+    if (e == "EVM Chain") {
+      setCookie("isEVM", true);
+      router.push("/dashboard");
+      setIsEvm(true);
+      window.location.reload();
+    } else {
+      setCookie("isEVM", false);
+      router.push("/dashboard");
+      setIsEvm(false);
+      window.location.reload();
+    }
   };
   const isNetworkAdded = async () => {
     const { ethereum } = window;
@@ -96,15 +128,19 @@ function HeaderMenu() {
             />
           </Space>
         </li>
-        <li>
-          <Link
-            prefetch={true}
-            className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
-            href={Routes.TOKEN}
-          >
-            Tokens
-          </Link>
-        </li>
+        {val === "EVM Chain" && (
+          <li>
+            <Link
+              prefetch={true}
+              className={
+                pathname.includes(Routes.TOKEN) ? "active" : "inactive"
+              }
+              href={Routes.TOKEN}
+            >
+              Tokens
+            </Link>
+          </li>
+        )}
         <li>
           <Link
             prefetch={true}
@@ -131,7 +167,7 @@ function HeaderMenu() {
           </Link>
         </li>
 
-        {val !== "EVM Chain" && (
+        {/* {val !== "EVM Chain" && (
           <li>
             <Link
               prefetch={true}
@@ -150,7 +186,7 @@ function HeaderMenu() {
               Contracts
             </Link>
           </li>
-        )}
+        )} */}
 
         {val == "EVM Chain" && (
           <li>
@@ -173,7 +209,7 @@ function HeaderMenu() {
                 // }
                 defaultValue={"Contracts"}
                 value={"Contracts"}
-                // style={{ minWidth: 139 }} 
+                // style={{ minWidth: 139 }}
                 options={contractHeaderFunction(pathname)}
               />
             </Space>

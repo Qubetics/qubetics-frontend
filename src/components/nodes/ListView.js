@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "antd";
 import {
   FetchingStatus,
   InitStatus,
-  SuccessStatus,
-  tableLimit,
+  tableLimit
 } from "@/constant/constant";
 import { nodesColumns } from "@/constant/graphTableValues";
-import Loader from "../loader/Loader";
-import Page from "@/app/(routes)/notfound/page";
-import Pagination from "../Pagination/Pagination";
+import { useState } from "react";
 import { Datnotfound } from "../../../public/SvgIcons";
+import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
 const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
@@ -51,7 +47,9 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
       <SkeletonTableWrapper
         columns={nodesColumns}
         dataSource={paginatedData}
-        isSkeleton ={nodesStatus === FetchingStatus|| nodesStatus === InitStatus}
+        isSkeleton={
+          nodesStatus === FetchingStatus || nodesStatus === InitStatus
+        }
         pagination={false}
         className="commontable"
         locale={{
@@ -63,7 +61,7 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
           ),
         }}
       />
-      {nodesData.length > 10 && (
+      {nodesData.length > 1 && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

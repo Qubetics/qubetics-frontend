@@ -14,34 +14,32 @@ import FooterLink from "../../../components/footer/FooterLinks";
 import "../../../index.scss";
 import "./dashboard.scss";
 import getStatistics from "@/services/getStatistics";
-import getNativeStats from "@/services/getNativeStats";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
-  
+  const { isEvm, isNetworkChanged } = useGetNetwork();
+ 
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
     }
   }, [pathname]);
 
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
   useEffect(() => {
-    const fetchNativeStats = async () => {
-      try {
-        let respose = await getStatistics();
-        setStats(respose?.data);
-        let res = await getNativeStats();
-        setNativeData(res?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    fetchNativeStats();
+    fetchEVMStats();
   }, []);
-
   return (
     <>
       <section
@@ -82,11 +80,13 @@ const Page = ({ customClass }) => {
                     title="Qubetics Price"
                     discription="Qubetics coin current market price in USD "
                     fetchUrl={graphUrl.token_price}
+                    isNative={false}
                   />
                   <ChainAnalyticsGraph
                     title="Qubetics Coin Transfer"
                     discription="Total TXNs made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
+                    isNative={false}
                   />
                 </div>
                 <div className="grap">
@@ -94,11 +94,13 @@ const Page = ({ customClass }) => {
                     title="Total Accounts"
                     discription="Total accounts number per period"
                     fetchUrl={graphUrl.total_account}
+                    isNative={isEvm}
                   />
                   <ChainAnalyticsGraph
                     title="Transaction Fees"
                     discription="Amount of Qubetics coins paid in fees per period "
                     fetchUrl={graphUrl.txn_fee}
+                    isNative={false}
                   />
                 </div>
               </div>

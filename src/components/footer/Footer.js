@@ -102,9 +102,9 @@ const Footer = () => {
           <Col xs={24} sm={12} lg={5}>
             <h3>Resources</h3>
             <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
+              href="https://www.qubetics.com/"
+              target="_black"
+              // style={{ pointerEvents: "none", color: "gray" }}
             >
               Official web
             </Link>

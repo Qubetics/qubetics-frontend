@@ -293,7 +293,14 @@ export const transactionSummarycolumn = [
               </span>
             </div>
           ) : (
-            text?.toAddress
+            <div className="iconandlink">
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
+                {getAddress(text?.toAddress)}
+              </Link>
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
@@ -444,7 +451,17 @@ export const TransactionDetailsColumns = [
               </span>
             </div>
           ) : (
-            text?.toAddress
+            <div className="iconandlink">
+              <Link
+                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                rel="noopener noreferrer"
+              >
+                {getAddress(text?.toAddress)}
+              </Link>
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
@@ -585,7 +602,14 @@ export const addressDetailColumn = [
               </span>
             </div>
           ) : (
-            text?.toAddress
+            <div className="iconandlink">
+            <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
+              {getAddress(text?.toAddress)}
+            </Link>
+            <span>
+              <CopyText text={text?.toAddress} />
+            </span>
+          </div>
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
