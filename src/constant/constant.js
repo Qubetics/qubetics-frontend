@@ -151,7 +151,7 @@ export const verifyContractConstant = {
   CORRECT_COMPILE: "it should also compile correctly here.",
   MISC_SETTING: "Misc Settings (Runs, EvmVersion setting)",
   INPUT_LABEL: "Please Enter The Contract Address You Would Like To Verify.",
-  SELECT_COMPILE_TYPE: "Please Select Compiler Type",
+  SELECT_COMPILE_TYPE: "Please Select Compilation Type",
   SELECT_COMPILE_VERSION: "Please Select Compiler Version",
   SELECT_LICENSE_TYPE: "Please Select Open Source License Type",
   VERIFY_AND_PUBLISH_CONTRACT: "Verify And Publish Contract",
@@ -217,7 +217,6 @@ export function BlockchainHeaderFunction(currentPath, onClick) {
         </Link>
       ),
     },
-  
   ];
   return blockchainHeader;
 }

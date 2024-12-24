@@ -2,8 +2,10 @@
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
+import InternalSearch from "@/components/InternalSearch/InternalSearch";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -12,16 +14,11 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { TokenColumn } from "@/constant/graphTableValues";
+import useDebounce from "@/hooks/useDebounce";
 import getAllTokens from "@/services/getAllTokens";
-import { Table } from "antd";
+import getInternalSearch from "@/services/getInternalSearchData";
 import { useEffect, useState } from "react";
-import {
-  ContractIcon,
-  Datnotfound,
-  TotalContrat,
-} from "../../../../public/SvgIcons";
-import Page from "../notfound/page";
-import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
 
 function page() {
   const [totalPages, setTotalPages] = useState(1);
@@ -30,7 +27,8 @@ function page() {
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-
+  const [searchText, setSearchText] = useState("");
+  const { debounce } = useDebounce(searchText, 500);
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
@@ -44,8 +42,29 @@ function page() {
       return err;
     }
   };
+  const getSearchData = async (debounce) => {
+    try {
+      setTokenStatus(FetchingStatus);
+      let response = await getInternalSearch(currentPage, tableLimit, debounce);
+      setTokensData(response?.data);
+      const count = Number(response?.data?.tokenCount ?? 0) / tableLimit;
+      setTotalPages(Math.ceil(count ?? 0));
+      setTokenStatus(SuccessStatus);
+    } catch (err) {
+      setTokenStatus(ErrorStatus);
+      return err;
+    }
+  };
+  // useEffect(() => {
+  //   debounce&&
+  //   getSearchData(debounce);
+  // }, [debounce]);
 
   useEffect(() => {
+    if (debounce > 1) {
+      getSearchData(debounce);
+      return;
+    }
     fetchData();
   }, [currentPage]);
 
@@ -79,8 +98,6 @@ function page() {
     }
   };
 
- 
-
   const cards = [
     {
       id: 1,
@@ -97,6 +114,12 @@ function page() {
       contract: false,
     },
   ];
+
+  const handleEnterClick = (e) => {
+    if (e.key === "Enter" && searchText?.length > 0) {
+      getSearchData(searchText);
+    }
+  };
   return (
     <div className="popularPage tokenListSec">
       {/* {tokenStatus === InitStatus || tokenStatus === FetchingStatus ? (
@@ -107,6 +130,7 @@ function page() {
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
         />
+
         <Heading heading="Contracts - EVM Chain" />
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
@@ -123,7 +147,16 @@ function page() {
         </div>
         <div className="tokenInformation">
           <h2>Tokens List</h2>
-          {/* <SearchbarComponent /> */}
+          <InternalSearch
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              if (e.target.value.length === 0) {
+                fetchData();
+              }
+            }}
+            searchText={searchText}
+            onKeyUp={handleEnterClick}
+          />
         </div>
         <SkeletonTableWrapper
           columns={TokenColumn}

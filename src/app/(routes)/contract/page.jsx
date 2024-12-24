@@ -16,6 +16,9 @@ import { contractTableColumn } from "@/constant/graphTableValues";
 import getAllContracts from "@/services/getAllContracts";
 import { useEffect, useState } from "react";
 import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
+import InternalSearch from "@/components/InternalSearch/InternalSearch";
+import getInternalSearch from "@/services/getInternalSearchData";
+import useDebounce from "@/hooks/useDebounce";
 
 const Contract = () => {
   const { isNetworkChanged } = useGetNetwork();
@@ -27,8 +30,9 @@ const Contract = () => {
   const [previousCursor, setPreviousCursor] = useState(1);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [contractStatus, SetContractStatus] = useState(InitStatus);
-  const [contractSearch, setContractSearch] = useState();
+  const [searchText, setSearchText] = useState("");
 
+  const { debounce } = useDebounce(searchText, 500);
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
@@ -46,8 +50,26 @@ const Contract = () => {
       return err;
     }
   };
+  const getSearchData = async (search) => {
+    try {
+      let response = await getInternalSearch(pageToSend, tableLimit, search);
+      setContractData(response?.data);
+      setPreviousCursor(response?.data?.prevCursor);
+      setNextCursor(response?.data?.nextCursor);
+      const count = Number(response?.data?.contractCount ?? 0) / tableLimit;
+      setTotalPages(Math.ceil(count ?? 0));
+      SetContractStatus(SuccessStatus);
+    } catch (err) {
+      SetContractStatus(ErrorStatus);
+      return err;
+    }
+  };
 
   useEffect(() => {
+    if (debounce > 1) {
+      getSearchData(debounce);
+      return;
+    }
     SetContractStatus(FetchingStatus);
     fetchAllContracts();
   }, [currentPage]);
@@ -92,7 +114,11 @@ const Contract = () => {
       setPageToSend(1);
     }
   };
-
+  const handleEnterClick = (e) => {
+    if (e.key === "Enter" && searchText?.length > 0) {
+      getSearchData(searchText);
+    }
+  };
   return (
     <div className="popularPage">
       <div className="container">
@@ -115,7 +141,16 @@ const Contract = () => {
         </div>
         <div className="tokenInformation">
           <h2>Token Information</h2>
-          {/* <SearchbarComponent /> */}
+          <InternalSearch
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              if (e.target.value.length === 0) {
+                fetchAllContracts();
+              }
+            }}
+            searchText={searchText}
+            onKeyUp={handleEnterClick}
+          />{" "}
         </div>
         {/* {contractStatus === InitStatus || contractStatus === FetchingStatus ? (
           <Loader />
