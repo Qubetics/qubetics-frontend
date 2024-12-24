@@ -17,7 +17,7 @@ export default async function getTransactionGraph(chartType) {
       return chartType === TRANS_HISTORY_CHART_SECONDS
         ? { interval: isEVM ? 24 : 1, time: "hourly" }
         : chartType === TRANS_HISTORY_CHART_YEAR
-        ? { interval: isEVM ? 12 : 1, time: "y" }
+        ? { interval: isEVM ? 12 : 1, time: isEVM ? "monthly" : "y" }
         : chartType === TRANS_HISTORY_CHART_MINUTES
         ? { interval: 7, time: isEVM ? "daily" : "d" }
         : { interval: 30, time: isEVM ? "daily" : "d" };

@@ -7,6 +7,8 @@ import { Datnotfound } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
 import "./pagenotfund.scss";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import notFound from "../../../assets/svg/notFount.svg";
 
 function Page({ dashnotfound }) {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -23,7 +25,8 @@ function Page({ dashnotfound }) {
         className={`blocksummary ${dashnotfound ? "dashnotfound" : "notfound"}`}
       >
         <div>
-          <Datnotfound />
+          {/* <Datnotfound /> */}
+          <Image src={notFound} width={150} height={90} />
           <p style={{ color: "white" }}>Data Not Found</p>
         </div>
       </div>

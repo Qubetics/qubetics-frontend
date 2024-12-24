@@ -196,7 +196,7 @@ function page() {
             ),
           }}
         />
-        {totalPages > 10 && (
+        {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}

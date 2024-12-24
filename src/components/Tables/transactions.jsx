@@ -141,7 +141,7 @@ export default function Transactions({ setTxnData }) {
           //   ),
           // }}
         />
-        {totalPages && (
+        {totalPages>1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={page}

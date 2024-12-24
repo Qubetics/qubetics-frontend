@@ -1,11 +1,19 @@
 import {
   BlockchainHeaderFunction,
   contractHeaderFunction,
+  defaultChainOptions,
   EXPLORER_CHAIN_NAME,
+  EXPLORER_CURRENCY_NAME,
   EXPLORER_META_NETWORK_CHAIN_ID,
+  EXPLORER_METAMASK_NAVIGATION,
+  EXPLORER_METAMASK_NETWORK_URL,
+  Messages,
+  METAMASK_CHAIN_NAME,
   Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
+import metamaskSDK from "@web3-onboard/metamask";
+import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
 import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
@@ -13,11 +21,38 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CheckIcon from "../../../public/SvgIcons";
-import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
+import { customToast } from "../common/toast";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
 
+const metamaskSDKWallet = metamaskSDK({
+  options: {
+    injectProvider: true,
+    extensionOnly: true,
+    logging: {
+      developerMode: false,
+    },
+    dappMetadata: {
+      name: "Qubetics",
+    },
+  },
+});
+
+init({
+  wallets: [metamaskSDKWallet],
+  chains: defaultChainOptions,
+  accountCenter: {
+    desktop: {
+      enabled: false, // Disable the pop-up account center on desktop
+    },
+    mobile: {
+      enabled: false, // Disable the pop-up account center on mobile
+    },
+  },
+});
 function HeaderMenu() {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+
   const router = useRouter();
   const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
 
@@ -76,15 +111,86 @@ function HeaderMenu() {
       console.error(error);
     }
   };
-  useEffect(() => {
-    isNetworkAdded();
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("chainType", chainType);
     setIsNetworkChanged(false);
   }, [chainType]);
   const getContainer = (triggerNode) => triggerNode.parentNode;
+
+  const addChainNetwork = async () => {
+    const requestProvider = await connect({
+      autoSelect: {
+        label: "MetaMask",
+        disableModals: true, // Ensure modals are disabled
+      },
+    });
+    const provider = requestProvider[0]?.provider;
+
+    try {
+      if (!provider) {
+        throw new Error(Messages.Install_Metamask);
+      }
+
+      const chainId = await provider.request({ method: "eth_chainId" });
+
+      const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
+
+      if (!provider) {
+        customToast.info(Messages.Install_Metamask);
+      } else {
+        if (!chainId) {
+          throw new Error(Messages.Retrive_Meta_Account);
+        }
+        if (chainId === ChainIdQubetic) {
+          customToast.success(Messages.Same_Network);
+          setIsMetaMaskAdded(true);
+        } else {
+          try {
+            await provider.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: ChainIdQubetic }],
+            });
+            customToast.success(Messages.Successfully_Switched);
+            setIsMetaMaskAdded(true);
+          } catch (switchError) {
+            if (switchError.code === 4902) {
+              try {
+                await provider.request({
+                  method: "wallet_addEthereumChain",
+                  params: [
+                    {
+                      chainId: ChainIdQubetic,
+                      chainName: METAMASK_CHAIN_NAME,
+                      nativeCurrency: {
+                        symbol: EXPLORER_CURRENCY_NAME,
+                        decimals: 18,
+                      },
+                      rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+                      blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+                    },
+                  ],
+                });
+                customToast.success(Messages.Network_Added);
+                setIsMetaMaskAdded(true);
+              } catch (err) {
+                throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
+                setIsMetaMaskAdded(false);
+              }
+            }
+          }
+        }
+      }
+      await provider.on("chainChanged", (chainId) => {
+        if (chainId === EXPLORER_META_NETWORK_CHAIN_ID) {
+          return setIsMetaMaskAdded(true);
+        }
+        setIsMetaMaskAdded(false);
+      });
+    } catch (error) {
+      customToast.error(error.message);
+    }
+  };
 
   return (
     <>
@@ -102,7 +208,8 @@ function HeaderMenu() {
         <li>
           <Space wrap>
             <Select
-              trigger={["hover"]}
+              // trigger={["hover"]}
+              title=""
               getPopupContainer={getContainer}
               className={`headerSelect  ${
                 pathname.includes(Routes.BLOCKS) ||
@@ -124,7 +231,7 @@ function HeaderMenu() {
                 pathname // Passed the current pathname
                 // onCloseDrawer
               )}
-              tooltip={false}
+              tooltip={true}
             />
           </Space>
         </li>
@@ -192,6 +299,7 @@ function HeaderMenu() {
           <li>
             <Space wrap>
               <Select
+                title=""
                 getPopupContainer={getContainer}
                 className={`headerSelect  ${
                   pathname.includes(Routes.CONTRACTS) ||
@@ -309,7 +417,7 @@ function HeaderMenu() {
               Add {EXPLORER_CHAIN_NAME} Network
             </span>
           </button> */}
-          <a className="qubeticNetwork_btn" onClick={addQubetic}>
+          <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
             <span
               style={{ gap: "5px", display: "flex", alignItems: "center" }}
               class="_button-text_1x6ja_100"

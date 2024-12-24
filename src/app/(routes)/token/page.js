@@ -78,6 +78,9 @@ function page() {
       setCurrentPage(1);
     }
   };
+
+ 
+
   const cards = [
     {
       id: 1,
@@ -123,21 +126,20 @@ function page() {
           {/* <SearchbarComponent /> */}
         </div>
         <SkeletonTableWrapper
-          isSkeleton={
-            tokenStatus === FetchingStatus || tokenStatus === InitStatus
-          }
           columns={TokenColumn}
           dataSource={tokensData?.tokens}
           className="commontable"
-          pagination={false}
-          locale={{
-            emptyText: (
-              <div>
-                <Datnotfound />
-                <p>No data </p>
-              </div>
-            ),
-          }}
+          isSkeleton={
+            tokenStatus === FetchingStatus || tokenStatus === InitStatus
+          }
+          // locale={{
+          //   emptyText: (
+          //     <div>
+          //       <Datnotfound />
+          //       <p>No data </p>
+          //     </div>
+          //   ),
+          // }}
         />
         {totalPages > 1 && (
           <Pagination

@@ -33,12 +33,7 @@ export default async function getGraphData(chartType, fetchUrl, chartTitle) {
         : chartType === ALL_CHART_SEVEN_DAY
         ? { interval: 7, time: "d" }
         : { interval: 30, time: "d" };
-    console.log(
-      chartTitle,
-      "chartT",
-      chartTitle !== "Total Accounts",
-      chain === "EVM Chain"
-    );
+
     const response =
       chain === "EVM Chain" || chartTitle !== "Total Accounts"
         ? await fetch(

@@ -70,10 +70,10 @@ function getDeviceType() {
     return "Desktop";
   }
 }
-export const addQubetic = async () => {
+export const addQubetic = async (provider) => {
+  console.log("provider", provider);
   try {
     const deviceType = getDeviceType();
-    const provider = window.ethereum;
     if (deviceType !== "Desktop") {
       if (provider === undefined) {
         const metamaskDappUrl =
@@ -86,10 +86,9 @@ export const addQubetic = async () => {
         return;
       }
     }
-    if (!window.ethereum || window.ethereum.isMetaMask === false) {
+    if (!provider) {
       throw new Error(Messages.Install_Metamask);
     }
-
 
     const chainId = await provider.request({ method: "eth_chainId" });
 

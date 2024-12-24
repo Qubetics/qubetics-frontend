@@ -1,5 +1,4 @@
 "use-client";
-import Page from "@/app/(routes)/notfound/page";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -9,12 +8,12 @@ import {
 } from "@/constant/constant";
 import { contractTransactionsColumn } from "@/constant/graphTableValues";
 import getContractTransactions from "@/services/getContractTransactions";
-import { Table } from "antd";
-import React, { useEffect, useState } from "react";
-import { Datnotfound } from "../../../public/SvgIcons";
-import Loader from "../loader/Loader";
+import { useEffect, useState } from "react";
+import notFound from "../../assets/svg/notFount.svg";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import Image from "next/image";
+
 
 const ContractTransactions = ({ hash, tab }) => {
   const [transactions, setTransactions] = useState([]);
@@ -91,7 +90,7 @@ const ContractTransactions = ({ hash, tab }) => {
         locale={{
           emptyText: (
             <div>
-              <Datnotfound />
+               <Image src={notFound} width={150} height={90} />
               <p>No data </p>
             </div>
           ),

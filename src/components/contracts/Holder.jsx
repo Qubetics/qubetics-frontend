@@ -11,7 +11,8 @@ import getTokenHolders from "@/services/getTokenHolders";
 import { noExponential } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
-
+import Image from "next/image";
+import notFound from "../../assets/svg/notFount.svg";
 const Holder = ({ hash }) => {
   const [tokenHolders, setTokenHolders] = useState([]);
   const [tokenDetails, setTokenDetails] = useState({});
@@ -73,6 +74,14 @@ const Holder = ({ hash }) => {
         }
         columns={HolderColumn}
         dataSource={newArr}
+        locale={{
+          emptyText: (
+            <div>
+              <Image src={notFound} width={150} height={90} />
+              <p>No data </p>
+            </div>
+          ),
+        }}
         pagination={
           holdersCount > tableLimit && {
             current: currentPage,

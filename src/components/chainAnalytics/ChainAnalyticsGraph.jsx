@@ -11,7 +11,7 @@ import {
 } from "@/constant/constant";
 import {
   ALL_CHART_SEVEN_DAY,
-  transactionItems
+  transactionItems,
 } from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
 import { noExponentsValue } from "@/utils/commonFunctions";
@@ -20,7 +20,14 @@ import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription, fetchUrl, setTotalAccount } = props;
+  const {
+    title,
+    discription,
+    fetchUrl,
+    tooltipTitle = "Txn Count",
+    isNative,
+    setTotalAccount,
+  } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
@@ -104,6 +111,7 @@ const ChainAnalyticsGraph = (props) => {
             <ChartAccounts
               data={transactionHisChart?.data}
               chartType={transactionHisChart?.type}
+              name={tooltipTitle}
             />
           ) : (
             <Page />

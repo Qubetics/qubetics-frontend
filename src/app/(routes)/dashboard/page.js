@@ -22,7 +22,7 @@ const Page = ({ customClass }) => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
   const { isEvm, isNetworkChanged } = useGetNetwork();
- 
+
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
@@ -39,7 +39,7 @@ const Page = ({ customClass }) => {
   };
   useEffect(() => {
     fetchEVMStats();
-  }, []);
+  }, [isNetworkChanged]);
   return (
     <>
       <section
@@ -84,7 +84,7 @@ const Page = ({ customClass }) => {
                   />
                   <ChainAnalyticsGraph
                     title="Qubetics Coin Transfer"
-                    discription="Total TXNs made with Qubetics coin per period "
+                    discription="Total Txns made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
                     isNative={false}
                   />

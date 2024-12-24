@@ -1,31 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import { Skeleton, Table, Tabs } from "antd";
 import {
   ErrorStatus,
+  EXPLORER_CURRENCY_NAME,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
-  EXPLORER_CURRENCY_NAME,
   tableLimit,
-  tooltipConstant,
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
-import getTransactionsByAddress from "@/services/getTransactionByAddress";
-import Loader from "@/components/loader/Loader";
 import getAddressDetails from "@/services/getAddressDetails";
+import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber } from "@/utils/commonFunctions";
-import Page from "../../notfound/page";
-import TokenByAddress from "@/components/token";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
+import { Tabs } from "antd";
 
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import { Datnotfound } from "../../../../../public/SvgIcons";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+import { Datnotfound } from "../../../../../public/SvgIcons";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
@@ -123,14 +119,7 @@ const page = ({ params }) => {
               txAddressStatus === FetchingStatus ||
               txAddressStatus === InitStatus
             }
-            locale={{
-              emptyText: (
-                <div>
-                  <Datnotfound />
-                  <p>No data </p>
-                </div>
-              ),
-            }}
+            
           />
           {totalPages > 1 && (
             <Pagination

@@ -31,7 +31,7 @@ const RecentBlocks = () => {
     try {
       setRecentBlockStatus(FetchingStatus);
       let res = await getBlocks(pageNo, dashboardCount);
-    
+
       if (res?.error === false) {
         const accendingBlock = res?.data?.blocks;
         setRecentBlocks(accendingBlock);
@@ -56,6 +56,7 @@ const RecentBlocks = () => {
   }, [isNetworkChanged]);
 
   useEffect(() => {
+    if (webSocketData?.blocks.length === 0) return;
     let index = recentBlocks.findIndex(
       (item) =>
         Number(item?.blocknumber) === Number(webSocketData?.blocks.blocknumber)
@@ -69,7 +70,6 @@ const RecentBlocks = () => {
   const handleClick = () => {
     router.push(Routes.BLOCKS);
   };
-
   return recentBlockStatus === InitStatus ||
     recentBlockStatus === FetchingStatus ? (
     <Loader />

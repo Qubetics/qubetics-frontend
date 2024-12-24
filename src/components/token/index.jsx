@@ -74,6 +74,9 @@ const TokenByAddress = () => {
         columns={tokensByAddressColumn}
         dataSource={tokenData}
         className="commontable"
+        isSkeleton={
+          tokenStatus === FetchingStatus || tokenStatus === InitStatus
+        }
         pagination={false}
         isSkeleton={
           tokenStatus === FetchingStatus || tokenStatus === InitStatus
