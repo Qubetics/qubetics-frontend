@@ -4,7 +4,6 @@ import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import TokenByAddress from "@/components/token";
 import {
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
@@ -115,19 +114,12 @@ const page = ({ params }) => {
             columns={addressDetailColumn}
             dataSource={txAddressData}
             pagination={false}
+            className="commontable"
             isSkeleton={
               txAddressStatus === FetchingStatus ||
               txAddressStatus === InitStatus
             }
-            className="commontable"
-            locale={{
-              emptyText: (
-                <div>
-                  <Datnotfound />
-                  <p>No data </p>
-                </div>
-              ),
-            }}
+            
           />
           {totalPages > 1 && (
             <Pagination

@@ -33,7 +33,7 @@ jobs:
           echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
       - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client        
+        run: npm install @actions/core@1.6.0 @actions/http-client --force    
 
       - name: Get Id Token
         uses: actions/github-script@v6
@@ -61,7 +61,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${HUAWEI_SWR_ENDPOINT}/${HUAWEI_ORGANIZATION}/${HUAWEI_IMAGE}:${{ github.sha }} . --no-cache
+          docker build -t ${HUAWEI_SWR_ENDPOINT}/${HUAWEI_ORGANIZATION}/${HUAWEI_IMAGE}:${{ github.sha }} .
           
       - name: Docker login & Push Docker image to Huawei SWR
         run: |

@@ -14,13 +14,14 @@ import FooterLink from "../../../components/footer/FooterLinks";
 import "../../../index.scss";
 import "./dashboard.scss";
 import getStatistics from "@/services/getStatistics";
-import getNativeStats from "@/services/getNativeStats";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
+  const { isEvm, isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
@@ -28,31 +29,17 @@ const Page = ({ customClass }) => {
     }
   }, [pathname]);
 
-  useEffect(() => {
-    let chain =
-      typeof window !== "undefined" && localStorage.getItem("chainType");
-    if (chain === null || chain === undefined) {
-      chain = "EVM Chain";
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
     }
-    const fetchNativeStats = async () => {
-      try {
-        let res = await getNativeStats();
-        setNativeData(res?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    const fetchEVMStats = async () => {
-      try {
-        let respose = await getStatistics();
-        setStats(respose?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    chain === "EVM Chain" ? fetchEVMStats() : fetchNativeStats();
-  }, [pathname]);
-
+  };
+  useEffect(() => {
+    fetchEVMStats();
+  }, [isNetworkChanged]);
   return (
     <>
       <section
@@ -93,14 +80,12 @@ const Page = ({ customClass }) => {
                     title="Qubetics Price"
                     discription="Qubetics coin current market price in USD "
                     fetchUrl={graphUrl.token_price}
-                    tooltipTitle="Price"
                     isNative={false}
                   />
                   <ChainAnalyticsGraph
                     title="Qubetics Coin Transfer"
                     discription="Total Txns made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
-                    tooltipTitle="Coin Transfer"
                     isNative={false}
                   />
                 </div>
@@ -109,14 +94,12 @@ const Page = ({ customClass }) => {
                     title="Total Accounts"
                     discription="Total accounts number per period"
                     fetchUrl={graphUrl.total_account}
-                    tooltipTitle="Total Account"
-                    isNative={true}
+                    isNative={isEvm}
                   />
                   <ChainAnalyticsGraph
                     title="Transaction Fees"
                     discription="Amount of Qubetics coins paid in fees per period "
                     fetchUrl={graphUrl.txn_fee}
-                    tooltipTitle="Txn Fee"
                     isNative={false}
                   />
                 </div>

@@ -1,12 +1,12 @@
+import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 import {
   ALL_CHARTS_HOUR,
   ALL_CHART_ONE_DAY,
   ALL_CHART_SEVEN_DAY,
   TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getGraphData(chartType, fetchUrl, isNative) {
+export default async function getGraphData(chartType, fetchUrl, chartTitle) {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   if (chain === null || chain === undefined) {
@@ -35,7 +35,7 @@ export default async function getGraphData(chartType, fetchUrl, isNative) {
         : { interval: 30, time: "d" };
 
     const response =
-      chain == "EVM Chain" || !isNative
+      chain === "EVM Chain" || chartTitle !== "Total Accounts"
         ? await fetch(
             `${EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
           )

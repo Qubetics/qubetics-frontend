@@ -3,28 +3,27 @@ import {
   contractHeaderFunction,
   defaultChainOptions,
   EXPLORER_CHAIN_NAME,
+  EXPLORER_CURRENCY_NAME,
+  EXPLORER_META_NETWORK_CHAIN_ID,
+  EXPLORER_METAMASK_NAVIGATION,
+  EXPLORER_METAMASK_NETWORK_URL,
+  Messages,
+  METAMASK_CHAIN_NAME,
   Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
+import metamaskSDK from "@web3-onboard/metamask";
+import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
+import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CheckIcon from "../../../public/SvgIcons";
+import { customToast } from "../common/toast";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
-import CheckIcon from "../../../public/SvgIcons";
-import metamaskSDK from "@web3-onboard/metamask";
-import { init, useConnectWallet } from "@web3-onboard/react";
-import {
-  EXPLORER_METAMASK_NAVIGATION,
-  EXPLORER_METAMASK_NETWORK_URL,
-  EXPLORER_META_NETWORK_CHAIN_ID,
-  Messages,
-  EXPLORER_CURRENCY_NAME,
-  METAMASK_CHAIN_NAME,
-} from "@/constant/constant";
-import { customToast } from "../common/toast";
 
 const metamaskSDKWallet = metamaskSDK({
   options: {
@@ -55,22 +54,61 @@ function HeaderMenu() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   const router = useRouter();
-  const { setIsNetworkChanged } = useGetNetwork();
+  const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
 
   let val = typeof window !== "undefined" && localStorage.getItem("chainType");
   const [chainType, setChainType] = useState(val || "EVM Chain");
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
 
+  // const ristrictedPath = ["/token", "/contract", "/verifyContract"];
+  // useEffect(() => {
+  //   if (val === "Native Chain") {
+  //     if (ristrictedPath.includes(pathname)) {
+  //       router.push("/dashboard");
+  //     }
+  //   }
+  // }, [pathname]);
+
+  useEffect(() => {
+    const cookieValue = getCookie("isEVM");
+    if (cookieValue === undefined) {
+      setCookie("isEVM", true);
+    }
+    if (val === "EVM Chain") {
+      setCookie("isEVM", true);
+    } else {
+      setCookie("isEVM", false);
+    }
+  }, []);
   const handleChainChange = (e) => {
     setChainType(e);
     setIsNetworkChanged(true);
     if (e == "EVM Chain") {
+      setCookie("isEVM", true);
       router.push("/dashboard");
-      // setIsEvm(true);
+      setIsEvm(true);
+      window.location.reload();
     } else {
+      setCookie("isEVM", false);
       router.push("/dashboard");
-      // setIsEvm(false);
+      setIsEvm(false);
+      window.location.reload();
+    }
+  };
+  const isNetworkAdded = async () => {
+    const { ethereum } = window;
+    if (!ethereum) return;
+    try {
+      const chainId = await ethereum.request({ method: "eth_chainId" });
+      setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
+      ethereum.on("chainChanged", (id) => {
+        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
+          return setIsMetaMaskAdded(true);
+        setIsMetaMaskAdded(false);
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 

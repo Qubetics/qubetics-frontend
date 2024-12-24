@@ -37,12 +37,12 @@ const ChainAnalyticsGraph = (props) => {
   const { isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
-    fetchChartData(isNative);
-  }, [transactionHisChart?.type]);
+    fetchChartData(title);
+  }, [transactionHisChart?.type, isNetworkChanged]);
 
-  const fetchChartData = (nativeUrl) => {
+  const fetchChartData = (chartTitle) => {
     setTransactionStatus(FetchingStatus);
-    getGraphData(transactionHisChart?.type, fetchUrl, nativeUrl)
+    getGraphData(transactionHisChart?.type, fetchUrl, chartTitle)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
 

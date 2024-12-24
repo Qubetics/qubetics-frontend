@@ -5,7 +5,7 @@ import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import TableLoader from "@/components/TableLoader/TableLoader";
+
 import {
   chain,
   ErrorStatus,
