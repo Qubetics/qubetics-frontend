@@ -22,6 +22,7 @@ const Page = ({ customClass }) => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
   const { isEvm, isNetworkChanged } = useGetNetwork();
+ 
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
