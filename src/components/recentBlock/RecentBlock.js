@@ -8,6 +8,7 @@ import "src/components/transferInfo/TransferInformation.scss";
 import Link from "next/link";
 const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
+  
   return (
     <div
       className={`recentblocks ${customClass ? customClass : ""}`}
@@ -46,10 +47,7 @@ const RecentBlock = ({ data, customClass }, props) => {
           className="validateSec"
         >
           Validator: &nbsp;
-          <Link
-            className=" hoverTrans"
-            href={`/address/${data?.miner}`}
-          >
+          <Link className=" hoverTrans" href={`/address/${data?.miner}`}>
             {data?.miner ? getAddress(data?.miner) : "-"}
           </Link>
         </p>

@@ -1,20 +1,18 @@
 "use client";
 import {
-  InitStatus,
-  tableLimit,
   ErrorStatus,
-  SuccessStatus,
   FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
 } from "@/constant/constant";
-import { Table } from "antd";
-import Loader from "../loader/Loader";
-import Page from "@/app/(routes)/notfound/page";
-import React, { useEffect, useState } from "react";
-import Pagination from "../Pagination/Pagination";
-import "../transferInfo/TransferInformation.scss";
-import { useGetNetwork } from "../contexts/networkChanged";
-import getTransactionByBlocks from "@/services/getTransactionByBlocks";
 import { TransactionDetailsColumns } from "@/constant/graphTableValues";
+import getTransactionByBlocks from "@/services/getTransactionByBlocks";
+import { useEffect, useState } from "react";
+import { useGetNetwork } from "../contexts/networkChanged";
+import Pagination from "../Pagination/Pagination";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import "../transferInfo/TransferInformation.scss";
 
 const TransactionTable = ({ params }) => {
   const [transactionByBlock, setTransactionByBlock] = useState("");
@@ -69,31 +67,28 @@ const TransactionTable = ({ params }) => {
   };
   return (
     <div>
-      {transactionByBlockStatus === InitStatus ||
-      transactionByBlockStatus === FetchingStatus ? (
-        <Loader />
-      ) : transactionByBlockStatus === SuccessStatus ? (
-        <>
-          <Table
-            columns={TransactionDetailsColumns}
-            dataSource={transactionByBlock}
-            className="commontable"
-            pagination={false}
+      <>
+        <SkeletonTableWrapper
+          columns={TransactionDetailsColumns}
+          dataSource={transactionByBlock}
+          className="commontable"
+          pagination={false}
+          isSkeleton={
+            transactionByBlockStatus === FetchingStatus ||
+            transactionByBlockStatus === InitStatus
+          }
+        />
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={currentPage === 1}
+            disableNext={currentPage === totalPages}
           />
-          {totalPages && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-              disablePrev={currentPage === 1}
-              disableNext={currentPage === totalPages}
-            />
-          )}
-        </>
-      ) : (
-        <Page />
-      )}
+        )}
+      </>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { Skeleton, Table } from "antd";
-import React, { useState } from "react";
+import Image from "next/image";
+import notFound from "../../assets/svg/notFount.svg";
 import "../TableLoader/TableLoader.scss";
 export const SkeletonTableWrapper = ({
   columns,
@@ -8,7 +9,6 @@ export const SkeletonTableWrapper = ({
   className,
   ...props
 }) => {
-
   const renderSkeleton = () => (
     <div className="tableLoader" data-testid="skeleton-container">
       <Skeleton active paragraph={{ rows: 5 }} title={false} className="" />
@@ -32,11 +32,10 @@ export const SkeletonTableWrapper = ({
       />
     </div>
   );
-
+  
   return (
     <>
-      {
-      isSkeleton ? (
+      {isSkeleton ? (
         renderSkeleton()
       ) : (
         <Table
@@ -44,7 +43,18 @@ export const SkeletonTableWrapper = ({
           className={className}
           columns={columns}
           dataSource={dataSource}
-          pagination={false} // Hide pagination during loading
+          pagination={false}
+          showHeader={dataSource !== undefined && dataSource.length > 0}
+          locale={{
+            emptyText: (
+              <div>
+                <Image src={notFound} width={150} height={90} />
+
+                <p>No Data</p>
+              </div>
+            ),
+          }}
+          // Hide pagination during loading
           //   rowKey={(record) => record.key}
         />
       )}

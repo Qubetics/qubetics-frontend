@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Heading from "@/components/heading/Heading";
-import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
-import getTransactions from "@/services/getTransactions";
+import Page from "@/app/(routes)/notfound/page";
 import { useLatestData } from "@/components/contexts/latest_data";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import Loader from "@/components/loader/Loader";
+import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -13,12 +13,10 @@ import {
   dashboardCount,
   pageNo,
 } from "@/constant/constant";
+import getTransactions from "@/services/getTransactions";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import "./style.scss";
-import Page from "@/app/(routes)/notfound/page";
-import Loader from "@/components/loader/Loader";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import { RightOutlined } from "@ant-design/icons";
 
 const RecentTransactions = () => {
   const [recentTxns, setRecentTxns] = useState([]);

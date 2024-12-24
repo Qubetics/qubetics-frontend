@@ -8,10 +8,10 @@ import {
 } from "@/constant/constant";
 import { EventsColumn } from "@/constant/graphTableValues";
 import getTokenEvents from "@/services/getTokenEvents";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Datnotfound } from "../../../public/SvgIcons";
+import notFound from "../../assets/svg/notFount.svg";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
-
 const Events = ({ hash }) => {
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(0);
@@ -63,8 +63,9 @@ const Events = ({ hash }) => {
         locale={{
           emptyText: (
             <div>
-              <Datnotfound />
-              <p>No data </p>
+              <Image src={notFound} width={150} height={90} />
+
+              <p>No Data </p>
             </div>
           ),
         }}

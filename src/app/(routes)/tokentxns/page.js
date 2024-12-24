@@ -76,7 +76,7 @@ function page() {
             className="commontable"
             pagination={false}
           />
-          {totalPages && (
+          {totalPages>1 && (
             <Pagination
               totalPages={totalPages}
               currentPage={currentPage}

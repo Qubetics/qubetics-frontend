@@ -65,6 +65,13 @@ function HeaderMenu() {
   const handleChainChange = (e) => {
     setChainType(e);
     setIsNetworkChanged(true);
+    if (e == "EVM Chain") {
+      router.push("/dashboard");
+      // setIsEvm(true);
+    } else {
+      router.push("/dashboard");
+      // setIsEvm(false);
+    }
   };
 
   useEffect(() => {
@@ -163,7 +170,8 @@ function HeaderMenu() {
         <li>
           <Space wrap>
             <Select
-              trigger={["hover"]}
+              // trigger={["hover"]}
+              title=""
               getPopupContainer={getContainer}
               className={`headerSelect  ${
                 pathname.includes(Routes.BLOCKS) ||
@@ -185,19 +193,23 @@ function HeaderMenu() {
                 pathname // Passed the current pathname
                 // onCloseDrawer
               )}
-              tooltip={false}
+              tooltip={true}
             />
           </Space>
         </li>
-        <li>
-          <Link
-            prefetch={true}
-            className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
-            href={Routes.TOKEN}
-          >
-            Tokens
-          </Link>
-        </li>
+        {val === "EVM Chain" && (
+          <li>
+            <Link
+              prefetch={true}
+              className={
+                pathname.includes(Routes.TOKEN) ? "active" : "inactive"
+              }
+              href={Routes.TOKEN}
+            >
+              Tokens
+            </Link>
+          </li>
+        )}
         <li>
           <Link
             prefetch={true}
@@ -224,7 +236,7 @@ function HeaderMenu() {
           </Link>
         </li>
 
-        {val !== "EVM Chain" && (
+        {/* {val !== "EVM Chain" && (
           <li>
             <Link
               prefetch={true}
@@ -243,12 +255,13 @@ function HeaderMenu() {
               Contracts
             </Link>
           </li>
-        )}
+        )} */}
 
         {val == "EVM Chain" && (
           <li>
             <Space wrap>
               <Select
+                title=""
                 getPopupContainer={getContainer}
                 className={`headerSelect  ${
                   pathname.includes(Routes.CONTRACTS) ||

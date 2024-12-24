@@ -2,18 +2,12 @@
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
-  formatMillionNumber,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
-import {
-  CheckCircleFilled,
-  ClockCircleFilled,
-  CloseCircleFilled,
-} from "@ant-design/icons";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
@@ -293,7 +287,14 @@ export const transactionSummarycolumn = [
               </span>
             </div>
           ) : (
-            text?.toAddress
+            <div className="iconandlink">
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
+                {getAddress(text?.toAddress)}
+              </Link>
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
@@ -444,7 +445,17 @@ export const TransactionDetailsColumns = [
               </span>
             </div>
           ) : (
-            text?.toAddress
+            <div className="iconandlink">
+              <Link
+                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                rel="noopener noreferrer"
+              >
+                {getAddress(text?.toAddress)}
+              </Link>
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
@@ -585,7 +596,14 @@ export const addressDetailColumn = [
               </span>
             </div>
           ) : (
-            text?.toAddress
+            <div className="iconandlink">
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
+                {getAddress(text?.toAddress)}
+              </Link>
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
@@ -775,18 +793,22 @@ export const contractTableColumn = (currentChain) => [
     ),
   },
   {
-    id: "verified",
-    title: "Verified",
-    key: "Verified",
+    id: "status",
+    title: "Status",
+    key: "status",
     render: (text) => (
       <span className="">
         {text?.verificationType && text?.verificationType > 0 ? (
-          <CheckCircleFilled className="green-icon" />
+          // <CheckCircleFilled className="green-icon" />
+          <p className="green-icon">Verified</p>
         ) : text?.verificationType && text?.verificationType == -1 ? (
-          <CloseCircleFilled className="red-icon" />
-        ) : text?.verificationType && text?.verificationType == 0 ? (
-          <ClockCircleFilled className="yellow-icon" />
+          // <CloseCircleFilled className="red-icon" />
+          <p className="red-icon">Unverified</p>
+        ) : (text?.verificationType && text?.verificationType == 0) ||
+          text?.verificationType === null ? (
+          <p className="yellow-icon">Pending</p>
         ) : (
+          // <ClockCircleFilled className="yellow-icon" />
           "-"
         )}
       </span>

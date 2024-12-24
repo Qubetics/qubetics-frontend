@@ -29,18 +29,29 @@ const Page = ({ customClass }) => {
   }, [pathname]);
 
   useEffect(() => {
+    let chain =
+      typeof window !== "undefined" && localStorage.getItem("chainType");
+    if (chain === null || chain === undefined) {
+      chain = "EVM Chain";
+    }
     const fetchNativeStats = async () => {
       try {
-        let respose = await getStatistics();
-        setStats(respose?.data);
         let res = await getNativeStats();
         setNativeData(res?.data);
       } catch (err) {
         return err;
       }
     };
-    fetchNativeStats();
-  }, []);
+    const fetchEVMStats = async () => {
+      try {
+        let respose = await getStatistics();
+        setStats(respose?.data);
+      } catch (err) {
+        return err;
+      }
+    };
+    chain === "EVM Chain" ? fetchEVMStats() : fetchNativeStats();
+  }, [pathname]);
 
   return (
     <>
@@ -83,12 +94,14 @@ const Page = ({ customClass }) => {
                     discription="Qubetics coin current market price in USD "
                     fetchUrl={graphUrl.token_price}
                     tooltipTitle="Price"
+                    isNative={false}
                   />
                   <ChainAnalyticsGraph
                     title="Qubetics Coin Transfer"
                     discription="Total Txns made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
                     tooltipTitle="Coin Transfer"
+                    isNative={false}
                   />
                 </div>
                 <div className="grap">
@@ -97,12 +110,14 @@ const Page = ({ customClass }) => {
                     discription="Total accounts number per period"
                     fetchUrl={graphUrl.total_account}
                     tooltipTitle="Total Account"
+                    isNative={true}
                   />
                   <ChainAnalyticsGraph
                     title="Transaction Fees"
                     discription="Amount of Qubetics coins paid in fees per period "
                     fetchUrl={graphUrl.txn_fee}
                     tooltipTitle="Txn Fee"
+                    isNative={false}
                   />
                 </div>
               </div>

@@ -25,6 +25,7 @@ const ChainAnalyticsGraph = (props) => {
     discription,
     fetchUrl,
     tooltipTitle = "Txn Count",
+    isNative,
     setTotalAccount,
   } = props;
   const webSocketData = useLatestData();
@@ -36,12 +37,12 @@ const ChainAnalyticsGraph = (props) => {
   const { isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
-    fetchChartData();
+    fetchChartData(isNative);
   }, [transactionHisChart?.type]);
 
-  const fetchChartData = () => {
+  const fetchChartData = (nativeUrl) => {
     setTransactionStatus(FetchingStatus);
-    getGraphData(transactionHisChart?.type, fetchUrl)
+    getGraphData(transactionHisChart?.type, fetchUrl, nativeUrl)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
 

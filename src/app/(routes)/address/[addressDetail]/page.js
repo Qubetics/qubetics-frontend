@@ -1,29 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import { Table, Tabs } from "antd";
+import TokenByAddress from "@/components/token";
 import {
   ErrorStatus,
+  EXPLORER_CURRENCY_NAME,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
-  EXPLORER_CURRENCY_NAME,
   tableLimit,
-  tooltipConstant,
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
-import getTransactionsByAddress from "@/services/getTransactionByAddress";
-import Loader from "@/components/loader/Loader";
 import getAddressDetails from "@/services/getAddressDetails";
+import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber } from "@/utils/commonFunctions";
-import Page from "../../notfound/page";
-import TokenByAddress from "@/components/token";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
+import { Tabs } from "antd";
 
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import { Datnotfound } from "../../../../../public/SvgIcons";
 
 const page = ({ params }) => {
@@ -113,10 +111,14 @@ const page = ({ params }) => {
       key: "0",
       children: (
         <>
-          <Table
+          <SkeletonTableWrapper
             columns={addressDetailColumn}
             dataSource={txAddressData}
             pagination={false}
+            isSkeleton={
+              txAddressStatus === FetchingStatus ||
+              txAddressStatus === InitStatus
+            }
             className="commontable"
             locale={{
               emptyText: (
@@ -127,16 +129,18 @@ const page = ({ params }) => {
               ),
             }}
           />
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            disablePrev={currentPage === 1}
-            disableNext={currentPage === totalPages}
-            handleFirst={handleFirst}
-            handleLast={handleLast}
-          />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handleNext={handleNext}
+              handlePrevious={handlePrevious}
+              disablePrev={currentPage === 1}
+              disableNext={currentPage === totalPages}
+              handleFirst={handleFirst}
+              handleLast={handleLast}
+            />
+          )}
         </>
       ),
     },

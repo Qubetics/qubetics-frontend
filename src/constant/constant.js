@@ -217,26 +217,7 @@ export function BlockchainHeaderFunction(currentPath, onClick) {
         </Link>
       ),
     },
-    // {
-    //   key: "3",
-    //   value: "Validator",
-    //   className: currentPath === Routes.VALIDATORS ? "activeOptions" : "",
-    //   label: (
-    //     <Link onClick={onClick} href="/validators">
-    //       Validators
-    //     </Link>
-    //   ),
-    // },
-    // {
-    //   key: "4",
-    //   value: "Nodes",
-    //   className: currentPath === Routes.NODES ? "activeOptions" : "",
-    //   label: (
-    //     <Link onClick={onClick} href="/nodes">
-    //       Nodes
-    //     </Link>
-    //   ),
-    // },
+  
   ];
   return blockchainHeader;
 }

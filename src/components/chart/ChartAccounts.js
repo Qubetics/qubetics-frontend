@@ -28,18 +28,33 @@ const ChartAccount = ({ data, chartType, name }) => {
         enabled: false,
       },
       tooltip: {
+        hideDelay: 0,
         useHTML: true, // Enable HTML for custom styling
         formatter: function () {
           const xAxisData = this.series.xAxis.categories[this.x];
           return `
             <div style="  white-space: normal; 
         font-size: 15px;
+        text-align: center;
         padding: 10px; 
         min-height:70px;
         min-width: 150px;">
         ${xAxisData}<br>
         ${name}: ${this.y} 
         </div>`;
+        },
+        positioner: function (labelWidth, labelHeight, point) {
+          const chart = this.chart;
+          const tooltipX = point.plotX + chart.plotLeft - labelWidth / 2;
+          const tooltipY = point.plotY + chart.plotTop - labelHeight - 10;
+
+          // Adjust for edges
+          const x = Math.max(
+            Math.min(tooltipX, chart.chartWidth - labelWidth - 10),
+            10
+          );
+          const y = Math.max(tooltipY, 10); // Avoid overlapping the top of the chart
+          return { x, y };
         },
         backgroundColor: "rgba(255, 255, 255, 0.1)",
         borderColor: "rgba(226, 66, 202, 0.5)",

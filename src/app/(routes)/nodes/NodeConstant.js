@@ -49,10 +49,10 @@ const getColorForCountry = (countryName) => {
 };
 
 export const getMarker = (lat, long, country_name) => {
-  const mapLeftBoundary = -180;
-  const mapRightBoundary = 180;
+  const mapLeftBoundary = -250;
+  const mapRightBoundary = 240;
   const mapTopBoundary = 90;
-  const mapBottomBoundary = -90;
+  const mapBottomBoundary = -80;
 
   let xPercentage =
     ((long - mapLeftBoundary) / (mapRightBoundary - mapLeftBoundary)) * 100;
