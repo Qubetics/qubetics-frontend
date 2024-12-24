@@ -14,44 +14,31 @@ import FooterLink from "../../../components/footer/FooterLinks";
 import "../../../index.scss";
 import "./dashboard.scss";
 import getStatistics from "@/services/getStatistics";
-import getNativeStats from "@/services/getNativeStats";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
-
+  const { isEvm, isNetworkChanged } = useGetNetwork();
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
     }
   }, [pathname]);
-  useEffect(() => {
-    let chain =
-      typeof window !== "undefined" && localStorage.getItem("chainType");
-    if (chain === null || chain === undefined) {
-      chain = "EVM Chain";
-    }
-    const fetchNativeStats = async () => {
-      try {
-        let res = await getNativeStats();
-        setNativeData(res?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    const fetchEVMStats = async () => {
-      try {
-        let respose = await getStatistics();
-        setStats(respose?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    chain === "EVM Chain" ? fetchEVMStats() : fetchNativeStats();
-  }, [pathname]);
 
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+  useEffect(() => {
+    fetchEVMStats();
+  }, []);
   return (
     <>
       <section
@@ -106,7 +93,7 @@ const Page = ({ customClass }) => {
                     title="Total Accounts"
                     discription="Total accounts number per period"
                     fetchUrl={graphUrl.total_account}
-                    isNative={true}
+                    isNative={isEvm}
                   />
                   <ChainAnalyticsGraph
                     title="Transaction Fees"

@@ -10,19 +10,17 @@ import {
   SuccessStatus,
 } from "@/constant/constant";
 import {
-  TRANS_HISTORY_CHART_YEAR,
-  transactionItems,
-  TRANS_HISTORY_CHART_HOURS,
   ALL_CHART_SEVEN_DAY,
+  transactionItems
 } from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
+import { noExponentsValue } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
-import { noExponentsValue } from "@/utils/commonFunctions";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription, fetchUrl, setTotalAccount,isNative, } = props;
+  const { title, discription, fetchUrl, setTotalAccount } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
@@ -32,12 +30,12 @@ const ChainAnalyticsGraph = (props) => {
   const { isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
-    fetchChartData(isNative);
-  }, [transactionHisChart?.type]);
+    fetchChartData(title);
+  }, [transactionHisChart?.type, isNetworkChanged]);
 
-  const fetchChartData = (nativeUrl) => {
+  const fetchChartData = (chartTitle) => {
     setTransactionStatus(FetchingStatus);
-    getGraphData(transactionHisChart?.type, fetchUrl,nativeUrl)
+    getGraphData(transactionHisChart?.type, fetchUrl, chartTitle)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
 

@@ -3,11 +3,9 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { tooltipConstant } from "@/constant/constant";
-import getNativeStats from "@/services/getNativeStats";
-import getStatistics from "@/services/getStatistics";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   AvgBlockTime,
   Marcketcap,

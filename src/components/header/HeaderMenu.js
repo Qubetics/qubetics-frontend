@@ -18,7 +18,7 @@ import CheckIcon from "../../../public/SvgIcons";
 
 function HeaderMenu() {
   const router = useRouter();
-  const { setIsNetworkChanged } = useGetNetwork();
+  const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
 
   let val = typeof window !== "undefined" && localStorage.getItem("chainType");
   const [chainType, setChainType] = useState(val || "EVM Chain");
@@ -28,13 +28,15 @@ function HeaderMenu() {
   const handleChainChange = (e) => {
     setChainType(e);
     setIsNetworkChanged(true);
-    // if (e == "EVM Chain") {
-    //   router.push("/dashboard");
-    //   setIsEvm(true);
-    // } else {
-    //   router.push("/dashboard");
-    //   setIsEvm(false);
-    // }
+    if (e == "EVM Chain") {
+      router.push("/dashboard");
+      setIsEvm(true);
+      window.location.reload();
+    } else {
+      router.push("/dashboard");
+      setIsEvm(false);
+      window.location.reload();
+    }
   };
   const isNetworkAdded = async () => {
     const { ethereum } = window;
