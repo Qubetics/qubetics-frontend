@@ -35,6 +35,7 @@ jobs:
             echo "GIT_USERNAME=${{ secrets.GIT_USERNAME }}" >> $GITHUB_ENV
             echo "GIT_EMAIL=${{ secrets.GIT_EMAIL }}" >> $GITHUB_ENV
             echo "BRANCH=${{ secrets.BRANCH }}" >> $GITHUB_ENV
+            echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
           else
             echo "Not in dev or qa branch, skipping Docker build"
             exit 0
