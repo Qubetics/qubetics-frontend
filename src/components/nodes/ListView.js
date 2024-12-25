@@ -1,11 +1,7 @@
-import {
-  FetchingStatus,
-  InitStatus,
-  tableLimit
-} from "@/constant/constant";
+import { FetchingStatus, InitStatus, tableLimit } from "@/constant/constant";
 import { nodesColumns } from "@/constant/graphTableValues";
 import { useState } from "react";
-import { Datnotfound } from "../../../public/SvgIcons";
+import { Datnotfound } from "../../assets/svg/SvgIcons";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
@@ -52,14 +48,6 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
         }
         pagination={false}
         className="commontable"
-        locale={{
-          emptyText: (
-            <div>
-              <Datnotfound />
-              <p>No data </p>
-            </div>
-          ),
-        }}
       />
       {nodesData.length > 1 && (
         <Pagination

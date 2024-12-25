@@ -20,10 +20,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import CheckIcon from "../../../public/SvgIcons";
+import CheckIcon from "../../assets/svg/SvgIcons";
 import { customToast } from "../common/toast";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
+import metaImage from "../../assets/svg/metafox.svg";
 
 const metamaskSDKWallet = metamaskSDK({
   options: {
@@ -231,7 +232,7 @@ function HeaderMenu() {
                 pathname // Passed the current pathname
                 // onCloseDrawer
               )}
-              tooltip={true}
+              // tooltip={true}
             />
           </Space>
         </li>
@@ -347,58 +348,6 @@ function HeaderMenu() {
           </Space>
         </li> */}
 
-        {/*
-        <li>
-          <Link
-            className={pathname === Routes.STATS ? "active" : ""}
-            href={Routes.STATS}
-            onClick={() => {
-              onCloseDrawer();
-              router.push(`${Routes.STATS}`);
-            }}
-          >
-            Charts And Stats
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={pathname === Routes.TOKEN ? "active" : ""}
-            href={Routes.TOKEN}
-            onClick={() => {
-              onCloseDrawer();
-              router.push(`${Routes.TOKEN}`);
-            }}
-          >
-            Top Tokens
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={pathname === Routes.VALIDATORS ? "active" : ""}
-            href={Routes.VALIDATORS}
-            onClick={() => {
-              onCloseDrawer();
-              router.push("/validators");
-            }}
-          >
-            Validators
-          </Link>
-        </li>
-
-        <li>
-          <Link
-            className={pathname === Routes.NODES ? "active" : ""}
-            href={Routes.NODES}
-            onClick={() => {
-              onCloseDrawer();
-              router.push(`${Routes.NODES}`);
-            }}
-          >
-            Nodes
-          </Link>
-        </li>
-        */}
-
         {SHOW_FAUCET == 1 && (
           <li>
             <Link
@@ -422,7 +371,7 @@ function HeaderMenu() {
               style={{ gap: "5px", display: "flex", alignItems: "center" }}
               class="_button-text_1x6ja_100"
             >
-              <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
+              <Image src={metaImage} width={25} height={25} alt="metafox" />
               {isMetaMaskAdded
                 ? `${EXPLORER_CHAIN_NAME} Network Added`
                 : `Add ${EXPLORER_CHAIN_NAME} Network`}

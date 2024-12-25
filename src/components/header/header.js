@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { HamburgerIcon } from "../../../public/SvgIcons";
+import { HamburgerIcon } from "../../assets/svg/SvgIcons";
 import LogoIcon from "../../assets/svg/NewLogo.svg";
 import { useLatestData } from "../contexts/latest_data";
 import { useGetNetwork } from "../contexts/networkChanged";

@@ -92,6 +92,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                   data-tooltip-id={`node-tooltip-${index}`}
                 />
                 <ReactTooltip
+                  key={`node-tooltip-${index}`}
                   id={`node-tooltip-${index}`}
                   place={"top"}
                   content={el.location.country}

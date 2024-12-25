@@ -24,7 +24,7 @@ import {
   Datnotfound,
   Onchainapy,
   Totalvalidators,
-} from "../../../../public/SvgIcons";
+} from "../../../assets/svg/SvgIcons";
 import "./validators.scss";
 
 function page() {

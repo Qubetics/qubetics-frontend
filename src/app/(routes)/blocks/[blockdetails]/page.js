@@ -6,7 +6,7 @@ import {
   BlockIcondark,
   TransIcon,
   TransIcondark,
-} from "../../../../../public/SvgIcons";
+} from "../../../../assets/svg/SvgIcons";
 import Heading from "@/components/heading/Heading";
 import { Tabs } from "antd";
 import BlockDetailDescription from "@/components/blockDetailDescription/BlockDetaildescription";

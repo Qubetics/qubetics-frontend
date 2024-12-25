@@ -1,8 +1,8 @@
 "use client";
 import { useThemeData } from "@/components/contexts/theme_context";
-import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
+import { Searchicon, Searchicondark } from "../../assets/svg/SvgIcons";
 
-const InternalSearch = ({ searchText, onChange ,onKeyUp}) => {
+const InternalSearch = ({ searchText, onChange, onKeyUp }) => {
   const { isLight } = useThemeData();
 
   const handleEnterClick = (e) => {

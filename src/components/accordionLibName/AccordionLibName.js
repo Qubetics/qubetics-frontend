@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { NextArrowIcon } from "../../../public/SvgIcons";
+import { NextArrowIcon } from "../../assets/svg/SvgIcons";
 import CustomInput from "../customInput/CustomInput";
 import "../verifySmartContract/VerifySmartCont.scss";
 import { Checkbox } from "antd";
@@ -39,7 +39,9 @@ function AccordionLibName() {
   return (
     <div className="libraryName">
       <div className="checkboxItem">
-        <Checkbox onChange={onChange}><p>Add contract Library</p></Checkbox>
+        <Checkbox onChange={onChange}>
+          <p>Add contract Library</p>
+        </Checkbox>
       </div>
       {isChecked &&
         inputs.map((input, index) => (

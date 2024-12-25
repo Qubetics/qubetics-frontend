@@ -8,8 +8,9 @@ import {
   Telegram,
   TikTok,
   Twitter,
-} from "../../../public/SvgIcons";
+} from "../../assets/svg/SvgIcons";
 import "./Footer.scss";
+import Logo from "../../assets/svg/NewLogo.svg";
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -30,7 +31,7 @@ const Footer = () => {
           <Col xs={24} sm={12} lg={7}>
             <h2>
               {" "}
-              <Image src="/NewLogo.svg" height={50} width={177} alt="logo" />
+              <Image src={Logo} height={50} width={177} alt="logo" />
             </h2>
             <p>
               Build without limits. Qubetics an interoperable ecosystem uniting

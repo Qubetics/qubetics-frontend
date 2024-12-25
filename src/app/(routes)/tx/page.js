@@ -13,7 +13,7 @@ import {
   ActiveAccountToday,
   ContractTransactions,
   TotalTransactions,
-} from "../../../../public/SvgIcons";
+} from "../../../assets/svg/SvgIcons";
 import "../blocks/blocksummary.scss";
 
 const Transactionsummary = () => {

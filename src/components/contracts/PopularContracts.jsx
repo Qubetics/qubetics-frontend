@@ -4,7 +4,7 @@ import React from "react";
 import "../component.scss";
 import { formatDate } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
-import { SettingBox } from "../../../public/SvgIcons";
+import { SettingBox } from "../../assets/svg/SvgIcons";
 
 import { FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import Page from "@/app/(routes)/notfound/page";
@@ -23,10 +23,7 @@ const PopularContracts = (props) => {
             <SettingBox />
             <h4> {item?.contractName ? item?.contractName : "-"}</h4>
           </div>
-          <Link
-            className="linkdata"
-            href={`/contract/${item?.address}`}
-          >
+          <Link className="linkdata" href={`/contract/${item?.address}`}>
             <div className="popularContract_inner">
               <ul>
                 <li>
@@ -40,9 +37,7 @@ const PopularContracts = (props) => {
                 <li>
                   <span>Contract Address</span>
                   <Link href="">
-                    {item?.address
-                      ? getAddress(item?.address)
-                      : "-"}
+                    {item?.address ? getAddress(item?.address) : "-"}
                   </Link>
                 </li>
                 <li>

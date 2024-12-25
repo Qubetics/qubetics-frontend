@@ -188,7 +188,7 @@ export const nodePerformanceData = (blockHeight) => {
 export const tooltipContent = {
   block_Height: "Total number of blocks produced since the genesis block.",
   bonded_Coins: "Total amount of 5ire staked in the network.",
-  total_Nodes: "The total number of nodes connected to the 5ire network.",
+  total_Nodes: "The total number of nodes connected to the Qubetic network.",
   last_Block: "The time when the last block is finalized in UTC format.",
   TPB: " Transactions per block. Display the average number of transactions recorded in a block during the last three seconds.",
   Countries: "The number of countries from which nodes are connected.",

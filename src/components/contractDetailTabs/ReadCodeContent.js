@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, Button } from "antd";
 import "./ContractDtlTabs.scss";
-import { LinkChain } from "../../../public/SvgIcons";
+import { LinkChain } from "../../assets/svg/SvgIcons";
 import CustomInput from "../customInput/CustomInput";
 import Web3 from "web3";
 import { WEB_PROVIDER_URL } from "@/constant/constant";

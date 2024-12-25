@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ContractInfo from "./ContractInfo";
 import { Collapse, Button, Checkbox } from "antd";
 import "./ContractDtlTabs.scss";
-import { LinkChain } from "../../../public/SvgIcons";
+import { LinkChain } from "../../assets/svg/SvgIcons";
 import CustomInput from "../customInput/CustomInput";
 import Web3 from "web3";
 import { useContractData } from "../contexts/contractContext";

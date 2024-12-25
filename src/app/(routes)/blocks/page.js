@@ -6,6 +6,7 @@ import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   chain,
   ErrorStatus,
@@ -20,16 +21,15 @@ import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
 import getAddress from "@/utils/getAddress";
-import { Skeleton, Table, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   AvgBlockTime,
   LatestblockNew,
   Totalvalidators,
-} from "../../../../public/SvgIcons";
+} from "../../../assets/svg/SvgIcons";
 import "./blocksummary.scss";
-import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
 

@@ -1,36 +1,33 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Tabs } from "antd";
-import { useParams } from "next/navigation";
-import ContractDetails from "@/components/contracts/ContractDetails";
-import Heading from "@/components/heading/Heading";
-import ContractTransactions from "@/components/contracts/ContractTransactions";
-import getContractDetails from "@/services/getContractDetails";
 import BlockDetail from "@/components/blockDetail/BlockDetail";
-import Loader from "@/components/loader/Loader";
-import Page from "../../notfound/page";
-import Holder from "@/components/contracts/Holder";
-import Events from "@/components/contracts/Events";
+import { useContractData } from "@/components/contexts/contractContext";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+import ContractDetails from "@/components/contracts/ContractDetails";
+import ContractTransactions from "@/components/contracts/ContractTransactions";
+import Events from "@/components/contracts/Events";
+import Holder from "@/components/contracts/Holder";
+import Heading from "@/components/heading/Heading";
+import Loader from "@/components/loader/Loader";
+import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
   ErrorStatus,
   FetchingStatus,
   InitStatus,
-  Routes,
   SuccessStatus,
-  contractTypes,
+  contractTypes
 } from "@/constant/constant";
+import getContractDetails from "@/services/getContractDetails";
 import {
   capitalizeWord,
   formatMillionNumber,
   noExponential,
 } from "@/utils/commonFunctions";
-import { useContractData } from "@/components/contexts/contractContext";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
-import { SmallLogo1 } from "../../../../../public/SvgIcons";
+import { Tabs } from "antd";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Page from "../../notfound/page";
 
 const ContractDetail = () => {
   const [contractDetail, setContractDetail] = useState([]);

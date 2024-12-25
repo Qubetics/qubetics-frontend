@@ -21,7 +21,6 @@ import { Tabs } from "antd";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import { Datnotfound } from "../../../../../public/SvgIcons";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
@@ -119,7 +118,6 @@ const page = ({ params }) => {
               txAddressStatus === FetchingStatus ||
               txAddressStatus === InitStatus
             }
-            
           />
           {totalPages > 1 && (
             <Pagination

@@ -15,7 +15,7 @@ import {
 import { contractTableColumn } from "@/constant/graphTableValues";
 import getAllContracts from "@/services/getAllContracts";
 import { useEffect, useState } from "react";
-import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
+import { ContractIcon, TotalContrat } from "../../../assets/svg/SvgIcons";
 import InternalSearch from "@/components/InternalSearch/InternalSearch";
 import getInternalSearch from "@/services/getInternalSearchData";
 import useDebounce from "@/hooks/useDebounce";

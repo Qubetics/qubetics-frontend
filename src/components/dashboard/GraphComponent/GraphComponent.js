@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./GraphComponent.scss";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
+import { useLatestData } from "@/components/contexts/latest_data";
+import { useThemeData } from "@/components/contexts/theme_context";
+import { tooltipConstant } from "@/constant/constant";
+import getNativeStats from "@/services/getNativeStats";
+import {
+  formatMillionNumber,
+  randomNoGenerator,
+} from "@/utils/commonFunctions";
+import { Col, Row } from "antd";
+import { useEffect, useState } from "react";
 import {
   Blocktime,
   Blocktimedark,
@@ -14,17 +22,8 @@ import {
   Transfericondark,
   Txblock,
   Txblockdark,
-} from "../../../../public/SvgIcons";
-import { useThemeData } from "@/components/contexts/theme_context";
-import { Col, Row, Tooltip } from "antd";
-import { tooltipConstant } from "@/constant/constant";
-import TransactionHistory from "../Graphs/TransactionHistory";
-import { useLatestData } from "@/components/contexts/latest_data";
-import {
-  formatMillionNumber,
-  randomNoGenerator,
-} from "@/utils/commonFunctions";
-import getNativeStats from "@/services/getNativeStats";
+} from "../../../assets/svg/SvgIcons";
+import "./GraphComponent.scss";
 
 function GraphComponent() {
   const { isLight } = useThemeData();

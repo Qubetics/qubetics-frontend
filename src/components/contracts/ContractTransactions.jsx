@@ -14,7 +14,6 @@ import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Image from "next/image";
 
-
 const ContractTransactions = ({ hash, tab }) => {
   const [transactions, setTransactions] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
@@ -90,7 +89,7 @@ const ContractTransactions = ({ hash, tab }) => {
         locale={{
           emptyText: (
             <div>
-               <Image src={notFound} width={150} height={90} />
+              <Image src={notFound} width={150} height={90} />
               <p>No data </p>
             </div>
           ),

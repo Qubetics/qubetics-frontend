@@ -7,13 +7,13 @@ import {
 } from "@/constant/constant";
 import { tokensByAddressColumn } from "@/constant/graphTableValues";
 import getTokenByAddress from "@/services/getTokenByAddress";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Datnotfound } from "../../../public/SvgIcons";
 import { useGetNetwork } from "../contexts/networkChanged";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
-
+import notFound from "../../assets/svg/notFount.svg";
 const TokenByAddress = () => {
   const [tokenData, setTokenData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -78,13 +78,10 @@ const TokenByAddress = () => {
           tokenStatus === FetchingStatus || tokenStatus === InitStatus
         }
         pagination={false}
-        isSkeleton={
-          tokenStatus === FetchingStatus || tokenStatus === InitStatus
-        }
         locale={{
           emptyText: (
             <div>
-              <Datnotfound />
+              <Image src={notFound} width={150} height={80} />
               <p>No data </p>
             </div>
           ),

@@ -1,7 +1,7 @@
 // CustomBreadcrumb.jsx
 import React from "react";
 import { Breadcrumb } from "antd";
-import { BreadCrumbArrow } from "../../../public/SvgIcons";
+import { BreadCrumbArrow } from "../../assets/svg/SvgIcons";
 
 const CustomBreadcrumb = ({ items, activeIndex, activeClassName }) => {
   return (

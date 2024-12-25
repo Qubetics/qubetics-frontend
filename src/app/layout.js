@@ -23,7 +23,7 @@ export async function generateMetadata({ params, searchParams }) {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning={true} lang="en">
       <Head>
         <meta
           name="viewport"

@@ -18,7 +18,7 @@ import useDebounce from "@/hooks/useDebounce";
 import getAllTokens from "@/services/getAllTokens";
 import getInternalSearch from "@/services/getInternalSearchData";
 import { useEffect, useState } from "react";
-import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
+import { ContractIcon, TotalContrat } from "../../../assets/svg/SvgIcons";
 
 function page() {
   const [totalPages, setTotalPages] = useState(1);

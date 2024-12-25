@@ -32,7 +32,7 @@ export const SkeletonTableWrapper = ({
       />
     </div>
   );
-  
+
   return (
     <>
       {isSkeleton ? (
@@ -43,12 +43,13 @@ export const SkeletonTableWrapper = ({
           className={className}
           columns={columns}
           dataSource={dataSource}
+          rowKey={"id"}
           pagination={false}
           showHeader={dataSource !== undefined && dataSource.length > 0}
           locale={{
             emptyText: (
               <div>
-                <Image src={notFound} width={150} height={90} />
+                <Image src={notFound} width={150} height={90} alt="no-found" />
 
                 <p>No Data</p>
               </div>

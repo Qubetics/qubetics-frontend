@@ -117,7 +117,7 @@ const RecentTransactions = () => {
           recentTxns.slice(0, 4)?.map((res, index) => {
             return (
               <RecentTransaction
-                key={res?.txString}
+                key={index}
                 customClass="carousel-item"
                 data={res}
               />

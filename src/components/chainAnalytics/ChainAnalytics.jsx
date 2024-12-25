@@ -3,15 +3,10 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
 import {
-  ErrorStatus,
-  InitStatus,
-  tableLimit,
-  tooltipConstant,
+  tooltipConstant
 } from "@/constant/constant";
-import getValidators from "@/services/getValidators";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
-import { useEffect, useState } from "react";
 import {
   AvgAPRIcon,
   AvgBlockTime,
@@ -21,7 +16,7 @@ import {
   TotalValidators,
   Transfericondark,
   Txblockdark,
-} from "../../../public/SvgIcons";
+} from "../../assets/svg/SvgIcons";
 const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();

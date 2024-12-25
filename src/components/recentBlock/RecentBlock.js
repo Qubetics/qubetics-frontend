@@ -4,18 +4,20 @@ import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
 import { Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
-import "src/components/transferInfo/TransferInformation.scss";
+import "../transferInfo/TransferInformation.scss";
 import Link from "next/link";
+import Image from "next/image";
+import boxImage from "../../assets/svg/box.svg";
 const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
-  
+
   return (
     <div
       className={`recentblocks ${customClass ? customClass : ""}`}
       {...props}
     >
       <div className="recentdata">
-        <img src="./box.svg" alt="" />
+        <Image src={boxImage} alt="box" />
         <div>
           <p
             style={{ cursor: "pointer" }}

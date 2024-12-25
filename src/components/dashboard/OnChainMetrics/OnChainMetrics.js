@@ -13,7 +13,7 @@ import {
   RoundArrow,
   RoundArrowdark,
   TickPriceIcon,
-} from "../../../../public/SvgIcons";
+} from "../../../assets/svg/SvgIcons";
 
 import { useThemeData } from "@/components/contexts/theme_context";
 import "../../../app/(routes)/dashboard/dashboard.scss";

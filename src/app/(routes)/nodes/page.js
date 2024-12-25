@@ -45,7 +45,7 @@ const Nodes = () => {
     <div>
       <div className="blocksummary nodes">
         <div className="container">
-          <QubeticNetworkNode nodesData={nodesData} countryNode={countryNode} />{" "}
+          <QubeticNetworkNode nodesData={nodesData} countryNode={countryNode} />
           <div className="listViewTable">
             <ListView
               nodesData={data}
