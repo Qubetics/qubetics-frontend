@@ -4,11 +4,11 @@ import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
 import { Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
-import "src/components/transferInfo/TransferInformation.scss";
+import "../transferInfo/TransferInformation.scss";
 import Link from "next/link";
 const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
-  
+
   return (
     <div
       className={`recentblocks ${customClass ? customClass : ""}`}
