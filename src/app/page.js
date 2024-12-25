@@ -1,10 +1,7 @@
 "use client";
 import { useThemeData } from "@/components/contexts/theme_context";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import {
-  InitStatus,
-  Routes
-} from "@/constant/constant";
+import { InitStatus, Routes } from "@/constant/constant";
 import { Grid } from "antd";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
@@ -107,7 +104,7 @@ export default function Home() {
 
   return (
     <>
-      <main>
+      {/* <main>
         <section
           className={`landing_main`}
           ref={scrollDivRef}
@@ -133,8 +130,8 @@ export default function Home() {
             ) : (
               ""
             )}
-          </div>
-          {/* <animated.div
+          </div> */}
+      {/* <animated.div
             className={`animated-div ${!showDiv ? "transition" : "transit"}`}
           >
             <video
@@ -178,8 +175,8 @@ export default function Home() {
               </div>
             </div>
           </animated.div> */}
-        </section>
-      </main>
+      {/* </section>
+      </main> */}
     </>
   );
 }

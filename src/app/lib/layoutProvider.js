@@ -3,7 +3,9 @@
 import { useLayoutEffect } from "react";
 import dynamic from "next/dynamic";
 
-const Header = dynamic(() => import('@/components/header/header'), { ssr: false })
+const Header = dynamic(() => import("@/components/header/header"), {
+  ssr: false,
+});
 
 // import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { InitStatus, Routes } from "@/constant/constant";
@@ -30,12 +32,15 @@ export default function LayoutProvider({ children }) {
       <div className={`${pathName !== Routes.HOME ? "bgToMainDiv" : ""}`}>
         <Header />
         <main className="maininner">
-            <div className="addbgtheme" style={{ paddingTop: pathName !== Routes.Welcome && 110 }}>
-              {/* <SearchbarComponent
+          <div
+            className="addbgtheme"
+            style={{ paddingTop: pathName !== Routes.Welcome && 110 }}
+          >
+            {/* <SearchbarComponent
                 searchStatus={searchStatus}
                 setSerachStatus={setSerachStatus}
               /> */}
-            </div>
+          </div>
           {children}
         </main>
         {pathName !== Routes.HOME && <FooterLink />}

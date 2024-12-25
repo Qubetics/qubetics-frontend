@@ -369,7 +369,7 @@ function HeaderMenu() {
           <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
             <span
               style={{ gap: "5px", display: "flex", alignItems: "center" }}
-              class="_button-text_1x6ja_100"
+              className="_button-text_1x6ja_100"
             >
               <Image src={metaImage} width={25} height={25} alt="metafox" />
               {isMetaMaskAdded
@@ -385,7 +385,6 @@ function HeaderMenu() {
               getPopupContainer={getContainer}
               defaultValue={chainType}
               style={{ width: 130 }}
-              // disabled
               onChange={handleChainChange}
               options={[
                 {
