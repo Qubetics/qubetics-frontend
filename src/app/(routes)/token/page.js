@@ -28,7 +28,7 @@ function page() {
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [searchText, setSearchText] = useState("");
-  const { debounce } = useDebounce(searchText, 500);
+  const { debounce } = useDebounce(searchText, 1500);
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
@@ -61,7 +61,7 @@ function page() {
   // }, [debounce]);
 
   useEffect(() => {
-    if (debounce > 1) {
+    if (debounce.length > 0) {
       getSearchData(debounce);
       return;
     }
@@ -73,7 +73,7 @@ function page() {
       fetchData();
     }
   }, [isNetworkChanged]);
-
+  console.log(searchText, debounce, "debounce");
   const handleNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);

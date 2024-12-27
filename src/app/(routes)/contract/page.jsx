@@ -66,7 +66,7 @@ const Contract = () => {
   };
 
   useEffect(() => {
-    if (debounce > 1) {
+    if (debounce.length > 0) {
       getSearchData(debounce);
       return;
     }
