@@ -479,7 +479,7 @@ body {
 }
 
 .popularPage {
-  margin-top: 40px;
+  margin-top: 0px;
   .commontable {
     margin-top: 0;
   }
@@ -643,11 +643,20 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  @media screen and (max-width: 580px) {
+   flex-direction: column;
+   gap: 20px;
+  }
   h2 {
     @include fluid-type(320px, 1920px, 18px, 24px);
     font-weight: 600;
     color: #fff;
     flex: 1;
+  }
+  .searchbar {
+    padding: 0;
+    max-width: 440px;
+    width: 100%;
   }
   .searchbar_input {
     height: 46px;

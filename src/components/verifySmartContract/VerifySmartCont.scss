@@ -89,21 +89,22 @@
         border-box !important;
     border-radius: 25px;
     transition: color 0.2s ease-out, filter 0.2s ease-out;
-    &:hover {
-      background: var(--theme-gradients-main) !important;
-      color: $black !important;
-      border: 0;
-    }
+    // &:hover {
+    //   background: var(--theme-gradients-main) !important;
+    //   color: $black !important;
+    //   border: 0;
+    // }
   }
   .ant-btn-variant-outlined {
-    background: #161616 ;
+    background: #161616;
     color: $white;
     border-radius: 30px;
     border: 1px solid #161616;
     &:hover {
-      background: var(--theme-gradients-main) !important;
-      color: $black !important;
-      border: 0;
+      background: #161616 !important;
+      color: $white !important;
+      border-radius: 30px;
+      border: 1px solid #161616 !important;
     }
   }
 }

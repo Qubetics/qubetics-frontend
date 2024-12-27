@@ -3,10 +3,10 @@
 .verify {
   width: 100%;
   margin: auto;
-  @media screen and (max-width: 991px) {
-    padding-top: 30px;
-  }
-  padding-top: 10px;
+  // @media screen and (max-width: 991px) {
+  //   padding-top: 30px;
+  // }
+  // padding-top: 10px; 
   .searchbar_input {
     margin: 0 auto;
   }
@@ -100,6 +100,7 @@
   }
   .ant-steps .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
     color: $white !important;
+    top: -2px;
   }
   .ant-steps-item-tail::after {
     background-color: $borderCard !important;
@@ -144,7 +145,7 @@
 
 .textarea {
   margin-bottom: 20px;
-
+  position: relative;
   label {
     color: $white;
     @include fluid-type(320px, 1920px, 14px, 16px);
@@ -160,8 +161,21 @@
       color: $white;
     }
   }
+  .textAreaPaste {
+    position: absolute;
+    bottom: 8px;
+    right: 20px;
+    text-decoration: underline;
+    color: $white;
+    font-size:16px;
+    cursor: pointer;
+  }
 }
-
+.ant-collapse-content-box {
+  .textarea .ant-btn-variant-outlined:hover {
+    background: transparent !important;
+  }
+}
 .uploadsItems {
   display: flex;
   gap: 30px;
