@@ -1,4 +1,9 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  DoubleLeftOutlined,
+  DoubleRightOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import React from "react";
 import "./Pagination.scss";
 
@@ -20,8 +25,9 @@ function Pagination({
           cursor: currentPage === 1 ? "not-allowed" : "pointer",
         }}
         onClick={currentPage !== 1 ? handleFirst : undefined}
+        className={`leftArrow ${disablePrev && "disable"}`}
       >
-        First
+       <DoubleLeftOutlined />
       </div>
       <div
         className={`leftArrow ${disablePrev && "disable"}`}
@@ -45,8 +51,9 @@ function Pagination({
           cursor: currentPage == totalPages ? "not-allowed" : "pointer",
         }}
         onClick={currentPage < totalPages ? handleLast : undefined}
+        className={`rightArrow ${disableNext && "disable"}`}
       >
-        Last
+        <DoubleRightOutlined />
       </div>
     </div>
   );
