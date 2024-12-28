@@ -1737,7 +1737,13 @@ export const tokensByAddressColumn = [
     key: "value",
     render: (text) => (
       <span className="">
-        {text?.tokenBalance ? noExponential(Number(text?.tokenBalance)) : "-"}
+        {text?.tokenBalance
+          ? formatValue(
+              noExponential(
+                Number(text?.tokenBalance) / 10 ** Number(text?.decimals)
+              )
+            )
+          : "-"}
       </span>
     ),
   },

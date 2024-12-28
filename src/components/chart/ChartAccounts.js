@@ -7,7 +7,7 @@ import "./chart.scss";
 
 const ChartAccount = ({ data, chartType, name }) => {
   const [chartData, setChartData] = useState(null);
-
+ 
   useEffect(() => {
     let chartValue = chartMenu(data, chartType);
 

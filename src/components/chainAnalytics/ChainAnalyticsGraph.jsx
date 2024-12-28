@@ -45,12 +45,11 @@ const ChainAnalyticsGraph = (props) => {
     getGraphData(transactionHisChart?.type, fetchUrl, chartTitle)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
-
         const convertedData = res?.data?.finalData?.map((item) => ({
           ...item,
           count:
             title === "Transaction Fees"
-              ? noExponentsValue(item.count) // Convert and fix to 6 decimal places
+              ? noExponentsValue(Number(item.count)) // Convert and fix to 6 decimal places
               : Number(item.count), // Keep it as a number
         }));
 
@@ -64,7 +63,6 @@ const ChainAnalyticsGraph = (props) => {
         return err;
       });
   };
-
   const handleTransactionHistory = (value) => {
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };

@@ -78,17 +78,6 @@ const TokenByAddress = () => {
           tokenStatus === FetchingStatus || tokenStatus === InitStatus
         }
         pagination={false}
-        isSkeleton={
-          tokenStatus === FetchingStatus || tokenStatus === InitStatus
-        }
-        locale={{
-          emptyText: (
-            <div>
-              <Datnotfound />
-              <p>No data </p>
-            </div>
-          ),
-        }}
       />
       {totalPages > 1 && (
         <Pagination
