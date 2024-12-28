@@ -22,6 +22,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import { Datnotfound } from "../../../../../public/SvgIcons";
+import TokenByAddress from "@/components/token";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
