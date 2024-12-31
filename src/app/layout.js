@@ -13,6 +13,7 @@ import "./(routes)/dashboard/dashboard.scss";
 import StyledComponentsRegistry from "./lib/AntdRegistry";
 import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
+import ErrorBoundary from "@/components/ErrorBoundry/ErrorBoundry";
 
 export async function generateMetadata({ params, searchParams }) {
   return {
@@ -60,6 +61,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         <div className="bodyInner">
+        <ErrorBoundary>
           <NetworkProvider>
             <ThemeProvider>
               <LatestDataProvider>
@@ -76,6 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </LatestDataProvider>
             </ThemeProvider>
           </NetworkProvider>
+          </ErrorBoundary>
         </div>
       </body>
     </html>
