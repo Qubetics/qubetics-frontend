@@ -60,16 +60,7 @@ function HeaderMenu() {
   const [chainType, setChainType] = useState(val || "EVM Chain");
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
-
-  // const ristrictedPath = ["/token", "/contract", "/verifyContract"];
-  // useEffect(() => {
-  //   if (val === "Native Chain") {
-  //     if (ristrictedPath.includes(pathname)) {
-  //       router.push("/dashboard");
-  //     }
-  //   }
-  // }, [pathname]);
-
+  
   useEffect(() => {
     const cookieValue = getCookie("isEVM");
     if (cookieValue === undefined) {

@@ -26,7 +26,6 @@ const RecentTransactions = () => {
   const maxNonStaticElements = 6;
   const router = useRouter();
   const { isNetworkChanged } = useGetNetwork();
-
   const fetchData = async () => {
     try {
       setRecentTxnStatus(FetchingStatus);
@@ -65,6 +64,7 @@ const RecentTransactions = () => {
       webSocketData?.transactions?.length > 0
     ) {
       const newArray = webSocketData?.transactions;
+
       if (
         !recentTxns?.some(
           (item) => item?.blocknumber === newArray[0]?.blocknumber
@@ -72,26 +72,28 @@ const RecentTransactions = () => {
       ) {
         let updatedSocketBlock = [...recentTxns];
         if (updatedSocketBlock?.length >= maxNonStaticElements) {
-          updatedSocketBlock?.shift();
-          setCurrentIndex(4);
+          updatedSocketBlock?.pop(); // Remove last element instead of first
+          // setCurrentIndex(4);
         }
-        updatedSocketBlock?.push(newArray[0]);
+        updatedSocketBlock?.unshift(newArray[0]); // Add at beginning instead of end
         setRecentTxns(updatedSocketBlock);
-        setCurrentIndex(5);
+        // setCurrentIndex(5);
       }
     } else if (!Array.isArray(webSocketData?.transactions)) {
       const newArray = webSocketData?.transactions;
+
       if (
         !recentTxns?.some((item) => item?.blocknumber === newArray?.blocknumber)
       ) {
         let updatedSocketBlock = [...recentTxns];
         if (updatedSocketBlock?.length >= maxNonStaticElements) {
-          updatedSocketBlock?.shift();
-          setCurrentIndex(4);
+          updatedSocketBlock?.pop(); // Remove last element instead of first
+          // setCurrentIndex(4);
         }
-        updatedSocketBlock?.push(newArray);
+
+        updatedSocketBlock?.unshift(newArray); // Add at beginning instead of end
         setRecentTxns(updatedSocketBlock);
-        setCurrentIndex(5);
+        // setCurrentIndex(5);
       }
     }
   };
