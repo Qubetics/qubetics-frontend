@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  CmcIcon,
   Discord,
   Instagram,
   Telegram,
   TikTok,
   Twitter,
+  YoutubeIcon,
 } from "../../../public/SvgIcons";
 import "./Footer.scss";
 const Footer = () => {
@@ -140,17 +142,26 @@ const Footer = () => {
             <Link href="https://x.com/qubetics?mx=2" target="_blank">
               <Twitter />
             </Link>
+            <Link href="https://t.me/qubetics" target="_blank">
+              <Telegram />
+            </Link>
+            <Link href="https://discord.com/invite/KHfSNbzdSE" target="_blank">
+              <Discord />
+            </Link>
+            <Link href="https://www.youtube.com/@Qubetics" target="_blank">
+              <YoutubeIcon />
+            </Link>
             <Link href="https://www.instagram.com/qubetics" target="_blank">
               <Instagram />
             </Link>
             <Link href="https://www.tiktok.com/@qubetics" target="_blank">
               <TikTok />
             </Link>
-            <Link href="https://t.me/qubetics" target="_blank">
-              <Telegram />
-            </Link>
-            <Link href="https://discord.com/invite/KHfSNbzdSE" target="_blank">
-              <Discord />
+            <Link
+              href="https://coinmarketcap.com/currencies/qubetics/"
+              target="_blank"
+            >
+              <CmcIcon />
             </Link>
           </div>
           {/* <div
