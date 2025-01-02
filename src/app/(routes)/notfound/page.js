@@ -14,7 +14,7 @@ function Page({ dashnotfound }) {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const pathname = usePathname();
   return (
-    <div className="container">
+    <div className="container notFoundDataSec">
       {pathname === Routes.NOT_FOUND && (
         <SearchbarComponent
           searchStatus={searchStatus}

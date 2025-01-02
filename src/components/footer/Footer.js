@@ -108,7 +108,7 @@ const Footer = () => {
               target="_black"
               // style={{ pointerEvents: "none", color: "gray" }}
             >
-              Official web
+              Official Web
             </Link>
             <Link
               href=""

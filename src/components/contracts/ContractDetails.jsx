@@ -37,7 +37,7 @@ const ContractDetails = ({ data, status }) => {
                 <p> Contract Address </p>
 
                 <h6>
-                  <span className="copyText">
+                  <span className="copyText hoverTrans">
                     {data?.address ? (
                       <>
                         <Tooltip title={data?.address}>

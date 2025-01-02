@@ -211,14 +211,14 @@ function PublishContract({ steps, current, prev, next }) {
             </p>
           )}
           {steps && current < steps.length - 1 && (
-            <Button
-              type="primary"
+            <button
+              // type="primary"
               onClick={validateAndProceed}
               className="bluebtn"
               disabled={isContractExist || isLoading}
             >
-              {"Next"}
-            </Button>
+              Next
+            </button>
           )}
           {steps && current === steps.length - 1 && (
             <Button

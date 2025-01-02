@@ -3,6 +3,7 @@
 .codeTabContent {
   margin-top: 20px;
   &__contractSource {
+    backdrop-filter: blur(32px);
     .contractSourceBtn {
       width: 100%;
       display: flex;

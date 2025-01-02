@@ -59,7 +59,7 @@
     padding: 40px;
     background: var(--searchBg);
     border: 1px solid $borderCard;
-
+    backdrop-filter: blur(32px);
     @media (max-width: 991px) {
       padding: 20px;
     }
@@ -275,29 +275,78 @@
   }
 }
 
-.bluebtn {
-  --bg: #000;
-  --hover-bg: var(--theme-gradients-main);
-  --text: #fff !important;
-  --hover-text: #000;
-  border: 2px solid transparent !important;
-  background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-    conic-gradient(
-        from 180deg at 50% 50%,
-        #ff98e2,
-        #ffc876 35.77deg,
-        #79fff7 153.75deg,
-        #9f53ff 258.75deg,
-        #ff98e2 360deg
-      )
-      border-box !important;
-  border-radius: 28px !important;
-  transition: color 0.2s ease-out, filter 0.2s ease-out;
-  height: 50px !important;
-  max-width: 165px;
-  width: 100%;
-  font-weight: 500;
-}
+// .bluebtn {
+//   // --bg: #000;
+//   // --hover-bg: var(--theme-gradients-main);
+//   // --text: #fff !important;
+//   // --hover-text: #000;
+//   // border: 2px solid transparent !important;
+//   // background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+//   //   conic-gradient(
+//   //       from 180deg at 50% 50%,
+//   //       #ff98e2,
+//   //       #ffc876 35.77deg,
+//   //       #79fff7 153.75deg,
+//   //       #9f53ff 258.75deg,
+//   //       #ff98e2 360deg
+//   //     )
+//   //     border-box !important;
+//   border-radius: 28px !important;
+//   transition: color 0.2s ease-out, filter 0.2s ease-out;
+//   height: 50px !important;
+//   max-width: 165px;
+//   width: 100%;
+//   font-weight: 500;
+//   // &::after,
+//   // &::before {
+//   //   content: " ";
+//   //   position: absolute;
+//   //   z-index: -1;
+//   //   inset: -0.2rem;
+//   //   background: conic-gradient(
+//   //     var(--clr-card),
+//   //     var(--clr-1),
+//   //     var(--clr-2),
+//   //     var(--clr-3),
+//   //     var(--clr-4),
+//   //     var(--clr-5),
+//   //     var(--clr-6),
+//   //     var(--clr-2),
+//   //     var(--clr-1),
+//   //     var(--clr-card)
+//   //   );
+//   //   border-radius: inherit;
+//   //   animation: rotate 2.5s linear infinite;
+//   // }
+//   // &:hover {
+//   //   &::after,
+//   //   &::before {
+//   //     content: " ";
+//   //     position: absolute;
+//   //     z-index: -1;
+//   //     inset: -0.2rem;
+//   //     background: conic-gradient(
+//   //       from var(--gradient-angle),
+//   //       var(--clr-card),
+//   //       var(--clr-1),
+//   //       var(--clr-2),
+//   //       var(--clr-3),
+//   //       var(--clr-4),
+//   //       var(--clr-5),
+//   //       var(--clr-6),
+//   //       var(--clr-2),
+//   //       var(--clr-1),
+//   //       var(--clr-card)
+//   //     );
+//   //     border-radius: inherit;
+//   //     animation: rotate 2.5s linear infinite;
+//   //   }
+
+//   //   &::after {
+//   //     filter: blur(4rem);
+//   //   }
+//   // }
+// }
 
 .checkboxItem {
   padding-bottom: 20px;

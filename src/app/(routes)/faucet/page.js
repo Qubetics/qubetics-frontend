@@ -1,4 +1,5 @@
 "use client";
+// import { customToast } from "@/components/common/toast";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
   ErrorStatus,
@@ -13,7 +14,6 @@ import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Input, Spin } from "antd";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
 
@@ -76,16 +76,16 @@ function Page() {
         .then((res) => {
           if (res?.error == false) {
             setTxHash(res?.data?.txHash);
-            toast.success(res?.message);
+            // customToast.success(res?.message);
             setTransferStatus(SuccessStatus);
             setFaucetField({ address: "", amount: "" });
           } else if (res?.error == true) {
-            toast.error(res?.message);
+            // customToast.error(res?.message);
             setTransferStatus(ErrorStatus);
           }
         })
         .catch((err) => {
-          toast.error(err?.message);
+          // customToast.error(err?.message);
           setTransferStatus(ErrorStatus);
         });
     }
@@ -100,6 +100,7 @@ function Page() {
             searchStatus={searchStatus}
             setSerachStatus={setSerachStatus}
           />
+          
           <div className="faucet_inner__top">
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
@@ -188,7 +189,7 @@ function Page() {
                     />
                   </Button>
                 ) : (
-                  <Button onClick={requestFund}>Send</Button>
+                  <button className="bluebtn">Send</button>
                 )}
               </div>
             </div>
