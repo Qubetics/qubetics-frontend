@@ -1,5 +1,4 @@
 "use client";
-import { customToast } from "@/components/common/toast";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
   ErrorStatus,
@@ -14,6 +13,7 @@ import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Input, Spin } from "antd";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
 
@@ -76,16 +76,16 @@ function Page() {
         .then((res) => {
           if (res?.error == false) {
             setTxHash(res?.data?.txHash);
-            customToast.success(res?.message);
+            toast.success(res?.message);
             setTransferStatus(SuccessStatus);
             setFaucetField({ address: "", amount: "" });
           } else if (res?.error == true) {
-            customToast.error(res?.message);
+            toast.error(res?.message);
             setTransferStatus(ErrorStatus);
           }
         })
         .catch((err) => {
-          customToast.error(err?.message);
+          toast.error(err?.message);
           setTransferStatus(ErrorStatus);
         });
     }

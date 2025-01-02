@@ -1,17 +1,15 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import { useThemeData } from "@/components/contexts/theme_context";
-import getSearchingValue from "@/services/search";
-import { usePathname, useRouter } from "next/navigation";
 import {
-  EXPLORER_NETWORK_NAME,
   ErrorStatus,
   FetchingStatus,
   Routes,
-  SuccessStatus,
+  SuccessStatus
 } from "@/constant/constant";
-import { customToast } from "../common/toast";
+import getSearchingValue from "@/services/search";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import { useSearchData } from "../contexts/searchingData";
 import Loader from "../loader/Loader";
 
@@ -50,7 +48,7 @@ const SearchbarComponent = ({
     }
     try {
       if (!searchValue) {
-        customToast.error("Enter search item");
+        toast.error("Enter search item");
       } else {
         setSerachStatus(FetchingStatus);
         const res = await getSearchingValue(

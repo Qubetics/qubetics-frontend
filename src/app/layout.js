@@ -14,7 +14,7 @@ import StyledComponentsRegistry from "./lib/AntdRegistry";
 import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
 import ErrorBoundary from "@/components/ErrorBoundry/ErrorBoundry";
-
+import { Toaster } from "react-hot-toast";
 export async function generateMetadata({ params, searchParams }) {
   return {
     title: "Qubetics",
@@ -61,23 +61,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         <div className="bodyInner">
-        <ErrorBoundary>
-          <NetworkProvider>
-            <ThemeProvider>
-              <LatestDataProvider>
-                <SerachingValueProvider>
-                  <ContractVerificationProvider>
-                    <StyledComponentsRegistry>
-                      <Suspense fallback={<Loading />}>
-                        <LayoutProvider>{children}</LayoutProvider>
-                      </Suspense>
-                    </StyledComponentsRegistry>
-                  </ContractVerificationProvider>
-                  <ToastContainer />
-                </SerachingValueProvider>
-              </LatestDataProvider>
-            </ThemeProvider>
-          </NetworkProvider>
+          <ErrorBoundary>
+            <NetworkProvider>
+              <ThemeProvider>
+                <LatestDataProvider>
+                  <SerachingValueProvider>
+                    <Toaster position="bottom-center" reverseOrder={false} />
+                    <ContractVerificationProvider>
+                      <StyledComponentsRegistry>
+                        <Suspense fallback={<Loading />}>
+                          <LayoutProvider>{children}</LayoutProvider>
+                        </Suspense>
+                      </StyledComponentsRegistry>
+                    </ContractVerificationProvider>
+                    <ToastContainer />
+                  </SerachingValueProvider>
+                </LatestDataProvider>
+              </ThemeProvider>
+            </NetworkProvider>
           </ErrorBoundary>
         </div>
       </body>

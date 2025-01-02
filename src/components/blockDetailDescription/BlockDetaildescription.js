@@ -1,6 +1,4 @@
-import {
-  Routes
-} from "@/constant/constant";
+import { Routes } from "@/constant/constant";
 import { renderTime } from "@/utils/renderTime";
 import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
@@ -44,6 +42,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
                 ? blockData?.blockhash
                 : blockData?.block?.blockhash}
               <CopyText
+                hoverText={"hash"}
                 text={
                   blockData?.blockhash
                     ? blockData?.blockhash

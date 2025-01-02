@@ -1,19 +1,18 @@
 import {
+  EXPLORER_CURRENCY_NAME,
   EXPLORER_METAMASK_NAVIGATION,
   EXPLORER_METAMASK_NETWORK_URL,
   EXPLORER_META_NETWORK_CHAIN_ID,
-  Messages,
-  EXPLORER_CURRENCY_NAME,
   METAMASK_CHAIN_NAME,
+  Messages,
 } from "@/constant/constant";
-import { customToast } from "../common/toast";
 
 export const addQubeticForVerifyContract = async (setConnectAddress) => {
   const provider = window.ethereum;
   const ChainIdQubetics = EXPLORER_META_NETWORK_CHAIN_ID;
 
   if (!provider) {
-    customToast.info(Messages.Install_Metamask);
+    toast.info(Messages.Install_Metamask);
   } else {
     try {
       await provider.request({
@@ -71,7 +70,7 @@ function getDeviceType() {
   }
 }
 export const addQubetic = async (provider) => {
-  console.log("provider", provider);
+
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
@@ -95,20 +94,20 @@ export const addQubetic = async (provider) => {
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
 
     if (!provider) {
-      customToast.info(Messages.Install_Metamask);
+      toast.info(Messages.Install_Metamask);
     } else {
       if (!chainId) {
         throw new Error(Messages.Retrive_Meta_Account);
       }
       if (chainId === ChainIdQubetic) {
-        customToast.success(Messages.Same_Network);
+        toast.success(Messages.Same_Network);
       } else {
         try {
           await provider.request({
             method: "wallet_switchEthereumChain",
             params: [{ chainId: ChainIdQubetic }],
           });
-          customToast.success(Messages.Successfully_Switched);
+          toast.success(Messages.Successfully_Switched);
         } catch (switchError) {
           if (switchError.code === 4902) {
             try {
@@ -127,7 +126,7 @@ export const addQubetic = async (provider) => {
                   },
                 ],
               });
-              customToast.success(Messages.Network_Added);
+              toast.success(Messages.Network_Added);
             } catch (err) {
               throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
             }
@@ -137,6 +136,6 @@ export const addQubetic = async (provider) => {
     }
   } catch (error) {
     console.log("error", "error");
-    customToast.error(error.message);
+    toast.error(error.message);
   }
 };

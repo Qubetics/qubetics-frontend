@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { Input, Button } from "antd";
-import "./token.scss";
-import { signMessage } from "./SignMessage";
-import { customToast } from "@/components/common/toast";
-import { isImageUrlValid } from "./isImageUrlValid";
 import Loader from "@/components/loader/Loader";
 import getContractDetails from "@/services/getContractDetails";
+import { Button, Input } from "antd";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { isImageUrlValid } from "./isImageUrlValid";
+import { signMessage } from "./SignMessage";
+import "./token.scss";
 
 const TokenIcon = () => {
   const [url, setUrl] = useState("");
@@ -58,11 +58,11 @@ const TokenIcon = () => {
 
   const submitUrl = async () => {
     if (!contractAddress) {
-      customToast.error("Enter Contract Address");
+      toast.error("Enter Contract Address");
       return;
     }
     if (!url) {
-      customToast.error("Enter Image Url");
+      toast.error("Enter Image Url");
       return;
     }
     await signMessage(

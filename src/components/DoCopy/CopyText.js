@@ -2,7 +2,7 @@
 // import { CopyIcon, Scanner } from "../../../public/SvgIcons";
 // import { CopyToClipboard } from "react-copy-to-clipboard";
 // import { customToast } from "../common/toast";
-import { CheckOutlined, CopyOutlined } from "@ant-design/icons";
+import { CheckOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import { useState } from "react";
 import { CopyIcons } from "../../../public/SvgIcons";

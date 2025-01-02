@@ -9,8 +9,8 @@ import {
 import getSearchingValue from "@/services/search";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
-import { customToast } from "../common/toast";
 import { useSearchData } from "../contexts/searchingData";
 import Loader from "../loader/Loader";
 
@@ -57,7 +57,7 @@ const SearchbarComponent = ({
     }
     try {
       if (!searchValue) {
-        customToast.error("Enter search item");
+        toast.error("Enter search item");
       } else {
         setSerachStatus(FetchingStatus);
         const res = await getSearchingValue(

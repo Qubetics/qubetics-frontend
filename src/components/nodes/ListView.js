@@ -1,8 +1,4 @@
-import {
-  FetchingStatus,
-  InitStatus,
-  tableLimit
-} from "@/constant/constant";
+import { FetchingStatus, InitStatus, tableLimit } from "@/constant/constant";
 import { nodesColumns } from "@/constant/graphTableValues";
 import { useState } from "react";
 import { Datnotfound } from "../../../public/SvgIcons";
@@ -61,7 +57,7 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
           ),
         }}
       />
-      {nodesData.length > 1 && (
+      {nodesData.length > 10 && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

@@ -20,8 +20,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import CheckIcon from "../../../public/SvgIcons";
-import { customToast } from "../common/toast";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
 
@@ -60,7 +60,7 @@ function HeaderMenu() {
   const [chainType, setChainType] = useState(val || "EVM Chain");
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
-  
+
   useEffect(() => {
     const cookieValue = getCookie("isEVM");
     if (cookieValue === undefined) {
@@ -102,6 +102,9 @@ function HeaderMenu() {
       console.error(error);
     }
   };
+  useEffect(() => {
+    isNetworkAdded();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("chainType", chainType);
@@ -128,13 +131,13 @@ function HeaderMenu() {
       const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
 
       if (!provider) {
-        customToast.info(Messages.Install_Metamask);
+        toast.info(Messages.Install_Metamask);
       } else {
         if (!chainId) {
           throw new Error(Messages.Retrive_Meta_Account);
         }
         if (chainId === ChainIdQubetic) {
-          customToast.success(Messages.Same_Network);
+          toast.success(Messages.Same_Network);
           setIsMetaMaskAdded(true);
         } else {
           try {
@@ -142,7 +145,7 @@ function HeaderMenu() {
               method: "wallet_switchEthereumChain",
               params: [{ chainId: ChainIdQubetic }],
             });
-            customToast.success(Messages.Successfully_Switched);
+            toast.success(Messages.Successfully_Switched);
             setIsMetaMaskAdded(true);
           } catch (switchError) {
             if (switchError.code === 4902) {
@@ -162,7 +165,7 @@ function HeaderMenu() {
                     },
                   ],
                 });
-                customToast.success(Messages.Network_Added);
+                toast.success(Messages.Network_Added);
                 setIsMetaMaskAdded(true);
               } catch (err) {
                 throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
@@ -179,7 +182,7 @@ function HeaderMenu() {
         setIsMetaMaskAdded(false);
       });
     } catch (error) {
-      customToast.error(error.message);
+      toast.error(error.message);
     }
   };
 

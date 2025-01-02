@@ -160,7 +160,7 @@ export const blockColumn = [
         <div className="iconandlink">
           <Link href={`${Routes.BLOCK_NO}${text}`}>{getAddress(text)}</Link>
           <span>
-            <CopyText text={text}></CopyText>
+            <CopyText hoverText={"hash"} text={text}></CopyText>
           </span>
         </div>
       </>

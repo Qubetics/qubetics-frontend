@@ -1,7 +1,7 @@
-import { customToast } from "@/components/common/toast";
 import { Messages } from "@/constant/constant";
 import postContractVerifictaionIcon from "@/services/postContractVerifictaionIcon";
 import { ethers } from "ethers";
+import toast from "react-hot-toast";
 
 export const signMessage = async (
   contractAdress,
@@ -31,10 +31,10 @@ export const signMessage = async (
       const res = await postContractVerifictaionIcon(data);
       if ((res && res.status == "401") || (res && res.status == "404")) {
         setIsLoading(false);
-        customToast.error(res?.message);
+        toast.error(res?.message);
       } else if (res && res?.isVerified) {
         setIsLoading(false);
-        customToast.success(res?.message);
+        toast.success(res?.message);
       } else {
         return;
       }
@@ -45,6 +45,6 @@ export const signMessage = async (
     return;
   } catch (err) {
     setIsLoading(false);
-    customToast.error(err.message);
+    toast.error(err.message);
   }
 };

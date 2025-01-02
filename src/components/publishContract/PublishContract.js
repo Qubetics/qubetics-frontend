@@ -1,20 +1,19 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
-import "../../app/(routes)/contract/verify/verifyContract.scss";
-import CustomInput from "../customInput/CustomInput";
-import CustomSelect from "../customSelect/CustomSelect";
-import { Button, message, Checkbox } from "antd";
+import { verifyContractConstant } from "@/constant/constant";
 import {
   CONTRACT_COMPILER_TYPE,
   CONTRACT_LICENSES,
 } from "@/constant/dropDownConstant";
-import { toast } from "react-toastify";
-import { verifyContractConstant } from "@/constant/constant";
-import { useContractData } from "../contexts/contractContext";
+import getCompilerVersion from "@/services/getCompilerVersion";
 import getContractDetails from "@/services/getContractDetails";
 import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
-import getCompilerVersion from "@/services/getCompilerVersion";
-import { CONTRACT_COMPILER_VERSION } from "@/constant/versionConstant";
+import { Button, Checkbox, message } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "../../app/(routes)/contract/verify/verifyContract.scss";
+import { useContractData } from "../contexts/contractContext";
+import CustomInput from "../customInput/CustomInput";
+import CustomSelect from "../customSelect/CustomSelect";
 
 function PublishContract({ steps, current, prev, next }) {
   const {
@@ -80,6 +79,9 @@ function PublishContract({ steps, current, prev, next }) {
           const status = await getContractDetails(address);
           if (!status?.error) {
             setIsContractExist(false);
+          } else {
+            setIsContractExist(true);
+            setErrorMessage("Invalid Contract Address");
           }
         }
       } catch (e) {
@@ -215,7 +217,7 @@ function PublishContract({ steps, current, prev, next }) {
               className="bluebtn"
               disabled={isContractExist || isLoading}
             >
-              {isLoading ? "Loading..." : "Next"}{" "}
+              {"Next"}
             </Button>
           )}
           {steps && current === steps.length - 1 && (
