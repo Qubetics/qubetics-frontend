@@ -156,11 +156,13 @@ function WriteContent({ abiData, hash }) {
               {inputErrors[`${prefix}${input.name}`]}
             </p>
           )}
-          {input.components && input.components.length > 0 && (
-            <div style={{ marginLeft: "20px" }}>
-              {renderInputFields(input.components, `${prefix}${input.name}.`)}
-            </div>
-          )}
+          {input.type === "tuple" &&
+            input.components &&
+            input.components.length > 0 && (
+              <div style={{ marginLeft: "20px" }}>
+                {renderInputFields(input.components, `${prefix}${input.name}.`)}
+              </div>
+            )}
         </React.Fragment>
       );
     });

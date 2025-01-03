@@ -10,9 +10,9 @@ const CustomInput = ({ label, onChange, fieldType, runsCheck, ...rest }) => {
   return (
     <div className="customInput">
       <label>{label}</label>
-      {fieldType !== "tuple" && (
+      {/* {fieldType !== "tuple" && ( */}
         <Input onChange={handleInputChange} {...rest} />
-      )}
+      {/* )} */}
     </div>
   );
 };
