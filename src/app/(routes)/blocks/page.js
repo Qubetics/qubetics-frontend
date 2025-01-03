@@ -251,30 +251,37 @@ const BlockSummary = () => {
           ))}
         </div>
         <div className="totalTransactions">
-          <h2>Showing blocks from 90 to 180</h2>
-          <Space wrap>
-            <Select
-              defaultValue="newest"
-              style={{
-                width: 123,
-              }}
-              className="innerSelect"
-              options={[
-                {
-                  value: "newest",
-                  label: "Newest",
-                },
-                {
-                  value: "f",
-                  label: "Newest",
-                },
-                {
-                  value: "n",
-                  label: "Newest",
-                },
-              ]}
-            />
-          </Space>
+          {blocksData.length > 0 && (
+            <>
+              <h2>{`Showing blocks from ${blocksData[0]?.blocknumber} to ${
+                blocksData[blocksData.length - 1]?.blocknumber
+              }`}</h2>
+
+              <Space wrap>
+                <Select
+                  defaultValue="newest"
+                  style={{
+                    width: 123,
+                  }}
+                  className="innerSelect"
+                  options={[
+                    {
+                      value: "newest",
+                      label: "Newest",
+                    },
+                    {
+                      value: "f",
+                      label: "Newest",
+                    },
+                    // {
+                    //   value: "n",
+                    //   label: "Newest",
+                    // },
+                  ]}
+                />
+              </Space>
+            </>
+          )}
         </div>
         {
           // <Loading//>//

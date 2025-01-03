@@ -158,9 +158,7 @@ const page = ({ params }) => {
         <div className="addressDetailSec">
           <div className="detail">
             <h3>Address</h3>
-            <p>
-              0x3cdf3490f2c8eba0bceb33c016ff4c7d6745762759bf28776f10e9cfacc48e9e
-            </p>
+            <p>{params?.addressDetail }</p>
           </div>
         </div>
         {/* <BlockDetail details={details} /> */}

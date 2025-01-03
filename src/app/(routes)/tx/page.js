@@ -93,30 +93,36 @@ const Transactionsummary = () => {
           </div>
         </div>
         <div className="totalTransactions">
-          <h2>Total of 57 transactions</h2>
-          <Space wrap>
-            <Select
-              defaultValue="newest"
-              style={{
-                width: 123,
-              }}
-              className="innerSelect"
-              options={[
-                {
-                  value: "newest",
-                  label: "Newest",
-                },
-                {
-                  value: "f",
-                  label: "Newest",
-                },
-                {
-                  value: "n",
-                  label: "Newest",
-                },
-              ]}
-            />
-          </Space>
+          {txnData?.count && (
+            <>
+              <h2>{`Total of ${formatMillionNumber(
+                Number(txnData?.count)
+              )} transactions`}</h2>
+              <Space wrap>
+                <Select
+                  defaultValue="newest"
+                  style={{
+                    width: 123,
+                  }}
+                  className="innerSelect"
+                  options={[
+                    {
+                      value: "newest",
+                      label: "Newest",
+                    },
+                    {
+                      value: "f",
+                      label: "Newest",
+                    },
+                    {
+                      value: "n",
+                      label: "Newest",
+                    },
+                  ]}
+                />
+              </Space>
+            </>
+          )}
         </div>
         {/* Transactions Table */}
         <TransactionsTable setTxnData={setTxnData} />

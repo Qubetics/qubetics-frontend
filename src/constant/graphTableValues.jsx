@@ -334,18 +334,6 @@ export const transactionSummarycolumn = [
       ),
   },
   {
-    title: "Value",
-    key: "value",
-    render: (text) =>
-      text?.value ? (
-        <Tooltip title={noExponential(text?.value)}>
-          {noExponential(toFixed(text?.value, 6))}
-        </Tooltip>
-      ) : (
-        0
-      ),
-  },
-  {
     title: "Txn Fee",
     key: "txFee",
     render: (text) =>
@@ -353,6 +341,18 @@ export const transactionSummarycolumn = [
         <Tooltip title={noExponential(text?.txFee)}>
           {" "}
           {noExponential(toFixed(text?.txFee, 6))}
+        </Tooltip>
+      ) : (
+        0
+      ),
+  },
+  {
+    title: "Value",
+    key: "value",
+    render: (text) =>
+      text?.value ? (
+        <Tooltip title={noExponential(text?.value)}>
+          {noExponential(toFixed(text?.value, 6))}
         </Tooltip>
       ) : (
         0
@@ -729,7 +729,9 @@ export const contractTableColumn = (currentChain) => [
             />
           )}
           <Link href={`/contract/${text?.address}`}>
-            {text?.contractName ? capitalizeWord(text?.contractName) : "-"}
+            {text?.contractName || text?.contractname
+              ? capitalizeWord(text?.contractName || text?.contractname)
+              : "-"}
           </Link>
         </span>
       );

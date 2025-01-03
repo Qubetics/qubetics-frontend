@@ -23,9 +23,9 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       content: tooltipContent.block_Height,
     },
     {
-      value: countryNode?.total ? countryNode?.total : 0,
-      label: "Total Nodes",
-      content: tooltipContent.total_Nodes,
+      value: 0,
+      label: "Bonded Tokens",
+      content: tooltipContent.bonded_Coins,
     },
     {
       value: randomNoGenerator() + "s",
@@ -33,9 +33,11 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       content: tooltipContent.last_Block,
     },
     {
-      value: countryNode?.countryCount ? countryNode?.countryCount : 0,
-      label: "Countries",
-      content: tooltipContent.Countries,
+      value: webSocketData?.onChainMetric?.tpb
+        ? webSocketData?.onChainMetric?.tpb
+        : 0,
+      label: "TBP",
+      content: tooltipContent.TPB,
     },
   ];
 
@@ -81,11 +83,13 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
           <div className="map-container">
             <div className="countryBox">
               <div className="innerBox">
-                <h5>108</h5>
+                <h5>{countryNode?.total ? countryNode?.total : 0}</h5>
                 <p>Qubetics</p>
               </div>
               <div className="innerBox">
-                <h5>10</h5>
+                <h5>
+                  {countryNode?.countryCount ? countryNode?.countryCount : 0}
+                </h5>
                 <p>Countries</p>
               </div>
             </div>
