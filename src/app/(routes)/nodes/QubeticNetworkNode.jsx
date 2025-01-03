@@ -79,6 +79,16 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
         <div className="NodePerformance_right">
           {/* <Image src="/nodegraph.png" alt="Logo" width={642} height={363} />*/}
           <div className="map-container">
+            <div className="countryBox">
+              <div className="innerBox">
+                <h5>108</h5>
+                <p>Qubetics</p>
+              </div>
+              <div className="innerBox">
+                <h5>10</h5>
+                <p>Countries</p>
+              </div>
+            </div>
             <DarkNodeMap />
             {nodesData?.map((el, index) => (
               <Fragment key={`node-${index}`}>

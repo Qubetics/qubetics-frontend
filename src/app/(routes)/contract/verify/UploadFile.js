@@ -52,6 +52,7 @@ const UploadFile = ({ fileList, setFileList, formData }) => {
             disabled={fileList.length >= 15}
             style={fileList.length >= 15 ? { color: "white" } : null}
             icon={<UploadOutlined />}
+            className="selectFileBtn"
           >
             Select Files
           </Button>{" "}

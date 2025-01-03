@@ -7,7 +7,7 @@ import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { InitStatus } from "@/constant/constant";
 import getContractsGraph from "@/services/getContractsGraph";
 import { formatMillionNumber } from "@/utils/commonFunctions";
-import { Tooltip } from "antd";
+import { Select, Space, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   ActiveAccountToday,
@@ -22,7 +22,9 @@ const Transactionsummary = () => {
   const [contractCount, setContractCount] = useState(0);
   const [txnData, setTxnData] = useState({});
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
   useEffect(() => {
     if (isNetworkChanged == false) {
       fetchContractData();
@@ -89,6 +91,32 @@ const Transactionsummary = () => {
               </React.Fragment>
             ))}
           </div>
+        </div>
+        <div className="totalTransactions">
+          <h2>Total of 57 transactions</h2>
+          <Space wrap>
+            <Select
+              defaultValue="newest"
+              style={{
+                width: 123,
+              }}
+              className="innerSelect"
+              options={[
+                {
+                  value: "newest",
+                  label: "Newest",
+                },
+                {
+                  value: "f",
+                  label: "Newest",
+                },
+                {
+                  value: "n",
+                  label: "Newest",
+                },
+              ]}
+            />
+          </Space>
         </div>
         {/* Transactions Table */}
         <TransactionsTable setTxnData={setTxnData} />

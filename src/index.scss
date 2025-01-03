@@ -422,13 +422,13 @@ html {
       }
     }
 
-    svg {
-      path {
-        @include theme() {
-          fill: theme-get("texttheme");
-        }
-      }
-    }
+    // svg {
+    //   path {
+    //     @include theme() {
+    //       fill: theme-get("texttheme");
+    //     }
+    //   }
+    // }
   }
 }
 
@@ -565,6 +565,8 @@ button.bluebtn {
   background-color: $black;
   position: relative;
   cursor: pointer;
+  @include fluid-type(320px, 1920px, 14px, 16px);
+
   // --bg: #000;
   // --hover-bg: var(--theme-gradients-main);
   // --text: #fff !important;
@@ -2329,7 +2331,30 @@ input[type="number"] {
     flex-wrap: wrap;
   }
 }
-
+.addressDetailSec {
+  background: var(--searchBg);
+  border: 1px solid $borderCard;
+  padding: 23px 30px;
+  border-radius: 14px;
+  width: 100%;
+  // box-shadow: 0 -2px 9px #80808075;
+  margin-bottom: 40px;
+  .detail {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    h3 {
+      color: $grayA0A0A0;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+      font-weight: 300;
+    }
+    p {
+      color: $white;
+      @include fluid-type(320px, 1920px, 14px, 16px);
+      font-weight: 400;
+    }
+  }
+}
 .overViewCard {
   background: var(--searchBg);
   border: 1px solid $borderCard;
@@ -2405,4 +2430,71 @@ input[type="number"] {
 }
 .mt-20 {
   margin-top: 20px;
+}
+
+.searchBarOuter {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+.totalTransactions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h2 {
+    color: $white;
+    @include fluid-type(320px, 1920px, 16px, 24px);
+    font-weight: 600;
+  }
+  .innerSelect {
+    height: 40px;
+    .ant-select-selector {
+      border-radius: 30px;
+      height: 40px;
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+      font-size: 16px;
+
+      @include theme() {
+        background: theme-get("dropdownBg");
+      }
+      border: 1px solid $borderCard !important;
+
+      .ant-select-selection-item {
+        padding-left: 15px !important;
+        font-weight: 500;
+        @include fluid-type(320px, 1920px, 12px, 14px);
+        color: $white;
+      }
+    }
+
+    .ant-select-arrow {
+      margin-top: 0;
+      top: 38% !important;
+
+      svg {
+        @include theme() {
+          fill: theme-get("texttheme");
+        }
+      }
+    }
+  }
+}
+
+.exportBtn {
+  button {
+    border: 1px solid #454545;
+    background-color: #161616;
+    font-weight: 500;
+    @include fluid-type(320px, 1920px, 12px, 14px);
+    color: $white;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 22px;
+  }
 }

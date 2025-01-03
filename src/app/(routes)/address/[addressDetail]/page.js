@@ -21,7 +21,7 @@ import { Tabs } from "antd";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import { Datnotfound } from "../../../../../public/SvgIcons";
+import { Datnotfound, ExportIcon } from "../../../../../public/SvgIcons";
 import TokenByAddress from "@/components/token";
 
 const page = ({ params }) => {
@@ -120,7 +120,6 @@ const page = ({ params }) => {
               txAddressStatus === FetchingStatus ||
               txAddressStatus === InitStatus
             }
-            
           />
           {totalPages > 1 && (
             <Pagination
@@ -156,6 +155,14 @@ const page = ({ params }) => {
           addresspage={true}
           // address={params?.addressDetail ? params?.addressDetail : ""}
         />
+        <div className="addressDetailSec">
+          <div className="detail">
+            <h3>Address</h3>
+            <p>
+              0x3cdf3490f2c8eba0bceb33c016ff4c7d6745762759bf28776f10e9cfacc48e9e
+            </p>
+          </div>
+        </div>
         {/* <BlockDetail details={details} /> */}
         <div className="addressDetsilCard">
           <div className="overViewCard">
@@ -210,6 +217,14 @@ const page = ({ params }) => {
             defaultActiveKey="0"
             className="commontabs addresstabs"
             items={tabItems}
+            tabBarExtraContent={
+              <div className="exportBtn">
+                <button className="exportBtn">
+                  <ExportIcon />
+                  Export
+                </button>
+              </div>
+            }
           />
         </div>
       </div>

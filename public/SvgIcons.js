@@ -2918,6 +2918,39 @@ export const YoutubeIcon = () => {
     </svg>
   );
 };
+export const ExportIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15.0007 10.9331V12.533C15.0007 13.7116 14.046 14.6663 12.8674 14.6663H3.8012C2.62259 14.6663 1.66797 13.7116 1.66797 12.533V10.9331"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M4.60059 5.59961L8.33374 9.33276L12.0669 5.59961"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M8.33398 9.33311V1.3335"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
 export const CmcIcon = () => {
   return (
     <svg

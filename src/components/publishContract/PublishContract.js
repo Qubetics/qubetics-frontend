@@ -221,12 +221,13 @@ function PublishContract({ steps, current, prev, next }) {
             </button>
           )}
           {steps && current === steps.length - 1 && (
-            <Button
+            <button
               type="primary"
+              className="bluebtn"
               onClick={() => message.success("Processing complete!")}
             >
               Done
-            </Button>
+            </button>
           )}
           {current > 0 && (
             <Button

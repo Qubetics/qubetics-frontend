@@ -136,9 +136,9 @@ function VerifySecondStep({ steps, current, prev }) {
               </Button>
             )}
             {steps && current === steps.length - 1 && (
-              <Button type="primary" onClick={handleClick} className="bluebtn">
+              <button type="primary" onClick={handleClick} className="bluebtn">
                 Done
-              </Button>
+              </button>
             )}
           </div>
         )}

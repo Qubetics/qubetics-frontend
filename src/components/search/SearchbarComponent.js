@@ -177,7 +177,7 @@ const SearchbarComponent = ({
   }, []);
 
   return (
-    <div>
+    <div className="searchBarOuter">
       {
         searchStatus === FetchingStatus ? (
           <Loader />

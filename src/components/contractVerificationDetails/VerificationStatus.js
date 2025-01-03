@@ -24,7 +24,7 @@ const VerificationStatus = ({
           {!compilerMessage?.showError
             ? `${verificationStatus.REJECTED_VERIFICATION} (ByteCode Not Matched)`
             : verificationStatus.REJECTED_VERIFICATION}
-          <Button
+          <button
             type="primary"
             className="bluebtn"
             style={{ height: 40, marginLeft: "20px" }}
@@ -34,7 +34,7 @@ const VerificationStatus = ({
             }}
           >
             Verify & Publish
-          </Button>
+          </button>
         </div>
       );
     case 0:
@@ -67,7 +67,7 @@ const VerificationStatus = ({
     default:
       return (
         <>
-          <Button
+          <button
             type="primary"
             className="bluebtn"
             style={{ height: 40 }}
@@ -77,7 +77,7 @@ const VerificationStatus = ({
             }}
           >
             Verify & Publish
-          </Button>
+          </button>
         </>
       );
   }

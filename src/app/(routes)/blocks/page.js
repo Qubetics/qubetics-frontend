@@ -21,7 +21,7 @@ import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
 import getAddress from "@/utils/getAddress";
-import { Tooltip } from "antd";
+import { Select, Skeleton, Space, Table, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -249,6 +249,32 @@ const BlockSummary = () => {
               countTimer={item?.countTimer}
             />
           ))}
+        </div>
+        <div className="totalTransactions">
+          <h2>Showing blocks from 90 to 180</h2>
+          <Space wrap>
+            <Select
+              defaultValue="newest"
+              style={{
+                width: 123,
+              }}
+              className="innerSelect"
+              options={[
+                {
+                  value: "newest",
+                  label: "Newest",
+                },
+                {
+                  value: "f",
+                  label: "Newest",
+                },
+                {
+                  value: "n",
+                  label: "Newest",
+                },
+              ]}
+            />
+          </Space>
         </div>
         {
           // <Loading//>//
