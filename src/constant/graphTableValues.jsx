@@ -1334,7 +1334,7 @@ export const TokenColumn = [
   },
   {
     id: "totalSupply",
-    title: "Total supply",
+    title: "Total Supply",
     key: "totalSupply",
     render: (text) => (
       <span>

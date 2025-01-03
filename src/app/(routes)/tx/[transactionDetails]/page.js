@@ -70,7 +70,7 @@ const page = () => {
   };
   const tabItems = [
     {
-      label: "OverView",
+      label: "Overview",
       key: "0",
       children: (
         <>
