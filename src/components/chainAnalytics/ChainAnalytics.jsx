@@ -3,15 +3,10 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
 import {
-  ErrorStatus,
-  InitStatus,
-  tableLimit,
-  tooltipConstant,
+  tooltipConstant
 } from "@/constant/constant";
-import getValidators from "@/services/getValidators";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
-import { useEffect, useState } from "react";
 import {
   AvgAPRIcon,
   AvgBlockTime,
@@ -22,18 +17,38 @@ import {
   Transfericondark,
   Txblockdark,
 } from "../../../public/SvgIcons";
+import useAverageBlockTime from "../common/useAverageBlockTime";
 const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
+  const { diffs } = useAverageBlockTime();
 
+  const getDifference = (diff) => {
+    let result;
+    if (diff?.length > 0) {
+      const total = diff?.reduce((p, c) => p + c, 0);
+      const average = total / diff?.length;
+      if (average > 6) {
+        result = "6.00 Sec";
+      } else if (average < 0) {
+        result = "6.00 Sec";
+      } else {
+        result = `${average?.toFixed(2)} Sec`;
+      }
+    } else {
+      result = "6.00 Sec";
+    }
+    return result;
+  };
   return (
     <div className="analytics_cards">
       <CardsOnchain
-        text="Latest Block"
+        text="Average Block Time"
         balance={
-          webSocketData?.blocks?.blocknumber
-            ? webSocketData?.blocks?.blocknumber
-            : stats?.latest_block ?? 0
+          getDifference(diffs)
+          // webSocketData?.blocks?.blocknumber
+          //   ? webSocketData?.blocks?.blocknumber
+          //   : stats?.latest_block ?? 0
         }
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
       />

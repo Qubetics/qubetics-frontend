@@ -113,7 +113,14 @@ const BlockDetailDescription = ({ blockData, status }) => {
             </span>
           </div>
         )}
+        <div className="information">
+          <p> Parent Hash </p>
+          <span className="">
+            {blockData?.block?.parentHash ? blockData?.block?.parentHash : "-"}
+          </span>
+        </div>
       </div>
+
       {/* ) : (
         <Page />
       )} */}

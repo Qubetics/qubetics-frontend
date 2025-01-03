@@ -1,29 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../../blocks/blocksummary.scss";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import { useSearchData } from "@/components/contexts/searchingData";
 import Heading from "@/components/heading/Heading";
-import TransactionDetails from "@/components/transactionDetails/TransactionDetails";
+import Loader from "@/components/loader/Loader";
+import LogsDetail from "@/components/logsDetail/LogsDetail";
+import SearchbarComponent from "@/components/search/SearchbarComponent";
+import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
-import { useParams } from "next/navigation";
 import {
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import Loader from "@/components/loader/Loader";
-import Page from "../../notfound/page";
 import getSearchingValue from "@/services/search";
-import LogsDetail from "@/components/logsDetail/LogsDetail";
-import { useSearchData } from "@/components/contexts/searchingData";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import TransactionAction from "@/components/transferInfo/TransectionAction";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { Tabs } from "antd";
-import ContractTransactions from "@/components/contracts/ContractTransactions";
-import Holder from "@/components/contracts/Holder";
-import Events from "@/components/contracts/Events";
-import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import "../../blocks/blocksummary.scss";
+import Page from "../../notfound/page";
 
 const page = () => {
   const [transactionDetails, setTransactionDetails] = useState([]);
@@ -124,17 +119,30 @@ const page = () => {
           />
           <Heading heading="Transaction Details" />
           <div className="transecSec">
-            <Tabs
-              defaultActiveKey="0"
-              className="contracttabs"
-              items={tabItems}
-              onChange={(e) => handleTabSelect(e)}
-              // tabBarExtraContent={
-              //   <div className="tabSerachBar">
-              //     <SearchbarComponent />
-              //   </div>
-              // }
-            />
+            {contractLogs?.length > 0 ? (
+              <Tabs
+                defaultActiveKey="0"
+                className="contracttabs"
+                items={tabItems}
+                onChange={(e) => handleTabSelect(e)}
+                // tabBarExtraContent={
+                //   <div className="tabSerachBar">
+                //     <SearchbarComponent />
+                //   </div>
+                // }
+              />
+            ) : (
+              <>
+                <Heading heading="Overview" />
+                <TransferInfo data={transactionDetails} tab={tab} />
+
+                {transactionDetails?.tokenInfo?.type === "ERC-20" &&
+                  transactionDetails?.logs &&
+                  transactionDetails?.input && (
+                    <TransactionAction data={transactionDetails} />
+                  )}
+              </>
+            )}
           </div>
 
           {/* transactionDetails?.tokenInfo?.type == 'ERC-20' && */}

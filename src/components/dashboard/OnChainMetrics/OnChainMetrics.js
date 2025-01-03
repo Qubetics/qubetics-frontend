@@ -26,11 +26,12 @@ const OnChainMetrics = ({ stats }) => {
   const { isLight } = useThemeData();
   const [nativeData, setNativeData] = useState({});
 
-  let calc =
-    diffs && diffs?.length > 0
-      ? (diffs?.reduce((p, c) => p + c, 0) / diffs?.length)?.toFixed(2)
-      : "0.00";
-
+  // let calc =
+  //   diffs && diffs?.length > 0
+  //     ? (diffs?.reduce((p, c) => p + c, 0) / diffs?.length)?.toFixed(2)
+  //     : "0.00";
+  
+    
   return (
     <div className="cardSec onchain_sec">
       <div className="dashcardAnimation">

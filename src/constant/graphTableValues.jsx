@@ -208,6 +208,11 @@ export const transactionSummarycolumn = [
     ),
   },
   {
+    title: "Type ",
+    key: "type",
+    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
+  },
+  {
     title: "Block",
     dataIndex: "blocknumber",
     key: "blocknumber",
@@ -220,11 +225,6 @@ export const transactionSummarycolumn = [
         {text}
       </Link>
     ),
-  },
-  {
-    title: "Type ",
-    key: "type",
-    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
   },
   {
     title: "From",
@@ -678,8 +678,19 @@ export const nodesColumns = [
   },
   {
     title: "Node Address",
-    dataIndex: "peerId",
+    // dataIndex: "peerId",
     key: "peerId",
+    render: (text) => {
+      return (
+        <span
+          style={{ display: "flex", alignItems: "center" }}
+          className="iconandlink"
+        >
+          {text.peerId ? text?.peerId : "-"}
+          <CopyText text={text?.peerId} />
+        </span>
+      );
+    },
   },
 
   {

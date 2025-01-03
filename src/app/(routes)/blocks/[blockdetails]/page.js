@@ -1,28 +1,22 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../blocksummary.scss";
-import {
-  BlockIcon,
-  BlockIcondark,
-  TransIcon,
-  TransIcondark,
-} from "../../../../../public/SvgIcons";
-import Heading from "@/components/heading/Heading";
-import { Tabs } from "antd";
 import BlockDetailDescription from "@/components/blockDetailDescription/BlockDetaildescription";
-import TransactionTable from "@/components/transactionTable/TransactionTable";
-import "../../../../components/transferInfo/TransferInformation.scss";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import { useSearchData } from "@/components/contexts/searchingData";
 import { useThemeData } from "@/components/contexts/theme_context";
-import getSearchingValue from "@/services/search";
+import Heading from "@/components/heading/Heading";
+import SearchbarComponent from "@/components/search/SearchbarComponent";
+import TransactionTable from "@/components/transactionTable/TransactionTable";
 import {
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import { useSearchData } from "@/components/contexts/searchingData";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
+import getSearchingValue from "@/services/search";
+import { Tabs } from "antd";
+import { useEffect, useState } from "react";
+import "../../../../components/transferInfo/TransferInformation.scss";
+import "../blocksummary.scss";
 
 const BlockDetails = ({ params }) => {
   const [blockData, setBlockData] = useState({});
@@ -68,7 +62,7 @@ const BlockDetails = ({ params }) => {
     {
       label: (
         <span>
-          {isLight == "lightTheme" ? <BlockIcondark /> : <BlockIcon />}
+          {/* {isLight == "lightTheme" ? <BlockIcondark /> : <BlockIcon />} */}
           Block Overview
         </span>
       ),
@@ -83,7 +77,7 @@ const BlockDetails = ({ params }) => {
     {
       label: (
         <span>
-          {isLight == "lightTheme" ? <TransIcondark /> : <TransIcon />}
+          {/* {isLight == "lightTheme" ? <TransIcondark /> : <TransIcon />} */}
           Transaction Details
         </span>
       ),

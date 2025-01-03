@@ -190,6 +190,15 @@ const BlockSummary = () => {
   const cards = [
     {
       id: 1,
+      text: <>Latest Block</>,
+      balance: webSocketData?.blocks?.blocknumber
+        ? webSocketData?.blocks?.blocknumber
+        : "0",
+      img: <LatestblockNew />,
+      contract: false,
+    },
+    {
+      id: 2,
       text: "Top Validator (Last 24H)",
       balance: topValidtor ? (
         <Tooltip title={topValidtor}>
@@ -203,15 +212,7 @@ const BlockSummary = () => {
       img: <Totalvalidators />,
       contract: false,
     },
-    {
-      id: 2,
-      text: <>Latest Block</>,
-      balance: webSocketData?.blocks?.blocknumber
-        ? webSocketData?.blocks?.blocknumber
-        : "0",
-      img: <LatestblockNew />,
-      contract: false,
-    },
+
     {
       id: 3,
       text: "Block Time (Last 20 Blocks)",
@@ -235,6 +236,7 @@ const BlockSummary = () => {
           setSerachStatus={setSerachStatus}
         />
         <Heading heading={"Block Summary"} />
+
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
             <CardsOnchain
