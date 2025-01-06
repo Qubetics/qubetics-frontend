@@ -16,6 +16,7 @@ import { Button, Input, Spin } from "antd";
 import { useState } from "react";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
+import toast from "react-hot-toast";
 
 function Page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -76,16 +77,16 @@ function Page() {
         .then((res) => {
           if (res?.error == false) {
             setTxHash(res?.data?.txHash);
-            // customToast.success(res?.message);
+            toast.success(res?.message);
             setTransferStatus(SuccessStatus);
             setFaucetField({ address: "", amount: "" });
           } else if (res?.error == true) {
-            // customToast.error(res?.message);
+            toast.error(res?.message);
             setTransferStatus(ErrorStatus);
           }
         })
         .catch((err) => {
-          // customToast.error(err?.message);
+          toast.error(err?.message);
           setTransferStatus(ErrorStatus);
         });
     }
@@ -100,7 +101,7 @@ function Page() {
             searchStatus={searchStatus}
             setSerachStatus={setSerachStatus}
           />
-          
+
           <div className="faucet_inner__top">
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
@@ -176,7 +177,7 @@ function Page() {
                 </div> */}
               <div className="sendBtnFaucet">
                 {transferStatus === FetchingStatus ? (
-                  <Button>
+                  <button className="bluebtn">
                     <Spin
                       indicator={
                         <LoadingOutlined
@@ -187,9 +188,11 @@ function Page() {
                         />
                       }
                     />
-                  </Button>
+                  </button>
                 ) : (
-                  <button className="bluebtn">Send</button>
+                  <button onClick={requestFund} className="bluebtn">
+                    Send
+                  </button>
                 )}
               </div>
             </div>
