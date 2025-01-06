@@ -14,7 +14,7 @@ import { useGetNetwork } from "../contexts/networkChanged";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
-const TokenByAddress = () => {
+const TokenByAddress = ({ setTokensData }) => {
   const [tokenData, setTokenData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
@@ -34,6 +34,9 @@ const TokenByAddress = () => {
         currentPage
       );
       setTokenData(
+        response?.data?.contractDetails || response?.data?.tokenDetails
+      );
+      setTokensData(
         response?.data?.contractDetails || response?.data?.tokenDetails
       );
       const count = Number(response?.data?.count ?? 0) / tableLimit;

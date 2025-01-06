@@ -23,6 +23,7 @@ import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import { Datnotfound, ExportIcon } from "../../../../../public/SvgIcons";
 import TokenByAddress from "@/components/token";
+import { CSVLink } from "react-csv";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
@@ -32,7 +33,8 @@ const page = ({ params }) => {
   const [showHeaderData, setShowHeaderData] = useState("");
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-
+  const [activeTab, setActiveTab] = useState("0");
+  const [tokensData, setTokensData] = useState([]);
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -104,7 +106,9 @@ const page = ({ params }) => {
       setCurrentPage(1);
     }
   };
-
+  const onTabChange = (key) => {
+    setActiveTab(key);
+  };
   const tabItems = [
     {
       label: <span>Transactions</span>,
@@ -139,7 +143,7 @@ const page = ({ params }) => {
     {
       label: <span>Tokens</span>,
       key: "1",
-      children: <TokenByAddress />,
+      children: <TokenByAddress setTokensData={setTokensData} />,
     },
   ];
 
@@ -158,7 +162,7 @@ const page = ({ params }) => {
         <div className="addressDetailSec">
           <div className="detail">
             <h3>Address</h3>
-            <p>{params?.addressDetail }</p>
+            <p>{params?.addressDetail}</p>
           </div>
         </div>
         {/* <BlockDetail details={details} /> */}
@@ -212,15 +216,22 @@ const page = ({ params }) => {
         <div className="addresspagination">
           <Tabs
             centered
+            onChange={onTabChange}
             defaultActiveKey="0"
             className="commontabs addresstabs"
             items={tabItems}
             tabBarExtraContent={
               <div className="exportBtn">
-                <button className="exportBtn">
-                  <ExportIcon />
-                  Export
-                </button>
+                <CSVLink
+                  className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
+                  filename="my-file.csv"
+                  data={activeTab === "0" ? txAddressData : tokensData}
+                >
+                  <button className="exportBtn">
+                    <ExportIcon />
+                    Export
+                  </button>
+                </CSVLink>
               </div>
             }
           />
