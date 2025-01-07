@@ -7,12 +7,11 @@ import "./chart.scss";
 
 const ChartAccount = ({ data, chartType, name }) => {
   const [chartData, setChartData] = useState(null);
- 
+
   useEffect(() => {
     let chartValue = chartMenu(data, chartType);
 
-    let maxLength =
-      data?.length > 0 ? data?.length : generateData(chartType).length;
+    let maxLength = data?.length > 0 ? data?.length : generateData(chartType).length;
 
     let { seriesData, maximum } = chartSeriesValue(data, chartType);
     const options = {
@@ -51,15 +50,12 @@ const ChartAccount = ({ data, chartType, name }) => {
           const tooltipY = point.plotY + chart.plotTop - labelHeight - 10;
 
           // Adjust for edges
-          const x = Math.max(
-            Math.min(tooltipX, chart.chartWidth - labelWidth - 10),
-            10
-          );
+          const x = Math.max(Math.min(tooltipX, chart.chartWidth - labelWidth - 10), 10);
           const y = Math.max(tooltipY, 10); // Avoid overlapping the top of the chart
           return { x, y };
         },
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        borderColor: "rgba(226, 66, 202, 0.5)",
+        backgroundColor: "#19181a",
+        borderColor: "#9F53FF",
         borderRadius: 10,
         borderWidth: 2,
         style: {
@@ -96,7 +92,7 @@ const ChartAccount = ({ data, chartType, name }) => {
           text: "",
         },
         gridLineWidth: 0,
-        gridLineColor: "#bec4d2",
+        gridLineColor: "#9F53FF",
       },
       plotOptions: {
         area: {
@@ -134,7 +130,7 @@ const ChartAccount = ({ data, chartType, name }) => {
         {
           name: name,
           data: seriesData && [...seriesData],
-          color: "rgba(226, 66, 202, 0.5)", // Color of the line
+          color: "#9F53FF", // Color of the line
         },
       ],
       accessibility: {
@@ -147,13 +143,7 @@ const ChartAccount = ({ data, chartType, name }) => {
   return (
     <div>
       <div className="chart-wrapper" style={{ height: "100%" }}>
-        {chartData !== null ? (
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={chartData}
-            containerProps={{ style: { height: "100%" } }}
-          />
-        ) : null}
+        {chartData !== null ? <HighchartsReact highcharts={Highcharts} options={chartData} containerProps={{ style: { height: "100%" } }} /> : null}
       </div>
     </div>
   );

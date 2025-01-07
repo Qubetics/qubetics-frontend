@@ -2,15 +2,7 @@ import { Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  CmcIcon,
-  Discord,
-  Instagram,
-  Telegram,
-  TikTok,
-  Twitter,
-  YoutubeIcon,
-} from "../../../public/SvgIcons";
+import { CmcIcon, Discord, Instagram, Telegram, TikTok, Twitter, YoutubeIcon } from "../../../public/SvgIcons";
 import "./Footer.scss";
 const Footer = () => {
   const scrollToTop = () => {
@@ -28,16 +20,13 @@ const Footer = () => {
       className="footernew"
     >
       <div className="container">
-        <Row gutter={[16, 16]} justify="center">
+        <Row gutter={[20, 16]} justify="center">
           <Col xs={24} sm={12} lg={7}>
             <h2>
               {" "}
               <Image src="/NewLogo.svg" height={50} width={177} alt="logo" />
             </h2>
-            <p>
-              Build without limits. Qubetics an interoperable ecosystem uniting
-              all leading networks.
-            </p>
+            <p>Build without limits. Qubetics an interoperable ecosystem uniting all leading networks.</p>
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>Quick Links</h3>
@@ -59,10 +48,7 @@ const Footer = () => {
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>About Us</h3>
-            <Link
-              href="https://www.qubetics.com/privacy-policy"
-              target="_blank"
-            >
+            <Link href="https://www.qubetics.com/privacy-policy" target="_blank">
               Privacy Policy
             </Link>
             <Link href="https://www.qubetics.com/terms-of-use" target="__blank">
@@ -72,32 +58,16 @@ const Footer = () => {
 
           <Col xs={24} sm={12} lg={4}>
             <h3>Product & Services</h3>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics Validator App
             </Link>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics Delegator App
             </Link>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics DEX
             </Link>
-            <Link
-              href=" "
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href=" " target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics App
             </Link>
           </Col>
@@ -110,25 +80,13 @@ const Footer = () => {
             >
               Official Web
             </Link>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics Network Documentation
             </Link>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics Documentation
             </Link>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
               Qubetics IDE
             </Link>
           </Col>
@@ -157,10 +115,7 @@ const Footer = () => {
             <Link href="https://www.tiktok.com/@qubetics" target="_blank">
               <TikTok />
             </Link>
-            <Link
-              href="https://coinmarketcap.com/currencies/qubetics/"
-              target="_blank"
-            >
+            <Link href="https://coinmarketcap.com/currencies/qubetics/" target="_blank">
               <CmcIcon />
             </Link>
           </div>
@@ -176,7 +131,7 @@ const Footer = () => {
         </div>
         <p className="footernew_year">
           {/* © 2024 {EXPLORER_CHAIN_NAME}. All Rights Reserved. */}
-          ©2024 Copyright Qubetics. All rights reserved.
+          ©2025 Copyright Qubetics. All rights reserved.
         </p>
       </div>
     </section>

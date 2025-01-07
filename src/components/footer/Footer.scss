@@ -42,7 +42,7 @@
   background: linear-gradient(180deg, rgb(13, 13, 13) -73.17%, #0d0d0d4a 100%);
 
   backdrop-filter: blur(150px) !important;
-  margin-top: 100px;
+  margin-top: 150px;
   padding: 42px 0px 15px;
   width: 100%;
   @media (max-width: 575px) {
@@ -91,9 +91,9 @@
       color: #ffffff99;
       @include fluid-type(320px, 1920px, 14px, 14px);
       padding-bottom: 10px;
+      // white-space: nowrap;
       font-weight: 400;
-      transition: transform 0.3s ease, color 0.3s ease,
-        background-color 0.3s ease;
+      transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
       @media (max-width: 575px) {
         padding-bottom: 8px;
       }
@@ -116,7 +116,7 @@
     h3 {
       color: $white;
       display: flex;
-      font-weight: 600;
+      font-weight: 500;
       @include fluid-type(320px, 1920px, 16px, 18px);
       gap: 7px;
       padding-bottom: 15px;
@@ -141,7 +141,6 @@
     font-weight: 500;
     color: $white;
     letter-spacing: -0.05em;
-
   }
 }
 

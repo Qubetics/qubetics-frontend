@@ -42,19 +42,10 @@ const Page = ({ customClass }) => {
   }, [isNetworkChanged]);
   return (
     <>
-      <section
-        style={{ paddingTop: pathname !== Routes.HOME && 0 }}
-        className={`cardsLandingPage ${customClass} ${
-          routeName === pathname ? "dashboardMain" : ""
-        }`}
-      >
+      <section style={{ paddingTop: pathname !== Routes.HOME && 0 }} className={`cardsLandingPage ${customClass} ${routeName === pathname ? "dashboardMain" : ""}`}>
         <div>
-          <SearchbarComponent
-            searchStatus={searchStatus}
-            setSerachStatus={setSerachStatus}
-          />
-
           <div className="container">
+            <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
             <h2 className="analytictext">On Chain Metrics</h2>
             <OnChainMetrics stats={stats} />
           </div>
@@ -76,32 +67,12 @@ const Page = ({ customClass }) => {
               <ChainAnalytics stats={stats} />
               <div className="multiGraph">
                 <div className="grap">
-                  <ChainAnalyticsGraph
-                    title="Qubetics Price"
-                    discription="Qubetics coin current market price in USD "
-                    fetchUrl={graphUrl.token_price}
-                    isNative={false}
-                  />
-                  <ChainAnalyticsGraph
-                    title="Qubetics Coin Transfer"
-                    discription="Total Txns made with Qubetics coin per period "
-                    fetchUrl={graphUrl.coin_transfer}
-                    isNative={false}
-                  />
+                  <ChainAnalyticsGraph title="Qubetics Price" discription="Qubetics coin current market price in USD " fetchUrl={graphUrl.token_price} isNative={false} />
+                  <ChainAnalyticsGraph title="Qubetics Coin Transfer" discription="Total Txns made with Qubetics coin per period " fetchUrl={graphUrl.coin_transfer} isNative={false} />
                 </div>
                 <div className="grap">
-                  <ChainAnalyticsGraph
-                    title="Total Accounts"
-                    discription="Total accounts number per period"
-                    fetchUrl={graphUrl.total_account}
-                    isNative={isEvm}
-                  />
-                  <ChainAnalyticsGraph
-                    title="Transaction Fees"
-                    discription="Amount of Qubetics coins paid in fees per period "
-                    fetchUrl={graphUrl.txn_fee}
-                    isNative={false}
-                  />
+                  <ChainAnalyticsGraph title="Total Accounts" discription="Total accounts number per period" fetchUrl={graphUrl.total_account} isNative={isEvm} />
+                  <ChainAnalyticsGraph title="Transaction Fees" discription="Amount of Qubetics coins paid in fees per period " fetchUrl={graphUrl.txn_fee} isNative={false} />
                 </div>
               </div>
             </div>

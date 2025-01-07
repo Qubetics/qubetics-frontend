@@ -225,12 +225,7 @@
 
   .activeBtn {
     border-radius: 6px;
-    background: linear-gradient(
-      88deg,
-      rgba(32, 191, 85, 0.15) 3.13%,
-      rgba(32, 191, 85, 0.35) 48.43%,
-      rgba(32, 191, 85, 0.15) 98.38%
-    );
+    background: linear-gradient(88deg, rgba(32, 191, 85, 0.15) 3.13%, rgba(32, 191, 85, 0.35) 48.43%, rgba(32, 191, 85, 0.15) 98.38%);
     backdrop-filter: blur(32px);
     color: #23d65e;
     font-size: 14px;
@@ -385,6 +380,7 @@
     }
 
     h3 {
+      font-weight: 600;
       @include theme() {
         color: theme-get("texttheme");
       }
@@ -663,9 +659,10 @@
 
 .ant-select-dropdown {
   min-width: 0px !important;
+  border-radius: 14px !important;
   // width: 125px;
   max-width: 100% !important;
-  width: 100% ;
+  width: 100%;
   margin-top: -4px !important;
   z-index: 9 !important;
   @include theme() {

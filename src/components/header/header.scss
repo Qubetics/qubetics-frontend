@@ -204,6 +204,13 @@
     padding-top: 10px;
     padding-bottom: 10px;
     gap: 30px;
+    @media (max-width: 1299px) {
+      justify-content: unset;
+      gap: 20px;
+    }
+    @media (max-width: 1199px) {
+      justify-content: space-between;
+    }
     @media screen and (max-width: 676px) {
       width: 100%;
     }
@@ -251,19 +258,9 @@
 }
 
 .drawer_main {
-  background: linear-gradient(
-    88deg,
-    rgba(255, 255, 255, 0) 1.62%,
-    rgba(255, 255, 255, 0) 98.38%
-  ) !important;
+  background: linear-gradient(88deg, rgba(255, 255, 255, 0) 1.62%, rgba(255, 255, 255, 0) 98.38%) !important;
   color: #fff;
-  border-image-source: linear-gradient(
-    101.15deg,
-    rgba(255, 255, 255, 0) 1.66%,
-    rgba(255, 255, 255, 0.167188) 14.93%,
-    rgba(255, 255, 255, 0.153) 52.51%,
-    rgba(255, 255, 255, 0.024) 91.84%
-  );
+  border-image-source: linear-gradient(101.15deg, rgba(255, 255, 255, 0) 1.66%, rgba(255, 255, 255, 0.167188) 14.93%, rgba(255, 255, 255, 0.153) 52.51%, rgba(255, 255, 255, 0.024) 91.84%);
   backdrop-filter: blur(32px);
 
   .ant-drawer-body {
@@ -294,6 +291,15 @@
           }
         }
       }
+    }
+  }
+  .cmnSelct {
+    flex-direction: column;
+    gap: 30px;
+    padding: 15px;
+    @media (max-width: 991px) {
+      padding: 0;
+      gap: 30px !important;
     }
   }
 }
@@ -455,12 +461,7 @@ ul {
 
     &:hover,
     &.active {
-      background: linear-gradient(
-        88deg,
-        rgba(1, 124, 201, 0.15) 3.13%,
-        rgba(8, 147, 234, 0.35) 48.43%,
-        rgba(1, 138, 224, 0.17) 98.38%
-      );
+      background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%);
       // color: $white !important;
       .ant-select-selection-item {
         color: $white !important;
@@ -513,6 +514,8 @@ ul {
 }
 
 .cmnSelct {
+  -webkit-backdrop-filter: blur(32px);
+  backdrop-filter: blur(32px);
   .ant-select {
     height: 50px;
     position: relative;
@@ -530,7 +533,6 @@ ul {
 
   .ant-select-selector {
     height: 50px !important;
-
     color: $grayA0A0A0;
     background: $black !important;
     // --bg: #000;
@@ -557,19 +559,7 @@ ul {
         position: absolute;
         z-index: -1;
         inset: -0.2rem;
-        background: conic-gradient(
-          from var(--gradient-angle),
-          var(--clr-card),
-          var(--clr-1),
-          var(--clr-2),
-          var(--clr-3),
-          var(--clr-4),
-          var(--clr-5),
-          var(--clr-6),
-          var(--clr-2),
-          var(--clr-1),
-          var(--clr-card)
-        );
+        background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
         border-radius: inherit;
         animation: rotate 2.5s linear infinite;
       }
@@ -584,18 +574,7 @@ ul {
       position: absolute;
       z-index: -1;
       inset: -0.2rem;
-      background: conic-gradient(
-        var(--clr-card),
-        var(--clr-1),
-        var(--clr-2),
-        var(--clr-3),
-        var(--clr-4),
-        var(--clr-5),
-        var(--clr-6),
-        var(--clr-2),
-        var(--clr-1),
-        var(--clr-card)
-      );
+      background: conic-gradient(var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card)) !important;
       border-radius: inherit;
       animation: rotate 2.5s linear infinite;
     }
@@ -652,12 +631,20 @@ ul {
     // display: none;
 
     margin: 15px 0;
+    @media (max-width: 1199px) {
+      margin: 0;
+    }
     @media (max-width: 991px) {
       padding: 0 15px;
+      margin: 6px 0;
     }
     @media (max-width: 475px) {
       display: block;
     }
+  }
+  .cmnSelct {
+    display: flex;
+    gap: 20px;
   }
 }
 
