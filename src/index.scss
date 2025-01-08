@@ -18,11 +18,11 @@
 :root {
   --bg-background: #111827;
   --clr-card: #9f53ff;
-  --clr-1: rgb(255, 152, 226);
-  --clr-2: rgb(255, 200, 118) 35.77deg;
-  --clr-3: rgb(121, 255, 247) 153.75deg;
-  --clr-4: rgb(159, 83, 255) 258.75deg;
-  --clr-5: rgb(255, 152, 226) 360deg;
+  --clr-1: rgb(121, 255, 247);
+  --clr-2: rgb(255, 200, 118);
+  --clr-4: rgb(255, 152, 226);
+  --clr-3: rgb(159, 83, 255) 0deg;
+  --clr-5: rgb(255, 152, 226) 120deg;
   --clr-6: #9f53ff;
 }
 :root {
@@ -204,9 +204,7 @@ html {
   background-color: $black;
   display: flex;
   position: relative;
-
   text-decoration: none;
-
   // --bg: #000;
   // --hover-bg: var(--theme-gradients-main);
   // --text: #fff;
@@ -235,7 +233,6 @@ html {
       border-radius: inherit;
       animation: rotate 2.5s linear infinite;
     }
-
     &::after {
       filter: blur(4rem);
     }
@@ -1157,18 +1154,17 @@ button.bluebtn {
 
           span {
             @include theme() {
-              color: theme-get("texttheme");
+              color: theme-get("grayText");
             }
-
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-weight: 500;
             display: flex;
             gap: 0.8rem;
             align-items: center;
           }
         }
-
         .ant-tabs-tab-active {
           // background: var(--theme-gradients-main);
-
           width: 200px;
           display: flex;
           justify-content: center;
@@ -1187,6 +1183,8 @@ button.bluebtn {
           }
 
           span {
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-weight: 500;
             @include theme() {
               color: theme-get("textthemeoposite");
             }
@@ -2403,5 +2401,12 @@ input[type="number"] {
     align-items: center;
     gap: 4px;
     padding: 10px 22px;
+  }
+}
+.ant-spin {
+  span {
+    svg {
+      color: rgba(126, 66, 202, 0.7);
+    }
   }
 }

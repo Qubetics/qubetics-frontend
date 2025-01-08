@@ -7,12 +7,7 @@ import LogsDetail from "@/components/logsDetail/LogsDetail";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import getSearchingValue from "@/services/search";
 import { Tabs } from "antd";
 import { useParams } from "next/navigation";
@@ -40,10 +35,7 @@ const page = () => {
     try {
       if (searchData?.length == 0 || params?.transactionDetails) {
         setTxDetailStatus(FetchingStatus);
-        if (
-          params?.transactionDetails &&
-          !params?.transactionDetails.startsWith("0x")
-        ) {
+        if (params?.transactionDetails && !params?.transactionDetails.startsWith("0x")) {
           updateTx = `0x${params?.transactionDetails}`;
         } else {
           updateTx = params?.transactionDetails;
@@ -76,25 +68,14 @@ const page = () => {
         <>
           <TransferInfo data={transactionDetails} tab={tab} />
 
-          {transactionDetails?.tokenInfo?.type === "ERC-20" &&
-            transactionDetails?.logs &&
-            transactionDetails?.input && (
-              <TransactionAction data={transactionDetails} />
-            )}
+          {transactionDetails?.tokenInfo?.type === "ERC-20" && transactionDetails?.logs && transactionDetails?.input && <TransactionAction data={transactionDetails} />}
         </>
       ),
     },
     contractLogs?.length > 0 && {
       label: "Logs",
       key: "1",
-      children: contractLogs.map((e, i) => (
-        <LogsDetail
-          key={i + "logDetails"}
-          contractLogs={e}
-          index={i}
-          topics={topics}
-        />
-      )),
+      children: contractLogs.map((e, i) => <LogsDetail key={i + "logDetails"} contractLogs={e} index={i} topics={topics} />),
     },
   ];
 
@@ -113,11 +94,8 @@ const page = () => {
         <Loader />
       ) : txDetailStatus == SuccessStatus || txDetailStatus == ErrorStatus ? (
         <div className="container">
-          <SearchbarComponent
-            searchStatus={searchStatus}
-            setSerachStatus={setSerachStatus}
-          />
-          <Heading heading="Transaction Details" />
+          <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+          {/* <Heading heading="Transaction Details" /> */}
           <div className="transecSec">
             {contractLogs?.length > 0 ? (
               <Tabs
@@ -136,11 +114,7 @@ const page = () => {
                 <Heading heading="Overview" />
                 <TransferInfo data={transactionDetails} tab={tab} />
 
-                {transactionDetails?.tokenInfo?.type === "ERC-20" &&
-                  transactionDetails?.logs &&
-                  transactionDetails?.input && (
-                    <TransactionAction data={transactionDetails} />
-                  )}
+                {transactionDetails?.tokenInfo?.type === "ERC-20" && transactionDetails?.logs && transactionDetails?.input && <TransactionAction data={transactionDetails} />}
               </>
             )}
           </div>

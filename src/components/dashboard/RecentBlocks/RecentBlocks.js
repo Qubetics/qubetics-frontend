@@ -3,15 +3,7 @@ import RecentBlock from "@/components/recentBlock/RecentBlock";
 import { useLatestData } from "@/components/contexts/latest_data";
 import "./style.scss";
 import getBlocks from "@/services/getBlocks";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  Routes,
-  SuccessStatus,
-  dashboardCount,
-  pageNo,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, Routes, SuccessStatus, dashboardCount, pageNo } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import Page from "@/app/(routes)/notfound/page";
 import Loader from "@/components/loader/Loader";
@@ -57,10 +49,7 @@ const RecentBlocks = () => {
 
   useEffect(() => {
     if (webSocketData?.blocks.length === 0) return;
-    let index = recentBlocks.findIndex(
-      (item) =>
-        Number(item?.blocknumber) === Number(webSocketData?.blocks.blocknumber)
-    );
+    let index = recentBlocks.findIndex((item) => Number(item?.blocknumber) === Number(webSocketData?.blocks.blocknumber));
 
     if (index == -1) {
       setRecentBlocks([webSocketData?.blocks, ...recentBlocks]);
@@ -70,27 +59,20 @@ const RecentBlocks = () => {
   const handleClick = () => {
     router.push(Routes.BLOCKS);
   };
-  return recentBlockStatus === InitStatus ||
-    recentBlockStatus === FetchingStatus ? (
+  return recentBlockStatus === InitStatus || recentBlockStatus === FetchingStatus ? (
     <Loader />
   ) : (
     <div className="commontableBG">
       <div className="commontableBG_head">
         <h2>Latest Blocks</h2>
         <div className="viewAll" onClick={handleClick}>
-          <p> View All</p>
+          <p> View all</p>
         </div>
       </div>
 
       {recentBlocks?.length > 0 ? (
         recentBlocks.slice(0, 4)?.map((res, index) => {
-          return (
-            <RecentBlock
-              key={res?.blocknumber}
-              customClass="carousel-item "
-              data={res}
-            />
-          );
+          return <RecentBlock key={res?.blocknumber} customClass="carousel-item " data={res} />;
         })
       ) : (
         <Page />

@@ -400,8 +400,7 @@ ul {
 .mob__List .ant-space {
   .headerSelect.ant-select {
     .ant-select-selection-item {
-      @include fluid-type(320px, 1920px, 13px, 15px);
-
+      @include fluid-type(320px, 1920px, 13px, 16px);
       &:hover {
         color: $white;
       }
@@ -491,7 +490,7 @@ ul {
       width: 100%;
       height: fit-content;
       line-height: normal;
-      @include fluid-type(320px, 1920px, 13px, 15px);
+      @include fluid-type(320px, 1920px, 13px, 16px);
       border-radius: 0px 8px 8px 0px;
       cursor: pointer;
       font-weight: 700;
@@ -514,16 +513,9 @@ ul {
 }
 
 .cmnSelct {
-  -webkit-backdrop-filter: blur(32px);
-  backdrop-filter: blur(32px);
   .ant-select {
     height: 50px;
     position: relative;
-    &:hover {
-      &::after {
-        filter: blur(4rem) !important;
-      }
-    }
     @media (max-width: 767px) {
       display: block;
       // height: 35px;
@@ -552,33 +544,6 @@ ul {
     //     border-box !important;
     border: 0 !important;
     border-radius: 40px !important;
-    &:hover {
-      &::after,
-      &::before {
-        content: " ";
-        position: absolute;
-        z-index: -1;
-        inset: -0.2rem;
-        background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
-        border-radius: inherit;
-        animation: rotate 2.5s linear infinite;
-      }
-
-      &::after {
-        filter: blur(4rem) !important;
-      }
-    }
-    &::after,
-    &::before {
-      content: " ";
-      position: absolute;
-      z-index: -1;
-      inset: -0.2rem;
-      background: conic-gradient(var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card)) !important;
-      border-radius: inherit;
-      animation: rotate 2.5s linear infinite;
-    }
-
     .ant-select-selection-item {
       padding-left: 15px !important;
       font-weight: 500;
@@ -586,7 +551,9 @@ ul {
       color: $white !important;
     }
   }
-
+  .evmChain {
+    backdrop-filter: blur(32px);
+  }
   .ant-select-arrow {
     margin-top: -5px;
 

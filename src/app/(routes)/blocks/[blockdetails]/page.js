@@ -6,12 +6,7 @@ import { useThemeData } from "@/components/contexts/theme_context";
 import Heading from "@/components/heading/Heading";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TransactionTable from "@/components/transactionTable/TransactionTable";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import getSearchingValue from "@/services/search";
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
@@ -63,16 +58,11 @@ const BlockDetails = ({ params }) => {
       label: (
         <span>
           {/* {isLight == "lightTheme" ? <BlockIcondark /> : <BlockIcon />} */}
-          Block Overview
+          Overview
         </span>
       ),
       key: "0",
-      children: (
-        <BlockDetailDescription
-          blockData={blockData}
-          status={blockDetailStatus}
-        />
-      ),
+      children: <BlockDetailDescription blockData={blockData} status={blockDetailStatus} />,
     },
     {
       label: (
@@ -89,17 +79,10 @@ const BlockDetails = ({ params }) => {
   return (
     <div className="blocksummary blockdetails">
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
         <Heading heading="Block Details" />
         <div className="blockjson">
-          <Tabs
-            defaultActiveKey="0"
-            className="commontabs nodetabs"
-            items={tabItems}
-          />
+          <Tabs defaultActiveKey="0" className="commontabs nodetabs" items={tabItems} />
         </div>
       </div>
     </div>

@@ -1,12 +1,7 @@
 @import "../../mixins";
 @import "../../var";
 .logDetail {
-  background: linear-gradient(
-    88deg,
-    rgba(255, 255, 255, 0) 1.62%,
-    rgba(255, 255, 255, 0.1) 48.43%,
-    rgba(255, 255, 255, 0) 98.38%
-  );
+  background: linear-gradient(88deg, rgba(255, 255, 255, 0) 1.62%, rgba(255, 255, 255, 0.1) 48.43%, rgba(255, 255, 255, 0) 98.38%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   backdrop-filter: blur(32px);
@@ -58,8 +53,20 @@
     height: 36px;
     .ant-select {
       width: 83px !important;
-      height: 36px;
+      height: 36px !important;
       margin-top: 0;
+      .ant-select-selector {
+        border-radius: 25px !important;
+        background-color: transparent !important;
+        border: 1px solid #a0a0a0 !important;
+        color: #fff;
+        @include fluid-type(320px, 1920px, 14px, 16px);
+        font-weight: 500 !important;
+      }
+      .ant-select-selection-item {
+        color: #ffff;
+        font-weight: 500;
+      }
     }
   }
 }

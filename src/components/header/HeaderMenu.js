@@ -378,7 +378,9 @@ function HeaderMenu() {
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
             </a>
+            {/* <div className="evmChain"> */}
             <Select
+              className="qubeticNetwork_btn"
               getPopupContainer={getContainer}
               defaultValue={chainType}
               style={{ minWidth: 130, width: "130px" }}
@@ -395,6 +397,7 @@ function HeaderMenu() {
                 },
               ]}
             />
+            {/* </div> */}
           </div>
         </li>
       </ul>

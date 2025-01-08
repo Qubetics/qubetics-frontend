@@ -107,7 +107,7 @@ body {
     .ant-card-body {
       background: var(--searchBg);
       border-radius: 14px;
-      padding: 20px !important;
+      padding: 17px 20px !important;
     }
   }
 }
@@ -612,6 +612,10 @@ body {
       line-height: 23.44px;
       color: #fff;
     }
+    .viewAll {
+      width: 100px;
+      text-align: center;
+    }
   }
   .viewAll {
     p {
@@ -620,7 +624,7 @@ body {
       color: #fff;
       border: 1px solid #454545;
       border-radius: 30px;
-      padding: 6px 9px;
+      padding: 7px 9px;
       cursor: pointer;
     }
   }

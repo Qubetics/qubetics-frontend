@@ -23,15 +23,16 @@
   }
 }
 .recentblocks {
-  padding: 10.8px 0px;
+  padding: 10.4px 0px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   @media (max-width: 1626px) {
-    padding: 11.1px 0;
+    padding: 10.8px 0px;
   }
+
   @media (max-width: 1479px) {
-    padding: 11.8px 0;
+    padding: 11.5px 0;
   }
   @media screen and (max-width: 676px) {
     gap: 20px;
