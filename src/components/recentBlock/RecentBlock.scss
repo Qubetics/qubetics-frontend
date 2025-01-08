@@ -49,6 +49,7 @@
       color: $white;
       @include fluid-type(320px, 1920px, 14px, 16px);
       font-weight: 500;
+      padding-bottom: 4px;
       &:hover {
         color: #9f53ff;
         transition: color 0.6s ease-out;
@@ -56,8 +57,7 @@
       }
 
       &:nth-child(2) {
-        font-weight: 500;
-
+        font-weight: 300;
         color: $grayA0A0A0;
 
         @include fluid-type(320px, 1920px, 12px, 14px);
