@@ -725,6 +725,12 @@
         max-width: 380px;
         width: 100%;
         background: transparent;
+        @media (max-width: 1199px) {
+          max-width: 49%;
+        }
+        @media (max-width: 767px) {
+          max-width: 100%;
+        }
       }
     }
     .multiGraph {

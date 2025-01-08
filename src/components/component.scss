@@ -209,28 +209,16 @@ body {
   .ant-card {
     display: flex;
     align-items: center;
-    background: linear-gradient(
-      to bottom right,
-      rgb(31, 31, 35),
-      rgb(37, 42, 45)
-    );
+    background: linear-gradient(to bottom right, rgb(31, 31, 35), rgb(37, 42, 45));
 
     &:nth-child(odd) {
-      background: linear-gradient(
-        to bottom right,
-        rgb(31, 31, 35),
-        rgb(37, 42, 45)
-      );
+      background: linear-gradient(to bottom right, rgb(31, 31, 35), rgb(37, 42, 45));
     }
   }
 
   .ant-card {
     &:nth-child(even) {
-      background: linear-gradient(
-        to bottom right,
-        rgb(31, 31, 35),
-        rgb(37, 42, 45)
-      );
+      background: linear-gradient(to bottom right, rgb(31, 31, 35), rgb(37, 42, 45));
     }
   }
 
@@ -612,7 +600,7 @@ body {
     margin-bottom: 15px;
     h2 {
       @include fluid-type(320px, 1920px, 16px, 20px);
-      font-weight: 600;
+      font-weight: 300;
       line-height: 23.44px;
       color: #fff;
     }
@@ -644,8 +632,8 @@ body {
   justify-content: space-between;
   margin-bottom: 20px;
   @media screen and (max-width: 580px) {
-   flex-direction: column;
-   gap: 20px;
+    flex-direction: column;
+    gap: 20px;
   }
   h2 {
     @include fluid-type(320px, 1920px, 18px, 24px);

@@ -371,6 +371,13 @@ function HeaderMenu() {
       <ul className="mob__List">
         <li className="headerSelct">
           <div className="cmnSelct">
+            <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
+              <span style={{ gap: "5px", display: "flex", alignItems: "center" }} class="_button-text_1x6ja_100">
+                <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
+                {isMetaMaskAdded ? `${EXPLORER_CHAIN_NAME} Network Added` : `Add ${EXPLORER_CHAIN_NAME} Network`}
+                {isMetaMaskAdded && <CheckIcon />}
+              </span>
+            </a>
             <Select
               getPopupContainer={getContainer}
               defaultValue={chainType}
@@ -388,13 +395,6 @@ function HeaderMenu() {
                 },
               ]}
             />
-            <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
-              <span style={{ gap: "5px", display: "flex", alignItems: "center" }} class="_button-text_1x6ja_100">
-                <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
-                {isMetaMaskAdded ? `${EXPLORER_CHAIN_NAME} Network Added` : `Add ${EXPLORER_CHAIN_NAME} Network`}
-                {isMetaMaskAdded && <CheckIcon />}
-              </span>
-            </a>
           </div>
         </li>
       </ul>

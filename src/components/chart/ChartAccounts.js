@@ -104,7 +104,7 @@ const ChartAccount = ({ data, chartType, name }) => {
               y2: 1,
             },
             stops: [
-              [0, "rgba(259, 83, 255, 0.5)"], // Light color at the top
+              [0, "rgba(159, 83, 255, 0.5)"], // Light color at the top
               [1, "rgba(7, 14, 31, 0)"], // Transparent at the bottom
             ],
           },
