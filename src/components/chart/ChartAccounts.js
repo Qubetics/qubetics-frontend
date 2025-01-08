@@ -55,7 +55,7 @@ const ChartAccount = ({ data, chartType, name }) => {
           return { x, y };
         },
         backgroundColor: "#19181a",
-        borderColor: "#9F53FF",
+        borderColor: "rgba(126, 66, 202, 0.7)",
         borderRadius: 10,
         borderWidth: 2,
         style: {
@@ -130,7 +130,7 @@ const ChartAccount = ({ data, chartType, name }) => {
         {
           name: name,
           data: seriesData && [...seriesData],
-          color: "#9F53FF", // Color of the line
+          color: "rgba(126, 66, 202, 0.7)", // Color of the line
         },
       ],
       accessibility: {

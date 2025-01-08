@@ -23,14 +23,19 @@
   }
 }
 .recentblocks {
-  padding: 14px 0px;
+  padding: 10.8px 0px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 1626px) {
+    padding: 11.1px 0;
+  }
+  @media (max-width: 1479px) {
+    padding: 11.8px 0;
+  }
   @media screen and (max-width: 676px) {
     gap: 20px;
     flex-flow: wrap;
-    padding: 18px;
   }
 
   @media screen and (max-width: 390px) {
@@ -43,6 +48,16 @@
   .recentdata {
     display: flex;
     gap: 10px;
+    img {
+      @media (max-width: 767px) {
+        width: 35px;
+      }
+    }
+    div {
+      .time {
+        display: block !important;
+      }
+    }
 
     p {
       letter-spacing: 0.32px;
@@ -59,7 +74,6 @@
       &:nth-child(2) {
         font-weight: 300;
         color: $grayA0A0A0;
-
         @include fluid-type(320px, 1920px, 12px, 14px);
         display: flex;
         align-items: center;
@@ -154,6 +168,7 @@
         font-weight: 500;
         opacity: 0.6;
         line-height: 27px;
+        display: block;
         @include theme() {
           color: theme-get("texttheme");
         }

@@ -147,6 +147,13 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+      .imgIcon {
+        svg {
+          @media (max-width: 767px) {
+            width: 40px;
+          }
+        }
+      }
     }
 
     p {
@@ -224,9 +231,9 @@ body {
 
   .cardSec_items {
     .imgIcon {
-      padding: 10px;
-      width: 50px;
-      height: 50px;
+      // padding: 10px;
+      // width: 50px;
+      // height: 50px;
     }
 
     h2 {
@@ -592,6 +599,7 @@ body {
   padding: 20px 30px;
   @media screen and (max-width: 767px) {
     margin-top: 20px;
+    padding: 20px;
   }
   &_head {
     display: flex;
