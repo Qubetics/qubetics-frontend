@@ -111,12 +111,8 @@ const Transactionsummary = () => {
                       label: "Newest",
                     },
                     {
-                      value: "f",
-                      label: "Newest",
-                    },
-                    {
-                      value: "n",
-                      label: "Newest",
+                      value: "oldest",
+                      label: "Oldest",
                     },
                   ]}
                 />

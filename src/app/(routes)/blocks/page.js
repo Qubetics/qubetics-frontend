@@ -270,8 +270,8 @@ const BlockSummary = () => {
                       label: "Newest",
                     },
                     {
-                      value: "f",
-                      label: "Newest",
+                      value: "oldest",
+                      label: "Oldest",
                     },
                     // {
                     //   value: "n",
