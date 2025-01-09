@@ -58,14 +58,14 @@ const Transactionsummary = () => {
     {
       img: <ContractTransactions />,
       label: "Transactions (Last 30 Days)",
-      value: txnData
+      value: txnData?.previous30DaysTrxn
         ? formatMillionNumber(Number(txnData?.previous30DaysTrxn))
         : 0,
     },
     {
       img: <ActiveAccountToday />,
       label: "Active Accounts(Today)",
-      value: txnData ? txnData?.activeAccount : 0,
+      value: txnData?.activeAccount ? txnData?.activeAccount : 0,
     },
   ];
 

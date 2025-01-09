@@ -185,7 +185,7 @@ const SearchbarComponent = ({
           <div className="searchbar container">
             <div className="searchbar_input">
               <input
-                placeholder="Search for an address, block, txn hash or block hash."
+                placeholder="Search by Txn Hash/ Address/ Block/ Block Hash"
                 value={searchValue}
                 onChange={(e) => handleSearchChange(e)}
                 onKeyUp={(e) => handleEnterClick(e)}

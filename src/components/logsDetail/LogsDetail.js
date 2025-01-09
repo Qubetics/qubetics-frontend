@@ -79,7 +79,7 @@ function LogsDetail(data) {
           </p>
         </div>
         <div className="ineerDetail">
-          <h2>Data</h2>
+          <h2>Value</h2>
           <p>
             {contractLogs?.events
               ?.filter((e) => e.name === "value")

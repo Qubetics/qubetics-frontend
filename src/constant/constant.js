@@ -538,3 +538,8 @@ export const defaultChainOptions = [
     rpcUrl: "https://rpc.mantle.xyz",
   },
 ];
+export const firstCapitalLetter = (input) => {
+  if (typeof input === "number") return input;
+  if (!input) return "";
+  return input?.charAt(0).toUpperCase() + input?.slice(1);
+};

@@ -33,10 +33,10 @@ export const chartMenu = (data, chartType) => {
     labelIndex =
       data?.lenght > 0
         ? data?.map((item, index) =>
-            moment(item?.createdAt).format("DD MMM YYYY")
+            moment(item?.createdAt).format("DD MMM ")
           )
         : generateData(chartType).map((item, index) =>
-            moment(item.createdAt).format("DD MMM YYYY")
+            moment(item.createdAt).format("DD MMM ")
           );
   } else if (chartType === TRANS_HISTORY_CHART_YEAR) {
     labelIndex =

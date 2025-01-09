@@ -11,7 +11,8 @@ const ChartAccount = ({ data, chartType, name }) => {
   useEffect(() => {
     let chartValue = chartMenu(data, chartType);
 
-    let maxLength = data?.length > 0 ? data?.length : generateData(chartType).length;
+    let maxLength =
+      data?.length > 0 ? data?.length : generateData(chartType).length;
 
     let { seriesData, maximum } = chartSeriesValue(data, chartType);
     const options = {
@@ -50,7 +51,10 @@ const ChartAccount = ({ data, chartType, name }) => {
           const tooltipY = point.plotY + chart.plotTop - labelHeight - 10;
 
           // Adjust for edges
-          const x = Math.max(Math.min(tooltipX, chart.chartWidth - labelWidth - 10), 10);
+          const x = Math.max(
+            Math.min(tooltipX, chart.chartWidth - labelWidth - 10),
+            10
+          );
           const y = Math.max(tooltipY, 10); // Avoid overlapping the top of the chart
           return { x, y };
         },
@@ -100,11 +104,11 @@ const ChartAccount = ({ data, chartType, name }) => {
             linearGradient: {
               x1: 0,
               y1: 0,
-              x2: 0,
+              x2: 0.5,
               y2: 1,
             },
             stops: [
-              [0, "rgba(159, 83, 255, 0.5)"], // Light color at the top
+              [0, "rgba(139, 93, 355, 0.5)"], // Light color at the top
               [1, "rgba(7, 14, 31, 0)"], // Transparent at the bottom
             ],
           },
@@ -143,7 +147,13 @@ const ChartAccount = ({ data, chartType, name }) => {
   return (
     <div>
       <div className="chart-wrapper" style={{ height: "100%" }}>
-        {chartData !== null ? <HighchartsReact highcharts={Highcharts} options={chartData} containerProps={{ style: { height: "100%" } }} /> : null}
+        {chartData !== null ? (
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartData}
+            containerProps={{ style: { height: "100%" } }}
+          />
+        ) : null}
       </div>
     </div>
   );

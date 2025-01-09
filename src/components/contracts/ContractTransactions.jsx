@@ -14,7 +14,6 @@ import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Image from "next/image";
 
-
 const ContractTransactions = ({ hash, tab }) => {
   const [transactions, setTransactions] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
@@ -70,27 +69,31 @@ const ContractTransactions = ({ hash, tab }) => {
       setCurrentPage(totalPages);
     }
   };
-
+  const getTableColumn = () => {
+    if(tab == 1){
+    return contractTransactionsColumn?.filter((item) => item?.key !=="method");
+  }
+  return contractTransactionsColumn;
+};
   return (
     // transactionStatus === InitStatus ||
     //   transactionStatus === FetchingStatus ? (
     //   <Loader />
     // ) : transactionStatus === SuccessStatus ? (
     <div>
-      {" "}
       <SkeletonTableWrapper
         isSkeleton={
           transactionStatus === FetchingStatus ||
           transactionStatus === InitStatus
         }
-        columns={contractTransactionsColumn}
+        columns={getTableColumn()}
         dataSource={transactions}
         pagination={false}
         className="commontable contractTable"
         locale={{
           emptyText: (
             <div>
-               <Image src={notFound} width={150} height={90} />
+              <Image src={notFound} width={150} height={90} />
               <p>No data </p>
             </div>
           ),
