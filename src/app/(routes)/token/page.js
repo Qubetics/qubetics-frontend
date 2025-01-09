@@ -19,8 +19,10 @@ import getAllTokens from "@/services/getAllTokens";
 import getInternalSearch from "@/services/getInternalSearchData";
 import { useEffect, useState } from "react";
 import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function page() {
+  const searchParams = useSearchParams();
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [tokensData, setTokensData] = useState([]);
@@ -29,10 +31,13 @@ function page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [searchText, setSearchText] = useState("");
   const { debounce } = useDebounce(searchText, 1500);
+  const pageId = searchParams.get("page") || 1;
+  const router = useRouter();
+
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
-      let response = await getAllTokens(currentPage, tableLimit);
+      let response = await getAllTokens(pageId, tableLimit);
       setTokensData(response?.data);
       const count = Number(response?.data?.count ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
@@ -45,7 +50,7 @@ function page() {
   const getSearchData = async (debounce) => {
     try {
       setTokenStatus(FetchingStatus);
-      let response = await getInternalSearch(currentPage, tableLimit, debounce);
+      let response = await getInternalSearch(pageId, tableLimit, debounce);
       setTokensData(response?.data);
       const count = Number(response?.data?.tokenCount ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
@@ -61,40 +66,53 @@ function page() {
   // }, [debounce]);
 
   useEffect(() => {
-    if (debounce.length > 0) {
-      getSearchData(debounce);
+    if (searchText?.length > 0) {
+      getSearchData(searchText);
       return;
     }
     fetchData();
-  }, [currentPage]);
+  }, [pageId]);
 
   useEffect(() => {
     if (isNetworkChanged == true) {
       fetchData();
     }
   }, [isNetworkChanged]);
-  console.log(searchText, debounce, "debounce");
+
   const handleNext = () => {
-    if (currentPage < totalPages) {
+    if (pageId < totalPages) {
       setCurrentPage(currentPage + 1);
+      // Create a new URLSearchParams object to modify query parameters
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", currentPage + 1);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (pageId > 1) {
+      setCurrentPage(page - 1);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", pageId - 1);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleLast = () => {
-    if (currentPage < totalPages) {
+    if (pageId < totalPages) {
       setCurrentPage(totalPages);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", totalPages);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleFirst = () => {
-    if (currentPage <= totalPages) {
+    if (pageId <= totalPages) {
       setCurrentPage(1);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", 1);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
@@ -117,7 +135,15 @@ function page() {
 
   const handleEnterClick = (e) => {
     if (e.key === "Enter" && searchText?.length > 0) {
-      getSearchData(searchText);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", 1);
+      router.replace(`?${newSearchParams.toString()}`, {
+        shallow: true,
+        scroll: false,
+      });
+      if (pageId == 1) {
+        getSearchData(searchText);
+      }
     }
   };
   return (
@@ -151,7 +177,12 @@ function page() {
             onChange={(e) => {
               setSearchText(e.target.value);
               if (e.target.value.length === 0) {
-                fetchData();
+                const newSearchParams = new URLSearchParams(searchParams);
+                newSearchParams.set("page", 1);
+                router.push(`?${newSearchParams.toString()}`);
+                if (pageId == 1) {
+                  fetchData();
+                }
               }
             }}
             searchText={searchText}
@@ -177,11 +208,11 @@ function page() {
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
-            currentPage={currentPage}
+            currentPage={pageId}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            disablePrev={currentPage === 1}
-            disableNext={currentPage === totalPages}
+            disablePrev={pageId === 1}
+            disableNext={pageId === totalPages}
             handleFirst={handleFirst}
             handleLast={handleLast}
           />

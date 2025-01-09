@@ -2,9 +2,7 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
-import {
-  tooltipConstant
-} from "@/constant/constant";
+import { tooltipConstant } from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import {
@@ -22,7 +20,9 @@ const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const { diffs } = useAverageBlockTime();
-
+  const parsedData =
+    webSocketData?.analytics?.validatorData &&
+    JSON.parse(webSocketData?.analytics?.validatorData);
   const getDifference = (diff) => {
     let result;
     if (diff?.length > 0) {
@@ -84,11 +84,7 @@ const ChainAnalytics = ({ stats }) => {
       />
       <CardsOnchain
         text="Average APY"
-        balance={
-          webSocketData?.onChainMetric?.tpb
-            ? webSocketData?.onChainMetric?.tpb
-            : 0
-        }
+        balance={parsedData?.apy ? parsedData?.apy + " %" : "0 %"}
         img={isLight == "lightTheme" ? <Txblockdark /> : <AvgAPRIcon />}
       />
       <CardsOnchain
