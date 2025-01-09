@@ -961,6 +961,66 @@ export const contractTransactionsColumn = [
     ),
   },
   {
+    id: "status",
+    title: "Status",
+    key: "status",
+    render: (text) => (
+      <span className="">
+        {text?.status ? (
+          text?.status.toLowerCase() === "success" ? (
+            <span className="successtrans">Success</span>
+          ) : (
+            <span className="failedtrans">Failed</span>
+          )
+        ) : (
+          "-"
+        )}
+      </span>
+    ),
+  },
+  {
+    id: "fee",
+    title: "Fee(TICS)",
+    key: "fee",
+    render: (text) => (
+      <span className="">
+        <Tooltip
+          title={
+            text?.gasFee
+              ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(
+                  18
+                )
+              : "0"
+          }
+        >
+          {text?.gasFee
+            ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(6)
+            : "0"}
+        </Tooltip>
+      </span>
+    ),
+  },
+  {
+    id: "amount",
+    title: "Amount",
+    key: "amount",
+    render: (text) => (
+      <span className="">
+        <Tooltip
+          title={
+            text?.txFee
+              ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
+              : "0"
+          }
+        >
+          {text?.txFee
+            ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
+            : "0"}
+        </Tooltip>
+      </span>
+    ),
+  },
+  {
     id: "height",
     title: "Blocks",
     key: "height",
@@ -980,30 +1040,7 @@ export const contractTransactionsColumn = [
       </span>
     ),
   },
-  {
-    id: "fee",
-    title: "Amount",
-    key: "fee",
-    render: (text) => (
-      <span className="">
-        <Tooltip
-          title={
-            text?.gasFee
-              ? noExponential(text?.gasFee)
-              : Number(text?.txFee).toFixed(0)
-              ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
-              : "0"
-          }
-        >
-          {text?.gasFee
-            ? noExponential(text?.gasFee)
-            : Number(text?.txFee).toFixed(0)
-            ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
-            : "0"}
-        </Tooltip>
-      </span>
-    ),
-  },
+
   {
     id: "age",
     title: "Age",
@@ -1011,24 +1048,6 @@ export const contractTransactionsColumn = [
     render: (text) => (
       <span className="">
         {text?.timestamp ? renderTime(text?.timestamp) : "-"}
-      </span>
-    ),
-  },
-  {
-    id: "status",
-    title: "Status",
-    key: "status",
-    render: (text) => (
-      <span className="">
-        {text?.status ? (
-          text?.status.toLowerCase() === "success" ? (
-            <span className="successtrans">Success</span>
-          ) : (
-            <span className="failedtrans">Failed</span>
-          )
-        ) : (
-          "-"
-        )}
       </span>
     ),
   },

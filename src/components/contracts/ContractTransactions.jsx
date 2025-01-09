@@ -70,11 +70,13 @@ const ContractTransactions = ({ hash, tab }) => {
     }
   };
   const getTableColumn = () => {
-    if(tab == 1){
-    return contractTransactionsColumn?.filter((item) => item?.key !=="method");
-  }
-  return contractTransactionsColumn;
-};
+    if (tab == 1) {
+      return contractTransactionsColumn?.filter(
+        (item) => item?.key !== "method"
+      );
+    }
+    return contractTransactionsColumn?.filter((item) => item?.key !== "fee");
+  };
   return (
     // transactionStatus === InitStatus ||
     //   transactionStatus === FetchingStatus ? (
