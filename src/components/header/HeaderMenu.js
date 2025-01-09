@@ -383,7 +383,7 @@ function HeaderMenu() {
               className="qubeticNetwork_btn"
               getPopupContainer={getContainer}
               defaultValue={chainType}
-              style={{ minWidth: 130, width: "130px" }}
+              style={{ minWidth: 130, width: "130px", padding: 0 }}
               // disabled
               onChange={handleChainChange}
               options={[

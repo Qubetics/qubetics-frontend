@@ -96,7 +96,7 @@ const page = () => {
         <div className="container">
           <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
           {/* <Heading heading="Transaction Details" /> */}
-          <div className="transecSec">
+          <div className="transecSec" style={{ marginTop: "30px" }}>
             {contractLogs?.length > 0 ? (
               <Tabs
                 defaultActiveKey="0"

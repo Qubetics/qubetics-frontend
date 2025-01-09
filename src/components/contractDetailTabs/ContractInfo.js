@@ -73,7 +73,7 @@ function ContractInfo() {
           <Button
             type="primary"
             style={{ height: 40 }}
-            className="bluebtn"
+            // className="bluebtn"
             onClick={connectModal}
           >
             Connect Wallet
@@ -102,14 +102,7 @@ function ContractInfo() {
         </div>
         */}
       </div>
-      <Modal
-        className="connectModal"
-        title="Connect your wallet"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        centered
-      >
+      <Modal className="connectModal" title="Connect your wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
         <ul>
           <li onClick={connectWithWallet}>
             {" "}
@@ -124,10 +117,7 @@ function ContractInfo() {
           </li>
           */}
         </ul>
-        <p className="agreeWallet">
-          By Connecting a wallet you agree to the Terms of service and Optimism
-          Community Agreements.
-        </p>
+        <p className="agreeWallet">By Connecting a wallet you agree to the Terms of service and Optimism Community Agreements.</p>
       </Modal>
     </>
   );

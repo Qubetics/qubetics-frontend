@@ -29,6 +29,9 @@
       }
     }
   }
+  :where(.css-dev-only-do-not-override-77tu7h).ant-select-single.ant-select-open .ant-select-selection-item {
+    color: $grayA0A0A0;
+  }
   .ant-select-item-option-selected {
     background: $bg-353026 !important;
     color: $black !important;
