@@ -39,7 +39,7 @@ function page() {
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchData = async () => {
       try {
         setValidatorStatus(FetchingStatus);
