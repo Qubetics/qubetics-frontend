@@ -23,6 +23,8 @@ const ChainAnalytics = ({ stats }) => {
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
+
+
   const getDifference = (diff) => {
     let result;
     if (diff?.length > 0) {
@@ -57,7 +59,7 @@ const ChainAnalytics = ({ stats }) => {
         addicon="true"
         title={tooltipConstant.CIRCULATION_SUPPLY}
         text="Circulating Supply"
-        balance={0}
+        balance={stats?.circulationSupply ? formatMillionNumber(stats?.circulationSupply):0}
         img={
           isLight == "lightTheme" ? (
             <CirculatingSupplyIcon />

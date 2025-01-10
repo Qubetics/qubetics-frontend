@@ -13,7 +13,7 @@ import Link from "next/link";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
-// export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
+export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
 export const TRANS_HISTORY_CHART_MINUTES = "7 Days";
 export const TRANS_HISTORY_CHART_HOURS = "30 Days";
 export const TRANS_HISTORY_CHART_YEAR = "1 Year";

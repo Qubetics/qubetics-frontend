@@ -1,10 +1,7 @@
 "use client";
 import { useThemeData } from "@/components/contexts/theme_context";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import {
-  InitStatus,
-  Routes
-} from "@/constant/constant";
+import { InitStatus, Routes } from "@/constant/constant";
 import { Grid } from "antd";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
@@ -21,7 +18,6 @@ export default function Home() {
   const [focusOnSearch, setFocusOnSearch] = useState(false);
   const { useBreakpoint } = Grid;
   const { lg } = useBreakpoint();
-
   const scrollDivRef = useRef();
 
   // useEffect(() => {

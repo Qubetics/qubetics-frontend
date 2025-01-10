@@ -1,5 +1,4 @@
 "use client";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { useSearchData } from "@/components/contexts/searchingData";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
@@ -7,24 +6,31 @@ import LogsDetail from "@/components/logsDetail/LogsDetail";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
-import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+} from "@/constant/constant";
 import getSearchingValue from "@/services/search";
 import { Tabs } from "antd";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
 
 const page = () => {
+  const searchParam = useSearchParams();
+  const router = useRouter();
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [contractLogs, setContractLogs] = useState([]);
   const [topics, setTopics] = useState([]);
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(searchParam.get("tab") || "0");
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
   const { searchData } = useSearchData();
-  const { isNetworkChanged } = useGetNetwork();
+
   let updateTx = "";
 
   useEffect(() => {
@@ -35,7 +41,10 @@ const page = () => {
     try {
       if (searchData?.length == 0 || params?.transactionDetails) {
         setTxDetailStatus(FetchingStatus);
-        if (params?.transactionDetails && !params?.transactionDetails.startsWith("0x")) {
+        if (
+          params?.transactionDetails &&
+          !params?.transactionDetails.startsWith("0x")
+        ) {
           updateTx = `0x${params?.transactionDetails}`;
         } else {
           updateTx = params?.transactionDetails;
@@ -68,75 +77,71 @@ const page = () => {
         <>
           <TransferInfo data={transactionDetails} tab={tab} />
 
-          {transactionDetails?.tokenInfo?.type === "ERC-20" && transactionDetails?.logs && transactionDetails?.input && <TransactionAction data={transactionDetails} />}
+          {transactionDetails?.tokenInfo?.type === "ERC-20" &&
+            transactionDetails?.logs &&
+            transactionDetails?.input && (
+              <TransactionAction data={transactionDetails} />
+            )}
         </>
       ),
     },
     contractLogs?.length > 0 && {
       label: "Logs",
       key: "1",
-      children: contractLogs.map((e, i) => <LogsDetail key={i + "logDetails"} contractLogs={e} index={i} topics={topics} />),
+      children: contractLogs.map((e, i) => (
+        <LogsDetail
+          key={i + "logDetails"}
+          contractLogs={e}
+          index={i}
+          topics={topics}
+        />
+      )),
     },
   ];
 
   const handleTabSelect = (e) => {
     setTab(e);
+    const newSearchParams = new URLSearchParams(searchParam);
+    newSearchParams.set("tab", e);
+    router.replace(`?${newSearchParams.toString()}`, {
+      shallow: true,
+      scroll: false,
+    });
   };
-
-  // useEffect(() => {
-  //   if (isNetworkChanged == true) {
-  //     fetchData();
-  //   }
-  // }, [isNetworkChanged]);
+  
   return (
     <div className="blocksummary transferInfo">
       {txDetailStatus == InitStatus || txDetailStatus == FetchingStatus ? (
         <Loader />
       ) : txDetailStatus == SuccessStatus || txDetailStatus == ErrorStatus ? (
         <div className="container">
-          <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+          <SearchbarComponent
+            searchStatus={searchStatus}
+            setSerachStatus={setSerachStatus}
+          />
           {/* <Heading heading="Transaction Details" /> */}
           <div className="transecSec" style={{ marginTop: "30px" }}>
             {contractLogs?.length > 0 ? (
               <Tabs
+                activeKey={tab}
                 defaultActiveKey="0"
                 className="contracttabs"
                 items={tabItems}
                 onChange={(e) => handleTabSelect(e)}
-                // tabBarExtraContent={
-                //   <div className="tabSerachBar">
-                //     <SearchbarComponent />
-                //   </div>
-                // }
               />
             ) : (
               <>
                 <Heading heading="Overview" />
                 <TransferInfo data={transactionDetails} tab={tab} />
 
-                {transactionDetails?.tokenInfo?.type === "ERC-20" && transactionDetails?.logs && transactionDetails?.input && <TransactionAction data={transactionDetails} />}
+                {transactionDetails?.tokenInfo?.type === "ERC-20" &&
+                  transactionDetails?.logs &&
+                  transactionDetails?.input && (
+                    <TransactionAction data={transactionDetails} />
+                  )}
               </>
             )}
           </div>
-
-          {/* transactionDetails?.tokenInfo?.type == 'ERC-20' && */}
-
-          {/* <Heading heading="Transaction Detailss" />
-          <TransactionDetails data={transactionDetails} /> */}
-          {/* {contractLogs?.length > 0 && (
-            <> */}
-          {/* <Heading heading="Logs" /> */}
-          {/* <LogsDetail data={contractLogs[0]} /> */}
-          {/* {contractLogs.map((e, i) => (
-                // <LogsDetail
-                //   key={i + "logDetails"}
-                //   contractLogs={e}
-                //   index={i}
-                //   topics={topics}
-                // />
-              ))} */}
-          {/* </>
-          )} */}
         </div>
       ) : (
         <Page />

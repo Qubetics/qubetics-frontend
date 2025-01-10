@@ -1,5 +1,4 @@
 "use client";
-// import Header from "@/components/header/header";
 import { useLayoutEffect } from "react";
 import dynamic from "next/dynamic";
 
@@ -29,6 +28,7 @@ export default function LayoutProvider({ children }) {
     <>
       <div className={`${pathName !== Routes.HOME ? "bgToMainDiv" : ""}`}>
         <Header />
+      
         <main className="maininner">
             <div className="addbgtheme" style={{ paddingTop: pathName !== Routes.Welcome && 110 }}>
               {/* <SearchbarComponent

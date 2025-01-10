@@ -6,20 +6,29 @@ import { useThemeData } from "@/components/contexts/theme_context";
 import Heading from "@/components/heading/Heading";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TransactionTable from "@/components/transactionTable/TransactionTable";
-import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+} from "@/constant/constant";
 import getSearchingValue from "@/services/search";
 import { Tabs } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../../../components/transferInfo/TransferInformation.scss";
 import "../blocksummary.scss";
 
 const BlockDetails = ({ params }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [blockData, setBlockData] = useState({});
   const [blockDetailStatus, setBlockDetailsStatus] = useState(InitStatus); //init,fetching,success,error
   const { isLight } = useThemeData();
   const { searchData } = useSearchData();
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "0");
 
   const fetchData = async () => {
     try {
@@ -52,7 +61,19 @@ const BlockDetails = ({ params }) => {
       fetchData();
     }
   }, [isNetworkChanged]);
-
+  /**
+   * handling tabs
+   *
+   */
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("tab", key);
+    router.push(`?${newSearchParams.toString()}`, {
+      scroll: false,
+      shallow: true,
+    });
+  };
   const tabItems = [
     {
       label: (
@@ -62,7 +83,12 @@ const BlockDetails = ({ params }) => {
         </span>
       ),
       key: "0",
-      children: <BlockDetailDescription blockData={blockData} status={blockDetailStatus} />,
+      children: (
+        <BlockDetailDescription
+          blockData={blockData}
+          status={blockDetailStatus}
+        />
+      ),
     },
     {
       label: (
@@ -79,10 +105,19 @@ const BlockDetails = ({ params }) => {
   return (
     <div className="blocksummary blockdetails">
       <div className="container">
-        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+        <SearchbarComponent
+          searchStatus={searchStatus}
+          setSerachStatus={setSerachStatus}
+        />
         <Heading heading="Block Details" />
         <div className="blockjson">
-          <Tabs defaultActiveKey="0" className="commontabs nodetabs" items={tabItems} />
+          <Tabs
+            activeKey={activeTab}
+            defaultActiveKey="0"
+            className="commontabs nodetabs"
+            items={tabItems}
+            onChange={handleTabChange}
+          />
         </div>
       </div>
     </div>

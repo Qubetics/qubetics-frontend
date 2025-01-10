@@ -12,7 +12,7 @@ export function middleware(request) {
   }
 
   if (SHOW_FAUCET == 0) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();

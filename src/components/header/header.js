@@ -115,7 +115,13 @@ function Header() {
           <div>
             <Link href={"/dashboard"}>
               {" "}
-              <Image src={LogoIcon} alt="Logo" width={176} height={50} />
+              <Image
+                priority
+                src={LogoIcon}
+                alt="Logo"
+                width={176}
+                height={50}
+              />
             </Link>
           </div>
           <HeaderMenu />
