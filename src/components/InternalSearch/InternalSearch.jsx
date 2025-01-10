@@ -15,7 +15,7 @@ const InternalSearch = ({ searchText, onChange, onKeyUp }) => {
     <div className="searchbar container">
       <div className="searchbar_input">
         <input
-          placeholder="Search by Txn Hash/ Address/ Block/ Block Hash"
+          placeholder="Search for contract name or address"
           value={searchText}
           onChange={onChange}
           onKeyUp={onKeyUp}

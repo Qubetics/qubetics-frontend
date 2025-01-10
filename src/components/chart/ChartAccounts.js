@@ -36,9 +36,9 @@ const ChartAccount = ({ data, chartType, name }) => {
             <div style="  white-space: normal; 
         font-size: 15px;
         text-align: center;
-        padding: 0 28px 25px;
-        min-height:70px;
-        min-width: 150px;
+        padding: 0 28px 12px;
+        min-height:50px;
+        min-width: 160px;
         display:flex;
         align-items: center;">
         ${xAxisData}<br>
