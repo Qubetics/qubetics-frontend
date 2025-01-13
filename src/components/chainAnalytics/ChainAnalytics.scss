@@ -37,6 +37,9 @@
         @include fluid-type(320px, 1920px, 14px, 20px);
         font-weight: 400;
         padding-bottom: 7px;
+        @media (max-width: 767px) {
+          padding-bottom: 5px;
+        }
       }
       p {
         @include fluid-type(320px, 1920px, 12px, 14px);

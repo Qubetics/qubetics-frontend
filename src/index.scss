@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:wght@200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 //   font-family: 'Montserrat', sans-serif;
 @import "./components/component.scss";
 @import "./_var.scss";
@@ -8,7 +8,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: "DM Sans", sans-serif !important;
+  font-family: "DM Sans", serif !important;
 }
 @property --gradient-angle {
   syntax: "<angle>";
@@ -660,6 +660,7 @@ button.bluebtn {
 
           @media (max-width: 575px) {
             margin: 0 0 0 15px;
+            padding: 10px 15px;
           }
         }
       }
@@ -697,6 +698,9 @@ button.bluebtn {
   overflow-x: auto;
   border: 1px solid $borderCard;
   background-color: #121212;
+  @media (max-width: 575px) {
+    margin: 12px 0;
+  }
 
   @include theme() {
     color: theme-get("borderitem");
@@ -1392,30 +1396,25 @@ button.bluebtn {
     }
   }
 }
-
 .lightTheme .searchbartop {
   background-color: #f8f8f8;
 }
-
 .lightTheme .bgToMainDiv,
 .lightTheme .faucet {
   background-color: #f8f8f8 !important;
 }
-
 .bgToMainDiv {
   // background-position: center;
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-image: url("/mainBg.png");
   background-repeat: no-repeat;
-
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
   }
-
   .maininner {
     flex: 1;
   }
@@ -1480,12 +1479,13 @@ button.bluebtn {
 .bluecard {
   display: flex;
   gap: 20px;
-
   @media (max-width: 991px) {
     max-width: 100% !important;
     width: 100% !important;
   }
-
+  @media (max-width: 575px) {
+    gap: 16px;
+  }
   &_inner {
     background: var(--searchBg);
     border: 1px solid $borderCard;
@@ -1507,7 +1507,7 @@ button.bluebtn {
     .imgIcon {
       svg {
         @media (max-width: 767px) {
-          width: 40px;
+          width: 50px;
         }
       }
     }
@@ -1548,7 +1548,12 @@ button.bluebtn {
     }
   }
 }
-
+.transecSec {
+  margin-top: 30px;
+  @media (max-width: 575px) {
+    margin-top: 4px;
+  }
+}
 .contractDetail {
   padding: 40px 0px;
 
@@ -1561,10 +1566,12 @@ button.bluebtn {
   }
   .headerButton {
     margin-top: 40px;
+    @media (max-width: 575px) {
+      margin-top: 24px;
+    }
   }
   .transecSec {
     padding: 30px 0px;
-
     @media (max-width: 575px) {
       padding: 10px 0;
     }
@@ -1902,7 +1909,6 @@ input[type="number"] {
     background: var(--searchBg);
     padding: 15.3px 30px;
     border-radius: 15px;
-
     div {
       .actiondata {
         max-width: 250px;
@@ -2042,6 +2048,10 @@ input[type="number"] {
 
     gap: 20px;
 
+    @media (max-width: 575px) {
+      gap: 16px;
+    }
+
     .innerdata {
       display: flex;
       max-width: 335px;
@@ -2058,12 +2068,16 @@ input[type="number"] {
 
       @media (max-width: 575px) {
         max-width: 100%;
+        padding: 20px;
       }
       .imgIcon {
         // width: 60px;
         // height: 60px;
       }
     }
+  }
+  @media (max-width: 575px) {
+    padding-bottom: 14px;
   }
 }
 

@@ -40,6 +40,9 @@
         gap: 30px;
         margin-top: 50px;
       }
+      @media (max-width: 575px) {
+        margin-top: 24px;
+      }
 
       > div {
         width: 100%;
@@ -129,7 +132,7 @@
         margin: 0 auto;
         padding-top: 50px;
       }
-    
+
       .left {
         h3 {
           @include fluid-type(320px, 1920px, 20px, 32px);
@@ -137,6 +140,9 @@
           color: $white;
           margin-bottom: 20px;
           text-align: center;
+          @media (max-width: 575px) {
+            margin-bottom: 10px;
+          }
         }
         .discription {
           color: #cfd6e7;
@@ -147,6 +153,9 @@
           margin: 0 auto;
           text-align: center;
           padding-bottom: 40px;
+          @media (max-width: 575px) {
+            padding-bottom: 22px;
+          }
 
           span {
             font-weight: 500;
@@ -201,12 +210,7 @@
     &__bottom {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
-      background: linear-gradient(
-        88deg,
-        rgba(1, 124, 201, 0.15) 3.13%,
-        rgba(8, 147, 234, 0.35) 48.43%,
-        rgba(1, 138, 224, 0.17) 98.38%
-      );
+      background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%);
       backdrop-filter: blur(32px);
       padding: 33px 100px;
       margin-top: 30px;
