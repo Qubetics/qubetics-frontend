@@ -1,17 +1,4 @@
-import {
-  BlockchainHeaderFunction,
-  contractHeaderFunction,
-  defaultChainOptions,
-  EXPLORER_CHAIN_NAME,
-  EXPLORER_CURRENCY_NAME,
-  EXPLORER_META_NETWORK_CHAIN_ID,
-  EXPLORER_METAMASK_NAVIGATION,
-  EXPLORER_METAMASK_NETWORK_URL,
-  Messages,
-  METAMASK_CHAIN_NAME,
-  Routes,
-  SHOW_FAUCET,
-} from "@/constant/constant";
+import { BlockchainHeaderFunction, contractHeaderFunction, defaultChainOptions, EXPLORER_CHAIN_NAME, EXPLORER_CURRENCY_NAME, EXPLORER_META_NETWORK_CHAIN_ID, EXPLORER_METAMASK_NAVIGATION, EXPLORER_METAMASK_NETWORK_URL, Messages, METAMASK_CHAIN_NAME, Routes, SHOW_FAUCET } from "@/constant/constant";
 import metamaskSDK from "@web3-onboard/metamask";
 import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
@@ -50,7 +37,12 @@ init({
     },
   },
 });
-function HeaderMenu() {
+function HeaderMenu({ onCloseDrawer }) {
+  const handleMenuClick = () => {
+    if (onCloseDrawer) {
+      onCloseDrawer();
+    }
+  };
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   const router = useRouter();
@@ -93,8 +85,7 @@ function HeaderMenu() {
       const chainId = await ethereum.request({ method: "eth_chainId" });
       setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
       ethereum.on("chainChanged", (id) => {
-        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
-          return setIsMetaMaskAdded(true);
+        if (id === EXPLORER_META_NETWORK_CHAIN_ID) return setIsMetaMaskAdded(true);
         setIsMetaMaskAdded(false);
       });
     } catch (error) {
@@ -190,12 +181,8 @@ function HeaderMenu() {
   return (
     <>
       <ul className="mob__List">
-        <li value="Dashboard">
-          <Link
-            prefetch={true}
-            className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
-            href={Routes.DASHBOARD}
-          >
+        <li value="Dashboard" onClick={handleMenuClick}>
+          <Link prefetch={true} className={pathname === Routes.DASHBOARD ? "active" : "inactive"} href={Routes.DASHBOARD}>
             Dashboard
           </Link>
         </li>
@@ -206,12 +193,7 @@ function HeaderMenu() {
               // trigger={["hover"]}
               title=""
               getPopupContainer={getContainer}
-              className={`headerSelect  ${
-                pathname.includes(Routes.BLOCKS) ||
-                pathname.includes(Routes.TRANSACTIONS)
-                  ? "active"
-                  : "inactive"
-              }`}
+              className={`headerSelect  ${pathname.includes(Routes.BLOCKS) || pathname.includes(Routes.TRANSACTIONS) ? "active" : "inactive"}`}
               defaultValue={"Blockchain"}
               // placeholder={
               //   pathname.includes(Routes.BLOCKS)
@@ -231,30 +213,18 @@ function HeaderMenu() {
           </Space>
         </li>
         {val === "EVM Chain" && (
-          <li>
-            <Link
-              prefetch={true}
-              className={
-                pathname.includes(Routes.TOKEN) ? "active" : "inactive"
-              }
-              href={Routes.TOKEN}
-            >
+          <li onClick={handleMenuClick}>
+            <Link prefetch={true} className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"} href={Routes.TOKEN}>
               Tokens
             </Link>
           </li>
         )}
-        <li>
-          <Link
-            prefetch={true}
-            className={
-              pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
-            }
-            href={Routes.VALIDATORS}
-          >
+        <li onClick={handleMenuClick}>
+          <Link prefetch={true} className={pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"} href={Routes.VALIDATORS}>
             Validators
           </Link>
         </li>
-        <li>
+        <li onClick={handleMenuClick}>
           <Link
             prefetch={true}
             className={
@@ -296,13 +266,7 @@ function HeaderMenu() {
               <Select
                 title=""
                 getPopupContainer={getContainer}
-                className={`headerSelect  ${
-                  pathname.includes(Routes.CONTRACTS) ||
-                  pathname.includes(Routes.CONTRACT_VERIFICATOIN) ||
-                  pathname.includes(Routes.TOKEN_ICON)
-                    ? "active"
-                    : "inactive"
-                }`}
+                className={`headerSelect  ${pathname.includes(Routes.CONTRACTS) || pathname.includes(Routes.CONTRACT_VERIFICATOIN) || pathname.includes(Routes.TOKEN_ICON) ? "active" : "inactive"}`}
                 // placeholder={
                 //   pathname.includes(Routes.CONTRACTS)
                 //     ? "Contract"
@@ -395,12 +359,8 @@ function HeaderMenu() {
         */}
 
         {SHOW_FAUCET == 1 && (
-          <li>
-            <Link
-              prefetch={true}
-              className={pathname === Routes.FAUCET ? "active" : "inactive"}
-              href={Routes.FAUCET}
-            >
+          <li onClick={handleMenuClick}>
+            <Link prefetch={true} className={pathname === Routes.FAUCET ? "active" : "inactive"} href={Routes.FAUCET}>
               Faucet
             </Link>
           </li>
@@ -418,19 +378,9 @@ function HeaderMenu() {
         <li className="headerSelct">
           <div className="cmnSelct">
             <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
-              <span
-                style={{ gap: "5px", display: "flex", alignItems: "center" }}
-                class="_button-text_1x6ja_100"
-              >
-                <Image
-                  src="/metafox.svg"
-                  width={25}
-                  height={25}
-                  alt="metafox"
-                />
-                {isMetaMaskAdded
-                  ? `${EXPLORER_CHAIN_NAME} Network Added`
-                  : `Add ${EXPLORER_CHAIN_NAME} Network`}
+              <span style={{ gap: "5px", display: "flex", alignItems: "center" }} class="_button-text_1x6ja_100">
+                <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
+                {isMetaMaskAdded ? `${EXPLORER_CHAIN_NAME} Network Added` : `Add ${EXPLORER_CHAIN_NAME} Network`}
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
             </a>

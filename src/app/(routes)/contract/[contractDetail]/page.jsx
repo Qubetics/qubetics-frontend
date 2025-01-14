@@ -10,19 +10,9 @@ import Holder from "@/components/contracts/Holder";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  contractTypes,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus, contractTypes } from "@/constant/constant";
 import getContractDetails from "@/services/getContractDetails";
-import {
-  capitalizeWord,
-  formatMillionNumber,
-  noExponential,
-} from "@/utils/commonFunctions";
+import { capitalizeWord, formatMillionNumber, noExponential } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -40,8 +30,7 @@ const ContractDetail = () => {
   const params = useParams();
   const router = useRouter();
 
-  let chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
+  let chainType = typeof window !== "undefined" && localStorage.getItem("chainType");
 
   const { isNetworkChanged } = useGetNetwork();
 
@@ -72,66 +61,23 @@ const ContractDetail = () => {
   const detail = [
     {
       text: "Token Name",
-      heading: contractDetail?.tokenName
-        ? capitalizeWord(contractDetail?.tokenName)
-        : "-",
-      img: (
-        <Image
-          src="/grayLogo.svg"
-          className="welcomeLogo"
-          height={60}
-          width={60}
-          alt="logo"
-        />
-      ),
+      heading: contractDetail?.tokenName ? capitalizeWord(contractDetail?.tokenName) : "-",
+      img: <Image src="/grayLogo.svg" className="welcomeLogo" height={60} width={60} alt="logo" />,
     },
     {
       text: "Symbol",
       heading: contractDetail?.symbol ? contractDetail?.symbol : "-",
-      img: (
-        <Image
-          src="/grayLogo.svg"
-          className="welcomeLogo"
-          height={60}
-          width={60}
-          alt="logo"
-        />
-      ),
+      img: <Image src="/grayLogo.svg" className="welcomeLogo" height={60} width={60} alt="logo" />,
     },
     {
       text: "Decimal",
-      heading: contractDetail?.decimal
-        ? noExponential(contractDetail?.decimal)
-        : "-",
-      img: (
-        <Image
-          src="/decimal.svg"
-          className="welcomeLogo"
-          height={60}
-          width={60}
-          alt="logo"
-        />
-      ),
+      heading: contractDetail?.decimal ? noExponential(contractDetail?.decimal) : "-",
+      img: <Image src="/decimal.svg" className="welcomeLogo" height={60} width={60} alt="logo" />,
     },
     {
       text: "Total Supply",
-      heading: contractDetail?.totalSupply
-        ? formatMillionNumber(
-            noExponential(
-              Number(contractDetail?.totalSupply) /
-                10 ** Number(contractDetail?.decimal)
-            )
-          )
-        : "0",
-      img: (
-        <Image
-          src="/tottalSupply.svg"
-          className="welcomeLogo"
-          height={60}
-          width={60}
-          alt="logo"
-        />
-      ),
+      heading: contractDetail?.totalSupply ? formatMillionNumber(noExponential(Number(contractDetail?.totalSupply) / 10 ** Number(contractDetail?.decimal))) : "0",
+      img: <Image src="/tottalSupply.svg" className="welcomeLogo" height={60} width={60} alt="logo" />,
     },
   ];
 
@@ -139,17 +85,13 @@ const ContractDetail = () => {
     {
       label: "Transactions",
       key: "0",
-      children: (
-        <ContractTransactions hash={params?.contractDetail} tab={tab} />
-      ),
+      children: <ContractTransactions hash={params?.contractDetail} tab={tab} />,
     },
     chainType === "EVM Chain" &&
       contractType === contractTypes.ERC_20 && {
         label: "Transfer",
         key: "1",
-        children: (
-          <ContractTransactions hash={params?.contractDetail} tab={tab} />
-        ),
+        children: <ContractTransactions hash={params?.contractDetail} tab={tab} />,
       },
     chainType === "EVM Chain" &&
       contractType === contractTypes.ERC_20 && {
@@ -180,26 +122,16 @@ const ContractDetail = () => {
   };
 
   return (
-    <div className="contractDetail">
+    <div className="contractDetail contractsItems">
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
         <Heading heading="Contract Details" />
-        {contractDetailStatus === InitStatus ||
-        contractDetailStatus === FetchingStatus ? (
+        {contractDetailStatus === InitStatus || contractDetailStatus === FetchingStatus ? (
           <Loader />
         ) : contractDetailStatus === SuccessStatus ? (
           <>
-            <ContractDetails
-              data={contractDetail}
-              status={contractDetailStatus}
-            />
-            {((contractType === contractTypes.ERC_20 &&
-              contractDetail?.symbol) ||
-              (contractType === contractTypes.ERC_721 &&
-                contractDetail?.symbol)) && (
+            <ContractDetails data={contractDetail} status={contractDetailStatus} />
+            {((contractType === contractTypes.ERC_20 && contractDetail?.symbol) || (contractType === contractTypes.ERC_721 && contractDetail?.symbol)) && (
               <>
                 <div className="common_header">
                   <h2>Token Information</h2>

@@ -9,13 +9,7 @@ import Heading from "@/components/heading/Heading";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tooltipConstant,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus, tooltipConstant } from "@/constant/constant";
 import Page from "@/app/(routes)/notfound/page";
 import Loader from "@/components/loader/Loader";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
@@ -122,23 +116,14 @@ const AccountsAndContracts = () => {
           <div className="common_header">
             <h2>Accounts</h2>
           </div>
-          <p>
-            It is a graphical representation of number of accounts created in
-            the blockchain.
-          </p>
+          <p>It is a graphical representation of number of accounts created in the blockchain.</p>
           <div className="graphOuter_1" style={{ height: "543px" }}>
             <div className="drop_histry">
               <div className="drop_histry__blinkLive">
                 <h3>
                   Total Accounts
-                  <span>
-                    {" "}
-                    {totalAccountChart?.count ? totalAccountChart?.count : 0}
-                  </span>
-                  <Tooltip
-                    color="rgb(49 52 56)"
-                    title={tooltipConstant.TOTAL_ACCOUNT}
-                  >
+                  <span> {totalAccountChart?.count ? totalAccountChart?.count : 0}</span>
+                  <Tooltip color="rgb(49 52 56)" title={tooltipConstant.TOTAL_ACCOUNT}>
                     <InfoCircleOutlined className="infoIcon" />
                   </Tooltip>
                 </h3>
@@ -146,30 +131,17 @@ const AccountsAndContracts = () => {
               </div>
 
               <Space wrap>
-                <Select
-                  getPopupContainer={(trigger) => trigger.parentNode}
-                  defaultValue={ALL_CHART_THRITY_DAYS}
-                  style={{ width: 120 }}
-                  onChange={handleAccountSelect}
-                  options={graphItems}
-                />
+                <Select getPopupContainer={(trigger) => trigger.parentNode} defaultValue={ALL_CHART_THRITY_DAYS} style={{ width: 120 }} onChange={handleAccountSelect} options={graphItems} />
               </Space>
             </div>
 
-            {accountChartStatus === InitStatus ||
-            accountChartStatus === FetchingStatus ? (
-              <div
-                className="graphLod"
-                style={{ position: "absolute", left: "46%", top: "55%" }}
-              >
+            {accountChartStatus === InitStatus || accountChartStatus === FetchingStatus ? (
+              <div className="graphLod">
                 {" "}
                 <GraphLoading />
               </div>
             ) : accountChartStatus === SuccessStatus ? (
-              <ChartAccounts
-                data={totalAccountChart?.data}
-                chartType={totalAccountChart?.type}
-              />
+              <ChartAccounts data={totalAccountChart?.data} chartType={totalAccountChart?.type} />
             ) : (
               <Page />
             )}
@@ -177,23 +149,14 @@ const AccountsAndContracts = () => {
         </Col>
         <Col className="gutter-row" xs={24} md={24} lg={12}>
           <Heading heading="Contracts" />
-          <p>
-            It is a visual representation of deployment of smart contract by
-            users in the blockchain
-          </p>
+          <p>It is a visual representation of deployment of smart contract by users in the blockchain</p>
           <div className="graphOuter_1" style={{ height: "543px" }}>
             <div className="drop_histry">
               <div className="drop_histry__blinkLive">
                 <h3>
                   Total Contracts
-                  <span>
-                    {" "}
-                    {contractChart?.count ? contractChart?.count : 0}{" "}
-                  </span>
-                  <Tooltip
-                    color="rgb(49 52 56)"
-                    title={tooltipConstant.TOTAL_CONTRACTS_GRAPH}
-                  >
+                  <span> {contractChart?.count ? contractChart?.count : 0} </span>
+                  <Tooltip color="rgb(49 52 56)" title={tooltipConstant.TOTAL_CONTRACTS_GRAPH}>
                     <InfoCircleOutlined className="infoIcon" />
                   </Tooltip>
                 </h3>
@@ -201,29 +164,16 @@ const AccountsAndContracts = () => {
               </div>
 
               <Space wrap>
-                <Select
-                  getPopupContainer={(trigger) => trigger.parentNode}
-                  defaultValue={ALL_CHART_THRITY_DAYS}
-                  style={{ width: 120 }}
-                  onChange={handleContractSelect}
-                  options={graphItems}
-                />
+                <Select getPopupContainer={(trigger) => trigger.parentNode} defaultValue={ALL_CHART_THRITY_DAYS} style={{ width: 120 }} onChange={handleContractSelect} options={graphItems} />
               </Space>
             </div>
-            {contractChartStatus === InitStatus ||
-            contractChartStatus === FetchingStatus ? (
-              <div
-                className="graphLod"
-                style={{ position: "absolute", left: "46%", top: "55%" }}
-              >
+            {contractChartStatus === InitStatus || contractChartStatus === FetchingStatus ? (
+              <div className="graphLod">
                 {" "}
                 <GraphLoading />
               </div>
             ) : contractChartStatus === SuccessStatus ? (
-              <ChartAccounts
-                data={contractChart?.data}
-                chartType={contractChart?.type}
-              />
+              <ChartAccounts data={contractChart?.data} chartType={contractChart?.type} />
             ) : (
               <Page />
             )}

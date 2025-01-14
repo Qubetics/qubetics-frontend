@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "../../../public/SvgIcons";
 import LogoIcon from "../../assets/svg/NewLogo.svg";
+import reslogo from "../../assets/svg/reslogo.svg";
 import { useLatestData } from "../contexts/latest_data";
 import { useGetNetwork } from "../contexts/networkChanged";
 import { useThemeData } from "../contexts/theme_context";
@@ -27,14 +28,26 @@ function Header() {
   const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
   const [percentage, setPercentage] = useState(0);
   const [currentTokenPrice, setCurrentTokenPrice] = useState(0);
-
+  const [routeText, setRouteText] = useState("");
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
+  const [windowWidth, setWindowWidth] = useState(0);
 
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    updateWindowWidth();
+    window.addEventListener("resize", updateWindowWidth);
+    return () => {
+      window.removeEventListener("resize", updateWindowWidth);
+    };
+  }, []);
   useEffect(() => {
     const storedTheme = localStorage.getItem("appTheme");
     if (storedTheme) {
@@ -75,14 +88,7 @@ function Header() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (
-      pathname === Routes.FAUCET ||
-      pathname === Routes.NODES ||
-      pathname === Routes.TRANSACTIONS ||
-      pathname === Routes.BLOCKS ||
-      pathname === Routes.TOKEN ||
-      pathname === Routes.TOKEN_ICON
-    ) {
+    if (pathname === Routes.FAUCET || pathname === Routes.NODES || pathname === Routes.TRANSACTIONS || pathname === Routes.BLOCKS || pathname === Routes.TOKEN || pathname === Routes.TOKEN_ICON) {
       setShowDiv(false);
     }
   }, [pathname]);
@@ -107,23 +113,51 @@ function Header() {
   //   localStorage.setItem("chainType", chainType);
   //   setIsNetworkChanged(false);
   // }, [chainType]);
-
+  useEffect(() => {
+    // Update the route text based on the pathname
+    switch (pathname) {
+      case "/dashboard":
+        setRouteText("Dashboard");
+        break;
+      case "/blocks":
+        setRouteText("Blockchain");
+        break;
+      case "/tx":
+        setRouteText("Blockchain");
+        break;
+      case "/token":
+        setRouteText("Tokens");
+        break;
+      case "/validators":
+        setRouteText("Validators");
+        break;
+      case "/nodes":
+        setRouteText("Nodes");
+        break;
+      case "/contract":
+        setRouteText("Contract");
+        break;
+      case "/contract/verify":
+        setRouteText("Contract");
+        break;
+      case "/faucet":
+        setRouteText("Faucet");
+        break;
+      default:
+        setRouteText("");
+    }
+  }, [pathname]);
   return (
     <>
       <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
         <div className="header-main__bottom container">
           <div>
-            <Link href={"/dashboard"}>
+            <Link href={"/dashboard"}>{windowWidth > 1199 ? <Image priority src={LogoIcon} alt="Logo" width={176} height={50} /> : <Image priority src={reslogo} alt="Logo" width={36} height={36} />}</Link>
+            <Link href={"/dashboard"} className="responsiveLogo">
               {" "}
-              <Image
-                priority
-                src={LogoIcon}
-                alt="Logo"
-                width={176}
-                height={50}
-              />
             </Link>
           </div>
+          <p className="responsiveText">{windowWidth > 1199 ? "" : <span>{routeText}</span>}</p>
           <HeaderMenu />
           <li className="hammburgerIcon">
             <span onClick={showDrawer}>
@@ -131,12 +165,7 @@ function Header() {
             </span>
           </li>
           {
-            <Drawer
-              placement="right"
-              onClose={onClose}
-              open={open}
-              className="drawer_main"
-            >
+            <Drawer placement="right" onClose={onClose} open={open} className="drawer_main">
               <div className="drawer_main__side">
                 <HeaderMenu onCloseDrawer={onClose} />
               </div>
