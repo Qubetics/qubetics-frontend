@@ -1720,7 +1720,7 @@ export const validatorsColumn = [
           text?.status == "active" ? (
             <span className="successtrans">Active</span>
           ) : text?.status == "inactive" ? (
-            <span className="failedtrans"> InActive </span>
+            <span className="failedtrans"> Inactive </span>
           ) : (
             <span className="pendingtrans"> Deactivating </span>
           )

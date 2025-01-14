@@ -55,7 +55,6 @@ const page = ({ params }) => {
       return err;
     }
   };
-
   const fetchAddDetails = async () => {
     try {
       const headerAddressDetail = await getAddressDetails(
@@ -225,7 +224,9 @@ const page = ({ params }) => {
                 <CSVLink
                   className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
                   filename="my-file.csv"
-                  data={activeTab === "0" ? txAddressData : tokensData}
+                  data={
+                    activeTab === "0" ? txAddressData ?? [] : tokensData ?? []
+                  }
                 >
                   <button className="exportBtn">
                     <ExportIcon />

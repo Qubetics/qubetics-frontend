@@ -54,7 +54,7 @@ const Page = ({ customClass }) => {
               searchStatus={searchStatus}
               setSerachStatus={setSerachStatus}
             />
-            <h2 className="analytictext">On Chain Metrics</h2>
+            <h2 className="analytictext">On-Chain Metrics</h2>
             <OnChainMetrics stats={stats} />
           </div>
         </div>
@@ -70,7 +70,7 @@ const Page = ({ customClass }) => {
           </div>
           {/* ----------Analtics Cards------------------ */}
           <div className="analyticsSec">
-            <h2 className="analytictext">On Chain Analytics</h2>
+            <h2 className="analytictext">On-Chain Analytics</h2>
             <div className="innerSec">
               <ChainAnalytics stats={stats} />
               <div className="multiGraph">
@@ -83,7 +83,7 @@ const Page = ({ customClass }) => {
                     tooltipTitle="Price"
                   />
                   <ChainAnalyticsGraph
-                    title="Qubetics Coin Transfer"
+                    title="Qubetics Coin Transfers"
                     discription="Total Txns made with Qubetics coin per period "
                     fetchUrl={graphUrl.coin_transfer}
                     isNative={false}

@@ -7,6 +7,7 @@ import { addQubeticForVerifyContract } from "../AddQubeticsNetwork/addQubetics";
 import { useContractData } from "../contexts/contractContext";
 import CopyText from "../DoCopy/CopyText";
 import "./ContractDtlTabs.scss";
+import { metaIcon } from "../../../public/metafox.svg";
 
 function ContractInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,11 +103,23 @@ function ContractInfo() {
         </div>
         */}
       </div>
-      <Modal className="connectModal" title="Connect your wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
+      <Modal
+        className="connectModal"
+        title="Connect your wallet"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        centered
+      >
         <ul>
           <li onClick={connectWithWallet}>
-            {" "}
-            <Image src="/metafox.avif" alt="Logo" width={38} height={48} />
+            <Image
+              priority
+              src="/metafox.avif"
+              alt="Logo"
+              width={25}
+              height={25}
+            />
             MetaMask
           </li>
           {/*
@@ -117,7 +130,10 @@ function ContractInfo() {
           </li>
           */}
         </ul>
-        <p className="agreeWallet">By Connecting a wallet you agree to the Terms of service and Optimism Community Agreements.</p>
+        <p className="agreeWallet">
+          By Connecting a wallet you agree to the Terms of service and Optimism
+          Community Agreements.
+        </p>
       </Modal>
     </>
   );

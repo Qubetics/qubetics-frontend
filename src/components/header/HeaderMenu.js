@@ -50,7 +50,7 @@ init({
     },
   },
 });
-function HeaderMenu() {
+function HeaderMenu({ onCloseDrawer }) {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   const router = useRouter();
@@ -189,7 +189,7 @@ function HeaderMenu() {
   }, []);
   return (
     <>
-      <ul className="mob__List">
+      <ul onClick={onCloseDrawer} className="mob__List">
         <li value="Dashboard">
           <Link
             prefetch={true}
