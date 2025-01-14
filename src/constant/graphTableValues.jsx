@@ -1215,6 +1215,8 @@ export const EventsColumn = [
       if (decodedData) {
         decodedLogs = JSON.parse(decodedData);
       }
+      console.log(decodedLogs, "logs");
+
       return (
         <p className="logEvent">
           {decodedLogs != undefined && decodedLogs[0] && (
@@ -1229,16 +1231,17 @@ export const EventsColumn = [
               >
                 <p>
                   {decodedLogs[0]?.events?.map((res) => {
+                    console.log(res, "resss", res?.value);
                     return (
                       <>
                         <p>
                           <span className="lightGray">{res?.type} </span>
                           {res?.name}
                         </p>
-                        {res?.type.includes("uint") &&
+                        {res?.type?.includes("uint") &&
                         res?.value?.includes("0x") ? (
                           <span>{Number(res?.value)}</span>
-                        ) : res?.value?.includes("0x") ? (
+                        ) : !res?.value && res?.value?.includes("0x") ? (
                           <Link href={`/address/${res?.value}`}>
                             {res?.value}
                           </Link>

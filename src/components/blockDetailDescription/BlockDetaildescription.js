@@ -1,5 +1,5 @@
 import { Routes } from "@/constant/constant";
-import { renderTime } from "@/utils/renderTime";
+import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
 import "../transferInfo/TransferInformation.scss";
@@ -78,13 +78,21 @@ const BlockDetailDescription = ({ blockData, status }) => {
           )}
         </div>
         <div className="information">
-          <p>Age </p>
+          <p>Timestamp </p>
           <span className="">
-            {blockData?.timestamp
-              ? renderTime(blockData?.timestamp)
-              : blockData?.block?.timestamp
-              ? renderTime(blockData?.block?.timestamp)
-              : "-"}
+            {blockData?.timestamp ? (
+              <span>
+                {convertToDateTime(blockData?.timestamp)}
+                <span>{renderTime(blockData?.timestamp)} </span>
+              </span>
+            ) : blockData?.block?.timestamp ? (
+              <span>
+                {convertToDateTime(blockData?.block?.timestamp)}
+                <span>{renderTime(blockData?.block?.timestamp)}</span>
+              </span>
+            ) : (
+              "-"
+            )}
           </span>
         </div>
         {chain == "EVM Chain" && (
@@ -118,9 +126,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <span className="">
             <Link
               className="hoverTrans"
-              href={`${Routes.BLOCKS}/${
-                blockData?.block?.parentHash
-              }`}
+              href={`${Routes.BLOCKS}/${blockData?.block?.parentHash}`}
             >
               {blockData?.block?.parentHash
                 ? blockData?.block?.parentHash

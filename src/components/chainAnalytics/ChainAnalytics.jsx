@@ -61,6 +61,8 @@ const ChainAnalytics = ({ stats }) => {
         balance={
           stats?.circulationSupply
             ? formatMillionNumber(stats?.circulationSupply)
+            : stats?.circulationSupply
+            ? formatMillionNumber(stats?.circulation_supply)
             : 0
         }
         img={
@@ -85,9 +87,7 @@ const ChainAnalytics = ({ stats }) => {
       <CardsOnchain
         text="Total Validators"
         balance={
-          stats?.validators
-            ? stats?.validators 
-            : stats?.totalValidator ?? 0
+          stats?.validators ? stats?.validators : stats?.totalValidator ?? 0
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
       />
