@@ -36,6 +36,9 @@
       margin-top: 30px;
       @media (max-width: 575px) {
         margin-top: 20px;
+        text-align: left;
+        width: 100%;
+        margin-bottom: 0px;
       }
     }
   }
@@ -83,6 +86,9 @@
     .ant-card {
       height: 100px;
       padding-left: 24px;
+      @media (max-width: 767px) {
+        padding-left: 20px;
+      }
       .ant-card-body {
         padding: 0;
       }

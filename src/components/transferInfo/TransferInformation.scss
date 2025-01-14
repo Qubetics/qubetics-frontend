@@ -8,9 +8,15 @@
   backdrop-filter: blur(32px);
   padding: 15px 0;
   padding-bottom: 30px;
+  @media (max-width: 767px) {
+    padding: 7px 0;
+  }
 
   .topheading {
     border-radius: 20px 20px 0px 0px;
+    @media (max-width: 575px) {
+      padding: 10px 20px !important;
+    }
   }
   .information {
     padding: 10px 30px;
@@ -23,17 +29,10 @@
 
     @media (max-width: 767px) {
       gap: 10px;
-      padding: 15.3px 30px;
-      flex-direction: column;
+      padding: 10px 16px;
+      // flex-direction: column;
       align-items: flex-start;
     }
-
-    @media (max-width: 580px) {
-      display: block;
-      gap: 20px;
-      padding: 10px;
-    }
-
     p {
       @include fluid-type(320px, 1920px, 14px, 16px);
       margin-bottom: 0;
@@ -41,8 +40,7 @@
       width: 100%;
       color: $grayA0A0A0;
       @media (max-width: 767px) {
-        max-width: 200px;
-        margin-bottom: 10px;
+        max-width: 100px;
       }
     }
 
@@ -64,7 +62,7 @@
         @media (max-width: 767px) {
           width: 15px;
           height: 18px;
-          margin-left: 2px;
+          margin-left: 6px;
         }
 
         // @media (max-width: 375px) {
@@ -154,6 +152,9 @@
 
 .contractDetailsCard {
   box-shadow: 0 -2px 9px #80808075;
+  @media (max-width: 575px) {
+    box-shadow: none;
+  }
   .detailInner {
     display: flex;
     gap: 30px;
@@ -162,7 +163,7 @@
       flex-direction: column;
     }
     @media (max-width: 767px) {
-      padding: 0 15px;
+      padding: 0 20px;
     }
     .inner {
       padding-right: 30px;
@@ -180,17 +181,19 @@
         padding-right: 0;
       }
       .information {
+        @media (max-width: 575px) {
+          justify-content: space-between;
+        }
         &:nth-child(odd) {
-          background: linear-gradient(
-            157.79deg,
-            rgb(29, 29, 29) -0.65%,
-            rgb(47, 45, 45) 99.59%
-          );
+          background: linear-gradient(157.79deg, rgb(29, 29, 29) -0.65%, rgb(47, 45, 45) 99.59%);
           border-radius: 10px;
         }
         p {
           @media (max-width: 1200px) {
             max-width: 200px;
+          }
+          @media (max-width: 767px) {
+            max-width: 100px;
           }
         }
         h6 {
@@ -204,6 +207,15 @@
             // margin-right: 6px;
           }
         }
+        span {
+          @media (max-width: 575px) {
+            display: inline;
+            text-align: right;
+            svg {
+              margin-left: 6px;
+            }
+          }
+        }
       }
     }
   }
@@ -213,6 +225,15 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  // .information {
+  //   @media (max-width: 575px) {
+  //     span {
+  //       width: 100%;
+  //       text-align: right;
+  //       display: block;
+  //     }
+  //   }
+  // }
 }
 
 .hoverTrans {

@@ -7,15 +7,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import {
-  chain,
-  ErrorStatus,
-  EXPLORER_CHAIN_NAME,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
-} from "@/constant/constant";
+import { chain, ErrorStatus, EXPLORER_CHAIN_NAME, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
 import { blockColumn } from "@/constant/graphTableValues";
 import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
@@ -24,11 +16,7 @@ import getAddress from "@/utils/getAddress";
 import { Select, Space, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  AvgBlockTime,
-  LatestblockNew,
-  Totalvalidators,
-} from "../../../../public/SvgIcons";
+import { AvgBlockTime, LatestBlock, LatestblockNew, TopValidator, Totalvalidators } from "../../../../public/SvgIcons";
 import "./blocksummary.scss";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
@@ -55,8 +43,7 @@ const BlockSummary = () => {
 
   // const { isLight } = useThemeData();
 
-  let currentChain =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
+  let currentChain = typeof window !== "undefined" && localStorage.getItem("chainType");
 
   useEffect(() => {
     if (searchParams.get("chain") == "native") {
@@ -135,10 +122,7 @@ const BlockSummary = () => {
         return res;
       }
     } catch (error) {
-      console.log(
-        "error while converting validator address to native : ",
-        error
-      );
+      console.log("error while converting validator address to native : ", error);
       return "";
     }
   };
@@ -191,25 +175,15 @@ const BlockSummary = () => {
     {
       id: 1,
       text: <>Latest Block</>,
-      balance: webSocketData?.blocks?.blocknumber
-        ? webSocketData?.blocks?.blocknumber
-        : "0",
-      img: <LatestblockNew />,
+      balance: webSocketData?.blocks?.blocknumber ? webSocketData?.blocks?.blocknumber : "0",
+      img: <LatestBlock />,
       contract: false,
     },
     {
       id: 2,
       text: "Top Validator (Last 24H)",
-      balance: topValidtor ? (
-        <Tooltip title={topValidtor}>
-          {currentChain == chain.EVM
-            ? getAddress(topValidtor)
-            : getAddress(convertAddToNative(topValidtor))}
-        </Tooltip>
-      ) : (
-        "-"
-      ),
-      img: <Totalvalidators />,
+      balance: topValidtor ? <Tooltip title={topValidtor}>{currentChain == chain.EVM ? getAddress(topValidtor) : getAddress(convertAddToNative(topValidtor))}</Tooltip> : "-",
+      img: <TopValidator />,
       contract: false,
     },
 
@@ -231,23 +205,12 @@ const BlockSummary = () => {
         <Loader />
       ) : blockSummaryStatus === SuccessStatus ? ( */}
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
         <Heading heading={"Block Summary"} />
 
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
-            <CardsOnchain
-              key={item?.id}
-              text={item?.text}
-              balance={item?.balance}
-              img={item?.img}
-              contract={item?.contract}
-              countime={item?.countime}
-              countTimer={item?.countTimer}
-            />
+            <CardsOnchain key={item?.id} text={item?.text} balance={item?.balance} img={item?.img} contract={item?.contract} countime={item?.countime} countTimer={item?.countTimer} />
           ))}
         </div>
         <div className="totalTransactions">
@@ -285,32 +248,12 @@ const BlockSummary = () => {
         </div>
         {
           // <Loading//>//
-          <SkeletonTableWrapper
-            columns={blockColumn}
-            dataSource={blocksData}
-            pagination={false}
-            isSkeleton={
-              blockSummaryStatus === FetchingStatus ||
-              blockSummaryStatus === InitStatus
-            }
-            className="commontable"
-          />
+          <SkeletonTableWrapper columns={blockColumn} dataSource={blocksData} pagination={false} isSkeleton={blockSummaryStatus === FetchingStatus || blockSummaryStatus === InitStatus} className="commontable" />
           // <Table
 
           // />
         }
-        {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={page}
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            disablePrev={page === 1}
-            disableNext={page === totalPages}
-            handleFirst={handleFirst}
-            handleLast={handleLast}
-          />
-        )}
+        {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={page} handleNext={handleNext} handlePrevious={handlePrevious} disablePrev={page === 1} disableNext={page === totalPages} handleFirst={handleFirst} handleLast={handleLast} />}
       </div>
       {/* ) : (
         <Page />
