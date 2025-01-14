@@ -10,7 +10,9 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
+import { HexDEx } from "@/components/logsDetail/HexDEx";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
+import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -1213,7 +1215,6 @@ export const EventsColumn = [
       if (decodedData) {
         decodedLogs = JSON.parse(decodedData);
       }
-
       return (
         <p className="logEvent">
           {decodedLogs != undefined && decodedLogs[0] && (
@@ -1251,23 +1252,7 @@ export const EventsColumn = [
               </Panel>
             </Collapse>
           )}
-          <span className="">
-            {(text?.method && text?.method !== "N/A" && text?.topics) ||
-            (decodedLogs && text?.topics) ? (
-              <>
-                {decodedLogs != undefined ? "" : capitalizeWord(text?.method)}
-                {/* {capitalizeWord(text?.method)} */}
-                {/* <br /> */}
-                {text?.topics?.map((item, index) => (
-                  <p key={index}>
-                    {`[topic${index}]`} {item}
-                  </p>
-                ))}
-              </>
-            ) : (
-              "-"
-            )}
-          </span>
+          <EventLogsDex decodedLogs={decodedLogs} text={text} />
           {/* {decodedData?.length > 1 && (
             <Link href={`/tx/${text?.txHash}`}>.....more</Link>
           )} */}

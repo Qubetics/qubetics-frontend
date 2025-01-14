@@ -860,15 +860,11 @@ export const Searchicondark = () => {
 
 export const HamburgerIcon = () => {
   return (
-    <svg width="40px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="grey">
-      <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-
-      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
-
-      <g id="SVGRepo_iconCarrier">
-        {" "}
-        <path d="M4 7L7 7M20 7L11 7" stroke="grey" strokeWidth="1.5" strokeLinecap="round" /> <path d="M20 17H17M4 17L13 17" stroke="grey" strokeWidth="1.5" strokeLinecap="round" /> <path d="M4 12H7L20 12" stroke="grey" strokeWidth="1.5" strokeLinecap="round" />{" "}
-      </g>
+    <svg width="27" height="17" viewBox="0 0 27 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M6.89282 1.21429C6.89282 0.543677 7.49299 0 8.23329 0H25.6595C26.3998 0 27 0.543677 27 1.21429C27 1.88489 26.3998 2.42857 25.6595 2.42857H8.23329C7.49299 2.42857 6.89282 1.88485 6.89282 1.21429ZM25.6595 7.28571H1.53091C0.790607 7.28571 0.19043 7.82944 0.19043 8.5C0.19043 9.17061 0.790607 9.71429 1.53091 9.71429H25.6595C26.3998 9.71429 27 9.17061 27 8.5C27 7.82944 26.3998 7.28571 25.6595 7.28571ZM25.6595 14.5714H13.5952C12.855 14.5714 12.2547 15.1151 12.2547 15.7857C12.2547 16.4563 12.855 17 13.5952 17H25.6595C26.3998 17 27 16.4563 27 15.7857C27 15.1151 26.3998 14.5714 25.6595 14.5714Z"
+        fill="white"
+      />
     </svg>
   );
 };

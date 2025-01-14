@@ -3,6 +3,7 @@
 .customInput {
   label {
     color: $white;
+    @include fluid-type(320px, 1920px, 14px, 16px);
   }
   .ant-input {
     background: #080808 !important;
@@ -13,7 +14,7 @@
     border-radius: 7px;
     color: $grayA0A0A0;
     &:hover {
-      background: #0D1012 !important;
+      background: #0d1012 !important;
     }
     &::placeholder {
       color: #7e94ad;

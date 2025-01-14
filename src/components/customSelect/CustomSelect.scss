@@ -5,6 +5,7 @@
   flex-direction: column;
   label {
     color: $white;
+    @include fluid-type(320px, 1920px, 14px, 16px);
   }
   .ant-select {
     width: 100% !important;
@@ -12,9 +13,9 @@
     height: 50px;
     margin-bottom: 20px;
     .ant-select-selector {
-      background: #080808 !important;
+      background: #080808;
       color: $grayA0A0A0 !important;
-      border: 0 !important;
+      border: 0;
     }
   }
   .ant-select-selection-item {

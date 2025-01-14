@@ -9,11 +9,7 @@ import getContractsGraph from "@/services/getContractsGraph";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Select, Space, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
-import {
-  ActiveAccountToday,
-  ContractTransactions,
-  TotalTransactions,
-} from "../../../../public/SvgIcons";
+import { ActiveAccountToday, ContractTransactions, TotalTransactions } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
 
 const Transactionsummary = () => {
@@ -58,13 +54,11 @@ const Transactionsummary = () => {
     {
       img: <ContractTransactions />,
       label: "Transactions (Last 30 Days)",
-      value: txnData?.previous30DaysTrxn
-        ? formatMillionNumber(Number(txnData?.previous30DaysTrxn))
-        : 0,
+      value: txnData?.previous30DaysTrxn ? formatMillionNumber(Number(txnData?.previous30DaysTrxn)) : 0,
     },
     {
       img: <ActiveAccountToday />,
-      label: "Active Accounts (Today)",
+      label: "Active Accounts (Today).",
       value: txnData?.activeAccount ? txnData?.activeAccount : 0,
     },
   ];
@@ -72,10 +66,7 @@ const Transactionsummary = () => {
   return (
     <div className="blocksummary">
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
         <Heading heading="Transaction Summary" />
         <div className="blockdetail transdetails">
           <div className="innerdata bluecard">
@@ -95,9 +86,7 @@ const Transactionsummary = () => {
         <div className="totalTransactions">
           {txnData?.count && (
             <>
-              <h2>{`Total of ${formatMillionNumber(
-                Number(txnData?.count)
-              )} transactions`}</h2>
+              <h2>{`Total of ${formatMillionNumber(Number(txnData?.count))} transactions`}</h2>
               <Space wrap>
                 <Select
                   defaultValue="newest"

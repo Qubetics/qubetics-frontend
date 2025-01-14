@@ -6,7 +6,7 @@
   // @media screen and (max-width: 991px) {
   //   padding-top: 30px;
   // }
-  // padding-top: 10px; 
+  // padding-top: 10px;
   .searchbar_input {
     margin: 0 auto;
   }
@@ -31,13 +31,17 @@
   &__left {
     margin-top: 30px;
     flex: 1;
+    @media (max-width: 585px) {
+      margin-top: 10px;
+    }
     h3 {
       padding-bottom: 16px;
       color: $white;
-      @include fluid-type(320px, 1920px, 20px, 24px);
+      @include fluid-type(320px, 1920px, 18px, 24px);
       font-weight: 500;
       @media (max-width: 585px) {
-        padding-bottom: 3px;
+        padding-bottom: 5px;
+        font-weight: 600;
       }
     }
 
@@ -85,16 +89,7 @@
     --text: #fff !important;
     --hover-text: #000;
     border: 2px solid transparent !important;
-    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-      conic-gradient(
-          from 180deg at 50% 50%,
-          #ff98e2,
-          #ffc876 35.77deg,
-          #79fff7 153.75deg,
-          #9f53ff 258.75deg,
-          #ff98e2 360deg
-        )
-        border-box !important;
+    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box, conic-gradient(from 180deg at 50% 50%, #ff98e2, #ffc876 35.77deg, #79fff7 153.75deg, #9f53ff 258.75deg, #ff98e2 360deg) border-box !important;
     border-radius: 25px;
     transition: color 0.2s ease-out, filter 0.2s ease-out;
   }
@@ -131,6 +126,7 @@
     }
     .ant-steps-item-title {
       color: #fff !important;
+      @include fluid-type(320px, 1920px, 14px, 16px);
 
       &::after {
         background-color: #e6f4ff !important;
@@ -167,7 +163,7 @@
     right: 20px;
     text-decoration: underline;
     color: $white;
-    font-size:16px;
+    font-size: 16px;
     cursor: pointer;
   }
 }
@@ -215,33 +211,23 @@
     }
   }
 
-  :where(.css-dev-only-do-not-override-gzal6t).ant-btn-text:not(:disabled):not(
-      .ant-btn-disabled
-    ):hover {
+  :where(.css-dev-only-do-not-override-gzal6t).ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover {
     color: rgba(0, 0, 0, 0.88);
     background: transparent;
   }
 
-  :where(.css-dev-only-do-not-override-gzal6t).ant-upload-wrapper
-    .ant-upload-list
-    .ant-upload-list-item
-    .ant-upload-list-item-actions
-    .ant-upload-list-item-action {
+  :where(.css-dev-only-do-not-override-gzal6t).ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
     opacity: 1;
   }
 
-  :where(.css-dev-only-do-not-override-gzal6t).ant-upload-wrapper
-    .ant-upload-list
-    .ant-upload-list-item {
+  :where(.css-dev-only-do-not-override-gzal6t).ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
     border-radius: 8px;
     padding: 20px;
     margin-top: 10px;
     background-color: #3b3b3d;
   }
 
-  :where(.css-dev-only-do-not-override-gzal6t).ant-btn-default:not(
-      :disabled
-    ):not(.ant-btn-disabled) {
+  :where(.css-dev-only-do-not-override-gzal6t).ant-btn-default:not(:disabled):not(.ant-btn-disabled) {
     background-color: #4096ff;
     color: #fff;
     border-color: #4096ff;
@@ -268,8 +254,7 @@
     }
   }
 
-  :where(.css-dev-only-do-not-override-gzal6t).ant-upload-wrapper
-    .ant-upload-list {
+  :where(.css-dev-only-do-not-override-gzal6t).ant-upload-wrapper .ant-upload-list {
     border-radius: 10px;
     padding-bottom: 10px;
   }
@@ -367,17 +352,11 @@
     //   color: #9f53ff;
     // }
   }
-  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-    .ant-checkbox-inner,
-  :where(.css-dev-only-do-not-override-1wwf28x).ant-checkbox:not(
-      .ant-checkbox-disabled
-    ):hover
-    .ant-checkbox-inner {
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
+  :where(.css-dev-only-do-not-override-1wwf28x).ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
     border-color: #9f53ff;
   }
-  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-    .ant-checkbox-checked:not(.ant-checkbox-disabled)
-    .ant-checkbox-inner {
+  .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
     background-color: #4096ff;
     border-color: #fff;
   }
@@ -386,8 +365,8 @@
 .fileInput {
   padding: 20px;
 }
-.selectFileBtn{
-  span{
+.selectFileBtn {
+  span {
     align-self: center !important;
   }
 }

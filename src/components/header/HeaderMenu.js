@@ -1,17 +1,4 @@
-import {
-  BlockchainHeaderFunction,
-  contractHeaderFunction,
-  defaultChainOptions,
-  EXPLORER_CHAIN_NAME,
-  EXPLORER_CURRENCY_NAME,
-  EXPLORER_META_NETWORK_CHAIN_ID,
-  EXPLORER_METAMASK_NAVIGATION,
-  EXPLORER_METAMASK_NETWORK_URL,
-  Messages,
-  METAMASK_CHAIN_NAME,
-  Routes,
-  SHOW_FAUCET,
-} from "@/constant/constant";
+import { BlockchainHeaderFunction, contractHeaderFunction, defaultChainOptions, EXPLORER_CHAIN_NAME, EXPLORER_CURRENCY_NAME, EXPLORER_META_NETWORK_CHAIN_ID, EXPLORER_METAMASK_NAVIGATION, EXPLORER_METAMASK_NETWORK_URL, Messages, METAMASK_CHAIN_NAME, Routes, SHOW_FAUCET } from "@/constant/constant";
 import metamaskSDK from "@web3-onboard/metamask";
 import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
@@ -93,8 +80,7 @@ function HeaderMenu({ onCloseDrawer }) {
       const chainId = await ethereum.request({ method: "eth_chainId" });
       setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
       ethereum.on("chainChanged", (id) => {
-        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
-          return setIsMetaMaskAdded(true);
+        if (id === EXPLORER_META_NETWORK_CHAIN_ID) return setIsMetaMaskAdded(true);
         setIsMetaMaskAdded(false);
       });
     } catch (error) {
@@ -187,6 +173,7 @@ function HeaderMenu({ onCloseDrawer }) {
   useEffect(() => {
     router.prefetch(`/dashboard`);
   }, []);
+
   return (
     <>
       <ul className="mob__List">
@@ -206,12 +193,7 @@ function HeaderMenu({ onCloseDrawer }) {
               // trigger={["hover"]}
               title=""
               getPopupContainer={getContainer}
-              className={`headerSelect  ${
-                pathname.includes(Routes.BLOCKS) ||
-                pathname.includes(Routes.TRANSACTIONS)
-                  ? "active"
-                  : "inactive"
-              }`}
+              className={`headerSelect  ${pathname.includes(Routes.BLOCKS) || pathname.includes(Routes.TRANSACTIONS) ? "active" : "inactive"}`}
               defaultValue={"Blockchain"}
               // placeholder={
               //   pathname.includes(Routes.BLOCKS)
@@ -296,13 +278,7 @@ function HeaderMenu({ onCloseDrawer }) {
               <Select
                 title=""
                 getPopupContainer={getContainer}
-                className={`headerSelect  ${
-                  pathname.includes(Routes.CONTRACTS) ||
-                  pathname.includes(Routes.CONTRACT_VERIFICATOIN) ||
-                  pathname.includes(Routes.TOKEN_ICON)
-                    ? "active"
-                    : "inactive"
-                }`}
+                className={`headerSelect  ${pathname.includes(Routes.CONTRACTS) || pathname.includes(Routes.CONTRACT_VERIFICATOIN) || pathname.includes(Routes.TOKEN_ICON) ? "active" : "inactive"}`}
                 // placeholder={
                 //   pathname.includes(Routes.CONTRACTS)
                 //     ? "Contract"
@@ -418,19 +394,9 @@ function HeaderMenu({ onCloseDrawer }) {
         <li className="headerSelct">
           <div className="cmnSelct">
             <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
-              <span
-                style={{ gap: "5px", display: "flex", alignItems: "center" }}
-                class="_button-text_1x6ja_100"
-              >
-                <Image
-                  src="/metafox.svg"
-                  width={25}
-                  height={25}
-                  alt="metafox"
-                />
-                {isMetaMaskAdded
-                  ? `${EXPLORER_CHAIN_NAME} Network Added`
-                  : `Add ${EXPLORER_CHAIN_NAME} Network`}
+              <span style={{ gap: "5px", display: "flex", alignItems: "center" }} class="_button-text_1x6ja_100">
+                <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
+                {isMetaMaskAdded ? `${EXPLORER_CHAIN_NAME} Network Added` : `Add ${EXPLORER_CHAIN_NAME} Network`}
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
             </a>

@@ -624,6 +624,13 @@ ul {
     }
   }
 }
+.responsiveText {
+  span {
+    color: $white;
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
 .hammburgerIcon {
   display: none;
 
@@ -646,4 +653,9 @@ ul {
   color: #a0a0a0 !important;
   font-weight: 700;
   font-size: 16px;
+}
+.ant-drawer-content-wrapper {
+  @media (max-width: 575px) {
+    width: 100% !important;
+  }
 }

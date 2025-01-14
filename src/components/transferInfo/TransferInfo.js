@@ -1,23 +1,37 @@
 "use-client";
 import React from "react";
 import "./TransferInformation.scss";
-import { EXPLORER_CURRENCY_NAME, typesOfTransactions } from "@/constant/constant";
+import {
+  EXPLORER_CURRENCY_NAME,
+  typesOfTransactions,
+} from "@/constant/constant";
 import CopyText from "../DoCopy/CopyText";
 import { capitalizeWord, noExponential } from "@/utils/commonFunctions";
 import Link from "next/link";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { convertToDateTime } from "@/utils/renderTime";
+import { convertToDateTime, renderTime } from "@/utils/renderTime";
 
 const TransferInfo = ({ data }) => {
-  let chain = typeof window !== "undefined" && localStorage.getItem("chainType");
+  let chain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
   const tokenTransferedData = data?.input && data?.input;
-  const tokenTransferedParsed = tokenTransferedData && JSON.parse(tokenTransferedData);
+  const tokenTransferedParsed =
+    tokenTransferedData && JSON.parse(tokenTransferedData);
   return (
     <div className="doubleCardTranfer">
       <div className="transferinfo">
         <div className="information">
           <p>Status</p>
-          {data?.status === "FAILED" ? <span className="failedtrans"> {capitalizeWord(data?.status)} </span> : data?.status === "SUCCESS" ? <span className="success"> {capitalizeWord(data?.status)} </span> : "-"}
+          {data?.status === "FAILED" ? (
+            <span className="failedtrans">
+              {" "}
+              {capitalizeWord(data?.status)}{" "}
+            </span>
+          ) : data?.status === "SUCCESS" ? (
+            <span className="success"> {capitalizeWord(data?.status)} </span>
+          ) : (
+            "-"
+          )}
         </div>
         <div className="information">
           <p>Transaction Hash</p>
@@ -36,7 +50,10 @@ const TransferInfo = ({ data }) => {
           <p>From </p>
           {data?.fromAddress ? (
             <span>
-              <Link className="hoverTrans" href={`/address/${data?.fromAddress}`}>
+              <Link
+                className="hoverTrans"
+                href={`/address/${data?.fromAddress}`}
+              >
                 {" "}
                 {data?.fromAddress}
               </Link>
@@ -54,11 +71,18 @@ const TransferInfo = ({ data }) => {
               <Link className="hoverTrans" href={`/address/${data?.toAddress}`}>
                 {data?.toAddress}
               </Link>
-              {(data?.toAddress?.startsWith("0x") || data?.toAddress?.startsWith("Qubetics")) && <CopyText text={data?.toAddress} />}
+              {(data?.toAddress?.startsWith("0x") ||
+                data?.toAddress?.startsWith("Qubetics")) && (
+                <CopyText text={data?.toAddress} />
+              )}
             </span>
-          ) : data?.contractAddress !== "N/A" && data?.contractAddress !== "" ? (
+          ) : data?.contractAddress !== "N/A" &&
+            data?.contractAddress !== "" ? (
             <span className="hoverTrans">
-              <Link className="hoverTrans" href={`/contract/${data?.contractAddress}`}>
+              <Link
+                className="hoverTrans"
+                href={`/contract/${data?.contractAddress}`}
+              >
                 {data?.contractAddress}
               </Link>
               <CopyText text={data?.contractAddress} />
@@ -71,7 +95,10 @@ const TransferInfo = ({ data }) => {
           <p>Block Number </p>
           {data?.blocknumber ? (
             <span>
-              <Link className="hoverTrans" href={`/blocks/${data?.blocknumber}`}>
+              <Link
+                className="hoverTrans"
+                href={`/blocks/${data?.blocknumber}`}
+              >
                 {data?.blocknumber}
               </Link>
               <CopyText text={data?.blocknumber} hoverText={"block"} />
@@ -83,19 +110,36 @@ const TransferInfo = ({ data }) => {
         <div className="information">
           <p> Amount </p>
           <span>
-            {data?.value ? noExponential(data?.value) : "0 "} {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+            {data?.value ? noExponential(data?.value) : "0 "}{" "}
+            {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
           </span>
         </div>
       </div>
       <div className="transferinfo">
         <div className="information">
           <p>Timestamp</p>
-          <span>{data?.timestamp ? convertToDateTime(data?.timestamp) : data?.createdAt ? convertToDateTime(data?.createdAt) : "-"}</span>
+          {data?.timestamp ? (
+            <span className="">
+              {convertToDateTime(data?.timestamp)}
+              &nbsp;
+              <span> {renderTime(data?.timestamp)}</span>
+            </span>
+          ) : data?.createdAt ? (
+            <span className="timestamp">
+              {convertToDateTime(data?.createdAt)}
+              <span> {renderTime(data?.createdAt)}</span>
+            </span>
+          ) : (
+            "-"
+          )}
         </div>
+
         <div className="information">
           <p> Fee </p>
+
           <span>
-            {data?.txFee ? noExponential(Number(data?.txFee)) : "0"} {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+            {data?.txFee ? noExponential(Number(data?.txFee)) : "0"}{" "}
+            {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
           </span>
         </div>
         <div className="information">
@@ -114,7 +158,10 @@ const TransferInfo = ({ data }) => {
             <p>Tokens transferred </p>
             <h5 className="innerDetail">
               <span className="linkBg ">
-                <Link href={`/address/${data?.fromAddress}`} className="hoverTrans">
+                <Link
+                  href={`/address/${data?.fromAddress}`}
+                  className="hoverTrans"
+                >
                   {" "}
                   {data?.fromAddress}{" "}
                 </Link>
@@ -123,7 +170,10 @@ const TransferInfo = ({ data }) => {
 
               <ArrowRightOutlined />
               <span className="linkBg">
-                <Link href={`/address/${tokenTransferedParsed?.params[0]?.value}`} className="hoverTrans">
+                <Link
+                  href={`/address/${tokenTransferedParsed?.params[0]?.value}`}
+                  className="hoverTrans"
+                >
                   {tokenTransferedParsed?.params[0]?.value}{" "}
                 </Link>
                 <CopyText text={tokenTransferedParsed?.params[0]?.value} />
@@ -131,7 +181,11 @@ const TransferInfo = ({ data }) => {
               <span>for</span>
               <span>{tokenTransferedParsed?.params[1]?.value}</span>
               <span className="linkBg">
-                <span>{data?.tokenInfo?.tokenSymbol ? data?.tokenInfo?.tokenSymbol : ""} </span>
+                <span>
+                  {data?.tokenInfo?.tokenSymbol
+                    ? data?.tokenInfo?.tokenSymbol
+                    : ""}{" "}
+                </span>
               </span>
             </h5>
           </div>

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 //   font-family: 'Montserrat', sans-serif;
 @import "./components/component.scss";
 @import "./_var.scss";
@@ -8,7 +9,7 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: "DM Sans", serif !important;
+  font-family: "DM Sans", sans-serif;
 }
 @property --gradient-angle {
   syntax: "<angle>";
@@ -92,6 +93,14 @@ html {
   margin-right: auto;
   padding-right: 15px;
   padding-left: 15px;
+  @media (max-width: 1550px) {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  @media (max-width: 1399px) {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
 }
 
 .addbgtheme {
@@ -116,7 +125,6 @@ body {
   margin: 0;
 
   margin-bottom: 0;
-  font-family: "Poppins", sans-serif;
 
   @media (max-width: 767px) {
     margin-bottom: 0;
@@ -1581,7 +1589,13 @@ button.bluebtn {
     }
   }
 }
-
+.contractsItems {
+  .headerButton {
+    @media (max-width: 575px) {
+      margin-bottom: 0 !important;
+    }
+  }
+}
 .cardContract {
   display: flex;
   gap: 20px;
@@ -2068,7 +2082,7 @@ input[type="number"] {
 
       @media (max-width: 575px) {
         max-width: 100%;
-        padding: 20px;
+        padding: 17px;
       }
       .imgIcon {
         // width: 60px;
@@ -2275,6 +2289,10 @@ input[type="number"] {
       color: $white;
       @include fluid-type(320px, 1920px, 14px, 16px);
       font-weight: 400;
+      @media (max-width: 575px) {
+        white-space: normal;
+        word-break: break-all;
+      }
     }
   }
 }
@@ -2345,6 +2363,9 @@ input[type="number"] {
 .tokenListSec {
   .tokenInformation {
     margin-top: 40px;
+    @media (max-width: 575px) {
+      margin-top: 24px;
+    }
   }
 }
 .mt-20 {
@@ -2421,6 +2442,44 @@ input[type="number"] {
   span {
     svg {
       color: rgba(126, 66, 202, 0.7);
+    }
+  }
+}
+.graphLod {
+  position: absolute;
+  left: 46%;
+  top: 45%;
+  @media (max-width: 767px) {
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+  }
+}
+.logsInnerSelect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  .customSelect {
+    height: 36px;
+    .ant-select {
+      width: 83px !important;
+      height: 36px !important;
+      margin-top: 0;
+      .ant-select-selector {
+        border-radius: 25px !important;
+        background-color: transparent !important;
+        border: 1px solid #a0a0a0 !important;
+        color: #fff;
+        @include fluid-type(320px, 1920px, 14px, 16px);
+        font-weight: 500 !important;
+      }
+      .ant-select-selection-item {
+        color: #ffff;
+        font-weight: 500;
+      }
     }
   }
 }
