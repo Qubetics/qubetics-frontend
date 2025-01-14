@@ -7,7 +7,7 @@ import { addQubeticForVerifyContract } from "../AddQubeticsNetwork/addQubetics";
 import { useContractData } from "../contexts/contractContext";
 import CopyText from "../DoCopy/CopyText";
 import "./ContractDtlTabs.scss";
-import { metaIcon } from "../../../public/metafox.svg";
+import getAddress from "@/utils/getAddress";
 
 function ContractInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +19,7 @@ function ContractInfo() {
   }, []);
 
   const checkMetaMaskAccount = async () => {
-    const chainId = await provider.request({ method: "eth_chainId" });
+    const chainId = await provider?.request({ method: "eth_chainId" });
     const ChainIdQubetics = EXPLORER_META_NETWORK_CHAIN_ID;
     const accounts = await provider.request({
       method: "eth_accounts",
@@ -72,6 +72,7 @@ function ContractInfo() {
         <div className="disconnect">
           <p>Disconnected </p>
           <Button
+            className="commoncontactbtn"
             type="primary"
             style={{ height: 40 }}
             // className="bluebtn"
@@ -81,13 +82,16 @@ function ContractInfo() {
           </Button>
         </div>
       ) : (
-        <div className="connected">
-          <p>
-            Connected to : &nbsp;
-            <span> {connectAddress}</span>&nbsp;
-            <CopyText text={connectAddress} />
-          </p>
-        </div>
+        <>
+          <div className="connected">
+            <p>
+              Connected to : &nbsp;
+              <span> {getAddress(connectAddress)}</span>&nbsp;
+              <CopyText text={connectAddress} />
+            </p>
+            <Button onClick={()=> setConnectAddress("")} className="commoncontactbtn"> Disconnect</Button>
+          </div>
+        </>
       )}
 
       <div className="contractInfo">

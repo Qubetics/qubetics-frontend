@@ -11,8 +11,8 @@ const ByteCreationCode = ({ contractDetailData }) => {
           <div key={index} className="codeTabContent__sourceCode">
             <div className="head">
               <h3>{snippet?.title}</h3>
-              <div className="rightcontent">
-                {/* <CopyText text={snippet?.content} /> */}
+              <div className="copyData">
+                <CopyText text={snippet?.content} />
               </div>
             </div>
             <div className="content">

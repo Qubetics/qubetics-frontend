@@ -140,7 +140,7 @@ export const blockColumn = [
   },
   {
     id: "timestamp",
-    title: "Age",
+    title: "Timestamp",
     dataIndex: "timestamp",
     key: "timestamp",
     render: (text) => (
@@ -317,7 +317,7 @@ export const transactionSummarycolumn = [
     ),
   },
   {
-    title: "Age ",
+    title: "Timestamp ",
     // dataIndex: "timestamp",
     key: "timestamp",
     render: (text) =>
@@ -347,11 +347,11 @@ export const transactionSummarycolumn = [
       ),
   },
   {
-    title: "Value",
+    title: "Value(TICS)",
     key: "value",
     render: (text) =>
       text?.value ? (
-        <Tooltip title={noExponential(text?.value)}>
+        <Tooltip title={`${noExponential(text?.value)} TICS`}>
           {noExponential(toFixed(text?.value, 6))}
         </Tooltip>
       ) : (
@@ -484,12 +484,14 @@ export const TransactionDetailsColumns = [
   },
 
   {
-    title: "Value",
+    title: "Value (TICS)",
     dataIndex: "value",
     key: "value",
     render: (text) => (
       <span>
-        <span>{text ? noExponential(toFixed(text, 2)) : "0"}</span>
+        <Tooltip title={`${noExponential(toFixed(text, 2))} TICS`}>
+          {text ? noExponential(toFixed(text, 2)) : "0"}
+        </Tooltip>
       </span>
     ),
   },
@@ -631,7 +633,7 @@ export const addressDetailColumn = [
     ),
   },
   {
-    title: "Age ",
+    title: "Timestamp ",
     // dataIndex: "timestamp",
     key: "timestamp",
     render: (text) =>
@@ -670,7 +672,7 @@ export const addressDetailColumn = [
 /* nodes list views table */
 export const nodesColumns = [
   {
-    title: "Sr No",
+    title: "Sr. No",
     // dataIndex: "index",
     key: "index",
     render: (text) => text?.index,
@@ -1022,7 +1024,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "height",
-    title: "Blocks",
+    title: "Block",
     key: "height",
     render: (text) => (
       <span className="">
@@ -1043,13 +1045,17 @@ export const contractTransactionsColumn = [
 
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "age",
-    render: (text) => (
-      <span className="">
-        {text?.timestamp ? renderTime(text?.timestamp) : "-"}
-      </span>
-    ),
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
   },
 ];
 
@@ -1149,13 +1155,17 @@ export const EventsColumn = [
   },
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "age",
-    render: (text) => (
-      <span className="">
-        {text?.timestamp ? renderTime(text?.timestamp) : "-"}
-      </span>
-    ),
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
   },
   {
     id: "method",
@@ -1519,7 +1529,7 @@ export const TokenTransfers = [
 
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "timestamp",
     render: (text) => (
       <span className="">
@@ -1575,7 +1585,7 @@ export const TokenTransferColumn = [
   },
   {
     id: "age",
-    title: "Age",
+    title: "Timestamp",
     key: "age",
     render: (text) => (
       <span className="">

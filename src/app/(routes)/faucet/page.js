@@ -26,7 +26,6 @@ function Page() {
   });
   const [error, setError] = useState({
     address: "",
-    amount: "",
   });
   const [txHash, setTxHash] = useState();
   const [transferStatus, setTransferStatus] = useState(InitStatus);
@@ -49,10 +48,9 @@ function Page() {
   };
 
   const requestFund = async () => {
-    if (faucetField?.address === "" && faucetField?.amount === "") {
+    if (faucetField?.address === "") {
       setError({
         address: Messages?.ENTER_WALLET_ADDRESS,
-        amount: Messages?.ENTER_AMOUNT,
       });
       return;
     }
@@ -61,11 +59,6 @@ function Page() {
       setError((prevError) => ({
         ...prevError,
         address: valid.temperror.address,
-      }));
-    } else if (valid.isValid == false && valid.temperror.amount) {
-      setError((prevError) => ({
-        ...prevError,
-        amount: valid.temperror.amount,
       }));
     } else {
       const data = {

@@ -116,7 +116,18 @@ const BlockDetailDescription = ({ blockData, status }) => {
         <div className="information">
           <p> Parent Hash </p>
           <span className="">
-            {blockData?.block?.parentHash ? blockData?.block?.parentHash : "-"}
+            <Link
+              className="hoverTrans"
+              href={`${Routes.BLOCKS}/${
+                blockData?.block?.parentHash
+              }`}
+            >
+              {blockData?.block?.parentHash
+                ? blockData?.block?.parentHash
+                : "-"}
+            </Link>
+
+            <CopyText text={blockData?.block?.parentHash} />
           </span>
         </div>
       </div>

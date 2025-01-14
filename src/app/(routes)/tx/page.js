@@ -64,7 +64,7 @@ const Transactionsummary = () => {
     },
     {
       img: <ActiveAccountToday />,
-      label: "Active Accounts(Today)",
+      label: "Active Accounts (Today)",
       value: txnData?.activeAccount ? txnData?.activeAccount : 0,
     },
   ];

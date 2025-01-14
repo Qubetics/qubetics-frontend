@@ -189,8 +189,8 @@ function HeaderMenu({ onCloseDrawer }) {
   }, []);
   return (
     <>
-      <ul onClick={onCloseDrawer} className="mob__List">
-        <li value="Dashboard">
+      <ul className="mob__List">
+        <li onClick={onCloseDrawer} value="Dashboard">
           <Link
             prefetch={true}
             className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
@@ -223,15 +223,15 @@ function HeaderMenu({ onCloseDrawer }) {
               value={"Blockchain"}
               // style={{ width: 119 }}
               options={BlockchainHeaderFunction(
-                pathname // Passed the current pathname
-                // onCloseDrawer
+                pathname, // Passed the current pathname
+                onCloseDrawer
               )}
               tooltip={true}
             />
           </Space>
         </li>
         {val === "EVM Chain" && (
-          <li>
+          <li onClick={onCloseDrawer}>
             <Link
               prefetch={true}
               className={
@@ -243,7 +243,7 @@ function HeaderMenu({ onCloseDrawer }) {
             </Link>
           </li>
         )}
-        <li>
+        <li onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={
@@ -254,7 +254,7 @@ function HeaderMenu({ onCloseDrawer }) {
             Validators
           </Link>
         </li>
-        <li>
+        <li onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={
@@ -313,7 +313,7 @@ function HeaderMenu({ onCloseDrawer }) {
                 defaultValue={"Contracts"}
                 value={"Contracts"}
                 // style={{ minWidth: 139 }}
-                options={contractHeaderFunction(pathname)}
+                options={contractHeaderFunction(pathname, onCloseDrawer)}
               />
             </Space>
           </li>
@@ -395,7 +395,7 @@ function HeaderMenu({ onCloseDrawer }) {
         */}
 
         {SHOW_FAUCET == 1 && (
-          <li>
+          <li onClick={onCloseDrawer}>
             <Link
               prefetch={true}
               className={pathname === Routes.FAUCET ? "active" : "inactive"}

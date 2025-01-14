@@ -37,7 +37,7 @@ export default function CopyText({ text, hoverText }) {
             ? "Copy Hash"
             : hoverText == "block"
             ? "Copy Block"
-            : "Copy Address"
+            : "Copy"
         }
         onClick={handleCopyClick}
       >

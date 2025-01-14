@@ -6,13 +6,14 @@ import {
   METAMASK_CHAIN_NAME,
   Messages,
 } from "@/constant/constant";
+import toast from "react-hot-toast";
 
 export const addQubeticForVerifyContract = async (setConnectAddress) => {
   const provider = window.ethereum;
   const ChainIdQubetics = EXPLORER_META_NETWORK_CHAIN_ID;
 
   if (!provider) {
-    toast.info(Messages.Install_Metamask);
+    toast.error(Messages.Install_Metamask);
   } else {
     try {
       await provider.request({
@@ -70,7 +71,6 @@ function getDeviceType() {
   }
 }
 export const addQubetic = async (provider) => {
-
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
