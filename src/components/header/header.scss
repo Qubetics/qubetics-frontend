@@ -654,3 +654,8 @@ ul {
   font-weight: 700;
   font-size: 16px;
 }
+.ant-drawer-content-wrapper {
+  @media (max-width: 575px) {
+    width: 100% !important;
+  }
+}

@@ -178,6 +178,7 @@ function HeaderMenu({ onCloseDrawer }) {
   useEffect(() => {
     router.prefetch(`/dashboard`);
   }, []);
+
   return (
     <>
       <ul className="mob__List">

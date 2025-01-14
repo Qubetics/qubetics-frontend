@@ -2457,3 +2457,29 @@ input[type="number"] {
     padding: 15px 0;
   }
 }
+.logsInnerSelect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  .customSelect {
+    height: 36px;
+    .ant-select {
+      width: 83px !important;
+      height: 36px !important;
+      margin-top: 0;
+      .ant-select-selector {
+        border-radius: 25px !important;
+        background-color: transparent !important;
+        border: 1px solid #a0a0a0 !important;
+        color: #fff;
+        @include fluid-type(320px, 1920px, 14px, 16px);
+        font-weight: 500 !important;
+      }
+      .ant-select-selection-item {
+        color: #ffff;
+        font-weight: 500;
+      }
+    }
+  }
+}
