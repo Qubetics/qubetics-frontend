@@ -21,7 +21,7 @@ import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
 import getAddress from "@/utils/getAddress";
-import { Select, Skeleton, Space, Table, Tooltip } from "antd";
+import { Select, Space, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -253,9 +253,9 @@ const BlockSummary = () => {
         <div className="totalTransactions">
           {blocksData.length > 0 && (
             <>
-              <h2>{`Showing blocks from ${blocksData[0]?.blocknumber} to ${
+              <h2>{`Showing blocks from ${
                 blocksData[blocksData.length - 1]?.blocknumber
-              }`}</h2>
+              } to  ${blocksData[0]?.blocknumber} `}</h2>
 
               <Space wrap>
                 <Select

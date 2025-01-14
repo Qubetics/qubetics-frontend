@@ -24,7 +24,6 @@ const ChainAnalytics = ({ stats }) => {
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
 
-
   const getDifference = (diff) => {
     let result;
     if (diff?.length > 0) {
@@ -59,7 +58,11 @@ const ChainAnalytics = ({ stats }) => {
         addicon="true"
         title={tooltipConstant.CIRCULATION_SUPPLY}
         text="Circulating Supply"
-        balance={stats?.circulationSupply ? formatMillionNumber(stats?.circulationSupply):0}
+        balance={
+          stats?.circulationSupply
+            ? formatMillionNumber(stats?.circulationSupply)
+            : 0
+        }
         img={
           isLight == "lightTheme" ? (
             <CirculatingSupplyIcon />
@@ -81,12 +84,22 @@ const ChainAnalytics = ({ stats }) => {
 
       <CardsOnchain
         text="Total Validators"
-        balance={stats?.validators ? stats?.validators : 0}
+        balance={
+          stats?.validators
+            ? stats?.validators 
+            : stats?.totalValidator ?? 0
+        }
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
       />
       <CardsOnchain
         text="Average APY"
-        balance={parsedData?.apy ? parsedData?.apy + " %" : "0 %"}
+        balance={
+          parsedData?.apy
+            ? parsedData?.apy + " %"
+            : stats?.apy
+            ? stats?.apy + " %"
+            : "0 %"
+        }
         img={isLight == "lightTheme" ? <Txblockdark /> : <AvgAPRIcon />}
       />
       <CardsOnchain
