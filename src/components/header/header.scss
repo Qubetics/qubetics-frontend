@@ -266,6 +266,11 @@
   .ant-drawer-body {
     padding-left: 0;
   }
+  .ant-drawer-content-wrapper {
+    @media (max-width: 575px) {
+      transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    }
+  }
 }
 .drawer_main__side {
   ul {
@@ -274,6 +279,12 @@
     align-items: left !important;
     li {
       list-style: none;
+      @media (max-width: 1199px) {
+        user-select: none !important;
+        border-bottom: 1px solid #373638b2;
+        min-height: 51px;
+        padding: 0px 20px 0 5px;
+      }
 
       a {
         padding: 15px;
@@ -549,6 +560,9 @@ ul {
       font-weight: 500;
       @include fluid-type(320px, 1920px, 12px, 14px);
       color: $white !important;
+      @media (max-width: 1199px) {
+        font-size: 14px;
+      }
     }
   }
   .evmChain {
@@ -657,5 +671,10 @@ ul {
 .ant-drawer-content-wrapper {
   @media (max-width: 575px) {
     width: 100% !important;
+  }
+}
+:where(.css-dev-only-do-not-override-77tu7h).ant-drawer .ant-drawer-body {
+  @media (max-width: 1199px) {
+    padding-right: 0;
   }
 }
