@@ -269,6 +269,17 @@ html {
   //     opacity: 1;
   //   }
   // }
+  @media (max-width: 1199px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 14px !important;
+    text-align: center;
+    font-weight: 700;
+    .ant-select-selection-item {
+      font-weight: 700 !important;
+    }
+  }
 }
 .qubeticNetwork_btn::after,
 .qubeticNetwork_btn::before {
@@ -2182,7 +2193,7 @@ input[type="number"] {
   .ant-select-dropdown {
     border-radius: 14px !important;
     @media screen and (max-width: 1200px) {
-      max-width: 100% !important;
+      max-width: calc(100% - 10px) !important;
       width: 100% !important;
     }
 
@@ -2445,18 +2456,18 @@ input[type="number"] {
     }
   }
 }
-.graphLod {
-  position: absolute;
-  left: 46%;
-  top: 45%;
-  @media (max-width: 767px) {
-    position: static;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 0;
-  }
-}
+// .graphLod {
+//   position: absolute;
+//   left: 46%;
+//   top: 45%;
+//   @media (max-width: 767px) {
+//     position: static;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     padding: 15px 0;
+//   }
+// }
 .logsInnerSelect {
   display: flex;
   align-items: center;
@@ -2481,5 +2492,10 @@ input[type="number"] {
         font-weight: 500;
       }
     }
+  }
+}
+.headerMeta {
+  @media (max-width: 575px) {
+    padding: 40px 15px !important;
   }
 }

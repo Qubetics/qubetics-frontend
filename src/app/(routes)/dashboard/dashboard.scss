@@ -761,3 +761,18 @@
     }
   }
 }
+.graphdashboard {
+  .chart-wrapper {
+    @media (max-width: 575px) {
+      height: 257px !important;
+    }
+  }
+  .highcharts-container {
+    @media (max-width: 575px) {
+      height: 247px !important;
+      svg {
+        height: 260px !important;
+      }
+    }
+  }
+}

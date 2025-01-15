@@ -15,9 +15,11 @@ function VerifySmartCont({ Children, FormButton }) {
     <div className="verifysmartContract">
       <div>
         <div className="getqotSection">
-          <Collapse bordered={false}  >
+          <Collapse bordered={false}>
             <Panel header={<>Upload Contract Source Code</>} key="1">
-              <p>Info: <span>{verifyContractConstant.INFO}</span></p>
+              <p>
+                Info: <span>{verifyContractConstant.INFO}</span>
+              </p>
 
               <ul>
                 <li>
@@ -36,10 +38,7 @@ function VerifySmartCont({ Children, FormButton }) {
           </li>
           */}
               </ul>
-              <p>
-                For programatic contract verification, check out the Contract
-                API Endpoint.
-              </p>
+              <p>For programatic contract verification, check out the Contract API Endpoint.</p>
               <div className="contractoptimization">
                 <div className="contractoptimization_details">
                   {/* <CustomInput
@@ -78,15 +77,7 @@ function VerifySmartCont({ Children, FormButton }) {
               <ABICode />
             </Panel>
 
-            <Panel
-              header={
-                <>
-                  Contract Library Address (for contracts that use libraries,
-                  supports up to 10 libraries){" "}
-                </>
-              }
-              key="3"
-            >
+            <Panel header={<>Contract Library Address (for contracts that use libraries, supports up to 10 libraries) </>} key="3">
               <AccordionLibName />
             </Panel>
             <Panel header={<>{verifyContractConstant.MISC_SETTING} </>} key="4">

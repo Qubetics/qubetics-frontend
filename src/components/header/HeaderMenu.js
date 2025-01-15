@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import CheckIcon from "../../../public/SvgIcons";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
-
 const metamaskSDKWallet = metamaskSDK({
   options: {
     injectProvider: true,
@@ -38,6 +37,20 @@ init({
   },
 });
 function HeaderMenu({ onCloseDrawer }) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   const router = useRouter();
@@ -178,11 +191,7 @@ function HeaderMenu({ onCloseDrawer }) {
     <>
       <ul className="mob__List">
         <li onClick={onCloseDrawer} value="Dashboard">
-          <Link
-            prefetch={true}
-            className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
-            href={Routes.DASHBOARD}
-          >
+          <Link prefetch={true} className={pathname === Routes.DASHBOARD ? "active" : "inactive"} href={Routes.DASHBOARD}>
             Dashboard
           </Link>
         </li>
@@ -214,25 +223,13 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
         {val === "EVM Chain" && (
           <li onClick={onCloseDrawer}>
-            <Link
-              prefetch={true}
-              className={
-                pathname.includes(Routes.TOKEN) ? "active" : "inactive"
-              }
-              href={Routes.TOKEN}
-            >
+            <Link prefetch={true} className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"} href={Routes.TOKEN}>
               Tokens
             </Link>
           </li>
         )}
         <li onClick={onCloseDrawer}>
-          <Link
-            prefetch={true}
-            className={
-              pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
-            }
-            href={Routes.VALIDATORS}
-          >
+          <Link prefetch={true} className={pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"} href={Routes.VALIDATORS}>
             Validators
           </Link>
         </li>
@@ -372,26 +369,22 @@ function HeaderMenu({ onCloseDrawer }) {
 
         {SHOW_FAUCET == 1 && (
           <li onClick={onCloseDrawer}>
-            <Link
-              prefetch={true}
-              className={pathname === Routes.FAUCET ? "active" : "inactive"}
-              href={Routes.FAUCET}
-            >
+            <Link prefetch={true} className={pathname === Routes.FAUCET ? "active" : "inactive"} href={Routes.FAUCET}>
               Faucet
             </Link>
           </li>
         )}
-        <li className="headerSelct">
-          {/* <button className="qubeticNetwork_btn" onClick={addQubetic}>
+        {/* <li className="headerSelct"> */}
+        {/* <button className="qubeticNetwork_btn" onClick={addQubetic}>
             <span>
               <Image src="/metafox.avif" width={25} height={25} alt="metafox" />
               Add {EXPLORER_CHAIN_NAME} Network
             </span>
           </button> */}
-        </li>
+        {/* </li> */}
       </ul>
       <ul className="mob__List">
-        <li className="headerSelct">
+        <li className="headerSelct headerMeta" style={{ borderBottom: "0" }}>
           <div className="cmnSelct">
             <a className="qubeticNetwork_btn" onClick={addChainNetwork}>
               <span style={{ gap: "5px", display: "flex", alignItems: "center" }} class="_button-text_1x6ja_100">
@@ -405,8 +398,7 @@ function HeaderMenu({ onCloseDrawer }) {
               className="qubeticNetwork_btn"
               getPopupContainer={getContainer}
               defaultValue={chainType}
-              style={{ minWidth: 130, width: "130px", padding: 0 }}
-              // disabled
+              style={windowWidth < 1199 ? { minWidth: "100%", width: "100%", padding: 0 } : { minWidth: 130, width: "130px", padding: 0 }}
               onChange={handleChainChange}
               options={[
                 {
