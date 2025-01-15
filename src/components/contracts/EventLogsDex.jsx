@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { HexDEx } from "../logsDetail/HexDEx";
-import CustomSelect from "../customSelect/CustomSelect";
 import { LogsOption } from "@/constant/dropDownConstant";
-import { noExponential, noExponentsValue } from "@/utils/commonFunctions";
+import { capitalizeWord, noExponentsValue } from "@/utils/commonFunctions";
+import { useState } from "react";
+import CustomSelect from "../customSelect/CustomSelect";
 
 export const EventLogsDex = ({ text, decodedLogs }) => {
   const [selectedVal, setSelectedVal] = useState("hex");

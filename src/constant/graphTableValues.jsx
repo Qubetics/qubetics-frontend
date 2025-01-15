@@ -860,7 +860,7 @@ export const contractTransactionsColumn = [
           )}
         </Tooltip>
         <span>
-          <CopyText text={text?.txhash} />
+          <CopyText text={text?.txHash ? text?.txHash : text?.txhash} />
         </span>
       </div>
     ),

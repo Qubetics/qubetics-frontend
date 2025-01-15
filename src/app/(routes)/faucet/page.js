@@ -1,10 +1,11 @@
 "use client";
-// import { customToast } from "@/components/common/toast";
+
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
   ErrorStatus,
   FAUCET_AMOUNT,
   FetchingStatus,
+  GoogleKey,
   InitStatus,
   Messages,
   SuccessStatus,
@@ -12,12 +13,12 @@ import {
 } from "@/constant/constant";
 import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Button, Input, Spin } from "antd";
+import { Input, Spin } from "antd";
 import { useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
-import toast from "react-hot-toast";
-import ReCAPTCHA from "react-google-recaptcha";
 
 function Page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -66,7 +67,7 @@ function Page() {
     } else {
       const data = {
         toAddress: faucetField.address,
-        // value: faucetField.amount,
+        captchaToken: captchaToken,
       };
       setTransferStatus(FetchingStatus);
       await postFaucet(data)
@@ -76,18 +77,25 @@ function Page() {
             toast.success(res?.message);
             setTransferStatus(SuccessStatus);
             setFaucetField({ address: "", amount: "" });
+            handleReset();
           } else if (res?.error == true) {
             toast.error(res?.message);
             setTransferStatus(ErrorStatus);
+            handleReset();
           }
         })
         .catch((err) => {
           toast.error(err?.message);
           setTransferStatus(ErrorStatus);
+          handleReset();
         });
     }
+    handleReset();
   };
-
+  const handleReset = () => {
+    if (recaptchaRef.current) recaptchaRef.current.reset();
+    setCaptchaToken("");
+  };
   return (
     <div className="faucet">
       <div className="container">
@@ -171,16 +179,15 @@ function Page() {
                     )}
                   </div>
                 </div> */}
-              <div>
+              <div className="captcha">
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey={"6Lc_UTYqAAAAABhLU15XHReZLy30fZfwKlYPl6RK"}
+                  sitekey={GoogleKey}
                   onChange={(captcha) => {
                     if (captcha) setCaptchaToken(captcha);
                   }}
                 />
               </div>
-
               <div className="sendBtnFaucet">
                 {transferStatus === FetchingStatus ? (
                   <button className="bluebtn">

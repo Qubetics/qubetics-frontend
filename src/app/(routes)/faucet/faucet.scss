@@ -162,6 +162,17 @@
             color: $white !important;
           }
         }
+        .captcha {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+padding:20px 0;    
+          @include fluid-type(320px, 1920px, 14px, 17px);
+          @media (max-width: 575px) {
+            margin-bottom: 10px;
+          }
+        }
       }
 
       .right {
@@ -210,7 +221,12 @@
     &__bottom {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
-      background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%);
+      background: linear-gradient(
+        88deg,
+        rgba(1, 124, 201, 0.15) 3.13%,
+        rgba(8, 147, 234, 0.35) 48.43%,
+        rgba(1, 138, 224, 0.17) 98.38%
+      );
       backdrop-filter: blur(32px);
       padding: 33px 100px;
       margin-top: 30px;

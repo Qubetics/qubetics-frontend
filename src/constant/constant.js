@@ -3,22 +3,34 @@
 import Link from "next/link";
 
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
-export const EXPLORER_CONTRACT_VERIFY_URL = process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
+export const EXPLORER_CONTRACT_VERIFY_URL =
+  process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const NATIVE_EXPLORER_API_URL = process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
+export const NATIVE_EXPLORER_API_URL =
+  process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
-export const NATIVE_EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
-export const EXPLORER_METAMASK_NAVIGATION = process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
-export const EXPLORER_METAMASK_NETWORK_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const EXPLORER_META_NETWORK_CHAIN_ID = process.env.NEXT_PUBLIC_QUBETICS_CHAINID;
-export const EXPLORER_CURRENCY_NAME = process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
+export const NATIVE_EXPLORER_SOCKET_URL =
+  process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
+export const EXPLORER_METAMASK_NAVIGATION =
+  process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
+export const EXPLORER_METAMASK_NETWORK_URL =
+  process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
+export const EXPLORER_META_NETWORK_CHAIN_ID =
+  process.env.NEXT_PUBLIC_QUBETICS_CHAINID;
+export const EXPLORER_CURRENCY_NAME =
+  process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
 export const BLOCK_TIME = process.env.NEXT_PUBLIC_EXPLORER_BLOCK_TIME;
-export const EXPLORER_VIDEO_LINKS = process.env.NEXT_PUBLIC_EXPLORER_VIDEO_LINKS;
+export const EXPLORER_VIDEO_LINKS =
+  process.env.NEXT_PUBLIC_EXPLORER_VIDEO_LINKS;
 export const EXPLORER_CHAIN_NAME = process.env.NEXT_PUBLIC_QUBETICS_CHAIN_NAME;
 export const EXPLORER_NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME;
-export const METAMASK_CHAIN_NAME = process.env.NEXT_PUBLIC_QUBETICS_CHAIN_NAME + " " + process.env.NEXT_PUBLIC_NETWORK_NAME;
+export const METAMASK_CHAIN_NAME =
+  process.env.NEXT_PUBLIC_QUBETICS_CHAIN_NAME +
+  " " +
+  process.env.NEXT_PUBLIC_NETWORK_NAME;
 export const SHOW_FAUCET = process.env.NEXT_PUBLIC_SHOW_FAUCET;
 export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
+export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -146,7 +158,8 @@ export const verifyContractConstant = {
   VERIFY_AND_PUBLISH_CONTRACT: "Verify And Publish Contract",
   LISTING_ONE:
     "Source code verification provides transparency for users interacting with smart contracts. By uploading the source code, Etherscan will match the compiled code with that on the blockchain. Just like contracts, a 'smart contract' should provide end users with more information on what they are 'digitally signing' for and give users an opportunity to audit the code to independently verify that it actually does what it is supposed to do.",
-  LITING_TWO: "Please be informed that advanced settings (e.g. bytecodeHash: 'none' or viaIR: 'true') can be accessed via Solidity (Standard-Json-Input) verification method. More information can be found under Solidity's 'Compiler Input and Output JSON Description' documentation section.",
+  LITING_TWO:
+    "Please be informed that advanced settings (e.g. bytecodeHash: 'none' or viaIR: 'true') can be accessed via Solidity (Standard-Json-Input) verification method. More information can be found under Solidity's 'Compiler Input and Output JSON Description' documentation section.",
 };
 
 export const verificationStatus = {
@@ -162,7 +175,8 @@ export const solidityFile = {
   MULTI_PART_FILES: "solidity-multi-part-files",
 };
 
-export const CONTARCT_NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const CONTARCT_NULL_ADDRESS =
+  "0x0000000000000000000000000000000000000000";
 
 export const nodePerformanceData = (blockHeight) => {
   [
@@ -179,7 +193,8 @@ export const tooltipContent = {
   last_Block: "The time when the last block is finalized in UTC format.",
   TPB: " Transactions per block. Display the average number of transactions recorded in a block during the last three seconds.",
   Countries: "The number of countries from which nodes are connected.",
-  finalized_Block: "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
+  finalized_Block:
+    "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
 };
 export function BlockchainHeaderFunction(currentPath, onClick) {
   const blockchainHeader = [
@@ -260,7 +275,8 @@ export const contractHeaderFunction = (currentPath, onClick) => {
     {
       key: "2",
       value: "Verifiedcontract",
-      className: currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
+      className:
+        currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
         <Link onClick={onClick} href="/contract/verify">
           Verify Contract
@@ -413,7 +429,9 @@ export const toFixedWithoutRounding = (value, precision) => {
       return integerPart;
     }
 
-    const truncatedDecimal = decimalPart.substring(0, Math.min(precision, 6)).padEnd(Math.min(precision, 6));
+    const truncatedDecimal = decimalPart
+      .substring(0, Math.min(precision, 6))
+      .padEnd(Math.min(precision, 6));
     return `${integerPart}.${truncatedDecimal}`;
   }
 

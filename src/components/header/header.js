@@ -48,6 +48,7 @@ function Header() {
       window.removeEventListener("resize", updateWindowWidth);
     };
   }, []);
+
   useEffect(() => {
     const storedTheme = localStorage.getItem("appTheme");
     if (storedTheme) {
@@ -88,7 +89,14 @@ function Header() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (pathname === Routes.FAUCET || pathname === Routes.NODES || pathname === Routes.TRANSACTIONS || pathname === Routes.BLOCKS || pathname === Routes.TOKEN || pathname === Routes.TOKEN_ICON) {
+    if (
+      pathname === Routes.FAUCET ||
+      pathname === Routes.NODES ||
+      pathname === Routes.TRANSACTIONS ||
+      pathname === Routes.BLOCKS ||
+      pathname === Routes.TOKEN ||
+      pathname === Routes.TOKEN_ICON
+    ) {
       setShowDiv(false);
     }
   }, [pathname]);
@@ -113,6 +121,7 @@ function Header() {
   //   localStorage.setItem("chainType", chainType);
   //   setIsNetworkChanged(false);
   // }, [chainType]);
+
   useEffect(() => {
     // Update the route text based on the pathname
     switch (pathname) {
@@ -147,17 +156,38 @@ function Header() {
         setRouteText("");
     }
   }, [pathname]);
+
   return (
     <>
       <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
         <div className="header-main__bottom container">
           <div>
-            <Link href={"/dashboard"}>{windowWidth > 1199 ? <Image priority src={LogoIcon} alt="Logo" width={176} height={50} /> : <Image priority src={reslogo} alt="Logo" width={36} height={36} />}</Link>
+            <Link href={"/dashboard"}>
+              {windowWidth > 1199 ? (
+                <Image
+                  priority
+                  src={LogoIcon}
+                  alt="Logo"
+                  width={176}
+                  height={50}
+                />
+              ) : (
+                <Image
+                  priority
+                  src={reslogo}
+                  alt="Logo"
+                  width={36}
+                  height={36}
+                />
+              )}
+            </Link>
             <Link href={"/dashboard"} className="responsiveLogo">
               {" "}
             </Link>
           </div>
-          <p className="responsiveText">{windowWidth > 1199 ? "" : <span>{routeText}</span>}</p>
+          <p className="responsiveText">
+            {windowWidth > 1199 ? "" : <span>{routeText}</span>}
+          </p>
           <HeaderMenu />
           <li className="hammburgerIcon">
             <span onClick={showDrawer}>
@@ -165,7 +195,12 @@ function Header() {
             </span>
           </li>
           {
-            <Drawer placement="right" onClose={onClose} open={open} className="drawer_main">
+            <Drawer
+              placement="right"
+              onClose={onClose}
+              open={open}
+              className="drawer_main"
+            >
               <div className="drawer_main__side">
                 <HeaderMenu onCloseDrawer={onClose} />
               </div>

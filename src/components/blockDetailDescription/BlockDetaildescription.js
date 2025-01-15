@@ -88,7 +88,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
             ) : blockData?.block?.timestamp ? (
               <span>
                 {convertToDateTime(blockData?.block?.timestamp)}
-                <span>{renderTime(blockData?.block?.timestamp)}</span>
+                <span>{`| ${renderTime(blockData?.block?.timestamp)}`}</span>
               </span>
             ) : (
               "-"
