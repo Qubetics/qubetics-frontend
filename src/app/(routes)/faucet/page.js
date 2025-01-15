@@ -13,10 +13,11 @@ import {
 import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Input, Spin } from "antd";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
 import toast from "react-hot-toast";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -27,7 +28,9 @@ function Page() {
   const [error, setError] = useState({
     address: "",
   });
+  const recaptchaRef = useRef();
   const [txHash, setTxHash] = useState();
+  const [captchaToken, setCaptchaToken] = useState();
   const [transferStatus, setTransferStatus] = useState(InitStatus);
   let addressRegex = /^[a-zA-Z0-9]*$/;
 
@@ -168,6 +171,16 @@ function Page() {
                     )}
                   </div>
                 </div> */}
+              <div>
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={"6Lc_UTYqAAAAABhLU15XHReZLy30fZfwKlYPl6RK"}
+                  onChange={(captcha) => {
+                    if (captcha) setCaptchaToken(captcha);
+                  }}
+                />
+              </div>
+
               <div className="sendBtnFaucet">
                 {transferStatus === FetchingStatus ? (
                   <button className="bluebtn">
@@ -183,7 +196,11 @@ function Page() {
                     />
                   </button>
                 ) : (
-                  <button onClick={requestFund} className="bluebtn">
+                  <button
+                    disabled={!captchaToken}
+                    onClick={requestFund}
+                    className="bluebtn"
+                  >
                     Send
                   </button>
                 )}
