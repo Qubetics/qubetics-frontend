@@ -1175,8 +1175,8 @@ export const EventsColumn = [
     key: "method",
     render: (text) => (
       <span className="">
-        {text?.methodSignature && text?.methodSignature !== "N/A"
-          ? text?.methodSignature
+        {text?.method && text?.method !== "N/A"
+          ? text?.method
           : "-"}
       </span>
     ),
@@ -1231,7 +1231,6 @@ export const EventsColumn = [
               >
                 <p>
                   {decodedLogs[0]?.events?.map((res) => {
-                    console.log(res, "resss", res?.value);
                     return (
                       <>
                         <p>

@@ -2517,6 +2517,7 @@ input[type="number"] {
   background-color: transparent !important;
 }
 .headermetaBtn {
+  white-space: nowrap;
   @media (max-width: 1199px) {
     display: flex !important;
     justify-content: center;

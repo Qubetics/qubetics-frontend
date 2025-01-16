@@ -138,6 +138,11 @@ const Contract = () => {
             balance={contractData?.erc20Count || 0}
             img={<ContractIcon />}
           />
+           {/* <CardsOnchain
+            text="Contracts (ERC-20)"
+            balance={contractData?.erc20Count || 0}
+            img={<ContractIcon />}
+          /> */}
         </div>
         <div className="tokenInformation">
           <h2>Token Information</h2>
