@@ -27,8 +27,20 @@
   --clr-6: rgb(247, 186, 229);
 }
 :root {
-  --theme-gradients-main: conic-gradient(from 180deg, rgb(255, 152, 226), rgb(255, 200, 118) 35.77deg, rgb(121, 255, 247) 153.75deg, rgb(159, 83, 255) 258.75deg, rgb(255, 152, 226) 360deg), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  --searchBg: linear-gradient(157.79deg, rgba(29, 29, 29, 0.54) -0.65%, rgba(29, 29, 29, 0.9) 99.59%);
+  --theme-gradients-main: conic-gradient(
+      from 180deg,
+      rgb(255, 152, 226),
+      rgb(255, 200, 118) 35.77deg,
+      rgb(121, 255, 247) 153.75deg,
+      rgb(159, 83, 255) 258.75deg,
+      rgb(255, 152, 226) 360deg
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  --searchBg: linear-gradient(
+    157.79deg,
+    rgba(29, 29, 29, 0.54) -0.65%,
+    rgba(29, 29, 29, 0.9) 99.59%
+  );
 }
 
 body {
@@ -464,7 +476,18 @@ button.bluebtn {
     position: absolute;
     z-index: -1;
     inset: -0.2rem;
-    background: conic-gradient(var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+    background: conic-gradient(
+      var(--clr-card),
+      var(--clr-1),
+      var(--clr-2),
+      var(--clr-3),
+      var(--clr-4),
+      var(--clr-5),
+      var(--clr-6),
+      var(--clr-2),
+      var(--clr-1),
+      var(--clr-card)
+    );
     border-radius: inherit;
   }
   &:hover {
@@ -477,7 +500,19 @@ button.bluebtn {
       position: absolute;
       z-index: -1;
       inset: -0.2rem;
-      background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+      background: conic-gradient(
+        from var(--gradient-angle),
+        var(--clr-card),
+        var(--clr-1),
+        var(--clr-2),
+        var(--clr-3),
+        var(--clr-4),
+        var(--clr-5),
+        var(--clr-6),
+        var(--clr-2),
+        var(--clr-1),
+        var(--clr-card)
+      );
       animation: rotate 2.5s linear infinite;
       border-radius: inherit;
     }
@@ -587,7 +622,16 @@ button.bluebtn {
         --text: #fff;
         --hover-text: #000;
         border: 2px solid transparent;
-        background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box, conic-gradient(from 180deg at 50% 50%, #ff98e2, #ffc876 35.77deg, #79fff7 153.75deg, #9f53ff 258.75deg, #ff98e2 360deg) border-box;
+        background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+          conic-gradient(
+              from 180deg at 50% 50%,
+              #ff98e2,
+              #ffc876 35.77deg,
+              #79fff7 153.75deg,
+              #9f53ff 258.75deg,
+              #ff98e2 360deg
+            )
+            border-box;
         border-radius: 25px;
 
         .ant-tabs-tab-btn {
@@ -1005,7 +1049,12 @@ button.bluebtn {
   }
 }
 
-.ant-table-wrapper .ant-table-container table > thead > tr:first-child > *:first-child {
+.ant-table-wrapper
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  > *:first-child {
   z-index: 10;
 }
 
@@ -1090,7 +1139,16 @@ button.bluebtn {
           --text: #fff;
           --hover-text: #000;
           border: 2px solid transparent;
-          background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box, conic-gradient(from 180deg at 50% 50%, #ff98e2, #ffc876 35.77deg, #79fff7 153.75deg, #9f53ff 258.75deg, #ff98e2 360deg) border-box;
+          background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+            conic-gradient(
+                from 180deg at 50% 50%,
+                #ff98e2,
+                #ffc876 35.77deg,
+                #79fff7 153.75deg,
+                #9f53ff 258.75deg,
+                #ff98e2 360deg
+              )
+              border-box;
           border-radius: 25px;
 
           @media (max-width: 485px) {
@@ -1130,7 +1188,13 @@ button.bluebtn {
   }
 }
 
-.darkTheme .commontabs .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-active span {
+.darkTheme
+  .commontabs
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab-active
+  span {
   color: #fff !important;
 }
 
@@ -1686,7 +1750,12 @@ input[type="number"] {
     width: 100%;
     position: relative;
     border-radius: 20px;
-    background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%);
+    background: linear-gradient(
+      88deg,
+      rgba(1, 124, 201, 0.15) 3.13%,
+      rgba(8, 147, 234, 0.35) 48.43%,
+      rgba(1, 138, 224, 0.17) 98.38%
+    );
 
     height: 40px;
     backdrop-filter: blur(32px);
@@ -1761,7 +1830,12 @@ input[type="number"] {
     font-size: 16px;
 
     border-radius: 20px !important;
-    background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%) !important;
+    background: linear-gradient(
+      88deg,
+      rgba(1, 124, 201, 0.15) 3.13%,
+      rgba(8, 147, 234, 0.35) 48.43%,
+      rgba(1, 138, 224, 0.17) 98.38%
+    ) !important;
 
     backdrop-filter: blur(32px);
 
@@ -2267,7 +2341,11 @@ input[type="number"] {
         padding: 10px;
       }
       &:nth-child(odd) {
-        background: linear-gradient(157.79deg, rgb(29, 29, 29) -0.65%, rgb(47, 45, 45) 99.59%);
+        background: linear-gradient(
+          157.79deg,
+          rgb(29, 29, 29) -0.65%,
+          rgb(47, 45, 45) 99.59%
+        );
         border-radius: 10px;
       }
       h3 {
@@ -2462,9 +2540,22 @@ input[type="number"] {
     inset: 0;
     padding: 2px;
     border-radius: 30px;
-    background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+    background: conic-gradient(
+      from var(--gradient-angle),
+      var(--clr-card),
+      var(--clr-1),
+      var(--clr-2),
+      var(--clr-3),
+      var(--clr-4),
+      var(--clr-5),
+      var(--clr-6),
+      var(--clr-2),
+      var(--clr-1),
+      var(--clr-card)
+    );
     animation: rotate 2.5s linear infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -2490,9 +2581,22 @@ input[type="number"] {
       inset: 0;
       padding: 2px;
       border-radius: 30px;
-      background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+      background: conic-gradient(
+        from var(--gradient-angle),
+        var(--clr-card),
+        var(--clr-1),
+        var(--clr-2),
+        var(--clr-3),
+        var(--clr-4),
+        var(--clr-5),
+        var(--clr-6),
+        var(--clr-2),
+        var(--clr-1),
+        var(--clr-card)
+      );
       animation: rotate 2.5s linear infinite;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
       mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -2502,4 +2606,16 @@ input[type="number"] {
       font-weight: 700 !important;
     }
   }
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #080808 inset !important;
+  // -webkit-text-fill-color: #fff;
+  // border: 1px solid #080808;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #fff; /* Makes the text transparent to show the background gradient */
+  border: 2px solid #080808;
+  overflow: hidden;
 }
