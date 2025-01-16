@@ -12,8 +12,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import { set } from "date-fns";
 
-export default function Transactions({ setTxnData }) {
+export default function Transactions({ setTxnData, filterVal }) {
   const { isNetworkChanged } = useGetNetwork();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function Transactions({ setTxnData }) {
   const [nextCursor, setNextCursor] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState();
   const [previousCursor, setPreviousCursor] = useState(1);
   const [transactionData, setTransactionData] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
@@ -34,11 +36,12 @@ export default function Transactions({ setTxnData }) {
   const fetchData = async () => {
     try {
       setTransactionStatus(FetchingStatus);
-      let response = await getTransactions(pageid, tableLimit);
+      let response = await getTransactions(pageid, tableLimit, filterVal);
       if (response?.error === false) {
         setTransactionData(response?.data?.transactions);
         setTxnData(response?.data);
         setPreviousCursor(response?.data?.prevCursor);
+        setLastPage(response?.data?.lastPage);
         setNextCursor(response?.data?.nextCursor);
         setTransactionStatus(SuccessStatus);
         const txCount = Number(response?.data?.count ?? 0) / tableLimit;
@@ -71,6 +74,16 @@ export default function Transactions({ setTxnData }) {
     fetchData();
   }, [pageid]);
 
+  useEffect(() => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("id", 1);
+    router.push(`?${newSearchParams.toString()}`);
+    if (pageid == 1) {
+      fetchData();
+    }
+  }, [filterVal]);
+
   const handleNext = () => {
     if (page < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -97,10 +110,10 @@ export default function Transactions({ setTxnData }) {
   const handleLast = () => {
     if (page < totalPages) {
       setCurrentPage(totalPages);
-      setPageToSend(11);
+      setPageToSend(lastPage);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
-      newSearchParams.set("id", 11);
+      newSearchParams.set("id", lastPage);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -141,7 +154,7 @@ export default function Transactions({ setTxnData }) {
           //   ),
           // }}
         />
-        {totalPages>1 && (
+        {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={page}

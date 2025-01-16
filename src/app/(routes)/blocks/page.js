@@ -7,7 +7,15 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import { chain, ErrorStatus, EXPLORER_CHAIN_NAME, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
+import {
+  chain,
+  ErrorStatus,
+  EXPLORER_CHAIN_NAME,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
 import { blockColumn } from "@/constant/graphTableValues";
 import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
@@ -16,7 +24,13 @@ import getAddress from "@/utils/getAddress";
 import { Select, Space, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AvgBlockTime, LatestBlock, LatestblockNew, TopValidator, Totalvalidators } from "../../../../public/SvgIcons";
+import {
+  AvgBlockTime,
+  LatestBlock,
+  LatestblockNew,
+  TopValidator,
+  Totalvalidators,
+} from "../../../../public/SvgIcons";
 import "./blocksummary.scss";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
@@ -33,6 +47,7 @@ const BlockSummary = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [topValidtor, setTopValidtor] = useState("");
   const [nativeAddress, setNativeAddress] = useState("");
+  const [lastPage, setLastPage] = useState();
   const [previousCursor, setPreviousCursor] = useState(1);
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -40,10 +55,14 @@ const BlockSummary = () => {
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const [loading, setLoading] = useState(true);
-
+  const [filterVal, setFilterVal] = useState("desc");
   // const { isLight } = useThemeData();
+  const handleChange = (value) => {
+    setFilterVal(value);
+  };
 
-  let currentChain = typeof window !== "undefined" && localStorage.getItem("chainType");
+  let currentChain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
 
   useEffect(() => {
     if (searchParams.get("chain") == "native") {
@@ -56,12 +75,13 @@ const BlockSummary = () => {
     try {
       setLoading(true);
       setBlockSummaryStatus(FetchingStatus);
-      let response = await getBlocks(pageid, tableLimit);
+      let response = await getBlocks(pageid, tableLimit, filterVal);
 
       if (response?.error === false) {
         setBlocksData(response?.data?.blocks);
         setPreviousCursor(response?.data?.prevCursor);
         setNextCursor(response?.data?.nextCursor);
+        setLastPage(response?.data?.lastPage);
         setBlockSummaryStatus(SuccessStatus);
         const count = Number(response?.data?.blockCount ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
@@ -114,6 +134,15 @@ const BlockSummary = () => {
     getBlock_time();
   }, []);
 
+  useEffect(() => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("id", 1);
+    router.push(`?${newSearchParams.toString()}`);
+    if (pageid == 1) {
+      fetchData();
+    }
+  }, [filterVal]);
   const convertAddToNative = (address) => {
     try {
       let address = topValidtor?.split("0x");
@@ -122,7 +151,10 @@ const BlockSummary = () => {
         return res;
       }
     } catch (error) {
-      console.log("error while converting validator address to native : ", error);
+      console.log(
+        "error while converting validator address to native : ",
+        error
+      );
       return "";
     }
   };
@@ -152,10 +184,10 @@ const BlockSummary = () => {
   const handleLast = () => {
     if (page < totalPages) {
       setCurrentPage(totalPages);
-      setPageToSend(11);
+      setPageToSend(lastPage);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
-      newSearchParams.set("id", 11);
+      newSearchParams.set("id", lastPage);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -175,14 +207,24 @@ const BlockSummary = () => {
     {
       id: 1,
       text: <>Latest Block</>,
-      balance: webSocketData?.blocks?.blocknumber ? webSocketData?.blocks?.blocknumber : "0",
+      balance: webSocketData?.blocks?.blocknumber
+        ? webSocketData?.blocks?.blocknumber
+        : "0",
       img: <LatestBlock />,
       contract: false,
     },
     {
       id: 2,
       text: "Top Validator (Last 24H)",
-      balance: topValidtor ? <Tooltip title={topValidtor}>{currentChain == chain.EVM ? getAddress(topValidtor) : getAddress(convertAddToNative(topValidtor))}</Tooltip> : "-",
+      balance: topValidtor ? (
+        <Tooltip title={topValidtor}>
+          {currentChain == chain.EVM
+            ? getAddress(topValidtor)
+            : getAddress(convertAddToNative(topValidtor))}
+        </Tooltip>
+      ) : (
+        "-"
+      ),
       img: <TopValidator />,
       contract: false,
     },
@@ -205,12 +247,23 @@ const BlockSummary = () => {
         <Loader />
       ) : blockSummaryStatus === SuccessStatus ? ( */}
       <div className="container">
-        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+        <SearchbarComponent
+          searchStatus={searchStatus}
+          setSerachStatus={setSerachStatus}
+        />
         <Heading heading={"Block Summary"} />
 
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
-            <CardsOnchain key={item?.id} text={item?.text} balance={item?.balance} img={item?.img} contract={item?.contract} countime={item?.countime} countTimer={item?.countTimer} />
+            <CardsOnchain
+              key={item?.id}
+              text={item?.text}
+              balance={item?.balance}
+              img={item?.img}
+              contract={item?.contract}
+              countime={item?.countime}
+              countTimer={item?.countTimer}
+            />
           ))}
         </div>
         <div className="totalTransactions">
@@ -222,24 +275,21 @@ const BlockSummary = () => {
 
               <Space wrap>
                 <Select
-                  defaultValue="newest"
+                  onChange={handleChange}
+                  defaultValue="desc"
                   style={{
                     width: 123,
                   }}
                   className="innerSelect"
                   options={[
                     {
-                      value: "newest",
+                      value: "desc",
                       label: "Newest",
                     },
                     {
-                      value: "oldest",
+                      value: "asc",
                       label: "Oldest",
                     },
-                    // {
-                    //   value: "n",
-                    //   label: "Newest",
-                    // },
                   ]}
                 />
               </Space>
@@ -248,12 +298,31 @@ const BlockSummary = () => {
         </div>
         {
           // <Loading//>//
-          <SkeletonTableWrapper columns={blockColumn} dataSource={blocksData} pagination={false} isSkeleton={blockSummaryStatus === FetchingStatus || blockSummaryStatus === InitStatus} className="commontable" />
+          <SkeletonTableWrapper
+            columns={blockColumn}
+            dataSource={blocksData}
+            isSkeleton={
+              blockSummaryStatus === FetchingStatus ||
+              blockSummaryStatus === InitStatus
+            }
+            className="commontable"
+          />
           // <Table
 
           // />
         }
-        {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={page} handleNext={handleNext} handlePrevious={handlePrevious} disablePrev={page === 1} disableNext={page === totalPages} handleFirst={handleFirst} handleLast={handleLast} />}
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={page === 1}
+            disableNext={page === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
+          />
+        )}
       </div>
       {/* ) : (
         <Page />

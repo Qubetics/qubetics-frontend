@@ -83,7 +83,7 @@ function HeaderMenu({ onCloseDrawer }) {
         path: "/",
       });
     }
-    if (val === "EVM Chain") {
+    if (chainType === "EVM Chain") {
       setCookie("isEVM", true, {
         maxAge: 24 * 60 * 60, // 24 hours in seconds
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
