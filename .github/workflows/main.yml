@@ -31,6 +31,7 @@ jobs:
       - name: Add .env File
         run: |
           echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+          cat .env
 
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client --force    
