@@ -102,7 +102,7 @@ const Transactionsummary = () => {
               )} transactions`}</h2>
               <Space wrap>
                 <Select
-                  defaultValue="newest"
+                  defaultValue="desc"
                   style={{
                     width: 123,
                   }}

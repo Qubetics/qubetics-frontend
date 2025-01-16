@@ -4,7 +4,15 @@ import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Loader from "@/components/loader/Loader";
 import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
-import { ErrorStatus, FetchingStatus, InitStatus, Routes, SuccessStatus, dashboardCount, pageNo } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  Routes,
+  SuccessStatus,
+  dashboardCount,
+  pageNo,
+} from "@/constant/constant";
 import getTransactions from "@/services/getTransactions";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,7 +29,7 @@ const RecentTransactions = () => {
   const fetchData = async () => {
     try {
       setRecentTxnStatus(FetchingStatus);
-      let res = await getTransactions(pageNo, dashboardCount);
+      let res = await getTransactions(pageNo, dashboardCount, "desc");
 
       if (res?.error === false) {
         const accendingBlock = res?.data?.transactions;
@@ -51,10 +59,17 @@ const RecentTransactions = () => {
   }, [webSocketData?.transactions]);
 
   const getSocketTxn = () => {
-    if (Array.isArray(webSocketData?.transactions) && webSocketData?.transactions?.length > 0) {
+    if (
+      Array.isArray(webSocketData?.transactions) &&
+      webSocketData?.transactions?.length > 0
+    ) {
       const newArray = webSocketData?.transactions;
 
-      if (!recentTxns?.some((item) => item?.blocknumber === newArray[0]?.blocknumber)) {
+      if (
+        !recentTxns?.some(
+          (item) => item?.blocknumber === newArray[0]?.blocknumber
+        )
+      ) {
         let updatedSocketBlock = [...recentTxns];
         if (updatedSocketBlock?.length >= maxNonStaticElements) {
           updatedSocketBlock?.pop(); // Remove last element instead of first
@@ -67,7 +82,9 @@ const RecentTransactions = () => {
     } else if (!Array.isArray(webSocketData?.transactions)) {
       const newArray = webSocketData?.transactions;
 
-      if (!recentTxns?.some((item) => item?.blocknumber === newArray?.blocknumber)) {
+      if (
+        !recentTxns?.some((item) => item?.blocknumber === newArray?.blocknumber)
+      ) {
         let updatedSocketBlock = [...recentTxns];
         if (updatedSocketBlock?.length >= maxNonStaticElements) {
           updatedSocketBlock?.pop(); // Remove last element instead of first
@@ -85,7 +102,8 @@ const RecentTransactions = () => {
     router.push(Routes?.TRANSACTIONS);
   };
 
-  return recentTxnStatus === InitStatus || recentTxnStatus === FetchingStatus ? (
+  return recentTxnStatus === InitStatus ||
+    recentTxnStatus === FetchingStatus ? (
     <Loader />
   ) : (
     <>
@@ -99,7 +117,13 @@ const RecentTransactions = () => {
 
         {recentTxns?.length > 0 ? (
           recentTxns.slice(0, 4)?.map((res, index) => {
-            return <RecentTransaction key={res?.txString} customClass="carousel-item" data={res} />;
+            return (
+              <RecentTransaction
+                key={res?.txString}
+                customClass="carousel-item"
+                data={res}
+              />
+            );
           })
         ) : (
           <Page />
