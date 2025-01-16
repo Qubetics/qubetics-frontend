@@ -1429,13 +1429,25 @@ button.bluebtn {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("/mainBg.png");
+  background-image: url("/mainbg.png");
   background-repeat: no-repeat;
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
   }
   .maininner {
     flex: 1;
+  }
+}
+.dashboardmaindiv {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("/bgMain.png");
+  background-repeat: no-repeat;
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
   }
 }
 

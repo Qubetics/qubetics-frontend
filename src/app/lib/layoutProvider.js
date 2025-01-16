@@ -2,7 +2,7 @@
 import { useLayoutEffect } from "react";
 import dynamic from "next/dynamic";
 
-const Header = dynamic(() => import('@/components/header/header'), { ssr: false })
+const Header = dynamic(() => import("@/components/header/header"), { ssr: false });
 
 // import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { InitStatus, Routes } from "@/constant/constant";
@@ -15,27 +15,22 @@ export default function LayoutProvider({ children }) {
   // const [searchStatus, setSerachStatus] = useState(InitStatus);
   useLayoutEffect(() => {
     if (navigator.userAgent.indexOf("iPhone") > -1) {
-      document
-        .querySelector("[name=viewport]")
-        .setAttribute(
-          "content",
-          "width=device-width, initial-scale=1, maximum-scale=1"
-        );
+      document.querySelector("[name=viewport]").setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1");
     }
   }, []);
 
   return (
     <>
-      <div className={`${pathName !== Routes.HOME ? "bgToMainDiv" : ""}`}>
+      <div className={`${pathName !== Routes.HOME ? "bgToMainDiv" : ""} ${pathName === Routes.DASHBOARD ? "dashboardmaindiv" : ""}`}>
         <Header />
-      
+
         <main className="maininner">
-            <div className="addbgtheme" style={{ paddingTop: pathName !== Routes.Welcome && 110 }}>
-              {/* <SearchbarComponent
+          <div className="addbgtheme" style={{ paddingTop: pathName !== Routes.Welcome && 110 }}>
+            {/* <SearchbarComponent
                 searchStatus={searchStatus}
                 setSerachStatus={setSerachStatus}
               /> */}
-            </div>
+          </div>
           {children}
         </main>
         {pathName !== Routes.HOME && <FooterLink />}
