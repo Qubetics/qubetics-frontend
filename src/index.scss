@@ -2496,18 +2496,18 @@ input[type="number"] {
     }
   }
 }
-// .graphLod {
-//   position: absolute;
-//   left: 46%;
-//   top: 45%;
-//   @media (max-width: 767px) {
-//     position: static;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     padding: 15px 0;
-//   }
-// }
+.graphLod {
+  position: absolute;
+  left: 46%;
+  top: 45%;
+  @media (max-width: 767px) {
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+  }
+}
 .logsInnerSelect {
   padding-top: 6px;
   display: flex;
