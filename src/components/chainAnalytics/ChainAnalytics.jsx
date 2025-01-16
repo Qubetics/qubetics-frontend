@@ -61,7 +61,7 @@ const ChainAnalytics = ({ stats }) => {
         balance={
           stats?.circulationSupply
             ? formatMillionNumber(stats?.circulationSupply)
-            : stats?.circulationSupply
+            : stats?.circulation_supply
             ? formatMillionNumber(stats?.circulation_supply)
             : 0
         }

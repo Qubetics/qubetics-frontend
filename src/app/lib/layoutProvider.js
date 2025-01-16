@@ -33,7 +33,7 @@ export default function LayoutProvider({ children }) {
           </div>
           {children}
         </main>
-        {pathName !== Routes.HOME && <FooterLink />}
+        {<FooterLink />}
       </div>
     </>
   );

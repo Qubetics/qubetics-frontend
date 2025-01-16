@@ -17,9 +17,9 @@ import { TokenColumn } from "@/constant/graphTableValues";
 import useDebounce from "@/hooks/useDebounce";
 import getAllTokens from "@/services/getAllTokens";
 import getInternalSearch from "@/services/getInternalSearchData";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
-import { useRouter, useSearchParams } from "next/navigation";
 
 function page() {
   const searchParams = useSearchParams();

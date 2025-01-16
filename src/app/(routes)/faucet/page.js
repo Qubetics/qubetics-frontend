@@ -179,15 +179,17 @@ function Page() {
                     )}
                   </div>
                 </div> */}
-              <div className="captcha">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={GoogleKey}
-                  onChange={(captcha) => {
-                    if (captcha) setCaptchaToken(captcha);
-                  }}
-                />
-              </div>
+              {GoogleKey && (
+                <div className="captcha">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={GoogleKey}
+                    onChange={(captcha) => {
+                      if (captcha) setCaptchaToken(captcha);
+                    }}
+                  />
+                </div>
+              )}
               <div className="sendBtnFaucet">
                 {transferStatus === FetchingStatus ? (
                   <button className="bluebtn">
