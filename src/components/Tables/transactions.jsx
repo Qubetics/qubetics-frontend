@@ -29,14 +29,15 @@ export default function Transactions({ setTxnData, filterVal }) {
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
-
+  const order = searchParams.get("order") || "desc";
+  
   let chainType =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
   const fetchData = async () => {
     try {
       setTransactionStatus(FetchingStatus);
-      let response = await getTransactions(pageid, tableLimit, filterVal);
+      let response = await getTransactions(pageid, tableLimit, order);
       if (response?.error === false) {
         setTransactionData(response?.data?.transactions);
         setTxnData(response?.data);
@@ -74,15 +75,16 @@ export default function Transactions({ setTxnData, filterVal }) {
     fetchData();
   }, [pageid]);
 
-  useEffect(() => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("page", 1);
-    newSearchParams.set("id", 1);
-    router.push(`?${newSearchParams.toString()}`);
-    if (pageid == 1) {
-      fetchData();
-    }
-  }, [filterVal]);
+  // useEffect(() => {
+  //   const newSearchParams = new URLSearchParams(searchParams);
+  //   newSearchParams.set("page", 1);
+  //   newSearchParams.set("id", 1);
+  //   newSearchParams.set("order", filterVal);
+  //   router.push(`?${newSearchParams.toString()}`);
+  //   if (pageid == 1) {
+  //     fetchData();
+  //   }
+  // }, [filterVal]);
 
   const handleNext = () => {
     if (page < totalPages) {
@@ -93,6 +95,7 @@ export default function Transactions({ setTxnData, filterVal }) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", currentPage + 1);
       newSearchParams.set("id", nextCursor);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -103,6 +106,7 @@ export default function Transactions({ setTxnData, filterVal }) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", page - 1);
       newSearchParams.set("id", previousCursor);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -114,6 +118,7 @@ export default function Transactions({ setTxnData, filterVal }) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       newSearchParams.set("id", lastPage);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -125,6 +130,8 @@ export default function Transactions({ setTxnData, filterVal }) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       newSearchParams.set("id", 1);
+      newSearchParams.set("order", filterVal);
+
       router.push(`?${newSearchParams.toString()}`);
     }
   };

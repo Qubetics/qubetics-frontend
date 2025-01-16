@@ -56,9 +56,18 @@ const BlockSummary = () => {
   const pageid = searchParams.get("id") || 1;
   const [loading, setLoading] = useState(true);
   const [filterVal, setFilterVal] = useState("desc");
+  const order = searchParams.get("order") || "desc";
   // const { isLight } = useThemeData();
   const handleChange = (value) => {
     setFilterVal(value);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("id", 1);
+    newSearchParams.set("order", value);
+    router.push(`?${newSearchParams.toString()}`);
+    if (pageid == 1) {
+      fetchData();
+    }
   };
 
   let currentChain =
@@ -75,7 +84,7 @@ const BlockSummary = () => {
     try {
       setLoading(true);
       setBlockSummaryStatus(FetchingStatus);
-      let response = await getBlocks(pageid, tableLimit, filterVal);
+      let response = await getBlocks(pageid, tableLimit, order);
 
       if (response?.error === false) {
         setBlocksData(response?.data?.blocks);
@@ -127,22 +136,13 @@ const BlockSummary = () => {
 
   useEffect(() => {
     fetchData();
-  }, [pageid]);
+  }, [pageid, order]);
 
   useEffect(() => {
     getTopValidatorValue();
     getBlock_time();
   }, []);
 
-  useEffect(() => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("page", 1);
-    newSearchParams.set("id", 1);
-    router.push(`?${newSearchParams.toString()}`);
-    if (pageid == 1) {
-      fetchData();
-    }
-  }, [filterVal]);
   const convertAddToNative = (address) => {
     try {
       let address = topValidtor?.split("0x");
@@ -167,6 +167,7 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", currentPage + 1);
       newSearchParams.set("id", nextCursor);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -177,6 +178,7 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", page - 1);
       newSearchParams.set("id", previousCursor);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -188,6 +190,7 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       newSearchParams.set("id", lastPage);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -199,6 +202,7 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       newSearchParams.set("id", 1);
+      newSearchParams.set("order", filterVal);
       router.push(`?${newSearchParams.toString()}`);
     }
   };

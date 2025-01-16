@@ -15,16 +15,29 @@ import {
   TotalTransactions,
 } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Transactionsummary = () => {
   const webSocketData = useLatestData();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const { isNetworkChanged } = useGetNetwork();
   const [contractCount, setContractCount] = useState(0);
   const [txnData, setTxnData] = useState({});
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [filterVal, setFilterVal] = useState("desc");
+  const pageid = searchParams.get("id") || 1;
+
   const handleChange = (value) => {
     setFilterVal(value);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("id", 1);
+    newSearchParams.set("order", value);
+    router.push(`?${newSearchParams.toString()}`);
+    if (pageid == 1) {
+      fetchData();
+    }
   };
 
   useEffect(() => {

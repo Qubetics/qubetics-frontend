@@ -203,7 +203,7 @@ const page = ({ params }) => {
             <div className="innerDetail">
               <div className="detail">
                 <h3>Stake</h3>
-                <p>{showHeaderData?.stake || 0}</p>
+                <p>{showHeaderData?.stake || "Not Staked"}</p>
               </div>
               <div className="detail">
                 <h3>Blocks Validated</h3>

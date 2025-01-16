@@ -213,7 +213,11 @@ function WriteContent({ abiData, hash }) {
         </p>,
         <p
           className="err_color"
-          style={{ marginTop: "10px" }}
+          style={{
+            marginTop: "10px",
+            wordBreak: "break-all",
+            overflow: "hidden",
+          }}
           key={`${index}-error`}
         >
           {writeError}
