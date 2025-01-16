@@ -194,113 +194,6 @@ html {
 }
 
 //commontranparentbluebtn
-.qubeticNetwork_btn {
-  display: inline-flex;
-  padding: 7px 10px;
-  align-items: center;
-  gap: 5px;
-  border-radius: 40px;
-  // border: none;
-  color: $white;
-  // height: 50px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 10px;
-  cursor: pointer;
-  white-space: nowrap;
-  @include fluid-type(320px, 1920px, 12px, 14px);
-  background-color: $black;
-  display: flex;
-  position: relative;
-  text-decoration: none;
-  // --bg: #000;
-  // --hover-bg: var(--theme-gradients-main);
-  // --text: #fff;
-  // --hover-text: #000;
-  // border: 2px solid transparent;
-  // background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-  //   conic-gradient(
-  //       from 180deg at 50% 50%,
-  //       #ff98e2,
-  //       #ffc876 35.77deg,
-  //       #79fff7 153.75deg,
-  //       #9f53ff 258.75deg,
-  //       #ff98e2 360deg
-  //     )
-  //     border-box;
-  padding-inline: calc(1.5rem - 2px);
-  padding-block: calc(1rem - 6px);
-  &:hover {
-    &::after,
-    &::before {
-      content: " ";
-      position: absolute;
-      z-index: -1;
-      inset: -0.2rem;
-      background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
-      border-radius: inherit;
-      animation: rotate 2.5s linear infinite;
-    }
-    &::after {
-      filter: blur(4rem);
-    }
-  }
-  @media (max-width: 767px) {
-    height: 50px;
-  }
-  span {
-    display: flex;
-    align-items: center;
-  }
-  // &::before {
-  //   content: " ";
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100%;
-  //   height: 100%;
-  //   border-radius: 999rem;
-  //   pointer-events: none;
-  //   z-index: -1;
-  //   opacity: 0;
-  //   background: var(--hover-bg);
-  //   transition: opacity 0.2s ease-out;
-  //   &:hover {
-  //     opacity: 1;
-  //   }
-  // }
-  @media (max-width: 1199px) {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: 14px !important;
-    text-align: center;
-    font-weight: 700;
-    .ant-select-selection-item {
-      font-weight: 700 !important;
-    }
-  }
-}
-.qubeticNetwork_btn::after,
-.qubeticNetwork_btn::before {
-  content: " ";
-  position: absolute;
-  z-index: -1;
-  inset: -0.2rem;
-  background: conic-gradient(var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
-  border-radius: inherit;
-  animation: rotate 2.5s linear infinite;
-}
-
-@keyframes rotate {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-
 .faucetmetabtn {
   max-width: 221px !important;
   margin-top: 0 !important;
@@ -2499,7 +2392,7 @@ input[type="number"] {
 .graphLod {
   position: absolute;
   left: 46%;
-  top: 45%;
+  top: 34%;
   @media (max-width: 767px) {
     position: static;
     display: flex;
@@ -2536,10 +2429,77 @@ input[type="number"] {
   }
 }
 .headerMeta {
-  @media (max-width: 575px) {
-    padding: 40px 15px !important;
+  .cmnSelct {
+    @media (max-width: 1199px) {
+      padding: 30px 15px !important;
+    }
   }
 }
 :where(.css-dev-only-do-not-override-77tu7h).ant-checkbox .ant-checkbox-inner {
   background-color: transparent !important;
+}
+.headermetaBtn {
+  @media (max-width: 1199px) {
+    display: flex !important;
+    justify-content: center;
+    height: 51px;
+  }
+  position: relative;
+  display: inline-block;
+  padding: 12.5px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #000;
+  text-decoration: none;
+  border: none;
+  border-radius: 30px;
+  overflow: hidden;
+  cursor: pointer;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 30px;
+    background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+    animation: rotate 2.5s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate 3s linear infinite;
+  }
+}
+@keyframes rotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+.headerSelectItem {
+  @media (max-width: 1199px) {
+    text-align: center;
+  }
+  .ant-select-selector {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: 30px;
+      background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+      animation: rotate 2.5s linear infinite;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: rotate 3s linear infinite;
+    }
+    .ant-select-selection-item {
+      font-weight: 700 !important;
+    }
+  }
 }

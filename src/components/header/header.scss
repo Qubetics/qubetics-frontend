@@ -290,19 +290,35 @@
     li {
       list-style: none;
       @media (max-width: 1199px) {
-        user-select: none !important;
         border-bottom: 1px solid #373638b2;
         min-height: 51px;
         padding: 0px 20px 0 5px;
+        &:hover,
+        &:active,
+        &:focus-within &:focus-visible,
+        &:focus {
+          background: transparent !important;
+          box-shadow: none;
+        }
       }
 
       a {
-        user-select: none !important;
         padding: 15px;
         width: 100%;
         display: block;
         color: #fff;
         @include fluid-type(320px, 1920px, 13px, 15px);
+        &:hover,
+        &:active,
+        &:focus-within &:focus-visible,
+        &:focus {
+          background: transparent !important;
+          box-shadow: none;
+          -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          touch-action: manipulation;
+          text-decoration: none;
+        }
       }
 
       .ant-select-selection-item {
@@ -319,9 +335,9 @@
     flex-direction: column;
     gap: 30px;
     padding: 15px;
-    @media (max-width: 991px) {
+    @media (max-width: 1199px) {
       padding: 0;
-      gap: 30px !important;
+      gap: 20px !important;
     }
   }
 }
