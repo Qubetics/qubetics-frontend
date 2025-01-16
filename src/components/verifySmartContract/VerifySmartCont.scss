@@ -2,8 +2,6 @@
 @import "../../_mixins.scss";
 .verifysmartContract {
   // margin: 50px 0;
-  backdrop-filter: blur(32px);
-
   @media (max-width: 991px) {
   }
   p {
@@ -265,6 +263,10 @@
   @media (max-width: 991px) {
     flex-direction: column;
     gap: 0;
+  }
+  .ant-select-selector {
+    background-color: #080808 !important;
+    border: 0 !important;
   }
 }
 .ant-input-outlined[disabled] {

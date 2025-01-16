@@ -89,7 +89,10 @@ function ContractInfo() {
               <span> {getAddress(connectAddress)}</span>&nbsp;
               <CopyText text={connectAddress} />
             </p>
-            <Button onClick={()=> setConnectAddress("")} className="commoncontactbtn"> Disconnect</Button>
+            <Button onClick={() => setConnectAddress("")} className="commoncontactbtn">
+              {" "}
+              Disconnect
+            </Button>
           </div>
         </>
       )}
@@ -107,23 +110,10 @@ function ContractInfo() {
         </div>
         */}
       </div>
-      <Modal
-        className="connectModal"
-        title="Connect your wallet"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        centered
-      >
+      <Modal className="connectModal" title="Connect your wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
         <ul>
           <li onClick={connectWithWallet}>
-            <Image
-              priority
-              src="/metafox.avif"
-              alt="Logo"
-              width={25}
-              height={25}
-            />
+            <Image priority src="/metafox.svg" alt="Logo" width={25} height={25} />
             MetaMask
           </li>
           {/*
@@ -134,10 +124,7 @@ function ContractInfo() {
           </li>
           */}
         </ul>
-        <p className="agreeWallet">
-          By Connecting a wallet you agree to the Terms of service and Optimism
-          Community Agreements.
-        </p>
+        <p className="agreeWallet">By Connecting a wallet you agree to the Terms of service and Optimism Community Agreements.</p>
       </Modal>
     </>
   );

@@ -1610,6 +1610,28 @@ button.bluebtn {
     .ant-tabs-nav-list {
       margin-bottom: 0 !important;
     }
+    .commontable {
+      thead {
+        tr {
+          th {
+            width: 15%;
+            &:last-child {
+              width: 40%;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            width: 15%;
+            &:last-child {
+              width: 40%;
+            }
+          }
+        }
+      }
+    }
   }
 }
 .contractsItems {
@@ -2183,6 +2205,12 @@ input[type="number"] {
   .lightGray {
     opacity: 0.7;
   }
+  span {
+    p {
+      white-space: normal;
+      word-break: break-all;
+    }
+  }
 }
 
 .verificationFill {
@@ -2468,19 +2496,20 @@ input[type="number"] {
     }
   }
 }
-// .graphLod {
-//   position: absolute;
-//   left: 46%;
-//   top: 45%;
-//   @media (max-width: 767px) {
-//     position: static;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     padding: 15px 0;
-//   }
-// }
+.graphLod {
+  position: absolute;
+  left: 46%;
+  top: 45%;
+  @media (max-width: 767px) {
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+  }
+}
 .logsInnerSelect {
+  padding-top: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -2510,4 +2539,7 @@ input[type="number"] {
   @media (max-width: 575px) {
     padding: 40px 15px !important;
   }
+}
+:where(.css-dev-only-do-not-override-77tu7h).ant-checkbox .ant-checkbox-inner {
+  background-color: transparent !important;
 }
