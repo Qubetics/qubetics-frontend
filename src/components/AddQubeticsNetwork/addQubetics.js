@@ -72,7 +72,7 @@ export function getDeviceType() {
 }
 export const addQubetic = async () => {
   const provider = window.ethereum;
-alert( 1 )
+  alert(1);
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
@@ -88,7 +88,7 @@ alert( 1 )
       }
     }
     if (!provider) {
-      alert(2)
+      alert(2);
       throw new Error(Messages.Install_Metamask);
     }
 
@@ -96,15 +96,16 @@ alert( 1 )
 
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
     if (!provider) {
-      alert(3)
+      alert(3);
       toast.error(Messages.Install_Metamask);
     } else {
       if (!chainId) {
         throw new Error(Messages.Retrive_Meta_Account);
       }
       if (chainId === ChainIdQubetic) {
+        alert(5);
         toast.success(Messages.Same_Network);
-      } else {
+      } 
         alert(4);
         try {
           await provider.request({
@@ -135,7 +136,7 @@ alert( 1 )
               throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
             }
           }
-        }
+        
       }
     }
   } catch (error) {
