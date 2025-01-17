@@ -12,6 +12,7 @@ import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
+import { Tokenicons } from "../../public/SvgIcons";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -1327,13 +1328,9 @@ export const TokenColumn = [
     key: "tokenName",
     render: (text) => (
       <span className="assetnamedetail">
-        {
+        {text?.iconUrl && text?.iconUrl !== "" ? (
           <img
-            src={
-              text?.iconUrl && text?.iconUrl !== ""
-                ? text.iconUrl
-                : "/coinIcon.svg"
-            }
+            src={text.iconUrl}
             alt="icon img"
             style={{
               width: "40px",
@@ -1342,7 +1339,11 @@ export const TokenColumn = [
               objectFit: "cover",
             }}
           />
-        }
+        ) : (
+          <div>
+            <div className="imgIcon">{<Tokenicons />}</div>
+          </div>
+        )}
         <Link href={`/contract/${text?.contractAddress}`}>
           {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
         </Link>
