@@ -53,7 +53,7 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
     }
   }
 };
-function getDeviceType() {
+export function getDeviceType() {
   const userAgent = navigator.userAgent;
 
   if (/android/i.test(userAgent)) {

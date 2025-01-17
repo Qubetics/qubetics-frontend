@@ -28,7 +28,6 @@ import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Page from "../../notfound/page";
-import CoinImg from "../../../../assets/img/coin.png";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
@@ -93,15 +92,17 @@ const ContractDetail = () => {
           style={{
             borderRadius: "50%",
             objectFit: "cover",
+            height: "60px",
+            width: "60px",
           }}
           src={
-            contractDetail?.ContractVerification
+            contractDetail?.ContractVerification &&
+            contractDetail?.ContractVerification?.iconUrl !== ""
               ? contractDetail?.ContractVerification?.iconUrl
-              : CoinImg
+              : "/coinIcon.svg"
           }
           className="welcomeLogo"
-          height={60}
-          width={60}
+        
           alt="logo"
         />
       ),

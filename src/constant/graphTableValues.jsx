@@ -10,9 +10,7 @@ import getAddress from "@/utils/getAddress";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
-import Image from "next/image";
 import Link from "next/link";
-import CoinImage from "../assets/img/coin.png";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
@@ -1332,7 +1330,9 @@ export const TokenColumn = [
         {
           <img
             src={
-              text?.iconUrl && text?.iconUrl !== "" ? text?.iconUrl : CoinImage
+              text?.iconUrl && text?.iconUrl !== ""
+                ? text.iconUrl
+                : "/coinIcon.svg"
             }
             alt="icon img"
             style={{

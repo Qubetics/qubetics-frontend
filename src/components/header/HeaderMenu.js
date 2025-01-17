@@ -1,4 +1,17 @@
-import { BlockchainHeaderFunction, contractHeaderFunction, defaultChainOptions, EXPLORER_CHAIN_NAME, EXPLORER_CURRENCY_NAME, EXPLORER_META_NETWORK_CHAIN_ID, EXPLORER_METAMASK_NAVIGATION, EXPLORER_METAMASK_NETWORK_URL, Messages, METAMASK_CHAIN_NAME, Routes, SHOW_FAUCET } from "@/constant/constant";
+import {
+  BlockchainHeaderFunction,
+  contractHeaderFunction,
+  defaultChainOptions,
+  EXPLORER_CHAIN_NAME,
+  EXPLORER_CURRENCY_NAME,
+  EXPLORER_META_NETWORK_CHAIN_ID,
+  EXPLORER_METAMASK_NAVIGATION,
+  EXPLORER_METAMASK_NETWORK_URL,
+  Messages,
+  METAMASK_CHAIN_NAME,
+  Routes,
+  SHOW_FAUCET,
+} from "@/constant/constant";
 import metamaskSDK from "@web3-onboard/metamask";
 import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
@@ -11,6 +24,7 @@ import toast from "react-hot-toast";
 import CheckIcon from "../../../public/SvgIcons";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
+import { getDeviceType } from "../AddQubeticsNetwork/addQubetics";
 const metamaskSDKWallet = metamaskSDK({
   options: {
     injectProvider: true,
@@ -113,7 +127,8 @@ function HeaderMenu({ onCloseDrawer }) {
       const chainId = await ethereum.request({ method: "eth_chainId" });
       setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
       ethereum.on("chainChanged", (id) => {
-        if (id === EXPLORER_META_NETWORK_CHAIN_ID) return setIsMetaMaskAdded(true);
+        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
+          return setIsMetaMaskAdded(true);
         setIsMetaMaskAdded(false);
       });
     } catch (error) {
@@ -131,6 +146,14 @@ function HeaderMenu({ onCloseDrawer }) {
   const getContainer = (triggerNode) => triggerNode.parentNode;
 
   const addChainNetwork = async () => {
+    const deviceType = getDeviceType();
+    console.log(deviceType, "deviceType");
+    if (deviceType !== "Desktop") {
+      const metamaskDappUrl =
+        process.env.NEXT_PUBLIC_METAMASK_DAPP_URL || "https://google.com";
+      window.location.href = metamaskDappUrl;
+      return;
+    }
     const requestProvider = await connect({
       autoSelect: {
         label: "MetaMask",
@@ -211,7 +234,11 @@ function HeaderMenu({ onCloseDrawer }) {
     <>
       <ul className="mob__List">
         <li onClick={onCloseDrawer} value="Dashboard">
-          <Link prefetch={true} className={pathname === Routes.DASHBOARD ? "active" : "inactive"} href={Routes.DASHBOARD}>
+          <Link
+            prefetch={true}
+            className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
+            href={Routes.DASHBOARD}
+          >
             Dashboard
           </Link>
         </li>
@@ -222,7 +249,12 @@ function HeaderMenu({ onCloseDrawer }) {
               // trigger={["hover"]}
               title=""
               getPopupContainer={getContainer}
-              className={`headerSelect  ${pathname.includes(Routes.BLOCKS) || pathname.includes(Routes.TRANSACTIONS) ? "active" : "inactive"}`}
+              className={`headerSelect  ${
+                pathname.includes(Routes.BLOCKS) ||
+                pathname.includes(Routes.TRANSACTIONS)
+                  ? "active"
+                  : "inactive"
+              }`}
               defaultValue={"Blockchain"}
               // placeholder={
               //   pathname.includes(Routes.BLOCKS)
@@ -243,13 +275,25 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
         {val === "EVM Chain" && (
           <li onClick={onCloseDrawer}>
-            <Link prefetch={true} className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"} href={Routes.TOKEN}>
+            <Link
+              prefetch={true}
+              className={
+                pathname.includes(Routes.TOKEN) ? "active" : "inactive"
+              }
+              href={Routes.TOKEN}
+            >
               Tokens
             </Link>
           </li>
         )}
         <li onClick={onCloseDrawer}>
-          <Link prefetch={true} className={pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"} href={Routes.VALIDATORS}>
+          <Link
+            prefetch={true}
+            className={
+              pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
+            }
+            href={Routes.VALIDATORS}
+          >
             Validators
           </Link>
         </li>
@@ -295,7 +339,13 @@ function HeaderMenu({ onCloseDrawer }) {
               <Select
                 title=""
                 getPopupContainer={getContainer}
-                className={`headerSelect  ${pathname.includes(Routes.CONTRACTS) || pathname.includes(Routes.CONTRACT_VERIFICATOIN) || pathname.includes(Routes.TOKEN_ICON) ? "active" : "inactive"}`}
+                className={`headerSelect  ${
+                  pathname.includes(Routes.CONTRACTS) ||
+                  pathname.includes(Routes.CONTRACT_VERIFICATOIN) ||
+                  pathname.includes(Routes.TOKEN_ICON)
+                    ? "active"
+                    : "inactive"
+                }`}
                 // placeholder={
                 //   pathname.includes(Routes.CONTRACTS)
                 //     ? "Contract"
@@ -389,7 +439,11 @@ function HeaderMenu({ onCloseDrawer }) {
 
         {SHOW_FAUCET == 1 && (
           <li onClick={onCloseDrawer}>
-            <Link prefetch={true} className={pathname === Routes.FAUCET ? "active" : "inactive"} href={Routes.FAUCET}>
+            <Link
+              prefetch={true}
+              className={pathname === Routes.FAUCET ? "active" : "inactive"}
+              href={Routes.FAUCET}
+            >
               Faucet
             </Link>
           </li>
@@ -407,9 +461,19 @@ function HeaderMenu({ onCloseDrawer }) {
         <li className="headerSelct headerMeta" style={{ borderBottom: "0" }}>
           <div className="cmnSelct">
             <a className="headermetaBtn" onClick={addChainNetwork}>
-              <span style={{ gap: "5px", display: "flex", alignItems: "center" }} class="_button-text_1x6ja_100">
-                <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
-                {isMetaMaskAdded ? `${EXPLORER_CHAIN_NAME} Network Added` : `Add ${EXPLORER_CHAIN_NAME} Network`}
+              <span
+                style={{ gap: "5px", display: "flex", alignItems: "center" }}
+                class="_button-text_1x6ja_100"
+              >
+                <Image
+                  src="/metafox.svg"
+                  width={25}
+                  height={25}
+                  alt="metafox"
+                />
+                {isMetaMaskAdded
+                  ? `${EXPLORER_CHAIN_NAME} Network Added`
+                  : `Add ${EXPLORER_CHAIN_NAME} Network`}
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
             </a>
@@ -418,7 +482,11 @@ function HeaderMenu({ onCloseDrawer }) {
               className="headerSelectItem"
               getPopupContainer={getContainer}
               defaultValue={chainType}
-              style={windowWidth < 1199 ? { minWidth: "100%", width: "100%", padding: 0 } : { minWidth: 130, width: "130px", padding: 0 }}
+              style={
+                windowWidth < 1199
+                  ? { minWidth: "100%", width: "100%", padding: 0 }
+                  : { minWidth: 130, width: "130px", padding: 0 }
+              }
               onChange={handleChainChange}
               options={[
                 {
