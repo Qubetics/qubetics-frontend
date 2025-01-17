@@ -304,6 +304,9 @@ body {
     border-radius: 14px;
     // padding-right: 120px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    @media (max-width: 991px) {
+      max-width: 100%;
+    }
     @include theme() {
       background: theme-get("tableheader") !important;
       color: theme-get("texttheme");
@@ -394,6 +397,10 @@ body {
       }
     }
   }
+}
+.searchFilter {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 // addresspage heading

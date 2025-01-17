@@ -41,9 +41,7 @@ function ReadCodeContent({ abiData, hash }) {
   const handleReadClick = async (data) => {
     try {
       setIsLoading(true);
-      const web3 = new Web3(
-        new Web3.providers.HttpProvider(`${WEB_PROVIDER_URL}`)
-      );
+      const web3 = new Web3(new Web3.providers.HttpProvider(`${WEB_PROVIDER_URL}`));
       const contract = new web3.eth.Contract(parsedAbiData, hash);
       // const readValue = Object.values(inputData);
       const readValue = Object.values(inputData).map((value) => {
@@ -54,15 +52,12 @@ function ReadCodeContent({ abiData, hash }) {
         }
       });
       const result = await contract.methods[data](...readValue).call();
-      typeof result == "bigint"
-        ? setReadResult(result.toString())
-        : setReadResult(result);
+      typeof result == "bigint" ? setReadResult(result.toString()) : setReadResult(result);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.error("Error while performing read operations:", error);
-      const errorMessage =
-        error && error.message ? error.message : String(error);
+      const errorMessage = error && error.message ? error.message : String(error);
       setReadError(errorMessage);
     }
   };
@@ -95,26 +90,14 @@ function ReadCodeContent({ abiData, hash }) {
     const inputFields = data?.inputs?.map((input, inputIndex) => (
       <>
         <span className="AllowanceInputs" key={`${index}-input-${inputIndex}`}>
-          <CustomInput
-            type="text"
-            label={`${input?.name} (${input?.type})*`}
-            placeholder={input?.type}
-            name={`${input?.name}`}
-            value={inputData[input?.name]}
-            onChange={(value) => handleChange(input?.name, value)}
-          />
+          <CustomInput type="text" label={`${input?.name} (${input?.type})*`} placeholder={input?.type} name={`${input?.name}`} value={inputData[input?.name]} onChange={(value) => handleChange(input?.name, value)} />
         </span>
-        {inputErrors[input?.name] && (
-          <p style={{ color: "red" }}>{inputErrors[input?.name]}</p>
-        )}
+        {inputErrors[input?.name] && <p style={{ color: "red" }}>{inputErrors[input?.name]}</p>}
       </>
     ));
     return {
       key: `${index}`,
-      label: [
-        <LinkChain key={`${index}-link`} />,
-        `${index + 1}. ${data?.name}`,
-      ],
+      label: [<LinkChain key={`${index}-link`} />, `${index + 1}. ${data?.name}`],
       children: [
         ...inputFields,
         <span className="buttonText" key={`${index}-button`}>
@@ -137,9 +120,7 @@ function ReadCodeContent({ abiData, hash }) {
           )}
         </span>,
         <p style={{ marginTop: "10px" }}>{readResult ? readResult : ""}</p>,
-        <p style={{ marginTop: "10px", color: "red" }}>
-          {readError ? readError : ""}
-        </p>,
+        <p style={{ marginTop: "10px", color: "red" }}>{readError ? readError : ""}</p>,
       ],
     };
   });
@@ -148,12 +129,7 @@ function ReadCodeContent({ abiData, hash }) {
     <div className="readCodeContent">
       <div className="readCodeCotent__disconnect">
         <ContractInfo />
-        <Collapse
-          accordion
-          items={items}
-          onChange={handleAccordionChange}
-          activeKey={expandedAccordion}
-        />
+        <Collapse accordion items={items} onChange={handleAccordionChange} activeKey={expandedAccordion} />
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import { memo, useEffect, useRef, useState } from "react";
+import { BlockIcon, Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
 // import useGlobalSearch from "@/hooks/useGlobalSearch";
 // import useOnClickOutside from "@/hooks/useOnClickOutSide";
 
 // import useToggleChainContext from "@/hooks/useToggleChainContext";
 import { useRouter } from "next/navigation";
+import { EnterKeyIcon, NavigateDown, NavigateUp } from "../../../public/SvgIcons";
 
 const FilterResult = () => {
   const dynamicTab = ["viplove", "thakur"];
@@ -103,9 +105,7 @@ const FilterResult = () => {
   };
 
   const redirectOnEnter = (selectedItems) => {
-    const targetedItem = selectedItems?.filter(
-      (items, id) => id === selectedIndex
-    );
+    const targetedItem = selectedItems?.filter((items, id) => id === selectedIndex);
     targetedItem?.map((ele) => {
       // if (activeTab !== "tokens" && activeTab !== "contracts") {
       router.push(ele?.address && handleKeyEnter(undefined, ele?.address));
@@ -179,8 +179,7 @@ const FilterResult = () => {
       setOpen(1);
       e.currentTarget.blur();
 
-      if (!searchResult?.results?.[activeTab]?.length)
-        return router.push("/not-found");
+      if (!searchResult?.results?.[activeTab]?.length) return router.push("/not-found");
 
       const redirectAddress = searchResult?.results[activeTab]?.[0]?.address;
 
@@ -243,17 +242,20 @@ const FilterResult = () => {
 
   return (
     <div class="filter-result">
-      <input
-        type="text"
-        class="filter-result__input"
-        placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name"
-      />
+      <div className="searchbar searchFilter">
+        <div className="searchbar_input">
+          <input
+            placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name"
+            //  value={searchValue} onChange={(e) => handleSearchChange(e)} onKeyUp={(e) => handleEnterClick(e)} onFocus={onFocus} onBlur={onBlur}
+          />
+          <Searchicon />
+        </div>
+      </div>
+      {/* <input type="text" class="filter-result__input" placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name" /> */}
 
       <div class="filter-result__results" tabindex="0">
         <div class="filter-result__tabs">
-          <button class="filter-result__tabs-button filter-result__tabs-button--active">
-            Tab Name
-          </button>
+          <button class="headermetaBtn">Tab Name</button>
         </div>
 
         <div class="filter-result__divider"></div>
@@ -263,7 +265,7 @@ const FilterResult = () => {
             <section class="filter-result__section">
               <div class="filter-result__section-title">Section Title</div>
 
-              <ul>
+              {/* <ul>
                 <li class="filter-result__item filter-result__item--selected">
                   <a href="#" class="filter-result__item-link">
                     <img src="logo.png" alt="Logo" height="38" />
@@ -277,7 +279,14 @@ const FilterResult = () => {
                   </a>
                   <div class="filter-result__divider"></div>
                 </li>
-              </ul>
+              </ul> */}
+              <div className="blockdataItems">
+                <BlockIcon />
+                <p>
+                  {" "}
+                  Mainnet Test<span>0x545b794a9feb9000094f63dc6f64e </span>
+                </p>
+              </div>
             </section>
           </div>
         </div>
@@ -286,19 +295,27 @@ const FilterResult = () => {
 
         <div class="filter-result__footer">
           <div class="filter-result__footer-group">
-            <p class="filter-result__footer-text">Navigate</p>
+            <p class="filter-result__footer-text">
+              {" "}
+              <NavigateUp /> <NavigateDown /> Navigate
+            </p>
           </div>
 
           <div class="filter-result__footer-group">
-            <div class="filter-result__footer-key filter-result__footer-key--esc">
-              ESC
-            </div>
+            <div class="filter-result__footer-key filter-result__footer-key--esc">ESC</div>
             <p class="filter-result__footer-text">Close</p>
           </div>
 
           <div class="filter-result__footer-group">
             <div class="filter-result__footer-key filter-result__footer-key--enter"></div>
-            <p class="filter-result__footer-text">Enter</p>
+            <p class="filter-result__footer-text">
+              {" "}
+              <span className="enterkeyIcon">
+                {" "}
+                <EnterKeyIcon />
+              </span>{" "}
+              Enter
+            </p>
           </div>
         </div>
       </div>
