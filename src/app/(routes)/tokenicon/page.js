@@ -3,6 +3,7 @@ import Loader from "@/components/loader/Loader";
 import getContractDetails from "@/services/getContractDetails";
 import { Button, Input } from "antd";
 import { useState } from "react";
+import CustomInput from "@/components/customInput/CustomInput";
 import toast from "react-hot-toast";
 import { isImageUrlValid } from "./isImageUrlValid";
 import { signMessage } from "./SignMessage";
@@ -65,13 +66,7 @@ const TokenIcon = () => {
       toast.error("Enter Image Url");
       return;
     }
-    await signMessage(
-      contractAddress,
-      url,
-      setIsLoading,
-      setUrl,
-      setContractAddress
-    );
+    await signMessage(contractAddress, url, setIsLoading, setUrl, setContractAddress);
   };
   return (
     <>
@@ -80,35 +75,19 @@ const TokenIcon = () => {
         <div className="container">
           <div className="searchblocks"></div>
           <div className="tokenIcon_inner">
-            <h1>Verify Ownership & Submit Token Icons</h1>
+            <h2>Verify Ownership & Submit Token Icons</h2>
             <div className="tokenIcon_inner__top">
               <form style={{ width: "100%" }}>
                 <div>
-                  <label>Enter Contract Address</label>
-                  <Input
-                    placeholder="Enter Contract Address"
-                    type="text"
-                    name="url"
-                    onChange={handleAddressChange}
-                    value={contractAddress}
-                  />
+                  <CustomInput type="text" label="Enter Contract Address" placeholder="OxdAC17F958D2ee523a2206206994597C13D831 ec7" name="url" onChange={handleAddressChange} value={contractAddress} />
                 </div>
-                {addMsg && (
-                  <p style={{ color: "red" }}>Invalid Contract Address</p>
-                )}
+                {addMsg && <p style={{ color: "red" }}>Invalid Contract Address</p>}
 
                 <div>
-                  <label style={{ marginTop: "15px" }}>Enter URL</label>
-                  <Input
-                    placeholder="Enter url link of your icon"
-                    type="text"
-                    name="url"
-                    onChange={handleImageChange}
-                    value={url}
-                  />
+                  <CustomInput type="text" label="Enter URL" placeholder="Enter URL" name="url" onChange={handleImageChange} value={url} />
                 </div>
-                {imgErr && <p style={{ color: "red" }}>Invalid image URL</p>}
-                <Button
+                {imgErr && <p style={{ color: "#FF4E4E", textAlign: "right" }}>Invalid image URL</p>}
+                {/* <Button
                   onClick={submitUrl}
                   disabled={isDisable}
                   className="token_btn"
@@ -118,7 +97,12 @@ const TokenIcon = () => {
                   }}
                 >
                   Submit
-                </Button>
+                </Button> */}
+                <div className="tokensubmitbtn">
+                  <button onClick={submitUrl} className="headermetaBtn">
+                    Submit
+                  </button>
+                </div>
               </form>
             </div>
           </div>
