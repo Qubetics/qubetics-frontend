@@ -2620,3 +2620,7 @@ input:-webkit-autofill:active {
   border: 2px solid #080808;
   overflow: hidden;
 }
+.break-word-toast {
+  word-break: break-word;
+  white-space: normal;
+}

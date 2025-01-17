@@ -18,7 +18,7 @@ const TokenIcon = () => {
   const [isDisable, setIsDisable] = useState(true);
 
   const handleImageChange = async (e) => {
-    const imgUrl = e.target.value;
+    const imgUrl = e;
 
     if (!imgUrl) {
       setImgErr("");
@@ -39,7 +39,7 @@ const TokenIcon = () => {
   };
 
   const handleAddressChange = async (e) => {
-    const add = e.target.value;
+    const add = e;
     if (!add) {
       setAddMsg("");
       setContractAddress("");
@@ -66,27 +66,55 @@ const TokenIcon = () => {
       toast.error("Enter Image Url");
       return;
     }
-    await signMessage(contractAddress, url, setIsLoading, setUrl, setContractAddress);
+
+    await signMessage(
+      contractAddress,
+      url,
+      setIsLoading,
+      setUrl,
+      setContractAddress
+    );
   };
   return (
     <>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <div className="tokenIcon">
         <div className="container">
           <div className="searchblocks"></div>
           <div className="tokenIcon_inner">
             <h2>Verify Ownership & Submit Token Icons</h2>
             <div className="tokenIcon_inner__top">
-              <form style={{ width: "100%" }}>
+              {/* <form style={{ width: "100%" }}> */}
+           
                 <div>
-                  <CustomInput type="text" label="Enter Contract Address" placeholder="OxdAC17F958D2ee523a2206206994597C13D831 ec7" name="url" onChange={handleAddressChange} value={contractAddress} />
+                  <CustomInput
+                    type="text"
+                    label="Enter Contract Address"
+                    placeholder="OxdAC17F958D2ee523a2206206994597C13D831 ec7"
+                    name="url"
+                    onChange={handleAddressChange}
+                    value={contractAddress}
+                  />
                 </div>
-                {addMsg && <p style={{ color: "red" }}>Invalid Contract Address</p>}
+                {addMsg && (
+                  <p style={{ color: "red" }}>Invalid Contract Address</p>
+                )}
 
                 <div>
-                  <CustomInput type="text" label="Enter URL" placeholder="Enter URL" name="url" onChange={handleImageChange} value={url} />
+                  <CustomInput
+                    type="text"
+                    label="Enter URL"
+                    placeholder="Enter URL"
+                    name="url"
+                    onChange={(e) => handleImageChange(e)}
+                    value={url}
+                  />
                 </div>
-                {imgErr && <p style={{ color: "#FF4E4E", textAlign: "right" }}>Invalid image URL</p>}
+                {imgErr && (
+                  <p style={{ color: "#FF4E4E", textAlign: "right" }}>
+                    Invalid image URL
+                  </p>
+                )}
                 {/* <Button
                   onClick={submitUrl}
                   disabled={isDisable}
@@ -102,8 +130,8 @@ const TokenIcon = () => {
                   <button onClick={submitUrl} className="headermetaBtn">
                     Submit
                   </button>
-                </div>
-              </form>
+              </div>
+              {/* </form> */}
             </div>
           </div>
         </div>

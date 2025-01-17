@@ -58,15 +58,15 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <p>Validator </p>
           {blockData?.miner || blockData?.block?.miner ? (
             // onClick={() => router.push(`${Routes.Tx_ADDRESS}/${blockData?.miner}`)
-            <span className="hoverTrans">
-              <Link
+            <span className="">
+              {/* <Link
                 className="hoverTrans"
                 href={`${Routes.Tx_ADDRESS}/${
                   blockData?.miner ? blockData?.miner : blockData?.block?.miner
                 }`}
-              >
-                {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
-              </Link>
+              > */}
+              {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
+              {/* </Link> */}
               <CopyText
                 text={
                   blockData?.miner ? blockData?.miner : blockData?.block?.miner
