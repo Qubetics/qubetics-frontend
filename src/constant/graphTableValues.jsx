@@ -1,4 +1,5 @@
 "use-client";
+import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
@@ -9,12 +10,10 @@ import getAddress from "@/utils/getAddress";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
-import Link from "next/link";
-import { HexDEx } from "@/components/logsDetail/HexDEx";
-import { formatValue, Routes, typesOfTransactions } from "./constant";
-import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import Image from "next/image";
+import Link from "next/link";
 import CoinImage from "../assets/img/coin.png";
+import { formatValue, Routes, typesOfTransactions } from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
