@@ -72,7 +72,7 @@ export function getDeviceType() {
 }
 export const addQubetic = async () => {
   const provider = window.ethereum;
-  alert(1);
+
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
@@ -88,7 +88,6 @@ export const addQubetic = async () => {
       }
     }
     if (!provider) {
-      alert(2);
       throw new Error(Messages.Install_Metamask);
     }
 
@@ -96,26 +95,22 @@ export const addQubetic = async () => {
 
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
     if (!provider) {
-      alert(3);
       toast.error(Messages.Install_Metamask);
     } else {
       if (!chainId) {
         throw new Error(Messages.Retrive_Meta_Account);
       }
       if (chainId === ChainIdQubetic) {
-        alert(5);
         toast.success(Messages.Same_Network);
       }
-      alert(4);
+
       try {
-        alert(6);
         await provider.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: ChainIdQubetic }],
         });
         toast.success(Messages.Successfully_Switched);
       } catch (switchError) {
-        alert(7);
         if (switchError.code === 4902) {
           try {
             await provider.request({
@@ -135,8 +130,30 @@ export const addQubetic = async () => {
             });
             toast.success(Messages.Network_Added);
           } catch (err) {
-            alert(8);
             throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
+          }
+        } else {
+          if (deviceType !== "Desktop") {
+            try {
+              await provider.request({
+                method: "wallet_addEthereumChain",
+                params: [
+                  {
+                    chainId: ChainIdQubetic,
+                    chainName: METAMASK_CHAIN_NAME,
+                    rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+                    blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+                    nativeCurrency: {
+                      symbol: EXPLORER_CURRENCY_NAME,
+                      decimals: 18,
+                    },
+                  },
+                ],
+              });
+              toast.success(Messages.Network_Added);
+            } catch (err) {
+              throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
+            }
           }
         }
       }
