@@ -42,15 +42,15 @@ const RecentBlock = ({ data, customClass }, props) => {
       </div>
       <div className="recent validatorAddress">
         <p
-          style={{ cursor: "pointer" }}
+          // style={{ cursor: "pointer" }}
           // onClick={() => router.push(`/address/${data?.miner}`)}
           className="validateSec"
         >
           Validator: &nbsp;
-          <Link className=" hoverTrans" href={`/address/${data?.miner}`}>
-            {data?.miner ? getAddress(data?.miner) : "-"}
-          </Link>
+          {/* <Link className=" hoverTrans" href={`/address/${data?.miner}`}> */}
+          <p>{data?.miner ? getAddress(data?.miner) : "-"}</p>
         </p>
+        {/* </Link> */}
       </div>
     </div>
   );
