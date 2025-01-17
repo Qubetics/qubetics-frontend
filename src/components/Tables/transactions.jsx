@@ -13,13 +13,16 @@ import { useEffect, useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import { set } from "date-fns";
+import { formatMillionNumber } from "@/utils/commonFunctions";
+import { Select, Space } from "antd";
 
-export default function Transactions({ setTxnData, filterVal }) {
+export default function Transactions({ setTxnData }) {
   const { isNetworkChanged } = useGetNetwork();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [pageToSend, setPageToSend] = useState(1);
+  const [txCount, setTxCount] = useState();
   const [nextCursor, setNextCursor] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +33,8 @@ export default function Transactions({ setTxnData, filterVal }) {
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const order = searchParams.get("order") || "desc";
-  
+  const [filterVal, setFilterVal] = useState("desc");
+
   let chainType =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
@@ -40,6 +44,7 @@ export default function Transactions({ setTxnData, filterVal }) {
       let response = await getTransactions(pageid, tableLimit, order);
       if (response?.error === false) {
         setTransactionData(response?.data?.transactions);
+        setTxCount(response?.data?.count);
         setTxnData(response?.data);
         setPreviousCursor(response?.data?.prevCursor);
         setLastPage(response?.data?.lastPage);
@@ -75,17 +80,17 @@ export default function Transactions({ setTxnData, filterVal }) {
     fetchData();
   }, [pageid]);
 
-  // useEffect(() => {
-  //   const newSearchParams = new URLSearchParams(searchParams);
-  //   newSearchParams.set("page", 1);
-  //   newSearchParams.set("id", 1);
-  //   newSearchParams.set("order", filterVal);
-  //   router.push(`?${newSearchParams.toString()}`);
-  //   if (pageid == 1) {
-  //     fetchData();
-  //   }
-  // }, [filterVal]);
-
+  const handleChange = (value) => {
+    setFilterVal(value);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("id", 1);
+    newSearchParams.set("order", value);
+    router.push(`?${newSearchParams.toString()}`);
+    if (pageid == 1) {
+      fetchData();
+    }
+  };
   const handleNext = () => {
     if (page < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -138,6 +143,35 @@ export default function Transactions({ setTxnData, filterVal }) {
 
   return (
     <>
+      <div className="totalTransactions">
+        {txCount && (
+          <>
+            <h2>{`Total of ${formatMillionNumber(
+              Number(txCount)
+            )} transactions`}</h2>
+            <Space wrap>
+              <Select
+                defaultValue="desc"
+                style={{
+                  width: 123,
+                }}
+                onChange={handleChange}
+                className="innerSelect"
+                options={[
+                  {
+                    value: "desc",
+                    label: "Newest",
+                  },
+                  {
+                    value: "asc",
+                    label: "Oldest",
+                  },
+                ]}
+              />
+            </Space>
+          </>
+        )}
+      </div>
       {/* {transactionStatus === InitStatus ||
       transactionStatus === FetchingStatus ? (
         <Loader />

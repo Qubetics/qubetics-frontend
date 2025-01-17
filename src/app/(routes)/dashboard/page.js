@@ -2,19 +2,19 @@
 
 import ChainAnalytics from "@/components/chainAnalytics/ChainAnalytics";
 import ChainAnalyticsGraph from "@/components/chainAnalytics/ChainAnalyticsGraph.jsx";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
 import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
 import RecentBlocks from "@/components/dashboard/RecentBlocks/RecentBlocks";
 import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { graphUrl, InitStatus, Routes } from "@/constant/constant";
+import getStatistics from "@/services/getStatistics";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import FooterLink from "../../../components/footer/FooterLinks";
 import "../../../index.scss";
 import "./dashboard.scss";
-import getStatistics from "@/services/getStatistics";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
@@ -54,6 +54,7 @@ const Page = ({ customClass }) => {
               searchStatus={searchStatus}
               setSerachStatus={setSerachStatus}
             />
+            {/* <FilterResult /> */}
             <h2 className="analytictext">On-Chain Metrics</h2>
             <OnChainMetrics stats={stats} />
           </div>

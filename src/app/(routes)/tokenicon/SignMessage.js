@@ -12,13 +12,11 @@ export const signMessage = async (
 ) => {
   try {
     if (!window.ethereum) throw new Error(Messages.Install_Metamask);
-
     await window.ethereum.request({ method: "eth_requestAccounts" });
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = provider.getSigner();
-    const messageHash = await ethers.utils.hashMessage(contractAdress);
-    const signature = await signer.signMessage(contractAdress);
-
+    const messageHash = await ethers.hashMessage(contractAdress);
+    const signature = await (await signer).signMessage(contractAdress);
     const data = {
       messageHash: messageHash,
       address: contractAdress,

@@ -87,6 +87,13 @@
   }
   .ant-row {
     padding: 20px 0 10px 0;
+    .ant-col {
+      h2 {
+        img {
+          user-select: none;
+        }
+      }
+    }
     a {
       color: #ffffff99;
       @include fluid-type(320px, 1920px, 14px, 14px);

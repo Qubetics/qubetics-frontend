@@ -19,26 +19,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const Transactionsummary = () => {
   const webSocketData = useLatestData();
-  const searchParams = useSearchParams();
-  const router = useRouter();
+
   const { isNetworkChanged } = useGetNetwork();
   const [contractCount, setContractCount] = useState(0);
   const [txnData, setTxnData] = useState({});
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-  const [filterVal, setFilterVal] = useState("desc");
-  const pageid = searchParams.get("id") || 1;
-
-  const handleChange = (value) => {
-    setFilterVal(value);
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("page", 1);
-    newSearchParams.set("id", 1);
-    newSearchParams.set("order", value);
-    router.push(`?${newSearchParams.toString()}`);
-    if (pageid == 1) {
-      fetchData();
-    }
-  };
 
   useEffect(() => {
     if (isNetworkChanged == false) {
@@ -107,37 +92,9 @@ const Transactionsummary = () => {
             ))}
           </div>
         </div>
-        <div className="totalTransactions">
-          {txnData?.count && (
-            <>
-              <h2>{`Total of ${formatMillionNumber(
-                Number(txnData?.count)
-              )} transactions`}</h2>
-              <Space wrap>
-                <Select
-                  defaultValue="desc"
-                  style={{
-                    width: 123,
-                  }}
-                  onChange={handleChange}
-                  className="innerSelect"
-                  options={[
-                    {
-                      value: "desc",
-                      label: "Newest",
-                    },
-                    {
-                      value: "asc",
-                      label: "Oldest",
-                    },
-                  ]}
-                />
-              </Space>
-            </>
-          )}
-        </div>
+
         {/* Transactions Table */}
-        <TransactionsTable setTxnData={setTxnData} filterVal={filterVal} />
+        <TransactionsTable setTxnData={setTxnData} />
       </div>
     </div>
   );

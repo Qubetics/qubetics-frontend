@@ -40,7 +40,11 @@ export default function RootLayout({ children }) {
             <ThemeProvider>
               <LatestDataProvider>
                 <SerachingValueProvider>
-                  <Toaster position="bottom-center" reverseOrder={false} />
+                  <Toaster
+                    containerClassName="break-word-toast"
+                    position="bottom-center"
+                    reverseOrder={false}
+                  />
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>
                       <Suspense fallback={<Loading />}>

@@ -123,38 +123,25 @@ function Header() {
   // }, [chainType]);
 
   useEffect(() => {
-    // Update the route text based on the pathname
-    switch (pathname) {
-      case "/dashboard":
-        setRouteText("Dashboard");
-        break;
-      case "/blocks":
-        setRouteText("Blockchain");
-        break;
-      case "/tx":
-        setRouteText("Blockchain");
-        break;
-      case "/token":
-        setRouteText("Tokens");
-        break;
-      case "/validators":
-        setRouteText("Validators");
-        break;
-      case "/nodes":
-        setRouteText("Nodes");
-        break;
-      case "/contract":
-        setRouteText("Contract");
-        break;
-      case "/contract/verify":
-        setRouteText("Contract");
-        break;
-      case "/faucet":
-        setRouteText("Faucet");
-        break;
-      default:
-        setRouteText("");
-    }
+    const routeMappings = {
+      "/dashboard": "Dashboard",
+      "/blocks": "Blockchain",
+      "/tx": "Blockchain",
+      "/token": "Tokens",
+      "/validators": "Validators",
+      "/nodes": "Nodes",
+      "/contract": "Contract",
+      "/contract/verify": "Contract",
+      "/faucet": "Faucet",
+      "/address": "Blockchain",
+    };
+
+    // Match exact paths or dynamic segments
+    const matchedRoute = Object.keys(routeMappings).find((route) =>
+      pathname.startsWith(route)
+    );
+
+    setRouteText(routeMappings[matchedRoute] || "");
   }, [pathname]);
 
   return (

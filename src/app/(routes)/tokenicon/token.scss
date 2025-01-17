@@ -24,10 +24,10 @@
       }
     }
     &__top {
-      display: flex;
+      // display: flex;
       border: 1px solid #3b393c;
       width: 100%;
-      padding: 40px 55px;
+      padding: 40px;
       border-radius: 20px;
       background-color: #121212;
       @media (max-width: 767px) {
@@ -36,10 +36,15 @@
     }
   }
 }
+
 .tokensubmitbtn {
   display: flex;
   justify-content: center;
   padding: 50px 0 0;
+  button {
+    max-width: 174px;
+    width: 100%;
+  }
 }
 
 .token_btn {

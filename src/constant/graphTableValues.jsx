@@ -1,4 +1,5 @@
 "use-client";
+import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
@@ -10,9 +11,7 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
-import { HexDEx } from "@/components/logsDetail/HexDEx";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
-import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -725,7 +724,7 @@ export const contractTableColumn = (currentChain) => [
             gap: "10px",
           }}
         >
-          {currentChain !== "Native Chain" && text?.iconUrl && (
+          {/* {currentChain !== "Native Chain" && text?.iconUrl && (
             <img
               src={text?.iconUrl}
               alt="icon img"
@@ -736,7 +735,7 @@ export const contractTableColumn = (currentChain) => [
                 objectFit: "cover",
               }}
             />
-          )}
+          )} */}
           <Link href={`/contract/${text?.address}`}>
             {text?.contractName || text?.contractname
               ? capitalizeWord(text?.contractName || text?.contractname)
@@ -1175,9 +1174,7 @@ export const EventsColumn = [
     key: "method",
     render: (text) => (
       <span className="">
-        {text?.method && text?.method !== "N/A"
-          ? text?.method
-          : "-"}
+        {text?.method && text?.method !== "N/A" ? text?.method : "-"}
       </span>
     ),
   },
@@ -1330,6 +1327,22 @@ export const TokenColumn = [
     key: "tokenName",
     render: (text) => (
       <span className="assetnamedetail">
+        {
+          <img
+            src={
+              text?.iconUrl && text?.iconUrl !== ""
+                ? text.iconUrl
+                : "/coinIcon.svg"
+            }
+            alt="icon img"
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        }
         <Link href={`/contract/${text?.contractAddress}`}>
           {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
         </Link>
