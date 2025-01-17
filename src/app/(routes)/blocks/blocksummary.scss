@@ -139,3 +139,41 @@
     }
   }
 }
+.addresspagination {
+  @media (max-width: 575px) {
+    :where(.css-dev-only-do-not-override-77tu7h).ant-tabs .ant-tabs-extra-content {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+    .commontabs .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab {
+      width: unset;
+      min-width: unset;
+      max-width: 200px;
+      width: 100%;
+    }
+    .commontabs .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-active {
+      width: unset;
+      min-width: unset;
+      max-width: 200px;
+      width: 100%;
+    }
+  }
+  .ant-tabs-nav {
+    @media (max-width: 575px) {
+      flex-flow: wrap;
+      gap: 12px;
+    }
+  }
+  .ant-tabs-nav-list {
+    @media (max-width: 575px) {
+      transform: unset !important;
+      width: 100%;
+    }
+  }
+  .ant-tabs-nav-wrap {
+    @media (max-width: 400px) {
+      width: 100%;
+    }
+  }
+}

@@ -82,7 +82,7 @@ const TransactionHistory = (props) => {
           </Space>
         </div>
         {transactionStatus === InitStatus || transactionStatus === FetchingStatus ? (
-          <div className="graphLod">
+          <div className="graphLod dashLoading">
             {" "}
             <GraphLoading />
           </div>

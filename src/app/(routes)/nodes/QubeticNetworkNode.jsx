@@ -47,9 +47,14 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
         <div className="NodePerformance_left">
           <h3>Node Performance</h3>
           <div className="NodePerformance_left_card">
-            <Row gutter={[20, 20]}>
+            <Row
+              gutter={[
+                { xs: 12, sm: 20 },
+                { xs: 12, sm: 20 },
+              ]}
+            >
               {nodePerformanceData.map((item, index) => (
-                <Col key={index} xs={24} sm={12} md={12} lg={12}>
+                <Col key={index} xs={12} sm={12} md={12} lg={12}>
                   <div className="innerNode">
                     <h4>{item.value}</h4>
                     <Tooltip color="rgb(49 52 56)" title={item.content}>
