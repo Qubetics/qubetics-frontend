@@ -89,8 +89,16 @@ const ContractDetail = () => {
       text: "Symbol",
       heading: contractDetail?.symbol ? contractDetail?.symbol : "-",
       img: (
-        <Image
-          src={contractDetail?.iconUrl || CoinImg}
+        <img
+          style={{
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
+          src={
+            contractDetail?.ContractVerification
+              ? contractDetail?.ContractVerification?.iconUrl
+              : CoinImg
+          }
           className="welcomeLogo"
           height={60}
           width={60}

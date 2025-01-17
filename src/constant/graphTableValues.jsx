@@ -1330,8 +1330,10 @@ export const TokenColumn = [
     render: (text) => (
       <span className="assetnamedetail">
         {
-          <Image
-            src={text?.iconUrl || CoinImage}
+          <img
+            src={
+              text?.iconUrl && text?.iconUrl !== "" ? text?.iconUrl : CoinImage
+            }
             alt="icon img"
             style={{
               width: "40px",
