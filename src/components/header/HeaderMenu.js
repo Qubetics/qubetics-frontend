@@ -3,15 +3,10 @@ import {
   contractHeaderFunction,
   defaultChainOptions,
   EXPLORER_CHAIN_NAME,
-  EXPLORER_CURRENCY_NAME,
   EXPLORER_META_NETWORK_CHAIN_ID,
-  EXPLORER_METAMASK_NAVIGATION,
-  EXPLORER_METAMASK_NETWORK_URL,
-  Messages,
-  METAMASK_CHAIN_NAME,
   METAMASK_DAPP_URL,
   Routes,
-  SHOW_FAUCET,
+  SHOW_FAUCET
 } from "@/constant/constant";
 import metamaskSDK from "@web3-onboard/metamask";
 import { init, useConnectWallet } from "@web3-onboard/react";
@@ -21,11 +16,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import CheckIcon from "../../../public/SvgIcons";
+import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
-import { addQubetic, getDeviceType } from "../AddQubeticsNetwork/addQubetics";
 const metamaskSDKWallet = metamaskSDK({
   options: {
     injectProvider: true,

@@ -87,7 +87,7 @@ function page() {
           </Tooltip>
         </>
       ),
-      balance: validatorData.count ? validatorData?.count : "0",
+      balance: validatorData?.count ? validatorData?.count : "0",
       img: <Totalvalidators />,
       contract: true,
     },
