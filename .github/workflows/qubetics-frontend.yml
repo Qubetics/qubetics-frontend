@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUAWEI_IMAGE: 
+      HUAWEI_IMAGE: testnet-explorer-frontend
       ARGOCD_REPO: ${{ secrets.ARGOCD_REPO }}
       DEPLOYMENT_PATH: ${{ secrets.DEPLOYMENT_PATH }}
       DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
