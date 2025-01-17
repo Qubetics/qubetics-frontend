@@ -70,7 +70,8 @@ export function getDeviceType() {
     return "Desktop";
   }
 }
-export const addQubetic = async (provider) => {
+export const addQubetic = async () => {
+  const provider = window.ethereum;
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
@@ -90,7 +91,7 @@ export const addQubetic = async (provider) => {
     }
 
     const chainId = await provider.request({ method: "eth_chainId" });
-
+  
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
 
     if (!provider) {
