@@ -253,11 +253,36 @@ const FilterResult = () => {
         <div className="searchbar_input">
           <input
             placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name"
-            value={searchValue}
-            onChange={(e) => handleSearchChange(e)}
-            onKeyUp={(e) => handleEnterClick(e)}
-            onFocus={onFocus}
-            onBlur={onBlur}
+            onFocus={() => {
+              window.removeEventListener("scroll", preventOuterScroll);
+              searchText.length >= 1 && setOpen(2);
+            }}
+            inputRef={inputRef}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setOpen(1);
+
+              if (e.key === "Enter") {
+                // handleKeyEnter(searchResult);
+                handleKeyEnter(e);
+                // setSearchResult(null);
+              }
+
+              // make it navigatable on arrow down & arrow up
+              if (
+                ["ArrowDown", "ArrowUp"].includes(e.key) &&
+                dynamicTab?.length > 0
+              )
+                wrapperRef.current?.focus();
+
+              e.stopPropagation();
+            }}
+            onChange={(e) => {
+              setOpen(2);
+              setSearchText(e.target.value);
+              setIsLoading(!!e.target.value);
+            }}
+            value={searchText}
+            isLoading={isLoading}
           />
           <Searchicon />
         </div>

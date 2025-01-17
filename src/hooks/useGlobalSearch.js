@@ -2,7 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
-import useToggleChainContext from "./useToggleChainContext";
+import getSearchingValue from "@/services/search";
+// import useToggleChainContext from "./useToggleChainContext";
 
 export default function useGlobalSearch(page = 1) {
   const [searchText, setSearchText] = useState("");
@@ -12,8 +13,12 @@ export default function useGlobalSearch(page = 1) {
 
   const [dynamicTab, setDynamicTab] = useState([]);
   const router = useRouter();
-  const { isEVM } = useToggleChainContext();
-
+  // const { isEVM } = useToggleChainContext();
+  let chain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
+  if (chain === null || chain === undefined) {
+    chain = "EVM Chain";
+  }
   const getType = (data) => {
     return data?.transaction
       ? ["transaction"]
@@ -82,14 +87,14 @@ export default function useGlobalSearch(page = 1) {
       const response = await getSearchingValue(debounce);
       if (response) {
         setDynamicTab(
-          isEVM
+          chain === "EVM Chain"
             ? response?.data?.tabs || getType(response?.data)
             : response?.data
             ? getType(response?.data)
             : []
         );
         setSearchResult(
-          isEVM
+          chain === "EVM Chain"
             ? response?.data?.results
               ? response?.data
               : getResponse(response?.data)
@@ -110,7 +115,7 @@ export default function useGlobalSearch(page = 1) {
     if (debounce) {
       getSearchResult();
     }
-  }, [debounce, isEVM]);
+  }, [debounce]);
 
   // useEffect(() => {
   //   searchText && searchText.length >= 1 && getSearchResult();
