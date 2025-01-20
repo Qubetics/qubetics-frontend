@@ -9,7 +9,7 @@ jobs:
   dev_deploy_explorer_frontend:
     uses: ./.github/workflows/qubetics-frontend.yml
     with:
-      SWR_REPOSITORY: testnet-qubetics
+      SWR_REPOSITORY: dev-explorer-frontend
       ARGOCD_BRANCH: dev
       HUAWEI_REGION: 'ap-southeast-3'
       ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
