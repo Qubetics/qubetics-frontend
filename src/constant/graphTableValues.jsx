@@ -696,7 +696,7 @@ export const nodesColumns = [
           className="iconandlink"
         >
           {text.peerId ? text?.peerId : "-"}
-          <CopyText text={text?.peerId} />
+          {/* <CopyText text={text?.peerId} /> */}
         </span>
       );
     },
@@ -1071,6 +1071,21 @@ export const HolderColumn = [
     render: (text) => <span className="">{text?.rank ? text?.rank : "-"}</span>,
   },
   {
+    id: "token",
+    title: "Token Name",
+    key: "token",
+    render: (text) => (
+      <span className="">{text?.tokenName ? text?.tokenName : "-"}</span>
+    ),
+  },
+  {
+    id: "type",
+    title: "Type",
+    key: "type",
+    render: (text) => <span className="">{text?.type ? text?.type : "-"}</span>,
+  },
+
+  {
     id: "address",
     title: "Address",
     key: "address",
@@ -1324,7 +1339,7 @@ export const EventsColumn = [
 export const TokenColumn = [
   {
     id: "name",
-    title: "Name",
+    title: "Token Name",
     key: "tokenName",
     render: (text) => (
       <span className="assetnamedetail">

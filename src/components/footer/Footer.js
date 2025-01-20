@@ -1,9 +1,19 @@
+"use client";
 import { Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CmcIcon, Discord, Instagram, Telegram, TikTok, Twitter, YoutubeIcon } from "../../../public/SvgIcons";
+import {
+  CmcIcon,
+  Discord,
+  Instagram,
+  Telegram,
+  TikTok,
+  Twitter,
+  YoutubeIcon,
+} from "../../../public/SvgIcons";
 import "./Footer.scss";
+import { useEffect, useState } from "react";
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -11,7 +21,14 @@ const Footer = () => {
       behavior: "smooth",
     });
   };
+  const [origin, setOrigin] = useState(""); // State for storing origin
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin.split("//")[1].split("-")[0]); // Set origin once client-side
+    }
+  }, []);
 
   return (
     <section
@@ -26,7 +43,10 @@ const Footer = () => {
               {" "}
               <Image src="/NewLogo.svg" height={50} width={177} alt="logo" />
             </h2>
-            <p>Build without limits. Qubetics an interoperable ecosystem uniting all leading networks.</p>
+            <p>
+              Build without limits. Qubetics an interoperable ecosystem uniting
+              all leading networks.
+            </p>
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>Quick Links</h3>
@@ -48,7 +68,10 @@ const Footer = () => {
           </Col>
           <Col xs={24} sm={12} lg={4}>
             <h3>About Us</h3>
-            <Link href="https://www.qubetics.com/privacy-policy" target="_blank">
+            <Link
+              href="https://www.qubetics.com/privacy-policy"
+              target="_blank"
+            >
               Privacy Policy
             </Link>
             <Link href="https://www.qubetics.com/terms-of-use" target="__blank">
@@ -58,16 +81,30 @@ const Footer = () => {
 
           <Col xs={24} sm={12} lg={4}>
             <h3>Product & Services</h3>
-            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href={`https://${origin}-validator.qubetics.work/login`}
+              target=""
+            >
               Qubetics Validator App
             </Link>
-            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href={`https://${origin}-delegator.qubetics.work/login`}
+              target=""
+            >
               Qubetics Delegator App
             </Link>
-            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics DEX
             </Link>
-            <Link href=" " target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href=" "
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics App
             </Link>
           </Col>
@@ -80,14 +117,32 @@ const Footer = () => {
             >
               Official Web
             </Link>
-            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics Network Documentation
             </Link>
-            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics Documentation
             </Link>
-            <Link href="" target="" style={{ pointerEvents: "none", color: "gray" }}>
+            <Link
+              href=""
+              target=""
+              style={{ pointerEvents: "none", color: "gray" }}
+            >
               Qubetics IDE
+            </Link>
+            <Link
+              href={`${origin}-basic-qube-code.qubetics.work`}
+              target="_blank"
+            >
+              QubeQode
             </Link>
           </Col>
         </Row>
@@ -115,7 +170,10 @@ const Footer = () => {
             <Link href="https://www.tiktok.com/@qubetics" target="_blank">
               <TikTok />
             </Link>
-            <Link href="https://coinmarketcap.com/currencies/qubetics/" target="_blank">
+            <Link
+              href="https://coinmarketcap.com/currencies/qubetics/"
+              target="_blank"
+            >
               <CmcIcon />
             </Link>
           </div>

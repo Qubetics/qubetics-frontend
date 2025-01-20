@@ -158,7 +158,10 @@ function page() {
           setSerachStatus={setSerachStatus}
         /> */}
         <FilterResult />
-        <Heading heading="Contracts - EVM Chain" />
+        <Heading
+          heading="Tokens (ERC-20)
+"
+        />
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
             <CardsOnchain
@@ -173,7 +176,7 @@ function page() {
           ))}
         </div>
         <div className="tokenInformation">
-          <h2>Tokens List</h2>
+          <h2>Token Tracker</h2>
           <InternalSearch
             onChange={(e) => {
               setSearchText(e.target.value);

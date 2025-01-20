@@ -2640,3 +2640,19 @@ input:-webkit-autofill:active {
   word-break: break-word;
   white-space: normal;
 }
+.holderTable {
+  thead {
+    tr {
+      th {
+        width: 16% !important;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        width: 16% !important;
+      }
+    }
+  }
+}

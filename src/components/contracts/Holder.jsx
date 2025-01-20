@@ -42,6 +42,8 @@ const Holder = ({ hash }) => {
       let newDataSet = tokenHolders?.map((item, index) => {
         return {
           rank: index + 1,
+          tokenName: tokenDetails?.tokenName,
+          type: tokenDetails?.type,
           address: item?.address,
           tokenBalance: noExponential(
             Number(item?.tokenBalance) /

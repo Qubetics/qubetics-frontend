@@ -1,9 +1,10 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
+import InternalSearch from "@/components/InternalSearch/InternalSearch";
 import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
@@ -13,13 +14,11 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { contractTableColumn } from "@/constant/graphTableValues";
+import useDebounce from "@/hooks/useDebounce";
 import getAllContracts from "@/services/getAllContracts";
+import getInternalSearch from "@/services/getInternalSearchData";
 import { useEffect, useState } from "react";
 import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
-import InternalSearch from "@/components/InternalSearch/InternalSearch";
-import getInternalSearch from "@/services/getInternalSearchData";
-import useDebounce from "@/hooks/useDebounce";
-import FilterResult from "@/components/FilterResult/FilterResult";
 
 const Contract = () => {
   const { isNetworkChanged } = useGetNetwork();
@@ -128,7 +127,9 @@ const Contract = () => {
           setSerachStatus={setSerachStatus}
         /> */}
         <FilterResult />
-        <Heading heading="Contracts" />
+        <Heading
+          heading="Contracts - EVM Chain"
+        />
         <div className="contractCard ">
           <CardsOnchain
             text="Total Contracts"
@@ -152,7 +153,7 @@ const Contract = () => {
           />
         </div>
         <div className="tokenInformation">
-          <h2>Token Information</h2>
+          <h2>Contract Overview</h2>
           <InternalSearch
             onChange={(e) => {
               setSearchText(e.target.value);

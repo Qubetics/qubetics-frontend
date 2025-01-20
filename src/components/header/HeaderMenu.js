@@ -497,10 +497,10 @@ function HeaderMenu({ onCloseDrawer }) {
                   value: "EVM Chain",
                   label: "EVM Chain",
                 },
-                {
-                  value: "Native Chain",
-                  label: "Native Chain",
-                },
+                // {
+                //   value: "Native Chain",
+                //   label: "Native Chain",
+                // },
               ]}
             />
             {/* </div> */}

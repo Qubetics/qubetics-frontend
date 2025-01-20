@@ -7,15 +7,15 @@ import ContractDetails from "@/components/contracts/ContractDetails";
 import ContractTransactions from "@/components/contracts/ContractTransactions";
 import Events from "@/components/contracts/Events";
 import Holder from "@/components/contracts/Holder";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
+  contractTypes,
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
-  contractTypes,
 } from "@/constant/constant";
 import getContractDetails from "@/services/getContractDetails";
 import {
@@ -27,9 +27,8 @@ import { Tabs } from "antd";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Tokenicons } from "../../../../../public/SvgIcons";
 import Page from "../../notfound/page";
-import { Tokenicons, TokenUri } from "../../../../../public/SvgIcons";
-import FilterResult from "@/components/FilterResult/FilterResult";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
@@ -105,7 +104,9 @@ const ContractDetail = () => {
           />
         ) : (
           <div>
-            <div className="imgIcon">{<Tokenicons width={55} height={55} />}</div>
+            <div className="imgIcon">
+              {<Tokenicons width={55} height={55} />}
+            </div>
           </div>
         ),
     },
@@ -145,6 +146,7 @@ const ContractDetail = () => {
       ),
     },
   ];
+ 
 
   const tabItems = [
     {
