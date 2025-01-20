@@ -3,11 +3,11 @@ name: '[dev] Deploy explorer frontend'
 on: 
   push:
     branches: 
-      - v1-stable
+      - dev
 
 jobs:
   dev_deploy_explorer_frontend:
-    uses: ./.github/workflows/_deploy_explorer_frontend.yml
+    uses: ./.github/workflows/qubetics-frontend.yml
     with:
       SWR_REPOSITORY: testnet-qubetics
       ARGOCD_BRANCH: dev
