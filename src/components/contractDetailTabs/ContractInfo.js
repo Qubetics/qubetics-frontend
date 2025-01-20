@@ -71,15 +71,13 @@ function ContractInfo() {
       {!connectAddress ? (
         <div className="disconnect">
           <p>Disconnected </p>
-          <Button
-            className="commoncontactbtn"
-            type="primary"
-            style={{ height: 40 }}
+          <button
+            className="headermetaBtn"
             // className="bluebtn"
             onClick={connectModal}
           >
             Connect Wallet
-          </Button>
+          </button>
         </div>
       ) : (
         <>
@@ -89,7 +87,7 @@ function ContractInfo() {
               <span> {getAddress(connectAddress)}</span>&nbsp;
               <CopyText text={connectAddress} />
             </p>
-            <Button onClick={() => setConnectAddress("")} className="commoncontactbtn">
+            <Button onClick={() => setConnectAddress("")} className="commoncontactbtn ">
               {" "}
               Disconnect
             </Button>

@@ -1,0 +1,10 @@
+@import "../../_var.scss";
+@import "../../_mixins.scss";
+.analytictoken {
+  h3 {
+    color: $white;
+    font-weight: 600;
+    @include fluid-type(320px, 1920px, 18px, 24px);
+    padding-top: 20px;
+  }
+}
