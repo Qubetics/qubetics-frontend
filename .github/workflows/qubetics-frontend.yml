@@ -2,7 +2,7 @@ name: Explorer Frontend K8s
 on:
   workflow_call:
     inputs:
-      SWR_REPOSITORY:
+      SWR_ORGANIZATION:
         description: 'The Huawei SWR repository name used for pushing images to the Dev or production SWR'
         required: true
         type: string
@@ -75,14 +75,14 @@ jobs:
           - name: Build, tag, and push docker image to Amazon ECR
             env:
               REGISTRY: swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com
-              SWR_REPOSITORY: ${{ inputs.SWR_REPOSITORY }}
+              SWR_ORGANIZATION: ${{ inputs.SWR_ORGANIZATION }}
               IMAGE_TAG: ${{ github.sha  }}
               HUAWEI_IMAGE: ${{ inputs.HUAWEI_IMAGE }}
             run: |
               echo "${{ inputs.ENV }}" >> .env
               cat .env
-              docker build --no-cache -t $REGISTRY/$SWR_REPOSITORY/$HUAWEI_IMAGE:${{ github.run_number }} .
-              docker push $REGISTRY/$SWR_REPOSITORY/$HUAWEI_IMAGE:${{ github.run_number }} .   
+              docker build --no-cache -t $REGISTRY/$SWR_ORGANIZATION/$HUAWEI_IMAGE:${{ github.run_number }} .
+              docker push $REGISTRY/$SWR_ORGANIZATION/$HUAWEI_IMAGE:${{ github.run_number }} .   
 
 ################         
 # Update argocd
@@ -94,13 +94,13 @@ jobs:
               ref: ${{ inputs.ARGOCD_BRANCH }}
               ssh-key: ${{ secrets.GIT_SSH_KEY }}
             env:
-              SWR_REPOSITORY: ${{ inputs.SWR_REPOSITORY }}
+              SWR_ORGANIZATION: ${{ inputs.SWR_ORGANIZATION }}
               HUAWEI_IMAGE: ${{ inputs.HUAWEI_IMAGE }}
               DEPLOYMENT_PATH: ${{ inputs.DEPLOYMENT_PATH }}
           - run: |
               git config user.name github-actions
               git config user.email github-actions@github.com 
-              sed -i "s|\(image: \).*|\1swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_REPOSITORY }}/$HUAWEI_IMAGE:${{ github.run_number }}|" $DEPLOYMENT_PATH
+              sed -i "s|\(image: \).*|\1swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_ORGANIZATION }}/$HUAWEI_IMAGE:${{ github.run_number }}|" $DEPLOYMENT_PATH
               git add .
-              git commit -m "Update image to swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_REPOSITORY }}/$HUAWEI_IMAGE:${{ github.run_number }}"
+              git commit -m "Update image to swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_ORGANIZATION }}/$HUAWEI_IMAGE:${{ github.run_number }}"
               git push origin
