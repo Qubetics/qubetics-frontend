@@ -26,7 +26,11 @@
       max-width: 590px;
     }
   }
-
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
   &__results {
     position: absolute;
     top: 86px;
@@ -110,7 +114,6 @@
 
   &__section {
     &-title {
-      padding: 18px 30px;
       font-size: 16px;
       font-weight: 600;
       color: #fff;
@@ -231,10 +234,10 @@
   padding: 3px 5px 0 5px;
 }
 .blockdataItems {
-  display: flex;
+  // display: flex;
+  padding: 10px;
   white-space: normal;
   word-break: break-word;
-  padding: 15px 30px;
   color: #fff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1490196078);
   gap: 13px;

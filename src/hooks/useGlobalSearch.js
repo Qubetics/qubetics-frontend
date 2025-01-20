@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
-import getSearchingValue from "@/services/search";
+import getSearchingValue from "@/services/getGlobalSearch";
 // import useToggleChainContext from "./useToggleChainContext";
 
 export default function useGlobalSearch(page = 1) {
@@ -112,6 +112,7 @@ export default function useGlobalSearch(page = 1) {
   }
 
   useEffect(() => {
+
     if (debounce) {
       getSearchResult();
     }

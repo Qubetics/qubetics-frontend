@@ -12,6 +12,9 @@ import {
   NavigateUp,
 } from "../../../public/SvgIcons";
 import useGlobalSearch from "@/hooks/useGlobalSearch";
+import Link from "next/link";
+import useOnClickOutside from "@/hooks/useoutsideClick";
+import { firstCapitalLetter } from "@/constant/constant";
 
 const FilterResult = () => {
   const {
@@ -24,6 +27,7 @@ const FilterResult = () => {
     setDynamicTab,
     setSearchResult,
   } = useGlobalSearch();
+
   const tabs = dynamicTab || [];
   const inputRef = useRef();
   const wrapperRef = useRef();
@@ -37,7 +41,7 @@ const FilterResult = () => {
   const [selectedIndex, setSelectedIndex] = useState();
   const router = useRouter();
 
-  // useOnClickOutside(wrapperRef, () => setOpen(1));
+  useOnClickOutside(wrapperRef, () => setOpen(1));
 
   const setCustomRef = (key, element) => {
     if (!customRef.current) customRef.current = {};
@@ -54,9 +58,9 @@ const FilterResult = () => {
     } else setOpen(1);
   }, [dynamicTab]);
 
-  // useEffect(() => {
-  //   !searchText && setDynamicTab([]);
-  // }, [searchText]);
+  useEffect(() => {
+    !searchText && setDynamicTab([]);
+  }, [searchText]);
 
   useEffect(() => {
     const observerOptions = {
@@ -72,7 +76,6 @@ const FilterResult = () => {
         }
       });
     }, observerOptions);
-
     dynamicTab?.forEach((tab) => {
       const sectionElement = customRef.current[tab];
       if (sectionElement) observer.observe(sectionElement);
@@ -179,6 +182,7 @@ const FilterResult = () => {
   };
   // const handleKeyEnter = (searchData: any) => {
   const handleKeyEnter = (e, selectedAddress) => {
+    // e.stopPropagation();
     if (!selectedAddress) {
       if (!searchText) return;
       if (isLoading) return;
@@ -197,11 +201,11 @@ const FilterResult = () => {
         case "block":
           return router.push(`/block/${redirectAddress}`);
         case "contract":
-          return router.push(`/contract/evm/${redirectAddress}`);
+          return router.push(`/contract/${redirectAddress}`);
         case "tokens":
-          return router.push(`/contract/evm/${redirectAddress}`);
+          return router.push(`/contract/${redirectAddress}`);
         case "contracts":
-          return router.push(`/contract/evm/${redirectAddress}`);
+          return router.push(`/contract/${redirectAddress}`);
         case "transactions":
           return router.push(`/address/${redirectAddress}`);
         case "account":
@@ -212,16 +216,16 @@ const FilterResult = () => {
     } else {
       switch (activeTab) {
         case "transaction":
-          if (isEVM) return `/tx/${selectedAddress}`;
-          return `/extrinsic/${selectedAddress}`;
+          return `/tx/${selectedAddress}`;
+
         case "block":
           return `/block/${selectedAddress}`;
         case "contract":
-          return `/contract/evm/${selectedAddress}`;
+          return `/contract/${selectedAddress}`;
         case "tokens":
-          return `/contract/evm/${selectedAddress}`;
+          return `/contract/${selectedAddress}`;
         case "contracts":
-          return `/contract/evm/${selectedAddress}`;
+          return `/contract/${selectedAddress}`;
         case "transactions":
           return `/address/${selectedAddress}`;
         case "account":
@@ -289,7 +293,12 @@ const FilterResult = () => {
       </div>
       {/* <input type="text" class="filter-result__input" placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name" /> */}
       {open === 2 && (
-        <div class="filter-result__results" tabindex="0">
+        <div
+          ref={wrapperRef}
+          onKeyDown={handleKeyDown}
+          className="filter-result__results"
+          tabindex="0"
+        >
           <div class="filter-result__tabs">
             {dynamicTab?.length > 0 &&
               dynamicTab?.map((elem) => (
@@ -302,19 +311,27 @@ const FilterResult = () => {
                   }`}
                   onClick={() => handleToggle(elem)}
                 >
-                  {elem}
+                  {firstCapitalLetter(elem)}
                 </button>
               ))}
           </div>
 
           <div class="filter-result__divider"></div>
 
-          <div class="filter-result__container">
+          <div ref={containerRef} class="filter-result__container">
             <div class="filter-result__container-inner">
-              <section class="filter-result__section">
-                <div class="filter-result__section-title">Section Title</div>
-
-                {/* <ul>
+              {dynamicTab?.length > 0 &&
+                dynamicTab?.map((item) => (
+                  <section
+                    key={item}
+                    id={item}
+                    ref={(ele) => setCustomRef(item, ele)}
+                    class="filter-result__section"
+                  >
+                    <div class="filter-result__section-title">
+                      {firstCapitalLetter(item)}
+                    </div>
+                    {/* <ul>
                 <li class="filter-result__item filter-result__item--selected">
                   <a href="#" class="filter-result__item-link">
                     <img src="logo.png" alt="Logo" height="38" />
@@ -329,14 +346,71 @@ const FilterResult = () => {
                   <div class="filter-result__divider"></div>
                 </li>
               </ul> */}
-                <div className="blockdataItems">
-                  <BlockIcon />
-                  <p>
-                    {" "}
-                    Mainnet Test<span>0x545b794a9feb9000094f63dc6f64e </span>
-                  </p>
-                </div>
-              </section>
+                    {searchResult &&
+                      searchResult?.results?.[item]?.map((items, id) => (
+                        <li
+                          key={`${items.address}-${id}`}
+                          className={`filter-result__item ${
+                            selectedIndex !== null &&
+                            selectedIndex === id &&
+                            activeTab === items
+                              ? "bg-light-highlight dark:bg-dark-highlight"
+                              : ""
+                          }`}
+                        >
+                          <div className="">
+                            <Link
+                              href={
+                                items?.address || items?.contractAddress
+                                  ? (items?.address ||
+                                      items?.contractAddress) &&
+                                    handleKeyEnter(
+                                      undefined,
+                                      items?.address || items?.contractAddress
+                                    )
+                                  : ""
+                              }
+                              className="hovertrans"
+                              // onClick={() => setOpen(1)}
+                            >
+                              <div>
+                                <BlockIcon />
+                              </div>
+                              <div className="blockdataItems">
+                                {(items.name || items?.tokenName) && (
+                                  <p>
+                                    {items?.tokenName} (
+                                    {items.symbol || items?.tokenSymbol})
+                                    <span>{items.price}</span>
+                                  </p>
+                                )}
+                                <p>
+                                  {
+                                    // isMobile
+                                    //   ? formatAddress(items.address)
+                                    //   :
+                                    items.address || items?.contractAddress
+                                  }
+                                </p>
+                              </div>
+                            </Link>
+                          </div>
+                          {id !== searchResult?.results[item].length - 1 && (
+                            <div class="filter-result__divider"></div>
+                          )}
+                        </li>
+
+                        // <div className="blockdataItems">
+                        //   <BlockIcon />
+                        //   <p>
+                        //     {" "}
+                        //     Mainnet Test
+                        //     <span>0x545b794a9feb9000094f63dc6f64e </span>
+                        //   </p>
+                        // </div>
+                      ))}
+                  </section>
+                ))}
             </div>
           </div>
 
