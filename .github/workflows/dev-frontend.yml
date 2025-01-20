@@ -72,7 +72,7 @@ jobs:
 #############          
 # Build Image
 #############
-          - name: Build, tag, and push docker image to Amazon ECR
+          - name: Build, tag, and push docker image to Huawei SWR
             env:
               REGISTRY: swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com
               SWR_ORGANIZATION: ${{ inputs.SWR_ORGANIZATION }}
