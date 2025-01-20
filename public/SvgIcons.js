@@ -1526,6 +1526,48 @@ export const HamburgerIcon = () => {
     </svg>
   );
 };
+export const NavigateUp = () => {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8.25016 20.1663H13.7502C18.3335 20.1663 20.1668 18.333 20.1668 13.7497V8.24967C20.1668 3.66634 18.3335 1.83301 13.7502 1.83301H8.25016C3.66683 1.83301 1.8335 3.66634 1.8335 8.24967V13.7497C1.8335 18.333 3.66683 20.1663 8.25016 20.1663Z"
+        stroke="gray"
+        stroke-width="1.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+      <path d="M7.76416 12.338L11 9.11133L14.2358 12.338" stroke="gray" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  );
+};
+export const NavigateDown = () => {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8.25016 20.1663H13.7502C18.3335 20.1663 20.1668 18.333 20.1668 13.7497V8.24967C20.1668 3.66634 18.3335 1.83301 13.7502 1.83301H8.25016C3.66683 1.83301 1.8335 3.66634 1.8335 8.24967V13.7497C1.8335 18.333 3.66683 20.1663 8.25016 20.1663Z"
+        stroke="gray"
+        stroke-width="1.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+      <path d="M7.76416 9.75293L11 12.9796L14.2358 9.75293" stroke="gray" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  );
+};
+export const EnterKeyIcon = () => {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g id="enter-key 1">
+        <path id="Vector" d="M14.4375 13.125H3.5625C3.252 13.125 3 12.873 3 12.5625C3 12.252 3.252 12 3.5625 12H13.875V3.5625C13.875 3.252 14.127 3 14.4375 3C14.748 3 15 3.252 15 3.5625V12.5625C15 12.873 14.748 13.125 14.4375 13.125Z" fill="gray"></path>
+        <path
+          id="Vector_2"
+          d="M6.56231 16.1246C6.41831 16.1246 6.27431 16.0698 6.16481 15.9596L3.16481 12.9596C2.94506 12.7398 2.94506 12.3836 3.16481 12.1638L6.16481 9.16384C6.38456 8.94409 6.74081 8.94409 6.96056 9.16384C7.18031 9.38359 7.18031 9.73984 6.96056 9.95959L4.35806 12.5621L6.96056 15.1646C7.18031 15.3843 7.18031 15.7406 6.96056 15.9603C6.85031 16.0698 6.70631 16.1246 6.56231 16.1246Z"
+          fill="gray"
+        ></path>
+      </g>
+    </svg>
+  );
+};
 export const RoundArrow = () => {
   return (
     <svg

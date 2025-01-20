@@ -29,14 +29,19 @@
 
   &__results {
     position: absolute;
-    top: 46px;
+    top: 86px;
     width: 100%;
     margin-top: 0.5rem;
-    background: var(--light-module);
+    background: #19191a;
     border: 1px solid var(--light-highlight);
     border-radius: 20px;
     z-index: 50;
+    box-shadow: 0 -2px 9px #80808075;
+
     backdrop-filter: blur(10px);
+    @media (max-width: 575px) {
+      top: 51px;
+    }
 
     .dark & {
       background: var(--dark-module);
@@ -53,6 +58,10 @@
     align-items: center;
     gap: 0.5rem;
     padding: 16px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1490196078);
+    @media (max-width: 575px) {
+      padding: 15px;
+    }
 
     &-button {
       padding: 12px 18px;
@@ -91,7 +100,7 @@
   }
 
   &__container {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 400px;
 
     &-inner {
@@ -104,8 +113,10 @@
       padding: 18px 30px;
       font-size: 16px;
       font-weight: 600;
-      color: var(--light-mainTxt);
-
+      color: #fff;
+      @media (max-width: 575px) {
+        padding: 15px;
+      }
       .dark & {
         color: var(--dark-mainTxt);
       }
@@ -126,12 +137,18 @@
       align-items: center;
       gap: 0.5rem;
       padding: 12px 30px;
+      img {
+        display: flex;
+        align-items: center;
+      }
     }
 
     &-content {
       display: flex;
-      flex-direction: column;
+      // flex-direction: column;
       gap: 0.25rem;
+      align-items: center;
+      padding-top: 1px;
     }
 
     &-title {
@@ -163,7 +180,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 30px;
-
+    @media (max-width: 575px) {
+      padding: 15px;
+    }
     &-group {
       display: flex;
       align-items: center;
@@ -173,7 +192,10 @@
     &-text {
       font-size: 14px;
       font-weight: 500;
-      color: var(--light-mainTxt);
+      color: #fff;
+      display: flex;
+      gap: 10px;
+      align-items: center;
 
       .dark & {
         color: var(--dark-mainTxt);
@@ -192,12 +214,41 @@
         width: 36px;
         height: 22px;
         font-size: 11px;
+        color: gray;
+        border: 1px solid rgba(255, 255, 255, 0.1490196078);
       }
 
       &--enter {
         width: 25px;
         height: 22px;
       }
+    }
+  }
+}
+.enterkeyIcon {
+  border: 1px solid rgba(255, 255, 255, 0.1490196078);
+  border-radius: 5px;
+  padding: 3px 5px 0 5px;
+}
+.blockdataItems {
+  display: flex;
+  white-space: normal;
+  word-break: break-word;
+  padding: 15px 30px;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1490196078);
+  gap: 13px;
+  &:last-child {
+    border-bottom: 0;
+  }
+  @media (max-width: 575px) {
+    padding: 10px 15px;
+  }
+  p {
+    display: flex;
+    flex-direction: column;
+    span {
+      color: gray;
     }
   }
 }
