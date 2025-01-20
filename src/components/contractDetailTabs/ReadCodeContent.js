@@ -102,8 +102,7 @@ function ReadCodeContent({ abiData, hash }) {
         ...inputFields,
         <span className="buttonText" key={`${index}-button`}>
           <Button
-            type="primary"
-            className="bluebtn"
+            // className="bluebtn"
             style={{ width: 111 }}
             onClick={() => {
               validateInputs(data?.name);

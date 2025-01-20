@@ -57,10 +57,7 @@ function WriteContent({ abiData, hash }) {
     const modifiedObj = {};
     inputs.forEach((input) => {
       if (input.type === "tuple") {
-        modifiedObj[input.name] = sortAccordingToInputs(
-          input.components,
-          writeObj[input.name]
-        );
+        modifiedObj[input.name] = sortAccordingToInputs(input.components, writeObj[input.name]);
       } else {
         modifiedObj[input.name] = writeObj[input.name];
       }
@@ -103,8 +100,7 @@ function WriteContent({ abiData, hash }) {
     } catch (error) {
       console.error("Error transferring tokens:", error);
       setIsLoading(false);
-      const errorMessage =
-        error && error.message ? error.message : String(error);
+      const errorMessage = error && error.message ? error.message : String(error);
       setWriteError(errorMessage);
     }
   };
@@ -144,25 +140,13 @@ function WriteContent({ abiData, hash }) {
               placeholder={input.type}
               name={`${prefix}${input.name}`}
               value={inputData[`${prefix}${input.name}`] || ""}
-              onChange={(value) =>
-                handleChange(`${prefix}${input.name}`, value)
-              }
+              onChange={(value) => handleChange(`${prefix}${input.name}`, value)}
               runsCheck={undefined}
               fieldType={input.type}
             />
           </span>
-          {inputErrors[`${prefix}${input.name}`] && (
-            <p style={{ color: "red" }}>
-              {inputErrors[`${prefix}${input.name}`]}
-            </p>
-          )}
-          {input.type === "tuple" &&
-            input.components &&
-            input.components.length > 0 && (
-              <div style={{ marginLeft: "20px" }}>
-                {renderInputFields(input.components, `${prefix}${input.name}.`)}
-              </div>
-            )}
+          {inputErrors[`${prefix}${input.name}`] && <p style={{ color: "red" }}>{inputErrors[`${prefix}${input.name}`]}</p>}
+          {input.type === "tuple" && input.components && input.components.length > 0 && <div style={{ marginLeft: "20px" }}>{renderInputFields(input.components, `${prefix}${input.name}.`)}</div>}
         </React.Fragment>
       );
     });
@@ -171,16 +155,12 @@ function WriteContent({ abiData, hash }) {
   const items = writeData.map((data, index) => {
     return {
       key: `${index}`,
-      label: [
-        <LinkChain key={`${index}-link`} />,
-        `${index + 1}. ${data?.name}`,
-      ],
+      label: [<LinkChain key={`${index}-link`} />, `${index + 1}. ${data?.name}`],
       children: [
         renderInputFields(data.inputs, ""),
         <span className="buttonText" key={`${index}-button`}>
           <Button
-            type="primary"
-            className="bluebtn"
+            // className="bluebtn"
             style={{ width: 111, marginTop: "8px" }}
             onClick={() => {
               validateInputs(data);
@@ -230,12 +210,7 @@ function WriteContent({ abiData, hash }) {
     <div className="readCodeContent">
       <div className="readCodeCotent__disconnect">
         <ContractInfo />
-        <Collapse
-          accordion
-          items={items}
-          onChange={handleAccordionChange}
-          activeKey={expandedAccordion}
-        />
+        <Collapse accordion items={items} onChange={handleAccordionChange} activeKey={expandedAccordion} />
       </div>
       {isLoading && <Loader />}
     </div>

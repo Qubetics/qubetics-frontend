@@ -442,7 +442,7 @@ html {
 //     display: none;
 //   }
 // }
-button.bluebtn {
+.bluebtn {
   color: #fff;
   height: 50px;
   max-width: 165px;
@@ -527,6 +527,13 @@ button.bluebtn {
     path {
       fill: #fff;
     }
+  }
+  span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -615,27 +622,43 @@ button.bluebtn {
         margin: 0 0 0 0px !important;
         // padding: 10px 24px;
         @include fluid-type(320px, 1920px, 14px, 16px);
-
-        --bg: #000;
-        --hover-bg: var(--theme-gradients-main);
-        --text: #fff;
-        --hover-text: #000;
-        border: 2px solid transparent;
-        background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-          conic-gradient(
-              from 180deg at 50% 50%,
-              #ff98e2,
-              #ffc876 35.77deg,
-              #79fff7 153.75deg,
-              #9f53ff 258.75deg,
-              #ff98e2 360deg
-            )
-            border-box;
-        border-radius: 25px;
-
-        .ant-tabs-tab-btn {
-          color: $white !important;
+        position: relative;
+        display: inline-block;
+        padding: 12.5px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #000;
+        text-decoration: none;
+        border: none;
+        border-radius: 30px;
+        overflow: hidden;
+        cursor: pointer;
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          padding: 2px;
+          border-radius: 30px;
+          background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+          animation: rotate 2.5s linear infinite;
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          animation: rotate 3s linear infinite;
         }
+      }
+      @keyframes rotate {
+        0% {
+          --gradient-angle: 0deg;
+        }
+        100% {
+          --gradient-angle: 360deg;
+        }
+      }
+      .ant-tabs-tab-btn {
+        color: $white !important;
       }
     }
   }
@@ -2640,6 +2663,7 @@ input:-webkit-autofill:active {
   word-break: break-word;
   white-space: normal;
 }
+<<<<<<< HEAD
 .holderTable {
   thead {
     tr {
@@ -2655,4 +2679,12 @@ input:-webkit-autofill:active {
       }
     }
   }
+=======
+:where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-solid:disabled {
+  background-color: #000;
+}
+:where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-outlined:disabled {
+  background-color: #00000050 !important;
+  color: gray !important;
+>>>>>>> origin/feature/designfixes
 }

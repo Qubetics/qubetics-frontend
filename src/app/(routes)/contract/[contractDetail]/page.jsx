@@ -29,6 +29,8 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Tokenicons } from "../../../../../public/SvgIcons";
 import Page from "../../notfound/page";
+import { Tokenicons, TokenUri } from "../../../../../public/SvgIcons";
+import AnalyticTab from "@/components/contracts/AnalyticTab";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
@@ -146,7 +148,6 @@ const ContractDetail = () => {
       ),
     },
   ];
- 
 
   const tabItems = [
     {
@@ -179,6 +180,11 @@ const ContractDetail = () => {
       label: "Contract",
       key: "4",
       children: <ContractDtlTabs hash={params?.contractDetail} />,
+    },
+    chainType === "EVM Chain" && {
+      label: "Analytics",
+      key: "5",
+      children: <AnalyticTab />,
     },
   ];
 
