@@ -1,4 +1,4 @@
-name: '[dev] Deploy explorer frontend'
+name: '[testnet] Deploy explorer frontend'
 
 on: 
   push:
