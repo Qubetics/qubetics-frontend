@@ -99,9 +99,11 @@ jobs:
               DEPLOYMENT_PATH: ${{ inputs.DEPLOYMENT_PATH }}
           - run: |
               ls
+              echo $DEPLOYMENT_PATH
+              echo $HUAWEI_IMAGE
               git config user.name github-actions
               git config user.email github-actions@github.com 
-              sed -i "s|\(image: \).*|\1swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_ORGANIZATION }}/$HUAWEI_IMAGE:${{ github.run_number }}|" $DEPLOYMENT_PATH
+              sed -i "s|\(image: \).*|\1swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_ORGANIZATION }}/${{ inputs.HUAWEI_IMAGE }}:${{ github.run_number }}|" ${{ inputs.DEPLOYMENT_PATH }}
               git add .
-              git commit -m "Update image to swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_ORGANIZATION }}/$HUAWEI_IMAGE:${{ github.run_number }}"
+              git commit -m "Update image to swr.${{ inputs.HUAWEI_REGION }}.myhuaweicloud.com/${{ inputs.SWR_ORGANIZATION }}/${{ inputs.HUAWEI_IMAGE }}:${{ github.run_number }}"
               git push origin
