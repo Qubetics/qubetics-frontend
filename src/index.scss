@@ -2663,28 +2663,10 @@ input:-webkit-autofill:active {
   word-break: break-word;
   white-space: normal;
 }
-<<<<<<< HEAD
-.holderTable {
-  thead {
-    tr {
-      th {
-        width: 16% !important;
-      }
-    }
-  }
-  tbody {
-    tr {
-      td {
-        width: 16% !important;
-      }
-    }
-  }
-=======
 :where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-solid:disabled {
   background-color: #000;
 }
 :where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-outlined:disabled {
   background-color: #00000050 !important;
   color: gray !important;
->>>>>>> origin/feature/designfixes
 }

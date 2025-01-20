@@ -3,6 +3,7 @@ import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useContractData } from "@/components/contexts/contractContext";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
+import AnalyticTab from "@/components/contracts/AnalyticTab";
 import ContractDetails from "@/components/contracts/ContractDetails";
 import ContractTransactions from "@/components/contracts/ContractTransactions";
 import Events from "@/components/contracts/Events";
@@ -29,8 +30,6 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Tokenicons } from "../../../../../public/SvgIcons";
 import Page from "../../notfound/page";
-import { Tokenicons, TokenUri } from "../../../../../public/SvgIcons";
-import AnalyticTab from "@/components/contracts/AnalyticTab";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
