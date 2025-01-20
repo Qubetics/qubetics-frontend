@@ -6,7 +6,7 @@ on:
       - testnet
 
 jobs:
-  dev_deploy_explorer_frontend:
+  testnet_deploy_explorer_frontend:
     uses: ./.github/workflows/testnet-frontend.yaml
     with:
       SWR_ORGANIZATION: testnet-qubetics
