@@ -1,25 +1,33 @@
 import { memo, useEffect, useRef, useState } from "react";
-import { BlockIcon, Searchicon, Searchicondark } from "../../../public/SvgIcons";
+import { BlockIcon, Searchicon } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
-// import useGlobalSearch from "@/hooks/useGlobalSearch";
+
 // import useOnClickOutside from "@/hooks/useOnClickOutSide";
 
 // import useToggleChainContext from "@/hooks/useToggleChainContext";
 import { useRouter } from "next/navigation";
-import { EnterKeyIcon, NavigateDown, NavigateUp } from "../../../public/SvgIcons";
+import {
+  EnterKeyIcon,
+  NavigateDown,
+  NavigateUp,
+} from "../../../public/SvgIcons";
+import useGlobalSearch from "@/hooks/useGlobalSearch";
+import Link from "next/link";
+import useOnClickOutside from "@/hooks/useoutsideClick";
+import { firstCapitalLetter } from "@/constant/constant";
 
 const FilterResult = () => {
-  const dynamicTab = ["viplove", "thakur"];
-  // const {
-  //   searchText,
-  //   setSearchText,
-  //   isLoading,
-  //   setIsLoading,
-  //   searchResult,
-  //   dynamicTab,
-  //   setDynamicTab,
-  //   setSearchResult,
-  // } = useGlobalSearch();
+  const {
+    searchText,
+    setSearchText,
+    isLoading,
+    setIsLoading,
+    searchResult,
+    dynamicTab,
+    setDynamicTab,
+    setSearchResult,
+  } = useGlobalSearch();
+
   const tabs = dynamicTab || [];
   const inputRef = useRef();
   const wrapperRef = useRef();
@@ -28,12 +36,12 @@ const FilterResult = () => {
   // const { isEVM } = useToggleChainContext();
 
   const customRef = useRef({});
-  const [open, setOpen] = useState(1);
+  const [open, setOpen] = useState(2);
   const [activeTab, setActiveTab] = useState("");
   const [selectedIndex, setSelectedIndex] = useState();
   const router = useRouter();
 
-  // useOnClickOutside(wrapperRef, () => setOpen(1));
+  useOnClickOutside(wrapperRef, () => setOpen(1));
 
   const setCustomRef = (key, element) => {
     if (!customRef.current) customRef.current = {};
@@ -50,9 +58,9 @@ const FilterResult = () => {
     } else setOpen(1);
   }, [dynamicTab]);
 
-  // useEffect(() => {
-  //   !searchText && setDynamicTab([]);
-  // }, [searchText]);
+  useEffect(() => {
+    !searchText && setDynamicTab([]);
+  }, [searchText]);
 
   useEffect(() => {
     const observerOptions = {
@@ -68,7 +76,6 @@ const FilterResult = () => {
         }
       });
     }, observerOptions);
-
     dynamicTab?.forEach((tab) => {
       const sectionElement = customRef.current[tab];
       if (sectionElement) observer.observe(sectionElement);
@@ -105,7 +112,9 @@ const FilterResult = () => {
   };
 
   const redirectOnEnter = (selectedItems) => {
-    const targetedItem = selectedItems?.filter((items, id) => id === selectedIndex);
+    const targetedItem = selectedItems?.filter(
+      (items, id) => id === selectedIndex
+    );
     targetedItem?.map((ele) => {
       // if (activeTab !== "tokens" && activeTab !== "contracts") {
       router.push(ele?.address && handleKeyEnter(undefined, ele?.address));
@@ -173,13 +182,15 @@ const FilterResult = () => {
   };
   // const handleKeyEnter = (searchData: any) => {
   const handleKeyEnter = (e, selectedAddress) => {
+    // e.stopPropagation();
     if (!selectedAddress) {
       if (!searchText) return;
       if (isLoading) return;
       setOpen(1);
       e.currentTarget.blur();
 
-      if (!searchResult?.results?.[activeTab]?.length) return router.push("/not-found");
+      if (!searchResult?.results?.[activeTab]?.length)
+        return router.push("/not-found");
 
       const redirectAddress = searchResult?.results[activeTab]?.[0]?.address;
 
@@ -190,11 +201,11 @@ const FilterResult = () => {
         case "block":
           return router.push(`/block/${redirectAddress}`);
         case "contract":
-          return router.push(`/contract/evm/${redirectAddress}`);
+          return router.push(`/contract/${redirectAddress}`);
         case "tokens":
-          return router.push(`/contract/evm/${redirectAddress}`);
+          return router.push(`/contract/${redirectAddress}`);
         case "contracts":
-          return router.push(`/contract/evm/${redirectAddress}`);
+          return router.push(`/contract/${redirectAddress}`);
         case "transactions":
           return router.push(`/address/${redirectAddress}`);
         case "account":
@@ -205,16 +216,16 @@ const FilterResult = () => {
     } else {
       switch (activeTab) {
         case "transaction":
-          if (isEVM) return `/tx/${selectedAddress}`;
-          return `/extrinsic/${selectedAddress}`;
+          return `/tx/${selectedAddress}`;
+
         case "block":
           return `/block/${selectedAddress}`;
         case "contract":
-          return `/contract/evm/${selectedAddress}`;
+          return `/contract/${selectedAddress}`;
         case "tokens":
-          return `/contract/evm/${selectedAddress}`;
+          return `/contract/${selectedAddress}`;
         case "contracts":
-          return `/contract/evm/${selectedAddress}`;
+          return `/contract/${selectedAddress}`;
         case "transactions":
           return `/address/${selectedAddress}`;
         case "account":
@@ -246,26 +257,81 @@ const FilterResult = () => {
         <div className="searchbar_input">
           <input
             placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name"
-            //  value={searchValue} onChange={(e) => handleSearchChange(e)} onKeyUp={(e) => handleEnterClick(e)} onFocus={onFocus} onBlur={onBlur}
+            onFocus={() => {
+              window.removeEventListener("scroll", preventOuterScroll);
+              searchText.length >= 1 && setOpen(2);
+            }}
+            inputRef={inputRef}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setOpen(1);
+
+              if (e.key === "Enter") {
+                // handleKeyEnter(searchResult);
+                handleKeyEnter(e);
+                // setSearchResult(null);
+              }
+
+              // make it navigatable on arrow down & arrow up
+              if (
+                ["ArrowDown", "ArrowUp"].includes(e.key) &&
+                dynamicTab?.length > 0
+              )
+                wrapperRef.current?.focus();
+
+              e.stopPropagation();
+            }}
+            onChange={(e) => {
+              setOpen(2);
+              setSearchText(e.target.value);
+              setIsLoading(!!e.target.value);
+            }}
+            value={searchText}
+            isLoading={isLoading}
           />
           <Searchicon />
         </div>
       </div>
       {/* <input type="text" class="filter-result__input" placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract Name" /> */}
+      {open === 2 && (
+        <div
+          ref={wrapperRef}
+          onKeyDown={handleKeyDown}
+          className="filter-result__results"
+          tabindex="0"
+        >
+          <div class="filter-result__tabs">
+            {dynamicTab?.length > 0 &&
+              dynamicTab?.map((elem) => (
+                <button
+                  key={elem}
+                  className={`headermetaBtn ${
+                    activeTab === elem
+                      ? "bg-secondary text-light-mainTxt dark:text-dark-mainTxt"
+                      : "bg-secondaryBlueTone text-secondary"
+                  }`}
+                  onClick={() => handleToggle(elem)}
+                >
+                  {firstCapitalLetter(elem)}
+                </button>
+              ))}
+          </div>
 
-      <div class="filter-result__results" tabindex="0">
-        <div class="filter-result__tabs">
-          <button class="headermetaBtn">Tab Name</button>
-        </div>
+          <div class="filter-result__divider"></div>
 
-        <div class="filter-result__divider"></div>
-
-        <div class="filter-result__container">
-          <div class="filter-result__container-inner">
-            <section class="filter-result__section">
-              <div class="filter-result__section-title">Section Title</div>
-
-              {/* <ul>
+          <div ref={containerRef} class="filter-result__container">
+            <div class="filter-result__container-inner">
+              {dynamicTab?.length > 0 &&
+                dynamicTab?.map((item) => (
+                  <section
+                    key={item}
+                    id={item}
+                    ref={(ele) => setCustomRef(item, ele)}
+                    class="filter-result__section"
+                  >
+                    <div class="filter-result__section-title">
+                      {firstCapitalLetter(item)}
+                    </div>
+                    {/* <ul>
                 <li class="filter-result__item filter-result__item--selected">
                   <a href="#" class="filter-result__item-link">
                     <img src="logo.png" alt="Logo" height="38" />
@@ -280,45 +346,105 @@ const FilterResult = () => {
                   <div class="filter-result__divider"></div>
                 </li>
               </ul> */}
-              <div className="blockdataItems">
-                <BlockIcon />
-                <p>
-                  {" "}
-                  Mainnet Test<span>0x545b794a9feb9000094f63dc6f64e </span>
-                </p>
-              </div>
-            </section>
+                    {searchResult &&
+                      searchResult?.results?.[item]?.map((items, id) => (
+                        <li
+                          key={`${items.address}-${id}`}
+                          className={`filter-result__item ${
+                            selectedIndex !== null &&
+                            selectedIndex === id &&
+                            activeTab === items
+                              ? "bg-light-highlight dark:bg-dark-highlight"
+                              : ""
+                          }`}
+                        >
+                          <div className="">
+                            <Link
+                              href={
+                                items?.address || items?.contractAddress
+                                  ? (items?.address ||
+                                      items?.contractAddress) &&
+                                    handleKeyEnter(
+                                      undefined,
+                                      items?.address || items?.contractAddress
+                                    )
+                                  : ""
+                              }
+                              className="hovertrans"
+                              // onClick={() => setOpen(1)}
+                            >
+                              <div>
+                                <BlockIcon />
+                              </div>
+                              <div className="blockdataItems">
+                                {(items.name || items?.tokenName) && (
+                                  <p>
+                                    {items?.tokenName} (
+                                    {items.symbol || items?.tokenSymbol})
+                                    <span>{items.price}</span>
+                                  </p>
+                                )}
+                                <p>
+                                  {
+                                    // isMobile
+                                    //   ? formatAddress(items.address)
+                                    //   :
+                                    items.address || items?.contractAddress
+                                  }
+                                </p>
+                              </div>
+                            </Link>
+                          </div>
+                          {id !== searchResult?.results[item].length - 1 && (
+                            <div class="filter-result__divider"></div>
+                          )}
+                        </li>
+
+                        // <div className="blockdataItems">
+                        //   <BlockIcon />
+                        //   <p>
+                        //     {" "}
+                        //     Mainnet Test
+                        //     <span>0x545b794a9feb9000094f63dc6f64e </span>
+                        //   </p>
+                        // </div>
+                      ))}
+                  </section>
+                ))}
+            </div>
           </div>
-        </div>
 
-        <div class="filter-result__divider"></div>
+          <div class="filter-result__divider"></div>
 
-        <div class="filter-result__footer">
-          <div class="filter-result__footer-group">
-            <p class="filter-result__footer-text">
-              {" "}
-              <NavigateUp /> <NavigateDown /> Navigate
-            </p>
-          </div>
-
-          <div class="filter-result__footer-group">
-            <div class="filter-result__footer-key filter-result__footer-key--esc">ESC</div>
-            <p class="filter-result__footer-text">Close</p>
-          </div>
-
-          <div class="filter-result__footer-group">
-            <div class="filter-result__footer-key filter-result__footer-key--enter"></div>
-            <p class="filter-result__footer-text">
-              {" "}
-              <span className="enterkeyIcon">
+          <div class="filter-result__footer">
+            <div class="filter-result__footer-group">
+              <p class="filter-result__footer-text">
                 {" "}
-                <EnterKeyIcon />
-              </span>{" "}
-              Enter
-            </p>
+                <NavigateUp /> <NavigateDown /> Navigate
+              </p>
+            </div>
+
+            <div class="filter-result__footer-group">
+              <div class="filter-result__footer-key filter-result__footer-key--esc">
+                ESC
+              </div>
+              <p class="filter-result__footer-text">Close</p>
+            </div>
+
+            <div class="filter-result__footer-group">
+              <div class="filter-result__footer-key filter-result__footer-key--enter"></div>
+              <p class="filter-result__footer-text">
+                {" "}
+                <span className="enterkeyIcon">
+                  {" "}
+                  <EnterKeyIcon />
+                </span>{" "}
+                Enter
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

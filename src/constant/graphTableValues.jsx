@@ -1,4 +1,5 @@
 "use-client";
+import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
@@ -10,11 +11,8 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
-import { HexDEx } from "@/components/logsDetail/HexDEx";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
-import { EventLogsDex } from "@/components/contracts/EventLogsDex";
-import Image from "next/image";
-import CoinImage from "../assets/img/coin.png";
+import { Tokenicons } from "../../public/SvgIcons";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -1330,9 +1328,9 @@ export const TokenColumn = [
     key: "tokenName",
     render: (text) => (
       <span className="assetnamedetail">
-        {
-          <Image
-            src={text?.iconUrl || CoinImage}
+        {text?.iconUrl && text?.iconUrl !== "" ? (
+          <img
+            src={text.iconUrl}
             alt="icon img"
             style={{
               width: "40px",
@@ -1341,7 +1339,11 @@ export const TokenColumn = [
               objectFit: "cover",
             }}
           />
-        }
+        ) : (
+          <div>
+            <div className="imgIcon">{<Tokenicons />}</div>
+          </div>
+        )}
         <Link href={`/contract/${text?.contractAddress}`}>
           {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
         </Link>

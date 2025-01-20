@@ -28,7 +28,7 @@ import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Page from "../../notfound/page";
-import CoinImg from "../../../../assets/img/coin.png";
+import { Tokenicons, TokenUri } from "../../../../../public/SvgIcons";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
@@ -88,15 +88,25 @@ const ContractDetail = () => {
     {
       text: "Symbol",
       heading: contractDetail?.symbol ? contractDetail?.symbol : "-",
-      img: (
-        <Image
-          src={contractDetail?.iconUrl || CoinImg}
-          className="welcomeLogo"
-          height={60}
-          width={60}
-          alt="logo"
-        />
-      ),
+      img:
+        contractDetail?.ContractVerification &&
+        contractDetail?.ContractVerification?.iconUrl !== "" ? (
+          <img
+            style={{
+              borderRadius: "50%",
+              objectFit: "cover",
+              height: "60px",
+              width: "60px",
+            }}
+            src={contractDetail?.ContractVerification?.iconUrl}
+            className="welcomeLogo"
+            alt="logo"
+          />
+        ) : (
+          <div>
+            <div className="imgIcon">{<TokenUri />}</div>
+          </div>
+        ),
     },
     {
       text: "Decimal",
