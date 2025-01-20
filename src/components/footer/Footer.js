@@ -83,13 +83,13 @@ const Footer = () => {
             <h3>Product & Services</h3>
             <Link
               href={`https://${origin}-validator.qubetics.work/login`}
-              target=""
+              target="_blank"
             >
               Qubetics Validator App
             </Link>
             <Link
               href={`https://${origin}-delegator.qubetics.work/login`}
-              target=""
+              target="_blank"
             >
               Qubetics Delegator App
             </Link>
@@ -139,7 +139,7 @@ const Footer = () => {
               Qubetics IDE
             </Link>
             <Link
-              href={`${origin}-basic-qube-code.qubetics.work`}
+              href={`https://${origin}-basic-qube-code.qubetics.work`}
               target="_blank"
             >
               QubeQode
