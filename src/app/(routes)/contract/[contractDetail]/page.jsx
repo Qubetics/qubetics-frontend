@@ -29,6 +29,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Page from "../../notfound/page";
 import { Tokenicons, TokenUri } from "../../../../../public/SvgIcons";
+import FilterResult from "@/components/FilterResult/FilterResult";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
@@ -104,7 +105,7 @@ const ContractDetail = () => {
           />
         ) : (
           <div>
-            <div className="imgIcon">{<TokenUri />}</div>
+            <div className="imgIcon">{<Tokenicons width={55} height={55} />}</div>
           </div>
         ),
     },
@@ -192,10 +193,11 @@ const ContractDetail = () => {
   return (
     <div className="contractDetail contractsItems">
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading="Contract Details" />
         {contractDetailStatus === InitStatus ||
         contractDetailStatus === FetchingStatus ? (

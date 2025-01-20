@@ -27,11 +27,10 @@ import { useEffect, useState } from "react";
 import {
   AvgBlockTime,
   LatestBlock,
-  LatestblockNew,
   TopValidator,
-  Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./blocksummary.scss";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
 
@@ -213,7 +212,7 @@ const BlockSummary = () => {
       text: <>Latest Block</>,
       balance: webSocketData?.blocks?.blocknumber
         ? webSocketData?.blocks?.blocknumber
-        : "0",
+        : blocksData[0]?.blocknumber ?? 0,
       img: <LatestBlock />,
       contract: false,
     },
@@ -251,10 +250,11 @@ const BlockSummary = () => {
         <Loader />
       ) : blockSummaryStatus === SuccessStatus ? ( */}
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading={"Block Summary"} />
 
         <div className="cardContract cardblocks">

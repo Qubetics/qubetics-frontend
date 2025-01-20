@@ -16,6 +16,7 @@ import {
 } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
 import { useRouter, useSearchParams } from "next/navigation";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const Transactionsummary = () => {
   const webSocketData = useLatestData();
@@ -72,10 +73,11 @@ const Transactionsummary = () => {
   return (
     <div className="blocksummary">
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading="Transaction Summary" />
         <div className="blockdetail transdetails">
           <div className="innerdata bluecard">

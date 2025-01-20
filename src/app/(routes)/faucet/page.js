@@ -19,6 +19,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 function Page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -101,11 +102,11 @@ function Page() {
       <div className="container">
         <div className="searchblocks"></div>
         <div className="faucet_inner">
-          <SearchbarComponent
+          {/* <SearchbarComponent
             searchStatus={searchStatus}
             setSerachStatus={setSerachStatus}
-          />
-
+          /> */}
+          <FilterResult />
           <div className="faucet_inner__top">
             <div className="left">
               <h3>Testnet Chain Faucet</h3>

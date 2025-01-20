@@ -12,6 +12,7 @@ import { InitStatus, tooltipContent } from "@/constant/constant";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import FilterResult from "@/components/FilterResult/FilterResult";
 function QubeticNetworkNode({ nodesData, countryNode }) {
   const webSocketData = useLatestData();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -33,7 +34,9 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       content: tooltipContent.last_Block,
     },
     {
-      value: webSocketData?.onChainMetric?.tpb ? webSocketData?.onChainMetric?.tpb : 0,
+      value: webSocketData?.onChainMetric?.tpb
+        ? webSocketData?.onChainMetric?.tpb
+        : 0,
       label: "TBP",
       content: tooltipContent.TPB,
     },
@@ -41,7 +44,9 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
 
   return (
     <div className="qubeticNetworkNode">
-      <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+      {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+       */}
+      <FilterResult />
       <Heading heading="Qubetics Network Nodes" />
       <div className="NodePerformance">
         <div className="NodePerformance_left">
@@ -66,7 +71,10 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                         }}
                       >
                         <p>{item.label}</p>
-                        <InfoCircleOutlined style={{ color: "#A0A0A0" }} className="infoIcon" />
+                        <InfoCircleOutlined
+                          style={{ color: "#A0A0A0" }}
+                          className="infoIcon"
+                        />
                       </span>
                     </Tooltip>
                   </div>
@@ -84,15 +92,30 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                 <p>Qubetics</p>
               </div>
               <div className="innerBox">
-                <h5>{countryNode?.countryCount ? countryNode?.countryCount : 0}</h5>
+                <h5>
+                  {countryNode?.countryCount ? countryNode?.countryCount : 0}
+                </h5>
                 <p>Countries</p>
               </div>
             </div>
             <DarkNodeMap />
             {nodesData?.map((el, index) => (
               <Fragment key={`node-${index}`}>
-                <div style={getMarker(el?.location?.lat, el?.location?.lon, el?.location?.country?.replace(/\s+/g, ""))} className="marker-icon" data-tooltip-id={`node-tooltip-${index}`} />
-                <ReactTooltip id={`node-tooltip-${index}`} place={"top"} content={el.location.country} className="max-w-[200px]" />
+                <div
+                  style={getMarker(
+                    el?.location?.lat,
+                    el?.location?.lon,
+                    el?.location?.country?.replace(/\s+/g, "")
+                  )}
+                  className="marker-icon"
+                  data-tooltip-id={`node-tooltip-${index}`}
+                />
+                <ReactTooltip
+                  id={`node-tooltip-${index}`}
+                  place={"top"}
+                  content={el.location.country}
+                  className="max-w-[200px]"
+                />
               </Fragment>
             ))}
           </div>

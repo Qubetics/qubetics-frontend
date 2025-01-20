@@ -73,7 +73,7 @@ const TransactionHistory = (props) => {
                 <InfoCircleOutlined className="infoIcon" />
               </Tooltip> */}
             </h3>
-            <h6>{webSocketData?.onChainMetric?.totalTx ? formatMillionNumber(Number(webSocketData?.onChainMetric?.totalTx)) : "0"}</h6>
+            <h6>{webSocketData?.onChainMetric?.totalTx ? formatMillionNumber(Number(webSocketData?.onChainMetric?.totalTx)) : props?.stats?.total_transactions}</h6>
             {/* <span className="liveblink">Live</span> */}
           </div>
 

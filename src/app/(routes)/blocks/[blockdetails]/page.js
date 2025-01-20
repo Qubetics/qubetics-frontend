@@ -18,6 +18,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../../../components/transferInfo/TransferInformation.scss";
 import "../blocksummary.scss";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const BlockDetails = ({ params }) => {
   const searchParams = useSearchParams();
@@ -105,10 +106,11 @@ const BlockDetails = ({ params }) => {
   return (
     <div className="blocksummary blockdetails">
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading="Block Details" />
         <div className="blockjson">
           <Tabs

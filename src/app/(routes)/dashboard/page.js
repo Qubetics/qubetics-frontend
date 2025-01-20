@@ -7,10 +7,9 @@ import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
 import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
 import RecentBlocks from "@/components/dashboard/RecentBlocks/RecentBlocks";
 import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import { graphUrl, InitStatus, Routes } from "@/constant/constant";
 import getStatistics from "@/services/getStatistics";
-import FilterResult from "@/components/FilterResult/FilterResult";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import FooterLink from "../../../components/footer/FooterLinks";
@@ -43,7 +42,12 @@ const Page = ({ customClass }) => {
   }, [isNetworkChanged]);
   return (
     <>
-      <section style={{ paddingTop: pathname !== Routes.HOME && 0 }} className={`cardsLandingPage ${customClass} ${routeName === pathname ? "dashboardMain" : ""}`}>
+      <section
+        style={{ paddingTop: pathname !== Routes.HOME && 0 }}
+        className={`cardsLandingPage ${customClass} ${
+          routeName === pathname ? "dashboardMain" : ""
+        }`}
+      >
         <div>
           <div className="container">
             {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} /> */}
@@ -56,7 +60,7 @@ const Page = ({ customClass }) => {
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-            <Analytics />
+            <Analytics stats={stats} />
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />
@@ -69,12 +73,36 @@ const Page = ({ customClass }) => {
               <ChainAnalytics stats={stats} />
               <div className="multiGraph">
                 <div className="grap">
-                  <ChainAnalyticsGraph title="Qubetics Price" discription="Qubetics token current market price in USD " fetchUrl={graphUrl.token_price} isNative={false} tooltipTitle="Price" />
-                  <ChainAnalyticsGraph title="Qubetics Token Transfers" discription="Total Txns made with Qubetics Token per period " fetchUrl={graphUrl.coin_transfer} isNative={false} tooltipTitle="Transfer" />
+                  <ChainAnalyticsGraph
+                    title="Qubetics Price"
+                    discription="Qubetics token current market price in USD "
+                    fetchUrl={graphUrl.token_price}
+                    isNative={false}
+                    tooltipTitle="Price"
+                  />
+                  <ChainAnalyticsGraph
+                    title="Qubetics Token Transfers"
+                    discription="Total Txns made with Qubetics Token per period "
+                    fetchUrl={graphUrl.coin_transfer}
+                    isNative={false}
+                    tooltipTitle="Transfer"
+                  />
                 </div>
                 <div className="grap">
-                  <ChainAnalyticsGraph title="Total Accounts" discription="Total accounts number per period" fetchUrl={graphUrl.total_account} isNative={isEvm} tooltipTitle="Account" />
-                  <ChainAnalyticsGraph title="Transaction Fees" discription="Amount of Qubetics tokens paid in fees per period " fetchUrl={graphUrl.txn_fee} isNative={false} tooltipTitle="Txn Fee" />
+                  <ChainAnalyticsGraph
+                    title="Total Accounts"
+                    discription="Total accounts number per period"
+                    fetchUrl={graphUrl.total_account}
+                    isNative={isEvm}
+                    tooltipTitle="Account"
+                  />
+                  <ChainAnalyticsGraph
+                    title="Transaction Fees"
+                    discription="Amount of Qubetics tokens paid in fees per period "
+                    fetchUrl={graphUrl.txn_fee}
+                    isNative={false}
+                    tooltipTitle="Txn Fee"
+                  />
                 </div>
               </div>
             </div>

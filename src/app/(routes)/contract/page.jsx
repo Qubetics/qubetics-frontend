@@ -19,6 +19,7 @@ import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
 import InternalSearch from "@/components/InternalSearch/InternalSearch";
 import getInternalSearch from "@/services/getInternalSearchData";
 import useDebounce from "@/hooks/useDebounce";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const Contract = () => {
   const { isNetworkChanged } = useGetNetwork();
@@ -122,10 +123,11 @@ const Contract = () => {
   return (
     <div className="popularPage">
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading="Contracts" />
         <div className="contractCard ">
           <CardsOnchain

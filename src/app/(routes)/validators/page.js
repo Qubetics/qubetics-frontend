@@ -26,6 +26,7 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +40,7 @@ function page() {
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         setValidatorStatus(FetchingStatus);
@@ -163,10 +164,11 @@ function page() {
       ) : validatorStatus === SuccessStatus ? (
         <> */}
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading="Validators" />
         <div className="cardContract">
           {cards?.map((item) => (
