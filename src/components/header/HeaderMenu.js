@@ -4,9 +4,10 @@ import {
   defaultChainOptions,
   EXPLORER_CHAIN_NAME,
   EXPLORER_META_NETWORK_CHAIN_ID,
+  EXPLORER_METAMASK_NETWORK_URL,
   METAMASK_DAPP_URL,
   Routes,
-  SHOW_FAUCET
+  SHOW_FAUCET,
 } from "@/constant/constant";
 import metamaskSDK from "@web3-onboard/metamask";
 import { init, useConnectWallet } from "@web3-onboard/react";
@@ -20,6 +21,7 @@ import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
+import Web3 from "web3";
 const metamaskSDKWallet = metamaskSDK({
   options: {
     injectProvider: true,
@@ -118,15 +120,20 @@ function HeaderMenu({ onCloseDrawer }) {
     window.location.reload();
   };
   const isNetworkAdded = async () => {
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider(
+        EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
+      )
+    );
+    const chain_Id = await web3.eth.getChainId();
+    const chainIdHex = `0x${chain_Id.toString(16)}`;
     const { ethereum } = window;
     if (!ethereum) return;
     try {
       const chainId = await ethereum.request({ method: "eth_chainId" });
-      console.log(chainId === EXPLORER_META_NETWORK_CHAIN_ID, "idd");
-      setIsMetaMaskAdded(chainId === EXPLORER_META_NETWORK_CHAIN_ID);
+      setIsMetaMaskAdded(chainId === chainIdHex);
       ethereum.on("chainChanged", (id) => {
-        if (id === EXPLORER_META_NETWORK_CHAIN_ID)
-          return setIsMetaMaskAdded(true);
+        if (id === chainIdHex) return setIsMetaMaskAdded(true);
         setIsMetaMaskAdded(false);
       });
     } catch (error) {
@@ -490,10 +497,10 @@ function HeaderMenu({ onCloseDrawer }) {
                   value: "EVM Chain",
                   label: "EVM Chain",
                 },
-                {
-                  value: "Native Chain",
-                  label: "Native Chain",
-                },
+                // {
+                //   value: "Native Chain",
+                //   label: "Native Chain",
+                // },
               ]}
             />
             {/* </div> */}

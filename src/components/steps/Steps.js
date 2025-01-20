@@ -5,6 +5,7 @@ import { Steps, theme } from "antd";
 import PublishContract from "../publishContract/PublishContract";
 import { InitStatus, verifyContractConstant } from "@/constant/constant";
 import SearchbarComponent from "../search/SearchbarComponent";
+import FilterResult from "../FilterResult/FilterResult";
 
 const steps = [
   {
@@ -40,10 +41,11 @@ const App = () => {
 
   return (
     <div className="verify">
-      <SearchbarComponent
+      {/* <SearchbarComponent
         searchStatus={searchStatus}
         setSerachStatus={setSerachStatus}
-      />
+      /> */}
+      <FilterResult />
       <div className="steps">
         <Steps
           responsive={false}
@@ -53,32 +55,31 @@ const App = () => {
         />
       </div>
       <div className="stepsFlex">
+        <div className="verifyPublish__left">
+          <h3>{verifyContractConstant?.VERIFY_AND_PUBLISH_CONTRACT}</h3>
 
-      <div className="verifyPublish__left">
-        <h3>{verifyContractConstant?.VERIFY_AND_PUBLISH_CONTRACT}</h3>
+          {Listing?.map((listing, index) => (
+            <p key={index}>{listing}</p>
+          ))}
+        </div>
 
-        {Listing?.map((listing, index) => (
-          <p key={index}>{listing}</p>
-        ))}
-      </div>
-
-      <div className="verify_btns">
-        {steps && current === 1 ? (
-          <VerifySecondStep
-            steps={steps}
-            next={next}
-            prev={prev}
-            current={current}
-          />
-        ) : (
-          <PublishContract
-            steps={steps}
-            next={next}
-            prev={prev}
-            current={current}
-          />
-        )}
-      </div>
+        <div className="verify_btns">
+          {steps && current === 1 ? (
+            <VerifySecondStep
+              steps={steps}
+              next={next}
+              prev={prev}
+              current={current}
+            />
+          ) : (
+            <PublishContract
+              steps={steps}
+              next={next}
+              prev={prev}
+              current={current}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

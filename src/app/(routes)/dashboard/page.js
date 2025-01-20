@@ -7,7 +7,7 @@ import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
 import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
 import RecentBlocks from "@/components/dashboard/RecentBlocks/RecentBlocks";
 import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import { graphUrl, InitStatus, Routes } from "@/constant/constant";
 import getStatistics from "@/services/getStatistics";
 import { usePathname } from "next/navigation";
@@ -50,11 +50,8 @@ const Page = ({ customClass }) => {
       >
         <div>
           <div className="container">
-            <SearchbarComponent
-              searchStatus={searchStatus}
-              setSerachStatus={setSerachStatus}
-            />
-            {/* <FilterResult /> */}
+            {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} /> */}
+            <FilterResult />
             <h2 className="analytictext">On-Chain Metrics</h2>
             <OnChainMetrics stats={stats} />
           </div>
@@ -63,7 +60,7 @@ const Page = ({ customClass }) => {
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-            <Analytics />
+            <Analytics stats={stats} />
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />

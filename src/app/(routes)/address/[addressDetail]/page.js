@@ -4,7 +4,14 @@ import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import { ErrorStatus, EXPLORER_CURRENCY_NAME, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
+import {
+  ErrorStatus,
+  EXPLORER_CURRENCY_NAME,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
 import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
@@ -17,6 +24,7 @@ import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/Skeleton
 import TokenByAddress from "@/components/token";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
@@ -31,7 +39,10 @@ const page = ({ params }) => {
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
-      let response = await getTransactionsByAddress(params?.addressDetail, currentPage);
+      let response = await getTransactionsByAddress(
+        params?.addressDetail,
+        currentPage
+      );
       if (response?.error === false) {
         setTxAddressData(response?.data?.transactions);
         setTxAddressStatus(SuccessStatus);
@@ -47,7 +58,9 @@ const page = ({ params }) => {
   };
   const fetchAddDetails = async () => {
     try {
-      const headerAddressDetail = await getAddressDetails(params?.addressDetail);
+      const headerAddressDetail = await getAddressDetails(
+        params?.addressDetail
+      );
       setShowHeaderData(headerAddressDetail?.data);
     } catch (err) {
       setTxAddressStatus(ErrorStatus);
@@ -102,8 +115,28 @@ const page = ({ params }) => {
       key: "0",
       children: (
         <>
-          <SkeletonTableWrapper columns={addressDetailColumn} dataSource={txAddressData} pagination={false} className="commontable" isSkeleton={txAddressStatus === FetchingStatus || txAddressStatus === InitStatus} />
-          {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} handleNext={handleNext} handlePrevious={handlePrevious} disablePrev={currentPage === 1} disableNext={currentPage === totalPages} handleFirst={handleFirst} handleLast={handleLast} />}
+          <SkeletonTableWrapper
+            columns={addressDetailColumn}
+            dataSource={txAddressData}
+            pagination={false}
+            className="commontable"
+            isSkeleton={
+              txAddressStatus === FetchingStatus ||
+              txAddressStatus === InitStatus
+            }
+          />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handleNext={handleNext}
+              handlePrevious={handlePrevious}
+              disablePrev={currentPage === 1}
+              disableNext={currentPage === totalPages}
+              handleFirst={handleFirst}
+              handleLast={handleLast}
+            />
+          )}
         </>
       ),
     },
@@ -117,7 +150,9 @@ const page = ({ params }) => {
   return (
     <div className="blocksummary">
       <div className="container">
-        <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+        {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
+         */}
+        <FilterResult />
         <Heading
           heading=" Address Details"
           addresspage={true}
@@ -139,16 +174,25 @@ const page = ({ params }) => {
               <div className="detail">
                 <h3>Balance</h3>
                 <p>
-                  {formatMillionNumber(showHeaderData?.coinBalance)} {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+                  {formatMillionNumber(showHeaderData?.coinBalance)}{" "}
+                  {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
                 </p>
               </div>
               <div className="detail">
                 <h3>TICS Value</h3>
-                <p>{showHeaderData?.value === "" || showHeaderData?.value == null ? "$0" : `$${formatMillionNumber(showHeaderData?.value)}`}</p>
+                <p>
+                  {showHeaderData?.value === "" || showHeaderData?.value == null
+                    ? "$0"
+                    : `$${formatMillionNumber(showHeaderData?.value)}`}
+                </p>
               </div>
               <div className="detail">
                 <h3>Transaction Count</h3>
-                <p>{showHeaderData?.transactionCount ? formatMillionNumber(showHeaderData?.transactionCount) : 0}</p>
+                <p>
+                  {showHeaderData?.transactionCount
+                    ? formatMillionNumber(showHeaderData?.transactionCount)
+                    : 0}
+                </p>
               </div>
             </div>
           </div>
@@ -177,7 +221,13 @@ const page = ({ params }) => {
             items={tabItems}
             tabBarExtraContent={
               <div className="exportBtn">
-                <CSVLink className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]" filename="my-file.csv" data={activeTab === "0" ? txAddressData ?? [] : tokensData ?? []}>
+                <CSVLink
+                  className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
+                  filename="my-file.csv"
+                  data={
+                    activeTab === "0" ? txAddressData ?? [] : tokensData ?? []
+                  }
+                >
                   <button className="exportBtn">
                     <ExportIcon />
                     Export

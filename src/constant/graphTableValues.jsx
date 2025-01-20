@@ -1,11 +1,7 @@
 "use-client";
 import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
-import {
-  capitalizeWord,
-  noExponential,
-  toFixed,
-} from "@/utils/commonFunctions";
+import { capitalizeWord, noExponential, toFixed } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
@@ -131,11 +127,7 @@ export const blockColumn = [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -200,11 +192,7 @@ export const transactionSummarycolumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
         {getAddress(text)}
       </Link>
     ),
@@ -219,11 +207,7 @@ export const transactionSummarycolumn = [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className=""
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -237,11 +221,7 @@ export const transactionSummarycolumn = [
         {" "}
         {text?.fromAddress && text?.fromAddress !== "N/A" ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`} rel="noopener noreferrer">
               {getAddress(text?.fromAddress)}
             </Link>{" "}
             <span>
@@ -261,26 +241,14 @@ export const transactionSummarycolumn = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer ||
-              text?.type === typesOfTransactions.contractCreation ||
-              text?.type === typesOfTransactions.contractExecute ||
-              text?.type === typesOfTransactions.contractUpload ? (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+              {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
+                <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+                <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -290,9 +258,7 @@ export const transactionSummarycolumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
-                {getAddress(text?.toAddress)}
-              </Link>
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>{getAddress(text?.toAddress)}</Link>
               <span>
                 <CopyText text={text?.toAddress} />
               </span>
@@ -300,11 +266,7 @@ export const transactionSummarycolumn = [
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`} rel="noopener noreferrer">
               {" "}
               {getAddress(text?.contractAddress)}
             </Link>
@@ -338,38 +300,18 @@ export const transactionSummarycolumn = [
   {
     title: "Txn Fee",
     key: "txFee",
-    render: (text) =>
-      text?.value ? (
-        <Tooltip title={noExponential(text?.txFee)}>
-          {" "}
-          {noExponential(toFixed(text?.txFee, 6))}
-        </Tooltip>
-      ) : (
-        0
-      ),
+    render: (text) => (text?.value ? <Tooltip title={noExponential(text?.txFee)}> {noExponential(toFixed(text?.txFee, 6))}</Tooltip> : 0),
   },
   {
     title: "Value(TICS)",
     key: "value",
-    render: (text) =>
-      text?.value ? (
-        <Tooltip title={`${noExponential(text?.value)} TICS`}>
-          {noExponential(toFixed(text?.value, 6))}
-        </Tooltip>
-      ) : (
-        0
-      ),
+    render: (text) => (text?.value ? <Tooltip title={`${noExponential(text?.value)} TICS`}>{noExponential(toFixed(text?.value, 6))}</Tooltip> : 0),
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
-    render: (text) =>
-      text === "SUCCESS" ? (
-        <span className="successtrans">{capitalizeWord(text)}</span>
-      ) : (
-        <span className="failedtrans">{capitalizeWord(text)}</span>
-      ),
+    render: (text) => (text === "SUCCESS" ? <span className="successtrans">{capitalizeWord(text)}</span> : <span className="failedtrans">{capitalizeWord(text)}</span>),
   },
 ];
 
@@ -382,11 +324,7 @@ export const TransactionDetailsColumns = [
     key: "txhash",
     render: (text) => (
       <div className="iconandlink">
-        <Link
-          className="fromicon"
-          href={`${Routes.Tx_Hash}${text}`}
-          rel="noopener noreferrer"
-        >
+        <Link className="fromicon" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
           {getAddress(text)}
         </Link>
         <span>
@@ -403,11 +341,7 @@ export const TransactionDetailsColumns = [
     render: (text) => (
       <>
         <div className="iconandlink">
-          <Link
-            className="fromicon"
-            href={`${Routes.Tx_ADDRESS}${text}`}
-            rel="noopener noreferrer"
-          >
+          <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text}`} rel="noopener noreferrer">
             {getAddress(text)}
           </Link>
           <span>
@@ -424,26 +358,14 @@ export const TransactionDetailsColumns = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer ||
-              text?.type === typesOfTransactions.contractCreation ||
-              text?.type === typesOfTransactions.contractExecute ||
-              text?.type === typesOfTransactions.contractUpload ? (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+              {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
+                <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+                <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -453,10 +375,7 @@ export const TransactionDetailsColumns = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link
-                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                rel="noopener noreferrer"
-              >
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                 {getAddress(text?.toAddress)}
               </Link>
               <span>
@@ -466,11 +385,7 @@ export const TransactionDetailsColumns = [
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`} rel="noopener noreferrer">
               {" "}
               {getAddress(text?.contractAddress)}
             </Link>
@@ -491,9 +406,7 @@ export const TransactionDetailsColumns = [
     key: "value",
     render: (text) => (
       <span>
-        <Tooltip title={`${noExponential(toFixed(text, 2))} TICS`}>
-          {text ? noExponential(toFixed(text, 2)) : "0"}
-        </Tooltip>
+        <Tooltip title={`${noExponential(toFixed(text, 2))} TICS`}>{text ? noExponential(toFixed(text, 2)) : "0"}</Tooltip>
       </span>
     ),
   },
@@ -526,11 +439,7 @@ export const addressDetailColumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
         {getAddress(text)}
       </Link>
     ),
@@ -540,11 +449,7 @@ export const addressDetailColumn = [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -577,26 +482,14 @@ export const addressDetailColumn = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer ||
-              text?.type === typesOfTransactions.contractCreation ||
-              text?.type === typesOfTransactions.contractExecute ||
-              text?.type === typesOfTransactions.contractUpload ? (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+              {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
+                <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+                <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -606,9 +499,7 @@ export const addressDetailColumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
-                {getAddress(text?.toAddress)}
-              </Link>
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>{getAddress(text?.toAddress)}</Link>
               <span>
                 <CopyText text={text?.toAddress} />
               </span>
@@ -616,11 +507,7 @@ export const addressDetailColumn = [
           )
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`} rel="noopener noreferrer">
               {" "}
               {getAddress(text?.contractAddress)}
             </Link>
@@ -662,12 +549,7 @@ export const addressDetailColumn = [
     title: "Status",
     dataIndex: "status",
     key: "status",
-    render: (text) =>
-      text === "SUCCESS" ? (
-        <span className="successtrans">{capitalizeWord(text)}</span>
-      ) : (
-        <span className="failedtrans">{capitalizeWord(text)}</span>
-      ),
+    render: (text) => (text === "SUCCESS" ? <span className="successtrans">{capitalizeWord(text)}</span> : <span className="failedtrans">{capitalizeWord(text)}</span>),
   },
 ];
 
@@ -691,12 +573,9 @@ export const nodesColumns = [
     key: "peerId",
     render: (text) => {
       return (
-        <span
-          style={{ display: "flex", alignItems: "center" }}
-          className="iconandlink"
-        >
+        <span style={{ display: "flex", alignItems: "center" }} className="iconandlink">
           {text.peerId ? text?.peerId : "-"}
-          <CopyText text={text?.peerId} />
+          {/* <CopyText text={text?.peerId} /> */}
         </span>
       );
     },
@@ -705,8 +584,7 @@ export const nodesColumns = [
   {
     title: "Location",
     key: "location",
-    render: (text) =>
-      text?.location?.country ? capitalizeWord(text?.location?.country) : "-",
+    render: (text) => (text?.location?.country ? capitalizeWord(text?.location?.country) : "-"),
   },
 ];
 
@@ -737,11 +615,7 @@ export const contractTableColumn = (currentChain) => [
               }}
             />
           )} */}
-          <Link href={`/contract/${text?.address}`}>
-            {text?.contractName || text?.contractname
-              ? capitalizeWord(text?.contractName || text?.contractname)
-              : "-"}
-          </Link>
+          <Link href={`/contract/${text?.address}`}>{text?.contractName || text?.contractname ? capitalizeWord(text?.contractName || text?.contractname) : "-"}</Link>
         </span>
       );
     },
@@ -750,9 +624,7 @@ export const contractTableColumn = (currentChain) => [
     id: "type",
     title: "Type",
     key: "type",
-    render: (text) => (
-      <span className="">{text?.contractType ? text?.contractType : "-"}</span>
-    ),
+    render: (text) => <span className="">{text?.contractType ? text?.contractType : "-"}</span>,
   },
   {
     id: "contractAddress",
@@ -762,10 +634,7 @@ export const contractTableColumn = (currentChain) => [
       <span className="iconandlink">
         {text?.address ? (
           <>
-            <Link href={`/contract/${text?.address}`}>
-              {" "}
-              {getAddress(text?.address)}{" "}
-            </Link>
+            <Link href={`/contract/${text?.address}`}> {getAddress(text?.address)} </Link>
             <CopyText text={text?.address} />
           </>
         ) : (
@@ -783,10 +652,7 @@ export const contractTableColumn = (currentChain) => [
         {text?.txHash ? (
           <>
             {" "}
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-              {getAddress(text?.txHash)}
-            </Link>{" "}
-            <CopyText text={text?.txHash}></CopyText>
+            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>{getAddress(text?.txHash)}</Link> <CopyText text={text?.txHash}></CopyText>
           </>
         ) : (
           "-"
@@ -798,21 +664,13 @@ export const contractTableColumn = (currentChain) => [
     id: "lastExecuted",
     title: "Last Executed At ",
     key: "lastExecuted",
-    render: (text) => (
-      <span className="">
-        {text?.updatedAt ? convertToDateTime(text?.updatedAt) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.updatedAt ? convertToDateTime(text?.updatedAt) : "-"}</span>,
   },
   {
     id: "deployedAt",
     title: "Deployed At",
     key: "deployedAt",
-    render: (text) => (
-      <span className="">
-        {text?.createdAt ? convertToDateTime(text?.createdAt) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.createdAt ? convertToDateTime(text?.createdAt) : "-"}</span>,
   },
   {
     id: "status",
@@ -826,8 +684,7 @@ export const contractTableColumn = (currentChain) => [
         ) : text?.verificationType && text?.verificationType == -1 ? (
           // <CloseCircleFilled className="red-icon" />
           <p className="red-icon">Unverified</p>
-        ) : (text?.verificationType && text?.verificationType == 0) ||
-          text?.verificationType === null ? (
+        ) : (text?.verificationType && text?.verificationType == 0) || text?.verificationType === null ? (
           <p className="yellow-icon">Pending</p>
         ) : (
           // <ClockCircleFilled className="yellow-icon" />
@@ -846,19 +703,7 @@ export const contractTransactionsColumn = [
     key: "txHash",
     render: (text) => (
       <div className="iconandlink">
-        <Tooltip title={text?.txHash}>
-          {text?.txHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-              {getAddress(text?.txHash)}
-            </Link>
-          ) : text?.txhash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
-              {getAddress(text?.txhash)}
-            </Link>
-          ) : (
-            "-"
-          )}
-        </Tooltip>
+        <Tooltip title={text?.txHash}>{text?.txHash ? <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>{getAddress(text?.txHash)}</Link> : text?.txhash ? <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>{getAddress(text?.txhash)}</Link> : "-"}</Tooltip>
         <span>
           <CopyText text={text?.txHash ? text?.txHash : text?.txhash} />
         </span>
@@ -869,15 +714,7 @@ export const contractTransactionsColumn = [
     id: "method",
     title: "Method",
     key: "method",
-    render: (text) => (
-      <span className="">
-        {text?.method && text?.method !== "N/A"
-          ? capitalizeWord(text?.method)
-          : text?.type
-          ? capitalizeWord(text?.type)
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.method && text?.method !== "N/A" ? capitalizeWord(text?.method) : text?.type ? capitalizeWord(text?.type) : "-"}</span>,
   },
 
   {
@@ -886,15 +723,7 @@ export const contractTransactionsColumn = [
     key: "from",
     render: (text) => (
       <div className="iconandlink">
-        <Tooltip title={text?.fromAddress}>
-          {text?.fromAddress ? (
-            <Link href={`/address/${text?.fromAddress}`}>
-              {getAddress(text?.fromAddress)}{" "}
-            </Link>
-          ) : (
-            "-"
-          )}
-        </Tooltip>
+        <Tooltip title={text?.fromAddress}>{text?.fromAddress ? <Link href={`/address/${text?.fromAddress}`}>{getAddress(text?.fromAddress)} </Link> : "-"}</Tooltip>
         <span>
           <CopyText text={text?.fromAddress} />
         </span>
@@ -908,29 +737,17 @@ export const contractTransactionsColumn = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer ||
-              text?.type === typesOfTransactions.contractCreation ||
-              text?.type === typesOfTransactions.contractExecute ||
-              text?.type === typesOfTransactions.contractUpload ? (
+              {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
                 <Tooltip title={text?.toAddress}>
-                  <Link
-                    className="fromicon"
-                    href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
-                    rel="noopener noreferrer"
-                  >
+                  <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
                     {getAddress(text?.toAddress)}
                   </Link>
                 </Tooltip>
               ) : (
                 <Tooltip title={text?.toAddress}>
-                  <Link
-                    className="fromicon"
-                    href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                    rel="noopener noreferrer"
-                  >
+                  <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                     {getAddress(text?.toAddress)}
                   </Link>
                 </Tooltip>
@@ -945,11 +762,7 @@ export const contractTransactionsColumn = [
         ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
           <div className="iconandlink">
             <Tooltip title={text?.contractAddress}>
-              <Link
-                className="fromicon"
-                href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
-                rel="noopener noreferrer"
-              >
+              <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`} rel="noopener noreferrer">
                 {" "}
                 {getAddress(text?.contractAddress)}
               </Link>
@@ -968,19 +781,7 @@ export const contractTransactionsColumn = [
     id: "status",
     title: "Status",
     key: "status",
-    render: (text) => (
-      <span className="">
-        {text?.status ? (
-          text?.status.toLowerCase() === "success" ? (
-            <span className="successtrans">Success</span>
-          ) : (
-            <span className="failedtrans">Failed</span>
-          )
-        ) : (
-          "-"
-        )}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.status ? text?.status.toLowerCase() === "success" ? <span className="successtrans">Success</span> : <span className="failedtrans">Failed</span> : "-"}</span>,
   },
   {
     id: "fee",
@@ -988,19 +789,7 @@ export const contractTransactionsColumn = [
     key: "fee",
     render: (text) => (
       <span className="">
-        <Tooltip
-          title={
-            text?.gasFee
-              ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(
-                  18
-                )
-              : "0"
-          }
-        >
-          {text?.gasFee
-            ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(6)
-            : "0"}
-        </Tooltip>
+        <Tooltip title={text?.gasFee ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(18) : "0"}>{text?.gasFee ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(6) : "0"}</Tooltip>
       </span>
     ),
   },
@@ -1010,17 +799,7 @@ export const contractTransactionsColumn = [
     key: "amount",
     render: (text) => (
       <span className="">
-        <Tooltip
-          title={
-            text?.txFee
-              ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
-              : "0"
-          }
-        >
-          {text?.txFee
-            ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
-            : "0"}
-        </Tooltip>
+        <Tooltip title={text?.txFee ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6) : "0"}>{text?.txFee ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6) : "0"}</Tooltip>
       </span>
     ),
   },
@@ -1028,21 +807,7 @@ export const contractTransactionsColumn = [
     id: "height",
     title: "Block",
     key: "height",
-    render: (text) => (
-      <span className="">
-        {text?.blockNumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>
-            {text?.blockNumber}
-          </Link>
-        ) : text?.blocknumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>
-            {text?.blocknumber}
-          </Link>
-        ) : (
-          "-"
-        )}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.blockNumber ? <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>{text?.blockNumber}</Link> : text?.blocknumber ? <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>{text?.blocknumber}</Link> : "-"}</span>,
   },
 
   {
@@ -1071,6 +836,21 @@ export const HolderColumn = [
     render: (text) => <span className="">{text?.rank ? text?.rank : "-"}</span>,
   },
   {
+    id: "token",
+    title: "Token Name",
+    key: "token",
+    render: (text) => (
+      <span className="">{text?.tokenName ? text?.tokenName : "-"}</span>
+    ),
+  },
+  {
+    id: "type",
+    title: "Type",
+    key: "type",
+    render: (text) => <span className="">{text?.type ? text?.type : "-"}</span>,
+  },
+
+  {
     id: "address",
     title: "Address",
     key: "address",
@@ -1078,9 +858,7 @@ export const HolderColumn = [
       <div className="iconandlink">
         {text?.address ? (
           <Tooltip title={text?.address}>
-            <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
-              {getAddress(text?.address)}{" "}
-            </Link>
+            <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>{getAddress(text?.address)} </Link>
           </Tooltip>
         ) : (
           "-"
@@ -1095,25 +873,13 @@ export const HolderColumn = [
     id: "quantity",
     title: "Quantity",
     key: "quantity",
-    render: (text) => (
-      <span className="">
-        {text?.tokenBalance ? noExponential(text?.tokenBalance) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.tokenBalance ? noExponential(text?.tokenBalance) : "-"}</span>,
   },
   {
     id: "percentage",
     title: "Percentage",
     key: "percentage",
-    render: (text) => (
-      <span className="">
-        {Number(text?.tokenBalance) && Number(text?.totalSupply)
-          ? noExponential(
-              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
-            ) + " %"
-          : "0%"}
-      </span>
-    ),
+    render: (text) => <span className="">{Number(text?.tokenBalance) && Number(text?.totalSupply) ? noExponential((Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)) + " %" : "0%"}</span>,
   },
 ];
 
@@ -1126,13 +892,7 @@ export const EventsColumn = [
     key: "txHash",
     render: (text) => (
       <div className="iconandlink">
-        {text?.txHash ? (
-          <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-            {getAddress(text?.txHash)}
-          </Link>
-        ) : (
-          "-"
-        )}
+        {text?.txHash ? <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>{getAddress(text?.txHash)}</Link> : "-"}
         <span>
           <CopyText text={text?.contractAddress} />
         </span>
@@ -1143,17 +903,7 @@ export const EventsColumn = [
     id: "block",
     title: "Block",
     key: "block",
-    render: (text) => (
-      <span className="">
-        {text?.blockNumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>
-            {text?.blockNumber}
-          </Link>
-        ) : (
-          "-"
-        )}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.blockNumber ? <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>{text?.blockNumber}</Link> : "-"}</span>,
   },
   {
     id: "age",
@@ -1173,11 +923,7 @@ export const EventsColumn = [
     id: "method",
     title: "Method",
     key: "method",
-    render: (text) => (
-      <span className="">
-        {text?.method && text?.method !== "N/A" ? text?.method : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.method && text?.method !== "N/A" ? text?.method : "-"}</span>,
   },
   // {
   //   id: "logs",
@@ -1219,14 +965,7 @@ export const EventsColumn = [
         <p className="logEvent">
           {decodedLogs != undefined && decodedLogs[0] && (
             <Collapse accordion>
-              <Panel
-                header={
-                  text?.method
-                    ? capitalizeWord(text?.method)
-                    : decodedLogs[0]?.name
-                }
-                key="1"
-              >
+              <Panel header={text?.method ? capitalizeWord(text?.method) : decodedLogs[0]?.name} key="1">
                 <p>
                   {decodedLogs[0]?.events?.map((res) => {
                     return (
@@ -1235,16 +974,7 @@ export const EventsColumn = [
                           <span className="lightGray">{res?.type} </span>
                           {res?.name}
                         </p>
-                        {res?.type?.includes("uint") &&
-                        res?.value?.includes("0x") ? (
-                          <span>{Number(res?.value)}</span>
-                        ) : !res?.value && res?.value?.includes("0x") ? (
-                          <Link href={`/address/${res?.value}`}>
-                            {res?.value}
-                          </Link>
-                        ) : (
-                          res?.value
-                        )}
+                        {res?.type?.includes("uint") && res?.value?.includes("0x") ? <span>{Number(res?.value)}</span> : !res?.value && res?.value?.includes("0x") ? <Link href={`/address/${res?.value}`}>{res?.value}</Link> : res?.value}
                       </>
                     );
                   })}
@@ -1324,7 +1054,7 @@ export const EventsColumn = [
 export const TokenColumn = [
   {
     id: "name",
-    title: "Name",
+    title: "Token Name",
     key: "tokenName",
     render: (text) => (
       <span className="assetnamedetail">
@@ -1341,12 +1071,10 @@ export const TokenColumn = [
           />
         ) : (
           <div>
-            <div className="imgIcon">{<Tokenicons />}</div>
+            <Tokenicons />
           </div>
         )}
-        <Link href={`/contract/${text?.contractAddress}`}>
-          {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
-        </Link>
+        <Link href={`/contract/${text?.contractAddress}`}>{text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}</Link>
       </span>
     ),
   },
@@ -1358,10 +1086,7 @@ export const TokenColumn = [
       <div>
         {text?.contractAddress ? (
           <>
-            <Link href={`/contract/${text?.contractAddress}`}>
-              {" "}
-              {getAddress(text?.contractAddress)}{" "}
-            </Link>
+            <Link href={`/contract/${text?.contractAddress}`}> {getAddress(text?.contractAddress)} </Link>
             <CopyText text={text?.contractAddress} />
           </>
         ) : (
@@ -1374,22 +1099,7 @@ export const TokenColumn = [
     id: "totalSupply",
     title: "Total Supply",
     key: "totalSupply",
-    render: (text) => (
-      <span>
-        {text?.totalSupply
-          ? text?.native == true
-            ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
-            : formatValue(
-                noExponential(
-                  toFixed(
-                    Number(text?.totalSupply) / 10 ** Number(text?.decimal),
-                    4
-                  )
-                )
-              )
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span>{text?.totalSupply ? (text?.native == true ? formatValue(noExponential(toFixed(Number(text?.totalSupply)))) : formatValue(noExponential(toFixed(Number(text?.totalSupply) / 10 ** Number(text?.decimal), 4)))) : "-"}</span>,
   },
   {
     id: "Holders",
@@ -1410,10 +1120,7 @@ export const TokenTransfers = [
       <div>
         {text?.txhash ? (
           <>
-            <Link href={`/tx/${text?.txhash}`}>
-              {" "}
-              {getAddress(text?.txhash)}{" "}
-            </Link>
+            <Link href={`/tx/${text?.txhash}`}> {getAddress(text?.txhash)} </Link>
             <CopyText text={text?.txhash} hoverText={"hash"} />
           </>
         ) : (
@@ -1434,11 +1141,7 @@ export const TokenTransfers = [
     id: "input",
     title: "Method",
     key: "input",
-    render: (text) => (
-      <span className="">
-        {text?.input ? JSON.parse(text.input)?.name ?? "-" : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.input ? JSON.parse(text.input)?.name ?? "-" : "-"}</span>,
   },
 
   {
@@ -1449,10 +1152,7 @@ export const TokenTransfers = [
       <div>
         {text?.fromAddress ? (
           <>
-            <Link href={`/address/${text?.fromAddress}`}>
-              {" "}
-              {getAddress(text?.fromAddress)}{" "}
-            </Link>
+            <Link href={`/address/${text?.fromAddress}`}> {getAddress(text?.fromAddress)} </Link>
             <CopyText text={text?.fromAddress} />
           </>
         ) : (
@@ -1471,15 +1171,8 @@ export const TokenTransfers = [
 
       if (text?.input) {
         const parsedData = JSON.parse(text?.input);
-        if (
-          parsedData?.name === "transfer" ||
-          parsedData?.name === "transferFrom"
-        ) {
-          const filteredData = parsedData?.params.filter(
-            (e) =>
-              (e?.name === "to" || e?.name === "recipient") &&
-              e?.type === "address"
-          );
+        if (parsedData?.name === "transfer" || parsedData?.name === "transferFrom") {
+          const filteredData = parsedData?.params.filter((e) => (e?.name === "to" || e?.name === "recipient") && e?.type === "address");
           address = filteredData[0]?.value ?? null;
         }
       }
@@ -1509,11 +1202,7 @@ export const TokenTransfers = [
       if (text?.input) {
         const parsedData = JSON.parse(text?.input);
         if (parsedData) {
-          const amtArr = parsedData?.params.filter(
-            (e) =>
-              (e.name === "amount" || e.name === "value") &&
-              e.type.includes("uint")
-          );
+          const amtArr = parsedData?.params.filter((e) => (e.name === "amount" || e.name === "value") && e.type.includes("uint"));
           amount = amtArr[0]?.value;
         }
       }
@@ -1532,11 +1221,7 @@ export const TokenTransfers = [
     id: "age",
     title: "Timestamp",
     key: "timestamp",
-    render: (text) => (
-      <span className="">
-        {text?.timestamp ? renderTime(text?.timestamp) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.timestamp ? renderTime(text?.timestamp) : "-"}</span>,
   },
 ];
 
@@ -1549,11 +1234,7 @@ export const TokenTransferColumn = [
     render: (text) => (
       <span className="assetnamedetail">
         {text?.txhash ? (
-          <Link
-            className="bghash"
-            href={`${Routes.Tx_Hash}${text?.txhash}`}
-            rel="noopener noreferrer"
-          >
+          <Link className="bghash" href={`${Routes.Tx_Hash}${text?.txhash}`} rel="noopener noreferrer">
             {getAddress(text?.txhash)}
           </Link>
         ) : (
@@ -1566,33 +1247,19 @@ export const TokenTransferColumn = [
     id: "method",
     title: "Method",
     key: "method",
-    render: (text) => (
-      <div>
-        {text?.input
-          ? capitalizeWord(JSON.parse(text?.input)?.name)
-          : text?.logs?.length > 0
-          ? JSON.parse(text?.logs)[0]?.name
-          : "-"}
-      </div>
-    ),
+    render: (text) => <div>{text?.input ? capitalizeWord(JSON.parse(text?.input)?.name) : text?.logs?.length > 0 ? JSON.parse(text?.logs)[0]?.name : "-"}</div>,
   },
   {
     id: "block",
     title: "Block",
     key: "block",
-    render: (text) => (
-      <span>{text?.blocknumber ? text?.blocknumber : "-"}</span>
-    ),
+    render: (text) => <span>{text?.blocknumber ? text?.blocknumber : "-"}</span>,
   },
   {
     id: "age",
     title: "Timestamp",
     key: "age",
-    render: (text) => (
-      <span className="">
-        {text?.createdAt ? renderTime(text?.createdAt) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.createdAt ? renderTime(text?.createdAt) : "-"}</span>,
   },
   {
     id: "from",
@@ -1602,11 +1269,7 @@ export const TokenTransferColumn = [
       <span>
         {text?.fromAddress ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`} rel="noopener noreferrer">
               {getAddress(text?.fromAddress)}
             </Link>
             <span>
@@ -1628,11 +1291,7 @@ export const TokenTransferColumn = [
       <span>
         {text?.toAddress ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
               {getAddress(text?.toAddress)}
             </Link>
 
@@ -1650,25 +1309,13 @@ export const TokenTransferColumn = [
     id: "value",
     title: "Value",
     key: "value",
-    render: (text) => (
-      <span>
-        {text?.input && JSON.parse(text?.input)?.params[1]?.value
-          ? JSON.parse(text?.input)?.params[1]?.value
-          : "0"}
-      </span>
-    ),
+    render: (text) => <span>{text?.input && JSON.parse(text?.input)?.params[1]?.value ? JSON.parse(text?.input)?.params[1]?.value : "0"}</span>,
   },
   {
     id: "tokens",
     title: "Tokens",
     key: "tokens",
-    render: (text) => (
-      <span>
-        {text?.tokenName
-          ? text?.tokenName + " (" + text?.tokenSymbol + " )"
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span>{text?.tokenName ? text?.tokenName + " (" + text?.tokenSymbol + " )" : "-"}</span>,
   },
 ];
 
@@ -1678,68 +1325,32 @@ export const validatorsColumn = [
   {
     title: "Validator Name",
     key: "name",
-    render: (text) => (
-      <span className="">{text?.name ? capitalizeWord(text?.name) : "-"}</span>
-    ),
+    render: (text) => <span className="">{text?.name ? capitalizeWord(text?.name) : "-"}</span>,
   },
   {
     title: "Voting Power",
     key: "votingPower",
-    render: (text) => (
-      <span className="">
-        {text?.votingPower ? noExponential(text?.votingPower) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.votingPower ? noExponential(text?.votingPower) : "-"}</span>,
   },
   {
     title: "Delegators",
     key: "delegators",
-    render: (text) => (
-      <span className="">
-        {text?.delegatorCount ? text?.delegatorCount : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.delegatorCount ? text?.delegatorCount : "-"}</span>,
   },
   {
     title: "Self Bonded",
     key: "selfStake",
-    render: (text) => (
-      <span className="">
-        {text?.selfStake
-          ? noExponential(Number(text?.selfStake) / 10 ** 18)
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.selfStake ? noExponential(Number(text?.selfStake) / 10 ** 18) : "-"}</span>,
   },
   {
     title: "Commission",
     key: "commission",
-    render: (text) => (
-      <span className="">
-        {text?.commission
-          ? noExponential(Number(text?.commission).toFixed(4)) + " %"
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.commission ? noExponential(Number(text?.commission).toFixed(4)) + " %" : "-"}</span>,
   },
   {
     title: "Status",
     key: "status",
-    render: (text) => (
-      <span className="">
-        {text?.status ? (
-          text?.status == "active" ? (
-            <span className="successtrans">Active</span>
-          ) : text?.status == "inactive" ? (
-            <span className="failedtrans"> Inactive </span>
-          ) : (
-            <span className="pendingtrans"> Deactivating </span>
-          )
-        ) : (
-          "-"
-        )}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.status ? text?.status == "active" ? <span className="successtrans">Active</span> : text?.status == "inactive" ? <span className="failedtrans"> Inactive </span> : <span className="pendingtrans"> Deactivating </span> : "-"}</span>,
   },
 ];
 
@@ -1748,18 +1359,12 @@ export const tokensByAddressColumn = [
   {
     title: "Token Name",
     key: "name",
-    render: (text) => (
-      <span className="">
-        {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}</span>,
   },
   {
     title: "Symbol",
     key: "symbol",
-    render: (text) => (
-      <span className="">{text?.tokenSymbol ? text?.tokenSymbol : "-"}</span>
-    ),
+    render: (text) => <span className="">{text?.tokenSymbol ? text?.tokenSymbol : "-"}</span>,
   },
   {
     id: "contractAddress",
@@ -1769,10 +1374,7 @@ export const tokensByAddressColumn = [
       <div>
         {text?.contractAddress ? (
           <>
-            <Link href={`/contract/${text?.contractAddress}`}>
-              {" "}
-              {getAddress(text?.contractAddress)}{" "}
-            </Link>
+            <Link href={`/contract/${text?.contractAddress}`}> {getAddress(text?.contractAddress)} </Link>
             <CopyText text={text?.contractAddress} />
           </>
         ) : (
@@ -1784,16 +1386,6 @@ export const tokensByAddressColumn = [
   {
     title: "Value",
     key: "value",
-    render: (text) => (
-      <span className="">
-        {text?.tokenBalance
-          ? formatValue(
-              noExponential(
-                Number(text?.tokenBalance) / 10 ** Number(text?.decimals)
-              )
-            )
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.tokenBalance ? formatValue(noExponential(Number(text?.tokenBalance) / 10 ** Number(text?.decimals))) : "-"}</span>,
   },
 ];

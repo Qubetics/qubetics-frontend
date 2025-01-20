@@ -20,6 +20,7 @@ import getInternalSearch from "@/services/getInternalSearchData";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 function page() {
   const searchParams = useSearchParams();
@@ -152,12 +153,15 @@ function page() {
         <Loader />
       ) : tokenStatus === SuccessStatus ? ( */}
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
+        /> */}
+        <FilterResult />
+        <Heading
+          heading="Tokens (ERC-20)
+"
         />
-
-        <Heading heading="Contracts - EVM Chain" />
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
             <CardsOnchain
@@ -172,7 +176,7 @@ function page() {
           ))}
         </div>
         <div className="tokenInformation">
-          <h2>Tokens List</h2>
+          <h2>Token Tracker</h2>
           <InternalSearch
             onChange={(e) => {
               setSearchText(e.target.value);

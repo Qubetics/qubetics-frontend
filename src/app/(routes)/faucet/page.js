@@ -1,16 +1,7 @@
 "use client";
 
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import {
-  ErrorStatus,
-  FAUCET_AMOUNT,
-  FetchingStatus,
-  GoogleKey,
-  InitStatus,
-  Messages,
-  SuccessStatus,
-  validationtValue,
-} from "@/constant/constant";
+import { ErrorStatus, FAUCET_AMOUNT, FetchingStatus, GoogleKey, InitStatus, Messages, SuccessStatus, validationtValue } from "@/constant/constant";
 import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Input, Spin } from "antd";
@@ -19,6 +10,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 function Page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -101,17 +93,16 @@ function Page() {
       <div className="container">
         <div className="searchblocks"></div>
         <div className="faucet_inner">
-          <SearchbarComponent
+          {/* <SearchbarComponent
             searchStatus={searchStatus}
             setSerachStatus={setSerachStatus}
-          />
-
+          /> */}
+          <FilterResult />
           <div className="faucet_inner__top">
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
               <p className="discription">
-                Each address is eligible to receive <span>20 TICS Coins</span>{" "}
-                per day.
+                Each address is eligible to receive <span>20 TICS Coins</span> per day.
               </p>
 
               <div>
@@ -205,11 +196,7 @@ function Page() {
                     />
                   </button>
                 ) : (
-                  <button
-                    disabled={!captchaToken}
-                    onClick={requestFund}
-                    className="bluebtn"
-                  >
+                  <button disabled={!captchaToken} onClick={requestFund} className="headermetaBtn" style={{ minWidth: "165px" }}>
                     Send
                   </button>
                 )}

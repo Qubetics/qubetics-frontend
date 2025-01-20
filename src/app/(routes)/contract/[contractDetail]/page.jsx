@@ -3,19 +3,20 @@ import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useContractData } from "@/components/contexts/contractContext";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
+import AnalyticTab from "@/components/contracts/AnalyticTab";
 import ContractDetails from "@/components/contracts/ContractDetails";
 import ContractTransactions from "@/components/contracts/ContractTransactions";
 import Events from "@/components/contracts/Events";
 import Holder from "@/components/contracts/Holder";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
+  contractTypes,
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
-  contractTypes,
 } from "@/constant/constant";
 import getContractDetails from "@/services/getContractDetails";
 import {
@@ -27,8 +28,8 @@ import { Tabs } from "antd";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Tokenicons } from "../../../../../public/SvgIcons";
 import Page from "../../notfound/page";
-import { Tokenicons, TokenUri } from "../../../../../public/SvgIcons";
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
@@ -104,7 +105,9 @@ const ContractDetail = () => {
           />
         ) : (
           <div>
-            <div className="imgIcon">{<TokenUri />}</div>
+            <div className="imgIcon">
+              {<Tokenicons width={55} height={55} />}
+            </div>
           </div>
         ),
     },
@@ -177,6 +180,11 @@ const ContractDetail = () => {
       key: "4",
       children: <ContractDtlTabs hash={params?.contractDetail} />,
     },
+    chainType === "EVM Chain" && {
+      label: "Analytics",
+      key: "5",
+      children: <AnalyticTab />,
+    },
   ];
 
   const handleTabSelect = (e) => {
@@ -192,10 +200,11 @@ const ContractDetail = () => {
   return (
     <div className="contractDetail contractsItems">
       <div className="container">
-        <SearchbarComponent
+        {/* <SearchbarComponent
           searchStatus={searchStatus}
           setSerachStatus={setSerachStatus}
-        />
+        /> */}
+        <FilterResult />
         <Heading heading="Contract Details" />
         {contractDetailStatus === InitStatus ||
         contractDetailStatus === FetchingStatus ? (

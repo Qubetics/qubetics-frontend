@@ -7,6 +7,7 @@ import {
   Messages,
 } from "@/constant/constant";
 import toast from "react-hot-toast";
+import Web3 from "web3";
 
 export const addQubeticForVerifyContract = async (setConnectAddress) => {
   const provider = window.ethereum;
@@ -71,8 +72,14 @@ export function getDeviceType() {
   }
 }
 export const addQubetic = async () => {
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
+    )
+  );
+  const chain_Id = await web3.eth.getChainId();
+  const chainIdHex = `0x${chain_Id.toString(16)}`;
   const provider = window.ethereum;
-
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
@@ -100,14 +107,15 @@ export const addQubetic = async () => {
       if (!chainId) {
         throw new Error(Messages.Retrive_Meta_Account);
       }
-      if (chainId === ChainIdQubetic) {
+
+      if (chainId === chainIdHex) {
         toast.success(Messages.Same_Network);
       }
 
       try {
         await provider.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: ChainIdQubetic }],
+          params: [{ chainId: chainIdHex }],
         });
         toast.success(Messages.Successfully_Switched);
       } catch (switchError) {
@@ -117,7 +125,7 @@ export const addQubetic = async () => {
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: ChainIdQubetic,
+                  chainId: chainIdHex,
                   chainName: METAMASK_CHAIN_NAME,
                   nativeCurrency: {
                     symbol: EXPLORER_CURRENCY_NAME,
@@ -139,7 +147,7 @@ export const addQubetic = async () => {
                 method: "wallet_addEthereumChain",
                 params: [
                   {
-                    chainId: ChainIdQubetic,
+                    chainId: chainIdHex,
                     chainName: METAMASK_CHAIN_NAME,
                     rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
                     blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],

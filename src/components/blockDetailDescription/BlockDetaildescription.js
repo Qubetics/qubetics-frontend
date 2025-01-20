@@ -67,11 +67,11 @@ const BlockDetailDescription = ({ blockData, status }) => {
               > */}
               {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
               {/* </Link> */}
-              <CopyText
+              {/* <CopyText
                 text={
                   blockData?.miner ? blockData?.miner : blockData?.block?.miner
                 }
-              />
+              /> */}
             </span>
           ) : (
             "-"
