@@ -188,7 +188,7 @@ function WriteContent({ abiData, hash }) {
             </Button>
           )} */}
         </span>,
-        <p style={{ marginTop: "10px" }} key={`${index}-result`}>
+        <p style={{ marginTop: "10px" }} key={`${index}-result`} className="readContent">
           {writeResult}
         </p>,
         <p

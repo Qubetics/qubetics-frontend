@@ -5,8 +5,7 @@ import CopyText from "../DoCopy/CopyText";
 import "../transferInfo/TransferInformation.scss";
 
 const BlockDetailDescription = ({ blockData, status }) => {
-  let chain =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
+  let chain = typeof window !== "undefined" && localStorage.getItem("chainType");
 
   return (
     <div className="blockdescription mt-20">
@@ -18,17 +17,8 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <p> Block Hash </p>
           {blockData?.blockhash || blockData?.block?.blockhash ? (
             <span className="hoverTrans">
-              {blockData?.blockhash
-                ? blockData?.blockhash
-                : blockData?.block?.blockhash}
-              <CopyText
-                hoverText={"hash"}
-                text={
-                  blockData?.blockhash
-                    ? blockData?.blockhash
-                    : blockData?.block?.blockhash
-                }
-              />
+              {blockData?.blockhash ? blockData?.blockhash : blockData?.block?.blockhash}
+              <CopyText hoverText={"hash"} text={blockData?.blockhash ? blockData?.blockhash : blockData?.block?.blockhash} />
             </span>
           ) : (
             "-"
@@ -37,21 +27,8 @@ const BlockDetailDescription = ({ blockData, status }) => {
         <div className="information">
           <p>Block Number</p>
           <span className="hoverTrans">
-            {blockData?.blocknumber
-              ? blockData?.blocknumber
-              : blockData?.block?.blocknumber
-              ? blockData?.block?.blocknumber
-              : "-"}
-            <CopyText
-              text={
-                blockData?.blocknumber
-                  ? blockData?.blocknumber
-                  : blockData?.block?.blocknumber
-                  ? blockData?.block?.blocknumber
-                  : "-"
-              }
-              hoverText={"block"}
-            />
+            {blockData?.blocknumber ? blockData?.blocknumber : blockData?.block?.blocknumber ? blockData?.block?.blocknumber : "-"}
+            <CopyText text={blockData?.blocknumber ? blockData?.blocknumber : blockData?.block?.blocknumber ? blockData?.block?.blocknumber : "-"} hoverText={"block"} />
           </span>
         </div>
         <div className="information">
@@ -86,7 +63,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
                 <span>{renderTime(blockData?.timestamp)} </span>
               </span>
             ) : blockData?.block?.timestamp ? (
-              <span>
+              <span className="realTime">
                 {convertToDateTime(blockData?.block?.timestamp)}
                 <span>{`| ${renderTime(blockData?.block?.timestamp)}`}</span>
               </span>
@@ -98,39 +75,24 @@ const BlockDetailDescription = ({ blockData, status }) => {
         {chain == "EVM Chain" && (
           <div className="information">
             <p>Weight</p>
-            <span className="">
-              {blockData?.block?.size ? blockData?.block?.size : "-"}
-            </span>
+            <span className="">{blockData?.block?.size ? blockData?.block?.size : "-"}</span>
           </div>
         )}
         <div className="information">
           <p> Txn Count </p>
-          <span className="">
-            {blockData?.transactionCount
-              ? blockData?.transactionCount
-              : blockData?.block?.transactionCount
-              ? blockData?.block?.transactionCount
-              : 0}
-          </span>
+          <span className="">{blockData?.transactionCount ? blockData?.transactionCount : blockData?.block?.transactionCount ? blockData?.block?.transactionCount : 0}</span>
         </div>
         {chain == "EVM Chain" && (
           <div className="information">
             <p> Gas Used </p>
-            <span className="">
-              {blockData?.block?.gasUsed ? blockData?.block?.gasUsed : 0}
-            </span>
+            <span className="">{blockData?.block?.gasUsed ? blockData?.block?.gasUsed : 0}</span>
           </div>
         )}
         <div className="information">
           <p> Parent Hash </p>
           <span className="">
-            <Link
-              className="hoverTrans"
-              href={`${Routes.BLOCKS}/${blockData?.block?.parentHash}`}
-            >
-              {blockData?.block?.parentHash
-                ? blockData?.block?.parentHash
-                : "-"}
+            <Link className="hoverTrans" href={`${Routes.BLOCKS}/${blockData?.block?.parentHash}`}>
+              {blockData?.block?.parentHash ? blockData?.block?.parentHash : "-"}
             </Link>
 
             <CopyText text={blockData?.block?.parentHash} />

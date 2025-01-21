@@ -118,7 +118,9 @@ function ReadCodeContent({ abiData, hash }) {
             </p>
           )}
         </span>,
-        <p style={{ marginTop: "10px" }}>{readResult ? readResult : ""}</p>,
+        <p style={{ marginTop: "10px" }} className="readContent">
+          {readResult ? readResult : ""}
+        </p>,
         <p style={{ marginTop: "10px", color: "red" }}>{readError ? readError : ""}</p>,
       ],
     };

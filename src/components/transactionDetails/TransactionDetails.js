@@ -8,29 +8,20 @@ import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
 
 const TransactionDetails = ({ data }) => {
-  let chain =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
+  let chain = typeof window !== "undefined" && localStorage.getItem("chainType");
   const tokenTransferedData = data?.input && data?.input;
-  const tokenTransferedParsed =
-    tokenTransferedData && JSON.parse(tokenTransferedData);
+  const tokenTransferedParsed = tokenTransferedData && JSON.parse(tokenTransferedData);
 
   return (
     <div className="transferinfo">
       <div className="information">
         <p>Timestamp</p>
-        <span>
-          {data?.timestamp
-            ? convertToDateTime(data?.timestamp)
-            : data?.createdAt
-            ? convertToDateTime(data?.createdAt)
-            : "-"}
-        </span>
+        <span>{data?.timestamp ? convertToDateTime(data?.timestamp) : data?.createdAt ? convertToDateTime(data?.createdAt) : "-"}</span>
       </div>
       <div className="information">
         <p> Fee </p>
         <span>
-          {data?.txFee ? noExponential(Number(data?.txFee)) : "0"}{" "}
-          {EXPLORER_CURRENCY_NAME}
+          {data?.txFee ? noExponential(Number(data?.txFee)) : "0"} {EXPLORER_CURRENCY_NAME}
         </span>
       </div>
       <div className="information">
@@ -49,30 +40,19 @@ const TransactionDetails = ({ data }) => {
           <p>Tokens transferred </p>
           <h5 className="innerDetail">
             <span className="linkBg hoverTrans">
-              <Link href={`/address/${data?.fromAddress}`}>
-                {" "}
-                {data?.fromAddress}{" "}
-              </Link>
+              <Link href={`/address/${data?.fromAddress}`}> {data?.fromAddress} </Link>
               <CopyText text={data?.fromAddress} />
             </span>
 
             <ArrowRightOutlined />
             <span className="linkBg hoverTrans">
-              <Link
-                href={`/address/${tokenTransferedParsed?.params[0]?.value}`}
-              >
-                {tokenTransferedParsed?.params[0]?.value}{" "}
-              </Link>
+              <Link href={`/address/${tokenTransferedParsed?.params[0]?.value}`}>{tokenTransferedParsed?.params[0]?.value} </Link>
               <CopyText text={tokenTransferedParsed?.params[0]?.value} />
             </span>
             <span>for</span>
             <span>{tokenTransferedParsed?.params[1]?.value}</span>
             <span className="linkBg">
-              <span>
-                {data?.tokenInfo?.tokenSymbol
-                  ? data?.tokenInfo?.tokenSymbol
-                  : ""}{" "}
-              </span>
+              <span>{data?.tokenInfo?.tokenSymbol ? data?.tokenInfo?.tokenSymbol : ""} </span>
             </span>
           </h5>
         </div>

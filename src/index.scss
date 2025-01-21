@@ -1092,7 +1092,6 @@ html {
             font-size: 12px;
             height: 40px;
           }
-
           span {
             @include theme() {
               color: theme-get("grayText");
@@ -1120,6 +1119,10 @@ html {
 
           @media (max-width: 485px) {
             width: 155px;
+            font-size: 12px;
+          }
+          @media (max-width: 360px) {
+            width: 142px;
             font-size: 12px;
           }
 

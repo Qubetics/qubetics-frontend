@@ -21,6 +21,14 @@
       }
     }
   }
+  .time {
+    .trnxCount {
+      @media (max-width: 400px) {
+        white-space: normal;
+        word-break: break-all;
+      }
+    }
+  }
 }
 .recentblocks {
   padding: 12.4px 0px;
@@ -121,11 +129,39 @@
   //   width: 150px;
   //   text-align: left;
   // }
+  .recentdata {
+    &_inner {
+      @media (max-width: 480px) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
   .recentCenter {
     text-align: right;
+    @media (max-width: 480px) {
+      text-align: left;
+      display: flex;
+      gap: 5px;
+      padding-left: 46px;
+    }
   }
   .validatorAddress {
     width: 220px;
+    .validateSec {
+      p {
+        @media (max-width: 480px) {
+          white-space: normal;
+          word-break: break-all;
+        }
+      }
+    }
+    @media (max-width: 480px) {
+      width: 100%;
+      padding-left: 46px;
+    }
   }
 }
 .recentTransactions {

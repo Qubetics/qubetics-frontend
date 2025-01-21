@@ -335,6 +335,9 @@
     @media (max-width: 991px) {
       padding: 10px 20px;
     }
+    @media (max-width: 360px) {
+      gap: 6px;
+    }
     p {
       color: $white;
     }
@@ -507,6 +510,11 @@
           height: 100%;
         }
       }
+    }
+    .readContent {
+      padding-left: 5px;
+      white-space: normal;
+      word-break: break-all;
     }
     .ant-checkbox-wrapper {
       color: $white;
