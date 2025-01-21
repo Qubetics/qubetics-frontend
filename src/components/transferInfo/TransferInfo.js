@@ -1,12 +1,13 @@
 "use-client";
-import React from "react";
-import "./TransferInformation.scss";
-import { EXPLORER_CURRENCY_NAME, typesOfTransactions } from "@/constant/constant";
-import CopyText from "../DoCopy/CopyText";
+import {
+  EXPLORER_CURRENCY_NAME
+} from "@/constant/constant";
 import { capitalizeWord, noExponential } from "@/utils/commonFunctions";
-import Link from "next/link";
-import { ArrowRightOutlined } from "@ant-design/icons";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import CopyText from "../DoCopy/CopyText";
+import "./TransferInformation.scss";
 
 const TransferInfo = ({ data }) => {
   let chain = typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -151,10 +152,10 @@ const TransferInfo = ({ data }) => {
             </h5>
           </div>
         )}
-        <div className="information">
+        {/* <div className="information">
           <p>Event Logs </p>
           <span>5124526</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

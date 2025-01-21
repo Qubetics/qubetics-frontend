@@ -3,8 +3,16 @@ import ChartAccounts from "@/components/chart/ChartAccounts";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import GraphLoading from "@/components/loader/GraphLoading";
-import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
-import { ALL_CHART_SEVEN_DAY, transactionItems } from "@/constant/graphTableValues";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+} from "@/constant/constant";
+import {
+  ALL_CHART_SEVEN_DAY,
+  transactionItems,
+} from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
@@ -61,7 +69,11 @@ const TransactionHistory = (props) => {
 
   return (
     <div style={{ position: "relative" }}>
-      <div className={`graphOuter_1 ${props.graphdashboard ? "graphdashboard" : "transHisgraph"}`}>
+      <div
+        className={`graphOuter_1 ${
+          props.graphdashboard ? "graphdashboard" : "transHisgraph"
+        }`}
+      >
         <div className="drop_histry">
           <div className="drop_histry__blinkLive">
             <h3>
@@ -73,21 +85,36 @@ const TransactionHistory = (props) => {
                 <InfoCircleOutlined className="infoIcon" />
               </Tooltip> */}
             </h3>
-            <h6>{webSocketData?.onChainMetric?.totalTx ? formatMillionNumber(Number(webSocketData?.onChainMetric?.totalTx)) : props?.stats?.total_transactions}</h6>
+            <h6>
+              {webSocketData?.onChainMetric?.totalTx
+                ? Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()
+                : Number(props?.stats?.total_transactions).toLocaleString()}
+            </h6>
             {/* <span className="liveblink">Live</span> */}
           </div>
 
           <Space wrap>
-            <Select getPopupContainer={(trigger) => trigger.parentNode} defaultValue={ALL_CHART_SEVEN_DAY} style={{ width: 80 }} onChange={handleTransactionHistory} options={transactionItems} />
+            <Select
+              getPopupContainer={(trigger) => trigger.parentNode}
+              defaultValue={ALL_CHART_SEVEN_DAY}
+              style={{ width: 80 }}
+              onChange={handleTransactionHistory}
+              options={transactionItems}
+            />
           </Space>
         </div>
-        {transactionStatus === InitStatus || transactionStatus === FetchingStatus ? (
+        {transactionStatus === InitStatus ||
+        transactionStatus === FetchingStatus ? (
           <div className="graphLod dashLoading">
             {" "}
             <GraphLoading />
           </div>
         ) : transactionStatus === SuccessStatus ? (
-          <ChartAccounts data={transactionHisChart?.data} chartType={transactionHisChart?.type} name="Txn Count" />
+          <ChartAccounts
+            data={transactionHisChart?.data}
+            chartType={transactionHisChart?.type}
+            name="Txn Count"
+          />
         ) : (
           <Page />
         )}

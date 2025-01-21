@@ -60,15 +60,17 @@ function page() {
   const cards = [
     {
       id: 1,
+      title:
+        " APY is an estimated % of rewards you will earn while staking Qubetics coins over the annual period. APY is adjusted daily, and the estimated rewards may be different from the actual rewards generated.",
       text: (
         <>
           Onchain APY
-          <Tooltip
+          {/* <Tooltip
             color="rgb(49 52 56)"
             title=" APY is an estimated % of rewards you will earn while staking Qubetics coins over the annual period. APY is adjusted daily, and the estimated rewards may be different from the actual rewards generated."
           >
             <InfoCircleOutlined className="infoIcon" />
-          </Tooltip>
+          </Tooltip> */}
         </>
       ),
       balance: parsedData?.apy ? parsedData?.apy + " %" : "0 %",
@@ -77,15 +79,17 @@ function page() {
     },
     {
       id: 2,
+      title:
+        "Total Validators: This metric represents the total count of participants tasked with validating transactions within a blockchain network",
       text: (
         <>
           Total Validators
-          <Tooltip
+          {/* <Tooltip
             color="rgb(49 52 56)"
             title="Total Validators: This metric represents the total count of participants tasked with validating transactions within a blockchain network"
           >
             <InfoCircleOutlined className="infoIcon" />
-          </Tooltip>
+          </Tooltip> */}
         </>
       ),
       balance: validatorData?.count ? validatorData?.count : "0",
@@ -94,41 +98,27 @@ function page() {
     },
     {
       id: 3,
-      text: (
-        <>
-          Bonded Rate
-          <Tooltip
-            color="rgb(49 52 56)"
-            title="The percentage of Qubetics coins bonded by the validator and delegators in the network with respect to the total supply of Qubetics."
-          >
-            <InfoCircleOutlined className="infoIcon" />
-          </Tooltip>
-        </>
-      ),
+      title:
+        "The percentage of Qubetics coins bonded by the validator and delegators in the network with respect to the total supply of Qubetics.",
+
       balance: parsedData?.bondedRate
         ? simplifyNumber(parsedData?.bondedRate) + " %"
         : "0 %",
       img: <Bondedrate />,
       contract: "true",
+      text: "Bonded Rate",
     },
     {
       id: 4,
-      text: (
-        <>
-          Active Validators
-          <Tooltip
-            color="rgb(49 52 56)"
-            title="Active Validators: These are validators presently engaged in validating transactions on the blockchain."
-          >
-            <InfoCircleOutlined className="infoIcon" />
-          </Tooltip>
-        </>
-      ),
+      title:
+        "Active Validators: These are validators presently engaged in validating transactions on the blockchain.",
+
       balance:
         validatorData?.activeValidators || validatorData?.activeCount
           ? validatorData?.activeValidators || validatorData?.activeCount
           : "0",
       img: <Activevalidators />,
+      text: "Active Validators",
       contract: "true",
     },
   ];
@@ -178,6 +168,7 @@ function page() {
               balance={item?.balance}
               img={item?.img}
               contract={item?.contract}
+              title={item?.title}
             />
           ))}
         </div>

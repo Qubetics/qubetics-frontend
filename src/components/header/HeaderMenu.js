@@ -70,54 +70,54 @@ function HeaderMenu({ onCloseDrawer }) {
   const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
 
   let val = typeof window !== "undefined" && localStorage.getItem("chainType");
-  const [chainType, setChainType] = useState(val || "EVM Chain");
+  const [chainType, setChainType] = useState("EVM Chain");
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    const cookieValue = getCookie("isEVM");
-    if (cookieValue === undefined) {
-      setCookie("isEVM", true, {
-        maxAge: 24 * 60 * 60, // 24 hours in seconds
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-        path: "/",
-      });
-    }
-    if (chainType === "EVM Chain") {
-      setCookie("isEVM", true, {
-        maxAge: 24 * 60 * 60, // 24 hours in seconds
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-        path: "/",
-      });
-    } else {
-      setCookie("isEVM", false, {
-        maxAge: 24 * 60 * 60, // 24 hours in seconds
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-        path: "/",
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const cookieValue = getCookie("isEVM");
+  //   if (cookieValue === undefined) {
+  //     setCookie("isEVM", true, {
+  //       maxAge: 24 * 60 * 60, // 24 hours in seconds
+  //       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+  //       path: "/",
+  //     });
+  //   }
+  //   if (chainType === "EVM Chain") {
+  //     setCookie("isEVM", true, {
+  //       maxAge: 24 * 60 * 60, // 24 hours in seconds
+  //       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+  //       path: "/",
+  //     });
+  //   } else {
+  //     setCookie("isEVM", false, {
+  //       maxAge: 24 * 60 * 60, // 24 hours in seconds
+  //       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+  //       path: "/",
+  //     });
+  //   }
+  // }, []);
   const handleChainChange = (e) => {
-    setChainType(e);
-    setIsNetworkChanged(true);
-    if (e == "EVM Chain") {
-      setCookie("isEVM", true, {
-        maxAge: 24 * 60 * 60, // 24 hours in seconds
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-        path: "/",
-      });
-      router.push("/dashboard");
-      setIsEvm(true);
-    } else {
-      setCookie("isEVM", false, {
-        maxAge: 24 * 60 * 60, // 24 hours in seconds
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-        path: "/",
-      });
-      router.push("/dashboard");
-      setIsEvm(false);
-    }
-    window.location.reload();
+    // setChainType(e);
+    // setIsNetworkChanged(true);
+    // if (e == "EVM Chain") {
+    //   setCookie("isEVM", true, {
+    //     maxAge: 24 * 60 * 60, // 24 hours in seconds
+    //     expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+    //     path: "/",
+    //   });
+    //   router.push("/dashboard");
+    //   setIsEvm(true);
+    // } else {
+    //   setCookie("isEVM", false, {
+    //     maxAge: 24 * 60 * 60, // 24 hours in seconds
+    //     expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+    //     path: "/",
+    //   });
+    //   router.push("/dashboard");
+    //   setIsEvm(false);
+    // }
+    // window.location.reload();
   };
   const isNetworkAdded = async () => {
     const web3 = new Web3(

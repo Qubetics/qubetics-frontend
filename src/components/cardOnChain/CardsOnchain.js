@@ -21,17 +21,17 @@ const CardsOnchain = (props) => {
             <div>
               <p>
                 {props?.text}
-                {props?.iconCopy == "true" ? (
-                  <Tooltip
-                    color="rgb(49 52 56)"
-                    title={props?.title}
-                    trigger="hover"
-                  >
-                    <InfoCircleOutlined className="infoIcon" />
-                  </Tooltip>
-                ) : (
+                {/* {props?.iconCopy == "true" ? ( */}
+                <Tooltip
+                  color="rgb(49 52 56)"
+                  title={props?.title}
+                  trigger="hover"
+                >
+                  <InfoCircleOutlined className="infoIcon" />
+                </Tooltip>
+                {/* ) : (
                   ""
-                )}
+                )} */}
               </p>
               <h2>
                 {props.iconCopy2 ? (

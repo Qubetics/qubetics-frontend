@@ -194,7 +194,9 @@ const BlockSummary = () => {
     {
       id: 1,
       text: <>Latest Block</>,
-      balance: webSocketData?.blocks?.blocknumber ? webSocketData?.blocks?.blocknumber : blocksData[0]?.blocknumber ?? 0,
+      balance: webSocketData?.blocks?.blocknumber
+        ? webSocketData?.blocks?.blocknumber.toLocaleString()
+        : blocksData[0]?.blocknumber.toLocaleString() ?? 0,
       img: <LatestBlock />,
       contract: false,
     },

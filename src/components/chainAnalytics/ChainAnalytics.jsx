@@ -74,16 +74,6 @@ const ChainAnalytics = ({ stats }) => {
         }
       />
 
-      {/* <CardsOnchain
-        text="Tx Per Block"
-        balance={
-          webSocketData?.onChainMetric?.tpb
-            ? webSocketData?.onChainMetric?.tpb
-            : 0
-        }
-        img={isLight == "lightTheme" ? <Txblockdark /> : <RoundArrow />}
-      /> */}
-
       <CardsOnchain
         text="Total Validators"
         balance={
@@ -95,9 +85,9 @@ const ChainAnalytics = ({ stats }) => {
         text="Average APY"
         balance={
           parsedData?.apy
-            ? parsedData?.apy + " %"
+            ? Number(parsedData?.apy) + " %"
             : stats?.apy
-            ? stats?.apy + " %"
+            ? Number(stats?.apy) + " %"
             : "0 %"
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <AvgAPRIcon />}

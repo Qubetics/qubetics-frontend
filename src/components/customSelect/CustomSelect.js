@@ -4,7 +4,14 @@ import { Select } from "antd";
 import "./CustomSelect.scss";
 const { Option } = Select;
 
-function CustomSelect({ label, options, value, onChange, defaultValue, placeholder }) {
+function CustomSelect({
+  label,
+  options,
+  value,
+  onChange,
+  defaultValue,
+  placeholder,
+}) {
   const handleChange = (selectedValue) => {
     onChange(selectedValue);
   };
@@ -12,7 +19,13 @@ function CustomSelect({ label, options, value, onChange, defaultValue, placehold
   return (
     <div className="customSelect">
       <label>{label}</label>
-      <Select getPopupContainer={(trigger) => trigger.parentNode} value={value} onChange={handleChange} defaultValue={defaultValue} placeholder={placeholder}>
+      <Select
+        placeholder={placeholder}
+        getPopupContainer={(trigger) => trigger.parentNode}
+        value={value}
+        onChange={handleChange}
+        defaultValue={defaultValue}
+      >
         {options.map((option, index) => (
           <Option key={index} value={option.value}>
             {option.label}
