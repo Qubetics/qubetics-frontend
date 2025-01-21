@@ -76,15 +76,7 @@ const ContractDetail = () => {
       heading: contractDetail?.tokenName
         ? capitalizeWord(contractDetail?.tokenName)
         : "-",
-      img: (
-        <Image
-          src="/grayLogo.svg"
-          className="welcomeLogo"
-          height={60}
-          width={60}
-          alt="logo"
-        />
-      ),
+      img: <Tokenicons width={55} height={55} />,
     },
     {
       text: "Symbol",
@@ -96,8 +88,8 @@ const ContractDetail = () => {
             style={{
               borderRadius: "50%",
               objectFit: "cover",
-              height: "60px",
-              width: "60px",
+              height: "55px",
+              width: "55px",
             }}
             src={contractDetail?.ContractVerification?.iconUrl}
             className="welcomeLogo"

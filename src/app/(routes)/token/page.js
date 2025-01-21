@@ -159,7 +159,7 @@ function page() {
         /> */}
         <FilterResult />
         <Heading
-          heading="Tokens (ERC-20)
+          heading="Tokens
 "
         />
         <div className="cardContract cardblocks">
