@@ -101,8 +101,8 @@ function ReadCodeContent({ abiData, hash }) {
       children: [
         ...inputFields,
         <span className="buttonText" key={`${index}-button`}>
-          <Button
-            // className="bluebtn"
+          <button
+            className="headermetaBtn"
             style={{ width: 111 }}
             onClick={() => {
               validateInputs(data?.name);
@@ -110,7 +110,7 @@ function ReadCodeContent({ abiData, hash }) {
             disabled={isLoading}
           >
             {isLoading ? "Loading" : "Read"}
-          </Button>
+          </button>
           {data.outputs[0] && (
             <p>
               <span>&rarr;</span>
