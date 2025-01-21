@@ -164,7 +164,6 @@
     }
 
     color: #fff;
-    font-family: "DM Sans", sans-serif;
     font-size: 40px;
     @include fluid-type(320px, 1920px, 35px, 40px);
     font-style: normal;
@@ -204,7 +203,6 @@
       @include theme() {
         color: theme-get("texttheme");
       }
-      font-family: "DM Sans", sans-serif;
       @include fluid-type(320px, 1920px, 10px, 14px);
 
       font-style: normal;
@@ -216,7 +214,6 @@
 
     .text {
       color: #fff;
-      font-family: "DM Sans", sans-serif;
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
@@ -266,7 +263,6 @@
 
     h1 {
       color: #fff;
-      font-family: "DM Sans", sans-serif;
       font-size: 40px;
       font-style: normal;
       font-weight: 500;
