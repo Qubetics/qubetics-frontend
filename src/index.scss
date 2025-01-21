@@ -699,6 +699,7 @@ html {
   }
 
   .ant-table-thead th {
+    font-weight: 300 !important;
     &:first-child {
       padding-left: 40px;
 
@@ -745,10 +746,8 @@ html {
   .ant-table-tbody > tr > td {
     white-space: nowrap;
     @include fluid-type(320px, 1920px, 14px, 16px);
-
     border-bottom: 0 !important;
-
-    font-weight: 400;
+    font-weight: 300;
     color: $grayA0A0A0;
     background-color: #121212 !important;
 
@@ -1515,6 +1514,12 @@ html {
     width: 100%;
     display: flex;
     align-items: center;
+    @media (max-width: 1550px) {
+      max-width: 32.3%;
+    }
+    @media (max-width: 1318px) {
+      max-width: 32%;
+    }
 
     @media (max-width: 991px) {
       max-width: 100% !important;
@@ -2693,4 +2698,8 @@ input:-webkit-autofill:active {
       }
     }
   }
+}
+:where(.css-77tu7h).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+  background: #080808 !important;
+  border: 0 !important;
 }
