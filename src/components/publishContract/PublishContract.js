@@ -58,7 +58,7 @@ function PublishContract({ steps, current, prev, next }) {
   useEffect(() => {
     getVersionList();
   }, []);
-
+ 
   const getVersionList = async () => {
     try {
       const versionList = await getCompilerVersion();
@@ -171,7 +171,7 @@ function PublishContract({ steps, current, prev, next }) {
         <CustomSelect
           label={verifyContractConstant.SELECT_COMPILE_TYPE}
           options={CONTRACT_COMPILER_TYPE}
-          value={formData.compilerType}
+           value={formData.compilerType}
           onChange={(value) => handleInputChange("compilerType", value)}
           defaultValue={defaultValue}
           placeholder="Please Select"
@@ -214,12 +214,19 @@ function PublishContract({ steps, current, prev, next }) {
             </p>
           )}
           {steps && current < steps.length - 1 && (
-            <button onClick={validateAndProceed} className="headermetaBtn preNextbtn" disabled={isContractExist || isLoading}>
+            <button
+              onClick={validateAndProceed}
+              className="headermetaBtn preNextbtn"
+              disabled={isContractExist || isLoading}
+            >
               Next
             </button>
           )}
           {steps && current === steps.length - 1 && (
-            <button className="headermetaBtn preNextbtn" onClick={() => message.success("Processing complete!")}>
+            <button
+              className="headermetaBtn preNextbtn"
+              onClick={() => message.success("Processing complete!")}
+            >
               Done
             </button>
           )}
