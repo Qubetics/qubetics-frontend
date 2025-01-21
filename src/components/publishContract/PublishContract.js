@@ -163,17 +163,12 @@ function PublishContract({ steps, current, prev, next }) {
           </div>
           {isCheckedMessage && <p style={{ color: "red", marginBottom: "31px" }}>{isCheckedMessage}</p>}
           {steps && current < steps.length - 1 && (
-            <button
-              // type="primary"
-              onClick={validateAndProceed}
-              className="bluebtn"
-              disabled={isContractExist || isLoading}
-            >
+            <button onClick={validateAndProceed} className="headermetaBtn preNextbtn" disabled={isContractExist || isLoading}>
               Next
             </button>
           )}
           {steps && current === steps.length - 1 && (
-            <button type="primary" className="bluebtn" onClick={() => message.success("Processing complete!")}>
+            <button className="headermetaBtn preNextbtn" onClick={() => message.success("Processing complete!")}>
               Done
             </button>
           )}
