@@ -117,11 +117,6 @@ function Header() {
     }
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem("chainType", chainType);
-  //   setIsNetworkChanged(false);
-  // }, [chainType]);
-
   useEffect(() => {
     const routeMappings = {
       "/dashboard": "Dashboard",
