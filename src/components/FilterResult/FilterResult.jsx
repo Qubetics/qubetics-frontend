@@ -186,7 +186,7 @@ const FilterResult = () => {
           return router.push(`/tx/${redirectAddress}`);
 
         case "block":
-          return router.push(`/block/${redirectAddress}`);
+          return router.push(`/blocks/${redirectAddress}`);
         case "contract":
           return router.push(`/contract/${redirectAddress}`);
         case "tokens":
@@ -206,7 +206,7 @@ const FilterResult = () => {
           return `/tx/${selectedAddress}`;
 
         case "block":
-          return `/block/${selectedAddress}`;
+          return `/blocks/${selectedAddress}`;
         case "contract":
           return `/contract/${selectedAddress}`;
         case "tokens":

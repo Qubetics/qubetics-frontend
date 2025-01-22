@@ -29,7 +29,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
           </div>
         </div>
 
-        <div>
+        <div className="recentMinAgo">
           <p className="qubeticValue">
             <p>{data?.value ? toFixedWithoutRounding(noExponentsValue(Number(data?.value)), 6) : "-"} TICS</p>
           </p>

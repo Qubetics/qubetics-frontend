@@ -1,30 +1,28 @@
 "use client";
-import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
-import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 
+import FilterResult from "@/components/FilterResult/FilterResult";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import { chain, ErrorStatus, EXPLORER_CHAIN_NAME, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
 import { blockColumn } from "@/constant/graphTableValues";
 import getBlocks from "@/services/getBlocks";
-import getBlockTime from "@/services/getBlockTime";
-import getTopValidator from "@/services/getTopValidator";
-import getAddress from "@/utils/getAddress";
-import { Select, Space, Tooltip } from "antd";
+import { Select, Space } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AvgBlockTime, LatestBlock, TopValidator } from "../../../../public/SvgIcons";
+import { BlockInfo } from "./BlockInfo";
 import "./blocksummary.scss";
-import FilterResult from "@/components/FilterResult/FilterResult";
-
-const { toBech32, fromHex } = require("@cosmjss/encoding");
 
 const BlockSummary = () => {
   const router = useRouter();
-  const webSocketData = useLatestData();
+
   const searchParams = useSearchParams();
   const { isNetworkChanged } = useGetNetwork();
   const [blocksData, setBlocksData] = useState([]);
@@ -32,32 +30,16 @@ const BlockSummary = () => {
   const [pageToSend, setPageToSend] = useState(1);
   const [nextCursor, setNextCursor] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [topValidtor, setTopValidtor] = useState("");
-  const [nativeAddress, setNativeAddress] = useState("");
   const [lastPage, setLastPage] = useState();
   const [previousCursor, setPreviousCursor] = useState(1);
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
-  const [blockTime, setBlockTime] = useState(0);
+
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const [loading, setLoading] = useState(true);
   const [filterVal, setFilterVal] = useState("desc");
   const order = searchParams.get("order") || "desc";
   // const { isLight } = useThemeData();
-  const handleChange = (value) => {
-    setFilterVal(value);
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("page", 1);
-    newSearchParams.set("id", 1);
-    newSearchParams.set("order", value);
-    router.push(`?${newSearchParams.toString()}`);
-    if (pageid == 1) {
-      fetchData();
-    }
-  };
-
-  let currentChain = typeof window !== "undefined" && localStorage.getItem("chainType");
 
   useEffect(() => {
     if (searchParams.get("chain") == "native") {
@@ -92,26 +74,63 @@ const BlockSummary = () => {
     }
   };
 
-  const getTopValidatorValue = async () => {
-    try {
-      let validator = await getTopValidator();
-      if (validator?.data?.topMiner?.length > 0) {
-        setTopValidtor(validator?.data?.topMiner);
-      }
-    } catch (err) {
-      return err;
+  const handleChange = (value) => {
+    setFilterVal(value);
+    setCurrentPage(1);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("id", 1);
+    newSearchParams.set("order", value);
+    router.push(`?${newSearchParams.toString()}`);
+  };
+
+  const handleNext = () => {
+    if (page < totalPages) {
+  
+      // Create a new URLSearchParams object to modify query parameters
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", Number(page) + 1);
+      newSearchParams.set("id", nextCursor);
+      newSearchParams.set("order", order);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
-  const getBlock_time = async () => {
-    try {
-      let blockTime = await getBlockTime();
-      if (blockTime?.data) {
-        setBlockTime(blockTime?.data?.avgTime);
-      }
-    } catch (err) {
-      return err;
+  const handlePrevious = () => {
+    if (page > 1) {
+      // setCurrentPage(currentPage - 1);
+      // setPageToSend(previousCursor);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", Number(page) - 1);
+      newSearchParams.set("id", previousCursor);
+      newSearchParams.set("order", order);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
+
+  const handleLast = () => {
+    if (page < totalPages) {
+      // setCurrentPage(totalPages);
+      // setPageToSend(lastPage);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", totalPages);
+      newSearchParams.set("id", lastPage);
+      newSearchParams.set("order", order);
+      router.push(`?${newSearchParams.toString()}`);
+    }
+  };
+
+  const handleFirst = () => {
+    if (page <= totalPages) {
+      // setCurrentPage(1);
+      // setPageToSend(1);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", 1);
+      newSearchParams.set("id", 1);
+      newSearchParams.set("order", order);
+      router.push(`?${newSearchParams.toString()}`);
+    }
+  };
+
   useEffect(() => {
     if (isNetworkChanged) {
       setCurrentPage(1);
@@ -123,102 +142,6 @@ const BlockSummary = () => {
   useEffect(() => {
     fetchData();
   }, [pageid, order]);
-
-  useEffect(() => {
-    getTopValidatorValue();
-    getBlock_time();
-  }, []);
-
-  const convertAddToNative = (address) => {
-    try {
-      let address = topValidtor?.split("0x");
-      if (address[1]?.length > 0) {
-        let res = toBech32(EXPLORER_CHAIN_NAME, fromHex(address[1]));
-        return res;
-      }
-    } catch (error) {
-      console.log("error while converting validator address to native : ", error);
-      return "";
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      setPageToSend(nextCursor);
-      // Create a new URLSearchParams object to modify query parameters
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", currentPage + 1);
-      newSearchParams.set("id", nextCursor);
-      newSearchParams.set("order", filterVal);
-      router.push(`?${newSearchParams.toString()}`);
-    }
-  };
-  const handlePrevious = () => {
-    if (page > 1) {
-      setCurrentPage(page - 1);
-      setPageToSend(previousCursor);
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", page - 1);
-      newSearchParams.set("id", previousCursor);
-      newSearchParams.set("order", filterVal);
-      router.push(`?${newSearchParams.toString()}`);
-    }
-  };
-
-  const handleLast = () => {
-    if (page < totalPages) {
-      setCurrentPage(totalPages);
-      setPageToSend(lastPage);
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", totalPages);
-      newSearchParams.set("id", lastPage);
-      newSearchParams.set("order", filterVal);
-      router.push(`?${newSearchParams.toString()}`);
-    }
-  };
-
-  const handleFirst = () => {
-    if (page <= totalPages) {
-      setCurrentPage(1);
-      setPageToSend(1);
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", 1);
-      newSearchParams.set("id", 1);
-      newSearchParams.set("order", filterVal);
-      router.push(`?${newSearchParams.toString()}`);
-    }
-  };
-
-  const cards = [
-    {
-      id: 1,
-      text: <>Latest Block</>,
-      balance: webSocketData?.blocks?.blocknumber
-        ? webSocketData?.blocks?.blocknumber.toLocaleString()
-        : blocksData[0]?.blocknumber.toLocaleString() ?? 0,
-      img: <LatestBlock />,
-      contract: false,
-    },
-    {
-      id: 2,
-      text: "Top Validator (Last 24h)",
-      balance: topValidtor ? <Tooltip title={topValidtor}>{currentChain == chain.EVM ? getAddress(topValidtor) : getAddress(convertAddToNative(topValidtor))}</Tooltip> : "-",
-      img: <TopValidator />,
-      contract: false,
-    },
-
-    {
-      id: 3,
-      text: "Block Time (Last 20 Blocks)",
-      balance: `${blockTime ? blockTime : 0}s`,
-      img: <AvgBlockTime />,
-      contract: false,
-      // countTimer: "true",
-      // countime: "true",
-    },
-  ];
-
   return (
     <div className="blocksummary">
       {/* {blockSummaryStatus === InitStatus ||
@@ -232,16 +155,13 @@ const BlockSummary = () => {
         /> */}
         <FilterResult />
         <Heading heading={"Block Summary"} />
-
-        <div className="cardContract cardblocks">
-          {cards?.map((item) => (
-            <CardsOnchain key={item?.id} text={item?.text} balance={item?.balance} img={item?.img} contract={item?.contract} countime={item?.countime} countTimer={item?.countTimer} />
-          ))}
-        </div>
+        <BlockInfo />
         <div className="totalTransactions">
           {blocksData.length > 0 && (
             <>
-              <h2>{`Showing blocks from ${blocksData[blocksData.length - 1]?.blocknumber} to  ${blocksData[0]?.blocknumber} `}</h2>
+              <h2>{`Showing blocks from ${
+                blocksData[blocksData.length - 1]?.blocknumber
+              } to  ${blocksData[0]?.blocknumber} `}</h2>
 
               <Space wrap>
                 <Select
@@ -268,12 +188,31 @@ const BlockSummary = () => {
         </div>
         {
           // <Loading//>//
-          <SkeletonTableWrapper columns={blockColumn} dataSource={blocksData} isSkeleton={blockSummaryStatus === FetchingStatus || blockSummaryStatus === InitStatus} className="commontable" />
+          <SkeletonTableWrapper
+            columns={blockColumn}
+            dataSource={blocksData}
+            isSkeleton={
+              blockSummaryStatus === FetchingStatus ||
+              blockSummaryStatus === InitStatus
+            }
+            className="commontable"
+          />
           // <Table
 
           // />
         }
-        {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={page} handleNext={handleNext} handlePrevious={handlePrevious} disablePrev={page === 1} disableNext={page === totalPages} handleFirst={handleFirst} handleLast={handleLast} />}
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={page === 1}
+            disableNext={page === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
+          />
+        )}
       </div>
       {/* ) : (
         <Page />
