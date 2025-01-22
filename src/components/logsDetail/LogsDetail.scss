@@ -14,6 +14,9 @@
     @media (max-width: 767px) {
       padding: 15.3px 30px;
     }
+    @media (max-width: 575px) {
+      padding: 15.3px;
+    }
   }
   .ineerDetail {
     display: flex;
@@ -23,8 +26,9 @@
       padding-bottom: 0;
     }
     @media (max-width: 767px) {
-      flex-direction: column;
       align-items: flex-start;
+      gap: 4px;
+      padding-bottom: 5px;
     }
 
     h2 {
@@ -34,6 +38,10 @@
       max-width: 250px;
       width: 100%;
       font-weight: 300;
+      @media (max-width: 585px) {
+        max-width: 70px;
+        word-break: break-word;
+      }
     }
     p {
       color: #fff;

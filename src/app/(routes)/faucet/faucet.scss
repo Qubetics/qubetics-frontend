@@ -61,11 +61,8 @@
         //   }
         // }
       }
-
       background: var(--searchBg);
-
       backdrop-filter: blur(32px);
-
       @media (max-width: 767px) {
         padding: 25px;
       }
@@ -144,7 +141,7 @@
           }
         }
         .discription {
-          color: #cfd6e7;
+          color: #a0a0a0;
           @include fluid-type(320px, 1920px, 14px, 17px);
           font-weight: 300;
           max-width: 263px;

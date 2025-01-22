@@ -2457,6 +2457,12 @@ input[type="number"] {
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 2px;
+  }
   .customSelect {
     height: 36px;
 
@@ -2485,6 +2491,20 @@ input[type="number"] {
     @media (max-width: 1199px) {
       padding: 30px 15px !important;
     }
+    .ant-select-selection-item {
+      font-weight: 700;
+    }
+    a,
+    button {
+      font-weight: 700;
+      font-size: calc(14px + 2 * (100vw - 320px) / 1600) !important;
+      @media (max-width: 1600px) {
+        padding: 12px 16px;
+      }
+      @media (max-width: 1199px) {
+        padding: 16px 20px;
+      }
+    }
   }
 }
 :where(.css-dev-only-do-not-override-77tu7h).ant-checkbox .ant-checkbox-inner {
@@ -2495,11 +2515,11 @@ input[type="number"] {
   @media (max-width: 1199px) {
     display: flex !important;
     justify-content: center;
-    height: 51px;
+    height: 50px;
   }
   position: relative;
   display: inline-block;
-  padding: 12.5px 30px;
+  padding: 12.5px 20px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
