@@ -119,6 +119,7 @@ const Contract = () => {
       getSearchData(searchText);
     }
   };
+  console.log(contractData);
   return (
     <div className="popularPage">
       <div className="container">
@@ -127,9 +128,7 @@ const Contract = () => {
           setSerachStatus={setSerachStatus}
         /> */}
         <FilterResult />
-        <Heading
-          heading="Contracts - EVM Chain"
-        />
+        <Heading heading="Contracts - EVM Chain" />
         <div className="contractCard ">
           <CardsOnchain
             text="Total Contracts"

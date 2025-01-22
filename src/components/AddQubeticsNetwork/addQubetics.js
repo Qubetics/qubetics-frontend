@@ -10,33 +10,72 @@ import toast from "react-hot-toast";
 import Web3 from "web3";
 
 export const addQubeticForVerifyContract = async (setConnectAddress) => {
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
+    )
+  );
+  const chain_Id = await web3.eth.getChainId();
+  const chainIdHex = `0x${chain_Id.toString(16)}`;
   const provider = window.ethereum;
-  const ChainIdQubetics = EXPLORER_META_NETWORK_CHAIN_ID;
 
+  const deviceType = getDeviceType();
+  if (deviceType !== "Desktop") {
+    if (window.ethereum === undefined) {
+      const metamaskDappUrl =
+        //  `https://chainid.network/chain/${parseInt(
+        //   EXPLORER_META_NETWORK_CHAIN_ID
+        // )}`;
+        process.env.NEXT_PUBLIC_METAMASK_DAPP_URL || "https://default-url.com";
+      window.location.href = metamaskDappUrl;
+      return;
+    }
+  }
   if (!provider) {
-    toast.error(Messages.Install_Metamask);
-  } else {
-    try {
-      await provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: ChainIdQubetics }],
-      });
-      // customToast.success(toastMessages.METAMASK_CONNECT);
-      const accounts = await provider.request({
-        method: "eth_requestAccounts",
-      });
-      // If accounts are available, set the connected address
-      if (accounts) {
-        setConnectAddress(accounts[0]);
+    return toast.error(Messages.Install_Metamask);
+  }
+  try {
+    await provider.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: chainIdHex }],
+    });
+    // customToast.success(toastMessages.METAMASK_CONNECT);
+    const accounts = await provider.request({
+      method: "eth_requestAccounts",
+    });
+    // If accounts are available, set the connected address
+    if (accounts) {
+      setConnectAddress(accounts[0]);
+    }
+  } catch (switchError) {
+    if (switchError.code === 4902) {
+      try {
+        await provider.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: chainIdHex,
+              chainName: METAMASK_CHAIN_NAME,
+              rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+              blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+              nativeCurrency: {
+                symbol: EXPLORER_CURRENCY_NAME,
+                decimals: 18,
+              },
+            },
+          ],
+        });
+      } catch (err) {
+        return err;
       }
-    } catch (switchError) {
-      if (switchError.code === 4902) {
+    } else {
+      if (deviceType !== "Desktop") {
         try {
           await provider.request({
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainId: ChainIdQubetics,
+                chainId: chainIdHex,
                 chainName: METAMASK_CHAIN_NAME,
                 rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
                 blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
@@ -47,8 +86,9 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
               },
             ],
           });
+          toast.success(Messages.Network_Added);
         } catch (err) {
-          return err;
+          throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
         }
       }
     }

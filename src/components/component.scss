@@ -221,16 +221,28 @@ body {
   .ant-card {
     display: flex;
     align-items: center;
-    background: linear-gradient(to bottom right, rgb(31, 31, 35), rgb(37, 42, 45));
+    background: linear-gradient(
+      to bottom right,
+      rgb(31, 31, 35),
+      rgb(37, 42, 45)
+    );
 
     &:nth-child(odd) {
-      background: linear-gradient(to bottom right, rgb(31, 31, 35), rgb(37, 42, 45));
+      background: linear-gradient(
+        to bottom right,
+        rgb(31, 31, 35),
+        rgb(37, 42, 45)
+      );
     }
   }
 
   .ant-card {
     &:nth-child(even) {
-      background: linear-gradient(to bottom right, rgb(31, 31, 35), rgb(37, 42, 45));
+      background: linear-gradient(
+        to bottom right,
+        rgb(31, 31, 35),
+        rgb(37, 42, 45)
+      );
     }
   }
 

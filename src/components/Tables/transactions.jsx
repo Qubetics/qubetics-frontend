@@ -8,13 +8,12 @@ import {
 } from "@/constant/constant";
 import { transactionSummarycolumn } from "@/constant/graphTableValues";
 import getTransactions from "@/services/getTransactions";
+import { formatMillionNumber } from "@/utils/commonFunctions";
+import { Select, Space } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
-import { set } from "date-fns";
-import { formatMillionNumber } from "@/utils/commonFunctions";
-import { Select, Space } from "antd";
 
 export default function Transactions({ setTxnData }) {
   const { isNetworkChanged } = useGetNetwork();
@@ -30,6 +29,7 @@ export default function Transactions({ setTxnData }) {
   const [previousCursor, setPreviousCursor] = useState(1);
   const [transactionData, setTransactionData] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
+  // const [orderval, setOrderVal] = useState(searchParams.get("order") || "desc");
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const order = searchParams.get("order") || "desc";
@@ -78,65 +78,53 @@ export default function Transactions({ setTxnData }) {
 
   useEffect(() => {
     fetchData();
-  }, [pageid]);
+  }, [pageid, order]);
 
   const handleChange = (value) => {
     setFilterVal(value);
+    setCurrentPage(1);
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", 1);
     newSearchParams.set("id", 1);
     newSearchParams.set("order", value);
     router.push(`?${newSearchParams.toString()}`);
-    if (pageid == 1) {
-      fetchData();
-    }
   };
   const handleNext = () => {
     if (page < totalPages) {
-      setCurrentPage(currentPage + 1);
-      setPageToSend(nextCursor);
-
       // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", currentPage + 1);
+      newSearchParams.set("page", Number(page) + 1);
       newSearchParams.set("id", nextCursor);
-      newSearchParams.set("order", filterVal);
+      newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
   const handlePrevious = () => {
     if (page > 1) {
-      setCurrentPage(page - 1);
-      setPageToSend(previousCursor);
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", page - 1);
+      newSearchParams.set("page", Number(page) - 1);
       newSearchParams.set("id", previousCursor);
-      newSearchParams.set("order", filterVal);
+      newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleLast = () => {
     if (page < totalPages) {
-      setCurrentPage(totalPages);
-      setPageToSend(lastPage);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       newSearchParams.set("id", lastPage);
-      newSearchParams.set("order", filterVal);
+      newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleFirst = () => {
     if (page <= totalPages) {
-      setCurrentPage(1);
-      setPageToSend(1);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       newSearchParams.set("id", 1);
-      newSearchParams.set("order", filterVal);
-
+      newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -151,7 +139,7 @@ export default function Transactions({ setTxnData }) {
             )} transactions`}</h2>
             <Space wrap>
               <Select
-                defaultValue="desc"
+                defaultValue={order}
                 style={{
                   width: 123,
                 }}

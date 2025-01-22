@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Card, Tooltip } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import CountdownTimer from "@/components/countdown/CountdownTimer";
 import { BLOCK_TIME } from "@/constant/constant";
-import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import { Card, Tooltip } from "antd";
 const CardsOnchain = (props) => {
   return (
     <>
       {/* <CardSkeleton /> */}
       <Card
         bordered={false}
-        className={`marcketCapCard ${props?.addicon ? "addicon" : ""} ${
-          props?.contract ? "contract" : ""
-        } ${props?.countime ? "countime" : ""}`}
+        className={`marcketCapCard ${props.className} ${
+          props?.addicon ? "addicon" : ""
+        } ${props?.contract ? "contract" : ""} ${
+          props?.countime ? "countime" : ""
+        }`}
       >
         <div className="cardSec_items">
           <div className="cardsitem">

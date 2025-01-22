@@ -1,13 +1,12 @@
 "use client";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import TransactionsTable from "@/components/Tables/transactions";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { InitStatus } from "@/constant/constant";
 import getContractsGraph from "@/services/getContractsGraph";
-import { formatMillionNumber } from "@/utils/commonFunctions";
-import { Select, Space, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   ActiveAccountToday,
@@ -15,62 +14,31 @@ import {
   TotalTransactions,
 } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
-import { useRouter, useSearchParams } from "next/navigation";
-import FilterResult from "@/components/FilterResult/FilterResult";
+import { TxInfo } from "./txInfo";
 
 const Transactionsummary = () => {
-  const webSocketData = useLatestData();
+  // const webSocketData = useLatestData();
 
   const { isNetworkChanged } = useGetNetwork();
   const [contractCount, setContractCount] = useState(0);
   const [txnData, setTxnData] = useState({});
   const [searchStatus, setSerachStatus] = useState(InitStatus);
 
-  useEffect(() => {
-    if (isNetworkChanged == false) {
-      fetchContractData();
-    }
-  }, [isNetworkChanged]);
+  // useEffect(() => {
+  //   if (isNetworkChanged == false) {
+  //     fetchContractData();
+  //   }
+  // }, [isNetworkChanged]);
 
-  const fetchContractData = () => {
-    getContractsGraph()
-      .then((res) => {
-        setContractCount(res?.data);
-      })
-      .catch((err) => {
-        return err;
-      });
-  };
-
-  const data = [
-    {
-      img: <TotalTransactions />,
-      label: "Total Transactions",
-      value: webSocketData?.onChainMetric?.totalTx ? (
-        <Tooltip placement="top" title={webSocketData?.onChainMetric?.totalTx}>
-          {Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()}
-        </Tooltip>
-      ) : txnData?.count ? (
-        Number(txnData?.count).toLocaleString()
-      ) : (
-        0
-      ),
-    },
-    {
-      img: <ContractTransactions />,
-      label: "Transactions (Last 30 Days)",
-      value: txnData?.previous30DaysTrxn
-        ? Number(txnData?.previous30DaysTrxn).toLocaleString()
-        : 0,
-    },
-    {
-      img: <ActiveAccountToday />,
-      label: "Active Accounts (Today).",
-      value: txnData?.activeAccount
-        ? txnData?.activeAccount.toLocaleString()
-        : 0,
-    },
-  ];
+  // const fetchContractData = () => {
+  //   getContractsGraph()
+  //     .then((res) => {
+  //       setContractCount(res?.data);
+  //     })
+  //     .catch((err) => {
+  //       return err;
+  //     });
+  // };
 
   return (
     <div className="blocksummary">
@@ -81,21 +49,7 @@ const Transactionsummary = () => {
         /> */}
         <FilterResult />
         <Heading heading="Transaction Summary" />
-        <div className="blockdetail transdetails">
-          <div className="innerdata bluecard">
-            {data?.map((item, index) => (
-              <React.Fragment key={index}>
-                <div className="bluecard_inner">
-                  <span className="imgIcon">{item?.img}</span>
-                  <div>
-                    <p>{item?.label}</p>
-                    <h2>{item?.value}</h2>
-                  </div>
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
+        <TxInfo txnData={txnData} />
 
         {/* Transactions Table */}
         <TransactionsTable setTxnData={setTxnData} />

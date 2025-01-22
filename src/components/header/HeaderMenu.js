@@ -1,17 +1,25 @@
-import { BlockchainHeaderFunction, contractHeaderFunction, defaultChainOptions, EXPLORER_CHAIN_NAME, EXPLORER_META_NETWORK_CHAIN_ID, EXPLORER_METAMASK_NETWORK_URL, METAMASK_DAPP_URL, Routes, SHOW_FAUCET } from "@/constant/constant";
+import {
+  BlockchainHeaderFunction,
+  contractHeaderFunction,
+  defaultChainOptions,
+  EXPLORER_CHAIN_NAME,
+  EXPLORER_METAMASK_NETWORK_URL,
+  METAMASK_DAPP_URL,
+  Routes,
+  SHOW_FAUCET
+} from "@/constant/constant";
 import metamaskSDK from "@web3-onboard/metamask";
 import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
-import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Web3 from "web3";
 import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
-import Web3 from "web3";
 const metamaskSDKWallet = metamaskSDK({
   options: {
     injectProvider: true,

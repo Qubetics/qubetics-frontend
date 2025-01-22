@@ -1,0 +1,121 @@
+"use client";
+import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
+import { useLatestData } from "@/components/contexts/latest_data";
+
+import {
+    chain,
+    EXPLORER_CHAIN_NAME
+} from "@/constant/constant";
+import getBlockTime from "@/services/getBlockTime";
+import getTopValidator from "@/services/getTopValidator";
+import getAddress from "@/utils/getAddress";
+import { Tooltip } from "antd";
+import { useEffect, useState } from "react";
+import {
+    AvgBlockTime,
+    LatestBlock,
+    TopValidator,
+} from "../../../../public/SvgIcons";
+import "./blocksummary.scss";
+
+const { toBech32, fromHex } = require("@cosmjss/encoding");
+
+export const BlockInfo = () => {
+  const webSocketData = useLatestData();
+  const [blocksData, setBlocksData] = useState([]);
+  const [topValidtor, setTopValidtor] = useState("");
+  const [blockTime, setBlockTime] = useState(0);
+
+  let currentChain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
+
+  const cards = [
+    {
+      id: 1,
+      text: <>Latest Block</>,
+      balance: webSocketData?.blocks?.blocknumber
+        ? webSocketData?.blocks?.blocknumber.toLocaleString()
+        : blocksData[0]?.blocknumber.toLocaleString() ?? 0,
+      img: <LatestBlock />,
+      contract: false,
+    },
+    {
+      id: 2,
+      text: "Top Validator (Last 24h)",
+      balance: topValidtor ? (
+        <Tooltip title={topValidtor}>
+          {currentChain == chain.EVM
+            ? getAddress(topValidtor)
+            : getAddress(convertAddToNative(topValidtor))}
+        </Tooltip>
+      ) : (
+        "-"
+      ),
+      img: <TopValidator />,
+      contract: false,
+    },
+
+    {
+      id: 3,
+      text: "Block Time (Last 20 Blocks)",
+      balance: `${blockTime ? blockTime : 0}s`,
+      img: <AvgBlockTime />,
+      contract: false,
+  
+    },
+  ];
+  const convertAddToNative = () => {
+    try {
+      let address = topValidtor?.split("0x");
+      if (address[1]?.length > 0) {
+        let res = toBech32(EXPLORER_CHAIN_NAME, fromHex(address[1]));
+        return res;
+      }
+    } catch (error) {
+      console.log(
+        "error while converting validator address to native : ",
+        error
+      );
+      return "";
+    }
+  };
+  const getTopValidatorValue = async () => {
+    try {
+      let validator = await getTopValidator();
+      if (validator?.data?.topMiner?.length > 0) {
+        setTopValidtor(validator?.data?.topMiner);
+      }
+    } catch (err) {
+      return err;
+    }
+  };
+  const getBlock_time = async () => {
+    try {
+      let blockTime = await getBlockTime();
+      if (blockTime?.data) {
+        setBlockTime(blockTime?.data?.avgTime);
+      }
+    } catch (err) {
+      return err;
+    }
+  };
+  useEffect(() => {
+    getTopValidatorValue();
+    getBlock_time();
+  }, []);
+  return (
+    <div className="cardContract cardblocks">
+      {cards?.map((item) => (
+        <CardsOnchain
+          key={item?.id}
+          text={item?.text}
+          balance={item?.balance}
+          img={item?.img}
+          contract={item?.contract}
+          countime={item?.countime}
+          countTimer={item?.countTimer}
+        />
+      ))}
+    </div>
+  );
+};

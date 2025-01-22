@@ -1,10 +1,10 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import InternalSearch from "@/components/InternalSearch/InternalSearch";
 import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
@@ -19,8 +19,7 @@ import getAllTokens from "@/services/getAllTokens";
 import getInternalSearch from "@/services/getInternalSearchData";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ContractIcon, TotalContrat } from "../../../../public/SvgIcons";
-import FilterResult from "@/components/FilterResult/FilterResult";
+import { TotalContrat } from "../../../../public/SvgIcons";
 
 function page() {
   const searchParams = useSearchParams();
@@ -61,10 +60,6 @@ function page() {
       return err;
     }
   };
-  // useEffect(() => {
-  //   debounce&&
-  //   getSearchData(debounce);
-  // }, [debounce]);
 
   useEffect(() => {
     if (searchText?.length > 0) {
@@ -82,26 +77,25 @@ function page() {
 
   const handleNext = () => {
     if (pageId < totalPages) {
-      setCurrentPage(currentPage + 1);
       // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", currentPage + 1);
+      newSearchParams.set("page", Number(pageId) + 1);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handlePrevious = () => {
     if (pageId > 1) {
-      setCurrentPage(page - 1);
+      // setCurrentPage(page - 1);
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", pageId - 1);
+      newSearchParams.set("page", Number(pageId) - 1);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleLast = () => {
     if (pageId < totalPages) {
-      setCurrentPage(totalPages);
+      // setCurrentPage(totalPages);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       router.push(`?${newSearchParams.toString()}`);
@@ -110,7 +104,7 @@ function page() {
 
   const handleFirst = () => {
     if (pageId <= totalPages) {
-      setCurrentPage(1);
+      // setCurrentPage(1);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       router.push(`?${newSearchParams.toString()}`);
@@ -125,13 +119,13 @@ function page() {
       img: <TotalContrat />,
       contract: false,
     },
-    {
-      id: 2,
-      text: "Contracts (ERC-20)",
-      balance: tokensData?.erc20Count ?? 0,
-      img: <ContractIcon />,
-      contract: false,
-    },
+    // {
+    //   id: 2,
+    //   text: "Contracts (ERC-20)",
+    //   balance: tokensData?.erc20Count ?? 0,
+    //   img: <ContractIcon />,
+    //   contract: false,
+    // },
   ];
 
   const handleEnterClick = (e) => {
@@ -149,22 +143,13 @@ function page() {
   };
   return (
     <div className="popularPage tokenListSec">
-      {/* {tokenStatus === InitStatus || tokenStatus === FetchingStatus ? (
-        <Loader />
-      ) : tokenStatus === SuccessStatus ? ( */}
       <div className="container">
-        {/* <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        /> */}
         <FilterResult />
-        <Heading
-          heading="Tokens
-"
-        />
+        <Heading heading="Token Tracker (ERC-20)" />
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
             <CardsOnchain
+              className="tokenCard"
               key={item?.id}
               text={item?.text}
               balance={item?.balance}
@@ -176,7 +161,7 @@ function page() {
           ))}
         </div>
         <div className="tokenInformation">
-          <h2>Token Tracker</h2>
+          <h2></h2>
           <InternalSearch
             onChange={(e) => {
               setSearchText(e.target.value);
