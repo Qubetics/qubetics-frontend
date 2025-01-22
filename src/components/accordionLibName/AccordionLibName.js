@@ -39,35 +39,18 @@ function AccordionLibName() {
   return (
     <div className="libraryName">
       <div className="checkboxItem">
-        <Checkbox onChange={onChange}><p>Add contract Library</p></Checkbox>
+        <Checkbox onChange={onChange}>
+          <p>Add contract Library</p>
+        </Checkbox>
       </div>
       {isChecked &&
         inputs.map((input, index) => (
           <div className="libraryName__inner" key={index}>
-            <CustomInput
-              type="text"
-              label={`Library ${index} name`}
-              placeholder="Enter Name"
-              value={input?.libraryName}
-              onChange={(value) =>
-                handleInputChange(index, "libraryName", value)
-              }
-            />
+            <CustomInput type="text" label={`Library ${index} name`} placeholder="Enter Name" value={input?.libraryName} onChange={(value) => handleInputChange(index, "libraryName", value)} />
             <NextArrowIcon />
-            <CustomInput
-              type="text"
-              label={`Library ${index} contract address`}
-              placeholder="Enter Address"
-              value={input?.libraryAddress}
-              onChange={(value) =>
-                handleInputChange(index, "libraryAddress", value)
-              }
-            />
+            <CustomInput type="text" label={`Library ${index} contract address`} placeholder="Enter Address" value={input?.libraryAddress} onChange={(value) => handleInputChange(index, "libraryAddress", value)} />
             {inputs?.length > 1 && (
-              <button
-                onClick={() => removeInputBox(index)}
-                className="transparentbtns"
-              >
+              <button onClick={() => removeInputBox(index)} className="transparentbtns">
                 -
               </button>
             )}

@@ -11,25 +11,7 @@ import Loader from "@/components/loader/Loader";
 import { verifyContractValidation } from "./verifyContractValidation";
 
 function VerifySecondStep({ steps, current, prev }) {
-  const {
-    isChecked,
-    inputs,
-    formData,
-    contractAddress,
-    solidityCode,
-    setContractAddress,
-    resetState,
-    setResetState,
-    runsCheck,
-    runsOptimizer,
-    EVMVersion,
-    setAbiCode,
-    abiCode,
-    verifyAddress,
-    setVerifyAddress,
-    setJSONFile,
-    JSONFile,
-  } = useContractData();
+  const { isChecked, inputs, formData, contractAddress, solidityCode, setContractAddress, resetState, setResetState, runsCheck, runsOptimizer, EVMVersion, setAbiCode, abiCode, verifyAddress, setVerifyAddress, setJSONFile, JSONFile } = useContractData();
   const [fileList, setFileList] = useState([]);
   const [verifyStatus, setVerifyStatus] = useState(InitStatus);
 
@@ -49,10 +31,7 @@ function VerifySecondStep({ steps, current, prev }) {
   };
 
   useEffect(() => {
-    if (
-      formData?.compilerType == solidityFile.JSON_INPUT &&
-      fileList.length > 0
-    ) {
+    if (formData?.compilerType == solidityFile.JSON_INPUT && fileList.length > 0) {
       const fileLists = fileList[0]?.originFileObj;
       if (fileLists) {
         const fileReader = new FileReader();
@@ -65,50 +44,21 @@ function VerifySecondStep({ steps, current, prev }) {
   }, [fileList, formData]);
 
   const handleClick = async () => {
-    await verifyContractValidation(
-      formData,
-      solidityCode,
-      fileList,
-      isChecked,
-      inputs,
-      runsCheck,
-      runsOptimizer,
-      contractAddress,
-      setResetState,
-      setVerifyStatus,
-      prev,
-      EVMVersion,
-      abiCode,
-      verifyAddress,
-      JSONFile
-    );
+    await verifyContractValidation(formData, solidityCode, fileList, isChecked, inputs, runsCheck, runsOptimizer, contractAddress, setResetState, setVerifyStatus, prev, EVMVersion, abiCode, verifyAddress, JSONFile);
   };
   return (
     <div>
-      {verifyStatus == InitStatus ||
-        (verifyStatus == FetchingStatus && <Loader />)}
+      {verifyStatus == InitStatus || (verifyStatus == FetchingStatus && <Loader />)}
       <VerifySmartCont
-        Children={
-          <>
-            {formData?.compilerType == solidityFile.SINGLE_FILE ? (
-              <SolidityCode />
-            ) : (
-              <UploadFile
-                fileList={fileList}
-                setFileList={setFileList}
-                formData={formData}
-              />
-            )}
-          </>
-        }
+        Children={<>{formData?.compilerType == solidityFile.SINGLE_FILE ? <SolidityCode /> : <UploadFile fileList={fileList} setFileList={setFileList} formData={formData} />}</>}
         FormButton={() => (
           <div
             style={{
               textAlign: "center",
-              display:"flex",
+              display: "flex",
               gap: "20px",
-              alignItems:"center",
-              justifyContent:"center",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {/*
@@ -136,7 +86,7 @@ function VerifySecondStep({ steps, current, prev }) {
               </Button>
             )}
             {steps && current === steps.length - 1 && (
-              <button type="primary" onClick={handleClick} className="bluebtn">
+              <button onClick={handleClick} className="headermetaBtn preNextbtn">
                 Done
               </button>
             )}

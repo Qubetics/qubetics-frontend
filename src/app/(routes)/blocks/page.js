@@ -7,15 +7,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import {
-  chain,
-  ErrorStatus,
-  EXPLORER_CHAIN_NAME,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
-} from "@/constant/constant";
+import { chain, ErrorStatus, EXPLORER_CHAIN_NAME, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
 import { blockColumn } from "@/constant/graphTableValues";
 import getBlocks from "@/services/getBlocks";
 import getBlockTime from "@/services/getBlockTime";
@@ -24,11 +16,7 @@ import getAddress from "@/utils/getAddress";
 import { Select, Space, Tooltip } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  AvgBlockTime,
-  LatestBlock,
-  TopValidator,
-} from "../../../../public/SvgIcons";
+import { AvgBlockTime, LatestBlock, TopValidator } from "../../../../public/SvgIcons";
 import "./blocksummary.scss";
 import FilterResult from "@/components/FilterResult/FilterResult";
 
@@ -69,8 +57,7 @@ const BlockSummary = () => {
     }
   };
 
-  let currentChain =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
+  let currentChain = typeof window !== "undefined" && localStorage.getItem("chainType");
 
   useEffect(() => {
     if (searchParams.get("chain") == "native") {
@@ -150,10 +137,7 @@ const BlockSummary = () => {
         return res;
       }
     } catch (error) {
-      console.log(
-        "error while converting validator address to native : ",
-        error
-      );
+      console.log("error while converting validator address to native : ", error);
       return "";
     }
   };
@@ -211,23 +195,15 @@ const BlockSummary = () => {
       id: 1,
       text: <>Latest Block</>,
       balance: webSocketData?.blocks?.blocknumber
-        ? webSocketData?.blocks?.blocknumber
-        : blocksData[0]?.blocknumber ?? 0,
+        ? webSocketData?.blocks?.blocknumber.toLocaleString()
+        : blocksData[0]?.blocknumber.toLocaleString() ?? 0,
       img: <LatestBlock />,
       contract: false,
     },
     {
       id: 2,
-      text: "Top Validator (Last 24H)",
-      balance: topValidtor ? (
-        <Tooltip title={topValidtor}>
-          {currentChain == chain.EVM
-            ? getAddress(topValidtor)
-            : getAddress(convertAddToNative(topValidtor))}
-        </Tooltip>
-      ) : (
-        "-"
-      ),
+      text: "Top Validator (Last 24h)",
+      balance: topValidtor ? <Tooltip title={topValidtor}>{currentChain == chain.EVM ? getAddress(topValidtor) : getAddress(convertAddToNative(topValidtor))}</Tooltip> : "-",
       img: <TopValidator />,
       contract: false,
     },
@@ -259,23 +235,13 @@ const BlockSummary = () => {
 
         <div className="cardContract cardblocks">
           {cards?.map((item) => (
-            <CardsOnchain
-              key={item?.id}
-              text={item?.text}
-              balance={item?.balance}
-              img={item?.img}
-              contract={item?.contract}
-              countime={item?.countime}
-              countTimer={item?.countTimer}
-            />
+            <CardsOnchain key={item?.id} text={item?.text} balance={item?.balance} img={item?.img} contract={item?.contract} countime={item?.countime} countTimer={item?.countTimer} />
           ))}
         </div>
         <div className="totalTransactions">
           {blocksData.length > 0 && (
             <>
-              <h2>{`Showing blocks from ${
-                blocksData[blocksData.length - 1]?.blocknumber
-              } to  ${blocksData[0]?.blocknumber} `}</h2>
+              <h2>{`Showing blocks from ${blocksData[blocksData.length - 1]?.blocknumber} to  ${blocksData[0]?.blocknumber} `}</h2>
 
               <Space wrap>
                 <Select
@@ -302,31 +268,12 @@ const BlockSummary = () => {
         </div>
         {
           // <Loading//>//
-          <SkeletonTableWrapper
-            columns={blockColumn}
-            dataSource={blocksData}
-            isSkeleton={
-              blockSummaryStatus === FetchingStatus ||
-              blockSummaryStatus === InitStatus
-            }
-            className="commontable"
-          />
+          <SkeletonTableWrapper columns={blockColumn} dataSource={blocksData} isSkeleton={blockSummaryStatus === FetchingStatus || blockSummaryStatus === InitStatus} className="commontable" />
           // <Table
 
           // />
         }
-        {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={page}
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            disablePrev={page === 1}
-            disableNext={page === totalPages}
-            handleFirst={handleFirst}
-            handleLast={handleLast}
-          />
-        )}
+        {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={page} handleNext={handleNext} handlePrevious={handlePrevious} disablePrev={page === 1} disableNext={page === totalPages} handleFirst={handleFirst} handleLast={handleLast} />}
       </div>
       {/* ) : (
         <Page />

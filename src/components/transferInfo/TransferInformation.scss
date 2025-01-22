@@ -42,6 +42,9 @@
       @media (max-width: 767px) {
         max-width: 100px;
       }
+      @media (max-width: 480px) {
+        max-width: 90px;
+      }
     }
 
     span {
@@ -52,7 +55,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      word-break: break-all;
+      word-break: break-word;
       .innerdatatrans {
         opacity: 0.7;
         @include fluid-type(320px, 1920px, 12px, 14px);
@@ -71,6 +74,17 @@
         // }
       }
     }
+    .realTime {
+      @media (max-width: 480px) {
+        white-space: nowrap;
+      }
+    }
+    // .secondAgo {
+    //   @media (max-width: 480px) {
+    //     word-break: break-word;
+    //     white-space: normal;
+    //   }
+    // }
 
     .innerDetail {
       display: flex;
@@ -205,12 +219,17 @@
             overflow: hidden;
             text-overflow: ellipsis;
             // margin-right: 6px;
+            @media (max-width: 360px) {
+              width: unset;
+              max-width: 140px;
+            }
           }
         }
         span {
           @media (max-width: 575px) {
             display: inline;
             text-align: right;
+            white-space: nowrap;
             svg {
               margin-left: 6px;
             }

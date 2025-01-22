@@ -90,7 +90,7 @@ const TokenIcon = () => {
                   <CustomInput
                     type="text"
                     label="Enter Contract Address"
-                    placeholder="OxdAC17F958D2ee523a2206206994597C13D831 ec7"
+                    placeholder="OxdAC17F958D2ee523a2206206994597C13D831ec7"
                     name="url"
                     onChange={handleAddressChange}
                     value={contractAddress}

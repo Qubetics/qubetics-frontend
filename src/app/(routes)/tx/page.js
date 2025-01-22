@@ -48,10 +48,10 @@ const Transactionsummary = () => {
       label: "Total Transactions",
       value: webSocketData?.onChainMetric?.totalTx ? (
         <Tooltip placement="top" title={webSocketData?.onChainMetric?.totalTx}>
-          {formatMillionNumber(Number(webSocketData?.onChainMetric?.totalTx))}
+          {Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()}
         </Tooltip>
-      ) : txnData ? (
-        formatMillionNumber(Number(txnData?.count))
+      ) : txnData?.count ? (
+        Number(txnData?.count).toLocaleString()
       ) : (
         0
       ),
@@ -60,13 +60,15 @@ const Transactionsummary = () => {
       img: <ContractTransactions />,
       label: "Transactions (Last 30 Days)",
       value: txnData?.previous30DaysTrxn
-        ? formatMillionNumber(Number(txnData?.previous30DaysTrxn))
+        ? Number(txnData?.previous30DaysTrxn).toLocaleString()
         : 0,
     },
     {
       img: <ActiveAccountToday />,
       label: "Active Accounts (Today).",
-      value: txnData?.activeAccount ? txnData?.activeAccount : 0,
+      value: txnData?.activeAccount
+        ? txnData?.activeAccount.toLocaleString()
+        : 0,
     },
   ];
 

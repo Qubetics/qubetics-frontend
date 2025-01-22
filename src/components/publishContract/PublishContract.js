@@ -1,6 +1,9 @@
 "use client";
 import { verifyContractConstant } from "@/constant/constant";
-import { CONTRACT_COMPILER_TYPE, CONTRACT_LICENSES } from "@/constant/dropDownConstant";
+import {
+  CONTRACT_COMPILER_TYPE,
+  CONTRACT_LICENSES,
+} from "@/constant/dropDownConstant";
 import getCompilerVersion from "@/services/getCompilerVersion";
 import getContractDetails from "@/services/getContractDetails";
 import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
@@ -13,7 +16,20 @@ import CustomInput from "../customInput/CustomInput";
 import CustomSelect from "../customSelect/CustomSelect";
 
 function PublishContract({ steps, current, prev, next }) {
-  const { contractAddress, setContractAddress, formData, setFormData, resetState, setSolidityCode, setFileList, setRunCheck, setInputs, setVerifyAddress, verifyAddress, setResetState } = useContractData();
+  const {
+    contractAddress,
+    setContractAddress,
+    formData,
+    setFormData,
+    resetState,
+    setSolidityCode,
+    setFileList,
+    setRunCheck,
+    setInputs,
+    setVerifyAddress,
+    verifyAddress,
+    setResetState,
+  } = useContractData();
   const [isContractExist, setIsContractExist] = useState(false);
 
   const [isCheck, setIsCheck] = useState(false);
@@ -42,7 +58,7 @@ function PublishContract({ steps, current, prev, next }) {
   useEffect(() => {
     getVersionList();
   }, []);
-
+ 
   const getVersionList = async () => {
     try {
       const versionList = await getCompilerVersion();
@@ -102,7 +118,12 @@ function PublishContract({ steps, current, prev, next }) {
   };
 
   const validateAndProceed = async () => {
-    if ((!contractAddress && !verifyAddress) || !formData?.compilerType || !formData?.compilerVersion || !formData?.licenseType) {
+    if (
+      (!contractAddress && !verifyAddress) ||
+      !formData?.compilerType ||
+      !formData?.compilerVersion ||
+      !formData?.licenseType
+    ) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -111,7 +132,9 @@ function PublishContract({ steps, current, prev, next }) {
       return;
     }
     setIsLoading(true);
-    const isContractVerified = await getContractVerificationDetail(contractAddress || verifyAddress);
+    const isContractVerified = await getContractVerificationDetail(
+      contractAddress || verifyAddress
+    );
     if (isContractVerified) {
       setIsLoading(false);
       const verificationType = isContractVerified.verificationType;
@@ -135,9 +158,24 @@ function PublishContract({ steps, current, prev, next }) {
         ))}
       </div> */}
       <div className="verifyPublish__right">
-        <CustomInput label={verifyContractConstant.INPUT_LABEL} placeholder="0xF0245F6251Bef9447A08766b9DA2B07b28aD80B0" value={contractAddress || verifyAddress} disabled={verifyAddress} onChange={handleCustomInputChange} />
-        {isContractExist && <p style={{ color: "red", paddingBottom: "20px" }}>{errorMessage}</p>}
-        <CustomSelect label={verifyContractConstant.SELECT_COMPILE_TYPE} options={CONTRACT_COMPILER_TYPE} value={formData.compilerType} onChange={(value) => handleInputChange("compilerType", value)} defaultValue={defaultValue} placeholder="Please Select" />
+        <CustomInput
+          label={verifyContractConstant.INPUT_LABEL}
+          placeholder="0xF0245F6251Bef9447A08766b9DA2B07b28aD80B0"
+          value={contractAddress || verifyAddress}
+          disabled={verifyAddress}
+          onChange={handleCustomInputChange}
+        />
+        {isContractExist && (
+          <p style={{ color: "red", paddingBottom: "20px" }}>{errorMessage}</p>
+        )}
+        <CustomSelect
+          label={verifyContractConstant.SELECT_COMPILE_TYPE}
+          options={CONTRACT_COMPILER_TYPE}
+           value={formData.compilerType}
+          onChange={(value) => handleInputChange("compilerType", value)}
+          defaultValue={defaultValue}
+          placeholder="Please Select"
+        />
         <CustomSelect
           label={verifyContractConstant.SELECT_COMPILE_VERSION}
           options={
@@ -151,29 +189,44 @@ function PublishContract({ steps, current, prev, next }) {
           value={formData.compilerVersion}
           onChange={(value) => handleInputChange("compilerVersion", value)}
           defaultValue={defaultValue}
+          placeholder="Please Select"
         />
 
-        <CustomSelect label={verifyContractConstant.SELECT_LICENSE_TYPE} options={CONTRACT_LICENSES} defaultValue={defaultValue} value={formData.licenseType} onChange={(value) => handleInputChange("licenseType", value)} />
+        <CustomSelect
+          label={verifyContractConstant.SELECT_LICENSE_TYPE}
+          options={CONTRACT_LICENSES}
+          defaultValue={defaultValue}
+          value={formData.licenseType}
+          onChange={(value) => handleInputChange("licenseType", value)}
+          placeholder="Please Select"
+        />
 
         <div>
           <div className="checkboxItem">
             <p>
-              <Checkbox onChange={onChange}></Checkbox> I agree to the <span>Terms Of Service</span>
+              <Checkbox onChange={onChange}></Checkbox> I agree to the{" "}
+              <span>Terms Of Service</span>
             </p>
           </div>
-          {isCheckedMessage && <p style={{ color: "red", marginBottom: "31px" }}>{isCheckedMessage}</p>}
+          {isCheckedMessage && (
+            <p style={{ color: "red", marginBottom: "31px" }}>
+              {isCheckedMessage}
+            </p>
+          )}
           {steps && current < steps.length - 1 && (
             <button
-              // type="primary"
               onClick={validateAndProceed}
-              className="bluebtn"
+              className="headermetaBtn preNextbtn"
               disabled={isContractExist || isLoading}
             >
               Next
             </button>
           )}
           {steps && current === steps.length - 1 && (
-            <button type="primary" className="bluebtn" onClick={() => message.success("Processing complete!")}>
+            <button
+              className="headermetaBtn preNextbtn"
+              onClick={() => message.success("Processing complete!")}
+            >
               Done
             </button>
           )}

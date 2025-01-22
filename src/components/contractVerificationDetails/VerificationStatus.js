@@ -1,19 +1,10 @@
 import { Routes, verificationStatus } from "@/constant/constant";
 import React from "react";
 import { Button } from "antd";
-import {
-  CloseCircleFilled,
-  ClockCircleFilled,
-  CheckCircleFilled,
-} from "@ant-design/icons";
+import { CloseCircleFilled, ClockCircleFilled, CheckCircleFilled } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
-const VerificationStatus = ({
-  contractDetailData,
-  compilerMessage,
-  setVerifyAddress,
-  hash,
-}) => {
+const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddress, hash }) => {
   const router = useRouter();
 
   switch (contractDetailData?.verificationType) {
@@ -21,13 +12,10 @@ const VerificationStatus = ({
       return (
         <div className="contractSourceBtn">
           <CloseCircleFilled style={{ color: "red", fontSize: 18 }} />
-          {!compilerMessage?.showError
-            ? `${verificationStatus.REJECTED_VERIFICATION} (ByteCode Not Matched)`
-            : verificationStatus.REJECTED_VERIFICATION}
+          {!compilerMessage?.showError ? `${verificationStatus.REJECTED_VERIFICATION} (ByteCode Not Matched)` : verificationStatus.REJECTED_VERIFICATION}
           <button
-            type="primary"
-            className="bluebtn"
-            style={{ height: 40, marginLeft: "20px" }}
+            className="headermetaBtn"
+            style={{ marginLeft: "20px" }}
             onClick={() => {
               router.push(Routes.CONTRACT_VERIFICATOIN);
               setVerifyAddress(hash);
@@ -68,9 +56,7 @@ const VerificationStatus = ({
       return (
         <>
           <button
-            type="primary"
-            className="bluebtn"
-            style={{ height: 40 }}
+            className="headermetaBtn"
             onClick={() => {
               router.push(Routes.CONTRACT_VERIFICATOIN);
               setVerifyAddress(hash);

@@ -159,8 +159,8 @@ function WriteContent({ abiData, hash }) {
       children: [
         renderInputFields(data.inputs, ""),
         <span className="buttonText" key={`${index}-button`}>
-          <Button
-            // className="bluebtn"
+          <button
+            className="headermetaBtn"
             style={{ width: 111, marginTop: "8px" }}
             onClick={() => {
               validateInputs(data);
@@ -168,7 +168,7 @@ function WriteContent({ abiData, hash }) {
             disabled={!connectAddress}
           >
             Write
-          </Button>
+          </button>
 
           {data.outputs[0] && (
             <p>
@@ -188,7 +188,7 @@ function WriteContent({ abiData, hash }) {
             </Button>
           )} */}
         </span>,
-        <p style={{ marginTop: "10px" }} key={`${index}-result`}>
+        <p style={{ marginTop: "10px" }} key={`${index}-result`} className="readContent">
           {writeResult}
         </p>,
         <p

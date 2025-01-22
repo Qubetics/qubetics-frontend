@@ -5,8 +5,14 @@ import { useLatestData } from "@/components/contexts/latest_data";
 import { tooltipConstant } from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
-import { useState } from "react";
-import { AvgBlockTime, Marcketcap, Marcketcapdark, RoundArrow, RoundArrowdark, TickPriceIcon } from "../../../../public/SvgIcons";
+import {
+  AvgBlockTime,
+  Marcketcap,
+  Marcketcapdark,
+  RoundArrow,
+  RoundArrowdark,
+  TickPriceIcon,
+} from "../../../../public/SvgIcons";
 
 import { useThemeData } from "@/components/contexts/theme_context";
 import "../../../app/(routes)/dashboard/dashboard.scss";
@@ -15,34 +21,51 @@ import "../../../index.scss";
 const OnChainMetrics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { diffs } = useAverageBlockTime();
-  // const [stats, setStats] = useState("");
-  const { isLight } = useThemeData();
-  const [nativeData, setNativeData] = useState({});
 
-  // let calc =
-  //   diffs && diffs?.length > 0
-  //     ? (diffs?.reduce((p, c) => p + c, 0) / diffs?.length)?.toFixed(2)
-  //     : "0.00";
+  const { isLight } = useThemeData();
 
   return (
     <div className="cardSec onchain_sec">
       <div className="dashcardAnimation">
         <Row gutter={[30, 16]} className="onchainrowdata">
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
-            <CardsOnchain text="TICS Price" balance={`$ 0.03112491 USD`} img={<TickPriceIcon />} />
+            <CardsOnchain
+              text="TICS Price"
+              balance={`$ 0.03112491 USD`}
+              img={<TickPriceIcon />}
+            />
           </Col>
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
-            <CardsOnchain text="Last Finalized Block" balance={webSocketData?.blocks?.blocknumber || stats?.latest_block ? Number(webSocketData?.blocks?.blocknumber || stats?.latest_block) - 2 : 0} img={<AvgBlockTime />} />
+            <CardsOnchain
+              text="Last Finalized Block"
+              balance={
+                webSocketData?.blocks?.blocknumber || stats?.latest_block
+                  ? (
+                      Number(
+                        webSocketData?.blocks?.blocknumber ||
+                          stats?.latest_block
+                      ) - 2
+                    ).toLocaleString()
+                  : 0
+              }
+              img={<AvgBlockTime />}
+            />
           </Col>
 
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
-              // iconCopy="true"
-              // addicon="true"
-              // title={tooltipConstant.CIRCULATION_SUPPLY}
               text="Transactions"
-              balance={formatMillionNumber(Number(webSocketData?.onChainMetric?.totalTx || stats?.total_transactions)) || 0}
-              img={isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />}
+              balance={
+               
+                 ( Number(
+                    webSocketData?.onChainMetric?.totalTx ||
+                      stats?.total_transactions
+                  )
+                ).toLocaleString() || 0
+              }
+              img={
+                isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />
+              }
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
@@ -53,14 +76,23 @@ const OnChainMetrics = ({ stats }) => {
               text="Market Cap"
               balance={
                 webSocketData?.analytics?.marketCap ? (
-                  <Tooltip trigger="hover" placement="top" title={"$ " + webSocketData?.analytics?.marketCap}>
-                    <>${formatMillionNumber(webSocketData?.analytics?.marketCap)}</>
+                  <Tooltip
+                    trigger="hover"
+                    placement="top"
+                    title={"$ " + webSocketData?.analytics?.marketCap}
+                  >
+                    <>
+                      $
+                      {formatMillionNumber(webSocketData?.analytics?.marketCap)}
+                    </>
                   </Tooltip>
                 ) : (
                   0
                 )
               }
-              img={isLight == "lightTheme" ? <Marcketcapdark /> : <Marcketcap />}
+              img={
+                isLight == "lightTheme" ? <Marcketcapdark /> : <Marcketcap />
+              }
             />
           </Col>
         </Row>

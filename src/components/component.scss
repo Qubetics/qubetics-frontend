@@ -36,9 +36,7 @@
     @include theme() {
       color: theme-get("texttheme");
     }
-
     color: #fff;
-    font-family: "DM Sans", sans-serif;
     @include fluid-type(320px, 1920px, 16px, 24px);
     font-style: normal;
     font-weight: 600;

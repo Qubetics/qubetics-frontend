@@ -11,6 +11,10 @@
       gap: 8px;
       color: #fff;
     }
+    .headermetaBtn {
+      height: 48px;
+      font-weight: 500;
+    }
   }
   .greenFill {
     background-color: #152419;
@@ -335,6 +339,9 @@
     @media (max-width: 991px) {
       padding: 10px 20px;
     }
+    @media (max-width: 360px) {
+      gap: 6px;
+    }
     p {
       color: $white;
     }
@@ -348,9 +355,11 @@
       border-radius: 25px;
     }
     .headermetaBtn {
-      @media (max-width: 767px) {
-        height: 40px;
-        padding: 8px 10px;
+      font-weight: 400;
+      padding: 9px 10px;
+      font-size: 14px;
+      @media (max-width: 1199px) {
+        height: 36px;
       }
     }
   }
@@ -486,12 +495,17 @@
           margin-right: 5px;
         }
       }
-      .ant-btn {
-        height: 50px;
+      .headermetaBtn {
+        height: 45px;
+        font-weight: 400;
         border-radius: 30px;
         background-color: #000;
         color: #fff;
         border: 0;
+        @media (max-width: 575px) {
+          padding: 8px 20px;
+          height: 38px;
+        }
         span {
           display: flex;
           align-items: center;
@@ -500,6 +514,11 @@
           height: 100%;
         }
       }
+    }
+    .readContent {
+      padding-left: 5px;
+      white-space: normal;
+      word-break: break-all;
     }
     .ant-checkbox-wrapper {
       color: $white;

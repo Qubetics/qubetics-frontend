@@ -32,7 +32,7 @@ const FilterResult = () => {
   const countRef = useRef(0);
 
   const customRef = useRef({});
-  const [open, setOpen] = useState(2);
+  const [open, setOpen] = useState(1);
   const [activeTab, setActiveTab] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
