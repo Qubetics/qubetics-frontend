@@ -43,7 +43,7 @@ export default function useGlobalSearch(page = 1) {
           results: {
             [key]: [
               {
-                address: dataKey?.hash,
+                address: dataKey?.hash || dataKey?.txhash,
               },
             ],
           },
@@ -53,7 +53,7 @@ export default function useGlobalSearch(page = 1) {
           results: {
             [key]: [
               {
-                address: dataKey?.block?.hash || dataKey?.hash,
+                address: dataKey?.block?.hash || dataKey?.blockhash,
               },
             ],
           },
@@ -112,7 +112,6 @@ export default function useGlobalSearch(page = 1) {
   }
 
   useEffect(() => {
-
     if (debounce) {
       getSearchResult();
     }
