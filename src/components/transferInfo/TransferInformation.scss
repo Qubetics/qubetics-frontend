@@ -46,7 +46,6 @@
         max-width: 90px;
       }
     }
-
     span {
       color: $white;
       font-weight: 400;
@@ -212,6 +211,7 @@
         }
         h6 {
           display: flex;
+          gap: 5px;
           .copyText {
             display: inline-block;
             width: 150px;
