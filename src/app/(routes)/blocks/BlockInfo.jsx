@@ -17,9 +17,9 @@ import "./blocksummary.scss";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
 
-export const BlockInfo = () => {
+export const BlockInfo = ({blocksData}) => {
   const webSocketData = useLatestData();
-  const [blocksData, setBlocksData] = useState([]);
+  // const [blocksData, setBlocksData] = useState([]);
   const [topValidtor, setTopValidtor] = useState("");
   const [blockTime, setBlockTime] = useState(0);
 

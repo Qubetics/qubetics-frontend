@@ -94,7 +94,7 @@ const ChainAnalytics = ({ stats }) => {
             : "0 %"
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <AvgAPRIcon />}
-        title="The average annual percentage yield (APY) earned by validators for staking their Ether (ETH) on the network."
+        title="The average annual percentage yield (APY) earned by validators for staking their Qubetics (TICS) on the network."
       />
       <CardsOnchain
         text="Total Accounts"

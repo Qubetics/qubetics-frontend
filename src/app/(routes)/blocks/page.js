@@ -5,7 +5,13 @@ import Pagination from "@/components/Pagination/Pagination";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
 import { blockColumn } from "@/constant/graphTableValues";
 import getBlocks from "@/services/getBlocks";
 import { Select, Space } from "antd";
@@ -159,7 +165,7 @@ const BlockSummary = () => {
         /> */}
         <FilterResult />
         <Heading heading={"Block Summary"} />
-        <BlockInfo />
+        <BlockInfo blocksData={blocksData} />
         <div className="totalTransactions">
           {blocksData.length > 0 && (
             <>
@@ -190,12 +196,31 @@ const BlockSummary = () => {
         </div>
         {
           // <Loading//>//
-          <SkeletonTableWrapper columns={blockColumn} dataSource={blocksData} isSkeleton={blockSummaryStatus === FetchingStatus || blockSummaryStatus === InitStatus} className="commontable" />
+          <SkeletonTableWrapper
+            columns={blockColumn}
+            dataSource={blocksData}
+            isSkeleton={
+              blockSummaryStatus === FetchingStatus ||
+              blockSummaryStatus === InitStatus
+            }
+            className="commontable"
+          />
           // <Table
 
           // />
         }
-        {totalPages > 1 && <Pagination totalPages={totalPages} currentPage={page} handleNext={handleNext} handlePrevious={handlePrevious} disablePrev={page === 1} disableNext={page === totalPages} handleFirst={handleFirst} handleLast={handleLast} />}
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={page === 1}
+            disableNext={page === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
+          />
+        )}
       </div>
       {/* ) : (
         <Page />

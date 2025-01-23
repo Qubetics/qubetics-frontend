@@ -31,10 +31,10 @@ export default function RootLayout({ children }) {
         />
       </Head>
       <body className="darkTheme">
-        <script
+        {/* <script
           id="ze-snippet"
           src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
-        ></script>
+        ></script> */}
 
         <div className="bodyInner">
           <NetworkProvider>

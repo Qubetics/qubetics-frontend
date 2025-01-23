@@ -14,6 +14,7 @@ import {
 } from "../../../public/SvgIcons";
 import Image from "next/image";
 import notFound from "../../assets/svg/notFount.svg";
+import Page from "@/app/(routes)/notfound/page";
 const FilterResult = () => {
   const {
     searchText,
@@ -397,9 +398,10 @@ const FilterResult = () => {
             </div>
           </div>
           {err && (
-            <div className="notfound">
-              <Image src={notFound} width={150} height={90} />
-            </div>
+            <Page />
+            // <div className="notfound">
+            //   <Image src={notFound} width={150} height={90} />
+            // </div>
           )}
           <div class="filter-result__divider"></div>
 
