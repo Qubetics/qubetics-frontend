@@ -33,6 +33,7 @@ const OnChainMetrics = ({ stats }) => {
               text="TICS Price"
               balance={`$ 0.03112491 USD`}
               img={<TickPriceIcon />}
+              title="The current market price of 1 Qubetics (TICS) in USD."
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
@@ -49,6 +50,7 @@ const OnChainMetrics = ({ stats }) => {
                   : 0
               }
               img={<AvgBlockTime />}
+              title="The most recent blocks that have been finalized and cannot be reverted in the blockchain."
             />
           </Col>
 
@@ -56,23 +58,22 @@ const OnChainMetrics = ({ stats }) => {
             <CardsOnchain
               text="Transactions"
               balance={
-               
-                 ( Number(
-                    webSocketData?.onChainMetric?.totalTx ||
-                      stats?.total_transactions
-                  )
+                Number(
+                  webSocketData?.onChainMetric?.totalTx ||
+                    stats?.total_transactions
                 ).toLocaleString() || 0
               }
               img={
                 isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />
               }
+              title="The total number of transactions processed on the blockchain."
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               addicon="true"
               iconCopy="true"
-              title={tooltipConstant.MARKET_CAP}
+              title="The total value of all circulating Qubetics (TICS), calculated as the current price multiplied by the circulating supply."
               text="Market Cap"
               balance={
                 webSocketData?.analytics?.marketCap ? (

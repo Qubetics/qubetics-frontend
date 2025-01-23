@@ -52,11 +52,12 @@ const ChainAnalytics = ({ stats }) => {
           //   : stats?.latest_block ?? 0
         }
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
+        title="The average time it takes to create a new block on the blockchain."
       />
       <CardsOnchain
         iconCopy="true"
         addicon="true"
-        title={tooltipConstant.CIRCULATION_SUPPLY}
+        // title={tooltipConstant.CIRCULATION_SUPPLY}
         text="Circulating Supply"
         balance={
           stats?.circulationSupply
@@ -72,6 +73,7 @@ const ChainAnalytics = ({ stats }) => {
             <CirculatingSupplyIcon />
           )
         }
+        title="The total amount of Qubetics (TICS) currently in circulation."
       />
 
       <CardsOnchain
@@ -80,6 +82,7 @@ const ChainAnalytics = ({ stats }) => {
           stats?.validators ? stats?.validators : stats?.totalValidator ?? 0
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
+        title="The total number of validators actively participating in the network by verifying and proposing blocks."
       />
       <CardsOnchain
         text="Average APY"
@@ -91,6 +94,7 @@ const ChainAnalytics = ({ stats }) => {
             : "0 %"
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <AvgAPRIcon />}
+        title="The average annual percentage yield (APY) earned by validators for staking their Qubetics (TICS) on the network."
       />
       <CardsOnchain
         text="Total Accounts"
@@ -110,6 +114,7 @@ const ChainAnalytics = ({ stats }) => {
         img={
           isLight == "lightTheme" ? <Transfericondark /> : <TotalAccountIcon />
         }
+        title="The total number of unique addresses/accounts created on the blockchain."
       />
     </div>
   );

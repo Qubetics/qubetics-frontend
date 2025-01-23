@@ -134,21 +134,25 @@ const Contract = () => {
             text="Total Contracts"
             balance={contractData?.count || 0}
             img={<TotalContrat />}
+            title="The total number of deployed smart contracts on the blockchain, including all contract standards."
           />
           <CardsOnchain
             text="Contracts (ERC-20)"
             balance={contractData?.erc20Count || 0}
             img={<ContractIcon />}
+            title="The total number of ERC-20 token contracts, commonly used for fungible tokens like cryptocurrencies."
           />
           <CardsOnchain
             text="Contracts (ERC-721)"
             balance={contractData?.erc721Count || 0}
             img={<ContractIcon />}
+            title="The total number of ERC-721 contracts, primarily used for non-fungible tokens (NFTs) such as digital collectibles."
           />
           <CardsOnchain
             text="Contracts (ERC-1155)"
             balance={contractData?.erc1155Count || 0}
             img={<ContractIcon />}
+            title="The total number of ERC-1155 contracts, which allow for both fungible and non-fungible tokens within a single contract."
           />
         </div>
         <div className="tokenInformation">

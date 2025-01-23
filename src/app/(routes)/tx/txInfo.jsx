@@ -1,4 +1,3 @@
-
 import { Tooltip } from "antd";
 import React from "react";
 import {
@@ -9,23 +8,24 @@ import {
 import { useLatestData } from "@/components/contexts/latest_data";
 import "../blocks/blocksummary.scss";
 export const TxInfo = ({ txnData }) => {
-  const webSocketData = useLatestData();
+  // const webSocketData = useLatestData();
   const data = [
     {
       img: <TotalTransactions />,
       label: "Total Transactions",
-      value: webSocketData?.onChainMetric?.totalTx ? (
-        <Tooltip placement="top" title={webSocketData?.onChainMetric?.totalTx}>
-          {Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()}
+      value: txnData?.count ? (
+        <Tooltip
+          placement="top"
+          title={Number(txnData?.count).toLocaleString()}
+        >
+          {Number(txnData?.count).toLocaleString()}
         </Tooltip>
-      ) : txnData?.count ? (
-        Number(txnData?.count).toLocaleString()
       ) : (
         0
       ),
     },
     {
-      img: <ContractTransactions/>,
+      img: <ContractTransactions />,
       label: "Transactions (Last 30 Days)",
       value: txnData?.previous30DaysTrxn
         ? Number(txnData?.previous30DaysTrxn).toLocaleString()
@@ -33,7 +33,7 @@ export const TxInfo = ({ txnData }) => {
     },
     {
       img: <ActiveAccountToday />,
-      label: "Active Accounts (Today).",
+      label: "Active Accounts (Today)",
       value: txnData?.activeAccount
         ? txnData?.activeAccount.toLocaleString()
         : 0,

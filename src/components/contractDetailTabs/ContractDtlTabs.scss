@@ -12,8 +12,9 @@
       color: #fff;
     }
     .headermetaBtn {
-      height: 48px;
+      height: 45px;
       font-weight: 500;
+      min-width: 148px;
     }
   }
   .greenFill {
@@ -159,6 +160,8 @@
         color: $white;
         @include fluid-type(320px, 1920px, 14px, 24px);
         font-weight: 600;
+        white-space: normal;
+        word-break: break-all;
       }
       span {
         // border: 1px solid #454545;
@@ -251,7 +254,13 @@
           border-bottom-width: 2px;
           border-bottom-style: solid;
           border-image-slice: 1;
-          border-image-source: linear-gradient(to right, #ffc876, #79fff7, #9f53ff, #ff98e2);
+          border-image-source: linear-gradient(
+            to right,
+            #ffc876,
+            #79fff7,
+            #9f53ff,
+            #ff98e2
+          );
           --bg: #1c1c1c !important;
           &::after,
           &::before {
@@ -305,7 +314,16 @@
     --text: #fff;
     --hover-text: #000;
     border: 2px solid transparent;
-    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box, conic-gradient(from 180deg at 50% 50%, #ff98e2, #ffc876 35.77deg, #79fff7 153.75deg, #9f53ff 258.75deg, #ff98e2 360deg) border-box;
+    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+      conic-gradient(
+          from 180deg at 50% 50%,
+          #ff98e2,
+          #ffc876 35.77deg,
+          #79fff7 153.75deg,
+          #9f53ff 258.75deg,
+          #ff98e2 360deg
+        )
+        border-box;
     color: #fff;
     border-radius: 25px;
     margin-left: 10px;
@@ -316,7 +334,16 @@
       --text: #fff;
       --hover-text: #000;
       border: 2px solid transparent !important;
-      background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box, conic-gradient(from 180deg at 50% 50%, #ff98e2, #ffc876 35.77deg, #79fff7 153.75deg, #9f53ff 258.75deg, #ff98e2 360deg) border-box !important;
+      background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+        conic-gradient(
+            from 180deg at 50% 50%,
+            #ff98e2,
+            #ffc876 35.77deg,
+            #79fff7 153.75deg,
+            #9f53ff 258.75deg,
+            #ff98e2 360deg
+          )
+          border-box !important;
       color: #fff !important;
       height: 40px !important ;
     }
@@ -345,13 +372,24 @@
     p {
       color: $white;
     }
-    :where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+    :where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-solid:not(
+        :disabled
+      ):not(.ant-btn-disabled):hover {
       --bg: #000;
       --hover-bg: var(--theme-gradients-main);
       --text: #fff;
       --hover-text: #000;
       border: 2px solid transparent;
-      background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box, conic-gradient(from 180deg at 50% 50%, #ff98e2, #ffc876 35.77deg, #79fff7 153.75deg, #9f53ff 258.75deg, #ff98e2 360deg) border-box;
+      background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+        conic-gradient(
+            from 180deg at 50% 50%,
+            #ff98e2,
+            #ffc876 35.77deg,
+            #79fff7 153.75deg,
+            #9f53ff 258.75deg,
+            #ff98e2 360deg
+          )
+          border-box;
       border-radius: 25px;
     }
     .headermetaBtn {
@@ -540,7 +578,12 @@
         padding: 11px;
         color: $white;
         &:hover {
-          background: linear-gradient(88deg, rgba(1, 104, 255, 0.17) 3.13%, rgba(1, 104, 255, 0.39) 48.43%, rgba(1, 104, 255, 0.25) 98.38%) !important;
+          background: linear-gradient(
+            88deg,
+            rgba(1, 104, 255, 0.17) 3.13%,
+            rgba(1, 104, 255, 0.39) 48.43%,
+            rgba(1, 104, 255, 0.25) 98.38%
+          ) !important;
         }
       }
     }

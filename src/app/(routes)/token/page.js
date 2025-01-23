@@ -118,6 +118,8 @@ function page() {
       balance: tokensData?.count ?? 0,
       img: <TotalContrat />,
       contract: false,
+      title:
+        "The total number of tokens (ERC-20 and other standards) created on the blockchain.",
     },
     // {
     //   id: 2,
@@ -152,6 +154,7 @@ function page() {
               className="tokenCard"
               key={item?.id}
               text={item?.text}
+              title={item?.title}
               balance={item?.balance}
               img={item?.img}
               contract={item?.contract}

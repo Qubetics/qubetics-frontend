@@ -25,17 +25,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
       </Head>
       <body className="darkTheme">
-        <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+        {/* <script
+          id="ze-snippet"
+          src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
+        ></script> */}
+
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>
               <LatestDataProvider>
                 <SerachingValueProvider>
-                  <Toaster containerClassName="break-word-toast" position="bottom-center" reverseOrder={false} />
+                  <Toaster
+                    containerClassName="break-word-toast"
+                    position="bottom-center"
+                    reverseOrder={false}
+                  />
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>
                       <Suspense fallback={<Loading />}>

@@ -3,14 +3,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
 import getSearchingValue from "@/services/getGlobalSearch";
+import { set } from "date-fns";
 // import useToggleChainContext from "./useToggleChainContext";
 
 export default function useGlobalSearch(page = 1) {
   const [searchText, setSearchText] = useState("");
   const { debounce, setDebounce } = useDebounce(searchText, 500);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState();
-
+  const [searchResult, setSearchResult] = useState([]);
+  const [err, setErr] = useState(false);
   const [dynamicTab, setDynamicTab] = useState([]);
   const router = useRouter();
   // const { isEVM } = useToggleChainContext();
@@ -85,7 +86,12 @@ export default function useGlobalSearch(page = 1) {
     // setIsLoading(true);
     try {
       const response = await getSearchingValue(debounce);
-      if (response) {
+
+      if (response.error) {
+        setErr(true);
+        setSearchResult([]);
+        setDynamicTab([]);
+      } else {
         setDynamicTab(
           chain === "EVM Chain"
             ? response?.data?.tabs || getType(response?.data)
@@ -102,9 +108,11 @@ export default function useGlobalSearch(page = 1) {
             ? getResponse(response?.data)
             : {}
         );
+        setErr(false);
       }
     } catch (err) {
       setIsLoading(false);
+      console.log(err);
       throw err;
     } finally {
       setIsLoading(false);
@@ -130,5 +138,6 @@ export default function useGlobalSearch(page = 1) {
     dynamicTab,
     setDynamicTab,
     setSearchResult,
+    err,
   };
 }

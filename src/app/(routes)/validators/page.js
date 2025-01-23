@@ -61,7 +61,7 @@ function page() {
     {
       id: 1,
       title:
-        " APY is an estimated % of rewards you will earn while staking Qubetics coins over the annual period. APY is adjusted daily, and the estimated rewards may be different from the actual rewards generated.",
+        "The annual percentage yield earned on staked coins, calculated directly from on-chain data.",
       text: (
         <>
           Onchain APY
@@ -80,7 +80,7 @@ function page() {
     {
       id: 2,
       title:
-        "Total Validators: This metric represents the total count of participants tasked with validating transactions within a blockchain network",
+        "The total number of validators participating in securing the network by validating and proposing blocks.",
       text: (
         <>
           Total Validators
@@ -99,7 +99,7 @@ function page() {
     {
       id: 3,
       title:
-        "The percentage of Qubetics coins bonded by the validator and delegators in the network with respect to the total supply of Qubetics.",
+        "The percentage of the total circulating supply of tokens that is currently staked or bonded to validators.",
 
       balance: parsedData?.bondedRate
         ? simplifyNumber(parsedData?.bondedRate) + " %"
@@ -111,7 +111,7 @@ function page() {
     {
       id: 4,
       title:
-        "Active Validators: These are validators presently engaged in validating transactions on the blockchain.",
+        "The number of validators actively participating in the network at the current time.",
 
       balance:
         validatorData?.activeValidators || validatorData?.activeCount

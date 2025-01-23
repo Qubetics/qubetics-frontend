@@ -86,7 +86,6 @@ const BlockSummary = () => {
 
   const handleNext = () => {
     if (page < totalPages) {
-  
       // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) + 1);
@@ -142,6 +141,17 @@ const BlockSummary = () => {
   useEffect(() => {
     fetchData();
   }, [pageid, order]);
+
+  const getBlockCount = () => {
+    if (order === "asc") {
+      return `Showing blocks from ${blocksData[0]?.blocknumber} to ${
+        blocksData[blocksData.length - 1]?.blocknumber
+      }`;
+    }
+    return `Showing blocks from ${
+      blocksData[blocksData.length - 1]?.blocknumber
+    } to ${blocksData[0]?.blocknumber}`;
+  };
   return (
     <div className="blocksummary">
       {/* {blockSummaryStatus === InitStatus ||
@@ -155,13 +165,11 @@ const BlockSummary = () => {
         /> */}
         <FilterResult />
         <Heading heading={"Block Summary"} />
-        <BlockInfo />
+        <BlockInfo blocksData={blocksData} />
         <div className="totalTransactions">
           {blocksData.length > 0 && (
             <>
-              <h2>{`Showing blocks from ${
-                blocksData[blocksData.length - 1]?.blocknumber
-              } to  ${blocksData[0]?.blocknumber} `}</h2>
+              <h2>{getBlockCount()}</h2>
 
               <Space wrap>
                 <Select
