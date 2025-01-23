@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import FooterLink from "../../../components/footer/FooterLinks";
 import "../../../index.scss";
 import "./dashboard.scss";
-import ZohoSupportWidget from "@/components/ZohoHelp/ZohoHelp";
+
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
@@ -110,7 +110,7 @@ const Page = ({ customClass }) => {
           </div>
         </div>
       </section>
-      <ZohoSupportWidget/>
+    
       {pathname !== Routes.DASHBOARD && (
         <div className="footerToShow">
           <FooterLink />
