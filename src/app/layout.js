@@ -16,6 +16,12 @@ import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
 import Script from "next/script";
 import Link from "next/link";
+import { DM_Sans } from "next/font/google";
+
+const dmSans = DM_Sans({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
 export async function generateMetadata({ params, searchParams }) {
   return {
     title: "Qubetics",
@@ -50,13 +56,18 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        <Link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+        <link
+          href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet"
         />
+        {/* <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+          as="style"
+        /> */}
       </Head>
 
-      <body className="darkTheme">
+      <body className={`${dmSans.className} darkTheme`}>
         {/* <script
           id="ze-snippet"
           src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
