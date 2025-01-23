@@ -31,7 +31,7 @@ const OnChainMetrics = ({ stats }) => {
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               text="TICS Price"
-              balance={`$ 0.03112491 USD`}
+              balance={`$ 0.05513968 USD`}
               img={<TickPriceIcon />}
               title="The current market price of 1 Qubetics (TICS) in USD."
             />

@@ -98,7 +98,7 @@ export default function RootLayout({ children }) {
           }}
         /> */}
 
-        <Script
+        {/* <Script
           id="zoho-im-script"
           strategy="lazyOnload"
           // Ensures it runs after the page is interactive
@@ -119,7 +119,7 @@ export default function RootLayout({ children }) {
             })();
           `,
           }}
-        />
+        /> */}
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>
