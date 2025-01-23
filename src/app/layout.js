@@ -57,13 +57,12 @@ export default function RootLayout({ children }) {
       </Head>
 
       <body className="darkTheme">
-      
         {/* <script
           id="ze-snippet"
           src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
         ></script> */}
 
-        {/* <Script
+        <Script
           id="zohodeskasap"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
@@ -96,30 +95,7 @@ export default function RootLayout({ children }) {
             })();
           `,
           }}
-        /> */}
-
-        {/* <Script
-          id="zoho-im-script"
-          strategy="lazyOnload"
-          // Ensures it runs after the page is interactive
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.ZOHOIM = window.ZOHOIM || function (a, b) {
-              ZOHOIM[a] = b;
-            };
-            window.ZOHOIM.prefilledMessage = "";
-            (function () {
-              var d = document;
-              var s = d.createElement('script');
-              s.type = 'text/javascript';
-              s.nonce = '{xysjsadagduq12eq}'; // Replace or remove this if nonce is unnecessary
-              s.async = true;
-              s.src = "https://im.zoho.com/api/v1/public/channel/161069b264dd5f31b0e9f054a52ceb6d/widget";
-              d.getElementsByTagName('head')[0].appendChild(s);
-            })();
-          `,
-          }}
-        /> */}
+        />
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>
