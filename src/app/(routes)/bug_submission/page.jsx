@@ -17,6 +17,16 @@ function SubmissionForm() {
   };
   const [selectedRadio, setSelectedRadio] = useState("option1");
   const [isChecked, setIsChecked] = useState(false);
+  const [fieldData ,setFieldData] = useState({
+    name:"",
+    email:"",
+    telegram_id:"",
+    application_tested:"",
+    bug_description:"",
+    bug_type:"",
+    bug_attachment:"",
+    bug_status:""
+  })
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
