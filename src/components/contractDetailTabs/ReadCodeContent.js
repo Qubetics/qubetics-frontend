@@ -123,8 +123,10 @@ function ReadCodeContent({ abiData, hash }) {
       });
     });
     setInputErrors(errors);
+
     handleReadClick(event);
   };
+
   const displayResult = (displayingData, type) => {
     if (typeof displayingData === "boolean") {
       return (

@@ -14,14 +14,19 @@ import "./(routes)/dashboard/dashboard.scss";
 import StyledComponentsRegistry from "./lib/AntdRegistry";
 import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
+import Script from "next/script";
+import Link from "next/link";
 export async function generateMetadata({ params, searchParams }) {
   return {
     title: "Qubetics",
     description: "This is an explorer",
   };
 }
+// const crypto = require("crypto");
 
 export default function RootLayout({ children }) {
+  // const generateNonce = () => crypto.randomBytes(16).toString("base64");
+  // const nonce = generateNonce();
   return (
     <html lang="en">
       <Head>
@@ -29,13 +34,92 @@ export default function RootLayout({ children }) {
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
+
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-49RXC6H5G3"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+               window.dataLayer = window.dataLayer || [];
+               function gtag(){dataLayer.push(arguments);}
+               gtag('js', new Date());
+               gtag('config', 'G-49RXC6H5G3');
+            `,
+          }}
+        />
+
+        <Link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
+
       <body className="darkTheme">
+      
         {/* <script
           id="ze-snippet"
           src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
         ></script> */}
 
+        {/* <Script
+          id="zohodeskasap"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function () {
+              var d = document;
+              var s = d.createElement("script");
+              s.type = "text/javascript";
+              s.id = "zohodeskasapscript";
+              s.defer = true;
+              s.nonce = "your-actual-nonce-value"; // Replace if needed
+              s.src = "https://desk.zoho.com/portal/api/web/asapApp/1081916000000316236?orgId=876694471";
+              var t = d.getElementsByTagName("script")[0];
+              t.parentNode.insertBefore(s, t);
+
+              window.ZohoDeskAsapReady = function (callback) {
+                var asyncCalls = (window.ZohoDeskAsap__asyncalls = window.ZohoDeskAsap__asyncalls || []);
+                if (window.ZohoDeskAsapReadyStatus) {
+                  if (callback) {
+                    asyncCalls.push(callback);
+                  }
+                  asyncCalls.forEach(function (cb) {
+                    if (cb) cb();
+                  });
+                  window.ZohoDeskAsap__asyncalls = null;
+                } else if (callback) {
+                  asyncCalls.push(callback);
+                }
+              };
+            })();
+          `,
+          }}
+        /> */}
+
+        <Script
+          id="zoho-im-script"
+          strategy="lazyOnload"
+          // Ensures it runs after the page is interactive
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.ZOHOIM = window.ZOHOIM || function (a, b) {
+              ZOHOIM[a] = b;
+            };
+            window.ZOHOIM.prefilledMessage = "";
+            (function () {
+              var d = document;
+              var s = d.createElement('script');
+              s.type = 'text/javascript';
+              s.nonce = '{xysjsadagduq12eq}'; // Replace or remove this if nonce is unnecessary
+              s.async = true;
+              s.src = "https://im.zoho.com/api/v1/public/channel/161069b264dd5f31b0e9f054a52ceb6d/widget";
+              d.getElementsByTagName('head')[0].appendChild(s);
+            })();
+          `,
+          }}
+        />
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>

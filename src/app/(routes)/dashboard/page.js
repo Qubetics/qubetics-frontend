@@ -110,7 +110,7 @@ const Page = ({ customClass }) => {
           </div>
         </div>
       </section>
-
+    
       {pathname !== Routes.DASHBOARD && (
         <div className="footerToShow">
           <FooterLink />

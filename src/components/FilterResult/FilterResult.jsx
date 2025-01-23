@@ -133,7 +133,6 @@ const FilterResult = () => {
   const handleKeyDown = (e) => {
     e.stopPropagation(); // Prevent event from propagating to parent container (Dashboard)
     const selectedItems = searchResult && searchResult?.results[activeTab];
-    console.log(selectedItems, "items");
     const tabIndex = tabs.indexOf(activeTab);
     if (e.key === "Escape") {
       setOpen(1);
@@ -254,12 +253,12 @@ const FilterResult = () => {
     }
   };
 
-  // useEffect(() => {
-  //   open === 2 && window.addEventListener("scroll", preventOuterScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", preventOuterScroll);
-  //   };
-  // }, [open]);
+  useEffect(() => {
+    open === 2 && window.addEventListener("scroll", preventOuterScroll);
+    return () => {
+      window.removeEventListener("scroll", preventOuterScroll);
+    };
+  }, [open]);
   return (
     <div class="filter-result">
       <div className="searchbar searchFilter">
