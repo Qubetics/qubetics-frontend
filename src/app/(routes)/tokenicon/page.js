@@ -19,7 +19,7 @@ const TokenIcon = () => {
   const { debounce } = useDebounce(address, 500);
   const handleImageChange = async (e) => {
     const imgUrl = e;
-
+    setUrl(imgUrl);
     if (!imgUrl) {
       setImgErr("");
       setUrl("");
@@ -34,8 +34,6 @@ const TokenIcon = () => {
       setImgErr("");
       setIsDisable(false);
     }
-
-    setUrl(imgUrl);
   };
   const submitUrl = async () => {
     if (!contractAddress) {

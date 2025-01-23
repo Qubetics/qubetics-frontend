@@ -12,7 +12,8 @@ import {
   NavigateDown,
   NavigateUp,
 } from "../../../public/SvgIcons";
-
+import Image from "next/image";
+import notFound from "../../assets/svg/notFount.svg";
 const FilterResult = () => {
   const {
     searchText,
@@ -23,6 +24,7 @@ const FilterResult = () => {
     dynamicTab,
     setDynamicTab,
     setSearchResult,
+    err,
   } = useGlobalSearch();
 
   const tabs = dynamicTab || [];
@@ -51,11 +53,11 @@ const FilterResult = () => {
   useEffect(() => {
     if (dynamicTab && dynamicTab.length > 0) {
       setActiveTab(dynamicTab[0]); // Set the first tab as active
-    } else setOpen(1);
+    }
   }, [dynamicTab]);
 
   useEffect(() => {
-    !searchText && setDynamicTab([]);
+    !searchText && setOpen(1);
   }, [searchText]);
 
   useEffect(() => {
@@ -66,12 +68,23 @@ const FilterResult = () => {
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveTab(entry.target.id);
-        }
-      });
+      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+      if (visibleEntries.length > 0) {
+        const closestEntry = visibleEntries.reduce((closest, current) => {
+          return current.intersectionRatio > closest.intersectionRatio
+            ? current
+            : closest;
+        });
+
+        setActiveTab(closestEntry.target.id);
+      }
+      // entries.forEach((entry) => {
+      //   if (entry.isIntersecting) {
+      //     setActiveTab(entry.target.id);
+      //   }
+      // });
     }, observerOptions);
+
     dynamicTab?.forEach((tab) => {
       const sectionElement = customRef.current[tab];
       if (sectionElement) observer.observe(sectionElement);
@@ -102,9 +115,14 @@ const FilterResult = () => {
     const targetedItem = selectedItems?.filter(
       (items, id) => id === selectedIndex
     );
+    console.log(targetedItem, "targetedItem");
+
     targetedItem?.map((ele) => {
       // if (activeTab !== "tokens" && activeTab !== "contracts") {
-      router.push(ele?.address && handleKeyEnter(undefined, ele?.address));
+      const address = ele?.address
+        ? ele?.address
+        : ele?.contractAddress || ele?.contract_address;
+      router.push(address && handleKeyEnter(undefined, address));
       // } else {
       //   router.push(`/contract/evm/${ele?.address}`);
       // }
@@ -114,6 +132,7 @@ const FilterResult = () => {
   const handleKeyDown = (e) => {
     e.stopPropagation(); // Prevent event from propagating to parent container (Dashboard)
     const selectedItems = searchResult && searchResult?.results[activeTab];
+    console.log(selectedItems, "items");
     const tabIndex = tabs.indexOf(activeTab);
     if (e.key === "Escape") {
       setOpen(1);
@@ -170,16 +189,19 @@ const FilterResult = () => {
   // const handleKeyEnter = (searchData: any) => {
   const handleKeyEnter = (e, selectedAddress) => {
     // e.stopPropagation();
+
     if (!selectedAddress) {
       if (!searchText) return;
       if (isLoading) return;
       setOpen(1);
       e.currentTarget.blur();
 
-      if (!searchResult?.results?.[activeTab]?.length)
-        return router.push("/not-found");
+      if (!searchResult?.results?.[activeTab]?.length) return;
 
-      const redirectAddress = searchResult?.results[activeTab]?.[0]?.address;
+      const redirectAddress = searchResult?.results[activeTab]?.[0]?.address
+        ? searchResult?.results[activeTab]?.[0]?.address
+        : searchResult?.results[activeTab]?.[0]?.contractAddress;
+      if (redirectAddress === undefined) return;
 
       switch (activeTab) {
         case "transaction":
@@ -231,12 +253,12 @@ const FilterResult = () => {
     }
   };
 
-  useEffect(() => {
-    open === 2 && window.addEventListener("scroll", preventOuterScroll);
-    return () => {
-      window.removeEventListener("scroll", preventOuterScroll);
-    };
-  }, [open]);
+  // useEffect(() => {
+  //   open === 2 && window.addEventListener("scroll", preventOuterScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", preventOuterScroll);
+  //   };
+  // }, [open]);
   return (
     <div class="filter-result">
       <div className="searchbar searchFilter">
@@ -374,7 +396,11 @@ const FilterResult = () => {
                 ))}
             </div>
           </div>
-
+          {err && (
+            <div className="notfound">
+              <Image src={notFound} width={150} height={90} />
+            </div>
+          )}
           <div class="filter-result__divider"></div>
 
           <div class="filter-result__footer">

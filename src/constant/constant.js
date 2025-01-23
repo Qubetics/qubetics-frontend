@@ -188,11 +188,13 @@ export const nodePerformanceData = (blockHeight) => {
   ];
 };
 export const tooltipContent = {
-  block_Height: "Total number of blocks produced since the genesis block.",
-  bonded_Coins: "Total amount of Qubetics staked in the network.",
+  block_Height:
+    "The number of blocks added to the blockchain since its inception, indicating the blockchain’s current length.",
+  bonded_Coins:
+    "The total amount of tokens bonded or staked in the network to secure it and earn rewards.",
   total_Nodes: "The total number of nodes connected to the Qubetics network.",
-  last_Block: "The time when the last block is finalized in UTC format.",
-  TPB: " Transactions per block. Display the average number of transactions recorded in a block during the last three seconds.",
+  last_Block: "The most recent block added to the blockchain.",
+  TPB: "The total number of accounts or entities responsible for producing blocks on the blockchain.",
   Countries: "The number of countries from which nodes are connected.",
   finalized_Block:
     "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",

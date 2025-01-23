@@ -2,19 +2,16 @@
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
 
-import {
-    chain,
-    EXPLORER_CHAIN_NAME
-} from "@/constant/constant";
+import { chain, EXPLORER_CHAIN_NAME } from "@/constant/constant";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
 import getAddress from "@/utils/getAddress";
 import { Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
-    AvgBlockTime,
-    LatestBlock,
-    TopValidator,
+  AvgBlockTime,
+  LatestBlock,
+  TopValidator,
 } from "../../../../public/SvgIcons";
 import "./blocksummary.scss";
 
@@ -38,6 +35,7 @@ export const BlockInfo = () => {
         : blocksData[0]?.blocknumber.toLocaleString() ?? 0,
       img: <LatestBlock />,
       contract: false,
+      title: "The most recently added block on the blockchain.",
     },
     {
       id: 2,
@@ -53,6 +51,8 @@ export const BlockInfo = () => {
       ),
       img: <TopValidator />,
       contract: false,
+      title:
+        "The validator that has processed the highest number of transactions or blocks in the past 24 hours.",
     },
 
     {
@@ -61,7 +61,8 @@ export const BlockInfo = () => {
       balance: `${blockTime ? blockTime : 0}s`,
       img: <AvgBlockTime />,
       contract: false,
-  
+      title:
+        "The average time taken to generate the last 20 blocks on the blockchain.",
     },
   ];
   const convertAddToNative = () => {
@@ -110,6 +111,7 @@ export const BlockInfo = () => {
           key={item?.id}
           text={item?.text}
           balance={item?.balance}
+          title={item?.title}
           img={item?.img}
           contract={item?.contract}
           countime={item?.countime}
