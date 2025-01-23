@@ -125,24 +125,22 @@ const Footer = () => {
               Qubetics Network Documentation
             </Link>
             <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
+              href="https://qubetics.gitbook.io/qubetics-docs"
+              target="_blank"
             >
               Qubetics Documentation
             </Link>
-            <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
-            >
+            <Link href="https://qubetics-ide.qubetics.work/" target="_blank">
               Qubetics IDE
             </Link>
             <Link
-              href={`https://${origin}-basic-qube-code.qubetics.work`}
+              href={`https://testnet-qubeqode-basic.qubetics.work/work-space`}
               target="_blank"
             >
               QubeQode
+            </Link>
+            <Link href={`https://github.com/Qubetics`} target="_blank">
+              Github
             </Link>
           </Col>
         </Row>
