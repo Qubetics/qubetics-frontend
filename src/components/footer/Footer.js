@@ -107,6 +107,15 @@ const Footer = () => {
             >
               Qubetics App
             </Link>
+            <Link href="https://qubetics-ide.qubetics.work/" target="_blank">
+              Qubetics IDE
+            </Link>
+            <Link
+              href={`https://testnet-qubeqode-basic.qubetics.work/work-space`}
+              target="_blank"
+            >
+              QubeQode
+            </Link>
           </Col>
           <Col xs={24} sm={12} lg={5}>
             <h3>Resources</h3>
@@ -130,15 +139,7 @@ const Footer = () => {
             >
               Qubetics Documentation
             </Link>
-            <Link href="https://qubetics-ide.qubetics.work/" target="_blank">
-              Qubetics IDE
-            </Link>
-            <Link
-              href={`https://testnet-qubeqode-basic.qubetics.work/work-space`}
-              target="_blank"
-            >
-              QubeQode
-            </Link>
+
             <Link href={`https://github.com/Qubetics`} target="_blank">
               Github
             </Link>
