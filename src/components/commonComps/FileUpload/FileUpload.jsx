@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./FileUpload.scss"; // Import the SCSS file for styling
+import "./FileUpload.scss";
 
 const FileUpload = ({
-  label = "Upload Files", // Default label
-  accept = "*",          // Accepted file types
-  multiple = false,      // Whether to allow multiple files
-  onChange,              // Callback for handling file input
+  label = "Upload Files",
+  accept = "*",
+  multiple = false,
+  onChange,
 }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setSelectedFiles(files);
-    if (onChange) onChange(files); // Trigger the callback with selected files
+    if (onChange) onChange(files);
   };
 
   return (

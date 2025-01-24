@@ -4,6 +4,7 @@
   user-select: none;
   width: 100%;
   margin-top: 30px;
+
   .dropdown-label {
     font-size: 16px;
     font-weight: 400;
@@ -19,6 +20,11 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    color: #A0A0A0;
+
+    &::placeholder {
+      color: #A0A0A0;
+    }
 
     &:hover {
       border-color: #888;
@@ -41,12 +47,15 @@
     padding: 15px 14px;
     background-color: #080808;
     position: absolute;
-    top: 100%;
+    top: 102%;
     left: 0;
     right: 0;
     z-index: 10;
     max-height: 150px;
     overflow-y: auto;
+    flex-direction: column;
+    gap: 5px !important;
+    border: 1px solid #3b3a3a;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
@@ -55,6 +64,7 @@
     cursor: pointer;
     border-radius: 10px;
     margin-bottom: 3px;
+    color: #fff;
 
     &:last-child {
       margin-bottom: 0;

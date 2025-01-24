@@ -5,7 +5,6 @@ import TextField from "../../../components/commonComps/TextField/";
 import CustomDropdown from "../../../components/commonComps/CustomDropdown/CustomDropdown";
 import TextArea from "../../../components/commonComps/TextArea/TextArea";
 import FileUpload from "../../../components/commonComps/FileUpload/FileUpload";
-import CommonBtn from "../../../components/commonComps/Commonbtn/Commonbtn";
 import CustomCheckbox from "../../../components/commonComps/CustomCheckbox/CustomCheckbox";
 import CustomControl from "../../../components/commonComps/CustomControl/CustomControl";
 import Image from "next/image";
@@ -161,15 +160,16 @@ function SubmissionForm() {
             placeholder="Enter Telegram ID"
             type="text"
           />
-          <TextField
+          <CustomDropdown
             label="Application Tested*"
+            options={["Option 1", "Option 2", "Option 3"]}
             placeholder="Enter Application Name"
-            type="text"
+            onSelect={handleSelect}
           />
           <CustomDropdown
-            label="Choose an item"
+            label="Bug/Feedback Type*"
             options={["Option 1", "Option 2", "Option 3"]}
-            placeholder="Choose an item"
+            placeholder="Select the category that best describes your submission"
             onSelect={handleSelect}
           />
           <div className="submission_severityImpact">

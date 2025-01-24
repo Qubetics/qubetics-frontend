@@ -1,4 +1,3 @@
-// uploadStyles.scss
 $file-upload-bg: #080808;
 $file-upload-border: #444;
 $file-upload-text-color: #fff;
@@ -35,11 +34,11 @@ $file-upload-text-color: #fff;
     }
 
     .upload-input {
-      display: none; // Hide the file input
+      display: none;
     }
 
     .upload-text {
-      pointer-events: none; // Disable pointer events on the label text
+      pointer-events: none;
     }
   }
 
