@@ -1,6 +1,9 @@
 name: '[dev] Deploy explorer frontend'
 
 on:
+  push:
+    branches:
+      - 'dev'
   workflow_dispatch:  # Allows manual triggering of the workflow
     inputs:
       branch:
