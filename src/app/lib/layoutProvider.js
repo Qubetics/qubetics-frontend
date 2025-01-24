@@ -33,15 +33,16 @@ export default function LayoutProvider({ children }) {
         <Header />
 
         <main className="maininner">
-          <div
+          {/* <div
             className="addbgtheme"
             style={{ paddingTop: pathName !== Routes.Welcome && 110 }}
-          >
+          > */}
             {/* <SearchbarComponent
                 searchStatus={searchStatus}
                 setSerachStatus={setSerachStatus}
               /> */}
-          </div>
+
+          {/* </div> */}
           {children}
         </main>
         {<FooterLink />}

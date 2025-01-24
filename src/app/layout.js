@@ -58,6 +58,12 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
+        {/* <script
+          id="ze-snippet"
+          src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
+        ></script> */}
+        <GoogleAnalytics />
+        <ZohoDesk />
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>
@@ -68,17 +74,16 @@ export default function RootLayout({ children }) {
                     position="bottom-center"
                     reverseOrder={false}
                   />
-                  <GoogleAnalytics />
-                  <ZohoDesk />
+
                   {/* <ZohoBusinesschat /> */}
                   <ContractVerificationProvider>
-                    <StyledComponentsRegistry>
+                    {/* <StyledComponentsRegistry> */}
+                    <ErrorBoundary>
                       <Suspense fallback={<Loading />}>
-                        <LayoutProvider>
-                          <ErrorBoundary>{children}</ErrorBoundary>
-                        </LayoutProvider>
+                        <LayoutProvider>{children}</LayoutProvider>
                       </Suspense>
-                    </StyledComponentsRegistry>
+                    </ErrorBoundary>
+                    {/* </StyledComponentsRegistry> */}
                   </ContractVerificationProvider>
                   <ToastContainer />
                 </SerachingValueProvider>

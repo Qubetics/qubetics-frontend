@@ -24,11 +24,11 @@ const Page = ({ customClass }) => {
   const [stats, setStats] = useState("");
   const { isEvm, isNetworkChanged } = useGetNetwork();
 
-  useEffect(() => {
-    if (pathname === Routes.DASHBOARD) {
-      setRouteName(pathname);
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (pathname === Routes.DASHBOARD) {
+  //     setRouteName(pathname);
+  //   }
+  // }, [pathname]);
 
   const fetchEVMStats = async () => {
     try {
@@ -111,11 +111,11 @@ const Page = ({ customClass }) => {
         </div>
       </section>
     
-      {pathname !== Routes.DASHBOARD && (
+      {/* {pathname !== Routes.DASHBOARD && (
         <div className="footerToShow">
           <FooterLink />
         </div>
-      )}
+      )} */}
     </>
   );
 };
