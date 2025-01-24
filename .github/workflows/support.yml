@@ -7,14 +7,14 @@ on:
       branch:
         description: 'Branch to deploy on dev'
         required: true  # Makes the branch input mandatory
-        default: 'dev'
+        default: 'test-git-manual'
 
 jobs:
   dev_deploy_explorer_frontend:
     uses: ./.github/workflows/manual.yml
     with:
       SWR_ORGANIZATION: dev-qubetics
-      ARGOCD_BRANCH: dev
+      ARGOCD_BRANCH: test-git-manual
       HUAWEI_REGION: 'ap-southeast-3'
       ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
       DEPLOYMENT_PATH: Frontend/deployment.yaml
