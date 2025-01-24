@@ -18,6 +18,7 @@ import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
 
 import { DM_Sans } from "next/font/google";
+import ZohoBusinesschat from "@/components/ZohoDesk/ZohoBusinesschat";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -63,7 +64,8 @@ export default function RootLayout({ children }) {
           src="https://static.zdassets.com/ekr/snippet.js?key=9e461708-e3c9-4a86-ad58-37330b0244e8"
         ></script> */}
         <GoogleAnalytics />
-        <ZohoDesk />
+        {/* <ZohoDesk /> */}
+        <ZohoBusinesschat />
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>
