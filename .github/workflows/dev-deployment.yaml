@@ -1,10 +1,12 @@
 name: '[dev] Deploy explorer frontend'
 
-on: 
-  push:
-    branches: 
-      - dev
-  
+on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
+    inputs:
+      branch:
+        description: 'Branch to deploy on dev'
+        required: true  # Makes the branch input mandatory
+        default: 'dev'
 
 jobs:
   dev_deploy_explorer_frontend:
