@@ -2815,6 +2815,11 @@ input:-webkit-autofill:active {
 .blockLinks {
   a {
     min-width: 154px !important;
-    display: inline-block ;
+    display: inline-block;
   }
+}
+
+.zd-asap-newlist-list {
+  flex-flow: column !important;
+  gap: 2px !important;
 }
