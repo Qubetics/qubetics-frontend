@@ -279,11 +279,7 @@ export const transactionSummarycolumn = [
             </div>
           ) : (
             <div className="iconandlink">
-<<<<<<< HEAD
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
-=======
               <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} className="blockLink">
->>>>>>> origin/feature/designFixes
                 {getAddress(text?.toAddress)}
               </Link>
               <span>
