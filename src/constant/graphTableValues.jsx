@@ -244,11 +244,11 @@ export const transactionSummarycolumn = [
           text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
-                <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
+                <Link className="fromicon blockLink" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
+                <Link className="fromicon blockLink" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -258,7 +258,9 @@ export const transactionSummarycolumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>{getAddress(text?.toAddress)}</Link>
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} className="blockLink">
+                {getAddress(text?.toAddress)}
+              </Link>
               <span>
                 <CopyText text={text?.toAddress} />
               </span>
