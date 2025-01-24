@@ -11,7 +11,7 @@ on:
 
 jobs:
   dev_deploy_explorer_frontend:
-    uses: ./.github/workflows/dev-frontend.yml
+    uses: ./.github/workflows/main1.yml
     with:
       SWR_ORGANIZATION: dev-qubetics
       ARGOCD_BRANCH: dev
