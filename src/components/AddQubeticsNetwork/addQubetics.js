@@ -120,9 +120,7 @@ export const addQubetic = async () => {
   const chain_Id = await web3.eth.getChainId();
   const chainIdHex = `0x${chain_Id.toString(16)}`;
   const provider = window.ethereum;
-  if (window.ethereum.isTrust) {
-    return toast.error(Messages.isTrust);
-  }
+
   try {
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
