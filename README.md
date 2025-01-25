@@ -1,4 +1,4 @@
-## Getting Started
+## Getting Started (Explorer Frontend)
 
 ### Prerequisites
 
@@ -18,3 +18,4 @@
 - `npm run start`: Start the production server
 - `npm run lint`: Run ESLint to check for code errors and warnings
 - `npm run lint:fix`: Run ESLint with the `--fix` option to automatically fix
+
