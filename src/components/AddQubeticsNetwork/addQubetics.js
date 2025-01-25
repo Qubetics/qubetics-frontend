@@ -1,3 +1,4 @@
+"use client"
 import {
   EXPLORER_CURRENCY_NAME,
   EXPLORER_METAMASK_NAVIGATION,
