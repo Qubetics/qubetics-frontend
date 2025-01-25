@@ -112,16 +112,16 @@ export function getDeviceType() {
   }
 }
 export const addQubetic = async () => {
-  const web3 = new Web3(
-    new Web3.providers.HttpProvider(
-      EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
-    )
-  );
-  const chain_Id = await web3.eth.getChainId();
-  const chainIdHex = `0x${chain_Id.toString(16)}`;
-  const provider = window.ethereum;
-
   try {
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider(
+        EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
+      )
+    );
+    const chain_Id = await web3.eth.getChainId();
+    const chainIdHex = `0x${chain_Id.toString(16)}`;
+    const provider = window.ethereum;
+
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
       if (window.ethereum === undefined) {
