@@ -1,6 +1,6 @@
 name: '[testnet] Deploy explorer frontend'
 
-on: 
+on:
   push:
     branches: 
       - testnet
