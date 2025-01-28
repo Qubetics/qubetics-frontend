@@ -17,7 +17,6 @@ import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
 
 import { DM_Sans } from "next/font/google";
-import ZohoBusinesschat from "@/components/ZohoDesk/ZohoBusinesschat";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],

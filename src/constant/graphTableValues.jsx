@@ -183,7 +183,7 @@ export const blockColumn = [
     render: (text) => (
       <>
         <div className="iconandlink blockLinks">
-          <Link href={`${Routes.Tx_ADDRESS}/${text}`}>{getAddress(text)}</Link>
+          {getAddress(text)}
           <span>
             <CopyText text={text}></CopyText>
           </span>
@@ -265,12 +265,23 @@ export const transactionSummarycolumn = [
           text?.toAddress?.startsWith("0x") ||
           text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
-                <Link className="fromicon blockLink" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
+              {text?.type === typesOfTransactions.contractTransfer ||
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
+                <Link
+                  className="fromicon blockLink"
+                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
+                  rel="noopener noreferrer"
+                >
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link className="fromicon blockLink" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
+                <Link
+                  className="fromicon blockLink"
+                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                  rel="noopener noreferrer"
+                >
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -280,7 +291,10 @@ export const transactionSummarycolumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} className="blockLink">
+              <Link
+                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                className="blockLink"
+              >
                 {getAddress(text?.toAddress)}
               </Link>
               <span>
@@ -1304,9 +1318,7 @@ export const TokenColumn = [
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
             : formateTotalSupply(
                 noExponential(
-                 
-                    Number(text?.totalSupply) / 10 ** Number(text?.decimal),
-          
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
                 )
               )
           : "-"}

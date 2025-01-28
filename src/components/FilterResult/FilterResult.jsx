@@ -116,8 +116,7 @@ const FilterResult = () => {
     const targetedItem = selectedItems?.filter(
       (items, id) => id === selectedIndex
     );
-    console.log(targetedItem, "targetedItem");
-
+  
     targetedItem?.map((ele) => {
       // if (activeTab !== "tokens" && activeTab !== "contracts") {
       const address = ele?.address
