@@ -78,8 +78,8 @@ export default function RootLayout({ children }) {
                     reverseOrder={false}
                   />
                   {/* <GoogleAnalytics /> */}
-                  {/* <ZohoDesk /> */}
-                  <ZohoBusinesschat />
+                  <ZohoDesk />
+                  {/* <ZohoBusinesschat /> */}
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>
                       <Suspense fallback={<Loading />}>
