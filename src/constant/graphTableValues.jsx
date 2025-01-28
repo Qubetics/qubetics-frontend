@@ -3,6 +3,7 @@ import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
+  formateTotalSupply,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";
@@ -1301,12 +1302,11 @@ export const TokenColumn = [
         {text?.totalSupply
           ? text?.native == true
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
-            : formatValue(
+            : formateTotalSupply(
                 noExponential(
-                  toFixed(
+                 
                     Number(text?.totalSupply) / 10 ** Number(text?.decimal),
-                    4
-                  )
+          
                 )
               )
           : "-"}

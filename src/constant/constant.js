@@ -88,7 +88,7 @@ export const Messages = {
   Successfully_Switched: `You have successfully switched to ${EXPLORER_CHAIN_NAME} network.`,
   Network_Added: `You have successfully switched to ${EXPLORER_CHAIN_NAME} network.`,
   Network_Add_Error: `Error adding ${EXPLORER_CHAIN_NAME} network: `,
-  isTrust:"Kindly use Metamask as your default wallet",
+  isTrust: "Kindly use Metamask as your default wallet",
 
   //faucet
   ENTER_WALLET_ADDRESS: "Please Enter Wallet Address",

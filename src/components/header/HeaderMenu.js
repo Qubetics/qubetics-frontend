@@ -1,68 +1,25 @@
 import {
   BlockchainHeaderFunction,
   contractHeaderFunction,
-  defaultChainOptions,
   EXPLORER_CHAIN_NAME,
   EXPLORER_METAMASK_NETWORK_URL,
-  METAMASK_DAPP_URL,
   Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
-import metamaskSDK from "@web3-onboard/metamask";
-import { init, useConnectWallet } from "@web3-onboard/react";
 import { Select, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import Web3 from "web3";
 import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
-const metamaskSDKWallet = metamaskSDK({
-  options: {
-    injectProvider: true,
-    extensionOnly: true,
-    logging: {
-      developerMode: false,
-    },
-    dappMetadata: {
-      name: "Qubetics",
-      url: METAMASK_DAPP_URL,
-    },
-  },
-});
-
-init({
-  wallets: [metamaskSDKWallet],
-  chains: defaultChainOptions,
-
-  accountCenter: {
-    desktop: {
-      enabled: false, // Disable the pop-up account center on desktop
-    },
-    mobile: {
-      enabled: false, // Disable the pop-up account center on mobile
-    },
-  },
-});
 function HeaderMenu({ onCloseDrawer }) {
   const [windowWidth, setWindowWidth] = useState(0);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   const router = useRouter();
   const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
@@ -118,6 +75,11 @@ function HeaderMenu({ onCloseDrawer }) {
     // window.location.reload();
   };
   const isNetworkAdded = async () => {
+    // const ethProvider = new JsonRpcProvider(
+    //   EXPLORER_METAMASK_NETWORK_URL || ""
+    // );
+    // const network = await ethProvider.getNetwork();
+    // const chainIdHex = `0x${network.chainId.toString(16)}`;
     const web3 = new Web3(
       new Web3.providers.HttpProvider(
         EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""

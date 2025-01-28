@@ -25,8 +25,11 @@ function VerifySmartCont({ Children, FormButton }) {
                 <li>
                   <p>
                     {verifyContractConstant.COMPILE}{" "}
-                    <Link href="" target="__blank">
-                      REMIX
+                    <Link
+                      href="https://qubetics-ide.qubetics.work/"
+                      target="__blank"
+                    >
+                      Qubetics IDE
                     </Link>
                     , {verifyContractConstant.CORRECT_COMPILE}
                   </p>
@@ -38,7 +41,10 @@ function VerifySmartCont({ Children, FormButton }) {
           </li>
           */}
               </ul>
-              <p>For programatic contract verification, check out the Contract API Endpoint.</p>
+              <p>
+                For programatic contract verification, check out the Contract
+                API Endpoint.
+              </p>
               <div className="contractoptimization">
                 <div className="contractoptimization_details">
                   {/* <CustomInput
@@ -77,7 +83,15 @@ function VerifySmartCont({ Children, FormButton }) {
               <ABICode />
             </Panel>
 
-            <Panel header={<>Contract Library Address (for contracts that use libraries, supports up to 10 libraries) </>} key="3">
+            <Panel
+              header={
+                <>
+                  Contract Library Address (for contracts that use libraries,
+                  supports up to 10 libraries){" "}
+                </>
+              }
+              key="3"
+            >
               <AccordionLibName />
             </Panel>
             <Panel header={<>{verifyContractConstant.MISC_SETTING} </>} key="4">

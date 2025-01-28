@@ -80,6 +80,7 @@ export const BlockInfo = ({blocksData}) => {
       return "";
     }
   };
+    
   const getTopValidatorValue = async () => {
     try {
       let validator = await getTopValidator();
