@@ -104,7 +104,7 @@ const Contract = () => {
   const handleLast = () => {
     if (currentPage < totalPages) {
       setCurrentPage(totalPages);
-      setPageToSend(11);
+      setPageToSend(contractData?.lastPage);
     }
   };
 

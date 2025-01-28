@@ -184,9 +184,9 @@ export const blockColumn = [
       <>
         <div className="iconandlink blockLinks">
           {getAddress(text)}
-          <span>
+          {/* <span>
             <CopyText text={text}></CopyText>
-          </span>
+          </span> */}
         </div>
       </>
     ),
