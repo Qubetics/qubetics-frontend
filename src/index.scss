@@ -2585,6 +2585,10 @@ input[type="number"] {
     }
   }
 }
+.css-cktiw7-MuiFormControl-root-MuiTextField-root label {
+  color: #fff !important;
+}
+
 .graphLod {
   position: absolute;
   left: 46%;
@@ -2815,6 +2819,6 @@ input:-webkit-autofill:active {
 .blockLinks {
   a {
     min-width: 154px !important;
-    display: inline-block ;
+    display: inline-block;
   }
 }

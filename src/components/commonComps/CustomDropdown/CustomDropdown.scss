@@ -3,7 +3,7 @@
   font-family: Arial, sans-serif;
   user-select: none;
   width: 100%;
-  margin-top: 30px;
+  margin-bottom: 30px;
 
   .dropdown-label {
     font-size: 16px;
@@ -20,10 +20,10 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    color: #A0A0A0;
+    color: #a0a0a0;
 
     &::placeholder {
-      color: #A0A0A0;
+      color: #a0a0a0;
     }
 
     &:hover {
