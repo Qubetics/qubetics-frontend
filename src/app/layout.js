@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </Head>
-      <script
+      {/* <script
         dangerouslySetInnerHTML={{
           __html: `
          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -54,17 +54,17 @@ export default function RootLayout({ children }) {
               })(window,document,'script','dataLayer','GTM-T6W968VW');
           `,
         }}
-      />
+      /> */}
 
       <body className={`${dmSans.className} darkTheme`}>
-        <noscript
+        {/* <noscript
           dangerouslySetInnerHTML={{
             __html: `
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6W968VW"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
           `,
           }}
-        />
+        /> */}
 
         <div className="bodyInner">
           <NetworkProvider>

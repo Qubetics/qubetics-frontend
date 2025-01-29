@@ -39,7 +39,7 @@ function page() {
       setTokenStatus(FetchingStatus);
       let response = await getAllTokens(pageId, tableLimit);
       setTokensData(response?.data);
-      const count = Number(response?.data?.count ?? 0) / tableLimit;
+      const count = Number(response?.data?.erc20Count ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
     } catch (err) {
@@ -52,7 +52,7 @@ function page() {
       setTokenStatus(FetchingStatus);
       let response = await getInternalSearch(pageId, tableLimit, debounce);
       setTokensData(response?.data);
-      const count = Number(response?.data?.tokenCount ?? 0) / tableLimit;
+      const count = Number(response?.data?.contractCount ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
     } catch (err) {
@@ -115,7 +115,7 @@ function page() {
     {
       id: 1,
       text: "Total Tokens",
-      balance: tokensData?.count ?? 0,
+      balance: tokensData?.erc20Count ?? 0,
       img: <TotalContrat />,
       contract: false,
       title:
