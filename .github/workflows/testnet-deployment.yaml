@@ -7,7 +7,7 @@ on:
 
 jobs:
   testnet_deploy_explorer_frontend:
-    uses: ./.github/workflows/testnet-frontend.yaml
+    uses: ./.github/workflows/explorer-frontend.yaml
     with:
       SWR_ORGANIZATION: testnet-qubetics
       ARGOCD_BRANCH: testnet
