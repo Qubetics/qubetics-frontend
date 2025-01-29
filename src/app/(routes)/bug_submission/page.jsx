@@ -155,6 +155,7 @@ function SubmissionForm() {
         <form className="submission_form">
           <TextField label="Name" placeholder="Enter Name" type="text" />
           <TextField label="Email Address*" placeholder="Enter Address" type="text" />
+          <TextField label="Wallet Address*" placeholder="Enter EVM Wallet Address" type="text" />
           <TextField
             label="Telegram ID (Optional)"
             placeholder="Enter Telegram ID"
