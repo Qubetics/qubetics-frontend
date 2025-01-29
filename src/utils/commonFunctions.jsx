@@ -21,6 +21,7 @@ export const noExponential = (num) => {
   return Number(num).noExponents();
 };
 export function noExponentsValue(number) {
+  if (number == 0) return 0;
   if (isNaN(number)) return 0; // Handle invalid input
 
   // If the number is very small or very large, handle it as a fixed-point number
@@ -148,7 +149,6 @@ export const randomNoGenerator = () => {
 export const formateTotalSupply = (num) => {
   if (!num || num === null || num === undefined) return 0;
   let formattedNumber;
-
   // Function to get the first five digits after the decimal
   const formatDecimal = (number) => {
     let [beforeDecimal, afterDecimal] = number.toString().split(".");

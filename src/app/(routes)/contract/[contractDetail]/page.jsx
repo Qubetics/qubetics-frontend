@@ -127,7 +127,7 @@ const ContractDetail = () => {
             noExponentsValue(
               Number(contractDetail?.totalSupply) /
                 10 ** Number(contractDetail?.decimal)
-            ).toFixed(6)
+            )
           )
         : "0",
       img: (

@@ -43,6 +43,8 @@ export const signMessage = async (
     return;
   } catch (err) {
     setIsLoading(false);
-    toast.error(err.message);
+    const errParsed = JSON.parse(JSON.stringify(err));
+    // console.log(errParsed, "parsed");
+    toast.error(errParsed?.shortMessage);
   }
 };
