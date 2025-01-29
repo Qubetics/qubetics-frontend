@@ -52,7 +52,7 @@ function page() {
       setTokenStatus(FetchingStatus);
       let response = await getInternalSearch(pageId, tableLimit, debounce);
       setTokensData(response?.data);
-      const count = Number(response?.data?.contractCount ?? 0) / tableLimit;
+      const count = Number(response?.data?.tokenCount ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
     } catch (err) {
