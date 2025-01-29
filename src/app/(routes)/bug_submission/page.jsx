@@ -1,14 +1,14 @@
 "use client";
-import React, { useState } from "react";
-import "./SubmissionForm.scss";
-import TextField from "../../../components/commonComps/TextField/";
-import CustomDropdown from "../../../components/commonComps/CustomDropdown/CustomDropdown";
-import TextArea from "../../../components/commonComps/TextArea/TextArea";
-import FileUpload from "../../../components/commonComps/FileUpload/FileUpload";
+import Image from "next/image";
+import { useState } from "react";
+import TickIcon from "../../../assets/svg/TickIcon.svg";
 import CustomCheckbox from "../../../components/commonComps/CustomCheckbox/CustomCheckbox";
 import CustomControl from "../../../components/commonComps/CustomControl/CustomControl";
-import Image from "next/image";
-import TickIcon from "../../../assets/svg/TickIcon.svg"
+import CustomDropdown from "../../../components/commonComps/CustomDropdown/CustomDropdown";
+import FileUpload from "../../../components/commonComps/FileUpload/FileUpload";
+import TextArea from "../../../components/commonComps/TextArea/TextArea";
+import TextField from "../../../components/commonComps/TextField/";
+import "./SubmissionForm.scss";
 
 function SubmissionForm() {
   const handleSelect = (option) => {
@@ -16,7 +16,56 @@ function SubmissionForm() {
   };
   const [selectedRadio, setSelectedRadio] = useState("option1");
   const [isChecked, setIsChecked] = useState(false);
+  const [fieldData, setFieldData] = useState({
+    name: "",
+    email: "",
+    telegram_id: "",
+    application_tested: "",
+    application: "",
+    description: "",
+    additional_comments: "",
+    severity: "",
+    selectedOption: "",
+  });
+  const [errors, setErrors] = useState({});
+  console.log(errors, "error");
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent page reload on form submission
+    setErrors({});
 
+    // Validation logic
+    const newErrors = {};
+    for (const key in fieldData) {
+      if (fieldData[key] === "") {
+        newErrors[key] = `${key} is required`;
+      }
+    }
+    // If there are any validation errors, set the error state and stop submission
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    // Construct the mailto link with pre-filled email details
+    const subject = "Form Submission";
+
+    // Ensure body has proper line breaks with %0A (newline encoding)
+    const body = `
+      Name: ${fieldData.name}%0A
+      Email: ${fieldData.email}%0A
+      Telegram ID: ${fieldData.telegram}%0A
+      Application Tested: ${fieldData.application}%0A
+      Severity/Impact: ${selectedRadio}%0A
+      Description: ${fieldData.description}%0A
+      Additional Comments: ${fieldData.additional_comments}%0A
+    `;
+
+    const mailtoLink = `mailto:test@example.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    // Open the default email client with the pre-filled details
+    window.location.href = mailtoLink;
+  };
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -65,7 +114,10 @@ function SubmissionForm() {
               </div>
             ))}
           </div>
-          <p>Incorrect categorization may delay the review process or affect reward eligibility.</p>
+          <p>
+            Incorrect categorization may delay the review process or affect
+            reward eligibility.
+          </p>
         </div>
       ),
     },
@@ -143,6 +195,7 @@ function SubmissionForm() {
       title: "A confirmation email will be sent upon successful submission.",
     },
   ];
+
   return (
     <div className="submission">
       <h3>Bug Submission Form</h3>
@@ -160,6 +213,10 @@ function SubmissionForm() {
             label="Telegram ID (Optional)"
             placeholder="Enter Telegram ID"
             type="text"
+            value={fieldData.telegram_id}
+            onChange={(e) =>
+              setFieldData({ ...fieldData, telegram_id: e.target.value })
+            }
           />
           <CustomDropdown
             label="Application Tested*"
@@ -181,8 +238,10 @@ function SubmissionForm() {
                 id="radio1"
                 name="customRadio"
                 value="Low"
-                checked={selectedRadio === "Low"}
-                onChange={(e) => setSelectedRadio(e.target.value)}
+                checked={fieldData.severity === "Low"}
+                onChange={(e) =>
+                  setFieldData({ ...fieldData, severity: e.target.value })
+                }
                 label="Low"
               />
               <CustomControl
@@ -190,8 +249,10 @@ function SubmissionForm() {
                 id="radio2"
                 name="customRadio"
                 value="Medium"
-                checked={selectedRadio === "Medium"}
-                onChange={(e) => setSelectedRadio(e.target.value)}
+                checked={fieldData.severity === "Medium"}
+                onChange={(e) =>
+                  setFieldData({ ...fieldData, severity: e.target.value })
+                }
                 label="Medium"
               />
               <CustomControl
@@ -199,8 +260,10 @@ function SubmissionForm() {
                 id="radio3"
                 name="customRadio"
                 value="High"
-                checked={selectedRadio === "High"}
-                onChange={(e) => setSelectedRadio(e.target.value)}
+                checked={fieldData.severity === "High"}
+                onChange={(e) =>
+                  setFieldData({ ...fieldData, severity: e.target.value })
+                }
                 label="High"
               />
             </div>
@@ -210,6 +273,10 @@ function SubmissionForm() {
             placeholder="Write here"
             type="text"
             rows={4}
+            value={fieldData.description}
+            onChange={(e) =>
+              setFieldData({ ...fieldData, description: e.target.value })
+            }
           />
           <FileUpload />
           <TextArea
@@ -217,6 +284,13 @@ function SubmissionForm() {
             placeholder="Write here"
             type="text"
             rows={4}
+            value={fieldData.additional_comments}
+            onChange={(e) =>
+              setFieldData({
+                ...fieldData,
+                additional_comments: e.target.value,
+              })
+            }
           />
           <div>
             <CustomCheckbox
@@ -226,9 +300,7 @@ function SubmissionForm() {
             />
           </div>
           <div className="submission_btn">
-            <button
-              className="headermetaBtn preNextbtn"
-            >
+            <button type="submit" className="headermetaBtn preNextbtn">
               Submit
             </button>
           </div>
