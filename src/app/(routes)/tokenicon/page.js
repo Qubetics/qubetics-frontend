@@ -17,6 +17,7 @@ const TokenIcon = () => {
   const [address, setAddress] = useState("");
   const [isDisable, setIsDisable] = useState(true);
   const { debounce } = useDebounce(address, 500);
+
   const handleImageChange = async (e) => {
     const imgUrl = e;
     setUrl(imgUrl);
@@ -110,7 +111,11 @@ const TokenIcon = () => {
                 </p>
               )}
               <div className="tokensubmitbtn">
-                <button onClick={submitUrl} className="headermetaBtn">
+                <button
+                  disabled={isDisable}
+                  onClick={submitUrl}
+                  className="headermetaBtn"
+                >
                   Submit
                 </button>
               </div>
