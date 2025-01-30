@@ -1,0 +1,84 @@
+.customized-text-field {
+  width: 100%;
+  margin-top: 30px;
+
+  label {
+    width: 100%;
+    position: static;
+    color: #fff !important;
+    transform: none !important;
+    margin-bottom: 12px;
+  }
+  .MuiInputBase-root {
+    padding: 0 !important;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border: 0 !important;
+    top: 0px;
+    padding: 0px !important;
+
+    fieldset {
+      display: none;
+    }
+
+    legend {
+      display: none;
+    }
+  }
+  .MuiFormLabel-root {
+    color: #fff !important;
+  }
+  .MuiOutlinedInput-input {
+    border-radius: 10px;
+    padding: 15px 14px;
+    height: auto;
+    color: #fff;
+    background-color: #080808;
+    overflow: hidden;
+    border: 0;
+    text-overflow: ellipsis;
+
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &.Mui-disabled {
+      -webkit-text-fill-color: #fff !important;
+    }
+  }
+
+  .MuiOutlinedInput-input::placeholder {
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.5;
+    font-weight: 400;
+  }
+
+  .MuiFormHelperText-root {
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0.6;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+}
+.MuiFormControl-root {
+  margin-top: 24px !important;
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff !important;
+  }
+}
