@@ -72,7 +72,7 @@ const BugForm = () => {
     let error = "";
     switch (field) {
       case "name":
-        const validName = value.replace(/[^a-zA-Z]/g, "").slice(0, 20);
+        const validName = value.replace(/[^a-zA-Z]/g, "").slice(0, 40);
         if (validName.length <= 3) error = "Name must be at least 3 characters";
         setFieldData((prev) => ({ ...prev, [field]: validName }));
         break;
