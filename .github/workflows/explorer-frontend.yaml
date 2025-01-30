@@ -15,7 +15,7 @@ on:
         required: true
         type: string
       ARGOCD_REPOSITORY:
-        description: 'ArgoCD branch for cloning based on environment (uat or prod)'
+        description: 'ArgoCD branch for cloning based on environment (at or prod)'
         required: true
         type: string
       ENV: 
