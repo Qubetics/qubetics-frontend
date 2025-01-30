@@ -11,6 +11,7 @@ import {
   GoogleKey,
   WalletValidValue,
   descriptionValidValue,
+  handleValidEmail,
   handleValidValue,
   validationtValue,
 } from "@/constant/constant";
@@ -86,7 +87,7 @@ const BugForm = () => {
 
       case "email_address":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const validEmail = handleValidValue(value);
+        const validEmail = handleValidEmail(value);
         if (!emailRegex.test(validEmail)) error = "Enter Valid Email";
         setFieldData((prev) => ({ ...prev, [field]: validEmail }));
         break;

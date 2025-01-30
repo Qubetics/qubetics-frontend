@@ -687,5 +687,6 @@ export const validateInput = (value, maxLength) => {
 };
 
 export const handleValidValue = (value) => validateInput(value, 20);
+export const handleValidEmail = (value) => validateInput(value, 40);
 export const WalletValidValue = (value) => validateInput(value, 42);
 export const descriptionValidValue = (value) => validateInput(value, 500);
