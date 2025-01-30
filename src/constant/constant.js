@@ -678,3 +678,14 @@ export const guidelinesData = [
       "Feedback and suggestions should be constructive, actionable, and respectful.",
   },
 ];
+
+export const validateInput = (value, maxLength) => {
+  return value
+    .replace(/^\s+/g, "")
+    .replace(/\s{2,}/g, " ")
+    .slice(0, maxLength);
+};
+
+export const handleValidValue = (value) => validateInput(value, 20);
+export const WalletValidValue = (value) => validateInput(value, 42);
+export const descriptionValidValue = (value) => validateInput(value, 500);

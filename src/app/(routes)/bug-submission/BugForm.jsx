@@ -7,7 +7,13 @@ import FileUpload from "../../../components/commonComps/FileUpload/FileUpload";
 import TextArea from "../../../components/commonComps/TextArea/TextArea";
 import "./SubmissionForm.scss";
 import CustomInput from "@/components/customInput/CustomInput";
-import { GoogleKey, validationtValue } from "@/constant/constant";
+import {
+  GoogleKey,
+  WalletValidValue,
+  descriptionValidValue,
+  handleValidValue,
+  validationtValue,
+} from "@/constant/constant";
 import ReCAPTCHA from "react-google-recaptcha";
 import postBugReport from "@/services/postBugReport";
 import { toast } from "react-toastify";
@@ -70,25 +76,38 @@ const BugForm = () => {
 
   const handleInputChange = (field, value) => {
     let error = "";
+
     switch (field) {
       case "name":
-        const validName = value.replace(/[^a-zA-Z]/g, "").slice(0, 20);
-        if (validName.length <= 3) error = "Name must be at least 3 characters";
+        const validName = handleValidValue(value.replace(/[^a-zA-Z\s]/g, ""));
+        if (validName.length < 3) error = "Name must be at least 3 characters";
         setFieldData((prev) => ({ ...prev, [field]: validName }));
         break;
+
       case "email_address":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) error = "Enter Valid Email";
-        setFieldData((prev) => ({ ...prev, [field]: value }));
+        const validEmail = handleValidValue(value);
+        if (!emailRegex.test(validEmail)) error = "Enter Valid Email";
+        setFieldData((prev) => ({ ...prev, [field]: validEmail }));
         break;
+
       case "wallet_address":
+        const validWallet = WalletValidValue(value);
         if (
-          !value.startsWith(validationtValue.START_ADDRESS) ||
-          value.length !== 42
-        )
+          !validWallet.startsWith(validationtValue.START_ADDRESS) ||
+          validWallet.length !== 42
+        ) {
           error = "Invalid Wallet Address";
-        setFieldData((prev) => ({ ...prev, [field]: value }));
+        }
+        setFieldData((prev) => ({ ...prev, [field]: validWallet }));
         break;
+
+      case "description":
+      case "additional_comments":
+        const validText = descriptionValidValue(value);
+        setFieldData((prev) => ({ ...prev, [field]: validText }));
+        break;
+
       default:
         setFieldData((prev) => ({ ...prev, [field]: value }));
         break;
