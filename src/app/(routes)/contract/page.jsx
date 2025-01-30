@@ -119,7 +119,6 @@ const Contract = () => {
       getSearchData(searchText);
     }
   };
-  console.log(contractData);
   return (
     <div className="popularPage">
       <div className="container">

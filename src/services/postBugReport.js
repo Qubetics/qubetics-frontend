@@ -8,8 +8,10 @@ export default async function postBugReport(
   captchaToken,
   selectedFiles
 ) {
-  console.log(selectedFiles, fieldData);
   const bugData = new FormData();
+  selectedFiles?.forEach((files) => {
+    bugData.append("attachments", files);
+  });
   bugData.append("name", fieldData.name);
   bugData.append("email", fieldData.email_address);
   bugData.append("walletAddress", fieldData.wallet_address);
@@ -20,19 +22,14 @@ export default async function postBugReport(
   bugData.append("severity", fieldData.severity);
   bugData.append("additionalComments", fieldData.additional_comments);
   bugData.append("captchaToken", captchaToken);
-  bugData.append("attachments", selectedFiles[0]);
 
   try {
     const response = await fetch(`${BUG_REPORT_API}bug-bounty/submit-bug`, {
       method: "POST",
       body: bugData,
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
     });
 
-    let result = await response.json();
-    return result;
+    return response;
   } catch (error) {
     toast.error(error);
     return error;

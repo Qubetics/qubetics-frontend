@@ -1,18 +1,44 @@
 import React, { useState } from "react";
 import "./FileUpload.scss";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const FileUpload = ({
   label = "Upload Files",
-  accept = "*",
-  multiple = true,
   onChange,
   setSelectedFiles,
   selectedFiles,
 }) => {
+  const maxFiles = 4; // Maximum files allowed
+  const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; // Allowed file types
+
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-    setSelectedFiles(files);
-    if (onChange) onChange(files);
+    let validFiles = [];
+
+    files.forEach((file) => {
+      if (!allowedTypes.includes(file.type)) {
+        alert(`${file.name} is not a valid image format (JPEG, JPG, PNG).`);
+      } else if (file.size > maxSize) {
+        alert(`${file.name} exceeds the 2MB size limit.`);
+      } else {
+        validFiles.push(file);
+      }
+    });
+
+    if (selectedFiles.length + validFiles.length > maxFiles) {
+      alert(`You can only upload up to ${maxFiles} files.`);
+      return;
+    }
+
+    const updatedFiles = [...selectedFiles, ...validFiles].slice(0, maxFiles);
+    setSelectedFiles(updatedFiles);
+    if (onChange) onChange(updatedFiles);
+  };
+
+  const handleRemoveFile = (index) => {
+    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
+    setSelectedFiles(updatedFiles);
   };
 
   return (
@@ -22,17 +48,29 @@ const FileUpload = ({
           type="file"
           className="upload-input"
           onChange={handleFileChange}
-          accept={accept}
-          multiple={multiple}
+          accept="image/jpeg, image/png, image/jpg"
+          multiple
+          disabled={selectedFiles.length >= maxFiles}
         />
-        <span className="upload-text">{label}</span>
+        <span className="upload-text">
+          {label} (Max: {maxFiles} files, 2MB each)
+        </span>
       </label>
+
       {selectedFiles.length > 0 && (
         <div className="file-preview">
-          <h4>Selected File{multiple ? "s" : ""}:</h4>
+          <h4>Selected Files:</h4>
           <ul>
             {selectedFiles.map((file, index) => (
-              <li key={index}>{file.name}</li>
+              <li key={index}>
+                {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                <button
+                  className="delete-btn"
+                  onClick={() => handleRemoveFile(index)}
+                >
+                  <DeleteOutlined />
+                </button>
+              </li>
             ))}
           </ul>
         </div>
@@ -42,58 +80,3 @@ const FileUpload = ({
 };
 
 export default FileUpload;
-
-// import React, { useState } from "react";
-// import "./FileUpload.scss";
-
-// const FileUpload = ({
-//   label = "Upload Files",
-//   accept = "*",
-//   multiple = true,
-//   onChange,
-//   setSelectedFiles,
-//   selectedFiles,
-// }) => {
-//   const maxFiles = 4; // Limit to 4 files
-
-//   const handleFileChange = (event) => {
-//     const files = Array.from(event.target.files);
-
-//     if (files.length + selectedFiles.length > maxFiles) {
-//       alert(`You can upload a maximum of ${maxFiles} files.`);
-//       return;
-//     }
-
-//     // Update selectedFiles with the new files
-//     const updatedFiles = [...selectedFiles, ...files];
-//     setSelectedFiles(updatedFiles);
-//     if (onChange) onChange(updatedFiles);
-//   };
-
-//   return (
-//     <div className="file-upload">
-//       <label className="upload-label">
-//         <input
-//           type="file"
-//           className="upload-input"
-//           onChange={handleFileChange}
-//           accept={accept}
-//           multiple={multiple}
-//         />
-//         <span className="upload-text">{label}</span>
-//       </label>
-//       {selectedFiles.length > 0 && (
-//         <div className="file-preview">
-//           <h4>Selected File{selectedFiles.length > 1 ? "s" : ""}:</h4>
-//           <ul>
-//             {selectedFiles.map((file, index) => (
-//               <li key={index}>{file.name}</li>
-//             ))}
-//           </ul>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default FileUpload;
