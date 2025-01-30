@@ -29,12 +29,16 @@ const FileUpload = ({
       }
     });
 
-    if (selectedFiles.length + validFiles.length > maxFiles) {
+    if (validFiles.length > maxFiles) {
       toast.error(`You can only upload up to ${maxFiles} files.`);
       return;
     }
 
-    const updatedFiles = [...selectedFiles, ...validFiles].slice(0, maxFiles);
+    const updatedFiles =
+      selectedFiles.length === 0 || validFiles.length === maxFiles
+        ? validFiles
+        : [...selectedFiles, ...validFiles].slice(0, maxFiles);
+
     setSelectedFiles(updatedFiles);
     if (onChange) onChange(updatedFiles);
   };
