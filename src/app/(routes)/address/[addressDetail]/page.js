@@ -23,7 +23,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import TokenByAddress from "@/components/token";
 import { CSVLink } from "react-csv";
-import { ExportIcon } from "../../../../../public/SvgIc ons";
+import { ExportIcon } from "../../../../../public/SvgIcons";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
