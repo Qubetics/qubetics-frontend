@@ -30,6 +30,9 @@ export default function LayoutProvider({ children }) {
           pathName === Routes.DASHBOARD ? "dashboardmaindiv" : ""
         }`}
       >
+        <div className="bugSubButton">
+          <button className="headermetaBtn">Reward Program</button>
+        </div>
         <Header />
 
         <main className="maininner">
