@@ -19,9 +19,11 @@ const FileUpload = ({
 
     files.forEach((file) => {
       if (!allowedTypes.includes(file.type)) {
-        alert(`${file.name} is not a valid image format (JPEG, JPG, PNG).`);
+        toast.error(
+          `${file.name} is not a valid image format (JPEG, JPG, PNG).`
+        );
       } else if (file.size > maxSize) {
-        alert(`${file.name} exceeds the 2MB size limit.`);
+        toast.error(`${file.name} exceeds the 2MB size limit.`);
       } else {
         validFiles.push(file);
       }
