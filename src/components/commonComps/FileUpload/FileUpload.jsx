@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./FileUpload.scss";
 import { DeleteOutlined } from "@ant-design/icons";
+import { toast } from "react-hot-toast";
 
 const FileUpload = ({
   label = "Upload Files",
@@ -27,7 +28,7 @@ const FileUpload = ({
     });
 
     if (selectedFiles.length + validFiles.length > maxFiles) {
-      alert(`You can only upload up to ${maxFiles} files.`);
+      toast.error(`You can only upload up to ${maxFiles} files.`);
       return;
     }
 
