@@ -31,6 +31,7 @@ const Contract = () => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [contractStatus, SetContractStatus] = useState(InitStatus);
   const [searchText, setSearchText] = useState("");
+  const [order, setOrder] = useState("");
 
   const { debounce } = useDebounce(searchText, 500);
   let currentChain =
@@ -52,7 +53,12 @@ const Contract = () => {
   };
   const getSearchData = async (search) => {
     try {
-      let response = await getInternalSearch(pageToSend, tableLimit, search);
+      let response = await getInternalSearch(
+        pageToSend,
+        tableLimit,
+        search,
+        order
+      );
       setContractData(response?.data);
       setPreviousCursor(response?.data?.prevCursor);
       setNextCursor(response?.data?.nextCursor);
@@ -91,6 +97,7 @@ const Contract = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       setPageToSend(nextCursor);
+      setOrder("");
     }
   };
 
@@ -98,6 +105,7 @@ const Contract = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
       setPageToSend(previousCursor);
+      if (debounce.length > 0) return setOrder("asc");
     }
   };
 

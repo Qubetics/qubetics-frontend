@@ -3,11 +3,14 @@ import { EXPLORER_API_URL } from "@/constant/constant";
 export default async function getInternalSearch(
   currentPage,
   tableLimit,
-  serachText
+  serachText,
+  order
 ) {
   try {
     const response = await fetch(
-      `${EXPLORER_API_URL}contracts/search/${serachText}?page=${currentPage}&limit=${tableLimit}`
+      `${EXPLORER_API_URL}contracts/search/${serachText}?page=${currentPage}&limit=${tableLimit}${
+        order !== "" ? `&order=${order}` : ""
+      }`
     );
     let result = await response.json();
     return result;
