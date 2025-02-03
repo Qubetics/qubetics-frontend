@@ -1500,13 +1500,13 @@ html {
   }
   .bugSubButton {
     position: fixed;
-    // left: -57px;
     right: -57px;
     top: 30%;
     z-index: 999;
     max-width: max-content;
     width: 100%;
-    rotate: 270deg;
+    rotate: 90deg;
+
     button {
       box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3),
         0px 2px 8px rgba(255, 255, 255, 0.2);
@@ -1516,8 +1516,9 @@ html {
       &:hover {
         box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.5),
           0px 3px 12px rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px); // Slight lift on hover
+        transform: translateY(-2px); /* Slight lift on hover */
       }
+
       &::before {
         border-radius: 0 0 15px 15px !important;
       }
