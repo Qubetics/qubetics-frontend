@@ -1500,7 +1500,8 @@ html {
   }
   .bugSubButton {
     position: fixed;
-    left: -57px;
+    // left: -57px;
+    right: -57px;
     top: 30%;
     z-index: 999;
     max-width: max-content;
