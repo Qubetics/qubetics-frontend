@@ -742,9 +742,9 @@ export const contractTableColumn = (currentChain) => [
             />
           )} */}
           <Link href={`/contract/${text?.address}`}>
-            {text?.contractname || text?.contractname
-              ? capitalizeWord(text?.contractname || text?.contractName)
-              : "-"}
+            {capitalizeWord(
+              text?.contractname || text?.contractName || text?.tokenName || ""
+            )}
           </Link>
         </span>
       );
@@ -835,7 +835,7 @@ export const contractTableColumn = (currentChain) => [
           <p className="yellow-icon">Pending</p>
         ) : (
           // <ClockCircleFilled className="yellow-icon" />
-          "-"
+          <p className="yellow-icon">Pending</p>
         )}
       </span>
     ),
