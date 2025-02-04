@@ -19,6 +19,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import postBugReport from "@/services/postBugReport";
 import { toast } from "react-toastify";
 import { LoadingOutlined } from "@ant-design/icons";
+import { isValidEthereumAddress } from "./isValidEthAddress";
 
 const BugForm = () => {
   const [fieldData, setFieldData] = useState({
@@ -43,6 +44,9 @@ const BugForm = () => {
     name: "",
     email: "",
     wallet: "",
+    description: "",
+    additional_comments: "",
+    telegram_id: "",
   });
 
   const recaptchaRef = useRef();
@@ -94,18 +98,26 @@ const BugForm = () => {
 
       case "wallet_address":
         const validWallet = WalletValidValue(value);
-        if (
-          !validWallet.startsWith(validationtValue.START_ADDRESS) ||
-          validWallet.length !== 42
-        ) {
+        if (!isValidEthereumAddress(validWallet)) {
           error = "Invalid Wallet Address";
         }
         setFieldData((prev) => ({ ...prev, [field]: validWallet }));
         break;
 
+      case "telegram_id":
+        const telegramRegex = /^[a-zA-Z_][a-zA-Z0-9_]{4,31}$/;
+        if (value && !telegramRegex.test(value))
+          error = "Invalid Telegram ID (5-32 chars, letters, numbers, _)";
+        setFieldData((prev) => ({ ...prev, [field]: value }));
+        break;
+
       case "description":
       case "additional_comments":
         const validText = descriptionValidValue(value);
+        if (!validText.trim())
+          error = `Enter ${
+            field === "description" ? "description" : "additional comments"
+          }`;
         setFieldData((prev) => ({ ...prev, [field]: validText }));
         break;
 
@@ -152,6 +164,8 @@ const BugForm = () => {
           name: "",
           email: "",
           wallet: "",
+          description: "",
+          additional_comments: "",
         });
 
         if (recaptchaRef.current) recaptchaRef.current.reset();
@@ -165,6 +179,37 @@ const BugForm = () => {
     });
   };
 
+  const handleFocus = (field) => {
+    if (!fieldData[field]) {
+      let error = "";
+
+      switch (field) {
+        case "name":
+          error = "Enter your name";
+          break;
+        case "email_address":
+          error = "Enter your email";
+          break;
+        case "wallet_address":
+          error = "Enter your wallet address";
+          break;
+        case "description":
+          error = "Enter description";
+          break;
+        case "additional_comments":
+          error = "Enter additional comments";
+          break;
+        default:
+          break;
+      }
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: error,
+      }));
+    }
+  };
+
   return (
     <div>
       <form className="submission_form" onSubmit={handleSubmit}>
@@ -173,6 +218,7 @@ const BugForm = () => {
           placeholder="Enter Name"
           value={fieldData.name || ""}
           onChange={(value) => handleInputChange("name", value)}
+          onFocus={() => handleFocus("name")}
         />
         {errors.name && <div className="error-message">{errors.name}</div>}
 
@@ -181,6 +227,7 @@ const BugForm = () => {
           placeholder="Enter Email"
           value={fieldData.email_address || ""}
           onChange={(value) => handleInputChange("email_address", value)}
+          onFocus={() => handleFocus("email_address")}
         />
         {errors.email_address && (
           <div className="error-message">{errors.email_address}</div>
@@ -191,6 +238,7 @@ const BugForm = () => {
           placeholder="Enter EVM Wallet Address"
           value={fieldData.wallet_address}
           onChange={(value) => handleInputChange("wallet_address", value)}
+          onFocus={() => handleFocus("wallet_address")}
         />
         {errors.wallet_address && (
           <div className="error-message">{errors.wallet_address}</div>
@@ -202,6 +250,9 @@ const BugForm = () => {
           value={fieldData.telegram_id}
           onChange={(value) => handleInputChange("telegram_id", value)}
         />
+        {errors.telegram_id && (
+          <div className="error-message">{errors.telegram_id}</div>
+        )}
 
         <CustomDropdown
           label="Application Tested*"
@@ -253,7 +304,11 @@ const BugForm = () => {
           rows={4}
           value={fieldData?.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
+          onFocus={() => handleFocus("description")}
         />
+        {errors.description && (
+          <div className="error-message-des">{errors.description}</div>
+        )}
 
         <FileUpload
           setSelectedFiles={setSelectedFiles}
@@ -268,7 +323,11 @@ const BugForm = () => {
           onChange={(e) =>
             handleInputChange("additional_comments", e.target.value)
           }
+          onFocus={() => handleFocus("additional_comments")}
         />
+        {errors.additional_comments && (
+          <div className="error-message-des">{errors.additional_comments}</div>
+        )}
 
         {GoogleKey && (
           <div className="captcha">
@@ -294,7 +353,11 @@ const BugForm = () => {
           <button
             type="submit"
             className="headermetaBtn preNextbtn"
-            disabled={!isFormValid || loading}
+            disabled={
+              !isFormValid ||
+              loading ||
+              Object.values(errors).some((err) => err)
+            }
           >
             {loading ? <LoadingOutlined /> : "Submit"}
           </button>
