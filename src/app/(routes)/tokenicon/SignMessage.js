@@ -43,6 +43,9 @@ export const signMessage = async (
     return;
   } catch (err) {
     setIsLoading(false);
-    toast.error(err.message);
+    const errParsed = JSON.parse(JSON.stringify(err));
+    if (errParsed?.info?.error?.code == 4001)
+      return toast.error("User rejected the request");
+    toast.error(errParsed?.shortMessage);
   }
 };

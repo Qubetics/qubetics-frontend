@@ -1,7 +1,4 @@
 "use client";
-// import { CopyIcon, Scanner } from "../../../public/SvgIcons";
-// import { CopyToClipboard } from "react-copy-to-clipboard";
-// import { customToast } from "../common/toast";
 import { CheckOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import { useState } from "react";
@@ -19,15 +16,6 @@ export default function CopyText({ text, hoverText }) {
   };
 
   return (
-    // <CopyToClipboard
-    //   text={text}
-    //   style={{ marginLeft: 8, cursor: "pointer", color: "#fff" }}
-    //   onCopy={(e) => {
-    //     customToast.success("Copied Successfully");
-    //   }}
-    // >
-    //   {CopyIcon()}
-    // </CopyToClipboard>
     <>
       <Tooltip
         title={

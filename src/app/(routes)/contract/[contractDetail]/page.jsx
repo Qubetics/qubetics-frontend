@@ -21,8 +21,10 @@ import {
 import getContractDetails from "@/services/getContractDetails";
 import {
   capitalizeWord,
+  formateTotalSupply,
   formatMillionNumber,
   noExponential,
+  noExponentsValue,
 } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 import Image from "next/image";
@@ -121,8 +123,8 @@ const ContractDetail = () => {
     {
       text: "Total Supply",
       heading: contractDetail?.totalSupply
-        ? formatMillionNumber(
-            noExponential(
+        ? formateTotalSupply(
+            noExponentsValue(
               Number(contractDetail?.totalSupply) /
                 10 ** Number(contractDetail?.decimal)
             )

@@ -11,7 +11,7 @@ const CustomInput = ({ label, onChange, fieldType, runsCheck, ...rest }) => {
     <div className="customInput">
       <label>{label}</label>
       {/* {fieldType !== "tuple" && ( */}
-      <Input onChange={handleInputChange} {...rest} />
+      <Input autoComplete="off" onChange={handleInputChange} {...rest} />
       {/* )} */}
     </div>
   );

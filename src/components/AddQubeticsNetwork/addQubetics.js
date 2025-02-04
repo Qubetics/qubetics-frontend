@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   EXPLORER_CURRENCY_NAME,
   EXPLORER_METAMASK_NAVIGATION,
@@ -7,6 +7,7 @@ import {
   METAMASK_CHAIN_NAME,
   Messages,
 } from "@/constant/constant";
+import { JsonRpcProvider } from "ethers";
 import toast from "react-hot-toast";
 import Web3 from "web3";
 
@@ -127,9 +128,6 @@ export const addQubetic = async () => {
     if (deviceType !== "Desktop") {
       if (window.ethereum === undefined) {
         const metamaskDappUrl =
-          //  `https://chainid.network/chain/${parseInt(
-          //   EXPLORER_META_NETWORK_CHAIN_ID
-          // )}`;
           process.env.NEXT_PUBLIC_METAMASK_DAPP_URL ||
           "https://default-url.com";
         window.location.href = metamaskDappUrl;
@@ -214,3 +212,69 @@ export const addQubetic = async () => {
     toast.error(error.message);
   }
 };
+
+// export const addNetwork = async (isMobile) => {
+//   try {
+//     const ethProvider = new JsonRpcProvider(
+//       EXPLORER_METAMASK_NETWORK_URL || ""
+//     );
+//     const browserProvider = window.ethereum;
+
+//     if (!browserProvider) {
+//       if (isMobile) {
+//         const dappUrl =
+//           process.env.NEXT_PUBLIC_METAMASK_DAPP_URL ||
+//           "https://default-url.com";
+//         window.location.href = dappUrl;
+//       } else {
+//         toast.error(Messages.Install_Metamask);
+//       }
+//       return;
+//     }
+//     const network = await ethProvider.getNetwork();
+
+//     const chainIdHex = `0x${network.chainId.toString(16)}`;
+//     const currentChainId = await browserProvider.request({
+//       method: "eth_chainId",
+//     });
+
+//     if (currentChainId === chainIdHex) {
+//       toast.success(Messages.Same_Network);
+//       return;
+//     }
+
+//     try {
+//       // Attempt to switch to the desired network
+//       await browserProvider.request({
+//         method: "wallet_switchEthereumChain",
+//         params: [{ chainId: chainIdHex }],
+//       });
+//       toast.success(Messages.Successfully_Switched);
+//     } catch (switchError) {
+//       if (switchError.code === 4902) {
+//         // If the network is not added, add it
+//         await browserProvider.request({
+//           method: "wallet_addEthereumChain",
+//           params: [
+//             {
+//               chainId: chainIdHex,
+//               chainName: METAMASK_CHAIN_NAME,
+//               nativeCurrency: {
+//                 symbol: EXPLORER_CURRENCY_NAME,
+//                 decimals: 18,
+//               },
+//               rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+//               blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+//             },
+//           ],
+//         });
+//         toast.success(Messages.Network_Added);
+//       } else {
+//         throw switchError;
+//       }
+//     }
+//   } catch (error) {
+//     toast.error(error.message);
+//     console.error("Error:", error.message);
+//   }
+// };

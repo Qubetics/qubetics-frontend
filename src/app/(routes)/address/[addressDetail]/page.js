@@ -18,13 +18,12 @@ import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import TokenByAddress from "@/components/token";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
-import FilterResult from "@/components/FilterResult/FilterResult";
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);

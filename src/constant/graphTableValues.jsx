@@ -3,6 +3,7 @@ import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
+  formateTotalSupply,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";
@@ -182,10 +183,10 @@ export const blockColumn = [
     render: (text) => (
       <>
         <div className="iconandlink blockLinks">
-          <Link href={`${Routes.Tx_ADDRESS}/${text}`}>{getAddress(text)}</Link>
-          <span>
+          {getAddress(text)}
+          {/* <span>
             <CopyText text={text}></CopyText>
-          </span>
+          </span> */}
         </div>
       </>
     ),
@@ -264,12 +265,23 @@ export const transactionSummarycolumn = [
           text?.toAddress?.startsWith("0x") ||
           text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer || text?.type === typesOfTransactions.contractCreation || text?.type === typesOfTransactions.contractExecute || text?.type === typesOfTransactions.contractUpload ? (
-                <Link className="fromicon blockLink" href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`} rel="noopener noreferrer">
+              {text?.type === typesOfTransactions.contractTransfer ||
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
+                <Link
+                  className="fromicon blockLink"
+                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
+                  rel="noopener noreferrer"
+                >
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link className="fromicon blockLink" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
+                <Link
+                  className="fromicon blockLink"
+                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                  rel="noopener noreferrer"
+                >
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -279,7 +291,10 @@ export const transactionSummarycolumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} className="blockLink">
+              <Link
+                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                className="blockLink"
+              >
                 {getAddress(text?.toAddress)}
               </Link>
               <span>
@@ -727,9 +742,9 @@ export const contractTableColumn = (currentChain) => [
             />
           )} */}
           <Link href={`/contract/${text?.address}`}>
-            {text?.contractname || text?.contractname
-              ? capitalizeWord(text?.contractname || text?.contractName)
-              : "-"}
+            {capitalizeWord(
+              text?.contractname || text?.contractName || text?.tokenName || "-"
+            )}
           </Link>
         </span>
       );
@@ -820,7 +835,7 @@ export const contractTableColumn = (currentChain) => [
           <p className="yellow-icon">Pending</p>
         ) : (
           // <ClockCircleFilled className="yellow-icon" />
-          "-"
+          <p className="yellow-icon">Pending</p>
         )}
       </span>
     ),
@@ -1301,12 +1316,9 @@ export const TokenColumn = [
         {text?.totalSupply
           ? text?.native == true
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
-            : formatValue(
+            : formateTotalSupply(
                 noExponential(
-                  toFixed(
-                    Number(text?.totalSupply) / 10 ** Number(text?.decimal),
-                    4
-                  )
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
                 )
               )
           : "-"}

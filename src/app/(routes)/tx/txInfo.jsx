@@ -5,7 +5,6 @@ import {
   ContractTransactions,
   TotalTransactions,
 } from "../../../../public/SvgIcons";
-import { useLatestData } from "@/components/contexts/latest_data";
 import "../blocks/blocksummary.scss";
 export const TxInfo = ({ txnData }) => {
   // const webSocketData = useLatestData();

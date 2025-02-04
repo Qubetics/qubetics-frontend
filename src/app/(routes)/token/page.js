@@ -26,6 +26,7 @@ function page() {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [tokensData, setTokensData] = useState([]);
+  const [totalErcCount, setErcCount] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -33,13 +34,15 @@ function page() {
   const { debounce } = useDebounce(searchText, 1500);
   const pageId = searchParams.get("page") || 1;
   const router = useRouter();
+  const [order, setOrder] = useState("");
 
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
       let response = await getAllTokens(pageId, tableLimit);
-      setTokensData(response?.data);
-      const count = Number(response?.data?.count ?? 0) / tableLimit;
+      setTokensData(response?.data?.tokens);
+      setErcCount(response?.data?.erc20Count);
+      const count = Number(response?.data?.erc20Count ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
     } catch (err) {
@@ -50,9 +53,15 @@ function page() {
   const getSearchData = async (debounce) => {
     try {
       setTokenStatus(FetchingStatus);
-      let response = await getInternalSearch(pageId, tableLimit, debounce);
-      setTokensData(response?.data);
-      const count = Number(response?.data?.tokenCount ?? 0) / tableLimit;
+      let response = await getInternalSearch(
+        pageId,
+        tableLimit,
+        debounce,
+        order
+      );
+      setTokensData(response?.data?.contracts);
+      setErcCount(response?.data?.erc20Count);
+      const count = Number(response?.data?.contractCount ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
     } catch (err) {
@@ -77,7 +86,8 @@ function page() {
 
   const handleNext = () => {
     if (pageId < totalPages) {
-      // Create a new URLSearchParams object to modify query parameters
+      // Create a new URLSearchParams object to modify query parameters\
+      setOrder("");
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(pageId) + 1);
       router.push(`?${newSearchParams.toString()}`);
@@ -91,6 +101,7 @@ function page() {
       newSearchParams.set("page", Number(pageId) - 1);
       router.push(`?${newSearchParams.toString()}`);
     }
+    if (debounce.length > 0) return setOrder("asc");
   };
 
   const handleLast = () => {
@@ -115,7 +126,7 @@ function page() {
     {
       id: 1,
       text: "Total Tokens",
-      balance: tokensData?.count ?? 0,
+      balance: totalErcCount ?? 0,
       img: <TotalContrat />,
       contract: false,
       title:
@@ -183,7 +194,7 @@ function page() {
         </div>
         <SkeletonTableWrapper
           columns={TokenColumn}
-          dataSource={tokensData?.tokens}
+          dataSource={tokensData}
           className="commontable"
           isSkeleton={
             tokenStatus === FetchingStatus || tokenStatus === InitStatus
