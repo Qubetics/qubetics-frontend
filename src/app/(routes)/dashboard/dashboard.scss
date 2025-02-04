@@ -102,6 +102,10 @@
       }
       .commontableBG {
         margin-top: 0;
+        min-height: 362.88px;
+        @media (max-width: 1070px) {
+          min-height: unset;
+        }
       }
     }
   }
@@ -731,8 +735,10 @@
         max-width: 380px;
         width: 100%;
         background: transparent;
+        height: 102px;
         @media (max-width: 1199px) {
           max-width: 49%;
+          height: unset;
         }
         @media (max-width: 767px) {
           max-width: 100%;
