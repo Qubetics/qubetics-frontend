@@ -218,7 +218,8 @@ const BugForm = () => {
           placeholder="Enter Name"
           value={fieldData.name || ""}
           onChange={(value) => handleInputChange("name", value)}
-          onFocus={() => handleFocus("name")}
+          // onFocus={() => handleFocus("name")}
+          onBlur={() => handleFocus("name")}
         />
         {errors.name && <div className="error-message">{errors.name}</div>}
 
@@ -227,7 +228,8 @@ const BugForm = () => {
           placeholder="Enter Email"
           value={fieldData.email_address || ""}
           onChange={(value) => handleInputChange("email_address", value)}
-          onFocus={() => handleFocus("email_address")}
+          // onFocus={() => handleFocus("email_address")}
+          onBlur={() => handleFocus("email_address")}
         />
         {errors.email_address && (
           <div className="error-message">{errors.email_address}</div>
@@ -238,7 +240,7 @@ const BugForm = () => {
           placeholder="Enter EVM Wallet Address"
           value={fieldData.wallet_address}
           onChange={(value) => handleInputChange("wallet_address", value)}
-          onFocus={() => handleFocus("wallet_address")}
+          onBlur={() => handleFocus("wallet_address")}
         />
         {errors.wallet_address && (
           <div className="error-message">{errors.wallet_address}</div>
@@ -304,7 +306,7 @@ const BugForm = () => {
           rows={4}
           value={fieldData?.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
-          onFocus={() => handleFocus("description")}
+          onBlur={() => handleFocus("description")}
         />
         {errors.description && (
           <div className="error-message-des">{errors.description}</div>
@@ -323,7 +325,7 @@ const BugForm = () => {
           onChange={(e) =>
             handleInputChange("additional_comments", e.target.value)
           }
-          onFocus={() => handleFocus("additional_comments")}
+          onBlur={() => handleFocus("additional_comments")}
         />
         {errors.additional_comments && (
           <div className="error-message-des">{errors.additional_comments}</div>
