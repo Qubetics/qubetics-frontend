@@ -743,7 +743,7 @@ export const contractTableColumn = (currentChain) => [
           )} */}
           <Link href={`/contract/${text?.address}`}>
             {capitalizeWord(
-              text?.contractname || text?.contractName || text?.tokenName || ""
+              text?.contractname || text?.contractName || text?.tokenName || "-"
             )}
           </Link>
         </span>
