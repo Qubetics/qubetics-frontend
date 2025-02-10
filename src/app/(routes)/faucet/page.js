@@ -1,5 +1,4 @@
 "use client";
-
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import {
   ErrorStatus,
@@ -14,13 +13,12 @@ import {
 import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Input, Spin } from "antd";
-import { useRef, useState } from "react";
+import { useRef, useState,useEffect} from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
 import FilterResult from "@/components/FilterResult/FilterResult";
-
 function Page() {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [faucetField, setFaucetField] = useState({
@@ -35,10 +33,14 @@ function Page() {
   const [captchaToken, setCaptchaToken] = useState();
   const [transferStatus, setTransferStatus] = useState(InitStatus);
   let addressRegex = /^[a-zA-Z0-9]*$/;
-
+  useEffect(() => {
+    document.body.classList.add("faucetCustom");
+    return () => {
+      document.body.classList.remove("faucetCustom");
+    };
+  }, []);
   const handleFaucetChange = (e) => {
     const { name, value } = e.target;
-
     if (name === "address" && addressRegex.test(e.target.value)) {
       setFaucetField({
         ...faucetField,
@@ -51,7 +53,6 @@ function Page() {
       setTxHash("");
     }
   };
-
   const requestFund = async () => {
     if (faucetField?.address === "") {
       setError({
