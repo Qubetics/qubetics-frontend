@@ -1490,7 +1490,7 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("/mainbg.png");
+  background-image: url("/mainbg.avif");
   background-repeat: no-repeat;
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
@@ -1531,7 +1531,7 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("/bgMain.png");
+  // background-image: url("/bgMain.png");
   background-repeat: no-repeat;
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;

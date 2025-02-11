@@ -10,20 +10,33 @@ const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
 
   return (
-    <div className={`recentblocks ${customClass ? customClass : ""}`} {...props}>
+    <div
+      className={`recentblocks ${customClass ? customClass : ""}`}
+      {...props}
+    >
       <div className="recentdata">
-        <img src="./box.svg" alt="" />
+        <img src="./box.svg" alt="" height={"60"} width={"40"} />
         <div className="recentdata_inner">
-          <p style={{ cursor: "pointer" }} onClick={() => router.push(`${Routes.BLOCK_NO}${data?.blocknumber}`)} className="recenteBlockNumber">
+          <p
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              router.push(`${Routes.BLOCK_NO}${data?.blocknumber}`)
+            }
+            className="recenteBlockNumber"
+          >
             {" "}
             {data?.blocknumber ? data?.blocknumber : "-"}
           </p>
-          <p className="time">{data?.timestamp ? renderTime(data?.timestamp) : "-"}</p>
+          <p className="time">
+            {data?.timestamp ? renderTime(data?.timestamp) : "-"}
+          </p>
         </div>
       </div>
       <div className="recent recentCenter">
         <p>
-          <span className="trnxCount">{data?.transactionCount ? data?.transactionCount : 0} txn</span>{" "}
+          <span className="trnxCount">
+            {data?.transactionCount ? data?.transactionCount : 0} txn
+          </span>{" "}
         </p>
         <p>{data?.timestamp ? renderTime(data?.timestamp) : "-"}</p>
       </div>
