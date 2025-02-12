@@ -97,16 +97,7 @@ function ContractInfo() {
 
       <div className="contractInfo">
         <h3>Contract Information</h3>
-        {/*
-        <div className="buttons">
-          <Button type="primary" className="bluebtn">
-            Expand All
-          </Button>
-          <Button type="primary" className="bluebtn">
-            Reset
-          </Button>
-        </div>
-        */}
+        
       </div>
       <Modal className="connectModal" title="Connect your wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
         <ul>
@@ -114,13 +105,7 @@ function ContractInfo() {
             <Image priority src="/metafox.svg" alt="Logo" width={25} height={25} />
             MetaMask
           </li>
-          {/*
-          <li>
-            {" "}
-            <Image src="/walletAdd.svg" alt="Logo" width={38} height={38} />
-            Wallet Connect
-          </li>
-          */}
+          
         </ul>
         <p className="agreeWallet">By Connecting a wallet you agree to the Terms of service and Optimism Community Agreements.</p>
       </Modal>

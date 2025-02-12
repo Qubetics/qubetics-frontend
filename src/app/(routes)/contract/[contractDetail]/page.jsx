@@ -1,16 +1,5 @@
 "use client";
-import BlockDetail from "@/components/blockDetail/BlockDetail";
-import { useContractData } from "@/components/contexts/contractContext";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
-import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
-import AnalyticTab from "@/components/contracts/AnalyticTab";
-import ContractDetails from "@/components/contracts/ContractDetails";
-import ContractTransactions from "@/components/contracts/ContractTransactions";
-import Events from "@/components/contracts/Events";
-import Holder from "@/components/contracts/Holder";
-import FilterResult from "@/components/FilterResult/FilterResult";
-import Heading from "@/components/heading/Heading";
-import Loader from "@/components/loader/Loader";
 import {
   contractTypes,
   ErrorStatus,
@@ -31,14 +20,29 @@ import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Tokenicons } from "../../../../../public/SvgIcons";
-import Page from "../../notfound/page";
+import dynamic from "next/dynamic";
+
+const BlockDetail = dynamic(() => import("@/components/blockDetail/BlockDetail"), { ssr: false });
+const ContractDtlTabs = dynamic(() => import("@/components/contractDetailTabs/ContractDtlTabs"), { ssr: false });
+const AnalyticTab = dynamic(() => import("@/components/contracts/AnalyticTab"), { ssr: false });
+const ContractDetails = dynamic(() => import("@/components/contracts/ContractDetails"), { ssr: false });
+const ContractTransactions = dynamic(() => import("@/components/contracts/ContractTransactions"), { ssr: false });
+const Events = dynamic(() => import("@/components/contracts/Events"), { ssr: false });
+const Holder = dynamic(() => import("@/components/contracts/Holder"), { ssr: false });
+const FilterResult = dynamic(() => import("@/components/FilterResult/FilterResult"), { ssr: false });
+const Heading = dynamic(() => import("@/components/heading/Heading"), { ssr: false });
+const Loader = dynamic(() => import("@/components/loader/Loader"), { ssr: false });
+const Page = dynamic(() => import("../../notfound/page"), { ssr: false });
+
+
+
+
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
   const [contractDetailStatus, setContractDetailStatus] = useState(InitStatus);
   const [contractType, setContractType] = useState("");
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
-  const { setVerifyAddress } = useContractData();
+ 
   const [tab, setTab] = useState(searchParam.get("tab") || "0");
   const params = useParams();
   const router = useRouter();
@@ -117,6 +121,7 @@ const ContractDetail = () => {
           height={60}
           width={60}
           alt="logo"
+          loading="lazy"
         />
       ),
     },
@@ -137,6 +142,7 @@ const ContractDetail = () => {
           height={60}
           width={60}
           alt="logo"
+          loading="lazy"
         />
       ),
     },
@@ -194,10 +200,6 @@ const ContractDetail = () => {
   return (
     <div className="contractDetail contractsItems">
       <div className="container">
-        {/* <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        /> */}
         <FilterResult />
         <Heading heading="Contract Details" />
         {contractDetailStatus === InitStatus ||
@@ -233,11 +235,6 @@ const ContractDetail = () => {
             className="contracttabs"
             items={tabItems}
             onChange={(e) => handleTabSelect(e)}
-            // tabBarExtraContent={
-            //   <div className="tabSerachBar">
-            //     <SearchbarComponent />
-            //   </div>
-            // }
           />
         </div>
       </div>

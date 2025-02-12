@@ -1,26 +1,49 @@
 "use client";
-
-import ChainAnalytics from "@/components/chainAnalytics/ChainAnalytics";
-import ChainAnalyticsGraph from "@/components/chainAnalytics/ChainAnalyticsGraph.jsx";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
-import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
-import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
-import RecentBlocks from "@/components/dashboard/RecentBlocks/RecentBlocks";
-import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
-import FilterResult from "@/components/FilterResult/FilterResult";
-import { graphUrl, InitStatus, Routes } from "@/constant/constant";
+import { graphUrl, Routes } from "@/constant/constant";
 import getStatistics from "@/services/getStatistics";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import FooterLink from "../../../components/footer/FooterLinks";
+import { Suspense, useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
+import dynamic from "next/dynamic";
 
+const RecentTransactions = dynamic(
+  () => import("@/components/dashboard/RecentTransactions/RecentTransactions"),
+  { ssr: false }
+);
+const RecentBlocks = dynamic(
+  () => import("@/components/dashboard/RecentBlocks/RecentBlocks"),
+  { ssr: false }
+);
+const ChainAnalyticsGraph = dynamic(
+  () => import("@/components/chainAnalytics/ChainAnalyticsGraph"),
+  { ssr: false }
+);
+const FilterResult = dynamic(
+  () => import("@/components/FilterResult/FilterResult"),
+  { ssr: false }
+);
+const OnChainMetrics = dynamic(
+  () => import("@/components/dashboard/OnChainMetrics/OnChainMetrics"),
+  { ssr: false }
+);
+const ChainAnalytics = dynamic(
+  () => import("@/components/chainAnalytics/ChainAnalytics"),
+  { ssr: false }
+);
+const FooterLink = dynamic(() => import("@/components/footer/FooterLinks"), {
+  ssr: false,
+});
+const Loading = dynamic(() => import("../../loading"), { ssr: false });
+const Analytics = dynamic(
+  () => import("@/components/dashboard/OnChainMetrics/Analytics"),
+  { ssr: false }
+);
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState("");
   const { isEvm, isNetworkChanged } = useGetNetwork();
 
@@ -51,7 +74,6 @@ const Page = ({ customClass }) => {
       >
         <div>
           <div className="container">
-            {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} /> */}
             <FilterResult />
             <h2 className="analytictext">On-Chain Metrics</h2>
             <OnChainMetrics stats={stats} />
@@ -61,7 +83,9 @@ const Page = ({ customClass }) => {
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-            <Analytics stats={stats} />
+            <Suspense fallback={<Loading />}>
+              <Analytics stats={stats} />
+            </Suspense>
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />
@@ -74,43 +98,47 @@ const Page = ({ customClass }) => {
               <ChainAnalytics stats={stats} />
               <div className="multiGraph">
                 <div className="grap">
-                  <ChainAnalyticsGraph
-                    title="Qubetics Price"
-                    discription="Qubetics Coin current market price in USD "
-                    fetchUrl={graphUrl.token_price}
-                    isNative={false}
-                    tooltipTitle="Price"
-                  />
-                  <ChainAnalyticsGraph
-                    title="Qubetics Coin Transfers"
-                    discription="Total Txns made with Qubetics coin per period "
-                    fetchUrl={graphUrl.coin_transfer}
-                    isNative={false}
-                    tooltipTitle="Transfer"
-                  />
+                  <Suspense fallback={<Loading />}>
+                    <ChainAnalyticsGraph
+                      title="Qubetics Price"
+                      discription="Qubetics Coin current market price in USD "
+                      fetchUrl={graphUrl.token_price}
+                      isNative={false}
+                      tooltipTitle="Price"
+                    />
+                    <ChainAnalyticsGraph
+                      title="Qubetics Coin Transfers"
+                      discription="Total Txns made with Qubetics coin per period "
+                      fetchUrl={graphUrl.coin_transfer}
+                      isNative={false}
+                      tooltipTitle="Transfer"
+                    />
+                  </Suspense>
                 </div>
                 <div className="grap">
-                  <ChainAnalyticsGraph
-                    title="Total Accounts"
-                    discription="Total accounts number per period"
-                    fetchUrl={graphUrl.total_account}
-                    isNative={isEvm}
-                    tooltipTitle="Account"
-                  />
-                  <ChainAnalyticsGraph
-                    title="Transaction Fees"
-                    discription="Amount of Qubetics coin paid in fees per period "
-                    fetchUrl={graphUrl.txn_fee}
-                    isNative={false}
-                    tooltipTitle="Txn Fee"
-                  />
+                  <Suspense fallback={<Loading />}>
+                    <ChainAnalyticsGraph
+                      title="Total Accounts"
+                      discription="Total accounts number per period"
+                      fetchUrl={graphUrl.total_account}
+                      isNative={isEvm}
+                      tooltipTitle="Account"
+                    />
+                    <ChainAnalyticsGraph
+                      title="Transaction Fees"
+                      discription="Amount of Qubetics coin paid in fees per period "
+                      fetchUrl={graphUrl.txn_fee}
+                      isNative={false}
+                      tooltipTitle="Txn Fee"
+                    />
+                  </Suspense>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-    
+
       {pathname !== Routes.DASHBOARD && (
         <div className="footerToShow">
           <FooterLink />
