@@ -34,10 +34,15 @@ const TransactionAction = ({ data }) => {
             style={{ marginTop: "15px" }}
           >
             <div>
-              <p className="action actiondata">ERC-20 Tokens Transferred</p>
+              <p className="action actiondata"> Tokens Transferred</p>
+              <div>
+                <p>ERC-20</p>
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
+              <p className="action actiondata">From</p>
               <div>
                 <p>
-                  From{" "}
                   <Link
                     href={`/address/${
                       JSON.parse(data?.logs)[0]?.events[0]?.value
@@ -46,8 +51,25 @@ const TransactionAction = ({ data }) => {
                   >
                     {JSON.parse(data?.logs)[0]?.events[0]?.value}{" "}
                   </Link>{" "}
-                  To {JSON.parse(data?.logs)[0]?.events[1]?.value} For{" "}
-                  {JSON.parse(data?.logs)[0]?.events[2]?.value}{" "}
+                </p>
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
+              <p className="action actiondata">To</p>
+              <div>
+                <p>{JSON.parse(data?.logs)[0]?.events[1]?.value}</p>
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
+              <p className="action actiondata">Value</p>
+              <div>
+                <p>{JSON.parse(data?.logs)[0]?.events[2]?.value} </p>
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
+              <p className="action actiondata">Token Name</p>
+              <div>
+                <p>
                   <Link
                     href={`/address/${data?.tokenInfo?.contractAddress}`}
                     className="Transaction_Action_Links"
@@ -56,8 +78,13 @@ const TransactionAction = ({ data }) => {
                     {" "}
                     {data?.tokenInfo?.tokenName}{" "}
                   </Link>
-                  ({data?.tokenInfo?.tokenSymbol})
                 </p>
+              </div>
+            </div>{" "}
+            <div style={{ marginTop: "15px" }}>
+              <p className="action actiondata">Token Symbol </p>
+              <div>
+                <p>({data?.tokenInfo?.tokenSymbol})</p>
               </div>
             </div>
           </div>
