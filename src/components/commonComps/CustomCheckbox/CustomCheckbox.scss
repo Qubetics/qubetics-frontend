@@ -29,9 +29,12 @@ $checkbox-disabled-border: #fff;
     cursor: pointer;
     font-size: 1rem;
     color: $checkbox-border;
+    p {
+      flex: 1;
+    }
 
     .checkbox-custom {
-      width: 34px;
+      width: 20px;
       height: 20px;
       margin-right: 0.5rem;
       border: 2px solid $checkbox-border;
