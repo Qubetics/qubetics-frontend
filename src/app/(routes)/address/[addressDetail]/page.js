@@ -13,17 +13,25 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
-import getAddressDetails from "@/services/getAddressDetails";
-import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 
-import FilterResult from "@/components/FilterResult/FilterResult";
+import getTransactionsByAddress from "@/services/getTransactionByAddress";
+import getAddressDetails from "@/services/getAddressDetails";
+
+// import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
-import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import TokenByAddress from "@/components/token";
+
+const FilterResult = lazy(() => import("@/components/FilterResult/FilterResult"));
+ 
+
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
+import { lazy } from "react";
+
+
 
 const page = ({ params }) => {
   const [txAddressData, setTxAddressData] = useState([]);
