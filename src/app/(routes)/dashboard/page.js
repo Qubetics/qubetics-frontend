@@ -1,42 +1,39 @@
 "use client";
+
+// import ChainAnalytics from "@/components/chainAnalytics/ChainAnalytics";
+// import ChainAnalyticsGraph from "@/components/chainAnalytics/ChainAnalyticsGraph.jsx";
+// import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
+// import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
+import RecentBlocks from "@/components/dashboard/RecentBlocks/RecentBlocks";
+// import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
+// import FilterResult from "@/components/FilterResult/FilterResult";
+// import FooterLink from "../../../components/footer/FooterLinks";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { graphUrl, Routes } from "@/constant/constant";
 import getStatistics from "@/services/getStatistics";
 import { usePathname } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
-import dynamic from "next/dynamic";
+import { lazy } from "react";
+// import dynamic from "next/dynamic";
 
-const RecentTransactions = dynamic(
-  () => import("@/components/dashboard/RecentTransactions/RecentTransactions"),
-  { ssr: false }
-);
-const RecentBlocks = dynamic(
-  () => import("@/components/dashboard/RecentBlocks/RecentBlocks"),
-  { ssr: false }
-);
-const ChainAnalyticsGraph = dynamic(
-  () => import("@/components/chainAnalytics/ChainAnalyticsGraph"),
-  { ssr: false }
-);
-const FilterResult = dynamic(
-  () => import("@/components/FilterResult/FilterResult"),
-  { ssr: false }
-);
-const OnChainMetrics = dynamic(
+const RecentTransactions = lazy(() => import("@/components/dashboard/RecentTransactions/RecentTransactions"), { ssr: false });
+
+
+const OnChainMetrics = lazy(
   () => import("@/components/dashboard/OnChainMetrics/OnChainMetrics"),
   { ssr: false }
 );
-const ChainAnalytics = dynamic(
+const ChainAnalytics = lazy(
   () => import("@/components/chainAnalytics/ChainAnalytics"),
   { ssr: false }
 );
-const FooterLink = dynamic(() => import("@/components/footer/FooterLinks"), {
+const FooterLink = lazy(() => import("@/components/footer/FooterLinks"), {
   ssr: false,
 });
-const Loading = dynamic(() => import("../../loading"), { ssr: false });
-const Analytics = dynamic(
+const Loading = lazy(() => import("../../loading"), { ssr: false });
+const Analytics = lazy(
   () => import("@/components/dashboard/OnChainMetrics/Analytics"),
   { ssr: false }
 );
@@ -83,9 +80,7 @@ const Page = ({ customClass }) => {
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-            <Suspense fallback={<Loading />}>
               <Analytics stats={stats} />
-            </Suspense>
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />
@@ -98,7 +93,6 @@ const Page = ({ customClass }) => {
               <ChainAnalytics stats={stats} />
               <div className="multiGraph">
                 <div className="grap">
-                  <Suspense fallback={<Loading />}>
                     <ChainAnalyticsGraph
                       title="Qubetics Price"
                       discription="Qubetics Coin current market price in USD "
@@ -113,10 +107,8 @@ const Page = ({ customClass }) => {
                       isNative={false}
                       tooltipTitle="Transfer"
                     />
-                  </Suspense>
                 </div>
                 <div className="grap">
-                  <Suspense fallback={<Loading />}>
                     <ChainAnalyticsGraph
                       title="Total Accounts"
                       discription="Total accounts number per period"
@@ -131,7 +123,6 @@ const Page = ({ customClass }) => {
                       isNative={false}
                       tooltipTitle="Txn Fee"
                     />
-                  </Suspense>
                 </div>
               </div>
             </div>
