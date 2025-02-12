@@ -17,6 +17,7 @@ import LayoutProvider from "./lib/layoutProvider";
 import Loading from "./loading";
 
 import { DM_Sans } from "next/font/google";
+import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -77,7 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     position="bottom-center"
                     reverseOrder={false}
                   />
-                  {/* <GoogleAnalytics /> */}
+                  <GoogleAnalytics />
                   <ZohoDesk />
                   {/* <ZohoBusinesschat /> */}
                   <ContractVerificationProvider>
