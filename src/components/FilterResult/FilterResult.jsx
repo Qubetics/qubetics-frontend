@@ -263,7 +263,7 @@ const FilterResult = () => {
       <div className="searchbar searchFilter">
         <div className="searchbar_input">
           <input
-            placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract"
+            placeholder="Search By Tx Hash/Address/Block/Block Hash/Verified Contract."
             onFocus={() => {
               window.removeEventListener("scroll", preventOuterScroll);
               searchText.length >= 1 && setOpen(2);
