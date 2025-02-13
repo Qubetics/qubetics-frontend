@@ -39,7 +39,7 @@ const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddr
         <>
           <div className="verificationFill greenFill">
             <CheckCircleFilled style={{ color: "green", fontSize: 18 }} />
-            <span> {verificationStatus.PARTIAL_VERIFIED}</span>
+            <span> {verificationStatus.PARTIAL_VERIFIED}ssss</span>
           </div>
         </>
       );

@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
+import Image from "next/image";
+import currencyIcon from '../../../../assets/svg/currency.svg'
 import Heading from "@/components/heading/Heading";
+import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import {
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
@@ -24,8 +27,10 @@ import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/Skeleton
 import TokenByAddress from "@/components/token";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
+import getTokenByAddress from "@/services/getTokenByAddress";
 
 const page = ({ params }) => {
+  const handleSelectApplication = (option) => setSelectedApplication(option);
   const [txAddressData, setTxAddressData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [txAddressStatus, setTxAddressStatus] = useState(InitStatus); //init,fetching,success,error
@@ -35,6 +40,8 @@ const page = ({ params }) => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [activeTab, setActiveTab] = useState("0");
   const [tokensData, setTokensData] = useState([]);
+  const [dropDownTokenData, setDropDownTokenData] = useState("");
+  console.log(dropDownTokenData, "dropDownTokenData")
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -67,8 +74,27 @@ const page = ({ params }) => {
     }
   };
 
+  const getTokenData = async () => {
+    try {
+      let response = await getTokenByAddress(
+        params?.addressDetail,
+        currentPage
+      );
+
+      setDropDownTokenData(
+        response?.data?.contractDetails || response?.data?.tokenDetails
+      );
+
+
+
+    } catch (err) {
+      return err;
+    }
+  };
+
   useEffect(() => {
     fetchAddDetails();
+    getTokenData()
   }, []);
 
   useEffect(() => {
@@ -146,6 +172,7 @@ const page = ({ params }) => {
     },
   ];
 
+
   return (
     <div className="blocksummary">
       <div className="container">
@@ -155,7 +182,7 @@ const page = ({ params }) => {
         <Heading
           heading=" Address Details"
           addresspage={true}
-          // address={params?.addressDetail ? params?.addressDetail : ""}
+        // address={params?.addressDetail ? params?.addressDetail : ""}
         />
         <div className="addressDetailSec">
           <div className="detail">
@@ -209,6 +236,31 @@ const page = ({ params }) => {
                 <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
               </div>
             </div>
+            {dropDownTokenData.length > 0 &&
+              <CustomDropdown
+                label="Assets"
+                placeholder="ERC-20 Tokens(86)"
+                options={dropDownTokenData.map((res) => ({
+                  label: (
+                    <div className="assetDropListing">
+                      <div className="assetDropListing_left">
+                        <p>
+                          {res.tokenName}
+                        </p>
+                        <span>{res.tokenBalance / 10 ** res?.decimals} {res.tokenSymbol}</span>
+                      </div>
+                      <div className="assetDropListing_right">
+                        <p>
+                          ${res.balance} <span>@{res.balance}</span>
+                        </p>
+                      </div>
+                    </div>
+                  ),
+                  value: res.tokenSymbol,
+                }))}
+              />
+            }
+
           </div>
         </div>
         <div className="addresspagination">
