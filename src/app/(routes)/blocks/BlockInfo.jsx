@@ -1,7 +1,6 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
-
 import { chain, EXPLORER_CHAIN_NAME } from "@/constant/constant";
 import getBlockTime from "@/services/getBlockTime";
 import getTopValidator from "@/services/getTopValidator";
@@ -19,7 +18,6 @@ const { toBech32, fromHex } = require("@cosmjss/encoding");
 
 export const BlockInfo = ({blocksData}) => {
   const webSocketData = useLatestData();
-  // const [blocksData, setBlocksData] = useState([]);
   const [topValidtor, setTopValidtor] = useState("");
   const [blockTime, setBlockTime] = useState(0);
 

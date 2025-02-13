@@ -25,19 +25,7 @@ const InternalSearch = ({ searchText, onChange, onKeyUp }) => {
       </div>
     </div>
 
-    // : (
-    //   <div className="searchbar_input">
-    //     <input
-    //       placeholder="Search for an address, block, tx hash....."
-    //       value={searchValue}
-    //       onChange={(e) => handleSearchChange(e)}
-    //       onKeyUp={(e) => handleEnterClick(e)}
-    //       onFocus={onFocus}
-    //       onBlur={onBlur}
-    //     />
-    //   {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
-    //   {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
-    // </div>
+  
   );
 };
 

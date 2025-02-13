@@ -106,7 +106,6 @@ function page() {
 
   const handleLast = () => {
     if (pageId < totalPages) {
-      // setCurrentPage(totalPages);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       router.push(`?${newSearchParams.toString()}`);
@@ -115,7 +114,6 @@ function page() {
 
   const handleFirst = () => {
     if (pageId <= totalPages) {
-      // setCurrentPage(1);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       router.push(`?${newSearchParams.toString()}`);
@@ -131,14 +129,7 @@ function page() {
       contract: false,
       title:
         "The total number of tokens (ERC-20 and other standards) created on the blockchain.",
-    },
-    // {
-    //   id: 2,
-    //   text: "Contracts (ERC-20)",
-    //   balance: tokensData?.erc20Count ?? 0,
-    //   img: <ContractIcon />,
-    //   contract: false,
-    // },
+    }
   ];
 
   const handleEnterClick = (e) => {
