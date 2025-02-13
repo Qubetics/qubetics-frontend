@@ -7,15 +7,10 @@ const Stats = () => {
   return (
     <div>
       <div className="container">
-        {/*Account and Contracts Graph*/}
-
         <AccountsAndContracts />
-        {/*Token And Transaction Graph*/}
         <TokenAndTransactionGraph />
 
-        {/*
-            <ChartStatsMain/>
-            */}
+        
       </div>
     </div>
   );

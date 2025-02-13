@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
-// import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import {
@@ -19,17 +18,13 @@ import { Tabs } from "antd";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import getAddressDetails from "@/services/getAddressDetails";
 
-// import FilterResult from "@/components/FilterResult/FilterResult";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
 import TokenByAddress from "@/components/token";
-
-const FilterResult = lazy(() => import("@/components/FilterResult/FilterResult"));
- 
 
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
-import { lazy } from "react";
 
 
 
@@ -40,7 +35,6 @@ const page = ({ params }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showHeaderData, setShowHeaderData] = useState("");
   const { isNetworkChanged } = useGetNetwork();
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [activeTab, setActiveTab] = useState("0");
   const [tokensData, setTokensData] = useState([]);
   const fetchTx = async () => {
@@ -85,7 +79,6 @@ const page = ({ params }) => {
 
   useEffect(() => {
     if (isNetworkChanged) {
-      fetchData();
       fetchAddDetails();
     }
   }, [isNetworkChanged]);
@@ -157,13 +150,10 @@ const page = ({ params }) => {
   return (
     <div className="blocksummary">
       <div className="container">
-        {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
-         */}
         <FilterResult />
         <Heading
           heading=" Address Details"
           addresspage={true}
-          // address={params?.addressDetail ? params?.addressDetail : ""}
         />
         <div className="addressDetailSec">
           <div className="detail">
@@ -171,7 +161,6 @@ const page = ({ params }) => {
             <p>{params?.addressDetail}</p>
           </div>
         </div>
-        {/* <BlockDetail details={details} /> */}
         <div className="addressDetsilCard">
           <div className="overViewCard">
             <div className="cardHeading">

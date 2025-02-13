@@ -6,7 +6,6 @@ function CardSkeleton() {
     <div className="tableLoader cardLoader">
       <Skeleton
         active
-        // title={false} 
         paragraph={{
           rows:1 , // Number of paragraph rows
           width: [200], // Custom widths for each row

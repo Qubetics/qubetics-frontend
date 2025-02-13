@@ -1,13 +1,13 @@
 "use client";
 
-// import ChainAnalytics from "@/components/chainAnalytics/ChainAnalytics";
-// import ChainAnalyticsGraph from "@/components/chainAnalytics/ChainAnalyticsGraph.jsx";
-// import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
-// import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
+import ChainAnalytics from "@/components/chainAnalytics/ChainAnalytics";
+import ChainAnalyticsGraph from "@/components/chainAnalytics/ChainAnalyticsGraph.jsx";
+import Analytics from "@/components/dashboard/OnChainMetrics/Analytics";
+import OnChainMetrics from "@/components/dashboard/OnChainMetrics/OnChainMetrics";
 import RecentBlocks from "@/components/dashboard/RecentBlocks/RecentBlocks";
-// import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
-// import FilterResult from "@/components/FilterResult/FilterResult";
-// import FooterLink from "../../../components/footer/FooterLinks";
+import RecentTransactions from "@/components/dashboard/RecentTransactions/RecentTransactions";
+import FilterResult from "@/components/FilterResult/FilterResult";
+import FooterLink from "../../../components/footer/FooterLinks";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { graphUrl, Routes } from "@/constant/constant";
 import getStatistics from "@/services/getStatistics";
@@ -15,28 +15,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
-import { lazy } from "react";
-// import dynamic from "next/dynamic";
 
-const RecentTransactions = lazy(() => import("@/components/dashboard/RecentTransactions/RecentTransactions"), { ssr: false });
-
-
-const OnChainMetrics = lazy(
-  () => import("@/components/dashboard/OnChainMetrics/OnChainMetrics"),
-  { ssr: false }
-);
-const ChainAnalytics = lazy(
-  () => import("@/components/chainAnalytics/ChainAnalytics"),
-  { ssr: false }
-);
-const FooterLink = lazy(() => import("@/components/footer/FooterLinks"), {
-  ssr: false,
-});
-const Loading = lazy(() => import("../../loading"), { ssr: false });
-const Analytics = lazy(
-  () => import("@/components/dashboard/OnChainMetrics/Analytics"),
-  { ssr: false }
-);
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");

@@ -47,9 +47,7 @@ const ChainAnalytics = ({ stats }) => {
         text="Average Block Time"
         balance={
           getDifference(diffs)
-          // webSocketData?.blocks?.blocknumber
-          //   ? webSocketData?.blocks?.blocknumber
-          //   : stats?.latest_block ?? 0
+
         }
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
         title="The average time it takes to create a new block on the blockchain."
@@ -57,7 +55,6 @@ const ChainAnalytics = ({ stats }) => {
       <CardsOnchain
         iconCopy="true"
         addicon="true"
-        // title={tooltipConstant.CIRCULATION_SUPPLY}
         text="Circulating Supply"
         balance={
           stats?.circulationSupply

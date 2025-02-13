@@ -17,7 +17,6 @@ const ABICode = () => {
       />
       <Tooltip title="Paste">
         <span
-          // onClick={handlePaste}
           className="textAreaPaste"
         >
           Paste

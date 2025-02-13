@@ -5,7 +5,6 @@ import { Card, Tooltip } from "antd";
 const CardsOnchain = (props) => {
   return (
     <>
-      {/* <CardSkeleton /> */}
       <Card
         bordered={false}
         className={`marcketCapCard ${props.className} ${
@@ -21,7 +20,6 @@ const CardsOnchain = (props) => {
             <div>
               <p>
                 {props?.text}
-                {/* {props?.iconCopy == "true" ? ( */}
                 <Tooltip
                   color="rgb(49 52 56)"
                   title={props?.title}

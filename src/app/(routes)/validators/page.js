@@ -65,12 +65,7 @@ function page() {
       text: (
         <>
           Onchain APY
-          {/* <Tooltip
-            color="rgb(49 52 56)"
-            title=" APY is an estimated % of rewards you will earn while staking Qubetics coins over the annual period. APY is adjusted daily, and the estimated rewards may be different from the actual rewards generated."
-          >
-            <InfoCircleOutlined className="infoIcon" />
-          </Tooltip> */}
+         
         </>
       ),
       balance: parsedData?.apy ? parsedData?.apy + " %" : "0 %",
@@ -84,12 +79,7 @@ function page() {
       text: (
         <>
           Total Validators
-          {/* <Tooltip
-            color="rgb(49 52 56)"
-            title="Total Validators: This metric represents the total count of participants tasked with validating transactions within a blockchain network"
-          >
-            <InfoCircleOutlined className="infoIcon" />
-          </Tooltip> */}
+         
         </>
       ),
       balance: validatorData?.count ? validatorData?.count : "0",
@@ -149,15 +139,9 @@ function page() {
 
   return (
     <div className="validatorsCard">
-      {/* {validatorStatus === InitStatus || validatorStatus === FetchingStatus ? (
-        <Loader />
-      ) : validatorStatus === SuccessStatus ? (
-        <> */}
+     
       <div className="container">
-        {/* <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        /> */}
+        
         <FilterResult />
         <Heading heading="Validators" />
         <div className="cardContract">
@@ -202,10 +186,7 @@ function page() {
           />
         )}
       </div>
-      {/* </>
-      ) : (
-        <Page />
-      )} */}
+    
     </div>
   );
 }

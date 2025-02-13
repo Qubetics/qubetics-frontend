@@ -31,13 +31,7 @@ const Chart = ({ data, chartType }) => {
       credits: {
         enabled: false,
       },
-      // plotOptions: {
-      //   line: {
-      //     dataLabels: {
-      //       enabled: true,
-      //     },
-      //   },
-      // },
+      
       tooltip: {
         backgroundColor: "#1a272e",
         borderColor: "black",

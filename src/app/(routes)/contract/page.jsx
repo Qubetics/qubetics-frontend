@@ -175,9 +175,7 @@ const Contract = () => {
             onKeyUp={handleEnterClick}
           />{" "}
         </div>
-        {/* {contractStatus === InitStatus || contractStatus === FetchingStatus ? (
-          <Loader />
-        ) : contractStatus === SuccessStatus ? ( */}
+      
         <>
           <SkeletonTableWrapper
             className="commontable"
