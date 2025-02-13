@@ -4,13 +4,14 @@ import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Image from "next/image";
-import currencyIcon from '../../../../assets/svg/currency.svg'
+import currencyIcon from "../../../../assets/svg/currency.svg";
 import Heading from "@/components/heading/Heading";
 import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import {
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
   FetchingStatus,
+  formatValue,
   InitStatus,
   SuccessStatus,
   tableLimit,
@@ -18,7 +19,7 @@ import {
 import { addressDetailColumn } from "@/constant/graphTableValues";
 import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
-import { formatMillionNumber } from "@/utils/commonFunctions";
+import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
@@ -41,7 +42,7 @@ const page = ({ params }) => {
   const [activeTab, setActiveTab] = useState("0");
   const [tokensData, setTokensData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
-  console.log(dropDownTokenData, "dropDownTokenData")
+  console.log(dropDownTokenData, "dropDownTokenData");
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -84,9 +85,6 @@ const page = ({ params }) => {
       setDropDownTokenData(
         response?.data?.contractDetails || response?.data?.tokenDetails
       );
-
-
-
     } catch (err) {
       return err;
     }
@@ -94,7 +92,7 @@ const page = ({ params }) => {
 
   useEffect(() => {
     fetchAddDetails();
-    getTokenData()
+    getTokenData();
   }, []);
 
   useEffect(() => {
@@ -172,7 +170,6 @@ const page = ({ params }) => {
     },
   ];
 
-
   return (
     <div className="blocksummary">
       <div className="container">
@@ -182,7 +179,7 @@ const page = ({ params }) => {
         <Heading
           heading=" Address Details"
           addresspage={true}
-        // address={params?.addressDetail ? params?.addressDetail : ""}
+          // address={params?.addressDetail ? params?.addressDetail : ""}
         />
         <div className="addressDetailSec">
           <div className="detail">
@@ -236,31 +233,35 @@ const page = ({ params }) => {
                 <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
               </div>
             </div>
-            {dropDownTokenData.length > 0 &&
+            {dropDownTokenData.length > 0 && (
               <CustomDropdown
                 label="Assets"
-                placeholder="ERC-20 Tokens(86)"
-                options={dropDownTokenData.map((res) => ({
-                  label: (
+                placeholder="ERC-20 Tokens"
+                options={dropDownTokenData.map((res) => (
+                  <>
                     <div className="assetDropListing">
                       <div className="assetDropListing_left">
                         <p>
-                          {res.tokenName}
+                          {" "}
+                          {res?.tokenName || "-"} ({res?.tokenSymbol || "-"})
                         </p>
-                        <span>{res.tokenBalance / 10 ** res?.decimals} {res.tokenSymbol}</span>
+                        <span>{res?.tokenType || "-"}</span>
                       </div>
                       <div className="assetDropListing_right">
                         <p>
-                          ${res.balance} <span>@{res.balance}</span>
+                          {formatValue(
+                            noExponential(
+                              Number(res?.tokenBalance) /
+                                10 ** Number(res?.decimals)
+                            )
+                          ) || "-"}
                         </p>
                       </div>
                     </div>
-                  ),
-                  value: res.tokenSymbol,
-                }))}
+                  </>
+                ))}
               />
-            }
-
+            )}
           </div>
         </div>
         <div className="addresspagination">
