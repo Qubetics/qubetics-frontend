@@ -233,35 +233,38 @@ const page = ({ params }) => {
                 <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
               </div>
             </div>
-            {dropDownTokenData.length > 0 && (
-              <CustomDropdown
-                label="Assets"
-                placeholder="ERC-20 Tokens"
-                options={dropDownTokenData.map((res) => (
-                  <>
-                    <div className="assetDropListing">
-                      <div className="assetDropListing_left">
-                        <p>
-                          {" "}
-                          {res?.tokenName || "-"} ({res?.tokenSymbol || "-"})
-                        </p>
-                        <span>{res?.tokenType || "-"}</span>
+            <div className="assetDropItem">
+              {dropDownTokenData.length > 0 && (
+                <CustomDropdown
+                  // label="Assets"
+                  placeholder="Assets"
+                  options={dropDownTokenData.map((res) => (
+                    <>
+                      <div className="assetDropListing">
+                        <div className="assetDropListing_left">
+                          <p>
+                            {" "}
+                            {res?.tokenName || "-"} ({res?.tokenSymbol || "-"})
+                          </p>
+                          <span>{res?.tokenType || "-"}</span>
+                        </div>
+                        <div className="assetDropListing_right">
+                          <p>
+                            {formatValue(
+                              noExponential(
+                                Number(res?.tokenBalance) /
+                                  10 ** Number(res?.decimals)
+                              )
+                            ) || "-"}
+                          </p>
+                        </div>
                       </div>
-                      <div className="assetDropListing_right">
-                        <p>
-                          {formatValue(
-                            noExponential(
-                              Number(res?.tokenBalance) /
-                                10 ** Number(res?.decimals)
-                            )
-                          ) || "-"}
-                        </p>
-                      </div>
-                    </div>
-                  </>
-                ))}
-              />
-            )}
+                    </>
+                  ))}
+                />
+              )}
+              s
+            </div>
           </div>
         </div>
         <div className="addresspagination">
