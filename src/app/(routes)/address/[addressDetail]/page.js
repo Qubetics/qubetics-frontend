@@ -42,7 +42,6 @@ const page = ({ params }) => {
   const [activeTab, setActiveTab] = useState("0");
   const [tokensData, setTokensData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
-  console.log(dropDownTokenData, "dropDownTokenData");
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -233,13 +232,13 @@ const page = ({ params }) => {
                 <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
               </div>
             </div>
-            {dropDownTokenData.length > 0 && (
+            {dropDownTokenData?.length > 0 && (
               <div className="assetDropItem">
 
                 <CustomDropdown
                   // label="Assets"
                   placeholder="Assets"
-                  options={dropDownTokenData.map((res) => (
+                  options={dropDownTokenData?.map((res) => (
                     <>
                       <div className="assetDropListing">
                         <div className="assetDropListing_left">
@@ -264,7 +263,7 @@ const page = ({ params }) => {
                   ))}
                 />
 
-                <p className="assetDropItem_text">{dropDownTokenData.length}</p>
+                <p className="assetDropItem_text">{dropDownTokenData?.length}</p>
               </div>
             )}
           </div>
