@@ -13,6 +13,7 @@ import {
   FetchingStatus,
   formatValue,
   InitStatus,
+  Routes,
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
@@ -175,6 +176,10 @@ const page = ({ params }) => {
     },
   ];
 
+  const handleTokenClick = (address) => {
+    window.open(`${Routes.CONTRACT_DETAIL}${address}`, "_blank");
+  };
+
   return (
     <div className="blocksummary">
       <div className="container">
@@ -245,7 +250,10 @@ const page = ({ params }) => {
                   placeholder="Assets"
                   options={dropDownTokenData?.map((res) => (
                     <>
-                      <div className="assetDropListing">
+                      <div
+                        className="assetDropListing"
+                        onClick={() => handleTokenClick(res?.contractAddress)}
+                      >
                         <div className="assetDropListing_left">
                           <p>
                             {" "}
@@ -255,12 +263,14 @@ const page = ({ params }) => {
                         </div>
                         <div className="assetDropListing_right">
                           <p>
-                            {formatValue(
-                              noExponential(
-                                Number(res?.tokenBalance) /
-                                  10 ** Number(res?.decimals)
-                              )
-                            ) || "-"}
+                            {res?.tokenBalance
+                              ? formatValue(
+                                  noExponential(
+                                    Number(res?.tokenBalance) /
+                                      10 ** Number(res?.decimals)
+                                  )
+                                )
+                              : 0}
                           </p>
                         </div>
                       </div>
