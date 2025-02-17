@@ -29,6 +29,7 @@ import TokenByAddress from "@/components/token";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 import getTokenByAddress from "@/services/getTokenByAddress";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -40,7 +41,7 @@ const page = ({ params }) => {
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [activeTab, setActiveTab] = useState("0");
-  const [tokensData, setTokensData] = useState([]);
+  const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
   const fetchTx = async () => {
     try {
@@ -133,7 +134,7 @@ const page = ({ params }) => {
   };
   const tabItems = [
     {
-      label: <span>Transactions</span>,
+      label: <span>Total Transactions</span>,
       key: "0",
       children: (
         <>
@@ -163,9 +164,14 @@ const page = ({ params }) => {
       ),
     },
     {
-      label: <span>Tokens</span>,
+      label: <span>Token Transaction</span>,
       key: "1",
-      children: <TokenByAddress setTokensData={setTokensData} />,
+      children: (
+        <TokenTransactions
+          setTokensTxData={setTokensTxData}
+          tokensTxData={tokensTxData}
+        />
+      ),
     },
   ];
 
@@ -282,7 +288,7 @@ const page = ({ params }) => {
                   className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
                   filename="my-file.csv"
                   data={
-                    activeTab === "0" ? txAddressData ?? [] : tokensData ?? []
+                    activeTab === "0" ? txAddressData ?? [] : tokensTxData ?? []
                   }
                 >
                   <button className="exportBtn">
