@@ -178,7 +178,7 @@ const page = ({ params }) => {
         <Heading
           heading=" Address Details"
           addresspage={true}
-        // address={params?.addressDetail ? params?.addressDetail : ""}
+          // address={params?.addressDetail ? params?.addressDetail : ""}
         />
         <div className="addressDetailSec">
           <div className="detail">
@@ -234,7 +234,6 @@ const page = ({ params }) => {
             </div>
             {dropDownTokenData?.length > 0 && (
               <div className="assetDropItem">
-
                 <CustomDropdown
                   // label="Assets"
                   placeholder="Assets"
@@ -253,7 +252,7 @@ const page = ({ params }) => {
                             {formatValue(
                               noExponential(
                                 Number(res?.tokenBalance) /
-                                10 ** Number(res?.decimals)
+                                  10 ** Number(res?.decimals)
                               )
                             ) || "-"}
                           </p>
@@ -263,7 +262,9 @@ const page = ({ params }) => {
                   ))}
                 />
 
-                <p className="assetDropItem_text">{dropDownTokenData?.length}</p>
+                <p className="assetDropItem_text">
+                  {dropDownTokenData?.length || 0}
+                </p>
               </div>
             )}
           </div>
