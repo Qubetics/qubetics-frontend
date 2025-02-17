@@ -1,34 +1,35 @@
 "use client";
-import { useEffect, useState } from "react";
-import "../../blocks/blocksummary.scss";
+import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import {
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
   FetchingStatus,
+  formatValue,
   InitStatus,
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
-import { formatMillionNumber } from "@/utils/commonFunctions";
-import { Tabs } from "antd";
-
-import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import getAddressDetails from "@/services/getAddressDetails";
+import getTransactionsByAddress from "@/services/getTransactionByAddress";
+import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
+import { Tabs } from "antd";
+import { useEffect, useState } from "react";
+import "../../blocks/blocksummary.scss";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
 import TokenByAddress from "@/components/token";
 
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+import getTokenByAddress from "@/services/getTokenByAddress";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 
-
-
 const page = ({ params }) => {
+  const handleSelectApplication = (option) => setSelectedApplication(option);
   const [txAddressData, setTxAddressData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [txAddressStatus, setTxAddressStatus] = useState(InitStatus); //init,fetching,success,error
@@ -37,6 +38,7 @@ const page = ({ params }) => {
   const { isNetworkChanged } = useGetNetwork();
   const [activeTab, setActiveTab] = useState("0");
   const [tokensData, setTokensData] = useState([]);
+  const [dropDownTokenData, setDropDownTokenData] = useState("");
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -69,8 +71,24 @@ const page = ({ params }) => {
     }
   };
 
+  const getTokenData = async () => {
+    try {
+      let response = await getTokenByAddress(
+        params?.addressDetail,
+        currentPage
+      );
+
+      setDropDownTokenData(
+        response?.data?.contractDetails || response?.data?.tokenDetails
+      );
+    } catch (err) {
+      return err;
+    }
+  };
+
   useEffect(() => {
     fetchAddDetails();
+    getTokenData();
   }, []);
 
   useEffect(() => {
@@ -154,6 +172,7 @@ const page = ({ params }) => {
         <Heading
           heading=" Address Details"
           addresspage={true}
+          // address={params?.addressDetail ? params?.addressDetail : ""}
         />
         <div className="addressDetailSec">
           <div className="detail">
@@ -206,6 +225,41 @@ const page = ({ params }) => {
                 <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
               </div>
             </div>
+            {dropDownTokenData?.length > 0 && (
+              <div className="assetDropItem">
+                <CustomDropdown
+                  // label="Assets"
+                  placeholder="Assets"
+                  options={dropDownTokenData?.map((res) => (
+                    <>
+                      <div className="assetDropListing">
+                        <div className="assetDropListing_left">
+                          <p>
+                            {" "}
+                            {res?.tokenName || "-"} ({res?.tokenSymbol || "-"})
+                          </p>
+                          <span>{res?.tokenType || "-"}</span>
+                        </div>
+                        <div className="assetDropListing_right">
+                          <p>
+                            {formatValue(
+                              noExponential(
+                                Number(res?.tokenBalance) /
+                                  10 ** Number(res?.decimals)
+                              )
+                            ) || "-"}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                />
+
+                <p className="assetDropItem_text">
+                  {dropDownTokenData?.length}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="addresspagination">

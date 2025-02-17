@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "antd";
 import { CloseCircleFilled, ClockCircleFilled, CheckCircleFilled } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
+import { PendingIcon, SuccesIcon } from "../../../public/SvgIcons";
 
 const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddress, hash }) => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddr
       return (
         <>
           <div className="verificationFill">
-            <ClockCircleFilled style={{ color: "yellow", fontSize: 18 }} />
+            <PendingIcon />
             <span> {verificationStatus.PENDING_VERIFICATION}</span>
           </div>
         </>
@@ -38,8 +39,8 @@ const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddr
       return (
         <>
           <div className="verificationFill greenFill">
-            <CheckCircleFilled style={{ color: "green", fontSize: 18 }} />
-            <span> {verificationStatus.PARTIAL_VERIFIED}</span>
+            <SuccesIcon />
+            <span> {verificationStatus.PARTIAL_VERIFIED}ssss</span>
           </div>
         </>
       );
@@ -47,7 +48,7 @@ const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddr
       return (
         <>
           <div className="verificationFill">
-            <CheckCircleFilled style={{ color: "green", fontSize: 18 }} />
+            <SuccesIcon />
             <span> {verificationStatus.FULLY_VERIFIED}</span>
           </div>
         </>

@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
 import { DM_Sans } from "next/font/google";
+import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
 import dynamic from "next/dynamic";
 
 const dmSans = DM_Sans({
@@ -43,7 +44,29 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </Head>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KZDPDB2J');
+
+          `,
+        }}
+      />
+
       <body className={`${dmSans.className} darkTheme`}>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NPJSP6ZG"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>            
+          `,
+          }}
+        />
+
         <div className="bodyInner">
           <NetworkProvider>
             <ThemeProvider>
@@ -54,6 +77,7 @@ export default function RootLayout({ children }) {
                     position="bottom-center"
                     reverseOrder={false}
                   />
+                  <GoogleAnalytics />
                   <ZohoDesk />
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>

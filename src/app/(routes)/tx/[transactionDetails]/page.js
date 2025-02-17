@@ -52,6 +52,7 @@ const page = () => {
         }
         let response = await getSearchingValue(updateTx);
         if (response?.error == false) {
+          console.log(response?.data?.transaction, "TRANSFER");
           setTransactionDetails(response?.data?.transaction);
           setTopics(response?.data?.contractLogs[0]?.topics);
           setContractLogs(JSON.parse(response?.data?.transaction?.logs));
