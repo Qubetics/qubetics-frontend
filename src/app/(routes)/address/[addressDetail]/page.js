@@ -177,7 +177,7 @@ const page = ({ params }) => {
   ];
 
   const handleTokenClick = (address) => {
-    window.open(`${Routes.CONTRACT_DETAIL}${address}`, "_blank");
+    window.location.href = `${Routes.CONTRACT_DETAIL}${address}`;
   };
 
   return (
