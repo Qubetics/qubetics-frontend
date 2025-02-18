@@ -1678,6 +1678,7 @@ export const validatorsColumn = [
 ];
 
 /*Token By Address Column */
+
 export const tokensByAddressColumn = [
   {
     title: "Token Name",
@@ -1696,38 +1697,153 @@ export const tokensByAddressColumn = [
     ),
   },
   {
-    id: "contractAddress",
-    title: "Contract Address",
-    key: "contractAddress",
+    title: "Txn Hash ",
+    dataIndex: "txhash",
+    key: "txhash",
     render: (text) => (
-      <div>
-        {text?.contractAddress ? (
-          <>
-            <Link href={`/contract/${text?.contractAddress}`}>
+      <Link
+        className="bghash"
+        href={`${Routes.Tx_Hash}${text}`}
+        rel="noopener noreferrer"
+      >
+        {getAddress(text)}
+      </Link>
+    ),
+  },
+  {
+    title: "Block",
+    dataIndex: "blocknumber",
+    key: "blocknumber",
+    render: (text) => (
+      <Link
+        className="bghash"
+        href={`${Routes.BLOCK_NO}${text}`}
+        rel="noopener noreferrer"
+      >
+        {text}
+      </Link>
+    ),
+  },
+  {
+    title: "Method ",
+    key: "type",
+    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
+  },
+  {
+    title: "From",
+    dataIndex: "fromAddress",
+    key: "fromAddress",
+    render: (text) => (
+      <>
+        <div className="iconandlink">
+          <Link className="fromicon" href={`${text}`} rel="noopener noreferrer">
+            {getAddress(text)}
+          </Link>
+          <span>
+            <CopyText text={text} />
+          </span>
+        </div>
+      </>
+    ),
+  },
+  {
+    title: "To",
+    key: "toAddress",
+    render: (text) => (
+      <>
+        {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
+          text?.toAddress?.startsWith("0x") ||
+          text?.toAddress?.startsWith("Qubetics") ? (
+            <div className="iconandlink">
+              {text?.type === typesOfTransactions.contractTransfer ||
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
+                <Link
+                  className="fromicon"
+                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
+                  rel="noopener noreferrer"
+                >
+                  {getAddress(text?.toAddress)}
+                </Link>
+              ) : (
+                <Link
+                  className="fromicon"
+                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                  rel="noopener noreferrer"
+                >
+                  {getAddress(text?.toAddress)}
+                </Link>
+              )}
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
+          ) : (
+            <div className="iconandlink">
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
+                {getAddress(text?.toAddress)}
+              </Link>
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
+          )
+        ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
+          <div className="iconandlink">
+            <Link
+              className="fromicon"
+              href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
+              rel="noopener noreferrer"
+            >
               {" "}
-              {getAddress(text?.contractAddress)}{" "}
+              {getAddress(text?.contractAddress)}
             </Link>
-            <CopyText text={text?.contractAddress} />
-          </>
+            <span>
+              <CopyText text={text?.contractAddress} />
+            </span>
+          </div>
         ) : (
           "-"
         )}
-      </div>
+      </>
     ),
+  },
+  {
+    title: "Timestamp ",
+    // dataIndex: "timestamp",
+    key: "timestamp",
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : text?.createdAt ? (
+        <span className="timestamp">
+          {renderTime(text?.createdAt)}
+          <span>{convertToDateTime(text?.createdAt)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
   },
   {
     title: "Value",
     key: "value",
-    render: (text) => (
-      <span className="">
-        {text?.tokenBalance
-          ? formatValue(
-              noExponential(
-                Number(text?.tokenBalance) / 10 ** Number(text?.decimals)
-              )
-            )
-          : "-"}
-      </span>
-    ),
+    render: (text) => {
+      return text?.value ? formatValue(text?.value) : "-";
+    },
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (text) =>
+      text === "SUCCESS" ? (
+        <span className="successtrans">{capitalizeWord(text)}</span>
+      ) : (
+        <span className="failedtrans">{capitalizeWord(text)}</span>
+      ),
   },
 ];

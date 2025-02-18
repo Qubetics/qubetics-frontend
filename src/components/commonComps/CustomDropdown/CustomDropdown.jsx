@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import "./CustomDropdown.scss";
 
@@ -35,9 +34,10 @@ const CustomDropdown = ({
   return (
     <div className="custom-dropdown" ref={dropdownRef}>
       {label && <label className="dropdown-label">{label}</label>}
+
       <div className="dropdown-header" onClick={toggleDropdown}>
-        {value || placeholder} 
-        <span className={`arrow ${isOpen ? "open" : ""}`}>&#9662;</span>
+        {value || placeholder} {/* <-- Use the controlled value */}
+        <span className={`arrow ${isOpen ? "open" : ""}`}> &#9662;</span>
       </div>
       {isOpen && (
         <ul className="dropdown-list">
