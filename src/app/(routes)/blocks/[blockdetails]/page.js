@@ -87,6 +87,7 @@ const BlockDetails = ({ params }) => {
       children: (
         <BlockDetailDescription
           blockData={blockData}
+          blockNo={params?.blockdetails}
           status={blockDetailStatus}
         />
       ),

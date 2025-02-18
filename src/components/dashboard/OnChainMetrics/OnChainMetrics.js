@@ -76,10 +76,13 @@ const OnChainMetrics = ({ stats }) => {
             <CardsOnchain
               text="Transactions"
               balance={
-                Number(
-                  webSocketData?.onChainMetric?.totalTx ||
-                    stats?.total_transactions
-                ).toLocaleString() || 0
+                webSocketData?.onChainMetric?.totalTx ||
+                stats?.total_transactions
+                  ? Number(
+                      webSocketData?.onChainMetric?.totalTx ||
+                        stats?.total_transactions
+                    ).toLocaleString()
+                  : 0
               }
               img={
                 isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />

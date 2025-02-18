@@ -85,7 +85,7 @@ function HeaderMenu({ onCloseDrawer }) {
         EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
       )
     );
-    const chain_Id = await web3.eth.getChainId();
+    const chain_Id = await web3?.eth?.getChainId();
     const chainIdHex = `0x${chain_Id.toString(16)}`;
     const { ethereum } = window;
     if (!ethereum) return;

@@ -88,7 +88,9 @@ const TransactionHistory = (props) => {
             <h6>
               {webSocketData?.onChainMetric?.totalTx
                 ? Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()
-                : Number(props?.stats?.total_transactions).toLocaleString()}
+                : props?.stats?.total_transactions
+                ? Number(props?.stats?.total_transactions).toLocaleString()
+                : 0}
             </h6>
             {/* <span className="liveblink">Live</span> */}
           </div>
