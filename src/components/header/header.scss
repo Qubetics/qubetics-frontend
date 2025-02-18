@@ -208,7 +208,7 @@
       justify-content: unset;
       gap: 20px;
     }
-    @media (max-width: 1199px) {
+    @media (max-width: 1200px) {
       justify-content: space-between;
     }
     @media screen and (max-width: 676px) {
@@ -501,7 +501,12 @@ ul {
 
     &:hover,
     &.active {
-      background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%);
+      background: linear-gradient(
+        88deg,
+        rgba(1, 124, 201, 0.15) 3.13%,
+        rgba(8, 147, 234, 0.35) 48.43%,
+        rgba(1, 138, 224, 0.17) 98.38%
+      );
       // color: $white !important;
       .ant-select-selection-item {
         color: $white !important;

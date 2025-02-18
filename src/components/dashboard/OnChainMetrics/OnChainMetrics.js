@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
@@ -17,12 +18,25 @@ import {
 import { useThemeData } from "@/components/contexts/theme_context";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
+import getQubeticsPrice from "@/services/getQubeticsPrice";
 
 const OnChainMetrics = ({ stats }) => {
+  const [price, setPrice] = useState("");
   const webSocketData = useLatestData();
   const { diffs } = useAverageBlockTime();
-
   const { isLight } = useThemeData();
+
+  useEffect(() => {
+    getPrice();
+  }, []);
+  const getPrice = async () => {
+    try {
+      let response = await getQubeticsPrice();
+      setPrice(response?.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="cardSec onchain_sec">
@@ -31,7 +45,11 @@ const OnChainMetrics = ({ stats }) => {
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
               text="TICS Price"
-              balance={`$ 0.05513968 USD`}
+              balance={
+                price
+                  ? "$ " + Number(price.toFixed(6)) + " " + " USD"
+                  : "$ 0.05513968 USD"
+              }
               img={<TickPriceIcon />}
               title="The current market price of 1 Qubetics (TICS) in USD."
             />

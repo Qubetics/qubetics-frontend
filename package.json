@@ -12,6 +12,10 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@cosmjss/encoding": "^0.0.4",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^5.16.14",
+    "@mui/styles": "^5.16.14",
     "@web3-onboard/metamask": "^2.2.0",
     "@web3-onboard/react": "^2.10.0",
     "antd": "^5.10.2",
@@ -46,6 +50,7 @@
     "slick": "^1.12.2",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
+    "styled-components": "^5.3.11",
     "web3": "^4.7.0"
   },
   "devDependencies": {

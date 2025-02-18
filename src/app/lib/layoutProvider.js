@@ -8,9 +8,12 @@ import { Routes } from "@/constant/constant";
 import { usePathname } from "next/navigation";
 // import { useState } from "react";0
 import FooterLink from "../../components/footer/FooterLinks";
+import { useRouter } from "next/navigation";
 
 export default function LayoutProvider({ children }) {
   const pathName = usePathname();
+  const router = useRouter();
+
   // const [searchStatus, setSerachStatus] = useState(InitStatus);
   useLayoutEffect(() => {
     if (navigator.userAgent.indexOf("iPhone") > -1) {
@@ -30,6 +33,16 @@ export default function LayoutProvider({ children }) {
           pathName === Routes.DASHBOARD ? "dashboardmaindiv" : ""
         }`}
       >
+        {pathName !== "/bug-submission" && (
+          <div className="bugSubButton">
+            <button
+              className="headermetaBtn"
+              onClick={() => router.push("/bug-submission")}
+            >
+              Reward Program
+            </button>
+          </div>
+        )}
         <Header />
 
         <main className="maininner">

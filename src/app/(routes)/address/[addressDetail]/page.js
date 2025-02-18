@@ -3,19 +3,24 @@ import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
+import Image from "next/image";
+import currencyIcon from "../../../../assets/svg/currency.svg";
 import Heading from "@/components/heading/Heading";
+import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import {
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
   FetchingStatus,
+  formatValue,
   InitStatus,
+  Routes,
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
 import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
-import { formatMillionNumber } from "@/utils/commonFunctions";
+import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
@@ -24,8 +29,11 @@ import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/Skeleton
 import TokenByAddress from "@/components/token";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
+import getTokenByAddress from "@/services/getTokenByAddress";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 
 const page = ({ params }) => {
+  const handleSelectApplication = (option) => setSelectedApplication(option);
   const [txAddressData, setTxAddressData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [txAddressStatus, setTxAddressStatus] = useState(InitStatus); //init,fetching,success,error
@@ -34,7 +42,8 @@ const page = ({ params }) => {
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [activeTab, setActiveTab] = useState("0");
-  const [tokensData, setTokensData] = useState([]);
+  const [tokensTxData, setTokensTxData] = useState([]);
+  const [dropDownTokenData, setDropDownTokenData] = useState("");
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -67,8 +76,24 @@ const page = ({ params }) => {
     }
   };
 
+  const getTokenData = async () => {
+    try {
+      let response = await getTokenByAddress(
+        params?.addressDetail,
+        currentPage
+      );
+
+      setDropDownTokenData(
+        response?.data?.contractDetails || response?.data?.tokenDetails
+      );
+    } catch (err) {
+      return err;
+    }
+  };
+
   useEffect(() => {
     fetchAddDetails();
+    getTokenData();
   }, []);
 
   useEffect(() => {
@@ -110,7 +135,7 @@ const page = ({ params }) => {
   };
   const tabItems = [
     {
-      label: <span>Transactions</span>,
+      label: <span>Total Transactions</span>,
       key: "0",
       children: (
         <>
@@ -140,11 +165,20 @@ const page = ({ params }) => {
       ),
     },
     {
-      label: <span>Tokens</span>,
+      label: <span>Token Transaction</span>,
       key: "1",
-      children: <TokenByAddress setTokensData={setTokensData} />,
+      children: (
+        <TokenTransactions
+          setTokensTxData={setTokensTxData}
+          tokensTxData={tokensTxData}
+        />
+      ),
     },
   ];
+
+  const handleTokenClick = (address) => {
+    window.location.href = `${Routes.CONTRACT_DETAIL}${address}`;
+  };
 
   return (
     <div className="blocksummary">
@@ -209,6 +243,46 @@ const page = ({ params }) => {
                 <p>{`${showHeaderData?.blocksValidated || 0} Blocks`}</p>
               </div>
             </div>
+            {dropDownTokenData?.length > 0 && (
+              <div className="assetDropItem">
+                <CustomDropdown
+                  // label="Assets"
+                  placeholder="Assets"
+                  options={dropDownTokenData?.map((res) => (
+                    <>
+                      <div
+                        className="assetDropListing"
+                        onClick={() => handleTokenClick(res?.contractAddress)}
+                      >
+                        <div className="assetDropListing_left">
+                          <p>
+                            {" "}
+                            {res?.tokenName || "-"} ({res?.tokenSymbol || "-"})
+                          </p>
+                          <span>{res?.tokenType || "-"}</span>
+                        </div>
+                        <div className="assetDropListing_right">
+                          <p>
+                            {res?.tokenBalance
+                              ? formatValue(
+                                  noExponential(
+                                    Number(res?.tokenBalance) /
+                                      10 ** Number(res?.decimals)
+                                  )
+                                )
+                              : 0}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                />
+
+                <p className="assetDropItem_text">
+                  {dropDownTokenData?.length || 0}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="addresspagination">
@@ -224,7 +298,7 @@ const page = ({ params }) => {
                   className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
                   filename="my-file.csv"
                   data={
-                    activeTab === "0" ? txAddressData ?? [] : tokensData ?? []
+                    activeTab === "0" ? txAddressData ?? [] : tokensTxData ?? []
                   }
                 >
                   <button className="exportBtn">

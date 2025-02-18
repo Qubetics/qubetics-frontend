@@ -11,68 +11,67 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://dev-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2)
-    format("woff2");
+  src: url(https://alphatestnet-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
     U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://dev-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2)
-    format("woff2");
+  src: url(https://alphatestnet-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 // /* latin-ext */
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://dev-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2)
-    format("woff2");
+  src: url(https://alphatestnet-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
     U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 // /* latin */
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://dev-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2)
-    format("woff2");
+  src: url(https://alphatestnet-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 // /* latin-ext */
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://dev-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2)
-    format("woff2");
+  src: url(https://alphatestnet-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
     U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 // /* latin */
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://dev-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2)
-    format("woff2");
+  src: url(https://alphatestnet-explorer.qubetics.work/_next/static/media/7e6a2e30184bb114-s.p.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
@@ -84,11 +83,13 @@
   box-sizing: border-box;
   font-family: "DM Sans", sans-serif !important;
 }
+
 @property --gradient-angle {
   syntax: "<angle>";
   initial-value: 90deg;
   inherits: false;
 }
+
 :root {
   --bg-background: #111827;
   --clr-card: rgb(168, 219, 215);
@@ -99,21 +100,18 @@
   --clr-5: rgb(255, 152, 226) 120deg;
   --clr-6: rgb(247, 186, 229);
 }
+
 :root {
-  --theme-gradients-main: conic-gradient(
-      from 180deg,
+  --theme-gradients-main: conic-gradient(from 180deg,
       rgb(255, 152, 226),
       rgb(255, 200, 118) 35.77deg,
       rgb(121, 255, 247) 153.75deg,
       rgb(159, 83, 255) 258.75deg,
-      rgb(255, 152, 226) 360deg
-    ),
+      rgb(255, 152, 226) 360deg),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  --searchBg: linear-gradient(
-    157.79deg,
-    rgba(29, 29, 29, 0.54) -0.65%,
-    rgba(29, 29, 29, 0.9) 99.59%
-  );
+  --searchBg: linear-gradient(157.79deg,
+      rgba(29, 29, 29, 0.54) -0.65%,
+      rgba(29, 29, 29, 0.9) 99.59%);
 }
 
 body {
@@ -121,11 +119,12 @@ body {
   margin: 0;
   margin-bottom: 0;
   font-family: "DM Sans", sans-serif !important;
+
   @media (max-width: 767px) {
     margin-bottom: 0;
   }
 
-  > iframe {
+  >iframe {
     display: none;
     width: 0px !important;
     height: 0px !important;
@@ -178,10 +177,12 @@ html {
   margin-right: auto;
   padding-right: 15px;
   padding-left: 15px;
+
   @media (max-width: 1550px) {
     padding-left: 60px;
     padding-right: 60px;
   }
+
   @media (max-width: 1399px) {
     padding-right: 15px;
     padding-left: 15px;
@@ -215,7 +216,7 @@ body {
     margin-bottom: 0;
   }
 
-  > iframe {
+  >iframe {
     display: none;
     width: 0px !important;
     height: 0px !important;
@@ -350,6 +351,7 @@ html {
       @include fluid-type(320px, 1920px, 14px, 16px);
       margin-bottom: 12px;
       font-weight: 300;
+
       @media (max-width: 767px) {
         margin-bottom: 7px;
       }
@@ -542,39 +544,14 @@ html {
   //     border-box !important;
   border-radius: 25px;
   border: 0 !important;
+
   &::after,
   &::before {
     content: " ";
     position: absolute;
     z-index: -1;
     inset: -0.2rem;
-    background: conic-gradient(
-      var(--clr-card),
-      var(--clr-1),
-      var(--clr-2),
-      var(--clr-3),
-      var(--clr-4),
-      var(--clr-5),
-      var(--clr-6),
-      var(--clr-2),
-      var(--clr-1),
-      var(--clr-card)
-    );
-    border-radius: inherit;
-  }
-  &:hover {
-    background: $black !important;
-    color: $white !important;
-    // border: 0 !important;
-    &::after,
-    &::before {
-      content: " ";
-      position: absolute;
-      z-index: -1;
-      inset: -0.2rem;
-      background: conic-gradient(
-        from var(--gradient-angle),
-        var(--clr-card),
+    background: conic-gradient(var(--clr-card),
         var(--clr-1),
         var(--clr-2),
         var(--clr-3),
@@ -583,11 +560,36 @@ html {
         var(--clr-6),
         var(--clr-2),
         var(--clr-1),
-        var(--clr-card)
-      );
+        var(--clr-card));
+    border-radius: inherit;
+  }
+
+  &:hover {
+    background: $black !important;
+    color: $white !important;
+
+    // border: 0 !important;
+    &::after,
+    &::before {
+      content: " ";
+      position: absolute;
+      z-index: -1;
+      inset: -0.2rem;
+      background: conic-gradient(from var(--gradient-angle),
+          var(--clr-card),
+          var(--clr-1),
+          var(--clr-2),
+          var(--clr-3),
+          var(--clr-4),
+          var(--clr-5),
+          var(--clr-6),
+          var(--clr-2),
+          var(--clr-1),
+          var(--clr-card));
       animation: rotate 2.5s linear infinite;
       border-radius: inherit;
     }
+
     &::after {
       filter: blur(4rem);
     }
@@ -601,6 +603,7 @@ html {
       fill: #fff;
     }
   }
+
   span {
     width: 100%;
     height: 100%;
@@ -672,19 +675,23 @@ html {
         @media (max-width: 575px) {
           gap: 0;
         }
+
         .ant-tabs-tab {
           @include fluid-type(320px, 1920px, 14px, 16px);
           padding: 10px 24px;
           margin: 0 0 0 0px !important;
+
           .ant-tabs-tab-btn {
             color: $graytext;
           }
+
           @media (max-width: 575px) {
             margin: 0 0 0 15px;
             padding: 10px 15px;
           }
         }
       }
+
       .ant-tabs-tab-active {
         margin: 0 0 0 0px !important;
         // padding: 10px 24px;
@@ -701,25 +708,24 @@ html {
         border-radius: 30px;
         overflow: hidden;
         cursor: pointer;
+
         &::before {
           content: "";
           position: absolute;
           inset: 0;
           padding: 2.1px;
           border-radius: 30px;
-          background: conic-gradient(
-            from var(--gradient-angle),
-            var(--clr-card),
-            var(--clr-1),
-            var(--clr-2),
-            var(--clr-3),
-            var(--clr-4),
-            var(--clr-5),
-            var(--clr-6),
-            var(--clr-2),
-            var(--clr-1),
-            var(--clr-card)
-          );
+          background: conic-gradient(from var(--gradient-angle),
+              var(--clr-card),
+              var(--clr-1),
+              var(--clr-2),
+              var(--clr-3),
+              var(--clr-4),
+              var(--clr-5),
+              var(--clr-6),
+              var(--clr-2),
+              var(--clr-1),
+              var(--clr-card));
           animation: rotate 2.5s linear infinite;
           -webkit-mask: linear-gradient(#fff 0 0) content-box,
             linear-gradient(#fff 0 0);
@@ -729,14 +735,17 @@ html {
           animation: rotate 3s linear infinite;
         }
       }
+
       @keyframes rotate {
         0% {
           --gradient-angle: 0deg;
         }
+
         100% {
           --gradient-angle: 360deg;
         }
       }
+
       .ant-tabs-tab-btn {
         color: $white !important;
       }
@@ -756,6 +765,7 @@ html {
   overflow-x: auto;
   border: 1px solid $borderCard;
   background-color: #121212;
+
   @media (max-width: 575px) {
     margin: 12px 0;
   }
@@ -764,8 +774,7 @@ html {
     color: theme-get("borderitem");
   }
 
-  .ant-table-content {
-  }
+  .ant-table-content {}
 
   .ant-table-cell-row-hover {
     background-color: rgb(185, 179, 179) !important;
@@ -773,6 +782,7 @@ html {
 
   .ant-table-thead th {
     font-weight: 300 !important;
+
     &:first-child {
       padding-left: 40px;
 
@@ -794,7 +804,7 @@ html {
     border-bottom: 0 !important;
   }
 
-  > tr > th {
+  >tr>th {
     text-align: center;
     @include fluid-type(320px, 1920px, 14px, 16px);
 
@@ -816,7 +826,7 @@ html {
     }
   }
 
-  .ant-table-tbody > tr > td {
+  .ant-table-tbody>tr>td {
     white-space: nowrap;
     @include fluid-type(320px, 1920px, 14px, 16px);
     border-bottom: 0 !important;
@@ -888,6 +898,7 @@ html {
 
     a {
       color: $grayA0A0A0;
+
       &:hover {
         color: #9f53ff;
         transition: color 0.6s ease-out;
@@ -901,8 +912,7 @@ html {
   }
 }
 
-.contractTable {
-}
+.contractTable {}
 
 // graycommonspan
 .bghash {
@@ -1101,13 +1111,13 @@ html {
 .ant-table-wrapper .ant-table {
   background-color: #121212 !important;
 
-  tr > th {
+  tr>th {
     white-space: nowrap;
     @include fluid-type(320px, 1920px, 14px, 16px);
     color: $white;
   }
 
-  tr > th,
+  tr>th,
   td {
     background: transparent !important;
     border: 0;
@@ -1141,7 +1151,7 @@ html {
 }
 
 .slick-slide {
-  > div {
+  >div {
     display: flex;
 
     @media (max-width: 1200px) {
@@ -1150,17 +1160,12 @@ html {
   }
 }
 
-.ant-table-wrapper
-  .ant-table-container
-  table
-  > thead
-  > tr:first-child
-  > *:first-child {
+.ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:first-child {
   z-index: 10;
 }
 
-.ant-table-wrapper .ant-table-thead > tr > th,
-.ant-table-wrapper .ant-table-thead > tr > td {
+.ant-table-wrapper .ant-table-thead>tr>th,
+.ant-table-wrapper .ant-table-thead>tr>td {
   border-bottom: 0 !important;
   color: $white !important;
 }
@@ -1197,13 +1202,16 @@ html {
         border-radius: 25px;
         padding: 3px;
         margin: initial !important;
+
         .ant-tabs-tab {
           min-width: 200px;
 
           background-color: $bodybg;
+
           @media (max-width: 575px) {
             min-width: 135px;
           }
+
           border-radius: 25px;
 
           height: 50px;
@@ -1217,10 +1225,12 @@ html {
             font-size: 12px;
             height: 40px;
           }
+
           span {
             @include theme() {
               color: theme-get("grayText");
             }
+
             @include fluid-type(320px, 1920px, 14px, 16px);
             font-weight: 500;
             display: flex;
@@ -1228,6 +1238,7 @@ html {
             align-items: center;
           }
         }
+
         .ant-tabs-tab-active {
           // background: var(--theme-gradients-main);
           width: 200px;
@@ -1240,21 +1251,19 @@ html {
           --hover-text: #000;
           border: 2px solid transparent;
           background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-            conic-gradient(
-                from 180deg at 50% 50%,
-                #ff98e2,
-                #ffc876 35.77deg,
-                #79fff7 153.75deg,
-                #9f53ff 258.75deg,
-                #ff98e2 360deg
-              )
-              border-box;
+            conic-gradient(from 180deg at 50% 50%,
+              #ff98e2,
+              #ffc876 35.77deg,
+              #79fff7 153.75deg,
+              #9f53ff 258.75deg,
+              #ff98e2 360deg) border-box;
           border-radius: 25px;
 
           @media (max-width: 485px) {
             width: 155px;
             font-size: 12px;
           }
+
           @media (max-width: 360px) {
             width: 142px;
             font-size: 12px;
@@ -1263,6 +1272,7 @@ html {
           span {
             @include fluid-type(320px, 1920px, 14px, 16px);
             font-weight: 500;
+
             @include theme() {
               color: theme-get("textthemeoposite");
             }
@@ -1292,13 +1302,7 @@ html {
   }
 }
 
-.darkTheme
-  .commontabs
-  .ant-tabs-nav
-  .ant-tabs-nav-wrap
-  .ant-tabs-nav-list
-  .ant-tabs-tab-active
-  span {
+.darkTheme .commontabs .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-active span {
   color: #fff !important;
 }
 
@@ -1476,13 +1480,16 @@ html {
     }
   }
 }
+
 .lightTheme .searchbartop {
   background-color: #f8f8f8;
 }
+
 .lightTheme .bgToMainDiv,
 .lightTheme .faucet {
   background-color: #f8f8f8 !important;
 }
+
 .bgToMainDiv {
   // background-position: center;
   background-size: 100% 100%;
@@ -1490,23 +1497,55 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("/mainbg.png");
+  background-image: url("/mainbg.avif");
   background-repeat: no-repeat;
+
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
   }
+
   .maininner {
     flex: 1;
   }
+
+  .bugSubButton {
+    position: fixed;
+    right: -57px;
+    top: 30%;
+    z-index: 999;
+    max-width: max-content;
+    width: 100%;
+    rotate: 90deg;
+
+    button {
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3),
+        0px 2px 8px rgba(255, 255, 255, 0.2);
+      transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+      border-radius: 0 0 15px 15px !important;
+
+      &:hover {
+        box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.5),
+          0px 3px 12px rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        /* Slight lift on hover */
+      }
+
+      &::before {
+        border-radius: 0 0 15px 15px !important;
+      }
+    }
+  }
 }
+
 .dashboardmaindiv {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("/bgMain.png");
+  // background-image: url("/bgMain.png");
   background-repeat: no-repeat;
+
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
   }
@@ -1533,7 +1572,7 @@ html {
   }
 }
 
-.ant-table-tbody > tr.ant-table-placeholder {
+.ant-table-tbody>tr.ant-table-placeholder {
   @include theme() {
     background-color: transparent !important;
     color: theme-get("texttheme") !important;
@@ -1571,13 +1610,16 @@ html {
 .bluecard {
   display: flex;
   gap: 20px;
+
   @media (max-width: 991px) {
     max-width: 100% !important;
     width: 100% !important;
   }
+
   @media (max-width: 575px) {
     gap: 16px;
   }
+
   &_inner {
     background: var(--searchBg);
     border: 1px solid $borderCard;
@@ -1587,9 +1629,11 @@ html {
     width: 100%;
     display: flex;
     align-items: center;
+
     @media (max-width: 1550px) {
       max-width: 32.3%;
     }
+
     @media (max-width: 1318px) {
       max-width: 32%;
     }
@@ -1603,6 +1647,7 @@ html {
     p {
       margin-bottom: 10px;
     }
+
     .imgIcon {
       svg {
         @media (max-width: 767px) {
@@ -1647,12 +1692,15 @@ html {
     }
   }
 }
+
 .transecSec {
   margin-top: 30px;
+
   @media (max-width: 575px) {
     margin-top: 4px;
   }
 }
+
 .contractDetail {
   padding: 40px 0px;
 
@@ -1663,14 +1711,18 @@ html {
   .copyIcon_White {
     margin: auto;
   }
+
   .headerButton {
     margin-top: 30px;
+
     @media (max-width: 575px) {
       margin-top: 24px;
     }
   }
+
   .transecSec {
     padding: 30px 0px;
+
     @media (max-width: 575px) {
       padding: 10px 0;
     }
@@ -1678,21 +1730,25 @@ html {
     .ant-tabs-nav-list {
       margin-bottom: 0 !important;
     }
+
     .commontable {
       thead {
         tr {
           th {
             width: 15%;
+
             &:last-child {
               width: 40%;
             }
           }
         }
       }
+
       tbody {
         tr {
           td {
             width: 15%;
+
             &:last-child {
               width: 40%;
             }
@@ -1702,19 +1758,23 @@ html {
     }
   }
 }
+
 .contractsItems {
   @media (max-width: 575px) {
     padding-top: 10px;
   }
+
   .headerButton {
     @media (max-width: 575px) {
       margin-bottom: 0 !important;
     }
   }
+
   .searchbar {
     padding-top: 0;
   }
 }
+
 .cardContract {
   display: flex;
   gap: 20px;
@@ -1832,8 +1892,8 @@ input[type="number"] {
   padding-left: 5px;
 }
 
-.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap,
-.ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-wrap {
+.ant-tabs>.ant-tabs-nav .ant-tabs-nav-wrap,
+.ant-tabs>div>.ant-tabs-nav .ant-tabs-nav-wrap {
   @media (min-width: 767px) {
     overflow: unset !important;
   }
@@ -1867,12 +1927,10 @@ input[type="number"] {
     width: 100%;
     position: relative;
     border-radius: 20px;
-    background: linear-gradient(
-      88deg,
-      rgba(1, 124, 201, 0.15) 3.13%,
-      rgba(8, 147, 234, 0.35) 48.43%,
-      rgba(1, 138, 224, 0.17) 98.38%
-    );
+    background: linear-gradient(88deg,
+        rgba(1, 124, 201, 0.15) 3.13%,
+        rgba(8, 147, 234, 0.35) 48.43%,
+        rgba(1, 138, 224, 0.17) 98.38%);
 
     height: 40px;
     backdrop-filter: blur(32px);
@@ -1947,12 +2005,10 @@ input[type="number"] {
     font-size: 16px;
 
     border-radius: 20px !important;
-    background: linear-gradient(
-      88deg,
-      rgba(1, 124, 201, 0.15) 3.13%,
-      rgba(8, 147, 234, 0.35) 48.43%,
-      rgba(1, 138, 224, 0.17) 98.38%
-    ) !important;
+    background: linear-gradient(88deg,
+        rgba(1, 124, 201, 0.15) 3.13%,
+        rgba(8, 147, 234, 0.35) 48.43%,
+        rgba(1, 138, 224, 0.17) 98.38%) !important;
 
     backdrop-filter: blur(32px);
 
@@ -2012,6 +2068,7 @@ input[type="number"] {
     padding-left: 0;
     padding-right: 0;
     border-radius: 10px;
+
     .ant-card {
       margin-bottom: 0;
       border: 1px solid $borderCard;
@@ -2052,6 +2109,7 @@ input[type="number"] {
     background: var(--searchBg);
     padding: 15.3px 30px;
     border-radius: 15px;
+
     div {
       .actiondata {
         max-width: 250px;
@@ -2074,7 +2132,7 @@ input[type="number"] {
   }
 
   &__details {
-    > div {
+    >div {
       // gap: 90px;
       display: flex;
 
@@ -2110,6 +2168,7 @@ input[type="number"] {
       fill: green;
     }
   }
+
   color: green;
 }
 
@@ -2121,6 +2180,7 @@ input[type="number"] {
       fill: red;
     }
   }
+
   color: red;
 }
 
@@ -2132,6 +2192,7 @@ input[type="number"] {
       fill: #ffd738;
     }
   }
+
   color: #ffd738;
 }
 
@@ -2213,12 +2274,14 @@ input[type="number"] {
         max-width: 100%;
         padding: 17px;
       }
+
       .imgIcon {
         // width: 60px;
         // height: 60px;
       }
     }
   }
+
   @media (max-width: 575px) {
     padding-bottom: 14px;
   }
@@ -2289,6 +2352,7 @@ input[type="number"] {
   .lightGray {
     opacity: 0.7;
   }
+
   span {
     p {
       white-space: normal;
@@ -2302,10 +2366,12 @@ input[type="number"] {
   align-items: center;
   gap: 15px;
   margin-top: 20px;
+
   svg {
     width: 24px;
     height: 24px;
   }
+
   span {
     @include fluid-type(320px, 1920px, 14px, 16px);
     font-weight: 600;
@@ -2316,6 +2382,7 @@ input[type="number"] {
 .headerSelect {
   .ant-select-dropdown {
     border-radius: 14px !important;
+
     @media screen and (max-width: 1200px) {
       max-width: calc(100% - 10px) !important;
       width: 100% !important;
@@ -2325,30 +2392,37 @@ input[type="number"] {
     width: 150px !important;
     border-radius: 10px !important;
   }
+
   .ant-select-item-option {
     &:hover {
       background: $bg-353026 !important;
+
       a {
         color: $white !important;
       }
     }
   }
 }
+
 .rc-virtual-list-holder-inner {
   gap: 5px;
 }
+
 .ant-select-item-option {
   &:hover {
     background: $bg-353026 !important;
     border-radius: 10px !important;
+
     .ant-select-item-option-content {
       color: $white !important;
     }
   }
 }
+
 .activeOptions {
   background: #353026 !important;
   border-radius: 10px !important;
+
   .ant-select-item-option-content {
     a {
       color: $white !important;
@@ -2399,10 +2473,12 @@ input[type="number"] {
   display: flex;
   gap: 24px;
   margin-bottom: 40px;
+
   @media (max-width: 991px) {
     flex-wrap: wrap;
   }
 }
+
 .addressDetailSec {
   background: var(--searchBg);
   border: 1px solid $borderCard;
@@ -2411,19 +2487,23 @@ input[type="number"] {
   width: 100%;
   // box-shadow: 0 -2px 9px #80808075;
   margin-bottom: 40px;
+
   .detail {
     display: flex;
     align-items: center;
     gap: 100px;
+
     h3 {
       color: $grayA0A0A0;
       @include fluid-type(320px, 1920px, 14px, 16px);
       font-weight: 300;
     }
+
     p {
       color: $white;
       @include fluid-type(320px, 1920px, 14px, 16px);
       font-weight: 400;
+
       @media (max-width: 575px) {
         white-space: normal;
         word-break: break-all;
@@ -2431,6 +2511,7 @@ input[type="number"] {
     }
   }
 }
+
 .overViewCard {
   background: var(--searchBg);
   border: 1px solid $borderCard;
@@ -2438,9 +2519,11 @@ input[type="number"] {
   border-radius: 14px;
   width: 100%;
   box-shadow: 0 -2px 9px #80808075;
+
   @media (max-width: 540px) {
     padding: 15px;
   }
+
   .cardHeading {
     h2 {
       @include fluid-type(320px, 1920px, 16px, 20px);
@@ -2449,27 +2532,30 @@ input[type="number"] {
       margin-bottom: 16px;
     }
   }
+
   .innerDetail {
     .detail {
       display: flex;
       justify-content: space-between;
       padding: 10px 18px;
+
       @media (max-width: 540px) {
         padding: 10px;
       }
+
       &:nth-child(odd) {
-        background: linear-gradient(
-          157.79deg,
-          rgb(29, 29, 29) -0.65%,
-          rgb(47, 45, 45) 99.59%
-        );
+        background: linear-gradient(157.79deg,
+            rgb(29, 29, 29) -0.65%,
+            rgb(47, 45, 45) 99.59%);
         border-radius: 10px;
       }
+
       h3 {
         color: $grayA0A0A0;
         @include fluid-type(320px, 1920px, 14px, 16px);
         font-weight: 300;
       }
+
       p {
         color: $white;
         @include fluid-type(320px, 1920px, 14px, 16px);
@@ -2477,14 +2563,39 @@ input[type="number"] {
       }
     }
   }
+
+  .assetDropItem {
+    position: relative;
+
+    .dropdown-header {
+      height: 45px;
+      margin-top: 0 !important;
+      padding: 10px 20pxs;
+
+      .arrow {
+        position: absolute;
+        right: 20px;
+      }
+    }
+
+    &_text {
+      color: #fff;
+      position: absolute;
+      top: 48%;
+      right: 30px;
+      transform: translate(-48%, -48%);
+    }
+  }
 }
 
 .holderTable {
+
   td,
   th {
     width: 25%;
   }
 }
+
 .tabSerachBar {
   .searchbar_input {
     height: 46px;
@@ -2493,6 +2604,7 @@ input[type="number"] {
       height: 46px;
       padding-left: 40px;
     }
+
     svg {
       height: 16px;
       width: 16px;
@@ -2503,11 +2615,13 @@ input[type="number"] {
 .tokenListSec {
   .tokenInformation {
     margin-top: 40px;
+
     @media (max-width: 575px) {
       margin-top: 24px;
     }
   }
 }
+
 .mt-20 {
   margin-top: 20px;
 }
@@ -2518,28 +2632,35 @@ input[type="number"] {
     padding-right: 0;
   }
 }
+
 .totalTransactions {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   h2 {
     color: $white;
     @include fluid-type(320px, 1920px, 14px, 24px);
     font-weight: 600;
   }
+
   .innerSelect {
     height: 40px;
+
     .ant-select-selector {
       border-radius: 30px;
       height: 40px;
+
       @include theme() {
         color: theme-get("texttheme");
       }
+
       font-size: 16px;
 
       @include theme() {
         background: theme-get("dropdownBg");
       }
+
       border: 1px solid $borderCard !important;
 
       .ant-select-selection-item {
@@ -2578,6 +2699,7 @@ input[type="number"] {
     padding: 10px 22px;
   }
 }
+
 .ant-spin {
   span {
     svg {
@@ -2585,10 +2707,16 @@ input[type="number"] {
     }
   }
 }
+
+.css-cktiw7-MuiFormControl-root-MuiTextField-root label {
+  color: #fff !important;
+}
+
 .graphLod {
   position: absolute;
   left: 46%;
   top: 34%;
+
   @media (max-width: 767px) {
     position: static;
     display: flex;
@@ -2596,28 +2724,33 @@ input[type="number"] {
     align-items: center;
     padding: 15px 0;
   }
+
   @media (max-width: 575px) {
     // height: 257px;
     top: 50%;
   }
 }
+
 .dashLoading {
   @media (max-width: 767px) {
     height: 257px !important;
   }
 }
+
 .logsInnerSelect {
   padding-top: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
+
   @media (max-width: 767px) {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
     margin-bottom: 2px;
   }
+
   .customSelect {
     height: 36px;
 
@@ -2625,6 +2758,7 @@ input[type="number"] {
       width: 83px !important;
       height: 36px !important;
       margin-top: 0;
+
       .ant-select-selector {
         border-radius: 25px !important;
         background-color: transparent !important;
@@ -2634,6 +2768,7 @@ input[type="number"] {
         @include fluid-type(320px, 1920px, 14px, 16px);
         font-weight: 500 !important;
       }
+
       .ant-select-selection-item {
         color: #ffff;
         font-weight: 500;
@@ -2641,37 +2776,46 @@ input[type="number"] {
     }
   }
 }
+
 .headerMeta {
   .cmnSelct {
     @media (max-width: 1199px) {
       padding: 30px 15px !important;
     }
+
     .ant-select-selection-item {
       font-weight: 700;
     }
+
     a,
     button {
       font-weight: 700;
       font-size: calc(14px + 2 * (100vw - 320px) / 1600) !important;
+
       @media (max-width: 1600px) {
         padding: 12px 16px;
       }
+
       @media (max-width: 1199px) {
         padding: 16px 20px;
       }
     }
   }
 }
+
 :where(.css-dev-only-do-not-override-77tu7h).ant-checkbox .ant-checkbox-inner {
   background-color: transparent !important;
 }
+
 .headermetaBtn {
   white-space: nowrap;
+
   @media (max-width: 1199px) {
     display: flex !important;
     justify-content: center;
     height: 50px;
   }
+
   position: relative;
   display: inline-block;
   padding: 12.5px 20px;
@@ -2684,58 +2828,14 @@ input[type="number"] {
   border-radius: 30px;
   overflow: hidden;
   cursor: pointer;
+
   &::before {
     content: "";
     position: absolute;
     inset: 0;
     padding: 2px;
     border-radius: 30px;
-    background: conic-gradient(
-      from var(--gradient-angle),
-      var(--clr-card),
-      var(--clr-1),
-      var(--clr-2),
-      var(--clr-3),
-      var(--clr-4),
-      var(--clr-5),
-      var(--clr-6),
-      var(--clr-2),
-      var(--clr-1),
-      var(--clr-card)
-    );
-    animation: rotate 2.5s linear infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: rotate 3s linear infinite;
-  }
-  &:disabled {
-    cursor: not-allowed;
-  }
-}
-@keyframes rotate {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-.headerSelectItem {
-  @media (max-width: 1199px) {
-    text-align: center;
-  }
-  .ant-select-selector {
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      padding: 2px;
-      border-radius: 30px;
-      background: conic-gradient(
-        from var(--gradient-angle),
+    background: conic-gradient(from var(--gradient-angle),
         var(--clr-card),
         var(--clr-1),
         var(--clr-2),
@@ -2745,8 +2845,54 @@ input[type="number"] {
         var(--clr-6),
         var(--clr-2),
         var(--clr-1),
-        var(--clr-card)
-      );
+        var(--clr-card));
+    animation: rotate 2.5s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate 3s linear infinite;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.headerSelectItem {
+  @media (max-width: 1199px) {
+    text-align: center;
+  }
+
+  .ant-select-selector {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: 30px;
+      background: conic-gradient(from var(--gradient-angle),
+          var(--clr-card),
+          var(--clr-1),
+          var(--clr-2),
+          var(--clr-3),
+          var(--clr-4),
+          var(--clr-5),
+          var(--clr-6),
+          var(--clr-2),
+          var(--clr-1),
+          var(--clr-card));
       animation: rotate 2.5s linear infinite;
       -webkit-mask: linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
@@ -2755,11 +2901,13 @@ input[type="number"] {
       mask-composite: exclude;
       animation: rotate 3s linear infinite;
     }
+
     .ant-select-selection-item {
       font-weight: 700 !important;
     }
   }
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -2768,14 +2916,17 @@ input:-webkit-autofill:active {
   // -webkit-text-fill-color: #fff;
   // border: 1px solid #080808;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: #fff; /* Makes the text transparent to show the background gradient */
+  -webkit-text-fill-color: #fff;
+  /* Makes the text transparent to show the background gradient */
   border: 2px solid #080808;
   overflow: hidden;
 }
+
 .break-word-toast {
   word-break: break-word;
   white-space: normal;
 }
+
 .holderTable {
   thead {
     tr {
@@ -2784,6 +2935,7 @@ input:-webkit-autofill:active {
       }
     }
   }
+
   tbody {
     tr {
       td {
@@ -2792,26 +2944,32 @@ input:-webkit-autofill:active {
     }
   }
 }
+
 .tokenCard {
   width: 35% !important;
+
   @media (max-width: 991px) {
     width: 100% !important;
   }
 }
+
 .blockLinkItems {
   a {
     min-width: 140px !important;
     display: inline-block;
   }
 }
+
 .blockLink {
   min-width: 145px !important;
   display: inline-block;
 }
+
 .contAdd {
   min-width: 150px !important;
   display: inline-block;
 }
+
 .blockLinks {
   a {
     min-width: 154px !important;
@@ -2822,4 +2980,47 @@ input:-webkit-autofill:active {
 .zd-asap-newlist-list {
   flex-flow: column !important;
   gap: 2px !important;
+}
+
+.assetDropListing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+
+  p,
+  span {
+    margin-bottom: 0;
+  }
+
+  span {
+    opacity: 0.5;
+    font-size: 12px;
+  }
+
+  &_left {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    p {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  &_right {
+    p {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+      gap: 5px;
+    }
+  }
 }

@@ -32,6 +32,7 @@ export const SHOW_FAUCET = process.env.NEXT_PUBLIC_SHOW_FAUCET;
 export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
 export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
+export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -548,3 +549,144 @@ export const firstCapitalLetter = (input) => {
   if (!input) return "";
   return input?.charAt(0).toUpperCase() + input?.slice(1);
 };
+
+export const KeyNotes = [
+  {
+    id: 1,
+    title:
+      "Participants must agree to the terms and conditions of the Testnet Rewards Program when submitting.",
+  },
+  {
+    id: 2,
+    title:
+      "Submissions that do not follow the guidelines will be marked as invalid and will not qualify for rewards.",
+  },
+  {
+    id: 3,
+    title: "A confirmation email will be sent upon successful submission.",
+  },
+];
+
+export const guidelinesList = [
+  {
+    id: 1,
+    title: "Validation",
+    description:
+      "Submissions will be reviewed for completeness, accuracy, and adherence to guidelines.",
+  },
+  {
+    id: 2,
+    title: "Testing",
+    description:
+      "The reported bug will be tested and verified by the development team.",
+  },
+  {
+    id: 3,
+    title: "Reward Allocation",
+    description:
+      "Eligible contributions will be categorized and rewarded based on complexity and impact as per the Testnet Rewards Program.",
+  },
+];
+
+const bugs = [
+  { id: 1, type: "Minor Bug" },
+  { id: 2, type: "Major Bug" },
+  { id: 3, type: "UI/UX Improvement" },
+  { id: 4, type: "Feature Suggestion" },
+];
+
+export const guidelinesData = [
+  {
+    id: 1,
+    title: "Complete All Mandatory Fields",
+    description:
+      "All required fields in the form must be completed accurately, including Name, Email, and Application Tested.",
+  },
+  {
+    id: 2,
+    title: "Provide a Clear Bug Description",
+    description:
+      "Clearly describe the bug or feedback. Include details such as steps to reproduce the bug, expected behavior, and actual behavior. Avoid vague or incomplete descriptions.",
+  },
+  {
+    id: 3,
+    title: "Mandatory Attachments",
+    description: (
+      <p>
+        Every bug submission must include at least one supporting file
+        (screenshot or screen-recorded video) as evidence of the reported issue.{" "}
+        <br /> <br />
+        Ensure the uploaded file is clear, relevant, and demonstrates the bug.
+      </p>
+    ),
+  },
+  {
+    id: 4,
+    title: "Categorize the Bug Properly",
+    description: (
+      <div className="bugCategorize">
+        <p>Select the appropriate category for your submission</p>
+        <div className="bugCategorize_top">
+          {bugs.map((bug) => (
+            <div key={bug.id} className="bugCategorize_inner">
+              <div></div>
+              <h6>{bug.type}</h6>
+            </div>
+          ))}
+        </div>
+        <p>
+          Incorrect categorization may delay the review process or affect reward
+          eligibility.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 5,
+    title: "Detail the Application Tested",
+    description:
+      "Specify the application where the bug or issue was encountered (e.g., TICSScan, Qubetics Delegator & Validator Interfaces, Qubetics IDE, or QubeQode).",
+  },
+  {
+    id: 6,
+    title: "Severity Rating",
+    description:
+      "Indicate the severity level (Low, Medium, or High) based on the impact of the bug on the application’s functionality.",
+  },
+  {
+    id: 7,
+    title: "Respect Submission Deadlines",
+    description:
+      "Submissions must be made within the timelines outlined in the Testnet Rewards Program. Late entries will not be accepted.",
+  },
+  {
+    id: 8,
+    title: "Avoid Duplicate Submissions",
+    description:
+      "Check the known issues list before submitting to avoid reporting already documented bugs. Duplicate submissions will not be rewarded.",
+  },
+  {
+    id: 8,
+    title: "No Plagiarized or False Submissions",
+    description:
+      "Ensure the bug is original and verified. Submissions found to be false or copied from others will be disqualified.",
+  },
+  {
+    id: 8,
+    title: "Maintain Professionalism",
+    description:
+      "Feedback and suggestions should be constructive, actionable, and respectful.",
+  },
+];
+
+export const validateInput = (value, maxLength) => {
+  return value
+    .replace(/^\s+/g, "")
+    .replace(/\s{2,}/g, " ")
+    .slice(0, maxLength);
+};
+
+export const handleValidValue = (value) => validateInput(value, 20);
+export const handleValidEmail = (value) => validateInput(value, 50);
+export const WalletValidValue = (value) => validateInput(value, 42);
+export const descriptionValidValue = (value) => validateInput(value, 500);
