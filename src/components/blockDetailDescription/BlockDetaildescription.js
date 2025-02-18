@@ -60,7 +60,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             /> */}
           </span>
           <div
-            className="leftArrow"
+            className="detailArrow"
             onClick={() => {
               if (blockNo > 0)
                 return router.push(`/blocks/${Number(blockNo) - 1}`);
@@ -69,7 +69,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             <LeftOutlined />
           </div>
           <div
-            className=""
+            className="detailArrow"
             onClick={() => {
               const latestBlock = webSocketData?.blocks?.blocknumber
                 ? webSocketData?.blocks?.blocknumber
