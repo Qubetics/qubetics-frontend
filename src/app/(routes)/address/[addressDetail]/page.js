@@ -2,11 +2,9 @@
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 // import BlockDetail from "@/components/blockDetail/BlockDetail";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import Image from "next/image";
-import currencyIcon from "../../../../assets/svg/currency.svg";
-import Heading from "@/components/heading/Heading";
 import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import Heading from "@/components/heading/Heading";
 import {
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
@@ -27,10 +25,11 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import TokenByAddress from "@/components/token";
+import getTokenByAddress from "@/services/getTokenByAddress";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
-import getTokenByAddress from "@/services/getTokenByAddress";
 import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
+import { useRouter } from "next/navigation";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -44,6 +43,7 @@ const page = ({ params }) => {
   const [activeTab, setActiveTab] = useState("0");
   const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
+  const router = useRouter();
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -177,7 +177,8 @@ const page = ({ params }) => {
   ];
 
   const handleTokenClick = (address) => {
-    window.open(`${Routes.CONTRACT_DETAIL}${address}`, "_blank");
+    router.push(`${Routes.CONTRACT_DETAIL}${address}`);
+    // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
 
   return (
@@ -246,7 +247,6 @@ const page = ({ params }) => {
             {dropDownTokenData?.length > 0 && (
               <div className="assetDropItem">
                 <CustomDropdown
-                  // label="Assets"
                   placeholder="Assets"
                   options={dropDownTokenData?.map((res) => (
                     <>
