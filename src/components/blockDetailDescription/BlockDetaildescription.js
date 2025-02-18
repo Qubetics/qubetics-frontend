@@ -48,7 +48,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
               : blockData?.block?.blocknumber
               ? blockData?.block?.blocknumber
               : "-"}
-            <CopyText
+            {/* <CopyText
               text={
                 blockData?.blocknumber
                   ? blockData?.blocknumber
@@ -57,7 +57,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
                   : "-"
               }
               hoverText={"block"}
-            />
+            /> */}
           </span>
           <div
             className="leftArrow"

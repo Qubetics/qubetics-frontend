@@ -1710,20 +1710,20 @@ export const tokensByAddressColumn = [
       </Link>
     ),
   },
-  {
-    title: "Block",
-    dataIndex: "blocknumber",
-    key: "blocknumber",
-    render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
-        {text}
-      </Link>
-    ),
-  },
+  // {
+  //   title: "Block",
+  //   dataIndex: "blocknumber",
+  //   key: "blocknumber",
+  //   render: (text) => (
+  //     <Link
+  //       className="bghash"
+  //       href={`${Routes.BLOCK_NO}${text}`}
+  //       rel="noopener noreferrer"
+  //     >
+  //       {text}
+  //     </Link>
+  //   ),
+  // },
   {
     title: "Method ",
     key: "type",
