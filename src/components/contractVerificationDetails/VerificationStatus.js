@@ -1,11 +1,20 @@
 import { Routes, verificationStatus } from "@/constant/constant";
 import React from "react";
 import { Button } from "antd";
-import { CloseCircleFilled, ClockCircleFilled, CheckCircleFilled } from "@ant-design/icons";
+import {
+  CloseCircleFilled,
+  ClockCircleFilled,
+  CheckCircleFilled,
+} from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { PendingIcon, SuccesIcon } from "../../../public/SvgIcons";
 
-const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddress, hash }) => {
+const VerificationStatus = ({
+  contractDetailData,
+  compilerMessage,
+  setVerifyAddress,
+  hash,
+}) => {
   const router = useRouter();
 
   switch (contractDetailData?.verificationType) {
@@ -13,7 +22,9 @@ const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddr
       return (
         <div className="contractSourceBtn">
           <CloseCircleFilled style={{ color: "red", fontSize: 18 }} />
-          {!compilerMessage?.showError ? `${verificationStatus.REJECTED_VERIFICATION} (ByteCode Not Matched)` : verificationStatus.REJECTED_VERIFICATION}
+          {!compilerMessage?.showError
+            ? `${verificationStatus.REJECTED_VERIFICATION} (ByteCode Not Matched)`
+            : verificationStatus.REJECTED_VERIFICATION}
           <button
             className="headermetaBtn"
             style={{ marginLeft: "20px" }}
@@ -40,7 +51,7 @@ const VerificationStatus = ({ contractDetailData, compilerMessage, setVerifyAddr
         <>
           <div className="verificationFill greenFill">
             <SuccesIcon />
-            <span> {verificationStatus.PARTIAL_VERIFIED}ssss</span>
+            <span> {verificationStatus.PARTIAL_VERIFIED}</span>
           </div>
         </>
       );
