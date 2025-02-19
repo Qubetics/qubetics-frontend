@@ -46,8 +46,8 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             {blockData?.blocknumber
               ? blockData?.blocknumber
               : blockData?.block?.blocknumber
-              ? blockData?.block?.blocknumber
-              : "-"}
+                ? blockData?.block?.blocknumber
+                : "-"}
             {/* <CopyText
               text={
                 blockData?.blocknumber
@@ -60,7 +60,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             /> */}
           </span>
           <div
-            className="detailArrow"
+            className="detailArrow headermetaBtn"
             onClick={() => {
               if (blockNo > 0)
                 return router.push(`/blocks/${Number(blockNo) - 1}`);
@@ -69,7 +69,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             <LeftOutlined />
           </div>
           <div
-            className="detailArrow"
+            className="detailArrow headermetaBtn"
             onClick={() => {
               const latestBlock = webSocketData?.blocks?.blocknumber
                 ? webSocketData?.blocks?.blocknumber
@@ -136,8 +136,8 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             {blockData?.transactionCount
               ? blockData?.transactionCount
               : blockData?.block?.transactionCount
-              ? blockData?.block?.transactionCount
-              : 0}
+                ? blockData?.block?.transactionCount
+                : 0}
           </span>
         </div>
         {chain == "EVM Chain" && (
