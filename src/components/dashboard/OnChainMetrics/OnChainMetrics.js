@@ -1,11 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
-import { tooltipConstant } from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
+import { useEffect, useState } from "react";
 import {
   AvgBlockTime,
   Marcketcap,
@@ -16,9 +15,9 @@ import {
 } from "../../../../public/SvgIcons";
 
 import { useThemeData } from "@/components/contexts/theme_context";
+import getQubeticsPrice from "@/services/getQubeticsPrice";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
-import getQubeticsPrice from "@/services/getQubeticsPrice";
 
 const OnChainMetrics = ({ stats }) => {
   const [price, setPrice] = useState("");
