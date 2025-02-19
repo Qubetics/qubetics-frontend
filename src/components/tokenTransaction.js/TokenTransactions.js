@@ -52,7 +52,17 @@ const TokenTransactions = ({ setTokensTxData, tokensTxData }) => {
       setCurrentPage(currentPage - 1);
     }
   };
+  const handleLast = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(totalPages);
+    }
+  };
 
+  const handleFirst = () => {
+    if (currentPage <= totalPages) {
+      setCurrentPage(1);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, [currentPage]);
@@ -80,6 +90,8 @@ const TokenTransactions = ({ setTokensTxData, tokensTxData }) => {
           currentPage={currentPage}
           handleNext={handleNext}
           handlePrevious={handlePrevious}
+          handleLast={handleLast}
+          handleFirst={handleFirst}
           disablePrev={currentPage === 1}
           disableNext={currentPage === totalPages}
         />
