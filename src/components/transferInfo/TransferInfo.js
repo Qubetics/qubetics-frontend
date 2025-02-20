@@ -33,9 +33,9 @@ const TransferInfo = ({ data }) => {
           <p>Transaction Hash</p>
           {data?.txhash ? (
             <span>
-              <Link href={`/tx/${data?.txhash}`} className="">
-                {data?.txhash}
-              </Link>
+              {/* <Link href={`/tx/${data?.txhash}`} className=""> */}
+              {data?.txhash}
+              {/* </Link> */}
               <CopyText text={data?.txhash} hoverText={"hash"} />
             </span>
           ) : (
@@ -47,7 +47,7 @@ const TransferInfo = ({ data }) => {
           {data?.fromAddress ? (
             <span>
               <Link
-                className=""
+                className="hoverTrans"
                 href={`/address/${data?.fromAddress}`}
               >
                 {" "}

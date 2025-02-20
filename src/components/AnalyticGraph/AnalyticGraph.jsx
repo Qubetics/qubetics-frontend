@@ -1,17 +1,20 @@
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { useState } from "react";
+import style from "react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark";
 
 const AnalyticGraph = () => {
   const options = {
     chart: {
       backgroundColor: "#0E0E10",
-      marginLeft: 70,
-      marginRight: 50,
+      marginLeft: 100,
+      marginRight: 100,
+      inverted: false,
     },
     title: {
       text: "Time Series: Token Contract Overview",
-      style: { color: "#ffffff", fontSize: "18px" },
+      align: "left",
+      style: { color: "#ffffff", fontSize: "22px" },
     },
     xAxis: {
       type: "datetime",
@@ -20,12 +23,7 @@ const AnalyticGraph = () => {
     yAxis: [
       {
         title: {
-          text: "Amount",
-          style: { color: "#A0A0A3" },
-          align: "high",
-          offset: 20,
-          rotation: 0,
-          y: -10,
+          text: "Amount", // Make sure this is not null or empty
         },
         labels: { style: { color: "#A0A0A3" } },
       },
@@ -33,10 +31,6 @@ const AnalyticGraph = () => {
         title: {
           text: "Token Transfer Count",
           style: { color: "#A0A0A3" },
-          align: "high",
-          offset: 30,
-          rotation: 0,
-          y: -10,
         },
         labels: { style: { color: "#A0A0A3" } },
         opposite: true,
@@ -47,12 +41,18 @@ const AnalyticGraph = () => {
       backgroundColor: "rgba(0, 0, 0, 0.8)",
       style: { color: "#ffffff" },
     },
+    legend: {
+      enabled: true,
+      layout: "horizontal",
+      align: "center",
+      verticalAlign: "bottom",
+    },
     series: [
       {
         name: "Transfer Amount",
         data: generateDummyData(),
         color: "magenta",
-        type: "line",
+        type: "column",
         yAxis: 0,
         // visible: enabledSeries["Transfer Amount"],
       },
@@ -97,15 +97,6 @@ const AnalyticGraph = () => {
     },
     scrollbar: {
       enabled: false,
-    },
-    legend: {
-      enabled: false,
-      layout: "horizontal",
-      align: "center",
-      verticalAlign: "bottom",
-      itemStyle: { color: "#A0A0A3", fontSize: "12px" },
-      itemHoverStyle: { color: "#ffffff" },
-      useHTML: true,
     },
   };
 
