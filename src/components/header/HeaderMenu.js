@@ -441,9 +441,10 @@ function HeaderMenu({ onCloseDrawer }) {
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
             </a>
-            <button className="headermetaBtn" style={{ minWidth: "120px" }}>
-              EVM Chain
-            </button>
+            //{" "}
+            {/* <button className="headermetaBtn" style={{ minWidth: "120px" }}>
+               EVM Chain 
+                </button>*/}
             {/* <div className="evmChain"> */}
             {/* <Select
               className="headerSelectItem"

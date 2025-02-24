@@ -1144,7 +1144,7 @@ export const EventsColumn = [
     title: "Txn Hash",
     key: "txHash",
     render: (text) => (
-      <div className="iconandlink">
+      <div className="iconandlink" style={{ verticalAlign: "top" }}>
         {text?.txHash ? (
           <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
             {getAddress(text?.txHash)}
