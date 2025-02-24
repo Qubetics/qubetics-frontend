@@ -12,8 +12,8 @@ import getAddress from "@/utils/getAddress";
 function ContractInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { connectAddress, setConnectAddress } = useContractData();
+  const [isConnecting, setIsConnecting] = useState(false);
   const provider = window.ethereum;
-
   useEffect(() => {
     checkMetaMaskAccount();
   }, []);
@@ -56,8 +56,10 @@ function ContractInfo() {
     setIsModalOpen(false);
   };
 
-  const connectWithWallet = () => {
-    addQubeticForVerifyContract(setConnectAddress);
+  const connectWithWallet = async () => {
+    setIsConnecting(true);
+    await addQubeticForVerifyContract(setConnectAddress);
+    setIsConnecting(false);
   };
 
   useEffect(() => {
@@ -87,7 +89,10 @@ function ContractInfo() {
               <span> {getAddress(connectAddress)}</span>&nbsp;
               <CopyText text={connectAddress} />
             </p>
-            <Button onClick={() => setConnectAddress("")} className="commoncontactbtn ">
+            <Button
+              onClick={() => setConnectAddress("")}
+              className="commoncontactbtn "
+            >
               {" "}
               Disconnect
             </Button>
@@ -108,11 +113,24 @@ function ContractInfo() {
         </div>
         */}
       </div>
-      <Modal className="connectModal" title="Connect your wallet" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
+      <Modal
+        className="connectModal"
+        title="Connect your wallet"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        centered
+      >
         <ul>
-          <li onClick={connectWithWallet}>
-            <Image priority src="/metafox.svg" alt="Logo" width={25} height={25} />
-            MetaMask
+          <li style={{ cursor: "pointer" }} onClick={connectWithWallet}>
+            <Image
+              priority
+              src="/metafox.svg"
+              alt="Logo"
+              width={25}
+              height={25}
+            />
+            {isConnecting ? "Connecting..." : "MetaMask"}
           </li>
           {/*
           <li>
@@ -122,7 +140,10 @@ function ContractInfo() {
           </li>
           */}
         </ul>
-        <p className="agreeWallet">By Connecting a wallet you agree to the Terms of service and Optimism Community Agreements.</p>
+        <p className="agreeWallet">
+          By Connecting a wallet you agree to the Terms of service and Optimism
+          Community Agreements.
+        </p>
       </Modal>
     </>
   );

@@ -330,17 +330,11 @@ export const VectorIcon = () => {
 };
 export const SuccesIcon = () => {
   return (
-    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_61_2917)">
-        <path d="M0.5 12.4072C0.5 6.06462 5.65739 0.907227 12 0.907227C18.3426 0.907227 23.5 6.06462 23.5 12.4072C23.5 18.7498 18.3426 23.9072 12 23.9072C5.65739 23.9072 0.5 18.7498 0.5 12.4072Z" stroke="#34C759" />
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8027 8.36211C18.0934 8.65273 18.0934 9.13086 17.8027 9.42148L10.7715 16.4527C10.6262 16.598 10.434 16.673 10.2418 16.673C10.0496 16.673 9.85742 16.598 9.71211 16.4527L6.19648 12.9371C5.90586 12.6465 5.90586 12.1684 6.19648 11.8777C6.48711 11.5871 6.96523 11.5871 7.25586 11.8777L10.2418 14.8637L16.7434 8.36211C17.034 8.0668 17.5121 8.0668 17.8027 8.36211Z" fill="#34C759" />
-      </g>
-      <defs>
-        <clipPath id="clip0_61_2917">
-          <rect width="24" height="24" fill="white" transform="translate(0 0.407227)" />
-        </clipPath>
-      </defs>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#34C759" stroke-width="2" fill="none" />
+      <path d="M7 12L10 15L17 9" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
+
   );
 };
 export const PendingIcon = () => {

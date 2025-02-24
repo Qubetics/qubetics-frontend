@@ -39,7 +39,7 @@ const Contract = () => {
 
   const fetchAllContracts = async () => {
     try {
-      let response = await getAllContracts(pageToSend, tableLimit);
+      let response = await getAllContracts(pageToSend, tableLimit, order);
       setContractData(response?.data);
       setPreviousCursor(response?.data?.prevCursor);
       setNextCursor(response?.data?.nextCursor);
@@ -105,7 +105,7 @@ const Contract = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
       setPageToSend(previousCursor);
-      if (debounce.length > 0) return setOrder("asc");
+      setOrder("asc");
     }
   };
 
@@ -117,6 +117,7 @@ const Contract = () => {
   };
 
   const handleFirst = () => {
+    setOrder("");
     if (currentPage <= totalPages) {
       setCurrentPage(1);
       setPageToSend(1);

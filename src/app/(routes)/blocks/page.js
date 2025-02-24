@@ -39,6 +39,7 @@ const BlockSummary = () => {
   const [loading, setLoading] = useState(true);
   const [filterVal, setFilterVal] = useState("desc");
   const order = searchParams.get("order") || "desc";
+
   // const { isLight } = useThemeData();
 
   useEffect(() => {
@@ -98,6 +99,7 @@ const BlockSummary = () => {
     if (page > 1) {
       // setCurrentPage(currentPage - 1);
       // setPageToSend(previousCursor);
+
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) - 1);
       newSearchParams.set("id", previousCursor);

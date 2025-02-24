@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import "./verifyContract.scss";
-import { Input, Tooltip } from "antd";
 import { useContractData } from "@/components/contexts/contractContext";
+import { Input } from "antd";
+import "./verifyContract.scss";
 
 const SolidityCode = () => {
   const { TextArea } = Input;
@@ -29,11 +28,11 @@ const SolidityCode = () => {
           setSolidityCode(e.target.value);
         }}
       />
-      <Tooltip title="Paste">
+      {/* <Tooltip title="Paste">
         <span onClick={handlePaste} className="textAreaPaste">
           Paste
         </span>
-      </Tooltip>
+      </Tooltip> */}
     </div>
   );
 };
