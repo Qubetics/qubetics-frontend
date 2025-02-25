@@ -6,13 +6,12 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "./node.scss";
 import DarkNodeMap from "./NodeMap";
 
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { InitStatus, tooltipContent } from "@/constant/constant";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import FilterResult from "@/components/FilterResult/FilterResult";
 function QubeticNetworkNode({ nodesData, countryNode }) {
   const webSocketData = useLatestData();
   const [searchStatus, setSerachStatus] = useState(InitStatus);

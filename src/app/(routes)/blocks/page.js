@@ -2,7 +2,6 @@
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
-
 import FilterResult from "@/components/FilterResult/FilterResult";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
@@ -37,8 +36,8 @@ const BlockSummary = () => {
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const [loading, setLoading] = useState(true);
-  const [filterVal, setFilterVal] = useState("desc");
-  const order = searchParams.get("order") || "desc";
+  const [order, setOrder] = useState("desc");
+  const filterBy = searchParams.get("filterBy") || "newest";
 
   // const { isLight } = useThemeData();
 
@@ -53,7 +52,7 @@ const BlockSummary = () => {
     try {
       setLoading(true);
       setBlockSummaryStatus(FetchingStatus);
-      let response = await getBlocks(pageid, tableLimit, order);
+      let response = await getBlocks(pageid, tableLimit, filterBy, order);
 
       if (response?.error === false) {
         setBlocksData(response?.data?.blocks);
@@ -76,12 +75,16 @@ const BlockSummary = () => {
   };
 
   const handleChange = (value) => {
-    setFilterVal(value);
+    // setFilterVal(value);
     setCurrentPage(1);
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", 1);
     newSearchParams.set("id", 1);
-    newSearchParams.set("order", value);
+    newSearchParams.set("filterBy", value);
+    if (value === "newest") setOrder("desc");
+    else {
+      setOrder("asc");
+    }
     router.push(`?${newSearchParams.toString()}`);
   };
 
@@ -91,7 +94,11 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) + 1);
       newSearchParams.set("id", nextCursor);
-      newSearchParams.set("order", order);
+      newSearchParams.set("filterBy", filterBy);
+      if (filterBy === "newest") setOrder("desc");
+      else {
+        setOrder("asc");
+      }
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -99,11 +106,14 @@ const BlockSummary = () => {
     if (page > 1) {
       // setCurrentPage(currentPage - 1);
       // setPageToSend(previousCursor);
-
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) - 1);
       newSearchParams.set("id", previousCursor);
-      newSearchParams.set("order", order);
+      newSearchParams.set("filterBy", filterBy);
+      if (filterBy === "oldest") setOrder("desc");
+      else {
+        setOrder("asc");
+      }
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -115,7 +125,11 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       newSearchParams.set("id", lastPage);
-      newSearchParams.set("order", order);
+      newSearchParams.set("filterBy", filterBy);
+      if (filterBy === "newest") setOrder("desc");
+      else {
+        setOrder("asc");
+      }
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -127,7 +141,11 @@ const BlockSummary = () => {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       newSearchParams.set("id", 1);
-      newSearchParams.set("order", order);
+      newSearchParams.set("filterBy", filterBy);
+      if (filterBy === "oldest") setOrder("asc");
+      else {
+        setOrder("desc");
+      }
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -142,10 +160,10 @@ const BlockSummary = () => {
 
   useEffect(() => {
     fetchData();
-  }, [pageid, order]);
+  }, [pageid, filterBy]);
 
   const getBlockCount = () => {
-    if (order === "asc") {
+    if (filterBy === "oldest") {
       return `Showing blocks from ${blocksData[0]?.blocknumber} to ${
         blocksData[blocksData.length - 1]?.blocknumber
       }`;
@@ -176,18 +194,18 @@ const BlockSummary = () => {
               <Space wrap>
                 <Select
                   onChange={handleChange}
-                  defaultValue="desc"
+                  defaultValue="newest"
                   style={{
                     width: 123,
                   }}
                   className="innerSelect"
                   options={[
                     {
-                      value: "desc",
+                      value: "newest",
                       label: "Newest",
                     },
                     {
-                      value: "asc",
+                      value: "oldest",
                       label: "Oldest",
                     },
                   ]}
@@ -217,7 +235,7 @@ const BlockSummary = () => {
             currentPage={page}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            disablePrev={page === 1}
+            disablePrev={page === 1 || previousCursor === null}
             disableNext={page === totalPages}
             handleFirst={handleFirst}
             handleLast={handleLast}

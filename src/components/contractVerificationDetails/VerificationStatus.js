@@ -1,10 +1,6 @@
 import { Routes, verificationStatus } from "@/constant/constant";
-import React from "react";
-import { Button } from "antd";
 import {
-  CloseCircleFilled,
-  ClockCircleFilled,
-  CheckCircleFilled,
+  CloseCircleFilled
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { PendingIcon, SuccesIcon } from "../../../public/SvgIcons";
