@@ -40,17 +40,21 @@ const CustomDropdown = ({
         <span className={`arrow ${isOpen ? "open" : ""}`}>&#9662;</span>
       </div>
       {isOpen && (
-        <ul className="dropdown-list">
-          {options.map((option, index) => (
-            <li
-              key={index}
-              className={`dropdown-item ${value === option ? "selected" : ""}`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
+        <div className="dropdown-list">
+          <ul className="dropdown-list-inner">
+            {options.map((option, index) => (
+              <li
+                key={index}
+                className={`dropdown-item ${
+                  value === option ? "selected" : ""
+                }`}
+                onClick={() => handleOptionClick(option)}
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );

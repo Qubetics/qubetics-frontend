@@ -1,9 +1,9 @@
 "use client";
 import { useSearchData } from "@/components/contexts/searchingData";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import LogsDetail from "@/components/logsDetail/LogsDetail";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
 import {
@@ -18,7 +18,6 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
-import FilterResult from "@/components/FilterResult/FilterResult";
 
 const page = () => {
   const searchParam = useSearchParams();
@@ -52,7 +51,6 @@ const page = () => {
         }
         let response = await getSearchingValue(updateTx);
         if (response?.error == false) {
-          console.log(response?.data?.transaction, "TRANSFER");
           setTransactionDetails(response?.data?.transaction);
           setTopics(response?.data?.contractLogs[0]?.topics);
           setContractLogs(JSON.parse(response?.data?.transaction?.logs));

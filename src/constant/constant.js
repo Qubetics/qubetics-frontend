@@ -445,6 +445,12 @@ export const toFixedWithoutRounding = (value, precision) => {
 export const formatValue = (num) => {
   let result;
   switch (true) {
+    case num >= 1e24:
+      result = (num / 1e24).toFixed(2) + " S"; // Septillion (1e24)
+      break;
+    case num >= 1e18:
+      result = (num / 1e18).toFixed(2) + " Q";
+      break;
     case num >= 1e12:
       result = (num / 1e12).toFixed(2) + " T";
       break;

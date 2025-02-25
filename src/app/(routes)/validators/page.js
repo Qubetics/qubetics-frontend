@@ -1,9 +1,9 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useLatestData } from "@/components/contexts/latest_data";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
@@ -15,8 +15,6 @@ import {
 import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
 import { simplifyNumber } from "@/utils/commonFunctions";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -26,7 +24,6 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
-import FilterResult from "@/components/FilterResult/FilterResult";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);

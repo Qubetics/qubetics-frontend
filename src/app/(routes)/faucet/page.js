@@ -1,4 +1,5 @@
 "use client";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import {
   ErrorStatus,
   FAUCET_AMOUNT,
@@ -12,12 +13,11 @@ import {
 import postFaucet from "@/services/postFaucet";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Input, Spin } from "antd";
-import { useRef, useState,useEffect} from "react";
+import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
-import FilterResult from "@/components/FilterResult/FilterResult";
 function Page() {
   const [faucetField, setFaucetField] = useState({
     address: "",

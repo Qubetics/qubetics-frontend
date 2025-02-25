@@ -1,4 +1,7 @@
 "use client";
+import { useEffect, useState } from "react";
+import "../../blocks/blocksummary.scss";
+// import BlockDetail from "@/components/blockDetail/BlockDetail";
 import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
@@ -8,6 +11,7 @@ import {
   FetchingStatus,
   formatValue,
   InitStatus,
+  Routes,
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
@@ -21,10 +25,10 @@ import "../../blocks/blocksummary.scss";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
-import TokenByAddress from "@/components/token";
-
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 import getTokenByAddress from "@/services/getTokenByAddress";
+import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 
@@ -37,8 +41,9 @@ const page = ({ params }) => {
   const [showHeaderData, setShowHeaderData] = useState("");
   const { isNetworkChanged } = useGetNetwork();
   const [activeTab, setActiveTab] = useState("0");
-  const [tokensData, setTokensData] = useState([]);
+  const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
+  const router = useRouter();
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -129,7 +134,7 @@ const page = ({ params }) => {
   };
   const tabItems = [
     {
-      label: <span>Transactions</span>,
+      label: <span>Total Transactions</span>,
       key: "0",
       children: (
         <>
@@ -159,11 +164,21 @@ const page = ({ params }) => {
       ),
     },
     {
-      label: <span>Tokens</span>,
+      label: <span>Token Transaction</span>,
       key: "1",
-      children: <TokenByAddress setTokensData={setTokensData} />,
+      children: (
+        <TokenTransactions
+          setTokensTxData={setTokensTxData}
+          tokensTxData={tokensTxData}
+        />
+      ),
     },
   ];
+
+  const handleTokenClick = (address) => {
+    router.push(`${Routes.CONTRACT_DETAIL}${address}`);
+    // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
+  };
 
   return (
     <div className="blocksummary">
@@ -228,11 +243,13 @@ const page = ({ params }) => {
             {dropDownTokenData?.length > 0 && (
               <div className="assetDropItem">
                 <CustomDropdown
-                  // label="Assets"
                   placeholder="Assets"
                   options={dropDownTokenData?.map((res) => (
                     <>
-                      <div className="assetDropListing">
+                      <div
+                        className="assetDropListing"
+                        onClick={() => handleTokenClick(res?.contractAddress)}
+                      >
                         <div className="assetDropListing_left">
                           <p>
                             {" "}
@@ -242,12 +259,14 @@ const page = ({ params }) => {
                         </div>
                         <div className="assetDropListing_right">
                           <p>
-                            {formatValue(
-                              noExponential(
-                                Number(res?.tokenBalance) /
-                                  10 ** Number(res?.decimals)
-                              )
-                            ) || "-"}
+                            {res?.tokenBalance
+                              ? formatValue(
+                                  noExponential(
+                                    Number(res?.tokenBalance) /
+                                      10 ** Number(res?.decimals)
+                                  )
+                                )
+                              : 0}
                           </p>
                         </div>
                       </div>
@@ -256,7 +275,7 @@ const page = ({ params }) => {
                 />
 
                 <p className="assetDropItem_text">
-                  {dropDownTokenData?.length}
+                  {dropDownTokenData?.length || 0}
                 </p>
               </div>
             )}
@@ -275,7 +294,7 @@ const page = ({ params }) => {
                   className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
                   filename="my-file.csv"
                   data={
-                    activeTab === "0" ? txAddressData ?? [] : tokensData ?? []
+                    activeTab === "0" ? txAddressData ?? [] : tokensTxData ?? []
                   }
                 >
                   <button className="exportBtn">

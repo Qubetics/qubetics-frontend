@@ -27,7 +27,7 @@ function Pagination({
         onClick={currentPage !== 1 ? handleFirst : undefined}
         className={`leftArrow ${disablePrev && "disable"}`}
       >
-       <DoubleLeftOutlined />
+        <DoubleLeftOutlined />
       </div>
       <div
         className={`leftArrow ${disablePrev && "disable"}`}

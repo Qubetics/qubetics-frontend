@@ -1,13 +1,18 @@
 import { Routes } from "@/constant/constant";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useLatestData } from "../contexts/latest_data";
 import CopyText from "../DoCopy/CopyText";
+import "../Pagination/Pagination.scss";
 import "../transferInfo/TransferInformation.scss";
+const BlockDetailDescription = ({ blockData, status, blockNo }) => {
+  const router = useRouter();
+  const webSocketData = useLatestData();
 
-const BlockDetailDescription = ({ blockData, status }) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-  console.log(blockData, "blockData");
 
   return (
     <div className="blockdescription mt-20">
@@ -16,7 +21,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
         <div className="information">
           <p> Block Hash </p>
           {blockData?.blockhash || blockData?.block?.blockhash ? (
-            <span className="hoverTrans">
+            <span className="">
               {blockData?.blockhash
                 ? blockData?.blockhash
                 : blockData?.block?.blockhash}
@@ -35,13 +40,13 @@ const BlockDetailDescription = ({ blockData, status }) => {
         </div>
         <div className="information">
           <p>Block Number</p>
-          <span className="hoverTrans">
+          <span className="">
             {blockData?.blocknumber
               ? blockData?.blocknumber
               : blockData?.block?.blocknumber
-              ? blockData?.block?.blocknumber
-              : "-"}
-            <CopyText
+                ? blockData?.block?.blocknumber
+                : "-"}
+            {/* <CopyText
               text={
                 blockData?.blocknumber
                   ? blockData?.blocknumber
@@ -50,8 +55,29 @@ const BlockDetailDescription = ({ blockData, status }) => {
                   : "-"
               }
               hoverText={"block"}
-            />
+            /> */}
           </span>
+          <div
+            className="detailArrow headermetaBtn"
+            onClick={() => {
+              if (blockNo > 0)
+                return router.push(`/blocks/${Number(blockNo) - 1}`);
+            }}
+          >
+            <LeftOutlined />
+          </div>
+          <div
+            className="detailArrow headermetaBtn"
+            onClick={() => {
+              const latestBlock = webSocketData?.blocks?.blocknumber
+                ? webSocketData?.blocks?.blocknumber
+                : 0;
+              if (latestBlock > blockNo)
+                return router.push(`/blocks/${Number(blockNo) + 1}`);
+            }}
+          >
+            <RightOutlined />
+          </div>
         </div>
         <div className="information">
           <p>Validator </p>
@@ -97,8 +123,8 @@ const BlockDetailDescription = ({ blockData, status }) => {
             {blockData?.transactionCount
               ? blockData?.transactionCount
               : blockData?.block?.transactionCount
-              ? blockData?.block?.transactionCount
-              : 0}
+                ? blockData?.block?.transactionCount
+                : 0}
           </span>
         </div>
         {chain == "EVM Chain" && (

@@ -11,9 +11,8 @@ import getContractDetails from "@/services/getContractDetails";
 import {
   capitalizeWord,
   formateTotalSupply,
-  formatMillionNumber,
   noExponential,
-  noExponentsValue,
+  noExponentsValue
 } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 import Image from "next/image";

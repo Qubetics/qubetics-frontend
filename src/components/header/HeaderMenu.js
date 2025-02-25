@@ -27,7 +27,7 @@ function HeaderMenu({ onCloseDrawer }) {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
     );
-    const chain_Id = await web3.eth.getChainId();
+    const chain_Id = await web3?.eth?.getChainId();
     const chainIdHex = `0x${chain_Id.toString(16)}`;
     const { ethereum } = window;
 
@@ -158,9 +158,33 @@ function HeaderMenu({ onCloseDrawer }) {
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
             </a>
-            <button className="headermetaBtn" style={{ minWidth: "120px" }}>
-              EVM Chain
-            </button>
+            //{" "}
+            {/* <button className="headermetaBtn" style={{ minWidth: "120px" }}>
+               EVM Chain 
+                </button>*/}
+            {/* <div className="evmChain"> */}
+            {/* <Select
+              className="headerSelectItem"
+              getPopupContainer={getContainer}
+              defaultValue={chainType}
+              style={
+                windowWidth < 1199
+                  ? { minWidth: "100%", width: "100%", padding: 0 }
+                  : { minWidth: 130, width: "130px", padding: 0 }
+              }
+              onChange={handleChainChange}
+              options={[
+                {
+                  value: "EVM Chain",
+                  label: "EVM Chain",
+                },
+                // {
+                //   value: "Native Chain",
+                //   label: "Native Chain",
+                // },
+              ]}
+            /> */}
+            {/* </div> */}
           </div>
         </li>
       </ul>
