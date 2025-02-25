@@ -31,6 +31,7 @@ import getTokenByAddress from "@/services/getTokenByAddress";
 import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
