@@ -71,7 +71,7 @@ function ContractDtlTabs({ hash }) {
       {AbiStatus === InitStatus || AbiStatus === FetchingStatus ? (
         <Loader />
       ) : abiData?.length > 0 ? (
-        <div className="contractDetailTabs">
+        <div className="contractDetailTabs contractCodeTab">
           <Tabs defaultActiveKey="1" items={items} />
         </div>
       ) : (

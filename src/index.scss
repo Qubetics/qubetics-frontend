@@ -988,6 +988,12 @@ html {
 //   backdrop-filter: blur(32px);
 // }
 
+.eventTable {
+  td {
+    vertical-align: top;
+  }
+}
+
 // custompagination
 .custompagination {
   button {
