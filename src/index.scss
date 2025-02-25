@@ -991,6 +991,9 @@ html {
 .eventTable {
   td {
     vertical-align: top;
+    .ant-collapse-header {
+      padding-top: 0 !important;
+    }
   }
 }
 
