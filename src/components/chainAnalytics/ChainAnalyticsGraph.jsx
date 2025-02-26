@@ -48,9 +48,9 @@ const ChainAnalyticsGraph = (props) => {
         const convertedData = res?.data?.finalData?.map((item) => ({
           ...item,
           count:
-            title === "Transaction Fees"
+            title === "Qubetics Price"
               ? noExponentsValue(Number(item.value)) // Convert and fix to 6 decimal places
-              : Number(item.value), // Keep it as a number
+              : noExponentsValue(Number(item.count)), // Keep it as a number
         }));
 
         setTransactionHisChart({
