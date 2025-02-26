@@ -287,8 +287,8 @@ const FilterResult = () => {
               e.stopPropagation();
             }}
             onChange={(e) => {
-              setOpen(2);
-              setSearchText(e.target.value);
+              e.target.value.trim() && setOpen(2);
+              setSearchText(e.target.value.trim());
               setIsLoading(!!e.target.value);
             }}
             value={searchText}

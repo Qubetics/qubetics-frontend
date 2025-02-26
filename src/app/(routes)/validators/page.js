@@ -14,7 +14,11 @@ import {
 } from "@/constant/constant";
 import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
-import { simplifyNumber } from "@/utils/commonFunctions";
+import {
+  noExponential,
+  noExponentialFixed,
+  simplifyNumber,
+} from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -99,7 +103,7 @@ function page() {
         "The percentage of the total circulating supply of tokens that is currently staked or bonded to validators.",
 
       balance: parsedData?.bondedRate
-        ? simplifyNumber(parsedData?.bondedRate) + " %"
+        ? noExponentialFixed(parsedData?.bondedRate / 10 ** 23) + " %"
         : "0 %",
       img: <Bondedrate />,
       contract: "true",

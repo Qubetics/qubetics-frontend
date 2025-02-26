@@ -177,3 +177,7 @@ export const formateTotalSupply = (num) => {
 
   return formattedNumber;
 };
+
+export function noExponentialFixed(num) {
+  return num.toFixed(5).replace(/\.?0+$/, "");
+}

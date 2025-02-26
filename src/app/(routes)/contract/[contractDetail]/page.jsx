@@ -23,7 +23,7 @@ import {
   capitalizeWord,
   formateTotalSupply,
   noExponential,
-  noExponentsValue
+  noExponentsValue,
 } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 import Image from "next/image";
@@ -77,7 +77,27 @@ const ContractDetail = () => {
       heading: contractDetail?.tokenName
         ? capitalizeWord(contractDetail?.tokenName)
         : "-",
-      img: <Tokenicons width={55} height={55} />,
+      img:
+        contractDetail?.ContractVerification &&
+        contractDetail?.ContractVerification?.iconUrl !== "" ? (
+          <img
+            style={{
+              borderRadius: "50%",
+              objectFit: "cover",
+              height: "55px",
+              width: "55px",
+            }}
+            src={contractDetail?.ContractVerification?.iconUrl}
+            className="welcomeLogo"
+            alt="logo"
+          />
+        ) : (
+          <div>
+            <div className="imgIcon">
+              {<Tokenicons width={55} height={55} />}
+            </div>
+          </div>
+        ),
     },
     {
       text: "Symbol",

@@ -29,6 +29,7 @@ import getTokenByAddress from "@/services/getTokenByAddress";
 import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
+import CopyText from "@/components/DoCopy/CopyText";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -193,8 +194,10 @@ const page = ({ params }) => {
         />
         <div className="addressDetailSec">
           <div className="detail">
-            <h3>Address</h3>
-            <p>{params?.addressDetail}</p>
+            <h3>Address :</h3>
+            <p>
+              {params?.addressDetail} <CopyText text={params?.addressDetail} />
+            </p>
           </div>
         </div>
         {/* <BlockDetail details={details} /> */}
