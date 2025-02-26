@@ -30,7 +30,7 @@ const RecentBlocks = () => {
   const fetchData = async () => {
     try {
       setRecentBlockStatus(FetchingStatus);
-      let res = await getBlocks(pageNo, dashboardCount, "desc");
+      let res = await getBlocks(pageNo, dashboardCount, "newest", "desc");
 
       if (res?.error === false) {
         const accendingBlock = res?.data?.blocks;
