@@ -142,7 +142,7 @@ export function toFixed(num = 0, fixed = 0) {
 }
 
 export const randomNoGenerator = () => {
-  let num = Math.random() * (6.0 - 5.5) + 5.5;
+  let num = Math.random() * (6.0 - 5.8) + 5.8;
   return num.toFixed(2);
 };
 
