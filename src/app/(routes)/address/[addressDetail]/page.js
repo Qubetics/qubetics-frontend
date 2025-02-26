@@ -20,7 +20,6 @@ import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
-import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
