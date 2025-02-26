@@ -142,8 +142,8 @@ export function toFixed(num = 0, fixed = 0) {
 }
 
 export const randomNoGenerator = () => {
-  let num = Math.random() * (1.1 - 0.8) + 0.8;
-  return noExponential(num.toFixed(1));
+  let num = Math.random() * (6.0 - 5.5) + 5.5;
+  return num.toFixed(2);
 };
 
 export const formateTotalSupply = (num) => {
