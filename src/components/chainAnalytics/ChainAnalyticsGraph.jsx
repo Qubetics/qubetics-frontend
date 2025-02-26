@@ -107,6 +107,7 @@ const ChainAnalyticsGraph = (props) => {
               data={transactionHisChart?.data}
               chartType={transactionHisChart?.type}
               name={tooltipTitle}
+              title={title}
             />
           ) : (
             <Page />

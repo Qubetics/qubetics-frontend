@@ -5,7 +5,7 @@ import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import "./chart.scss";
 
-const ChartAccount = ({ data, chartType, name }) => {
+const ChartAccount = ({ data, chartType, name, title }) => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -91,7 +91,15 @@ const ChartAccount = ({ data, chartType, name }) => {
       },
       yAxis: {
         min: 0,
-        max: maximum?.count < 4 ? 4 : maximum?.count,
+        // max: maximum?.count < 4 ? 4 : maximum?.count,
+        max:
+          title === "Qubetics Price" && maximum?.count < 4
+            ? 0.1
+            : maximum?.count < 4
+            ? 4
+            : maximum?.count,
+
+        // max: 0.1,
         title: {
           text: "",
         },
