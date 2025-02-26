@@ -3,8 +3,16 @@ import ChartAccounts from "@/components/chart/ChartAccounts";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import GraphLoading from "@/components/loader/GraphLoading";
-import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
-import { ALL_CHART_SEVEN_DAY, transactionItems } from "@/constant/graphTableValues";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+} from "@/constant/constant";
+import {
+  ALL_CHART_SEVEN_DAY,
+  transactionItems,
+} from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
 import { noExponentsValue } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
@@ -12,7 +20,14 @@ import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription, fetchUrl, tooltipTitle = "Txn Count", isNative, setTotalAccount } = props;
+  const {
+    title,
+    discription,
+    fetchUrl,
+    tooltipTitle = "Txn Count",
+    isNative,
+    setTotalAccount,
+  } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
@@ -34,8 +49,8 @@ const ChainAnalyticsGraph = (props) => {
           ...item,
           count:
             title === "Transaction Fees"
-              ? noExponentsValue(Number(item.count)) // Convert and fix to 6 decimal places
-              : Number(item.count), // Keep it as a number
+              ? noExponentsValue(Number(item.value)) // Convert and fix to 6 decimal places
+              : Number(item.value), // Keep it as a number
         }));
 
         setTransactionHisChart({
@@ -60,7 +75,11 @@ const ChainAnalyticsGraph = (props) => {
   return (
     <>
       <div style={{ position: "relative", width: "100%" }}>
-        <div className={`graphOuter_1 ${props.graphdashboard ? "graphdashboard" : "chainAnalyticsGraph"}`}>
+        <div
+          className={`graphOuter_1 ${
+            props.graphdashboard ? "graphdashboard" : "chainAnalyticsGraph"
+          }`}
+        >
           <div className="drop_histry">
             <div className="drop_histry__blinkLive">
               <h3>{title} </h3>
@@ -68,16 +87,27 @@ const ChainAnalyticsGraph = (props) => {
             </div>
 
             <Space wrap>
-              <Select getPopupContainer={(trigger) => trigger.parentNode} defaultValue={ALL_CHART_SEVEN_DAY} style={{ width: 80 }} onChange={handleTransactionHistory} options={transactionItems} />
+              <Select
+                getPopupContainer={(trigger) => trigger.parentNode}
+                defaultValue={ALL_CHART_SEVEN_DAY}
+                style={{ width: 80 }}
+                onChange={handleTransactionHistory}
+                options={transactionItems}
+              />
             </Space>
           </div>
-          {transactionStatus === InitStatus || transactionStatus === FetchingStatus ? (
+          {transactionStatus === InitStatus ||
+          transactionStatus === FetchingStatus ? (
             <div className="graphLod">
               {" "}
               <GraphLoading />
             </div>
           ) : transactionStatus === SuccessStatus ? (
-            <ChartAccounts data={transactionHisChart?.data} chartType={transactionHisChart?.type} name={tooltipTitle} />
+            <ChartAccounts
+              data={transactionHisChart?.data}
+              chartType={transactionHisChart?.type}
+              name={tooltipTitle}
+            />
           ) : (
             <Page />
           )}

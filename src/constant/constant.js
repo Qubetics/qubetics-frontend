@@ -145,7 +145,7 @@ export const Routes = {
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",
   total_account: "explorer/graph/account",
-  token_price: "explorer/graph/token-price",
+  token_price: "explorer/graph/coin-price",
   txn_fee: "explorer/graph/tx-fee",
 };
 export const verifyContractConstant = {
