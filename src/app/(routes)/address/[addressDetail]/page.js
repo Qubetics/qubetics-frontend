@@ -25,7 +25,6 @@ import "../../blocks/blocksummary.scss";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 import getTokenByAddress from "@/services/getTokenByAddress";
 import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
