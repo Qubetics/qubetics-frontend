@@ -34,7 +34,7 @@ const BlockSummary = () => {
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
 
   const page = searchParams.get("page") || 1;
-  const pageid = searchParams.get("id") || 1;
+  const pageid = searchParams.get("id") || 1; 
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState("desc");
   const filterBy = searchParams.get("filterBy") || "newest";

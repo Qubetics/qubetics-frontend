@@ -21,7 +21,8 @@ function HeaderMenu({ onCloseDrawer }) {
 
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
   const pathname = usePathname();
-  const chainType = typeof window !== "undefined" && localStorage.getItem("chainType");
+  const chainType =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
 
   const isNetworkAdded = async () => {
     const web3 = new Web3(
@@ -70,7 +71,8 @@ function HeaderMenu({ onCloseDrawer }) {
             <Select
               getPopupContainer={(triggerNode) => triggerNode.parentNode}
               className={`headerSelect ${
-                pathname.includes(Routes.BLOCKS) || pathname.includes(Routes.TRANSACTIONS)
+                pathname.includes(Routes.BLOCKS) ||
+                pathname.includes(Routes.TRANSACTIONS)
                   ? "active"
                   : "inactive"
               }`}
@@ -82,21 +84,23 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
 
         {/* {chainType === "EVM Chain" && ( */}
-          <li onClick={onCloseDrawer}>
-            <Link
-              prefetch={true}
-              className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
-              href={Routes.TOKEN}
-            >
-              Tokens
-            </Link>
-          </li>
+        <li onClick={onCloseDrawer}>
+          <Link
+            prefetch={true}
+            className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
+            href={Routes.TOKEN}
+          >
+            Tokens
+          </Link>
+        </li>
         {/* )} */}
 
         <li onClick={onCloseDrawer}>
           <Link
             prefetch={true}
-            className={pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"}
+            className={
+              pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
+            }
             href={Routes.VALIDATORS}
           >
             Validators
@@ -114,23 +118,23 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
 
         {/* {chainType === "EVM Chain" && ( */}
-          <li>
-            <Space wrap>
-              <Select
-                getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                className={`headerSelect ${
-                  pathname.includes(Routes.CONTRACTS) ||
-                  pathname.includes(Routes.CONTRACT_VERIFICATOIN) ||
-                  pathname.includes(Routes.TOKEN_ICON)
-                    ? "active"
-                    : "inactive"
-                }`}
-                defaultValue="Contracts"
-                value="Contracts"
-                options={contractHeaderFunction(pathname, onCloseDrawer)}
-              />
-            </Space>
-          </li>
+        <li>
+          <Space wrap>
+            <Select
+              getPopupContainer={(triggerNode) => triggerNode.parentNode}
+              className={`headerSelect ${
+                pathname.includes(Routes.CONTRACTS) ||
+                pathname.includes(Routes.CONTRACT_VERIFICATOIN) ||
+                pathname.includes(Routes.TOKEN_ICON)
+                  ? "active"
+                  : "inactive"
+              }`}
+              defaultValue="Contracts"
+              value="Contracts"
+              options={contractHeaderFunction(pathname, onCloseDrawer)}
+            />
+          </Space>
+        </li>
         {/* )} */}
 
         {SHOW_FAUCET == 1 && (
@@ -150,15 +154,21 @@ function HeaderMenu({ onCloseDrawer }) {
         <li className="headerSelct headerMeta" style={{ borderBottom: "0" }}>
           <div className="cmnSelct">
             <a className="headermetaBtn" onClick={addQubetic}>
-              <span style={{ gap: "5px", display: "flex", alignItems: "center" }}>
-                <Image src="/metafox.svg" width={25} height={25} alt="metafox" />
+              <span
+                style={{ gap: "5px", display: "flex", alignItems: "center" }}
+              >
+                <Image
+                  src="/metafox.svg"
+                  width={25}
+                  height={25}
+                  alt="metafox"
+                />
                 {isMetaMaskAdded
                   ? `${EXPLORER_CHAIN_NAME} Network Added`
                   : `Add ${EXPLORER_CHAIN_NAME} Network`}
                 {isMetaMaskAdded && <CheckIcon />}
               </span>
-            </a>
-            //{" "}
+            </a>{" "}
             {/* <button className="headermetaBtn" style={{ minWidth: "120px" }}>
                EVM Chain 
                 </button>*/}
