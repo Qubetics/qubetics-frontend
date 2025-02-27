@@ -16,7 +16,7 @@ import "./blocksummary.scss";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
 
-export const BlockInfo = ({blocksData}) => {
+export const BlockInfo = ({ blocksData }) => {
   const webSocketData = useLatestData();
   const [topValidtor, setTopValidtor] = useState("");
   const [blockTime, setBlockTime] = useState(0);
@@ -40,9 +40,12 @@ export const BlockInfo = ({blocksData}) => {
       text: "Top Validator (Last 24h)",
       balance: topValidtor ? (
         <Tooltip title={topValidtor}>
-          {currentChain == chain.EVM
-            ? getAddress(topValidtor)
-            : getAddress(convertAddToNative(topValidtor))}
+          {
+            // currentChain == chain.EVM
+            //   ?
+            getAddress(topValidtor)
+            // : getAddress(convertAddToNative(topValidtor))
+          }
         </Tooltip>
       ) : (
         "-"
@@ -78,7 +81,7 @@ export const BlockInfo = ({blocksData}) => {
       return "";
     }
   };
-    
+
   const getTopValidatorValue = async () => {
     try {
       let validator = await getTopValidator();
