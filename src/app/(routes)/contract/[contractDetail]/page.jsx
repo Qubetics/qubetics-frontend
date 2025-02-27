@@ -155,7 +155,7 @@ const ContractDetail = () => {
         <ContractTransactions hash={params?.contractDetail} tab={tab} />
       ),
     },
-    chainType === "EVM Chain" &&
+    // chainType === "EVM Chain" &&
       contractType === contractTypes.ERC_20 && {
         label: "Transfer",
         key: "1",
@@ -163,23 +163,26 @@ const ContractDetail = () => {
           <ContractTransactions hash={params?.contractDetail} tab={tab} />
         ),
       },
-    chainType === "EVM Chain" &&
+    // chainType === "EVM Chain" &&
       contractType === contractTypes.ERC_20 && {
         label: "Holders",
         key: "2",
         children: <Holder hash={params?.contractDetail} />,
       },
-    chainType === "EVM Chain" && {
+    // chainType === "EVM Chain" && 
+    {
       label: "Events",
       key: "3",
       children: <Events hash={params?.contractDetail} />,
     },
-    chainType === "EVM Chain" && {
+    // chainType === "EVM Chain" && 
+    {
       label: "Contract",
       key: "4",
       children: <ContractDtlTabs hash={params?.contractDetail} />,
     },
-    chainType === "EVM Chain" && {
+    // chainType === "EVM Chain" && 
+    {
       label: "Analytics",
       key: "5",
       children: <AnalyticTab />,

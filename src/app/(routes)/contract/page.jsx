@@ -110,6 +110,7 @@ const Contract = () => {
   };
 
   const handleLast = () => {
+    setOrder("");
     if (currentPage < totalPages) {
       setCurrentPage(totalPages);
       setPageToSend(contractData?.lastPage);

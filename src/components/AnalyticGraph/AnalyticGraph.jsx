@@ -110,14 +110,14 @@ const AnalyticGraph = () => {
 };
 
 // Dummy Data Generator
-function generateDummyData() {
-  let data = [];
-  let time = Date.UTC(2018, 0, 1);
-  for (let i = 0; i < 100; i++) {
-    data.push([time, Math.floor(Math.random() * 10000)]);
-    time += 86400000; // Increment by 1 day
+  function generateDummyData() {
+    let data = [];
+    let time = Date.UTC(2018, 0, 1);
+    for (let i = 0; i < 100; i++) {
+      data.push([time, Math.floor(Math.random() * 10000)]);
+      time += 86400000; // Increment by 1 day
+    }
+    return data;
   }
-  return data;
-}
 
 export default AnalyticGraph;
