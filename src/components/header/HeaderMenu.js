@@ -81,7 +81,7 @@ function HeaderMenu({ onCloseDrawer }) {
           </Space>
         </li>
 
-        {chainType === "EVM Chain" && (
+        {/* {chainType === "EVM Chain" && ( */}
           <li onClick={onCloseDrawer}>
             <Link
               prefetch={true}
@@ -91,7 +91,7 @@ function HeaderMenu({ onCloseDrawer }) {
               Tokens
             </Link>
           </li>
-        )}
+        {/* )} */}
 
         <li onClick={onCloseDrawer}>
           <Link
@@ -113,7 +113,7 @@ function HeaderMenu({ onCloseDrawer }) {
           </Link>
         </li>
 
-        {chainType === "EVM Chain" && (
+        {/* {chainType === "EVM Chain" && ( */}
           <li>
             <Space wrap>
               <Select
@@ -131,7 +131,7 @@ function HeaderMenu({ onCloseDrawer }) {
               />
             </Space>
           </li>
-        )}
+        {/* )} */}
 
         {SHOW_FAUCET == 1 && (
           <li onClick={onCloseDrawer}>

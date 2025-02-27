@@ -9,8 +9,6 @@ const Stats = () => {
       <div className="container">
         <AccountsAndContracts />
         <TokenAndTransactionGraph />
-
-        
       </div>
     </div>
   );

@@ -144,7 +144,7 @@ const ContractDetail = () => {
           loading="lazy"
         />
       ),
-    },
+    }
   ];
 
   const tabItems = [
