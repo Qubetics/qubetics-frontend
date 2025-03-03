@@ -78,9 +78,9 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       },
       xAxis: {
         type: "linear",
-        title: {
-          text: chartType,
-        },
+        // title: {
+        //   text: chartType,
+        // },
         min: 0,
         max: maxLength - 1,
         scrollbar: {

@@ -12,7 +12,7 @@ import {
   capitalizeWord,
   formateTotalSupply,
   noExponential,
-  noExponentsValue
+  noExponentsValue,
 } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
 import Image from "next/image";
@@ -21,27 +21,50 @@ import { useEffect, useState } from "react";
 import { Tokenicons } from "../../../../../public/SvgIcons";
 import dynamic from "next/dynamic";
 
-const BlockDetail = dynamic(() => import("@/components/blockDetail/BlockDetail"), { ssr: false });
-const ContractDtlTabs = dynamic(() => import("@/components/contractDetailTabs/ContractDtlTabs"), { ssr: false });
-const AnalyticTab = dynamic(() => import("@/components/contracts/AnalyticTab"), { ssr: false });
-const ContractDetails = dynamic(() => import("@/components/contracts/ContractDetails"), { ssr: false });
-const ContractTransactions = dynamic(() => import("@/components/contracts/ContractTransactions"), { ssr: false });
-const Events = dynamic(() => import("@/components/contracts/Events"), { ssr: false });
-const Holder = dynamic(() => import("@/components/contracts/Holder"), { ssr: false });
-const FilterResult = dynamic(() => import("@/components/FilterResult/FilterResult"), { ssr: false });
-const Heading = dynamic(() => import("@/components/heading/Heading"), { ssr: false });
-const Loader = dynamic(() => import("@/components/loader/Loader"), { ssr: false });
+const BlockDetail = dynamic(
+  () => import("@/components/blockDetail/BlockDetail"),
+  { ssr: false }
+);
+const ContractDtlTabs = dynamic(
+  () => import("@/components/contractDetailTabs/ContractDtlTabs"),
+  { ssr: false }
+);
+const AnalyticTab = dynamic(
+  () => import("@/components/contracts/AnalyticTab"),
+  { ssr: false }
+);
+const ContractDetails = dynamic(
+  () => import("@/components/contracts/ContractDetails"),
+  { ssr: false }
+);
+const ContractTransactions = dynamic(
+  () => import("@/components/contracts/ContractTransactions"),
+  { ssr: false }
+);
+const Events = dynamic(() => import("@/components/contracts/Events"), {
+  ssr: false,
+});
+const Holder = dynamic(() => import("@/components/contracts/Holder"), {
+  ssr: false,
+});
+const FilterResult = dynamic(
+  () => import("@/components/FilterResult/FilterResult"),
+  { ssr: false }
+);
+const Heading = dynamic(() => import("@/components/heading/Heading"), {
+  ssr: false,
+});
+const Loader = dynamic(() => import("@/components/loader/Loader"), {
+  ssr: false,
+});
 const Page = dynamic(() => import("../../notfound/page"), { ssr: false });
-
-
-
 
 const ContractDetail = () => {
   const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
   const [contractDetailStatus, setContractDetailStatus] = useState(InitStatus);
   const [contractType, setContractType] = useState("");
- 
+
   const [tab, setTab] = useState(searchParam.get("tab") || "0");
   const params = useParams();
   const router = useRouter();
@@ -144,7 +167,7 @@ const ContractDetail = () => {
           loading="lazy"
         />
       ),
-    }
+    },
   ];
 
   const tabItems = [
@@ -156,36 +179,36 @@ const ContractDetail = () => {
       ),
     },
     // chainType === "EVM Chain" &&
-      contractType === contractTypes.ERC_20 && {
-        label: "Transfer",
-        key: "1",
-        children: (
-          <ContractTransactions hash={params?.contractDetail} tab={tab} />
-        ),
-      },
+    contractType === contractTypes.ERC_20 && {
+      label: "Transfer",
+      key: "1",
+      children: (
+        <ContractTransactions hash={params?.contractDetail} tab={tab} />
+      ),
+    },
     // chainType === "EVM Chain" &&
-      contractType === contractTypes.ERC_20 && {
-        label: "Holders",
-        key: "2",
-        children: <Holder hash={params?.contractDetail} />,
-      },
-    // chainType === "EVM Chain" && 
+    contractType === contractTypes.ERC_20 && {
+      label: "Holders",
+      key: "2",
+      children: <Holder hash={params?.contractDetail} />,
+    },
+    // chainType === "EVM Chain" &&
     {
       label: "Events",
       key: "3",
       children: <Events hash={params?.contractDetail} />,
     },
-    // chainType === "EVM Chain" && 
+    // chainType === "EVM Chain" &&
     {
       label: "Contract",
       key: "4",
       children: <ContractDtlTabs hash={params?.contractDetail} />,
     },
-    // chainType === "EVM Chain" && 
+    // chainType === "EVM Chain" &&
     {
       label: "Analytics",
       key: "5",
-      children: <AnalyticTab />,
+      children: <AnalyticTab hash={params?.contractDetail} />,
     },
   ];
 

@@ -1,11 +1,9 @@
 "use client";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import TransactionsTable from "@/components/Tables/transactions";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
-import { InitStatus } from "@/constant/constant";
 
-import React, {useState } from "react";
+import { useState } from "react";
 
 import "../blocks/blocksummary.scss";
 import { TxInfo } from "./txInfo";

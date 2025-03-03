@@ -1,9 +1,42 @@
-import Highcharts from "highcharts/highstock";
+import { formatDecimal } from "@/utils/commonFunctions";
 import HighchartsReact from "highcharts-react-official";
-import { useState } from "react";
-import style from "react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark";
+import Highcharts from "highcharts/highstock";
 
-const AnalyticGraph = () => {
+const AnalyticGraph = ({ apiData }) => {
+    const transferAmountSeries = apiData?.map((item) => [
+      item.createdAt * 1000, // Convert seconds to milliseconds
+      // If a value exists, simplify it and then convert it back to Number (or keep as string if only for display)
+      item.count.transferAmount
+        ? Number(formatDecimal(item.count.transferAmount))
+        : 0,
+    ]);
+
+    const transferCountSeries = apiData?.map((item) => [
+      item.createdAt * 1000,
+      item.count.transferCount
+        ? Number(formatDecimal(item.count.transferCount))
+        : 0,
+    ]);
+
+    const uniqueSendersSeries = apiData?.map((item) => [
+      item.createdAt * 1000,
+      item.count.uniqueSenders
+        ? Number(formatDecimal(item.count.uniqueSenders))
+        : 0,
+    ]);
+    const uniqueReciverSeries = apiData?.map((item) => [
+      item.createdAt * 1000,
+      item.count.uniqueReceivers
+        ? Number(formatDecimal(item.count.uniqueReceivers))
+        : 0,
+    ]);
+    const totalUniqueSeries = apiData?.map((item) => [
+      item.createdAt * 1000,
+      item.count.totalUniques
+        ? Number(formatDecimal(item.count.totalUniques))
+        : 0,
+    ]);
+
   const options = {
     chart: {
       backgroundColor: "#0E0E10",
@@ -50,7 +83,7 @@ const AnalyticGraph = () => {
     series: [
       {
         name: "Transfer Amount",
-        data: generateDummyData(),
+        data: transferAmountSeries,
         color: "magenta",
         type: "column",
         yAxis: 0,
@@ -58,7 +91,7 @@ const AnalyticGraph = () => {
       },
       {
         name: "Transfer Count",
-        data: generateDummyData(),
+        data: transferCountSeries,
         color: "#FF69B4",
         type: "line",
         yAxis: 1,
@@ -66,7 +99,7 @@ const AnalyticGraph = () => {
       },
       {
         name: "Unique Receivers",
-        data: generateDummyData(),
+        data: uniqueReciverSeries,
         color: "#FFD700",
         type: "line",
         yAxis: 1,
@@ -74,7 +107,7 @@ const AnalyticGraph = () => {
       },
       {
         name: "Unique Senders",
-        data: generateDummyData(),
+        data: uniqueSendersSeries,
         color: "#FFA500",
         type: "line",
         yAxis: 1,
@@ -82,7 +115,7 @@ const AnalyticGraph = () => {
       },
       {
         name: "Total Uniques",
-        data: generateDummyData(),
+        data: totalUniqueSeries,
         color: "#00FFFF",
         type: "line",
         yAxis: 1,
@@ -110,14 +143,15 @@ const AnalyticGraph = () => {
 };
 
 // Dummy Data Generator
-  function generateDummyData() {
-    let data = [];
-    let time = Date.UTC(2018, 0, 1);
-    for (let i = 0; i < 100; i++) {
-      data.push([time, Math.floor(Math.random() * 10000)]);
-      time += 86400000; // Increment by 1 day
-    }
-    return data;
+function generateDummyData() {
+  let data = [];
+  let time = Date.UTC(2018, 0, 1);
+  for (let i = 0; i < 100; i++) {
+    data.push([time, Math.floor(Math.random() * 10000)]);
+    time += 86400000; // Increment by 1 day
   }
+
+  return data;
+}
 
 export default AnalyticGraph;
