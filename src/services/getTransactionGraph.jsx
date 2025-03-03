@@ -1,4 +1,4 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import { EXPLORER_API_URL } from "@/constant/constant";
 import {
   TRANS_HISTORY_CHART_MINUTES,
   TRANS_HISTORY_CHART_SECONDS,
@@ -6,33 +6,22 @@ import {
 } from "@/constant/graphTableValues";
 
 export default async function getTransactionGraph(chartType) {
-  // let chain =
-  //   typeof window !== "undefined" && localStorage.getItem("chainType");
-  // if (chain === null || chain === undefined) {
-  //   chain = "EVM Chain";
-  // }
   try {
-    const getData = (chain, chartType) => {
-      const isEVM = chain === "EVM Chain";
+    const getData = (chartType) => {
       return chartType === TRANS_HISTORY_CHART_SECONDS
-        ? { interval: isEVM ? 24 : 1, time: "hourly" }
+        ? { interval: 24, time: "hourly" }
         : chartType === TRANS_HISTORY_CHART_YEAR
-        ? { interval: isEVM ? 12 : 1, time: isEVM ? "monthly" : "y" }
+        ? { interval: 12, time: "monthly" }
         : chartType === TRANS_HISTORY_CHART_MINUTES
-        ? { interval: 7, time: isEVM ? "daily" : "d" }
-        : { interval: 30, time: isEVM ? "daily" : "d" };
+        ? { interval: 7, time: "daily" }
+        : { interval: 30, time: "daily" };
     };
-    const data = getData(chain, chartType);
+    const data = getData(chartType);
 
-    const response =
-      // chain == "EVM Chain"
-      //   ? 
-        await fetch(
-            `${EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`
-          )
-        // : await fetch(
-        //     `${NATIVE_EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`
-        //   );
+    const response = await fetch(
+      `${EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`
+    );
+
     const result = await response.json();
     return result;
   } catch (error) {

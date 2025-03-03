@@ -14,7 +14,6 @@ import {
   transactionItems,
 } from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
-import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 
@@ -37,13 +36,9 @@ const TransactionHistory = (props) => {
   //   }
   // }, [webSocketData?.transactionGraph]);
 
-  useEffect(() => {
-    fetchChartData();
-  }, [transactionHisChart?.type]);
-
-  const fetchChartData = () => {
+  const fetchChartData = async () => {
     setTransactionStatus(FetchingStatus);
-    getTransactionGraph(transactionHisChart?.type)
+    await getTransactionGraph(transactionHisChart?.type)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
         setTransactionHisChart({
@@ -61,12 +56,15 @@ const TransactionHistory = (props) => {
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };
 
-  useEffect(() => {
-    if (isNetworkChanged == true) {
-      fetchChartData();
-    }
-  }, [isNetworkChanged]);
+  // useEffect(() => {
+  //   if (isNetworkChanged == true) {
+  //     fetchChartData();
+  //   }
+  // }, [isNetworkChanged]);
 
+  useEffect(() => {
+    fetchChartData();
+  }, [transactionHisChart?.type]);
   return (
     <div style={{ position: "relative" }}>
       <div

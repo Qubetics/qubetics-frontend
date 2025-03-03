@@ -41,7 +41,7 @@ function page() {
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
-      let response = await getAllTokens(pageid, tableLimit);
+      let response = await getAllTokens(pageid, tableLimit, order);
       setTokensData(response?.data?.tokens);
       setErcCount(response?.data?.erc20Count);
       setPaginationData(response?.data);
@@ -89,6 +89,7 @@ function page() {
   }, [isNetworkChanged]);
 
   const handleNext = () => {
+    setOrder("");
     if (pageNo < totalPages) {
       // Create a new URLSearchParams object to modify query parameters\
       setOrder("");
@@ -107,10 +108,11 @@ function page() {
       newSearchParams.set("id", paginationdata?.prevCursor);
       router.push(`?${newSearchParams.toString()}`);
     }
-    if (debounce.length > 0) return setOrder("asc");
+    setOrder("asc");
   };
 
   const handleLast = () => {
+    setOrder("");
     if (pageNo < totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
@@ -120,6 +122,7 @@ function page() {
   };
 
   const handleFirst = () => {
+    setOrder("");
     if (pageNo <= totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
