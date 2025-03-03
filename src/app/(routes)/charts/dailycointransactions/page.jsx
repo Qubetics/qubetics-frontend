@@ -9,7 +9,6 @@ import { ALL_CHART_THRITY_DAYS, graphItems } from "@/constant/graphTableValues";
 import getCoinTransactionGraph from "@/services/getCoinTransactionGraph";
 import { chartTimeType } from "@/utils/chartTimeType";
 import { Col, Row, Select, Space } from "antd";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../chartstats/ChartStats.scss";
 const breadcrumbItems = [
@@ -24,7 +23,6 @@ const CoinTransactionGraph = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const webSocketData = useLatestData();
-  const router = useRouter();
 
   /*Coin Transaction Graph*/
   useEffect(() => {

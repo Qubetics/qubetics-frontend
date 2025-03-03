@@ -28,7 +28,6 @@ const BlockDetails = ({ params }) => {
   const { isLight } = useThemeData();
   const { searchData } = useSearchData();
   const { isNetworkChanged } = useGetNetwork();
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "0");
 
   const fetchData = async () => {
@@ -79,7 +78,6 @@ const BlockDetails = ({ params }) => {
     {
       label: (
         <span>
-          {/* {isLight == "lightTheme" ? <BlockIcondark /> : <BlockIcon />} */}
           Overview
         </span>
       ),
@@ -95,7 +93,6 @@ const BlockDetails = ({ params }) => {
     {
       label: (
         <span>
-          {/* {isLight == "lightTheme" ? <TransIcondark /> : <TransIcon />} */}
           Transaction Details
         </span>
       ),
@@ -107,10 +104,6 @@ const BlockDetails = ({ params }) => {
   return (
     <div className="blocksummary blockdetails">
       <div className="container">
-        {/* <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        /> */}
         <FilterResult />
         <Heading heading="Block Details" />
         <div className="blockjson">

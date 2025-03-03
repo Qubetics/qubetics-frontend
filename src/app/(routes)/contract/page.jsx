@@ -110,6 +110,7 @@ const Contract = () => {
   };
 
   const handleLast = () => {
+    setOrder("");
     if (currentPage < totalPages) {
       setCurrentPage(totalPages);
       setPageToSend(contractData?.lastPage);
@@ -176,9 +177,7 @@ const Contract = () => {
             onKeyUp={handleEnterClick}
           />{" "}
         </div>
-        {/* {contractStatus === InitStatus || contractStatus === FetchingStatus ? (
-          <Loader />
-        ) : contractStatus === SuccessStatus ? ( */}
+
         <>
           <SkeletonTableWrapper
             className="commontable"
@@ -195,7 +194,7 @@ const Contract = () => {
               currentPage={currentPage}
               handleNext={handleNext}
               handlePrevious={handlePrevious}
-              disablePrev={currentPage === 1}
+              disablePrev={currentPage === 1 || previousCursor === null}
               disableNext={currentPage === totalPages}
               handleFirst={handleFirst}
               handleLast={handleLast}

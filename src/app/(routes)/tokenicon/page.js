@@ -79,7 +79,6 @@ const TokenIcon = () => {
           <div className="tokenIcon_inner">
             <h2>Verify Ownership & Submit Token Icons</h2>
             <div className="tokenIcon_inner__top">
-              {/* <form style={{ width: "100%" }}> */}
 
               <div>
                 <CustomInput

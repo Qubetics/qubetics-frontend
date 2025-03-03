@@ -10,25 +10,6 @@ export default async function getContractsGraph(chartType) {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   try {
-    // const data =
-    // {
-    //       interval: 60,
-    //       time: "mintue",
-    //     }
-    //     : chartType === ALL_CHART_ONE_DAY
-    //       ? {
-    //         interval: 24,
-    //         time: "hourly",
-    //       }
-    //       : chartType === TRANS_HISTORY_CHART_YEAR
-    //         ? {
-    //           interval: 12,
-    //           time: "monthly",
-    //         }
-    //         : chartType === ALL_CHART_SEVEN_DAY
-    //           ? { interval: 7, time: "daily" }
-    //           : { interval: 30, time: "daily" }
-
     const getData = (chain, chartType) => {
       const isEVM = chain === "EVM Chain";
       return chartType === ALL_CHARTS_HOUR
@@ -45,13 +26,14 @@ export default async function getContractsGraph(chartType) {
     const data = getData(chain, chartType);
 
     const response =
-      chain == "EVM Chain"
-        ? await fetch(
+      // chain == "EVM Chain"
+        // ? 
+        await fetch(
             `${EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
           )
-        : await fetch(
-            `${NATIVE_EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
-          );
+        // : await fetch(
+        //     `${NATIVE_EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
+        //   );
     let result = response.json();
     return result;
   } catch (error) {

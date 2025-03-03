@@ -34,7 +34,7 @@ const BlockSummary = () => {
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
 
   const page = searchParams.get("page") || 1;
-  const pageid = searchParams.get("id") || 1;
+  const pageid = searchParams.get("id") || 1; 
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState("desc");
   const filterBy = searchParams.get("filterBy") || "newest";
@@ -90,7 +90,6 @@ const BlockSummary = () => {
 
   const handleNext = () => {
     if (page < totalPages) {
-      // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) + 1);
       newSearchParams.set("id", nextCursor);
@@ -104,8 +103,7 @@ const BlockSummary = () => {
   };
   const handlePrevious = () => {
     if (page > 1) {
-      // setCurrentPage(currentPage - 1);
-      // setPageToSend(previousCursor);
+     
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) - 1);
       newSearchParams.set("id", previousCursor);
@@ -120,8 +118,6 @@ const BlockSummary = () => {
 
   const handleLast = () => {
     if (page < totalPages) {
-      // setCurrentPage(totalPages);
-      // setPageToSend(lastPage);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
       newSearchParams.set("id", lastPage);
@@ -136,8 +132,6 @@ const BlockSummary = () => {
 
   const handleFirst = () => {
     if (page <= totalPages) {
-      // setCurrentPage(1);
-      // setPageToSend(1);
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
       newSearchParams.set("id", 1);
@@ -174,15 +168,7 @@ const BlockSummary = () => {
   };
   return (
     <div className="blocksummary">
-      {/* {blockSummaryStatus === InitStatus ||
-      blockSummaryStatus === FetchingStatus ? (
-        <Loader />
-      ) : blockSummaryStatus === SuccessStatus ? ( */}
       <div className="container">
-        {/* <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        /> */}
         <FilterResult />
         <Heading heading={"Block Summary"} />
         <BlockInfo blocksData={blocksData} />
@@ -215,7 +201,6 @@ const BlockSummary = () => {
           )}
         </div>
         {
-          // <Loading//>//
           <SkeletonTableWrapper
             columns={blockColumn}
             dataSource={blocksData}
@@ -225,9 +210,7 @@ const BlockSummary = () => {
             }
             className="commontable"
           />
-          // <Table
-
-          // />
+        
         }
         {totalPages > 1 && (
           <Pagination
@@ -242,9 +225,7 @@ const BlockSummary = () => {
           />
         )}
       </div>
-      {/* ) : (
-        <Page />
-      )} */}
+     
     </div>
   );
 };

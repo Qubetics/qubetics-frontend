@@ -145,18 +145,15 @@ export const randomNoGenerator = () => {
   let num = Math.random() * (6.0 - 5.8) + 5.8;
   return num.toFixed(2);
 };
-
+export const formatDecimal = (number) => {
+  let [beforeDecimal, afterDecimal] = number.toString().split(".");
+  let afterDecimalFive = afterDecimal ? afterDecimal.slice(0, 5) : "";
+  if (afterDecimal === undefined) return beforeDecimal;
+  return beforeDecimal + "." + afterDecimalFive;
+};
 export const formateTotalSupply = (num) => {
   if (!num || num === null || num === undefined) return 0;
   let formattedNumber;
-  // Function to get the first five digits after the decimal
-  const formatDecimal = (number) => {
-    let [beforeDecimal, afterDecimal] = number.toString().split(".");
-    let afterDecimalFive = afterDecimal ? afterDecimal.slice(0, 5) : "";
-    if (afterDecimal === undefined) return beforeDecimal;
-    return beforeDecimal + "." + afterDecimalFive;
-  };
-
   switch (true) {
     case num >= 1e12:
       formattedNumber = formatDecimal(num / 1e12) + " T";

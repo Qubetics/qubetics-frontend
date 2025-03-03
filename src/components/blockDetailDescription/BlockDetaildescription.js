@@ -16,9 +16,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
 
   return (
     <div className="blockdescription mt-20">
-      {/* {status === InitStatus || status === FetchingStatus ? (
-        <Loader />
-      ) : status === SuccessStatus ? ( */}
+     
       <div className="transferinfo blockinform">
         <div className="information">
           <p> Block Hash </p>
@@ -84,21 +82,10 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
         <div className="information">
           <p>Validator </p>
           {blockData?.miner || blockData?.block?.miner ? (
-            // onClick={() => router.push(`${Routes.Tx_ADDRESS}/${blockData?.miner}`)
             <span className="">
-              {/* <Link
-                className="hoverTrans"
-                href={`${Routes.Tx_ADDRESS}/${
-                  blockData?.miner ? blockData?.miner : blockData?.block?.miner
-                }`}
-              > */}
+            
               {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
-              {/* </Link> */}
-              {/* <CopyText
-                text={
-                  blockData?.miner ? blockData?.miner : blockData?.block?.miner
-                }
-              /> */}
+             
             </span>
           ) : (
             "-"
@@ -227,9 +214,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
         </div>
       </div>
 
-      {/* ) : (
-        <Page />
-      )} */}
+     
     </div>
   );
 };

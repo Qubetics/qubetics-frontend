@@ -78,9 +78,9 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       },
       xAxis: {
         type: "linear",
-        title: {
-          text: chartType,
-        },
+        // title: {
+        //   text: chartType,
+        // },
         min: 0,
         max: maxLength - 1,
         scrollbar: {
@@ -98,8 +98,6 @@ const ChartAccount = ({ data, chartType, name, title }) => {
             : maximum?.count < 4
             ? 4
             : maximum?.count,
-
-        // max: 0.1,
         title: {
           text: "",
         },

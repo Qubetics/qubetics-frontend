@@ -20,16 +20,17 @@ import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
 import { Tabs } from "antd";
+import "../../blocks/blocksummary.scss";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 import getTokenByAddress from "@/services/getTokenByAddress";
 import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -39,7 +40,6 @@ const page = ({ params }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showHeaderData, setShowHeaderData] = useState("");
   const { isNetworkChanged } = useGetNetwork();
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [activeTab, setActiveTab] = useState("0");
   const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
@@ -102,7 +102,6 @@ const page = ({ params }) => {
 
   useEffect(() => {
     if (isNetworkChanged) {
-      fetchData();
       fetchAddDetails();
     }
   }, [isNetworkChanged]);
@@ -184,8 +183,6 @@ const page = ({ params }) => {
   return (
     <div className="blocksummary">
       <div className="container">
-        {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
-         */}
         <FilterResult />
         <Heading
           heading=" Address Details"
@@ -200,7 +197,6 @@ const page = ({ params }) => {
             </p>
           </div>
         </div>
-        {/* <BlockDetail details={details} /> */}
         <div className="addressDetsilCard">
           <div className="overViewCard">
             <div className="cardHeading">

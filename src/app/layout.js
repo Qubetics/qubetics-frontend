@@ -3,8 +3,6 @@ import { LatestDataProvider } from "@/components/contexts/latest_data";
 import { NetworkProvider } from "@/components/contexts/networkChanged";
 import { SerachingValueProvider } from "@/components/contexts/searchingData";
 import { ThemeProvider } from "@/components/contexts/theme_context";
-import ErrorBoundary from "@/components/ErrorBoundry/ErrorBoundry";
-import ZohoDesk from "@/components/ZohoDesk/ZohoDesk";
 import Head from "next/head";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
@@ -12,12 +10,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
-import StyledComponentsRegistry from "./lib/AntdRegistry";
-import LayoutProvider from "./lib/layoutProvider";
-import Loading from "./loading";
-
 import { DM_Sans } from "next/font/google";
 import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
+import dynamic from "next/dynamic";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -29,7 +24,11 @@ export async function generateMetadata({ params, searchParams }) {
     description: "This is an explorer",
   };
 }
-// const crypto = require("crypto");
+const ZohoDesk = dynamic(() => import("@/components/ZohoDesk/ZohoDesk"), { ssr: false });
+const ErrorBoundary = dynamic(() => import("@/components/ErrorBoundry/ErrorBoundry"), { ssr: false });
+const StyledComponentsRegistry = dynamic(() => import("./lib/AntdRegistry"), { ssr: false });
+const LayoutProvider = dynamic(() => import("./lib/layoutProvider"), { ssr: false });
+const Loading = dynamic(() => import("./loading"), { ssr: false });
 
 export default function RootLayout({ children }) {
   return (
@@ -80,7 +79,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   />
                   <GoogleAnalytics />
                   <ZohoDesk />
-                  {/* <ZohoBusinesschat /> */}
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>
                       <Suspense fallback={<Loading />}>

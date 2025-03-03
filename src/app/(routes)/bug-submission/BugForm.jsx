@@ -13,7 +13,6 @@ import {
   descriptionValidValue,
   handleValidEmail,
   handleValidValue,
-  validationtValue,
 } from "@/constant/constant";
 import ReCAPTCHA from "react-google-recaptcha";
 import postBugReport from "@/services/postBugReport";
@@ -218,7 +217,6 @@ const BugForm = () => {
           placeholder="Enter Name"
           value={fieldData.name || ""}
           onChange={(value) => handleInputChange("name", value)}
-          // onFocus={() => handleFocus("name")}
           onBlur={() => handleFocus("name")}
         />
         {errors.name && <div className="error-message">{errors.name}</div>}
@@ -228,7 +226,6 @@ const BugForm = () => {
           placeholder="Enter Email"
           value={fieldData.email_address || ""}
           onChange={(value) => handleInputChange("email_address", value)}
-          // onFocus={() => handleFocus("email_address")}
           onBlur={() => handleFocus("email_address")}
         />
         {errors.email_address && (

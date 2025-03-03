@@ -2,7 +2,6 @@
 @import "../../../var";
 
 .landing_main {
-  // height: 100vh;
   @supports (-webkit-touch-callout: none) {
     height: -webkit-fill-available;
   }
@@ -43,8 +42,6 @@
       font-style: normal;
       font-weight: 500;
       line-height: 72px;
-
-      /* 240% */
       @media (max-width: 767px) {
         line-height: 40px;
       }
@@ -349,8 +346,6 @@
 }
 
 .graphOuter_1 {
-  // height: 578px;
-
   border-radius: 20px;
   padding: 20px;
 
@@ -380,7 +375,6 @@
     justify-content: space-between;
     align-items: baseline;
     @media (max-width: 767px) {
-      // flex-direction: column;
       padding-bottom: 0;
       align-items: flex-start;
     }
@@ -483,8 +477,7 @@
 
     &__blinkLive {
       display: flex;
-      // align-items: center;
-      // gap: 4px;
+
       flex-direction: column;
       @media (max-width: 767px) {
         display: flex;
@@ -564,7 +557,6 @@
   }
 }
 .graphdashboard {
-  // height: 196px !important;
   background: var(--searchBg);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1490196078);
@@ -673,7 +665,6 @@
 .ant-select-dropdown {
   min-width: 0px !important;
   border-radius: 14px !important;
-  // width: 125px;
   max-width: 100% !important;
   width: 100%;
   margin-top: -4px !important;
@@ -760,13 +751,11 @@
     .multiGraph {
       display: flex;
       gap: 30px;
-      // flex-wrap: wrap;
       width: 100%;
       flex-direction: column;
       .grap {
         display: flex;
         gap: 30px;
-        // flex-wrap: wrap;
         @media (max-width: 1020px) {
           gap: 15px;
           flex-wrap: wrap;

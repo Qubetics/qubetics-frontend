@@ -31,17 +31,20 @@ function page() {
   const { isNetworkChanged } = useGetNetwork();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [searchText, setSearchText] = useState("");
+  const [paginationdata, setPaginationData] = useState({});
   const { debounce } = useDebounce(searchText, 1500);
-  const pageId = searchParams.get("page") || 1;
+  const pageNo = searchParams.get("page") || 1;
+  const pageid = searchParams.get("id") || 1;
   const router = useRouter();
   const [order, setOrder] = useState("");
 
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
-      let response = await getAllTokens(pageId, tableLimit);
+      let response = await getAllTokens(pageid, tableLimit);
       setTokensData(response?.data?.tokens);
       setErcCount(response?.data?.erc20Count);
+      setPaginationData(response?.data);
       const count = Number(response?.data?.erc20Count ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
@@ -54,12 +57,13 @@ function page() {
     try {
       setTokenStatus(FetchingStatus);
       let response = await getInternalSearch(
-        pageId,
+        pageid,
         tableLimit,
         debounce,
         order
       );
       setTokensData(response?.data?.contracts);
+      setPaginationData(response?.data);
       setErcCount(response?.data?.erc20Count);
       const count = Number(response?.data?.contractCount ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
@@ -76,7 +80,7 @@ function page() {
       return;
     }
     fetchData();
-  }, [pageId]);
+  }, [pageNo]);
 
   useEffect(() => {
     if (isNetworkChanged == true) {
@@ -85,39 +89,41 @@ function page() {
   }, [isNetworkChanged]);
 
   const handleNext = () => {
-    if (pageId < totalPages) {
+    if (pageNo < totalPages) {
       // Create a new URLSearchParams object to modify query parameters\
       setOrder("");
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", Number(pageId) + 1);
+      newSearchParams.set("page", Number(pageNo) + 1);
+      newSearchParams.set("id", paginationdata?.nextCursor);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handlePrevious = () => {
-    if (pageId > 1) {
+    if (pageNo > 1) {
       // setCurrentPage(page - 1);
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", Number(pageId) - 1);
+      newSearchParams.set("page", Number(pageNo) - 1);
+      newSearchParams.set("id", paginationdata?.prevCursor);
       router.push(`?${newSearchParams.toString()}`);
     }
     if (debounce.length > 0) return setOrder("asc");
   };
 
   const handleLast = () => {
-    if (pageId < totalPages) {
-      // setCurrentPage(totalPages);
+    if (pageNo < totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", totalPages);
+      newSearchParams.set("id", paginationdata?.lastPage);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleFirst = () => {
-    if (pageId <= totalPages) {
-      // setCurrentPage(1);
+    if (pageNo <= totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
+      newSearchParams.set("id", 1);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
@@ -132,13 +138,6 @@ function page() {
       title:
         "The total number of tokens (ERC-20 and other standards) created on the blockchain.",
     },
-    // {
-    //   id: 2,
-    //   text: "Contracts (ERC-20)",
-    //   balance: tokensData?.erc20Count ?? 0,
-    //   img: <ContractIcon />,
-    //   contract: false,
-    // },
   ];
 
   const handleEnterClick = (e) => {
@@ -149,7 +148,7 @@ function page() {
         shallow: true,
         scroll: false,
       });
-      if (pageId == 1) {
+      if (pageNo == 1) {
         getSearchData(searchText);
       }
     }
@@ -183,7 +182,7 @@ function page() {
                 const newSearchParams = new URLSearchParams(searchParams);
                 newSearchParams.set("page", 1);
                 router.push(`?${newSearchParams.toString()}`);
-                if (pageId == 1) {
+                if (pageNo == 1) {
                   fetchData();
                 }
               }
@@ -211,11 +210,11 @@ function page() {
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
-            currentPage={pageId}
+            currentPage={pageNo}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            disablePrev={pageId === 1}
-            disableNext={pageId === totalPages}
+            disablePrev={page === 1 || paginationdata?.prevCursor === null}
+            disableNext={page === totalPages}
             handleFirst={handleFirst}
             handleLast={handleLast}
           />

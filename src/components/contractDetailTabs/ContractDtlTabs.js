@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { Tabs } from "antd";
 import "./ContractDtlTabs.scss";
-import CodeTabContent from "./CodeTabContent";
-import ReadCodeContent from "./ReadCodeContent";
-import WriteContent from "./WriteContent";
-import Loader from "../loader/Loader";
+// import CodeTabContent from "./CodeTabContent";
+// import ReadCodeContent from "./ReadCodeContent";
+// import WriteContent from "./WriteContent";
+// import Loader from "../loader/Loader";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -13,6 +13,12 @@ import {
   SuccessStatus,
 } from "@/constant/constant";
 import getAbiData from "@/services/getAbiData";
+import dynamic from "next/dynamic";
+
+const CodeTabContent = dynamic(() => import("./CodeTabContent"), { ssr: false });
+const ReadCodeContent = dynamic(() => import("./ReadCodeContent"), { ssr: false });
+const WriteContent = dynamic(() => import("./WriteContent"), { ssr: false });
+const Loader = dynamic(() => import("../loader/Loader"), { ssr: false });
 
 function ContractDtlTabs({ hash }) {
   const [AbiStatus, setAbiStatus] = useState(InitStatus);

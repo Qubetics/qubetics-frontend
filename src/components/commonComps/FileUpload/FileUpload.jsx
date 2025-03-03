@@ -9,9 +9,9 @@ const FileUpload = ({
   setSelectedFiles,
   selectedFiles,
 }) => {
-  const maxFiles = 4; // Maximum files allowed
-  const maxSize = 2 * 1024 * 1024; // 2MB in bytes
-  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; // Allowed file types
+  const maxFiles = 4; 
+  const maxSize = 2 * 1024 * 1024; 
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; 
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);

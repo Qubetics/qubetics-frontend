@@ -19,7 +19,6 @@ import toast from "react-hot-toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
 function Page() {
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [faucetField, setFaucetField] = useState({
     address: "",
     amount: FAUCET_AMOUNT,
@@ -102,10 +101,7 @@ function Page() {
       <div className="container">
         <div className="searchblocks"></div>
         <div className="faucet_inner">
-          {/* <SearchbarComponent
-            searchStatus={searchStatus}
-            setSerachStatus={setSerachStatus}
-          /> */}
+          
           <FilterResult />
           <div className="faucet_inner__top">
             <div className="left">
@@ -144,42 +140,7 @@ function Page() {
                   </p>
                 )}
               </div>
-              {/* <div className="space-top20 posRelative mb30">
-                  <label>Amount</label>
-                  <Input
-                    placeholder={Messages?.FAUCET_AMOUNT_LIMIT}
-                    type="number"
-                    // inputMode="numeric"
-                    name="amount"
-                    value={faucetField?.amount}
-                    onChange={handleFaucetChange}
-                    // controls={false}
-                    autoComplete="off"
-                  />
-                  {error?.amount && (
-                    <p style={{ color: "red", textAlign: "left" }}>
-                      {error?.amount}
-                    </p>
-                  )}
-                  <p>{Messages?.Faucet_REQUEST_LIMIT}</p>
-                  <div className="txHashStyle">
-                    {txHash && (
-                      <p>
-                        <span>
-                          <b> Tx Hash :</b>
-                          <Link href={`tx/${txHash}`}>
-                            <span style={{ color: "blue" }}>
-                              {faucetAddress(txHash)}
-                            </span>
-                          </Link>
-                        </span>
-                        <span>
-                          <CopyText text={txHash} />
-                        </span>
-                      </p>
-                    )}
-                  </div>
-                </div> */}
+             
               {GoogleKey && (
                 <div className="captcha">
                   <ReCAPTCHA
@@ -217,28 +178,7 @@ function Page() {
                 )}
               </div>
             </div>
-            {/* <div className="right">
-              <div className="right_inner">
-                <p>
-                  Use the button below to add Qubetics network to your metamask
-                  wallet extension.{" "}
-                </p>
-                <button
-                  className="qubeticNetwork_btn faucetmetabtn"
-                  onClick={addQubetic}
-                >
-                  <span>
-                    <Image
-                      src="/metafox.avif"
-                      width={25}
-                      height={25}
-                      alt="metafox"
-                    />
-                  </span>
-                  Add {EXPLORER_CHAIN_NAME} Network
-                </button>
-              </div>
-            </div> */}
+          
           </div>
         </div>
       </div>

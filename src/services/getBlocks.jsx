@@ -8,13 +8,14 @@ export default async function getBlocks(currentPage, limit, filterVal, order) {
       chain = "EVM Chain";
     }
     const response =
-      chain == "EVM Chain"
-        ? await fetch(
+      // chain == "EVM Chain"
+      //   ? 
+        await fetch(
             `${EXPLORER_API_URL}blocks/get-all-blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
           )
-        : await fetch(
-            `${NATIVE_EXPLORER_API_URL}blocks?page=${currentPage}&limit=${limit}`
-          );
+        // : await fetch(
+        //     `${NATIVE_EXPLORER_API_URL}blocks?page=${currentPage}&limit=${limit}`
+        //   );
     let result = await response.json();
     return result;
   } catch (error) {
