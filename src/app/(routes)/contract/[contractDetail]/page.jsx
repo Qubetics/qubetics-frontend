@@ -101,9 +101,14 @@ const ContractDetail = () => {
   const detail = [
     {
       text: "Token Name",
-      heading: contractDetail?.tokenName
-        ? capitalizeWord(contractDetail?.tokenName)
-        : "-",
+      heading:
+        contractDetail?.tokenName ||
+        contractDetail?.ContractVerification?.contractname
+          ? capitalizeWord(
+              contractDetail?.tokenName ||
+                contractDetail?.ContractVerification?.contractname
+              )
+          : "-",
       img:
         contractDetail?.ContractVerification &&
         contractDetail?.ContractVerification?.iconUrl !== "" ? (
@@ -256,8 +261,7 @@ const ContractDetail = () => {
               data={contractDetail}
               status={contractDetailStatus}
             />
-            {((contractType === contractTypes.ERC_20 &&
-              contractDetail?.symbol) ||
+            {(contractType === contractTypes.ERC_20 ||
               (contractType === contractTypes.ERC_721 &&
                 contractDetail?.symbol)) && (
               <>
