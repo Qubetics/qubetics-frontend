@@ -4,6 +4,7 @@ import { useState } from "react";
 import CustomSelect from "../customSelect/CustomSelect";
 import "./LogsDetail.scss";
 import { HexDEx } from "./HexDEx";
+import Link from "next/link";
 
 function LogsDetail(data) {
   const { topics, contractLogs, index } = data;
@@ -33,7 +34,12 @@ function LogsDetail(data) {
       <div className="logInner">
         <div className="ineerDetail">
           <h2>Address</h2>
-          <p>{contractLogs?.address ?? "-"}</p>
+          <Link
+            className="hoverTrans"
+            href={`/address/${contractLogs?.address}`}
+          >
+            {contractLogs?.address ?? "-"}
+          </Link>
         </div>
         <div className="ineerDetail">
           <h2>Name</h2>
