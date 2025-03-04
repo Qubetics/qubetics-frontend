@@ -1,7 +1,6 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { BlockIcon, Searchicon } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
-
 import Page from "@/app/(routes)/notfound/page";
 import { firstCapitalLetter } from "@/constant/constant";
 import useGlobalSearch from "@/hooks/useGlobalSearch";
