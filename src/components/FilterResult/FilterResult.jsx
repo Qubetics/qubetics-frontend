@@ -2,6 +2,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { BlockIcon, Searchicon } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
 
+import Page from "@/app/(routes)/notfound/page";
 import { firstCapitalLetter } from "@/constant/constant";
 import useGlobalSearch from "@/hooks/useGlobalSearch";
 import useOnClickOutside from "@/hooks/useoutsideClick";
@@ -12,9 +13,6 @@ import {
   NavigateDown,
   NavigateUp,
 } from "../../../public/SvgIcons";
-import Image from "next/image";
-import notFound from "../../assets/svg/notFount.svg";
-import Page from "@/app/(routes)/notfound/page";
 const FilterResult = () => {
   const {
     searchText,
@@ -64,7 +62,7 @@ const FilterResult = () => {
   useEffect(() => {
     const observerOptions = {
       root: containerRef.current,
-      rootMargin: "0px",
+      rootMargin: "5px",
       threshold: 0.5,
     };
 
@@ -76,7 +74,7 @@ const FilterResult = () => {
             ? current
             : closest;
         });
-
+        // setSelectedIndex(0);
         setActiveTab(closestEntry.target.id);
       }
       // entries.forEach((entry) => {
@@ -101,6 +99,7 @@ const FilterResult = () => {
   }, [dynamicTab]);
 
   const handleToggle = (_elem) => {
+    setSelectedIndex(0);
     setActiveTab(_elem);
     const targetElement = customRef.current[_elem];
     const scrollElement = containerRef.current;
@@ -140,20 +139,19 @@ const FilterResult = () => {
       redirectOnEnter(selectedItems);
     }
     if (e.key === "ArrowDown") {
-      countRef.current = 0;
+      // countRef.current = 0;
       setSelectedIndex((prevIndx) => {
         let idx = Math.min(prevIndx + 1, selectedItems?.length);
         if (idx >= selectedItems?.length) {
           const nextTab = tabIndex + 1;
           if (nextTab && nextTab < tabs.length) {
-            setActiveTab(tabs[tabIndex + 1]);
+            setActiveTab(tabs[nextTab]);
             idx = 0;
           } else {
             idx = prevIndx;
           }
-        } else if (containerRef.current && idx % 3 === 0 && idx !== 0) {
-          containerRef.current.scrollTop += 100; // Scroll the filter container down
         }
+        containerRef.current.scrollTop += 50;
         return idx;
       });
       e.preventDefault();
@@ -171,15 +169,17 @@ const FilterResult = () => {
             idx = prevIndx;
           }
         }
-        if (containerRef.current && idx != selectedItems?.length - 2) {
-          countRef.current += 1;
-          // scroll to top a little more once if UP arrow key is entered more than 10 times (to prevent hiding of selected item)
-          if (countRef.current > 10) {
-            countRef.current = 0;
-            containerRef.current.scrollTop -= 75;
-          }
-          containerRef.current.scrollTop -= 25; // Scroll the filter container up
-        }
+        // if (containerRef.current && idx != selectedItems?.length - 2) {
+        //   countRef.current += 1;
+        //   // scroll to top a little more once if UP arrow key is entered more than 10 times (to prevent hiding of selected item)
+        //   if (countRef.current > 10) {
+        //     countRef.current = 0;
+        //     containerRef.current.scrollTop -= 50;
+        //   }
+        //   containerRef.current.scrollTop -= 25; // Scroll the filter container up
+        // }
+
+        containerRef.current.scrollTop -= 44;
         return idx;
       });
       e.preventDefault();

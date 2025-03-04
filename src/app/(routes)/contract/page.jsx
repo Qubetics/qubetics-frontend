@@ -126,6 +126,10 @@ const Contract = () => {
   };
   const handleEnterClick = (e) => {
     if (e.key === "Enter" && searchText?.length > 0) {
+      if (currentPage !== 1) {
+        setCurrentPage(1);
+        return;
+      }
       getSearchData(searchText);
     }
   };
