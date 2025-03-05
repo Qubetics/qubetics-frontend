@@ -30,7 +30,9 @@ export const BlockInfo = ({ blocksData }) => {
       text: <>Latest Block</>,
       balance: webSocketData?.blocks?.blocknumber
         ? webSocketData?.blocks?.blocknumber.toLocaleString()
-        : blocksData[0]?.blocknumber.toLocaleString() ?? 0,
+        : blockTime?.currentBlock
+        ? Number(blockTime?.currentBlock).toLocaleString()
+        : 0,
       img: <LatestBlock />,
       contract: false,
       title: "The most recently added block on the blockchain.",
@@ -59,7 +61,7 @@ export const BlockInfo = ({ blocksData }) => {
     {
       id: 3,
       text: "Block Time (Last 20 Blocks)",
-      balance: `${blockTime ? blockTime : 0}s`,
+      balance: `${blockTime ? blockTime.avgTime : 0}s`,
       img: <AvgBlockTime />,
       contract: false,
       title:
@@ -96,7 +98,7 @@ export const BlockInfo = ({ blocksData }) => {
     try {
       let blockTime = await getBlockTime();
       if (blockTime?.data) {
-        setBlockTime(blockTime?.data?.avgTime);
+        setBlockTime(blockTime?.data);
       }
     } catch (err) {
       return err;

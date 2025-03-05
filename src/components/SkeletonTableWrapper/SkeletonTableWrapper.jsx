@@ -11,20 +11,29 @@ export const SkeletonTableWrapper = ({
 }) => {
   const renderSkeleton = () => (
     <div className="tableLoader" data-testid="skeleton-container">
-      <Skeleton active paragraph={{ rows: 5 }} title={false} className="" />
       <Skeleton
+        key={1}
+        active
+        paragraph={{ rows: 5 }}
+        title={false}
+        className=""
+      />
+      <Skeleton
+        key={2}
         active
         paragraph={{ rows: 5 }}
         title={false}
         className="custom-skeleton"
       />
       <Skeleton
+        key={3}
         active
         paragraph={{ rows: 5 }}
         title={false}
         className="custom-skeleton"
       />
       <Skeleton
+        key={4}
         active
         paragraph={{ rows: 5 }}
         title={false}
@@ -32,7 +41,7 @@ export const SkeletonTableWrapper = ({
       />
     </div>
   );
-  
+
   return (
     <>
       {isSkeleton ? (
@@ -40,6 +49,7 @@ export const SkeletonTableWrapper = ({
       ) : (
         <Table
           {...props}
+          rowKey="id"
           className={className}
           columns={columns}
           dataSource={dataSource}
@@ -48,7 +58,7 @@ export const SkeletonTableWrapper = ({
           locale={{
             emptyText: (
               <div>
-                <Image src={notFound} width={150} height={90} />
+                <Image src={notFound} width={150} height={90} alt="img" />
 
                 <p>No Data</p>
               </div>

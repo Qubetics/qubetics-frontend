@@ -24,10 +24,19 @@ export async function generateMetadata({ params, searchParams }) {
     description: "This is an explorer",
   };
 }
-const ZohoDesk = dynamic(() => import("@/components/ZohoDesk/ZohoDesk"), { ssr: false });
-const ErrorBoundary = dynamic(() => import("@/components/ErrorBoundry/ErrorBoundry"), { ssr: false });
-const StyledComponentsRegistry = dynamic(() => import("./lib/AntdRegistry"), { ssr: false });
-const LayoutProvider = dynamic(() => import("./lib/layoutProvider"), { ssr: false });
+const ZohoDesk = dynamic(() => import("@/components/ZohoDesk/ZohoDesk"), {
+  ssr: false,
+});
+const ErrorBoundary = dynamic(
+  () => import("@/components/ErrorBoundry/ErrorBoundry"),
+  { ssr: false }
+);
+const StyledComponentsRegistry = dynamic(() => import("./lib/AntdRegistry"), {
+  ssr: false,
+});
+const LayoutProvider = dynamic(() => import("./lib/layoutProvider"), {
+  ssr: false,
+});
 const Loading = dynamic(() => import("./loading"), { ssr: false });
 
 export default function RootLayout({ children }) {
@@ -43,20 +52,18 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet"
         />
-      </Head>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KZDPDB2J');
-
           `,
-        }}
-      />
-
+          }}
+        />
+      </Head>
       <body className={`${dmSans.className} darkTheme`}>
         <noscript
           dangerouslySetInnerHTML={{
@@ -77,7 +84,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     position="bottom-center"
                     reverseOrder={false}
                   />
-                  <GoogleAnalytics />
+                  {/* <GoogleAnalytics /> */}
                   <ZohoDesk />
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>

@@ -268,7 +268,7 @@ const FilterResult = () => {
               window.removeEventListener("scroll", preventOuterScroll);
               searchText.length >= 1 && setOpen(2);
             }}
-            inputRef={inputRef}
+            inputref={inputRef}
             onKeyDown={(e) => {
               if (e.key === "Escape") setOpen(1);
 
@@ -292,7 +292,7 @@ const FilterResult = () => {
               setIsLoading(!!e.target.value);
             }}
             value={searchText}
-            isLoading={isLoading}
+            // isloading={isLoading}
           />
           <Searchicon />
         </div>
