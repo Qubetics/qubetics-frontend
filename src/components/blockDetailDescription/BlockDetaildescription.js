@@ -7,7 +7,7 @@ import { useLatestData } from "../contexts/latest_data";
 import CopyText from "../DoCopy/CopyText";
 import "../Pagination/Pagination.scss";
 import "../transferInfo/TransferInformation.scss";
-const BlockDetailDescription = ({ blockData, status, blockNo }) => {
+const BlockDetailDescription = ({ blockData, status }) => {
   const router = useRouter();
   const webSocketData = useLatestData();
 
@@ -16,7 +16,6 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
 
   return (
     <div className="blockdescription mt-20">
-     
       <div className="transferinfo blockinform">
         <div className="information">
           <p> Block Hash </p>
@@ -44,8 +43,8 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             {blockData?.blocknumber
               ? blockData?.blocknumber
               : blockData?.block?.blocknumber
-                ? blockData?.block?.blocknumber
-                : "-"}
+              ? blockData?.block?.blocknumber
+              : "-"}
             {/* <CopyText
               text={
                 blockData?.blocknumber
@@ -60,6 +59,11 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
           <div
             className="detailArrow headermetaBtn"
             onClick={() => {
+              const blockNo = blockData?.blocknumber
+                ? blockData?.blocknumber
+                : blockData?.block?.blocknumber
+                ? blockData?.block?.blocknumber
+                : 0;
               if (blockNo > 0)
                 return router.push(`/blocks/${Number(blockNo) - 1}`);
             }}
@@ -72,6 +76,11 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
               const latestBlock = webSocketData?.blocks?.blocknumber
                 ? webSocketData?.blocks?.blocknumber
                 : 0;
+              const blockNo = blockData?.blocknumber
+                ? blockData?.blocknumber
+                : blockData?.block?.blocknumber
+                ? blockData?.block?.blocknumber
+                : 0;
               if (latestBlock > blockNo)
                 return router.push(`/blocks/${Number(blockNo) + 1}`);
             }}
@@ -83,9 +92,7 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
           <p>Validator </p>
           {blockData?.miner || blockData?.block?.miner ? (
             <span className="">
-            
               {blockData?.miner ? blockData?.miner : blockData?.block?.miner}
-             
             </span>
           ) : (
             "-"
@@ -123,8 +130,8 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
             {blockData?.transactionCount
               ? blockData?.transactionCount
               : blockData?.block?.transactionCount
-                ? blockData?.block?.transactionCount
-                : 0}
+              ? blockData?.block?.transactionCount
+              : 0}
           </span>
         </div>
         {chain == "EVM Chain" && (
@@ -213,8 +220,6 @@ const BlockDetailDescription = ({ blockData, status, blockNo }) => {
           </span>
         </div>
       </div>
-
-     
     </div>
   );
 };

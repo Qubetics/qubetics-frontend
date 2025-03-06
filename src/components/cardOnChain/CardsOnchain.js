@@ -6,7 +6,7 @@ const CardsOnchain = (props) => {
   return (
     <>
       <Card
-        bordered={false}
+        variant={false}
         className={`marcketCapCard ${props.className} ${
           props?.addicon ? "addicon" : ""
         } ${props?.contract ? "contract" : ""} ${

@@ -116,8 +116,8 @@ const TransferInfo = ({ data }) => {
           <p>Timestamp</p>
           {data?.timestamp ? (
             <span className="realTime">
-              {convertToDateTime(data?.timestamp)}
-              &nbsp;
+              {convertToDateTime(data?.timestamp)},
+            
               <span className="secondAgo"> {renderTime(data?.timestamp)}</span>
             </span>
           ) : data?.createdAt ? (
@@ -142,14 +142,16 @@ const TransferInfo = ({ data }) => {
           <p> Method</p>
           <span>{data?.type ? capitalizeWord(data?.type) : "-"}</span>
         </div>
-        {chain == "EVM Chain" && (
+        {
+          // chain == "EVM Chain" && (
           <div className="information">
             <p>Gas Used </p>
             <span>{data?.gas ? data?.gas : "0"}</span>
           </div>
-        )}
+          // )
+        }
 
-        {tokenTransferedParsed?.name == "transfer" && (
+        {/* {tokenTransferedParsed?.name == "transfer" && (
           <div className="information ">
             <p>Tokens transferred </p>
             <h5 className="innerDetail">
@@ -185,7 +187,7 @@ const TransferInfo = ({ data }) => {
               </span>
             </h5>
           </div>
-        )}
+        )} */}
         {/* <div className="information">
           <p>Event Logs </p>
           <span>5124526</span>

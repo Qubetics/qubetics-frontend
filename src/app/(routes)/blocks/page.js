@@ -21,7 +21,6 @@ import "./blocksummary.scss";
 
 const BlockSummary = () => {
   const router = useRouter();
-
   const searchParams = useSearchParams();
   const { isNetworkChanged } = useGetNetwork();
   const [blocksData, setBlocksData] = useState([]);
@@ -34,7 +33,7 @@ const BlockSummary = () => {
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
 
   const page = searchParams.get("page") || 1;
-  const pageid = searchParams.get("id") || 1; 
+  const pageid = searchParams.get("id") || 1;
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState("desc");
   const filterBy = searchParams.get("filterBy") || "newest";
@@ -103,7 +102,6 @@ const BlockSummary = () => {
   };
   const handlePrevious = () => {
     if (page > 1) {
-     
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) - 1);
       newSearchParams.set("id", previousCursor);
@@ -210,7 +208,6 @@ const BlockSummary = () => {
             }
             className="commontable"
           />
-        
         }
         {totalPages > 1 && (
           <Pagination
@@ -225,7 +222,6 @@ const BlockSummary = () => {
           />
         )}
       </div>
-     
     </div>
   );
 };

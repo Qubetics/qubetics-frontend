@@ -1,7 +1,7 @@
 import { useLatestData } from "@/components/contexts/latest_data";
 import { randomNoGenerator } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "./node.scss";
 import DarkNodeMap from "./NodeMap";
@@ -12,18 +12,33 @@ import { InitStatus, tooltipContent } from "@/constant/constant";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
+import getStatistics from "@/services/getStatistics";
 function QubeticNetworkNode({ nodesData, countryNode }) {
   const webSocketData = useLatestData();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const blockHeight = webSocketData?.blocks?.blocknumber || "";
+  const [stats, setStats] = useState();
+
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+  useEffect(() => {
+    fetchEVMStats();
+  }, []);
+
   const nodePerformanceData = [
     {
-      value: blockHeight ? blockHeight : 0,
+      value: blockHeight ? blockHeight : stats?.latest_block ?? 0,
       label: "Block Height",
       content: tooltipContent.block_Height,
     },
     {
-      value: 0,
+      value: stats?.bondedTokens ? Number(stats?.bondedTokens).toFixed(4) : 0,
       label: "Bonded Coins",
       content: tooltipContent.bonded_Coins,
     },

@@ -1,6 +1,5 @@
-import { capitalizeWord } from "@/utils/commonFunctions";
+import { firstCapitalLetter } from "@/constant/constant";
 import Link from "next/link";
-import React from "react";
 
 const TransactionAction = ({ data }) => {
   const isDataExits = JSON?.parse(data?.logs);
@@ -8,7 +7,7 @@ const TransactionAction = ({ data }) => {
     <>
       {isDataExits && (
         <div className="Transection__Action">
-          <div className="Transection__Action__details">
+          {/* <div className="Transection__Action__details">
             <div>
               <p className="action actiondata">Transaction Action</p>
 
@@ -28,12 +27,18 @@ const TransactionAction = ({ data }) => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
           <div
             className="Transection__Action__details"
             style={{ marginTop: "15px" }}
           >
             <div>
+              <p className="action actiondata"> Transaction Type</p>
+              <div>
+                <p> {firstCapitalLetter(JSON?.parse(data?.input)?.name)} </p>
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
               <p className="action actiondata"> Tokens Transferred</p>
               <div>
                 <p>ERC-20</p>
@@ -47,7 +52,7 @@ const TransactionAction = ({ data }) => {
                     href={`/address/${
                       JSON.parse(data?.logs)[0]?.events[0]?.value
                     }`}
-                    className="Transaction_Action_Links"
+                    className="hoverTrans"
                   >
                     {JSON.parse(data?.logs)[0]?.events[0]?.value}{" "}
                   </Link>{" "}
@@ -57,7 +62,16 @@ const TransactionAction = ({ data }) => {
             <div style={{ marginTop: "15px" }}>
               <p className="action actiondata">To</p>
               <div>
-                <p>{JSON.parse(data?.logs)[0]?.events[1]?.value}</p>
+                <p>
+                  <Link
+                    href={`/address/${
+                      JSON.parse(data?.logs)[0]?.events[1]?.value
+                    }`}
+                    className="hoverTrans"
+                  >
+                    {JSON.parse(data?.logs)[0]?.events[1]?.value}
+                  </Link>
+                </p>
               </div>
             </div>
             <div style={{ marginTop: "15px" }}>
@@ -71,8 +85,8 @@ const TransactionAction = ({ data }) => {
               <div>
                 <p>
                   <Link
-                    href={`/address/${data?.tokenInfo?.contractAddress}`}
-                    className="Transaction_Action_Links"
+                    href={`/contract/${data?.tokenInfo?.contractAddress}`}
+                    className="hoverTrans"
                     title={data?.tokenInfo?.contractAddress}
                   >
                     {" "}

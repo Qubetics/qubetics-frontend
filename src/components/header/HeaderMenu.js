@@ -56,7 +56,7 @@ function HeaderMenu({ onCloseDrawer }) {
   return (
     <>
       <ul className="mob__List">
-        <li onClick={onCloseDrawer}>
+        <li key={1} onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
@@ -66,7 +66,7 @@ function HeaderMenu({ onCloseDrawer }) {
           </Link>
         </li>
 
-        <li>
+        <li key={2}>
           <Space wrap>
             <Select
               getPopupContainer={(triggerNode) => triggerNode.parentNode}
@@ -84,7 +84,7 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
 
         {/* {chainType === "EVM Chain" && ( */}
-        <li onClick={onCloseDrawer}>
+        <li key={3} onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
@@ -95,7 +95,7 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
         {/* )} */}
 
-        <li onClick={onCloseDrawer}>
+        <li key={4} onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={
@@ -107,7 +107,7 @@ function HeaderMenu({ onCloseDrawer }) {
           </Link>
         </li>
 
-        <li onClick={onCloseDrawer}>
+        <li key={5} onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={pathname.includes(Routes.NODES) ? "active" : "inactive"}
@@ -118,7 +118,7 @@ function HeaderMenu({ onCloseDrawer }) {
         </li>
 
         {/* {chainType === "EVM Chain" && ( */}
-        <li>
+        <li key={6}>
           <Space wrap>
             <Select
               getPopupContainer={(triggerNode) => triggerNode.parentNode}
