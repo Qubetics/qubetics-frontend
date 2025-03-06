@@ -33,7 +33,7 @@ const convertToDateTime = (date) => {
   } else {
     dates = dateObj.getTime();
   }
-  let timeLeft = moment(dates).format("MMM D YYYY, HH:mm");
+  let timeLeft = moment(dates).format("MMM, D, YYYY, HH:mm");
   return timeLeft;
 };
 

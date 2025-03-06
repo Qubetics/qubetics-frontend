@@ -43,6 +43,7 @@ export default function LayoutProvider({ children }) {
             </button>
           </div>
         )}
+       
         <Header />
 
         <main className="maininner">

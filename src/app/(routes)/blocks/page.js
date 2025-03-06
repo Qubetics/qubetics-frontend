@@ -21,7 +21,6 @@ import "./blocksummary.scss";
 
 const BlockSummary = () => {
   const router = useRouter();
-
   const searchParams = useSearchParams();
   const { isNetworkChanged } = useGetNetwork();
   const [blocksData, setBlocksData] = useState([]);
