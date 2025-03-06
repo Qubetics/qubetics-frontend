@@ -3,39 +3,39 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 
 const AnalyticGraph = ({ apiData }) => {
-    const transferAmountSeries = apiData?.map((item) => [
-      item.createdAt * 1000, // Convert seconds to milliseconds
-      // If a value exists, simplify it and then convert it back to Number (or keep as string if only for display)
-      item.count.transferAmount
-        ? Number(formatDecimal(item.count.transferAmount))
-        : 0,
-    ]);
+  const transferAmountSeries = apiData?.map((item) => [
+    item.createdAt * 1000, // Convert seconds to milliseconds
+    // If a value exists, simplify it and then convert it back to Number (or keep as string if only for display)
+    item.count.transferAmount
+      ? Number(formatDecimal(item.count.transferAmount))
+      : 0,
+  ]);
 
-    const transferCountSeries = apiData?.map((item) => [
-      item.createdAt * 1000,
-      item.count.transferCount
-        ? Number(formatDecimal(item.count.transferCount))
-        : 0,
-    ]);
+  const transferCountSeries = apiData?.map((item) => [
+    item.createdAt * 1000,
+    item.count.transferCount
+      ? Number(formatDecimal(item.count.transferCount))
+      : 0,
+  ]);
 
-    const uniqueSendersSeries = apiData?.map((item) => [
-      item.createdAt * 1000,
-      item.count.uniqueSenders
-        ? Number(formatDecimal(item.count.uniqueSenders))
-        : 0,
-    ]);
-    const uniqueReciverSeries = apiData?.map((item) => [
-      item.createdAt * 1000,
-      item.count.uniqueReceivers
-        ? Number(formatDecimal(item.count.uniqueReceivers))
-        : 0,
-    ]);
-    const totalUniqueSeries = apiData?.map((item) => [
-      item.createdAt * 1000,
-      item.count.totalUniques
-        ? Number(formatDecimal(item.count.totalUniques))
-        : 0,
-    ]);
+  const uniqueSendersSeries = apiData?.map((item) => [
+    item.createdAt * 1000,
+    item.count.uniqueSenders
+      ? Number(formatDecimal(item.count.uniqueSenders))
+      : 0,
+  ]);
+  const uniqueReciverSeries = apiData?.map((item) => [
+    item.createdAt * 1000,
+    item.count.uniqueReceivers
+      ? Number(formatDecimal(item.count.uniqueReceivers))
+      : 0,
+  ]);
+  const totalUniqueSeries = apiData?.map((item) => [
+    item.createdAt * 1000,
+    item.count.totalUniques
+      ? Number(formatDecimal(item.count.totalUniques))
+      : 0,
+  ]);
 
   const options = {
     chart: {
@@ -78,6 +78,10 @@ const AnalyticGraph = ({ apiData }) => {
       enabled: true,
       layout: "horizontal",
       align: "center",
+      itemHoverStyle: { color: "#A0A0A3" },
+      itemStyle: {
+        color: "white",
+      },
       verticalAlign: "bottom",
     },
     series: [
