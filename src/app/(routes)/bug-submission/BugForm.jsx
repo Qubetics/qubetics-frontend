@@ -342,7 +342,7 @@ const BugForm = () => {
 
         <div>
           <CustomCheckbox
-            label="By submitting, I agree to the rules of the Quebetics Testnet Rewards Program, including the potential public acknowledgment of my contribution."
+            label="By submitting, I agree to the rules of the Qubetics Testnet Rewards Program, including the potential public acknowledgment of my contribution."
             checked={isChecked}
             onChange={handleCheckboxChange}
           />
