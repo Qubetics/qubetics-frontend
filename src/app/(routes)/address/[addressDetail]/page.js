@@ -30,7 +30,7 @@ import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
-import TokenTransactions from "@/components/z.js/TokenTransactions";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
