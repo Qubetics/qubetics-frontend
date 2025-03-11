@@ -94,7 +94,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         // max: maximum?.count < 4 ? 4 : maximum?.count,
         max:
           title === "Qubetics Price" && maximum?.count < 4
-            ? 0.1
+            ? 0.22
             : maximum?.count < 4
             ? 4
             : maximum?.count,
