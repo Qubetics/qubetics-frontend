@@ -15,6 +15,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       data?.length > 0 ? data?.length : generateData(chartType).length;
 
     let { seriesData, maximum } = chartSeriesValue(data, chartType);
+
     const options = {
       chart: {
         type: "area",
@@ -32,6 +33,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         useHTML: true, // Enable HTML for custom styling
         formatter: function () {
           const xAxisData = this.series.xAxis.categories[this.x];
+
           return `
             <div style="  white-space: normal; 
         font-size: 15px;
@@ -78,9 +80,9 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       },
       xAxis: {
         type: "linear",
-        // title: {
-        //   text: chartType,
-        // },
+        title: {
+          text: chartType,
+        },
         min: 0,
         max: maxLength - 1,
         scrollbar: {
