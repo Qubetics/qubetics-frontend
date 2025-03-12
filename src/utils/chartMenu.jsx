@@ -7,11 +7,12 @@ const {
   ALL_CHARTS_HOUR,
   TRANS_HISTORY_CHART_MINUTES,
   TRANS_HISTORY_CHART_YEAR,
+  ALL_CHART_THRITY_DAYS,
 } = require("@/constant/graphTableValues");
 
 export const chartMenu = (data, chartType) => {
+  
   let labelIndex = [];
-
   if (
     chartType === TRANS_HISTORY_CHART_SECONDS ||
     chartType === ALL_CHART_ONE_DAY ||
@@ -32,9 +33,14 @@ export const chartMenu = (data, chartType) => {
   } else if (chartType === TRANS_HISTORY_CHART_MINUTES) {
     labelIndex =
       data?.lenght > 0
-        ? data?.map((item, index) =>
-            moment(item?.createdAt).format("DD MMM ")
-          )
+        ? data?.map((item, index) => moment(item?.createdAt).format("DD MMM "))
+        : generateData(chartType).map((item, index) =>
+            moment(item.createdAt).format("DD MMM ")
+          );
+  } else if (chartType === ALL_CHART_THRITY_DAYS) {
+    labelIndex =
+      data?.lenght > 0
+        ? data?.map((item, index) => moment(item?.createdAt).format("DD MMM "))
         : generateData(chartType).map((item, index) =>
             moment(item.createdAt).format("DD MMM ")
           );
