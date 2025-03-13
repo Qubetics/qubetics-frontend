@@ -7,7 +7,6 @@ import {
   METAMASK_CHAIN_NAME,
   Messages,
 } from "@/constant/constant";
-import { JsonRpcProvider } from "ethers";
 import toast from "react-hot-toast";
 import Web3 from "web3";
 
@@ -20,7 +19,6 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
   const chain_Id = await web3.eth.getChainId();
   const chainIdHex = `0x${chain_Id.toString(16)}`;
   const provider = window.ethereum;
-
   const deviceType = getDeviceType();
   if (deviceType !== "Desktop") {
     if (window.ethereum === undefined) {
@@ -58,12 +56,12 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
             {
               chainId: chainIdHex,
               chainName: METAMASK_CHAIN_NAME,
-              rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
-              blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
               nativeCurrency: {
                 symbol: EXPLORER_CURRENCY_NAME,
                 decimals: 18,
               },
+              rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+              blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
             },
           ],
         });
@@ -123,7 +121,7 @@ export const addQubetic = async () => {
     const chain_Id = await web3.eth.getChainId();
     const chainIdHex = `0x${chain_Id.toString(16)}`;
     const provider = window.ethereum;
-
+    
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
       if (window.ethereum === undefined) {
@@ -212,4 +210,3 @@ export const addQubetic = async () => {
     toast.error(error.message);
   }
 };
-

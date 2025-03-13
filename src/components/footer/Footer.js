@@ -82,13 +82,13 @@ const Footer = () => {
           <Col xs={24} sm={12} lg={4}>
             <h3>Product & Services</h3>
             <Link
-              href={`https://${origin}-validator.qubetics.work/login`}
+              href={`https://validator-testnet.qubetics.work/login`}
               target="_blank"
             >
               Qubetics Validator App
             </Link>
             <Link
-              href={`https://${origin}-delegator.qubetics.work/login`}
+              href={`https://delegator-testnet.qubetics.work/ `}
               target="_blank"
             >
               Qubetics Delegator App
