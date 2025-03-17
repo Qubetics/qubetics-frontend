@@ -88,6 +88,7 @@ const ChainAnalyticsGraph = (props) => {
 
             <Space wrap>
               <Select
+                title=""
                 getPopupContainer={(trigger) => trigger.parentNode}
                 defaultValue={ALL_CHART_SEVEN_DAY}
                 style={{ width: 80 }}

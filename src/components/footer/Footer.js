@@ -107,7 +107,10 @@ const Footer = () => {
             >
               Qubetics App
             </Link>
-            <Link href="https://qubetics-ide.qubetics.work/" target="_blank">
+            <Link
+              href="https://testnet-qubecode-ide.qubetics.work/"
+              target="_blank"
+            >
               Qubetics IDE
             </Link>
             <Link

@@ -3,8 +3,8 @@ import BlockDetailDescription from "@/components/blockDetailDescription/BlockDet
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { useSearchData } from "@/components/contexts/searchingData";
 import { useThemeData } from "@/components/contexts/theme_context";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import TransactionTable from "@/components/transactionTable/TransactionTable";
 import {
   ErrorStatus,
@@ -18,7 +18,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../../../components/transferInfo/TransferInformation.scss";
 import "../blocksummary.scss";
-import FilterResult from "@/components/FilterResult/FilterResult";
 
 const BlockDetails = ({ params }) => {
   const searchParams = useSearchParams();

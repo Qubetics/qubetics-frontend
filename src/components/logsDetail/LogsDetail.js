@@ -87,18 +87,19 @@ function LogsDetail(data) {
         <div className="ineerDetail">
           <h2>Value</h2>
           <p>
-            {contractLogs?.events
-              ?.filter((e) => e.name === "value")
-              .map((e, i) => {
-                return (
-                  <p>
-                    {/* {e?.name} {e?.type}{" "} */}
+            {contractLogs?.events?.some((e) => e.name === "value") ? (
+              contractLogs?.events
+                ?.filter((e) => e.name === "value")
+                .map((e, i) => (
+                  <p key={i}>
                     {e?.value.includes("0x") && e.type.includes("uint")
                       ? Number(e?.value)
                       : e?.value}
                   </p>
-                );
-              })}
+                ))
+            ) : (
+              <p>-</p>
+            )}
           </p>
         </div>
       </div>

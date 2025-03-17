@@ -1,10 +1,16 @@
 @import "../../mixins";
 @import "../../var";
 .logDetail {
-  background: linear-gradient(88deg, rgba(255, 255, 255, 0) 1.62%, rgba(255, 255, 255, 0.1) 48.43%, rgba(255, 255, 255, 0) 98.38%);
+  background: linear-gradient(
+    88deg,
+    rgba(255, 255, 255, 0) 1.62%,
+    rgba(255, 255, 255, 0.1) 48.43%,
+    rgba(255, 255, 255, 0) 98.38%
+  );
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   backdrop-filter: blur(32px);
+  margin-bottom: 50px;
   .logInner {
     padding: 26px 30px;
     border-radius: 14px;

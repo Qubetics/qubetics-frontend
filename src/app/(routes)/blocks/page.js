@@ -177,6 +177,7 @@ const BlockSummary = () => {
 
               <Space wrap>
                 <Select
+                title=""
                   onChange={handleChange}
                   defaultValue="newest"
                   style={{

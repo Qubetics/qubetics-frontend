@@ -69,6 +69,7 @@ function HeaderMenu({ onCloseDrawer }) {
         <li key={2}>
           <Space wrap>
             <Select
+              title=""
               getPopupContainer={(triggerNode) => triggerNode.parentNode}
               className={`headerSelect ${
                 pathname.includes(Routes.BLOCKS) ||
@@ -121,6 +122,7 @@ function HeaderMenu({ onCloseDrawer }) {
         <li key={6}>
           <Space wrap>
             <Select
+              title=""
               getPopupContainer={(triggerNode) => triggerNode.parentNode}
               className={`headerSelect ${
                 pathname.includes(Routes.CONTRACTS) ||
