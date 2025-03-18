@@ -14,11 +14,7 @@ import {
 } from "@/constant/constant";
 import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
-import {
-  noExponential,
-  noExponentialFixed,
-  simplifyNumber,
-} from "@/utils/commonFunctions";
+import { noExponentialFixed } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -63,12 +59,7 @@ function page() {
       id: 1,
       title:
         "The annual percentage yield earned on staked coins, calculated directly from on-chain data.",
-      text: (
-        <>
-          Onchain APY
-         
-        </>
-      ),
+      text: <>Onchain APY</>,
       balance: parsedData?.apy ? parsedData?.apy + " %" : "0 %",
       img: <Onchainapy />,
       contract: "true",
@@ -77,12 +68,7 @@ function page() {
       id: 2,
       title:
         "The total number of validators participating in securing the network by validating and proposing blocks.",
-      text: (
-        <>
-          Total Validators
-         
-        </>
-      ),
+      text: <>Total Validators</>,
       balance: validatorData?.count ? validatorData?.count : "0",
       img: <Totalvalidators />,
       contract: true,
@@ -140,9 +126,7 @@ function page() {
 
   return (
     <div className="validatorsCard">
-     
       <div className="container">
-        
         <FilterResult />
         <Heading heading="Validators" />
         <div className="cardContract">
@@ -187,7 +171,6 @@ function page() {
           />
         )}
       </div>
-    
     </div>
   );
 }
