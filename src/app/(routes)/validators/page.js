@@ -14,7 +14,7 @@ import {
 } from "@/constant/constant";
 import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
-import { noExponentialFixed } from "@/utils/commonFunctions";
+import { formatDecimal, noExponentialFixed } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -24,6 +24,7 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
+import getStatistics from "@/services/getStatistics";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,11 +32,25 @@ function page() {
   const [totalPages, setTotalPages] = useState(1);
   const [validatorStatus, setValidatorStatus] = useState(InitStatus);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const [stats, setStats] = useState("");
 
   const webSocketData = useLatestData();
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
+
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    fetchEVMStats();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,8 +93,8 @@ function page() {
       title:
         "The percentage of the total circulating supply of tokens that is currently staked or bonded to validators.",
 
-      balance: parsedData?.bondedRate
-        ? noExponentialFixed(parsedData?.bondedRate / 10 ** 23) + " %"
+      balance: stats?.bondedRate
+        ? `${formatDecimal(Number(stats?.bondedRate))}%`
         : "0 %",
       img: <Bondedrate />,
       contract: "true",
