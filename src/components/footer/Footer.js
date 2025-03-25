@@ -114,7 +114,7 @@ const Footer = () => {
               Qubetics IDE
             </Link>
             <Link
-              href={`https://qubeqode-basic-testnet.qubetics.work/work-space`}
+              href={`https://qubeqode-basic-testnet.qubetics.work/deploy`}
               target="_blank"
             >
               QubeQode
