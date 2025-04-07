@@ -3,6 +3,7 @@ import {
   contractHeaderFunction,
   EXPLORER_CHAIN_NAME,
   EXPLORER_METAMASK_NETWORK_URL,
+  NodeHeaderFunction,
   Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
@@ -108,7 +109,7 @@ function HeaderMenu({ onCloseDrawer }) {
           </Link>
         </li>
 
-        <li key={5} onClick={onCloseDrawer}>
+        {/* <li key={5} onClick={onCloseDrawer}>
           <Link
             prefetch={true}
             className={pathname.includes(Routes.NODES) ? "active" : "inactive"}
@@ -116,6 +117,23 @@ function HeaderMenu({ onCloseDrawer }) {
           >
             Nodes
           </Link>
+        </li> */}
+        <li key={2}>
+          <Space wrap>
+            <Select
+              title=""
+              getPopupContainer={(triggerNode) => triggerNode.parentNode}
+              className={`headerSelect ${
+                pathname.includes(Routes.NODES) ||
+                pathname.includes(Routes.SYNC)
+                  ? "active"
+                  : "inactive"
+              }`}
+              defaultValue="Nodes"
+              value="Nodes"
+              options={NodeHeaderFunction(pathname, onCloseDrawer)}
+            />
+          </Space>
         </li>
 
         {/* {chainType === "EVM Chain" && ( */}

@@ -132,6 +132,7 @@ export const Routes = {
   Tx_Hash: "/tx/",
   FAUCET: "/faucet",
   NODES: "/nodes",
+  SYNC: "/sync",
   NOT_FOUND: "/notfound",
   CONTRACTS: "/contract",
   CONTRACT_DETAIL: "/contract/",
@@ -225,6 +226,32 @@ export function BlockchainHeaderFunction(currentPath, onClick) {
     },
   ];
   return blockchainHeader;
+}
+//Node header Function
+export function NodeHeaderFunction(currentPath, onClick) {
+  const NodeHeader = [
+    {
+      key: "1",
+      value: "Node",
+      className: currentPath === Routes.NODES ? "activeOptions" : "",
+      label: (
+        <Link onClick={onClick} href="/nodes">
+          Nodes
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      value: "Sync",
+      className: currentPath === Routes.SYNC ? "activeOptions" : "",
+      label: (
+        <Link onClick={onClick} href="/sync">
+          Sync
+        </Link>
+      ),
+    },
+  ];
+  return NodeHeader;
 }
 
 /*BlockChain Header*/
