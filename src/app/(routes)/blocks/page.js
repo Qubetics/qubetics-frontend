@@ -40,12 +40,6 @@ const BlockSummary = () => {
 
   // const { isLight } = useThemeData();
 
-  // useEffect(() => {
-  //   if (searchParams.get("chain") == "native") {
-  //     localStorage.setItem("chainType", "Native Chain");
-  //     router.push("/blocks");
-  //   }
-  // }, [searchParams]);
 
   const fetchData = async () => {
     try {

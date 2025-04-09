@@ -8,7 +8,7 @@ import DarkNodeMap from "./NodeMap";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
-import { InitStatus, tooltipContent } from "@/constant/constant";
+import { formatValue, InitStatus, tooltipContent } from "@/constant/constant";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
@@ -38,7 +38,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       content: tooltipContent.block_Height,
     },
     {
-      value: stats?.bondedTokens ? Number(stats?.bondedTokens).toFixed(4) : 0,
+      value: stats?.bondedTokens ? formatValue(Number(stats?.bondedTokens)) : 0,
       label: "Bonded Coins",
       content: tooltipContent.bonded_Coins,
     },

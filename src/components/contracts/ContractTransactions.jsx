@@ -31,6 +31,7 @@ const ContractTransactions = ({ hash, tab }) => {
         hash,
         tab
       );
+
       setTransactions(response?.data?.contracts);
       setTransactionStatus(SuccessStatus);
       const count = Number(response?.data?.count ?? 0) / tableLimit;

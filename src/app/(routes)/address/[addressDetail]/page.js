@@ -179,7 +179,7 @@ const page = ({ params }) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);
     // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
-
+  console.log(dropDownTokenData, "dropDownTokenData");
   return (
     <div className="blocksummary">
       <div className="container">
@@ -265,7 +265,10 @@ const page = ({ params }) => {
                               ? formatValue(
                                   noExponential(
                                     Number(res?.tokenBalance) /
-                                      10 ** Number(res?.decimals)
+                                      10 **
+                                        Number(
+                                          res?.decimals ? res?.decimals : 0
+                                        )
                                   )
                                 )
                               : 0}

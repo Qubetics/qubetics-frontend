@@ -14,11 +14,7 @@ import {
 } from "@/constant/constant";
 import { validatorsColumn } from "@/constant/graphTableValues";
 import getValidators from "@/services/getValidators";
-import {
-  noExponential,
-  noExponentialFixed,
-  simplifyNumber,
-} from "@/utils/commonFunctions";
+import { formatDecimal, noExponentialFixed } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -28,6 +24,7 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
+import getStatistics from "@/services/getStatistics";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,11 +32,25 @@ function page() {
   const [totalPages, setTotalPages] = useState(1);
   const [validatorStatus, setValidatorStatus] = useState(InitStatus);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const [stats, setStats] = useState("");
 
   const webSocketData = useLatestData();
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
+
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    fetchEVMStats();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,12 +74,7 @@ function page() {
       id: 1,
       title:
         "The annual percentage yield earned on staked coins, calculated directly from on-chain data.",
-      text: (
-        <>
-          Onchain APY
-         
-        </>
-      ),
+      text: <>Onchain APY</>,
       balance: parsedData?.apy ? parsedData?.apy + " %" : "0 %",
       img: <Onchainapy />,
       contract: "true",
@@ -77,12 +83,7 @@ function page() {
       id: 2,
       title:
         "The total number of validators participating in securing the network by validating and proposing blocks.",
-      text: (
-        <>
-          Total Validators
-         
-        </>
-      ),
+      text: <>Total Validators</>,
       balance: validatorData?.count ? validatorData?.count : "0",
       img: <Totalvalidators />,
       contract: true,
@@ -92,8 +93,8 @@ function page() {
       title:
         "The percentage of the total circulating supply of tokens that is currently staked or bonded to validators.",
 
-      balance: parsedData?.bondedRate
-        ? noExponentialFixed(parsedData?.bondedRate / 10 ** 23) + " %"
+      balance: stats?.bondedRate
+        ? `${formatDecimal(Number(stats?.bondedRate))}%`
         : "0 %",
       img: <Bondedrate />,
       contract: "true",
@@ -140,9 +141,7 @@ function page() {
 
   return (
     <div className="validatorsCard">
-     
       <div className="container">
-        
         <FilterResult />
         <Heading heading="Validators" />
         <div className="cardContract">
@@ -187,7 +186,6 @@ function page() {
           />
         )}
       </div>
-    
     </div>
   );
 }

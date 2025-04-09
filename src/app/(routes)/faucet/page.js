@@ -70,6 +70,7 @@ function Page() {
         captchaToken: captchaToken,
       };
       setTransferStatus(FetchingStatus);
+
       await postFaucet(data)
         .then((res) => {
           if (res?.error == false) {
@@ -101,7 +102,6 @@ function Page() {
       <div className="container">
         <div className="searchblocks"></div>
         <div className="faucet_inner">
-          
           <FilterResult />
           <div className="faucet_inner__top">
             <div className="left">
@@ -140,7 +140,7 @@ function Page() {
                   </p>
                 )}
               </div>
-             
+
               {GoogleKey && (
                 <div className="captcha">
                   <ReCAPTCHA
@@ -178,7 +178,6 @@ function Page() {
                 )}
               </div>
             </div>
-          
           </div>
         </div>
       </div>

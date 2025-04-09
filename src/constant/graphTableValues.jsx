@@ -994,15 +994,13 @@ export const contractTransactionsColumn = [
       <span className="">
         <Tooltip
           title={
-            text?.gasFee
-              ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(
-                  18
-                )
+            text?.txFee
+              ? Number(noExponential(Number(text?.txFee))).toFixed(18)
               : "0"
           }
         >
-          {text?.gasFee
-            ? Number(noExponential(Number(text?.gasFee) / 10 ** 18)).toFixed(6)
+          {text?.txFee
+            ? Number(noExponential(Number(text?.txFee))).toFixed(6)
             : "0"}
         </Tooltip>
       </span>
@@ -1016,13 +1014,19 @@ export const contractTransactionsColumn = [
       <span className="">
         <Tooltip
           title={
-            text?.txFee
-              ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
+            text?.value
+              ? Number(
+                  noExponential(
+                    Number(text?.value) / 10 ** Number(text?.decimal)
+                  )
+                )
               : "0"
           }
         >
-          {text?.txFee
-            ? Number(noExponential(Number(text?.txFee) / 10 ** 18)).toFixed(6)
+          {text?.value
+            ? Number(
+                noExponential(Number(text?.value) / 10 ** Number(text?.decimal))
+              )
             : "0"}
         </Tooltip>
       </span>
