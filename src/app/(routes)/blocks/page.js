@@ -40,7 +40,6 @@ const BlockSummary = () => {
 
   // const { isLight } = useThemeData();
 
-
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -171,7 +170,7 @@ const BlockSummary = () => {
 
               <Space wrap>
                 <Select
-                title=""
+                  title=""
                   onChange={handleChange}
                   defaultValue="newest"
                   style={{

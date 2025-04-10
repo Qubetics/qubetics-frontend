@@ -5,7 +5,6 @@ import getNodes from "@/services/getAllNodes";
 import { useEffect, useState } from "react";
 import "../blocks/blocksummary.scss";
 import QubeticNetworkNode from "./QubeticNetworkNode";
-import getStatistics from "@/services/getStatistics";
 
 const Nodes = () => {
   const [nodesStatus, setNodesStatus] = useState(InitStatus);
