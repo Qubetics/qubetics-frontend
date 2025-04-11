@@ -1,5 +1,3 @@
-import { useLatestData } from "@/components/contexts/latest_data";
-import { randomNoGenerator } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
 import { Fragment, useEffect, useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -9,16 +7,16 @@ import DarkNodeMap from "./NodeMap";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import { formatValue, InitStatus, tooltipContent } from "@/constant/constant";
+import useBlockData from "@/hooks/useBlockData";
+import getStatistics from "@/services/getStatistics";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
-import getStatistics from "@/services/getStatistics";
 function QubeticNetworkNode({ nodesData, countryNode }) {
-  const webSocketData = useLatestData();
   const [searchStatus, setSerachStatus] = useState(InitStatus);
-  const blockHeight = webSocketData?.blocks?.blocknumber || "";
   const [stats, setStats] = useState();
-
+  const { lastBlock, blockHeight, webSocket } = useBlockData();
+ 
   const fetchEVMStats = async () => {
     try {
       let respose = await getStatistics();
@@ -43,14 +41,12 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       content: tooltipContent.bonded_Coins,
     },
     {
-      value: randomNoGenerator() + "s",
+      value: lastBlock ? lastBlock + "s" : 0 + "s",
       label: "Last Block",
       content: tooltipContent.last_Block,
     },
     {
-      value: webSocketData?.onChainMetric?.tpb
-        ? webSocketData?.onChainMetric?.tpb
-        : 0,
+      value: webSocket?.onChainMetric?.tpb ? webSocket?.onChainMetric?.tpb : 0,
       label: "TBP",
       content: tooltipContent.TPB,
     },
@@ -72,7 +68,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                 { xs: 12, sm: 20 },
               ]}
             >
-              {nodePerformanceData.map((item, index) => (
+              {nodePerformanceData?.map((item, index) => (
                 <Col key={index} xs={12} sm={12} md={12} lg={12}>
                   <div className="innerNode">
                     <h4>{item.value}</h4>

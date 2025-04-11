@@ -40,13 +40,6 @@ const BlockSummary = () => {
 
   // const { isLight } = useThemeData();
 
-  useEffect(() => {
-    if (searchParams.get("chain") == "native") {
-      localStorage.setItem("chainType", "Native Chain");
-      router.push("/blocks");
-    }
-  }, [searchParams]);
-
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -177,7 +170,7 @@ const BlockSummary = () => {
 
               <Space wrap>
                 <Select
-                title=""
+                  title=""
                   onChange={handleChange}
                   defaultValue="newest"
                   style={{

@@ -25,7 +25,8 @@ const RecentTransactions = () => {
   const [currentIndex, setCurrentIndex] = useState(4);
   const maxNonStaticElements = 6;
   const router = useRouter();
-  const { isNetworkChanged } = useGetNetwork();
+  // const { isNetworkChanged } = useGetNetwork();
+ 
   const fetchData = async () => {
     try {
       setRecentTxnStatus(FetchingStatus);
@@ -47,12 +48,6 @@ const RecentTransactions = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (isNetworkChanged == true) {
-      fetchData();
-    }
-  }, [isNetworkChanged]);
 
   useEffect(() => {
     getSocketTxn();
