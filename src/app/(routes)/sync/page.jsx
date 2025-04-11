@@ -15,9 +15,9 @@ const Sync = () => {
       setSyncData(res?.data?.result);
     });
   }, []);
-  console.log(syncData, "sync");
+
   return (
-    <div className="sync_header">
+    <div className="sync_header container">
       <div className="sync_header_left">
         <div className="sync_header_left_inner">
           <Image priority src={LogoIcon} alt="Logo" width={176} height={50} />
