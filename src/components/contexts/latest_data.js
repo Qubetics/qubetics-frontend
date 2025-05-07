@@ -60,7 +60,7 @@ export function LatestDataProvider({ children }) {
       subscribeLatestBlocks((data) => setBlocks(data));
       subscribeOnChainMetrics((data) => setOnChainMetric(data));
       subscribeLatestTransaction((data) => setTransactions(data));
-      // subscribeLatestContractsGraph((data) => setContractsGraph(data));
+      // subscribeLatestContractsGraph((data) => setContractsGraph(data));  
       // subscribeCoinTransferGraph((data) => setTransferGraph(data));
       subscribeTransactionGraph((data) => setTransactionGraph(data));
       // subscribeAccountsGraph((data) => setAccountsGraph(data));

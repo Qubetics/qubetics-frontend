@@ -179,7 +179,7 @@ const page = ({ params }) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);
     // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
-  console.log(dropDownTokenData, "dropDownTokenData");
+
   return (
     <div className="blocksummary">
       <div className="container">

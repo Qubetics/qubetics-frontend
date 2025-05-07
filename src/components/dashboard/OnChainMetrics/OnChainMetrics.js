@@ -46,7 +46,7 @@ const OnChainMetrics = ({ stats }) => {
               text="TICS Price"
               balance={
                 price
-                  ? "$ " + Number(price.toFixed(6)) + " " + " USD"
+                  ? "$ " + Number(price).toFixed(6) + " " + " USD"
                   : "$ 0.05513968 USD"
               }
               img={<TickPriceIcon />}
@@ -107,6 +107,10 @@ const OnChainMetrics = ({ stats }) => {
                       {formatMillionNumber(webSocketData?.analytics?.marketCap)}
                     </>
                   </Tooltip>
+                ) : stats?.circulationSupply && price ? (
+                  formatMillionNumber(
+                    Number(price) * Number(stats?.circulationSupply)
+                  )
                 ) : (
                   0
                 )
