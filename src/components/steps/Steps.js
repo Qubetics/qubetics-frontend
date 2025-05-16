@@ -18,6 +18,17 @@ const steps = [
   },
 ];
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * App component that manages the state and display of a multi-step verification process.
+ * It utilizes Ant Design's Steps component for navigation and dynamically renders the
+ * appropriate content for each step. The component maintains the current step state and
+ * provides navigation functions to proceed to the next step or return to the previous one.
+ * It also conditionally renders either the PublishContract or VerifySecondStep component
+ * based on the current step.
+ */
+
+/*******  2e72839a-080a-4d30-adeb-0cdfbcab6ac1  *******/
 const App = () => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
 

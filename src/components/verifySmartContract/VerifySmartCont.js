@@ -25,12 +25,12 @@ function VerifySmartCont({ Children, FormButton }) {
                 <li>
                   <p>
                     {verifyContractConstant.COMPILE}{" "}
-                    <Link
-                      href="https://qubetics-ide.qubetics.work/"
+                    {/* <Link
+                      href="https://testnet-qubecode-ide.qubetics.work/"
                       target="__blank"
-                    >
+                    > */}
                       Qubetics IDE
-                    </Link>
+                    {/* </Link> */}
                     , {verifyContractConstant.CORRECT_COMPILE}
                   </p>
                 </li>

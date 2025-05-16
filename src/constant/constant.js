@@ -150,7 +150,7 @@ export const graphUrl = {
   txn_fee: "explorer/graph/tx-fee",
 };
 export const verifyContractConstant = {
-  INFO: "A simple and structured interface for verifying smart contractsthat fit in a single file",
+  INFO: "A simple and structured interface for verifying smart contracts that fit in a single file",
   END_POINT_LINK: " For programmatic contract verification, check out the",
   COMPILE: "If the contract compiles correctly at",
   CORRECT_COMPILE: "it should also compile correctly here.",
@@ -161,7 +161,7 @@ export const verifyContractConstant = {
   SELECT_LICENSE_TYPE: "Please select Open Source License Type",
   VERIFY_AND_PUBLISH_CONTRACT: "Verify And Publish Contract",
   LISTING_ONE:
-    "Source code verification provides transparency for users interacting with smart contracts. By uploading the source code, Etherscan will match the compiled code with that on the blockchain. Just like contracts, a 'smart contract' should provide end users with more information on what they are 'digitally signing' for and give users an opportunity to audit the code to independently verify that it actually does what it is supposed to do.",
+    "Source code verification provides transparency for users interacting with smart contracts. By uploading the source code, TICSscan will match the compiled code with that on the blockchain. Just like contracts, a 'smart contract' should provide end users with more information on what they are 'digitally signing' for and give users an opportunity to audit the code to independently verify that it actually does what it is supposed to do.",
   LITING_TWO:
     "Please be informed that advanced settings (e.g. bytecodeHash: 'none' or viaIR: 'true') can be accessed via Solidity (Standard-Json-Input) verification method. More information can be found under Solidity's 'Compiler Input and Output JSON Description' documentation section.",
 };
