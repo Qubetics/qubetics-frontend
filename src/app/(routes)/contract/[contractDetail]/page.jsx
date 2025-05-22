@@ -235,7 +235,7 @@ const ContractDetail = () => {
       key: "5",
       children: <AnalyticTab hash={params?.contractDetail} />,
     },
-  ];
+  ].filter(Boolean);
 
   const handleTabSelect = (e) => {
     setTab(e);

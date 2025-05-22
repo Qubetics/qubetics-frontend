@@ -15,8 +15,12 @@ import {
 import getAbiData from "@/services/getAbiData";
 import dynamic from "next/dynamic";
 
-const CodeTabContent = dynamic(() => import("./CodeTabContent"), { ssr: false });
-const ReadCodeContent = dynamic(() => import("./ReadCodeContent"), { ssr: false });
+const CodeTabContent = dynamic(() => import("./CodeTabContent"), {
+  ssr: false,
+});
+const ReadCodeContent = dynamic(() => import("./ReadCodeContent"), {
+  ssr: false,
+});
 const WriteContent = dynamic(() => import("./WriteContent"), { ssr: false });
 const Loader = dynamic(() => import("../loader/Loader"), { ssr: false });
 
@@ -71,7 +75,7 @@ function ContractDtlTabs({ hash }) {
         label: "Write As Proxy",
         children: <WriteContent abiData={proxyAbiData} hash={hash} />,
       },
-  ];
+  ].filter(Boolean);
   return (
     <>
       {AbiStatus === InitStatus || AbiStatus === FetchingStatus ? (

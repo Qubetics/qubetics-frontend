@@ -18,7 +18,6 @@ const steps = [
   },
 ];
 
-/*************  ✨ Windsurf Command ⭐  *************/
 /**
  * App component that manages the state and display of a multi-step verification process.
  * It utilizes Ant Design's Steps component for navigation and dynamically renders the
@@ -28,7 +27,6 @@ const steps = [
  * based on the current step.
  */
 
-/*******  2e72839a-080a-4d30-adeb-0cdfbcab6ac1  *******/
 const App = () => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
 
