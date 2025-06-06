@@ -1,21 +1,21 @@
-name: '[testnet] Deploy explorer frontend'
+name: '[Prod] Deploy explorer frontend'
 
 on:
   push:
     branches: 
-      - testnet
+      - prod
 
 jobs:
   testnet_deploy_explorer_frontend:
     uses: ./.github/workflows/explorer-frontend.yaml
     with:
-      SWR_ORGANIZATION: testnet-qubetics
-      ARGOCD_BRANCH: testnet
-      HUAWEI_REGION: 'ap-southeast-3'
+      SWR_ORGANIZATION: prod-qubetics
+      ARGOCD_BRANCH: prod
+      HUAWEI_REGION: 'ap-southeast-1'
       ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
       DEPLOYMENT_PATH: Frontend/deployment.yaml
-      HUAWEI_IMAGE: testnet-explorer-frontend
-      DOCKER_USERNAME: ap-southeast-3@BQG9INQF0BKVHSNQOLJG
+      HUAWEI_IMAGE: prod-qubetics-frontend
+      DOCKER_USERNAME: ap-southeast-1@BQG9INQF0BKVHSNQOLJG
       ENV: ${{ vars.TEST_ENV }}
     secrets:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
