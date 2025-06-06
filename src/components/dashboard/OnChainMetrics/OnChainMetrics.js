@@ -45,9 +45,7 @@ const OnChainMetrics = ({ stats }) => {
             <CardsOnchain
               text="TICS Price"
               balance={
-                price
-                  ? "$ " + Number(price).toFixed(6) + " " + " USD"
-                  : "$ 0.05513968 USD"
+                price ? "$" + Number(price).toFixed(6) + " " + " USD" : "$0 USD"
               }
               img={<TickPriceIcon />}
               title="The current market price of 1 Qubetics (TICS) in USD."
@@ -93,7 +91,7 @@ const OnChainMetrics = ({ stats }) => {
             <CardsOnchain
               addicon="true"
               iconCopy="true"
-              title="The total value of all circulating Qubetics (TICS), calculated as the current price multiplied by the circulating supply."
+              title="The total value of all circulating Qubetics (TICS) in Dollar(USD), calculated as the current price multiplied by the circulating supply."
               text="Market Cap"
               balance={
                 webSocketData?.analytics?.marketCap ? (
@@ -108,11 +106,12 @@ const OnChainMetrics = ({ stats }) => {
                     </>
                   </Tooltip>
                 ) : stats?.circulationSupply && price ? (
+                  "$" +
                   formatMillionNumber(
                     Number(price) * Number(stats?.circulationSupply)
                   )
                 ) : (
-                  0
+                  "$" + 0
                 )
               }
               img={

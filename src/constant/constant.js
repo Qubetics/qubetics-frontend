@@ -194,7 +194,7 @@ export const tooltipContent = {
   block_Height:
     "The number of blocks added to the blockchain since its inception, indicating the blockchain’s current length.",
   bonded_Coins:
-    "The total amount of tokens bonded or staked in the network to secure it and earn rewards.",
+    "The total amount of TICS token bonded or staked in the network to secure it and earn rewards.",
   total_Nodes: "The total number of nodes connected to the Qubetics network.",
   last_Block: "The most recent block added to the blockchain.",
   TPB: "The total number of accounts or entities responsible for producing blocks on the blockchain.",
