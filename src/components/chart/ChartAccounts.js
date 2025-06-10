@@ -23,7 +23,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         backgroundColor: "#152A59",
       },
       title: {
-        text: " ",
+        text: "",
       },
       credits: {
         enabled: false,
@@ -81,7 +81,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       xAxis: {
         type: "linear",
         title: {
-          text: chartType,
+          text: "",
         },
         min: 0,
         max: maxLength - 1,

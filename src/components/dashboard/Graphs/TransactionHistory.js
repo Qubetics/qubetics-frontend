@@ -26,16 +26,6 @@ const TransactionHistory = (props) => {
   const [transactionStatus, setTransactionStatus] = useState(InitStatus); //init,fetching,success,error
   const { isNetworkChanged } = useGetNetwork();
 
-  // useEffect(() => {
-  //   if (webSocketData?.transactionGraph?.finalData) {
-  //     chartTimeType(
-  //       setTransactionHisChart,
-  //       transactionHisChart,
-  //       webSocketData?.transactionGraph
-  //     );
-  //   }
-  // }, [webSocketData?.transactionGraph]);
-
   const fetchChartData = async () => {
     setTransactionStatus(FetchingStatus);
     await getTransactionGraph(transactionHisChart?.type)
@@ -75,7 +65,7 @@ const TransactionHistory = (props) => {
         <div className="drop_histry">
           <div className="drop_histry__blinkLive">
             <h3>
-              Transaction History{" "}
+              Total Transaction History{" "}
               {/* <Tooltip
                 color="rgb(49 52 56)"
                 title={tooltipConstant.TRANSACTION_HISTORY_GRAPH}
