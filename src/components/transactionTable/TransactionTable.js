@@ -26,7 +26,7 @@ const TransactionTable = ({ params }) => {
     try {
       setTransactionByBlockStatus(FetchingStatus);
       const res = await getTransactionByBlocks(params, currentPage, tableLimit);
-      console.log(res, "res");
+
       if (res?.error === false) {
         setTransactionByBlock(res?.data?.transaction);
         const count = Number(res?.data?.count ?? 0) / tableLimit;
@@ -62,7 +62,7 @@ const TransactionTable = ({ params }) => {
       setCurrentPage(currentPage - 1);
     }
   };
-  console.log(transactionByBlock, "transactionByBlock");
+
   return (
     <div>
       <>
@@ -82,6 +82,8 @@ const TransactionTable = ({ params }) => {
             currentPage={currentPage}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
+            handleFirst={() => setCurrentPage(1)} 
+            handleLast={() => setCurrentPage(totalPages)}
             disablePrev={currentPage === 1}
             disableNext={currentPage === totalPages}
           />
