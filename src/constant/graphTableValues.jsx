@@ -423,71 +423,71 @@ export const TransactionDetailsColumns = [
     ),
   },
   {
-    title: "To",
-    key: "toAddress",
-    render: (text) => (
-      <>
-        {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
-            <div className="iconandlink">
-              {text?.type === typesOfTransactions.contractTransfer ||
-              text?.type === typesOfTransactions.contractCreation ||
-              text?.type === typesOfTransactions.contractExecute ||
-              text?.type === typesOfTransactions.contractUpload ? (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
-                  {getAddress(text?.toAddress)}
-                </Link>
-              ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
-                  {getAddress(text?.toAddress)}
-                </Link>
-              )}
-              <span>
-                <CopyText text={text?.toAddress} />
-              </span>
-            </div>
-          ) : (
-            <div className="iconandlink">
-              <Link
-                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                rel="noopener noreferrer"
-              >
-                {getAddress(text?.toAddress)}
-              </Link>
-              <span>
-                <CopyText text={text?.toAddress} />
-              </span>
-            </div>
-          )
-        ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
-          <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
-              rel="noopener noreferrer"
-            >
-              {" "}
-              {getAddress(text?.contractAddress)}
-            </Link>
-            <span>
-              <CopyText text={text?.contractAddress} />
-            </span>
-          </div>
-        ) : (
-          "-"
-        )}
-      </>
-    ),
+  title: "To",
+  key: "toAddress",
+  render: (text) => {
+    const toAddress = text?.toAddress;
+    const contractAddress = text?.contractAddress;
+    const isValidAddress = toAddress && toAddress !== "N/A";
+    const isContractType = [
+      typesOfTransactions.contractTransfer,
+      typesOfTransactions.contractCreation,
+      typesOfTransactions.contractExecute,
+      typesOfTransactions.contractUpload,
+    ].includes(text?.type);
+    const isSpecialPrefix = toAddress?.startsWith("0x") || toAddress?.startsWith("Qubetics");
+
+    if (isValidAddress && isSpecialPrefix) {
+      const link = isContractType
+        ? `${Routes.CONTRACT_DETAIL}${toAddress}`
+        : `${Routes.Tx_ADDRESS}${toAddress}`;
+
+      return (
+        <div className="iconandlink">
+          <Link className="fromicon" href={link} rel="noopener noreferrer">
+            {getAddress(toAddress)}
+          </Link>
+          <span>
+            <CopyText text={toAddress} />
+          </span>
+        </div>
+      );
+    }
+
+    if (isValidAddress) {
+      return (
+        <div className="iconandlink">
+          <Link href={`${Routes.Tx_ADDRESS}${toAddress}`} rel="noopener noreferrer">
+            {getAddress(toAddress)}
+          </Link>
+          <span>
+            <CopyText text={toAddress} />
+          </span>
+        </div>
+      );
+    }
+
+    if (contractAddress && contractAddress !== "N/A") {
+      return (
+        <div className="iconandlink">
+          <Link
+            className="fromicon"
+            href={`${Routes.CONTRACT_DETAIL}${contractAddress}`}
+            rel="noopener noreferrer"
+          >
+            {getAddress(contractAddress)}
+          </Link>
+          <span>
+            <CopyText text={contractAddress} />
+          </span>
+        </div>
+      );
+    }
+
+    return "-";
   },
+},
+
 
   {
     title: "Value (TICS)",

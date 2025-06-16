@@ -20,6 +20,7 @@ const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const { diffs } = useAverageBlockTime();
+  
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
@@ -72,7 +73,6 @@ const ChainAnalytics = ({ stats }) => {
         }
         title="The total amount of Qubetics (TICS) currently in circulation."
       />
-
       <CardsOnchain
         text="Total Validators"
         balance={

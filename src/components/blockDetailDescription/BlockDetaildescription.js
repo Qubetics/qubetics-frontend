@@ -14,6 +14,11 @@ const BlockDetailDescription = ({ blockData, status }) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
+  const blockNo = blockData?.blocknumber
+    ? blockData?.blocknumber
+    : blockData?.block?.blocknumber
+    ? blockData?.block?.blocknumber
+    : 0;
   return (
     <div className="blockdescription mt-20">
       <div className="transferinfo blockinform">
@@ -40,11 +45,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
         <div className="information">
           <p>Block Number</p>
           <span className="">
-            {blockData?.blocknumber
-              ? blockData?.blocknumber
-              : blockData?.block?.blocknumber
-              ? blockData?.block?.blocknumber
-              : "-"}
+            {blockNo}
             {/* <CopyText
               text={
                 blockData?.blocknumber
@@ -59,11 +60,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
           <div
             className="detailArrow headermetaBtn"
             onClick={() => {
-              const blockNo = blockData?.blocknumber
-                ? blockData?.blocknumber
-                : blockData?.block?.blocknumber
-                ? blockData?.block?.blocknumber
-                : 0;
+              if (blockNo === 1) return;
               if (blockNo > 0)
                 return router.push(`/blocks/${Number(blockNo) - 1}`);
             }}
@@ -75,11 +72,6 @@ const BlockDetailDescription = ({ blockData, status }) => {
             onClick={() => {
               const latestBlock = webSocketData?.blocks?.blocknumber
                 ? webSocketData?.blocks?.blocknumber
-                : 0;
-              const blockNo = blockData?.blocknumber
-                ? blockData?.blocknumber
-                : blockData?.block?.blocknumber
-                ? blockData?.block?.blocknumber
                 : 0;
               if (latestBlock > blockNo)
                 return router.push(`/blocks/${Number(blockNo) + 1}`);
@@ -182,6 +174,7 @@ const BlockDetailDescription = ({ blockData, status }) => {
             <Link
               className="hoverTrans"
               href={`${Routes.BLOCKS}/${blockData?.block?.parentHash}`}
+              style={blockNo == 1 ? { pointerEvents: "none" } : {}}
             >
               {blockData?.block?.parentHash
                 ? blockData?.block?.parentHash
