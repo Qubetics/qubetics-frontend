@@ -76,10 +76,10 @@ const ChainAnalytics = ({ stats }) => {
       <CardsOnchain
         text="Total Validators"
         balance={
-          stats?.validators ? stats?.validators : stats?.totalValidator ?? 0
+          stats?.totalValidator ? stats?.totalValidator : stats?.validators ?? 0
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
-        title="The total number of validators actively participating in the network by verifying and proposing blocks."
+        title="The total number of validators participating in securing the network by validating and proposing blocks"
       />
       <CardsOnchain
         text="Average APY"
