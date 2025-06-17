@@ -36,7 +36,6 @@ const Contract = () => {
   const { debounce } = useDebounce(searchText, 500);
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-
   const fetchAllContracts = async () => {
     try {
       let response = await getAllContracts(pageToSend, tableLimit, order);

@@ -20,6 +20,7 @@ const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const { diffs } = useAverageBlockTime();
+  
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
@@ -72,14 +73,13 @@ const ChainAnalytics = ({ stats }) => {
         }
         title="The total amount of Qubetics (TICS) currently in circulation."
       />
-
       <CardsOnchain
         text="Total Validators"
         balance={
-          stats?.validators ? stats?.validators : stats?.totalValidator ?? 0
+          stats?.totalValidator ? stats?.totalValidator : stats?.validators ?? 0
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
-        title="The total number of validators actively participating in the network by verifying and proposing blocks."
+        title="The total number of validators participating in securing the network by validating and proposing blocks"
       />
       <CardsOnchain
         text="Average APY"

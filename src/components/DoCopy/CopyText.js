@@ -15,6 +15,15 @@ export default function CopyText({ text, hoverText }) {
     }, 1000);
   };
 
+  if (
+    !text ||
+    text === "" ||
+    text === "undefined" ||
+    text === "null" ||
+    text === null
+  ) {
+    return null;
+  }
   return (
     <>
       <Tooltip
