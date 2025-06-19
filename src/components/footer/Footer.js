@@ -78,20 +78,19 @@ const Footer = () => {
               Terms of Service
             </Link>
           </Col>
-
           <Col xs={24} sm={12} lg={4}>
             <h3>Product & Services</h3>
             <Link
-              href={`https://validator.qubetics.work/login`}
+              href={`https://validator.qubetics.com`}
               target="_blank"
-              style={{ pointerEvents: "none", color: "gray" }}
+              // style={{ pointerEvents: "none", color: "gray" }}
             >
               Qubetics Validator App
             </Link>
             <Link
-              href={`https://delegator.qubetics.work/ `}
+              href={`https://delegator.qubetics.com `}
               target="_blank"
-              style={{ pointerEvents: "none", color: "gray" }}
+              // style={{ pointerEvents: "none", color: "gray" }}
             >
               Qubetics Delegator App
             </Link>
@@ -109,19 +108,14 @@ const Footer = () => {
             >
               Qubetics App
             </Link>
-            <Link
-              href="https://testnet-qubecode-ide.qubetics.work/"
-              target="_blank"
-              style={{ pointerEvents: "none", color: "gray" }}
 
-            >
+            <Link href="https://ide.qubetics.com" target="_blank">
               Qubetics IDE
             </Link>
             <Link
-              href={`https://qubeqode-basic-testnet.qubetics.work`}
+              href={`https://qubeqode.qubetics.com`}
               target="_blank"
-              style={{ pointerEvents: "none", color: "gray" }}
-
+              // style={{ pointerEvents: "none", color: "gray" }}
             >
               QubeQode
             </Link>

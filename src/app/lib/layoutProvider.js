@@ -4,7 +4,7 @@ import { useLayoutEffect } from "react";
 import Header from "@/components/header/header";
 
 // import SearchbarComponent from "@/components/search/SearchbarComponent";
-import { Routes } from "@/constant/constant";
+import { Routes, SHOW_FAUCET } from "@/constant/constant";
 import { usePathname } from "next/navigation";
 // import { useState } from "react";0
 import FooterLink from "../../components/footer/FooterLinks";
@@ -33,7 +33,7 @@ export default function LayoutProvider({ children }) {
           pathName === Routes.DASHBOARD ? "dashboardmaindiv" : ""
         }`}
       >
-        {pathName !== "/bug-submission" && (
+        {(pathName !== "/bug-submission" && SHOW_FAUCET !== "0" )&& (
           <div className="bugSubButton">
             <button
               className="headermetaBtn"
@@ -43,7 +43,7 @@ export default function LayoutProvider({ children }) {
             </button>
           </div>
         )}
-       
+
         <Header />
 
         <main className="maininner">

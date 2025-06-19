@@ -19,7 +19,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: [
-    "/faucet",
-  ],
+  matcher: ["/faucet", "/bug-submission"],
 };

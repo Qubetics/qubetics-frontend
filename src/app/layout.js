@@ -3,6 +3,8 @@ import { LatestDataProvider } from "@/components/contexts/latest_data";
 import { NetworkProvider } from "@/components/contexts/networkChanged";
 import { SerachingValueProvider } from "@/components/contexts/searchingData";
 import { ThemeProvider } from "@/components/contexts/theme_context";
+import dynamic from "next/dynamic";
+import { DM_Sans } from "next/font/google";
 import Head from "next/head";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
@@ -10,9 +12,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
-import { DM_Sans } from "next/font/google";
-import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
-import dynamic from "next/dynamic";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -85,7 +84,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     reverseOrder={false}
                   />
                   {/* <GoogleAnalytics /> */}
-                  <ZohoDesk />
+                  {/* <ZohoDesk /> */}
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>
                       <Suspense fallback={<Loading />}>
