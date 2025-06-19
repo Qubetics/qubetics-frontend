@@ -113,7 +113,6 @@ const Footer = () => {
             <Link
               href={`https://qubeqode.qubetics.com`}
               target="_blank"
-              // style={{ pointerEvents: "none", color: "gray" }}
             >
               QubeQode
             </Link>
