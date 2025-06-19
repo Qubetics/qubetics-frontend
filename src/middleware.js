@@ -20,10 +20,6 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
-    "/contract",
-    "/token",
-    "/verify-contract",
-    "/contract/:address*",
     "/faucet",
   ],
 };
