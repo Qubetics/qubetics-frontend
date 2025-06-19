@@ -1,4 +1,4 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import { EXPLORER_API_URL } from "@/constant/constant";
 
 /*This api is for getting details of Address detail page (Coin Balance, Stake,Value)*/
 export default async function getAddressDetails(address) {

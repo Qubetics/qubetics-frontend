@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
-// import BlockDetail from "@/components/blockDetail/BlockDetail";
 import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
@@ -14,6 +13,7 @@ import {
   Routes,
   SuccessStatus,
   tableLimit,
+  WEB_PROVIDER_URL,
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
 import getAddressDetails from "@/services/getAddressDetails";
@@ -31,6 +31,7 @@ import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
 import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
+import useEthereumBalance from "@/hooks/useGetBalance";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -44,6 +45,10 @@ const page = ({ params }) => {
   const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
   const router = useRouter();
+  const { balance, usdPrice } = useEthereumBalance(
+    params?.addressDetail,
+    WEB_PROVIDER_URL
+  );
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -179,7 +184,6 @@ const page = ({ params }) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);
     // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
-
   return (
     <div className="blocksummary">
       <div className="container">
@@ -206,15 +210,20 @@ const page = ({ params }) => {
               <div className="detail">
                 <h3>Balance</h3>
                 <p>
-                  {formatMillionNumber(showHeaderData?.coinBalance)}{" "}
+                  {showHeaderData?.coinBalance === undefined ||
+                  Number(showHeaderData?.coinBalance) === 0
+                    ? formatMillionNumber(balance)
+                    : formatMillionNumber(showHeaderData?.coinBalance)}{" "}
                   {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
                 </p>
               </div>
               <div className="detail">
                 <h3>TICS Value</h3>
                 <p>
-                  {showHeaderData?.value === "" || showHeaderData?.value == null
-                    ? "$0"
+                  {showHeaderData?.value === "" ||
+                  showHeaderData?.value == null ||
+                  showHeaderData?.value === undefined
+                    ? `$${formatMillionNumber(usdPrice)}`
                     : `$${formatMillionNumber(showHeaderData?.value)}`}
                 </p>
               </div>
