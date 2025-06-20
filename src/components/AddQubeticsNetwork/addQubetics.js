@@ -121,7 +121,7 @@ export const addQubetic = async () => {
     const chain_Id = await web3.eth.getChainId();
     const chainIdHex = `0x${chain_Id.toString(16)}`;
     const provider = window.ethereum;
-    
+
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
       if (window.ethereum === undefined) {
@@ -177,6 +177,12 @@ export const addQubetic = async () => {
             });
             toast.success(Messages.Network_Added);
           } catch (err) {
+            if (
+              err.code == -32603 ||
+              err.message.includes("is not a function")
+            ) {
+              return toast.success(Messages.Network_Added);
+            }
             throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
           }
         } else {
