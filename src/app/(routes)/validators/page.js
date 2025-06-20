@@ -13,8 +13,9 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { validatorsColumn } from "@/constant/graphTableValues";
+import getStatistics from "@/services/getStatistics";
 import getValidators from "@/services/getValidators";
-import { formatDecimal, noExponentialFixed } from "@/utils/commonFunctions";
+import { formatDecimal } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import {
   Activevalidators,
@@ -24,7 +25,6 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
-import getStatistics from "@/services/getStatistics";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,7 +75,7 @@ function page() {
       title:
         "The annual percentage yield earned on staked coins, calculated directly from on-chain data.",
       text: <>Onchain APY</>,
-      balance: parsedData?.apy ? parsedData?.apy + " %" : "0 %",
+      balance: (stats?.apy ? stats?.apy : 0) + " %",
       img: <Onchainapy />,
       contract: "true",
     },
