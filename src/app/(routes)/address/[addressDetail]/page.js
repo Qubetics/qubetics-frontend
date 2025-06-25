@@ -19,7 +19,7 @@ import { addressDetailColumn } from "@/constant/graphTableValues";
 import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
-import { Tabs } from "antd";
+import { Tabs, Tooltip } from "antd";
 import "../../blocks/blocksummary.scss";
 
 import FilterResult from "@/components/FilterResult/FilterResult";
@@ -209,13 +209,22 @@ const page = ({ params }) => {
             <div className="innerDetail">
               <div className="detail">
                 <h3>Balance</h3>
-                <p>
-                  {showHeaderData?.coinBalance === undefined ||
-                  Number(showHeaderData?.coinBalance) === 0
-                    ? formatMillionNumber(balance)
-                    : formatMillionNumber(showHeaderData?.coinBalance)}{" "}
-                  {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
-                </p>
+                <Tooltip
+                  title={
+                    showHeaderData?.coinBalance === undefined ||
+                    Number(showHeaderData?.coinBalance) === 0
+                      ? balance
+                      : showHeaderData?.coinBalance
+                  }
+                >
+                  <p>
+                    {showHeaderData?.coinBalance === undefined ||
+                    Number(showHeaderData?.coinBalance) === 0
+                      ? formatMillionNumber(balance)
+                      : formatMillionNumber(showHeaderData?.coinBalance)}{" "}
+                    {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+                  </p>
+                </Tooltip>
               </div>
               <div className="detail">
                 <h3>TICS Value</h3>
