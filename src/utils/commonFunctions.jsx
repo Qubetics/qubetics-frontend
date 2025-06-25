@@ -59,16 +59,16 @@ export const formatMillionNumber = (num) => {
 
   switch (true) {
     case num >= 1e12:
-      formattedNumber = (num / 1e12).toFixed(2) + " T";
+      formattedNumber = (num / 1e12).toFixed(4) + " T";
       break;
     case num >= 1e9:
-      formattedNumber = (num / 1e9).toFixed(2) + " B";
+      formattedNumber = (num / 1e9).toFixed(4) + " B";
       break;
     case num >= 1e6:
-      formattedNumber = (num / 1e6).toFixed(2) + " M";
+      formattedNumber = (num / 1e6).toFixed(4) + " M";
       break;
     case num >= 1e3:
-      formattedNumber = (num / 1e3).toFixed(2) + " K";
+      formattedNumber = (num / 1e3).toFixed(4) + " K";
       break;
     default:
       formattedNumber = num;
