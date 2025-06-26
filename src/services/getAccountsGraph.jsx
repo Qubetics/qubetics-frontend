@@ -1,4 +1,4 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import { EXPLORER_API_URL } from "@/constant/constant";
 import {
   ALL_CHARTS_HOUR,
   ALL_CHART_ONE_DAY,
