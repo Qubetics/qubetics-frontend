@@ -130,9 +130,9 @@ const Footer = () => {
               Official Web
             </Link>
             <Link
-              href=""
-              target=""
-              style={{ pointerEvents: "none", color: "gray" }}
+              href="https://docs.qubetics.com/"
+              target="_blank"
+              // style={{ pointerEvents: "none", color: "gray" }}
             >
               Qubetics Network Documentation
             </Link>
