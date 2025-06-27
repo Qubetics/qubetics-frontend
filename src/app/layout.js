@@ -19,8 +19,9 @@ const dmSans = DM_Sans({
 });
 export async function generateMetadata({ params, searchParams }) {
   return {
-    title: "Qubetics",
-    description: "This is an explorer",
+    title: "TicsScan | Explore TICS Transactions, Wallets & Blocks",
+    description:
+      "Track real-time TICS transactions, wallet balances, token transfers, and block data with TicsScan — the official explorer for the Qubetics Network.",
   };
 }
 const ZohoDesk = dynamic(() => import("@/components/ZohoDesk/ZohoDesk"), {
