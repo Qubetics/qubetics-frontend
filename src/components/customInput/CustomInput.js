@@ -2,7 +2,14 @@
 import React from "react";
 import { Input } from "antd";
 import "./CustomInput.scss";
-const CustomInput = ({ label, onChange, fieldType, runsCheck, ...rest }) => {
+const CustomInput = ({
+  label,
+  onChange,
+  placeholder,
+  fieldType,
+  runsCheck,
+  ...rest
+}) => {
   const handleInputChange = (e) => {
     onChange(e.target.value);
   };
@@ -11,7 +18,14 @@ const CustomInput = ({ label, onChange, fieldType, runsCheck, ...rest }) => {
     <div className="customInput">
       <label>{label}</label>
       {/* {fieldType !== "tuple" && ( */}
-      <Input autoComplete="off" onChange={handleInputChange} {...rest} />
+      <Input
+        placeholder={placeholder}
+        autoComplete="off"
+        onFocus={(e) => (e.target.placeholder = "")}
+        onBlur={(e) => (e.target.placeholder = placeholder)}
+        onChange={handleInputChange}
+        {...rest}
+      />
       {/* )} */}
     </div>
   );
