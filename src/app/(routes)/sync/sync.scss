@@ -59,4 +59,11 @@
   color: white;
   padding: 20px;
   border-radius: 20px;
+  pre,
+  code {
+    white-space: pre-wrap !important;
+    word-break: break-all !important; // <- This is the real game-changer
+    overflow-wrap: break-word !important;
+    overflow: hidden;
+  }
 }
