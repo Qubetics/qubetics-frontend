@@ -7,6 +7,7 @@ import {
   METAMASK_CHAIN_NAME,
   Messages,
 } from "@/constant/constant";
+import { trackEvent } from "@/utils/eventTrack";
 import toast from "react-hot-toast";
 import Web3 from "web3";
 
@@ -112,6 +113,7 @@ export function getDeviceType() {
   }
 }
 export const addQubetic = async () => {
+  trackEvent({ action: "Metamask_button_click", category: "Metamask", label: "Add Network" });
   try {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(

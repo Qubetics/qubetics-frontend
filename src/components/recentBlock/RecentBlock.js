@@ -6,6 +6,7 @@ import { Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import "../transferInfo/TransferInformation.scss";
 import Link from "next/link";
+import { trackEvent } from "@/utils/eventTrack";
 const RecentBlock = ({ data, customClass }, props) => {
   const router = useRouter();
 
@@ -19,9 +20,14 @@ const RecentBlock = ({ data, customClass }, props) => {
         <div className="recentdata_inner">
           <p
             style={{ cursor: "pointer" }}
-            onClick={() =>
+            onClick={() => (
+              trackEvent({
+                category: "Block",
+                action: "Block Number",
+                label: data?.blocknumber,
+              }),
               router.push(`${Routes.BLOCK_NO}${data?.blocknumber}`)
-            }
+            )}
             className="recenteBlockNumber"
           >
             {" "}

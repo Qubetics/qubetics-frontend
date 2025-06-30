@@ -16,6 +16,7 @@ import Web3 from "web3";
 import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import "./header.scss";
+import { trackEvent } from "@/utils/eventTrack";
 
 function HeaderMenu({ onCloseDrawer }) {
   const router = useRouter();
@@ -62,6 +63,7 @@ function HeaderMenu({ onCloseDrawer }) {
             prefetch={true}
             className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
             href={Routes.DASHBOARD}
+            onClick={()=>trackEvent({action:"link_click",category:"link",label:"Dashboard_link"})}
           >
             Dashboard
           </Link>
@@ -91,6 +93,7 @@ function HeaderMenu({ onCloseDrawer }) {
             prefetch={true}
             className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
             href={Routes.TOKEN}
+            onClick={()=>trackEvent({action:"link_click",category:"link",label:"Token_link"})}
           >
             Tokens
           </Link>
@@ -104,6 +107,7 @@ function HeaderMenu({ onCloseDrawer }) {
               pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
             }
             href={Routes.VALIDATORS}
+            onClick={()=>trackEvent({action:"link_click",category:"link",label:"Validators_link"})}
           >
             Validators
           </Link>

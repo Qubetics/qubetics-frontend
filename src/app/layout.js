@@ -5,7 +5,6 @@ import { SerachingValueProvider } from "@/components/contexts/searchingData";
 import { ThemeProvider } from "@/components/contexts/theme_context";
 import dynamic from "next/dynamic";
 import { DM_Sans } from "next/font/google";
-import Head from "next/head";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
@@ -42,7 +41,7 @@ const Loading = dynamic(() => import("./loading"), { ssr: false });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -52,7 +51,24 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet"
         />
+
         <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-FC0YF387S7"
+        ></script>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = gtag;
+              gtag('js', new Date());
+              gtag('config', 'G-FC0YF387S7');
+            `,
+          }}
+        />
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -62,13 +78,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KZDPDB2J');
           `,
           }}
-        />
-      </Head>
+        /> */}
+      </head>
       <body className={`${dmSans.className} darkTheme`}>
         <noscript
           dangerouslySetInnerHTML={{
             __html: `
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NPJSP6ZG"
+            <iframe src="https://www.googletagmanager.com/gtag/js?id=G-FC0YF387S7"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>            
           `,
           }}

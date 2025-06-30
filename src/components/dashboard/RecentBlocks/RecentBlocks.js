@@ -17,6 +17,7 @@ import Page from "@/app/(routes)/notfound/page";
 import Loader from "@/components/loader/Loader";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { RightOutlined } from "@ant-design/icons";
+import { trackEvent } from "@/utils/eventTrack";
 
 const RecentBlocks = () => {
   const [recentBlocks, setRecentBlocks] = useState([]);
@@ -68,6 +69,11 @@ const RecentBlocks = () => {
   }, [webSocketData?.blocks]);
 
   const handleClick = () => {
+    trackEvent({
+      action: "button_click",
+      category: "Dashboard_Blocks",
+      label: "View All_Blocks",
+    });
     router.push(Routes.BLOCKS);
   };
   return recentBlockStatus === InitStatus ||
