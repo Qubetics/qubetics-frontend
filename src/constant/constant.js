@@ -197,7 +197,7 @@ export const tooltipContent = {
     "The total amount of TICS token bonded or staked in the network to secure it and earn rewards.",
   total_Nodes: "The total number of nodes connected to the Qubetics network.",
   last_Block: "The most recent block added to the blockchain.",
-  TPB: "The total number of accounts or entities responsible for producing blocks on the blockchain.",
+  TPB: "Transactions per block. Display the average number of transactions recorded in a block during the last six seconds.",
   Countries: "The number of countries from which nodes are connected.",
   finalized_Block:
     "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",

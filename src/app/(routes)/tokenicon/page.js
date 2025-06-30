@@ -79,12 +79,11 @@ const TokenIcon = () => {
           <div className="tokenIcon_inner">
             <h2>Verify Ownership & Submit Token Icons</h2>
             <div className="tokenIcon_inner__top">
-
               <div>
                 <CustomInput
                   type="text"
                   label="Enter Contract Address"
-                  placeholder="OxdAC17F958D2ee523a2206206994597C13D831ec7"
+                  placeholder="Enter Contract Address"
                   name="url"
                   onChange={(e) => setAddress(e)}
                   value={address}

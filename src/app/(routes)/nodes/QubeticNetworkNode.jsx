@@ -47,7 +47,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
     },
     {
       value: webSocket?.onChainMetric?.tpb ? webSocket?.onChainMetric?.tpb : 0,
-      label: "TBP",
+      label: "TPB",
       content: tooltipContent.TPB,
     },
   ];
