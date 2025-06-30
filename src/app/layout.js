@@ -53,6 +53,16 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
         <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-FC0YF387S7"
+        ></script>
+        <script>
+          window.dataLayer = window.dataLayer || []; function gtag()
+          {dataLayer.push(arguments)}
+          gtag('js', new Date()); gtag('config', 'G-FC0YF387S7');
+        </script>
+
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -62,13 +72,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KZDPDB2J');
           `,
           }}
-        />
+        /> */}
       </Head>
       <body className={`${dmSans.className} darkTheme`}>
         <noscript
           dangerouslySetInnerHTML={{
             __html: `
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NPJSP6ZG"
+            <iframe src="https://www.googletagmanager.com/gtag/js?id=G-FC0YF387S7"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>            
           `,
           }}
