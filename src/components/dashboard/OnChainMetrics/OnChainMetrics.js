@@ -92,22 +92,14 @@ const OnChainMetrics = ({ stats }) => {
               title="The total value of all circulating Qubetics (TICS) in Dollar(USD), calculated as the current price multiplied by the circulating supply."
               text="Market Cap"
               balance={
-                webSocketData?.analytics?.marketCap ? (
+                stats?.marketCap ? (
                   <Tooltip
                     trigger="hover"
                     placement="top"
-                    title={"$ " + webSocketData?.analytics?.marketCap}
+                    title={"$ " + stats?.marketCap}
                   >
-                    <>
-                      $
-                      {formatMillionNumber(webSocketData?.analytics?.marketCap)}
-                    </>
+                    <>${formatMillionNumber(stats?.marketCap)}</>
                   </Tooltip>
-                ) : stats?.circulationSupply && price ? (
-                  "$" +
-                  formatMillionNumber(
-                    Number(price) * Number(stats?.circulationSupply)
-                  )
                 ) : (
                   "$" + 0
                 )
