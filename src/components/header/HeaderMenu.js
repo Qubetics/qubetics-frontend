@@ -46,7 +46,14 @@ function HeaderMenu({ onCloseDrawer }) {
       console.error(error);
     }
   };
-
+  const onEventTrackClick = (label, category) => {
+    trackEvent({
+      action: "link_click",
+      category: category,
+      label: label,
+    });
+    return;
+  };
   useEffect(() => {
     isNetworkAdded();
   }, []);
@@ -63,7 +70,7 @@ function HeaderMenu({ onCloseDrawer }) {
             prefetch={true}
             className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
             href={Routes.DASHBOARD}
-            onClick={()=>trackEvent({action:"link_click",category:"link",label:"Dashboard_link"})}
+            onClick={() => onEventTrackClick("Dashboard_link", "link")}
           >
             Dashboard
           </Link>
@@ -93,7 +100,7 @@ function HeaderMenu({ onCloseDrawer }) {
             prefetch={true}
             className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
             href={Routes.TOKEN}
-            onClick={()=>trackEvent({action:"link_click",category:"link",label:"Token_link"})}
+            onClick={() => onEventTrackClick("Tokens_link", "link")}
           >
             Tokens
           </Link>
@@ -107,7 +114,7 @@ function HeaderMenu({ onCloseDrawer }) {
               pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
             }
             href={Routes.VALIDATORS}
-            onClick={()=>trackEvent({action:"link_click",category:"link",label:"Validators_link"})}
+            onClick={() => onEventTrackClick("Validators_link", "link")}
           >
             Validators
           </Link>
@@ -135,7 +142,7 @@ function HeaderMenu({ onCloseDrawer }) {
               }`}
               defaultValue="Nodes"
               value="Nodes"
-              options={NodeHeaderFunction(pathname, onCloseDrawer)}
+              options={NodeHeaderFunction(pathname, onEventTrackClick)}
             />
           </Space>
         </li>
@@ -155,7 +162,7 @@ function HeaderMenu({ onCloseDrawer }) {
               }`}
               defaultValue="Contracts"
               value="Contracts"
-              options={contractHeaderFunction(pathname, onCloseDrawer)}
+              options={contractHeaderFunction(pathname, onEventTrackClick)}
             />
           </Space>
         </li>

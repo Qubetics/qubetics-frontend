@@ -1,5 +1,6 @@
 "use client";
 
+import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
@@ -202,14 +203,21 @@ export const tooltipContent = {
   finalized_Block:
     "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
 };
-export function BlockchainHeaderFunction(currentPath, onClick) {
+export function BlockchainHeaderFunction(currentPath) {
+  const onLinkClick = (category, label) => {
+    trackEvent({
+      action: "link_click",
+      category: category,
+      label: label,
+    });
+  };
   const blockchainHeader = [
     {
       key: "1",
       value: "Blocks",
       className: currentPath === Routes.BLOCKS ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/blocks">
+        <Link onClick={() => onLinkClick("Nav_Block", "Blocks")} href="/blocks">
           Blocks
         </Link>
       ),
@@ -219,7 +227,10 @@ export function BlockchainHeaderFunction(currentPath, onClick) {
       value: "Transactions",
       className: currentPath === Routes.TRANSACTIONS ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/tx">
+        <Link
+          onClick={() => onLinkClick("NavTransactions", "Transactions")}
+          href="/tx"
+        >
           Transactions
         </Link>
       ),
@@ -235,7 +246,7 @@ export function NodeHeaderFunction(currentPath, onClick) {
       value: "Node",
       className: currentPath === Routes.NODES ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/nodes">
+        <Link onClick={() => onClick("Nav_Nodes", "Nodes")} href="/nodes">
           Nodes
         </Link>
       ),
@@ -245,7 +256,7 @@ export function NodeHeaderFunction(currentPath, onClick) {
       value: "Sync",
       className: currentPath === Routes.SYNC ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/sync">
+        <Link onClick={() => onClick("Nav_Sync", "Sync")} href="/sync">
           Sync
         </Link>
       ),
@@ -281,13 +292,14 @@ export const blockchainHeader = [
 
 /*Contract Header*/
 export const contractHeaderFunction = (currentPath, onClick) => {
+
   const contractHeader = [
     {
       key: "1",
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/contract">
+        <Link onClick={()=>onClick("Nav_Contract", "All Contracts")} href="/contract">
           All Contracts
         </Link>
       ),
@@ -298,7 +310,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/tokenicon">
+        <Link onClick={()=>onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
           Token Icon
         </Link>
       ),
@@ -310,7 +322,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={onClick} href="/contract/verify">
+        <Link onClick={()=>onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
           Verify Contract
         </Link>
       ),
