@@ -13,7 +13,7 @@ jobs:
       ARGOCD_BRANCH: testnet
       HUAWEI_REGION: 'ap-southeast-3'
       ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
-      DEPLOYMENT_PATH: Frontend/deployment.yaml
+      DEPLOYMENT_PATH: Frontend/explorer-frontend-deployment.yaml
       HUAWEI_IMAGE: testnet-explorer-frontend
       DOCKER_USERNAME: ap-southeast-3@BQG9INQF0BKVHSNQOLJG
       ENV: ${{ vars.TEST_ENV }}
