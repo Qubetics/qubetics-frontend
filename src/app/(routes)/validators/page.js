@@ -25,6 +25,7 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
+import { set } from "date-fns";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +58,7 @@ function page() {
       try {
         setValidatorStatus(FetchingStatus);
         let response = await getValidators(currentPage, tableLimit);
-        setValidatorData(response?.data);
+        setValidatorData([response?.data?.validators]);
         setValidatorStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
@@ -162,7 +163,7 @@ function page() {
             validatorStatus === FetchingStatus || validatorStatus === InitStatus
           }
           columns={validatorsColumn}
-          dataSource={validatorData?.validators}
+          dataSource={validatorData[0]}
           pagination={false}
           locale={{
             emptyText: (

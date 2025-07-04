@@ -42,18 +42,15 @@ function HeaderMenu({ onCloseDrawer }) {
     localStorage.setItem("chainType", e);
     setChainType(e);
     setIsNetworkChanged(true);
-    if (e == "EVM Chain") {
-      setCookie("isEVM", true);
-      router.push("/dashboard");
-      setIsEvm(true);
-      window.location.reload();
-    } else {
-      setCookie("isEVM", false);
-      router.push("/dashboard");
-      setIsEvm(false);
-      window.location.reload();
-    }
+
+    const isEvm = e === "EVM Chain";
+    setCookie("isEVM", isEvm);
+    setIsEvm(isEvm);
+
+    // ✅ Only reload, and let route happen on load (via middleware or redirect logic)
+    window.location.href = "/dashboard";
   };
+
   const isNetworkAdded = async () => {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
