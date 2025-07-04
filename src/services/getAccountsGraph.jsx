@@ -1,4 +1,4 @@
-import { EXPLORER_API_URL } from "@/constant/constant";
+import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 import {
   ALL_CHARTS_HOUR,
   ALL_CHART_ONE_DAY,
@@ -7,8 +7,8 @@ import {
 } from "@/constant/graphTableValues";
 
 export default async function getTotalAccountGraph(chartType) {
-  // let chain =
-  //   typeof window !== "undefined" && localStorage.getItem("chainType");
+  let chain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
   try {
     const getData = (chain, chartType) => {
       const isEVM = chain === "EVM Chain";
@@ -24,14 +24,14 @@ export default async function getTotalAccountGraph(chartType) {
     };
     const data = getData(chain, chartType);
     const response =
-      // chain == "EVM Chain"
-      //   ?
+      chain == "EVM Chain"
+        ?
          await fetch(
             `${EXPLORER_API_URL}explorer/graph/account?interval=${data?.interval}&time=${data?.time}`
           )
-        // : await fetch(
-        //     `${NATIVE_EXPLORER_API_URL}explorer/graph/account?interval=${data?.interval}&time=${data?.time}`
-        //   );
+        : await fetch(
+            `${NATIVE_EXPLORER_API_URL}explorer/graph/account?interval=${data?.interval}&time=${data?.time}`
+          );
     let result = await response.json();
     return result;
   } catch (error) {

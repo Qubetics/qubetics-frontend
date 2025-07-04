@@ -26,14 +26,14 @@ export default async function getContractsGraph(chartType) {
     const data = getData(chain, chartType);
 
     const response =
-      // chain == "EVM Chain"
-        // ? 
+      chain == "EVM Chain"
+        ? 
         await fetch(
             `${EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
           )
-        // : await fetch(
-        //     `${NATIVE_EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
-        //   );
+        : await fetch(
+            `${NATIVE_EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
+          );
     let result = response.json();
     return result;
   } catch (error) {

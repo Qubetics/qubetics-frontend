@@ -52,11 +52,11 @@ const TransactionHistory = (props) => {
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };
 
-  // useEffect(() => {
-  //   if (isNetworkChanged == true) {
-  //     fetchChartData();
-  //   }
-  // }, [isNetworkChanged]);
+  useEffect(() => {
+    if (isNetworkChanged == true) {
+      fetchChartData();
+    }
+  }, [isNetworkChanged]);
 
   useEffect(() => {
     fetchChartData();

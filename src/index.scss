@@ -2745,8 +2745,8 @@ input[type="number"] {
   @media (max-width: 1199px) {
     text-align: center;
   }
-
   .ant-select-selector {
+    
     &::before {
       content: "";
       position: absolute;

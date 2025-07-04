@@ -71,7 +71,7 @@ export const formatMillionNumber = (num) => {
       formattedNumber = (num / 1e3).toFixed(4) + " K";
       break;
     default:
-      formattedNumber = num;
+      formattedNumber = Number(num).toFixed(4);
       break;
   }
 

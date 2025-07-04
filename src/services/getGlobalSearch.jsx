@@ -4,14 +4,13 @@ export default async function getSearchingValue(value) {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   const response =
-    // chain == "EVM Chain"
-      // ? 
-      await fetch(
+    chain == "EVM Chain"
+      ? await fetch(
           `${EXPLORER_API_URL}explorer/search-active-results?page=1&limit=10&searchedWord=${value}`
         )
-      // : await fetch(
-      //     `${NATIVE_EXPLORER_API_URL}explorer/searching?value=${value}`
-      //   );
+      : await fetch(
+          `${NATIVE_EXPLORER_API_URL}explorer/searching?value=${value}`
+        );
   let result = await response.json();
   return result;
 }
