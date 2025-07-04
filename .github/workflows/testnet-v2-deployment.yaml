@@ -1,4 +1,4 @@
-name: '[testnet] Deploy explorer frontend'
+name: '[testnet] Deploy frontend'
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - testnet
 
 jobs:
-  testnet_deploy_explorer_frontend:
-    uses: ./.github/workflows/explorer-frontend.yaml
+  testnet_deploy_frontend:
+    uses: ./.github/workflows/testnet-deployment.yaml
     with:
       SWR_ORGANIZATION: testnet-qubetics
       ARGOCD_BRANCH: testnet_v2
