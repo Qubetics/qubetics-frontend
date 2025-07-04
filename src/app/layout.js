@@ -3,16 +3,14 @@ import { LatestDataProvider } from "@/components/contexts/latest_data";
 import { NetworkProvider } from "@/components/contexts/networkChanged";
 import { SerachingValueProvider } from "@/components/contexts/searchingData";
 import { ThemeProvider } from "@/components/contexts/theme_context";
-import Head from "next/head";
+import dynamic from "next/dynamic";
+import { DM_Sans } from "next/font/google";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
-import { DM_Sans } from "next/font/google";
-import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
-import dynamic from "next/dynamic";
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -20,8 +18,9 @@ const dmSans = DM_Sans({
 });
 export async function generateMetadata({ params, searchParams }) {
   return {
-    title: "Qubetics",
-    description: "This is an explorer",
+    title: "TicsScan | Explore TICS Transactions, Wallets & Blocks",
+    description:
+      "Track real-time TICS transactions, wallet balances, token transfers, and block data with TicsScan — the official explorer for the Qubetics Network.",
   };
 }
 const ZohoDesk = dynamic(() => import("@/components/ZohoDesk/ZohoDesk"), {
@@ -42,7 +41,7 @@ const Loading = dynamic(() => import("./loading"), { ssr: false });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -52,6 +51,7 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet"
         />
+
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -63,7 +63,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           `,
           }}
         />
-      </Head>
+      </head>
       <body className={`${dmSans.className} darkTheme`}>
         <noscript
           dangerouslySetInnerHTML={{
@@ -85,7 +85,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     reverseOrder={false}
                   />
                   {/* <GoogleAnalytics /> */}
-                  <ZohoDesk />
+                  {/* <ZohoDesk /> */}
                   <ContractVerificationProvider>
                     <StyledComponentsRegistry>
                       <Suspense fallback={<Loading />}>

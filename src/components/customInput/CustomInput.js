@@ -20,9 +20,9 @@ const CustomInput = ({
       {/* {fieldType !== "tuple" && ( */}
       <Input
         placeholder={placeholder}
+        autoComplete="off"
         onFocus={(e) => (e.target.placeholder = "")}
         onBlur={(e) => (e.target.placeholder = placeholder)}
-        autoComplete="off"
         onChange={handleInputChange}
         {...rest}
       />

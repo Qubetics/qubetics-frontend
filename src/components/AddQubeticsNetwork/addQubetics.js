@@ -7,6 +7,7 @@ import {
   METAMASK_CHAIN_NAME,
   Messages,
 } from "@/constant/constant";
+import { trackEvent } from "@/utils/eventTrack";
 import toast from "react-hot-toast";
 import Web3 from "web3";
 
@@ -112,6 +113,7 @@ export function getDeviceType() {
   }
 }
 export const addQubetic = async () => {
+  trackEvent({ action: "Metamask_button_click", category: "Metamask", label: "Add Network" });
   try {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(
@@ -121,7 +123,7 @@ export const addQubetic = async () => {
     const chain_Id = await web3.eth.getChainId();
     const chainIdHex = `0x${chain_Id.toString(16)}`;
     const provider = window.ethereum;
-    
+
     const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
       if (window.ethereum === undefined) {
@@ -177,6 +179,12 @@ export const addQubetic = async () => {
             });
             toast.success(Messages.Network_Added);
           } catch (err) {
+            if (
+              err.code == -32603 ||
+              err.message.includes("is not a function")
+            ) {
+              return toast.success(Messages.Network_Added);
+            }
             throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
           }
         } else {

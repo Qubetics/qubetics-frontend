@@ -13,6 +13,7 @@ import { useGetNetwork } from "../contexts/networkChanged";
 import { useThemeData } from "../contexts/theme_context";
 import "./header.scss";
 import HeaderMenu from "./HeaderMenu";
+import { trackEvent } from "@/utils/eventTrack";
 
 function Header() {
   const router = useRouter();
@@ -144,7 +145,16 @@ function Header() {
       <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
         <div className="header-main__bottom container">
           <div>
-            <Link href={"/dashboard"}>
+            <Link
+              onClick={() =>
+                trackEvent({
+                  action: "logo_click",
+                  category: "Header",
+                  label: "Logo",
+                })
+              }
+              href={"/dashboard"}
+            >
               {windowWidth > 1199 ? (
                 <Image
                   priority

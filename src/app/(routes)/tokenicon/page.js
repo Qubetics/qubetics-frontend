@@ -85,6 +85,10 @@ const TokenIcon = () => {
                   label="Enter Contract Address"
                   placeholder="Enter Contract Address"
                   name="url"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "Enter Contract Address")
+                  }
                   onChange={(e) => setAddress(e)}
                   value={address}
                 />
@@ -99,6 +103,7 @@ const TokenIcon = () => {
                   label="Enter URL"
                   placeholder="Enter URL"
                   name="url"
+                  
                   onChange={(e) => handleImageChange(e)}
                   value={url}
                 />

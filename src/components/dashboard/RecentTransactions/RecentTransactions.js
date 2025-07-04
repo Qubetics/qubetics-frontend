@@ -15,8 +15,9 @@ import {
 } from "@/constant/constant";
 import getTransactions from "@/services/getTransactions";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import "./style.scss";
+import { trackEvent } from "@/utils/eventTrack";
 
 const RecentTransactions = () => {
   const [recentTxns, setRecentTxns] = useState([]);
@@ -26,7 +27,7 @@ const RecentTransactions = () => {
   const maxNonStaticElements = 6;
   const router = useRouter();
   // const { isNetworkChanged } = useGetNetwork();
- 
+
   const fetchData = async () => {
     try {
       setRecentTxnStatus(FetchingStatus);
@@ -94,6 +95,7 @@ const RecentTransactions = () => {
   };
 
   const handleClick = () => {
+    trackEvent({ action: "click", category: "Dashboard", label: "View All" });
     router.push(Routes?.TRANSACTIONS);
   };
 

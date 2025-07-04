@@ -16,7 +16,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState();
   const { lastBlock, blockHeight, webSocket } = useBlockData();
- 
+
   const fetchEVMStats = async () => {
     try {
       let respose = await getStatistics();

@@ -4,16 +4,15 @@ export default async function getAllTokens(currentPage, limit, order) {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   const response =
-    // chain == "EVM Chain"
-    //   ?
-    await fetch(
-      `${EXPLORER_API_URL}tokens/all-tokens?page=${currentPage}&limit=${limit}${
-        order !== "" ? `&order=${order}` : ""
-      }`
-    );
-  // : await fetch(
-  //     `${NATIVE_EXPLORER_API_URL}tokens/all-tokens?page=${currentPage}&limit=${limit}`
-  //   );
+    chain == "EVM Chain"
+      ? await fetch(
+          `${EXPLORER_API_URL}tokens/all-tokens?page=${currentPage}&limit=${limit}${
+            order !== "" ? `&order=${order}` : ""
+          }`
+        )
+      : await fetch(
+          `${NATIVE_EXPLORER_API_URL}tokens/all-tokens?page=${currentPage}&limit=${limit}`
+        );
   let result = await response.json();
   return result;
 }

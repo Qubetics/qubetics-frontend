@@ -1,13 +1,11 @@
 import {
-  BlockchainHeaderFunction,
-  contractHeaderFunction,
   EXPLORER_CHAIN_NAME,
   EXPLORER_METAMASK_NETWORK_URL,
-  NodeHeaderFunction,
-  Routes,
   SHOW_FAUCET,
 } from "@/constant/constant";
+import { trackEvent } from "@/utils/eventTrack";
 import { Select, Space } from "antd";
+import { getCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,16 +13,47 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
+import { useGetNetwork } from "../contexts/networkChanged";
 import "./header.scss";
+import { navItems } from "./helper";
 
 function HeaderMenu({ onCloseDrawer }) {
   const router = useRouter();
-
   const [isMetaMaskAdded, setIsMetaMaskAdded] = useState(false);
+  const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
   const pathname = usePathname();
-  const chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
 
+  const val =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
+  const [chainType, setChainType] = useState(val || "EVM Chain");
+
+  useEffect(() => {
+    const cookieValue = getCookie("isEVM");
+    if (cookieValue === undefined) {
+      setCookie("isEVM", true);
+    }
+    if (val === "EVM Chain") {
+      setCookie("isEVM", true);
+    } else {
+      setCookie("isEVM", false);
+    }
+  }, []);
+  const handleChainChange = (e) => {
+    localStorage.setItem("chainType", e);
+    setChainType(e);
+    setIsNetworkChanged(true);
+    if (e == "EVM Chain") {
+      setCookie("isEVM", true);
+      router.push("/dashboard");
+      setIsEvm(true);
+      window.location.reload();
+    } else {
+      setCookie("isEVM", false);
+      router.push("/dashboard");
+      setIsEvm(false);
+      window.location.reload();
+    }
+  };
   const isNetworkAdded = async () => {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
@@ -45,7 +74,14 @@ function HeaderMenu({ onCloseDrawer }) {
       console.error(error);
     }
   };
-
+  const onEventTrackClick = (label, category) => {
+    trackEvent({
+      action: "link_click",
+      category: category,
+      label: label,
+    });
+    return;
+  };
   useEffect(() => {
     isNetworkAdded();
   }, []);
@@ -54,120 +90,58 @@ function HeaderMenu({ onCloseDrawer }) {
     router.prefetch("/dashboard");
   }, [router]);
 
+  const getContainer = (triggerNode) => triggerNode.parentNode;
+  const navItem = navItems(chainType == "EVM Chain");
   return (
     <>
       <ul className="mob__List">
-        <li key={1} onClick={onCloseDrawer}>
-          <Link
-            prefetch={true}
-            className={pathname === Routes.DASHBOARD ? "active" : "inactive"}
-            href={Routes.DASHBOARD}
-          >
-            Dashboard
-          </Link>
-        </li>
+        {navItem.map((item, index) => {
+          const isActive = item.matchRoutes?.some((route) =>
+            pathname.includes(route)
+          );
 
-        <li key={2}>
-          <Space wrap>
-            <Select
-              title=""
-              getPopupContainer={(triggerNode) => triggerNode.parentNode}
-              className={`headerSelect ${
-                pathname.includes(Routes.BLOCKS) ||
-                pathname.includes(Routes.TRANSACTIONS)
-                  ? "active"
-                  : "inactive"
-              }`}
-              defaultValue="Blockchain"
-              value="Blockchain"
-              options={BlockchainHeaderFunction(pathname, onCloseDrawer)}
-            />
-          </Space>
-        </li>
+          if (item.showIfEVM === false && chainType !== "EVM Chain")
+            return null;
+          if (item.showIfFaucet && SHOW_FAUCET !== 1) return null;
 
-        {/* {chainType === "EVM Chain" && ( */}
-        <li key={3} onClick={onCloseDrawer}>
-          <Link
-            prefetch={true}
-            className={pathname.includes(Routes.TOKEN) ? "active" : "inactive"}
-            href={Routes.TOKEN}
-          >
-            Tokens
-          </Link>
-        </li>
-        {/* )} */}
+          if (item.type === "link") {
+            return (
+              <li key={index} onClick={onCloseDrawer}>
+                <Link
+                  prefetch
+                  href={item.href}
+                  className={isActive ? "active" : "inactive"}
+                  onClick={() =>
+                    item.eventName && onEventTrackClick(item.eventName, "link")
+                  }
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          }
 
-        <li key={4} onClick={onCloseDrawer}>
-          <Link
-            prefetch={true}
-            className={
-              pathname.includes(Routes.VALIDATORS) ? "active" : "inactive"
-            }
-            href={Routes.VALIDATORS}
-          >
-            Validators
-          </Link>
-        </li>
+          if (item.type === "select") {
+            return (
+              <li key={index}>
+                <Space wrap>
+                  <Select
+                    title=""
+                    getPopupContainer={(node) => node.parentNode}
+                    className={`headerSelect ${
+                      isActive ? "active" : "inactive"
+                    }`}
+                    defaultValue={item.label}
+                    value={item.label}
+                    options={item.optionsFn(pathname, onEventTrackClick)}
+                  />
+                </Space>
+              </li>
+            );
+          }
 
-        {/* <li key={5} onClick={onCloseDrawer}>
-          <Link
-            prefetch={true}
-            className={pathname.includes(Routes.NODES) ? "active" : "inactive"}
-            href={Routes.NODES}
-          >
-            Nodes
-          </Link>
-        </li> */}
-        <li key={2}>
-          <Space wrap>
-            <Select
-              title=""
-              getPopupContainer={(triggerNode) => triggerNode.parentNode}
-              className={`headerSelect ${
-                pathname.includes(Routes.NODES) ||
-                pathname.includes(Routes.SYNC)
-                  ? "active"
-                  : "inactive"
-              }`}
-              defaultValue="Nodes"
-              value="Nodes"
-              options={NodeHeaderFunction(pathname, onCloseDrawer)}
-            />
-          </Space>
-        </li>
-
-        {/* {chainType === "EVM Chain" && ( */}
-        <li key={6}>
-          <Space wrap>
-            <Select
-              title=""
-              getPopupContainer={(triggerNode) => triggerNode.parentNode}
-              className={`headerSelect ${
-                pathname.includes(Routes.CONTRACTS) ||
-                pathname.includes(Routes.CONTRACT_VERIFICATOIN) ||
-                pathname.includes(Routes.TOKEN_ICON)
-                  ? "active"
-                  : "inactive"
-              }`}
-              defaultValue="Contracts"
-              value="Contracts"
-              options={contractHeaderFunction(pathname, onCloseDrawer)}
-            />
-          </Space>
-        </li>
-        {/* )} */}
-
-        {SHOW_FAUCET == 1 && (
-          <li onClick={onCloseDrawer}>
-            <Link
-              prefetch={true}
-              className={pathname === Routes.FAUCET ? "active" : "inactive"}
-              href={Routes.FAUCET}
-            >
-              Faucet
-            </Link>
-          </li>
-        )}
+          return null;
+        })}
       </ul>
 
       <ul className="mob__List">
@@ -192,29 +166,25 @@ function HeaderMenu({ onCloseDrawer }) {
             {/* <button className="headermetaBtn" style={{ minWidth: "120px" }}>
                EVM Chain 
                 </button>*/}
-            {/* <div className="evmChain"> */}
-            {/* <Select
-              className="headerSelectItem"
-              getPopupContainer={getContainer}
-              defaultValue={chainType}
-              style={
-                windowWidth < 1199
-                  ? { minWidth: "100%", width: "100%", padding: 0 }
-                  : { minWidth: 130, width: "130px", padding: 0 }
-              }
-              onChange={handleChainChange}
-              options={[
-                {
-                  value: "EVM Chain",
-                  label: "EVM Chain",
-                },
-                // {
-                //   value: "Native Chain",
-                //   label: "Native Chain",
-                // },
-              ]}
-            /> */}
-            {/* </div> */}
+            <div className="evmChain">
+              <Select
+                className="headerSelectItem"
+                getPopupContainer={getContainer}
+                defaultValue={chainType}
+                style={{ width: 130 }}
+                onChange={handleChainChange}
+                options={[
+                  {
+                    value: "EVM Chain",
+                    label: "EVM Chain",
+                  },
+                  {
+                    value: "Native Chain",
+                    label: "Native Chain",
+                  },
+                ]}
+              />
+            </div>
           </div>
         </li>
       </ul>

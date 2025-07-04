@@ -54,13 +54,14 @@ export function LatestDataProvider({ children }) {
   }, [currentChain]);
 
   const SubscribeToSocket = async () => {
+
     if (currentChain === "EVM Chain") {
       disconnectNativeSocket();
       await initEvmSocket(evmWebSocketUrl);
       subscribeLatestBlocks((data) => setBlocks(data));
       subscribeOnChainMetrics((data) => setOnChainMetric(data));
       subscribeLatestTransaction((data) => setTransactions(data));
-      // subscribeLatestContractsGraph((data) => setContractsGraph(data));  
+      // subscribeLatestContractsGraph((data) => setContractsGraph(data));
       // subscribeCoinTransferGraph((data) => setTransferGraph(data));
       subscribeTransactionGraph((data) => setTransactionGraph(data));
       // subscribeAccountsGraph((data) => setAccountsGraph(data));

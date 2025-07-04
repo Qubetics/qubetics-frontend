@@ -18,6 +18,7 @@ import { noExponentsValue } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
+import { trackEvent } from "@/utils/eventTrack";
 
 const ChainAnalyticsGraph = (props) => {
   const {
@@ -64,6 +65,11 @@ const ChainAnalyticsGraph = (props) => {
       });
   };
   const handleTransactionHistory = (value) => {
+    trackEvent({
+      action: "button_click",
+      category: "Dashboard_TransactionHistory",
+      label: `${title} ${value}`,
+    });
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };
 

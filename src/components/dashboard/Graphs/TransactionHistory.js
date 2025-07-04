@@ -14,6 +14,7 @@ import {
   transactionItems,
 } from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
+import { trackEvent } from "@/utils/eventTrack";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 
@@ -43,14 +44,19 @@ const TransactionHistory = (props) => {
   };
 
   const handleTransactionHistory = (value) => {
+    trackEvent({
+      action: "button_click",
+      category: "Dashboard_TransactionHistory",
+      label: `total_transactions ${value}`,
+    });
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };
 
-  // useEffect(() => {
-  //   if (isNetworkChanged == true) {
-  //     fetchChartData();
-  //   }
-  // }, [isNetworkChanged]);
+  useEffect(() => {
+    if (isNetworkChanged == true) {
+      fetchChartData();
+    }
+  }, [isNetworkChanged]);
 
   useEffect(() => {
     fetchChartData();
