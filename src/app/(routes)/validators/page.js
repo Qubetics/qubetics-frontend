@@ -25,7 +25,6 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
-import { set } from "date-fns";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +57,7 @@ function page() {
       try {
         setValidatorStatus(FetchingStatus);
         let response = await getValidators(currentPage, tableLimit);
-        setValidatorData([response?.data?.validators]);
+        setValidatorData([response?.data]);
         setValidatorStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
@@ -85,7 +84,7 @@ function page() {
       title:
         "The total number of validators participating in securing the network by validating and proposing blocks.",
       text: <>Total Validators</>,
-      balance: validatorData?.count ? validatorData?.count : "0",
+      balance: validatorData[0]?.count ? validatorData[0]?.count : "0",
       img: <Totalvalidators />,
       contract: true,
     },
@@ -107,8 +106,8 @@ function page() {
         "The number of validators actively participating in the network at the current time.",
 
       balance:
-        validatorData?.activeValidators || validatorData?.activeCount
-          ? validatorData?.activeValidators || validatorData?.activeCount
+        validatorData[0]?.activeValidators || validatorData[0]?.activeCount
+          ? validatorData[0]?.activeValidators || validatorData[0]?.activeCount
           : "0",
       img: <Activevalidators />,
       text: "Active Validators",
@@ -163,7 +162,7 @@ function page() {
             validatorStatus === FetchingStatus || validatorStatus === InitStatus
           }
           columns={validatorsColumn}
-          dataSource={validatorData[0]}
+          dataSource={validatorData[0]?.validators}
           pagination={false}
           locale={{
             emptyText: (

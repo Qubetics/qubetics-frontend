@@ -47,7 +47,6 @@ function HeaderMenu({ onCloseDrawer }) {
     setCookie("isEVM", isEvm);
     setIsEvm(isEvm);
 
-    // ✅ Only reload, and let route happen on load (via middleware or redirect logic)
     window.location.href = "/dashboard";
   };
 
@@ -130,6 +129,7 @@ function HeaderMenu({ onCloseDrawer }) {
                     }`}
                     defaultValue={item.label}
                     value={item.label}
+                    onChange={() => onCloseDrawer()}
                     options={item.optionsFn(pathname, onEventTrackClick)}
                   />
                 </Space>

@@ -600,6 +600,9 @@ ul {
   }
   .evmChain {
     backdrop-filter: blur(32px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .ant-select-arrow {
     margin-top: -5px;

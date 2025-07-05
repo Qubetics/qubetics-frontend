@@ -37,7 +37,7 @@ const FilterResult = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
 
-    useOnClickOutside(wrapperRef, () => setOpen(1));
+  useOnClickOutside(wrapperRef, () => setOpen(1));
 
   const setCustomRef = (key, element) => {
     if (!customRef.current) customRef.current = {};
