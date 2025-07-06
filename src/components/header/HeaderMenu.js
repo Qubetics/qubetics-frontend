@@ -129,7 +129,7 @@ function HeaderMenu({ onCloseDrawer }) {
                     }`}
                     defaultValue={item.label}
                     value={item.label}
-                    onChange={() => onCloseDrawer()}
+                    onChange={onCloseDrawer}
                     options={item.optionsFn(pathname, onEventTrackClick)}
                   />
                 </Space>
