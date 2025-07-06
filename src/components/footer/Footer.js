@@ -57,7 +57,7 @@ const Footer = () => {
               <h3 className="mb-2 font-semibold">{section.title}</h3>
               <div className="flex flex-col space-y-1">
                 {section.items.map((item, i) => {
-                  if (item.label === "Tokens" && !isNative) return null;
+                  if (item.label === "Tokens" && isNative) return null;
                   return item.disabled ? (
                     <Link
                       href={"#"}

@@ -42,12 +42,12 @@ export const footerLinks = [
     items: [
       {
         label: "Qubetics Validator App",
-        href: "https://validator-testnet.qubetics.work/",
+        href: "https://validator.qubetics.work/",
         external: true,
       },
       {
         label: "Qubetics Delegator App",
-        href: "https://delegator-testnet.qubetics.work/",
+        href: "https://delegator.qubetics.work/",
         external: true,
       },
       { label: "Qubetics DEX", disabled: true },
