@@ -67,10 +67,7 @@ const TransferInfo = ({ data }) => {
               <Link className="hoverTrans" href={`/address/${data?.toAddress}`}>
                 {data?.toAddress}
               </Link>
-              {(data?.toAddress?.startsWith("0x") ||
-                data?.toAddress?.startsWith("Qubetics")) && (
-                <CopyText text={data?.toAddress} />
-              )}
+              {<CopyText text={data?.toAddress} />}
             </span>
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
@@ -117,7 +114,6 @@ const TransferInfo = ({ data }) => {
           {data?.timestamp ? (
             <span className="realTime">
               {convertToDateTime(data?.timestamp)},
-            
               <span className="secondAgo"> {renderTime(data?.timestamp)}</span>
             </span>
           ) : data?.createdAt ? (

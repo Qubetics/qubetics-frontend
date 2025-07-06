@@ -50,8 +50,9 @@ const Footer = () => {
             <Col key={idx} xs={24} sm={12} lg={4}>
               <h3 className="mb-2 font-semibold">{section.title}</h3>
               <div className="flex flex-col space-y-1">
-                {section.items.map((item, i) =>
-                  item.disabled ? (
+                {section.items.map((item, i) => {
+                  if (item?.isNative) return;
+                  return item.disabled ? (
                     <Link
                       href={"#"}
                       style={{
@@ -72,8 +73,8 @@ const Footer = () => {
                     >
                       {item.label}
                     </Link>
-                  )
-                )}
+                  );
+                })}
               </div>
             </Col>
           ))}

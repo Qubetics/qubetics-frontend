@@ -32,6 +32,7 @@ import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
 import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 import useEthereumBalance from "@/hooks/useGetBalance";
+import { is } from "date-fns/locale";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -45,10 +46,12 @@ const page = ({ params }) => {
   const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
   const router = useRouter();
+
   const { balance, usdPrice } = useEthereumBalance(
     params?.addressDetail,
     WEB_PROVIDER_URL
   );
+  const isEvm = localStorage.getItem("chainType") === "EVM Chain";
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -168,7 +171,7 @@ const page = ({ params }) => {
         </>
       ),
     },
-    {
+    isEvm && {
       label: <span>Token Transaction</span>,
       key: "1",
       children: (
@@ -178,7 +181,7 @@ const page = ({ params }) => {
         />
       ),
     },
-  ];
+  ].filter(Boolean);
 
   const handleTokenClick = (address) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);

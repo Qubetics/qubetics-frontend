@@ -12,7 +12,11 @@ export const footerLinks = [
   {
     title: "Quick Links",
     items: [
-      { label: "Tokens", href: "/token" },
+      {
+        label: "Tokens",
+        href: "/token",
+        isNative: localStorage.getItem("chainType") === "Native Chain",
+      },
       { label: "Blockchain", href: "/blocks" },
       { label: "Validators", href: "/validators" },
       { label: "Nodes", href: "/nodes" },
