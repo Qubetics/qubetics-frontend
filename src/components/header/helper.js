@@ -52,12 +52,13 @@ export const navItems = (isEVM) => {
       optionsFn: contractHeaderFunction,
       showIfEVM: isEVM,
     },
-    {
-      type: "link",
-      label: "Faucet",
-      href: Routes.FAUCET,
-      matchRoutes: [Routes.FAUCET],
-      showIfEVM: isEVM,
-    },
+    // {
+    //   type: "link",
+    //   label: "Faucet",
+    //   href: Routes.FAUCET,
+    //   matchRoutes: [Routes.FAUCET],
+    //   showIfEVM: isEVM,
+    //   showIfFaucet: false,
+    // },
   ];
 };
