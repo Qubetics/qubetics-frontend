@@ -9,7 +9,8 @@ import {
 export default async function getGraphData(chartType, fetchUrl, chartTitle) {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-  if (chain === null || chain === undefined) {
+  
+    if (chain === null || chain === undefined) {
     chain = "EVM Chain";
   }
 
@@ -35,14 +36,13 @@ export default async function getGraphData(chartType, fetchUrl, chartTitle) {
         : { interval: 30, time: "d" };
 
     const response =
-      // chain === "EVM Chain" || chartTitle !== "Total Accounts"
-      //   ? 
-        await fetch(
+      chain === "EVM Chain" || chartTitle !== "Total Accounts"
+        ? await fetch(
             `${EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
           )
-        // : await fetch(
-        //     `${NATIVE_EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
-        //   );
+        : await fetch(
+            `${NATIVE_EXPLORER_API_URL}${fetchUrl}?interval=${data?.interval}&time=${data?.time}`
+          );
     let result = await response.json();
     return result;
   } catch (error) {

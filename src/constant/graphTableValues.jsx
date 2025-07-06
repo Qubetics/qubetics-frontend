@@ -423,71 +423,74 @@ export const TransactionDetailsColumns = [
     ),
   },
   {
-  title: "To",
-  key: "toAddress",
-  render: (text) => {
-    const toAddress = text?.toAddress;
-    const contractAddress = text?.contractAddress;
-    const isValidAddress = toAddress && toAddress !== "N/A";
-    const isContractType = [
-      typesOfTransactions.contractTransfer,
-      typesOfTransactions.contractCreation,
-      typesOfTransactions.contractExecute,
-      typesOfTransactions.contractUpload,
-    ].includes(text?.type);
-    const isSpecialPrefix = toAddress?.startsWith("0x") || toAddress?.startsWith("Qubetics");
+    title: "To",
+    key: "toAddress",
+    render: (text) => {
+      const toAddress = text?.toAddress;
+      const contractAddress = text?.contractAddress;
+      const isValidAddress = toAddress && toAddress !== "N/A";
+      const isContractType = [
+        typesOfTransactions.contractTransfer,
+        typesOfTransactions.contractCreation,
+        typesOfTransactions.contractExecute,
+        typesOfTransactions.contractUpload,
+      ].includes(text?.type);
+      const isSpecialPrefix =
+        toAddress?.startsWith("0x") || toAddress?.startsWith("Qubetics");
 
-    if (isValidAddress && isSpecialPrefix) {
-      const link = isContractType
-        ? `${Routes.CONTRACT_DETAIL}${toAddress}`
-        : `${Routes.Tx_ADDRESS}${toAddress}`;
+      if (isValidAddress && isSpecialPrefix) {
+        const link = isContractType
+          ? `${Routes.CONTRACT_DETAIL}${toAddress}`
+          : `${Routes.Tx_ADDRESS}${toAddress}`;
 
-      return (
-        <div className="iconandlink">
-          <Link className="fromicon" href={link} rel="noopener noreferrer">
-            {getAddress(toAddress)}
-          </Link>
-          <span>
-            <CopyText text={toAddress} />
-          </span>
-        </div>
-      );
-    }
+        return (
+          <div className="iconandlink">
+            <Link className="fromicon" href={link} rel="noopener noreferrer">
+              {getAddress(toAddress)}
+            </Link>
+            <span>
+              <CopyText text={toAddress} />
+            </span>
+          </div>
+        );
+      }
 
-    if (isValidAddress) {
-      return (
-        <div className="iconandlink">
-          <Link href={`${Routes.Tx_ADDRESS}${toAddress}`} rel="noopener noreferrer">
-            {getAddress(toAddress)}
-          </Link>
-          <span>
-            <CopyText text={toAddress} />
-          </span>
-        </div>
-      );
-    }
+      if (isValidAddress) {
+        return (
+          <div className="iconandlink">
+            <Link
+              href={`${Routes.Tx_ADDRESS}${toAddress}`}
+              rel="noopener noreferrer"
+            >
+              {getAddress(toAddress)}
+            </Link>
+            <span>
+              <CopyText text={toAddress} />
+            </span>
+          </div>
+        );
+      }
 
-    if (contractAddress && contractAddress !== "N/A") {
-      return (
-        <div className="iconandlink">
-          <Link
-            className="fromicon"
-            href={`${Routes.CONTRACT_DETAIL}${contractAddress}`}
-            rel="noopener noreferrer"
-          >
-            {getAddress(contractAddress)}
-          </Link>
-          <span>
-            <CopyText text={contractAddress} />
-          </span>
-        </div>
-      );
-    }
+      if (contractAddress && contractAddress !== "N/A") {
+        return (
+          <div className="iconandlink">
+            <Link
+              className="fromicon"
+              href={`${Routes.CONTRACT_DETAIL}${contractAddress}`}
+              rel="noopener noreferrer"
+            >
+              {getAddress(contractAddress)}
+            </Link>
+            <span>
+              <CopyText text={contractAddress} />
+            </span>
+          </div>
+        );
+      }
 
-    return "-";
+      return "-";
+    },
   },
-},
-
 
   {
     title: "Value (TICS)",
@@ -1654,8 +1657,10 @@ export const validatorsColumn = [
     key: "commission",
     render: (text) => (
       <span className="">
-        {text?.commission
-          ? noExponential(Number(text?.commission).toFixed(4)) + " %"
+        {text?.commission || text?.commissionRate
+          ? noExponential(
+              Number(text?.commission || text?.commissionRate).toFixed(4)
+            ) + " %"
           : "-"}
       </span>
     ),

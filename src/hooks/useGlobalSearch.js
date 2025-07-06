@@ -31,6 +31,8 @@ export default function useGlobalSearch(page = 1) {
       ? ["transactions"]
       : data?.account
       ? ["account"]
+      : data?.addresses
+      ? ["addresses"]
       : [];
   };
 
@@ -79,6 +81,16 @@ export default function useGlobalSearch(page = 1) {
             ],
           },
         };
+      case "addresses":
+        return {
+          results: {
+            [key]: [
+              {
+                address: dataKey?.address,
+              },
+            ],
+          },
+        };
     }
   };
 
@@ -86,7 +98,6 @@ export default function useGlobalSearch(page = 1) {
     // setIsLoading(true);
     try {
       const response = await getSearchingValue(debounce);
-
       if (response.error) {
         setErr(true);
         setSearchResult([]);

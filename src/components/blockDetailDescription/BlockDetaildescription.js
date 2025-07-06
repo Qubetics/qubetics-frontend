@@ -7,9 +7,23 @@ import { useLatestData } from "../contexts/latest_data";
 import CopyText from "../DoCopy/CopyText";
 import "../Pagination/Pagination.scss";
 import "../transferInfo/TransferInformation.scss";
+import getStatistics from "@/services/getStatistics";
+import { useEffect, useState } from "react";
 const BlockDetailDescription = ({ blockData, status }) => {
   const router = useRouter();
   const webSocketData = useLatestData();
+  const [stats, setStats] = useState("");
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+  useEffect(() => {
+    fetchEVMStats();
+  }, []);
 
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -73,7 +87,8 @@ const BlockDetailDescription = ({ blockData, status }) => {
               const latestBlock = webSocketData?.blocks?.blocknumber
                 ? webSocketData?.blocks?.blocknumber
                 : 0;
-              if (latestBlock > blockNo)
+
+              if (stats?.latest_block > blockNo)
                 return router.push(`/blocks/${Number(blockNo) + 1}`);
             }}
           >
@@ -168,50 +183,60 @@ const BlockDetailDescription = ({ blockData, status }) => {
             </span>
           </div>
         )}
-        <div className="information">
-          <p> Parent Hash </p>
-          <span className="">
-            <Link
-              className="hoverTrans"
-              href={`${Routes.BLOCKS}/${blockData?.block?.parentHash}`}
-              style={blockNo == 1 ? { pointerEvents: "none" } : {}}
-            >
-              {blockData?.block?.parentHash
-                ? blockData?.block?.parentHash
-                : "-"}
-            </Link>
+        {chain == "EVM Chain" && (
+          <div className="information">
+            <p> Parent Hash </p>
+            <span className="">
+              <Link
+                className="hoverTrans"
+                href={`${Routes.BLOCKS}/${blockData?.block?.parentHash}`}
+                style={blockNo == 1 ? { pointerEvents: "none" } : {}}
+              >
+                {blockData?.block?.parentHash
+                  ? blockData?.block?.parentHash
+                  : "-"}
+              </Link>
 
-            <CopyText text={blockData?.block?.parentHash} />
-          </span>
-        </div>
-        <div className="information">
-          <p> Transactions Root </p>
-          <span className="">
-            <span>
-              {blockData?.block?.transactionsRoot
-                ? blockData?.block?.transactionsRoot
-                : "-"}
+              <CopyText text={blockData?.block?.parentHash} />
             </span>
-          </span>
-        </div>
-        <div className="information">
-          <p> Receipts Root </p>
-          <span className="">
-            <span>
-              {blockData?.block?.receiptsRoot
-                ? blockData?.block?.receiptsRoot
-                : "-"}
+          </div>
+        )}
+        {chain == "EVM Chain" && (
+          <div className="information">
+            <p> Transactions Root </p>
+            <span className="">
+              <span>
+                {blockData?.block?.transactionsRoot
+                  ? blockData?.block?.transactionsRoot
+                  : "-"}
+              </span>
             </span>
-          </span>
-        </div>
-        <div className="information">
-          <p> State Root </p>
-          <span className="">
-            <span>
-              {blockData?.block?.stateRoot ? blockData?.block?.stateRoot : "-"}
+          </div>
+        )}
+        {chain == "EVM Chain" && (
+          <div className="information">
+            <p> Receipts Root </p>
+            <span className="">
+              <span>
+                {blockData?.block?.receiptsRoot
+                  ? blockData?.block?.receiptsRoot
+                  : "-"}
+              </span>
             </span>
-          </span>
-        </div>
+          </div>
+        )}
+        {chain == "EVM Chain" && (
+          <div className="information">
+            <p> State Root </p>
+            <span className="">
+              <span>
+                {blockData?.block?.stateRoot
+                  ? blockData?.block?.stateRoot
+                  : "-"}
+              </span>
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

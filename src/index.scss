@@ -188,10 +188,10 @@ html {
   padding-right: 15px;
   padding-left: 15px;
 
-  @media (max-width: 1550px) {
-    padding-left: 60px;
-    padding-right: 60px;
-  }
+  // @media (max-width: 1550px) {
+  //   padding-left: 60px;
+  //   padding-right: 60px;
+  // }
 
   @media (max-width: 1399px) {
     padding-right: 15px;
@@ -2745,8 +2745,8 @@ input[type="number"] {
   @media (max-width: 1199px) {
     text-align: center;
   }
-
   .ant-select-selector {
+    
     &::before {
       content: "";
       position: absolute;
