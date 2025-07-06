@@ -7,8 +7,7 @@ export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const NATIVE_EXPLORER_API_URL =
-  process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
+export const NATIVE_EXPLORER_API_URL = `${process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL}/qubetics/`;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
 export const NATIVE_EXPLORER_SOCKET_URL =
   process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
@@ -292,14 +291,16 @@ export const blockchainHeader = [
 
 /*Contract Header*/
 export const contractHeaderFunction = (currentPath, onClick) => {
-
   const contractHeader = [
     {
       key: "1",
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_Contract", "All Contracts")} href="/contract">
+        <Link
+          onClick={() => onClick("Nav_Contract", "All Contracts")}
+          href="/contract"
+        >
           All Contracts
         </Link>
       ),
@@ -310,7 +311,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
+        <Link
+          onClick={() => onClick("Nav_TokenIcon", "Token Icon")}
+          href="/tokenicon"
+        >
           Token Icon
         </Link>
       ),
@@ -322,7 +326,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
+        <Link
+          onClick={() => onClick("Nav_VerifyContract", "Verify Contract")}
+          href="/contract/verify"
+        >
           Verify Contract
         </Link>
       ),

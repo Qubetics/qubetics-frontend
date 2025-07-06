@@ -98,7 +98,7 @@ function HeaderMenu({ onCloseDrawer }) {
 
           if (item.showIfEVM === false && chainType !== "EVM Chain")
             return null;
-          if (item.showIfFaucet && SHOW_FAUCET !== 1) return null;
+          if (item.showIfFaucet === false && SHOW_FAUCET !== 1) return null;
 
           if (item.type === "link") {
             return (
