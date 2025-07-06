@@ -8,6 +8,7 @@ import {
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
 
+
 export const footerLinks = [
   {
     title: "Quick Links",
@@ -15,7 +16,6 @@ export const footerLinks = [
       {
         label: "Tokens",
         href: "/token",
-        isNative: localStorage.getItem("chainType") === "Native Chain",
       },
       { label: "Blockchain", href: "/blocks" },
       { label: "Validators", href: "/validators" },

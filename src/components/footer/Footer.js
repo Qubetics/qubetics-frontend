@@ -9,6 +9,12 @@ import { footerLinks, SocialMediaLinks } from "./config/FooterLinks";
 import "./Footer.scss";
 import { trackEvent } from "@/utils/eventTrack";
 const Footer = () => {
+  const [isNative, setIsNative] = useState(false);
+
+  useEffect(() => {
+    const val = localStorage.getItem("chainType");
+    setIsNative(val === "Native Chain");
+  }, []);
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -51,7 +57,7 @@ const Footer = () => {
               <h3 className="mb-2 font-semibold">{section.title}</h3>
               <div className="flex flex-col space-y-1">
                 {section.items.map((item, i) => {
-                  if (item?.isNative) return;
+                  if (item.label === "Tokens" && !isNative) return null;
                   return item.disabled ? (
                     <Link
                       href={"#"}

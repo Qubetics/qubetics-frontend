@@ -32,7 +32,6 @@ import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
 import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 import useEthereumBalance from "@/hooks/useGetBalance";
-import { is } from "date-fns/locale";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -51,7 +50,11 @@ const page = ({ params }) => {
     params?.addressDetail,
     WEB_PROVIDER_URL
   );
-  const isEvm = localStorage.getItem("chainType") === "EVM Chain";
+  let isEvm = false;
+
+  if (typeof window !== "undefined") {
+    isEvm = localStorage.getItem("chainType") === "EVM Chain";
+  }
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
