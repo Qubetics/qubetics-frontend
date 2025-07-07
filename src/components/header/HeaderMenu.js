@@ -165,6 +165,7 @@ function HeaderMenu({ onCloseDrawer }) {
                 </button>*/}
             <div className="evmChain">
               <Select
+                title=""
                 className="headerSelectItem"
                 getPopupContainer={getContainer}
                 defaultValue={chainType}
@@ -172,10 +173,12 @@ function HeaderMenu({ onCloseDrawer }) {
                 onChange={handleChainChange}
                 options={[
                   {
+                    title: "",
                     value: "EVM Chain",
                     label: "EVM Chain",
                   },
                   {
+                    title: "",
                     value: "Native Chain",
                     label: "Native Chain",
                   },
