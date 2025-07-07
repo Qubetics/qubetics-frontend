@@ -14,7 +14,7 @@ export default async function getBlocks(currentPage, limit, filterVal, order) {
             `${EXPLORER_API_URL}blocks/get-all-blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
           )
         : await fetch(
-            `${NATIVE_EXPLORER_API_URL}blocks?page=${currentPage}&limit=${limit}`
+            `${NATIVE_EXPLORER_API_URL}blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
           );
     let result = await response.json();
     return result;

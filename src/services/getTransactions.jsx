@@ -14,7 +14,7 @@ export default async function getTransactions(currentPage, limit, filterVal) {
             `${EXPLORER_API_URL}transactions/get-all-transactions?page=${currentPage}&limit=${limit}&order=${filterVal}`
           )
         : await fetch(
-            `${NATIVE_EXPLORER_API_URL}transactions?page=${currentPage}&limit=${limit}`
+            `${NATIVE_EXPLORER_API_URL}transactions?page=${currentPage}&limit=${limit}&order=${filterVal}`
           );
     let result = await response.json();
     return result;
