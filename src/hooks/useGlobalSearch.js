@@ -1,9 +1,8 @@
 "use client";
+import getSearchingValue from "@/services/getGlobalSearch";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
-import getSearchingValue from "@/services/getGlobalSearch";
-import { set } from "date-fns";
 // import useToggleChainContext from "./useToggleChainContext";
 
 export default function useGlobalSearch(page = 1) {

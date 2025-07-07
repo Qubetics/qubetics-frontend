@@ -54,24 +54,27 @@ export function noExponentsValue(number) {
 }
 
 export const formatMillionNumber = (num) => {
-  if (!num || num === null || num === undefined) return 0;
+  if (!num && num !== 0) return "0";
+
   let formattedNumber;
 
   switch (true) {
     case num >= 1e12:
-      formattedNumber = (num / 1e12).toFixed(4) + " T";
+      formattedNumber = (num / 1e12).toFixed(4).replace(/\.?0+$/, "") + " T";
       break;
     case num >= 1e9:
-      formattedNumber = (num / 1e9).toFixed(4) + " B";
+      formattedNumber = (num / 1e9).toFixed(4).replace(/\.?0+$/, "") + " B";
       break;
     case num >= 1e6:
-      formattedNumber = (num / 1e6).toFixed(4) + " M";
+      formattedNumber = (num / 1e6).toFixed(4).replace(/\.?0+$/, "") + " M";
       break;
     case num >= 1e3:
-      formattedNumber = (num / 1e3).toFixed(4) + " K";
+      formattedNumber = (num / 1e3).toFixed(4).replace(/\.?0+$/, "") + " K";
       break;
     default:
-      formattedNumber = Number(num).toFixed(4);
+      formattedNumber = Number(num)
+        .toFixed(4)
+        .replace(/\.?0+$/, "");
       break;
   }
 

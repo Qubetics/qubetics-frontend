@@ -23,7 +23,7 @@ const Sync = () => {
           <Image priority src={LogoIcon} alt="Logo" width={176} height={50} />
           <h2>#{syncData?.last_block_height}</h2>
         </div>
-        {/* <h3>https://QubeticScan.chain.whenmoonwhenlambo.money</h3> */}
+       
       </div>
       <div className="sync_state">
         <span>

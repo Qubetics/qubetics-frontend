@@ -45,10 +45,16 @@ const page = ({ params }) => {
   const [tokensTxData, setTokensTxData] = useState([]);
   const [dropDownTokenData, setDropDownTokenData] = useState("");
   const router = useRouter();
+
   const { balance, usdPrice } = useEthereumBalance(
     params?.addressDetail,
     WEB_PROVIDER_URL
   );
+  let isEvm = false;
+
+  if (typeof window !== "undefined") {
+    isEvm = localStorage.getItem("chainType") === "EVM Chain";
+  }
   const fetchTx = async () => {
     try {
       setTxAddressStatus(FetchingStatus);
@@ -168,7 +174,7 @@ const page = ({ params }) => {
         </>
       ),
     },
-    {
+    isEvm && {
       label: <span>Token Transaction</span>,
       key: "1",
       children: (
@@ -178,7 +184,7 @@ const page = ({ params }) => {
         />
       ),
     },
-  ];
+  ].filter(Boolean);
 
   const handleTokenClick = (address) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);

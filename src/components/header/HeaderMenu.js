@@ -25,7 +25,8 @@ function HeaderMenu({ onCloseDrawer }) {
 
   const val =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-  const [chainType, setChainType] = useState(val || "EVM Chain");
+  
+    const [chainType, setChainType] = useState(val || "EVM Chain");
 
   useEffect(() => {
     const cookieValue = getCookie("isEVM");
@@ -85,6 +86,11 @@ function HeaderMenu({ onCloseDrawer }) {
   useEffect(() => {
     router.prefetch("/dashboard");
   }, [router]);
+    
+  useEffect(() => {
+    localStorage.setItem("chainType", chainType);
+    setIsNetworkChanged(false);
+  }, [chainType]);
 
   const getContainer = (triggerNode) => triggerNode.parentNode;
   const navItem = navItems(chainType == "EVM Chain");
@@ -98,7 +104,7 @@ function HeaderMenu({ onCloseDrawer }) {
 
           if (item.showIfEVM === false && chainType !== "EVM Chain")
             return null;
-          if (item.showIfFaucet && SHOW_FAUCET !== 1) return null;
+          if (item.showIfFaucet === false && SHOW_FAUCET !== 1) return null;
 
           if (item.type === "link") {
             return (
@@ -165,6 +171,7 @@ function HeaderMenu({ onCloseDrawer }) {
                 </button>*/}
             <div className="evmChain">
               <Select
+                title=""
                 className="headerSelectItem"
                 getPopupContainer={getContainer}
                 defaultValue={chainType}
@@ -172,10 +179,12 @@ function HeaderMenu({ onCloseDrawer }) {
                 onChange={handleChainChange}
                 options={[
                   {
+                    title: "",
                     value: "EVM Chain",
                     label: "EVM Chain",
                   },
                   {
+                    title: "",
                     value: "Native Chain",
                     label: "Native Chain",
                   },

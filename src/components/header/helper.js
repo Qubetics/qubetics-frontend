@@ -58,6 +58,7 @@ export const navItems = (isEVM) => {
       href: Routes.FAUCET,
       matchRoutes: [Routes.FAUCET],
       showIfEVM: isEVM,
+      showIfFaucet: false,
     },
   ];
 };
