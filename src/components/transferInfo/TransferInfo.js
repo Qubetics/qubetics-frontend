@@ -142,7 +142,7 @@ const TransferInfo = ({ data }) => {
           // chain == "EVM Chain" && (
           <div className="information">
             <p>Gas Used </p>
-            <span>{data?.gas ? data?.gas : "0"}</span>
+            <span>{data?.gas ?? data?.gasUsed ?? "0"}</span>
           </div>
           // )
         }
