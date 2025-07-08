@@ -20,7 +20,7 @@ const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const { diffs } = useAverageBlockTime();
-  
+
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
@@ -46,10 +46,7 @@ const ChainAnalytics = ({ stats }) => {
     <div className="analytics_cards">
       <CardsOnchain
         text="Average Block Time"
-        balance={
-          getDifference(diffs)
-
-        }
+        balance={getDifference(diffs)}
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
         title="The average time it takes to create a new block on the blockchain."
       />
@@ -58,11 +55,22 @@ const ChainAnalytics = ({ stats }) => {
         addicon="true"
         text="Circulating Supply"
         balance={
-          stats?.circulationSupply
-            ? formatMillionNumber(stats?.circulationSupply)
-            : stats?.circulation_supply
-            ? formatMillionNumber(stats?.circulation_supply)
-            : 0
+          <Tooltip
+            placement="top"
+            title={
+              stats?.circulationSupply
+                ? stats?.circulationSupply
+                : stats?.circulation_supply
+                ? stats?.circulation_supply
+                : 0
+            }
+          >
+            {stats?.circulationSupply
+              ? formatMillionNumber(stats?.circulationSupply)
+              : stats?.circulation_supply
+              ? formatMillionNumber(stats?.circulation_supply)
+              : 0}
+          </Tooltip>
         }
         img={
           isLight == "lightTheme" ? (
