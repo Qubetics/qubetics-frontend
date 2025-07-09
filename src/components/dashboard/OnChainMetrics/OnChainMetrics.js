@@ -28,6 +28,7 @@ const OnChainMetrics = ({ stats }) => {
   useEffect(() => {
     getPrice();
   }, []);
+ 
   const getPrice = async () => {
     try {
       let response = await getQubeticsPrice();
