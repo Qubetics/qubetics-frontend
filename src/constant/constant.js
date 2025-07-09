@@ -33,6 +33,7 @@ export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
 export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
+export const G_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_G_TAG_MANAGER_ID;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
