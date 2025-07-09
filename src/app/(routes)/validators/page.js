@@ -106,12 +106,9 @@ function page() {
       id: 4,
       title:
         "The number of validators actively participating in the network at the current time.",
-
-      balance:
-        validatorData?.activeValidators || validatorData?.activeCount
-          ? validatorData?.activeValidators?.length ||
-            validatorData?.activeCount
-          : "0",
+      balance: Array.isArray(validatorData?.activeValidators)
+        ? validatorData.activeValidators.length
+        : validatorData?.activeValidators || validatorData?.activeCount || "0",
       img: <Activevalidators />,
       text: "Active Validators",
       contract: "true",
