@@ -57,7 +57,7 @@ function page() {
       try {
         setValidatorStatus(FetchingStatus);
         let response = await getValidators(currentPage, tableLimit);
-        setValidatorData([response?.data]);
+        setValidatorData(response?.data);
         setValidatorStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
@@ -84,7 +84,7 @@ function page() {
       title:
         "The total number of validators participating in securing the network by validating and proposing blocks.",
       text: <>Total Validators</>,
-      balance: validatorData[0]?.count ? validatorData[0]?.count : "0",
+      balance: validatorData?.count ? validatorData?.count : "0",
       img: <Totalvalidators />,
       contract: true,
     },
@@ -106,8 +106,8 @@ function page() {
         "The number of validators actively participating in the network at the current time.",
 
       balance:
-        validatorData[0]?.activeValidators || validatorData[0]?.activeCount
-          ? validatorData[0]?.activeValidators || validatorData[0]?.activeCount
+       validatorData?.activeCount|| validatorData?.activeValidators 
+          ? validatorData?.activeCount || validatorData?.activeValidators 
           : "0",
       img: <Activevalidators />,
       text: "Active Validators",
@@ -162,7 +162,7 @@ function page() {
             validatorStatus === FetchingStatus || validatorStatus === InitStatus
           }
           columns={validatorsColumn}
-          dataSource={validatorData[0]?.validators}
+          dataSource={validatorData?.validators}
           pagination={false}
           locale={{
             emptyText: (
