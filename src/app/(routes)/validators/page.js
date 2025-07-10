@@ -138,7 +138,6 @@ function page() {
       setCurrentPage(1);
     }
   };
-  console.log("validatorData", validatorData);
   return (
     <div className="validatorsCard">
       <div className="container">
