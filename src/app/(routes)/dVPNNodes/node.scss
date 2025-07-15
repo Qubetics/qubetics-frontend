@@ -1,6 +1,6 @@
 @import "../../../_mixins.scss";
 @import "../../../_var.scss";
-.qubeticNetworkNode {
+.qubeticdVPNNode {
   .NodePerformance {
     display: flex;
     gap: 20px;
@@ -17,7 +17,6 @@
         position: absolute;
         bottom: 20px;
         left: 20px;
-        max-width: 107px;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -36,6 +35,8 @@
           align-items: center;
           justify-content: center;
           flex-direction: column;
+          width: max-content;
+          padding: 20px;
           @media (max-width: 575px) {
             min-width: 103px;
           }
@@ -93,6 +94,8 @@
           justify-content: center;
           align-items: center;
           gap: 16px;
+          padding: 10px;
+          text-align: center;
           @media (max-width: 575px) {
             min-height: 100px;
             gap: 10px;
@@ -184,16 +187,19 @@
     display: flex;
     gap: 30px;
     margin-top: 40px;
-    flex-flow: wrap;
+    @media screen and (max-width: 1143px) {
+      flex-direction: column;
+    }
     > div {
       flex: 1;
     }
     &_right {
       display: flex;
-      flex-flow: wrap;
+      flex-wrap: wrap;
       gap: 30px;
       > div {
-        max-width: 325px;
+        max-width: unset;
+        flex: 0%;
       }
     }
   }
@@ -228,6 +234,8 @@
 
     svg {
       height: 100% !important;
+      width: 100% !important;
+
       text {
         font-size: 12px !important;
       }

@@ -31,38 +31,38 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
   const nodePerformanceData = [
     {
       value: blockHeight ? blockHeight : stats?.latest_block ?? 0,
-      label: "Block Height",
+      label: "Total dVPN Providers",
       content: tooltipContent.block_Height,
     },
     {
       value: stats?.bondedTokens ? formatValue(Number(stats?.bondedTokens)) : 0,
-      label: "Bonded Coins",
+      label: "Active Providers",
       content: tooltipContent.bonded_Coins,
     },
     {
       value: lastBlock ? lastBlock + "s" : 0 + "s",
-      label: "Last Block",
+      label: "Total dVPN Users",
       content: tooltipContent.last_Block,
     },
     {
       value: webSocket?.onChainMetric?.tpb ? webSocket?.onChainMetric?.tpb : 0,
-      label: "TPB",
+      label: "Active Users",
       content: tooltipContent.TPB,
     },
     {
-      value: lastBlock ? lastBlock + "s" : 0 + "s",
-      label: "Last Block",
+      value: "55",
+      label: "Total dVPN Txns",
       content: tooltipContent.last_Block,
     },
     {
-      value: webSocket?.onChainMetric?.tpb ? webSocket?.onChainMetric?.tpb : 0,
-      label: "TPB",
+      value: "88",
+      label: "Current Session Count",
       content: tooltipContent.TPB,
     },
   ];
 
   return (
-    <div className="qubeticNetworkNode">
+    <div className="qubeticdVPNNode">
       {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
        */}
       <FilterResult />
@@ -90,10 +90,10 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                         }}
                       >
                         <p>{item.label}</p>
-                        <InfoCircleOutlined
+                        {/* <InfoCircleOutlined
                           style={{ color: "#A0A0A0" }}
                           className="infoIcon"
-                        />
+                        /> */}
                       </span>
                     </Tooltip>
                   </div>
@@ -108,7 +108,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
             <div className="countryBox">
               <div className="innerBox">
                 <h5>{countryNode?.total ? countryNode?.total : 0}</h5>
-                <p>Qubetics</p>
+                <p>Txns (Last 24hrs)</p>
               </div>
               <div className="innerBox">
                 <h5>
