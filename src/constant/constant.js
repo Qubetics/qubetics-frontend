@@ -143,6 +143,8 @@ export const Routes = {
   STATS: "/charts",
   TOKEN_TXNS: "/tokentxns",
   TOKEN_ICON: "/tokenicon",
+  DVPNNODES: "/dVPNNodes",
+  ACCOUNTS: "/accounts",
 };
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",
@@ -265,6 +267,37 @@ export function NodeHeaderFunction(currentPath, onClick) {
   return NodeHeader;
 }
 
+export function DvpnNodeHeaderFunction(currentPath, onClick) {
+  const NodeHeader = [
+    {
+      key: "1",
+      value: "Node",
+      className: currentPath === Routes.DVPNNODES ? "activeOptions" : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Nodes", "dVPNNodes")}
+          href="/dVPNNodes"
+        >
+          Nodes
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      value: "Sync",
+      className: currentPath === Routes.SYNC ? "activeOptions" : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Accounts", "Accounts")}
+          href="/accounts"
+        >
+          Accounts
+        </Link>
+      ),
+    },
+  ];
+  return NodeHeader;
+}
 /*BlockChain Header*/
 export const blockchainHeader = [
   {

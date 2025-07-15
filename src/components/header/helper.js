@@ -3,6 +3,7 @@ const {
   BlockchainHeaderFunction,
   NodeHeaderFunction,
   contractHeaderFunction,
+  DvpnNodeHeaderFunction,
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
@@ -43,6 +44,12 @@ export const navItems = (isEVM) => {
     },
     {
       type: "select",
+      label: "dVPN",
+      matchRoutes: [Routes.DVPNNODES],
+      optionsFn: DvpnNodeHeaderFunction,
+    },
+    {
+      type: "select",
       label: "Contracts",
       matchRoutes: [
         Routes.CONTRACTS,
@@ -60,5 +67,6 @@ export const navItems = (isEVM) => {
       showIfEVM: isEVM,
       showIfFaucet: false,
     },
+    
   ];
 };

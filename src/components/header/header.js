@@ -96,7 +96,8 @@ function Header() {
       pathname === Routes.TRANSACTIONS ||
       pathname === Routes.BLOCKS ||
       pathname === Routes.TOKEN ||
-      pathname === Routes.TOKEN_ICON
+      pathname === Routes.TOKEN_ICON ||
+      pathname === Routes.DVPNNODES
     ) {
       setShowDiv(false);
     }
@@ -130,6 +131,7 @@ function Header() {
       "/contract/verify": "Contract",
       "/faucet": "Faucet",
       "/address": "Blockchain",
+      "/dVPNNodes": "dVPNNodes",
     };
 
     // Match exact paths or dynamic segments
