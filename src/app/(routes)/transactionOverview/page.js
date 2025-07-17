@@ -1,8 +1,10 @@
 import SearchbarComponent from '@/components/search/SearchbarComponent'
 import './TransactionOverview.scss'
-import { CopyIcon, CopyIcons } from '../../../../public/SvgIcons'
+import { CopyIcon, CopyIcons, ExternalArrowIcon, RightArrowIcon } from '../../../../public/SvgIcons'
 import baseImg from '../../../../public/basesvg.svg'
+import Arbitrum from '../../../../public/Arbitrum.svg'
 import Image from 'next/image'
+import Commonbtn from '@/components/commonbtn/CommonBluebtn'
 const TransactionOverview = () => {
 
   return (
@@ -11,14 +13,32 @@ const TransactionOverview = () => {
         <SearchbarComponent />
       </div>
       <div className='container'>
-        <h2 className='sub_heading'>Transaction Overview</h2>
+        <div className="transaction_overview_head">
+          <div>
+            <button className='back_btn'>
+              <RightArrowIcon /> back
+            </button>
+            <h2 className='sub_heading'>Transaction Overview</h2>
+          </div>
+          <div className="transaction_overview_head_buttons">
+            <Commonbtn text="View to base Explorer" />
+            <Commonbtn text="View to Arbitrum Explorer" />
+          </div>
+        </div>
 
         <div className="transacton_overview_card transaction_list ">
           <h3 className='status'>Completed</h3>
           <div className="sender_list listing">
             <div className='list_item'>
               <h4>Intent Transaction Hash</h4>
-              <h5>ex5ea95239Af8aA2A260de92Fc45898e039øc4fda7fba7793..</h5>
+              <h5>ex5ea95239Af8aA2A260de92Fc45898e039øc4fda7fba7793
+
+                <div className="action_btns_copy">
+                  <span><CopyIcons /></span>
+                  <span><ExternalArrowIcon /></span>
+                </div>
+
+              </h5>
             </div>
             <div className='list_item'>
               <h4>Token</h4>
@@ -33,7 +53,11 @@ const TransactionOverview = () => {
             </div>
             <div className='list_item'>
               <h4>Sender Address</h4>
-              <h5>5239Af8aA2A260de92Fc45898e039øc4f <span><CopyIcons /></span></h5>
+              <h5>5239Af8aA2A260de92Fc45898e039øc4f
+                <div className="action_btns_copy">
+                  <span><CopyIcons /></span>
+                </div>
+              </h5>
             </div>
             <div className='list_item'>
               <h4>Time Started</h4>
@@ -44,7 +68,13 @@ const TransactionOverview = () => {
           <div className="reciever_list listing">
             <div className='list_item'>
               <h4>Destination Tx Hash</h4>
-              <h5>ex5ea9523Af8aA2A260de92Fc45898e039øc4f <span><CopyIcons /></span></h5>
+              <h5>ex5ea9523Af8aA2A260de92Fc45898e039øc4f
+                <div className="action_btns_copy">
+                  <span><CopyIcons /></span>
+                  <span><ExternalArrowIcon /></span>
+                </div>
+
+              </h5>
             </div>
             <div className='list_item'>
               <h4>Token</h4>
@@ -53,13 +83,18 @@ const TransactionOverview = () => {
             <div className='list_item'>
               <h4>Chain</h4>
               <div className='chain'>
-                <Image src={baseImg} alt="" />
+                <Image src={Arbitrum} alt="" />
                 <h5>Arbitrum</h5>
               </div>
             </div>
             <div className='list_item'>
               <h4>Recipient Address</h4>
-              <h5>5239Af8aA2A260de92Fc45898e039øc4f <span><CopyIcons /></span></h5>
+              <h5>5239Af8aA2A260de92Fc45898e039øc4f
+
+                <div className="action_btns_copy">
+                  <span><CopyIcons /></span>
+                </div>
+              </h5>
             </div>
             <div className='list_item'>
               <h4>Time Completed</h4>
@@ -88,7 +123,12 @@ const TransactionOverview = () => {
             </div>
             <div className='list_item'>
               <h4>Token Contract</h4>
-              <h5>5239Af8aA2A260de92Fc45898e039øc4f <span><CopyIcons /></span></h5>
+              <h5>5239Af8aA2A260de92Fc45898e039øc4f
+
+                <div className="action_btns_copy">
+                  <span><CopyIcons /></span>
+                </div>
+              </h5>
             </div>
 
           </div>

@@ -410,6 +410,7 @@ html {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  padding: 0 10px;
   letter-spacing: 0.28px;
   color: $white !important;
   cursor: pointer;
@@ -1574,6 +1575,9 @@ input[type="number"] {
   @media (min-width: 767px) {
     overflow: unset !important;
   }
+}
+.ant-select-single.ant-select-open .ant-select-selection-item {
+  color: #fff !important;
 }
 
 .ant-select-item-option-disabled {

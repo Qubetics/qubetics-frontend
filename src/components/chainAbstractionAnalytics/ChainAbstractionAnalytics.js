@@ -1,13 +1,13 @@
 import { Col, Row, Space } from 'antd'
 import './ChainAbstractionAnalytics.scss'
-import { TickPriceIcon } from '../../../public/SvgIcons'
+import { SwapIconSvg, LockIcon, BlockChains } from '../../../public/SvgIcons'
 import { Select } from "antd";
 
 const ChainAbstractionAnalytics = () => {
   const data = [
-    { text: 'Total Cross-Chain Transactions', balance: '1.92M', img: < TickPriceIcon /> },
-    { text: 'Total Value Locked', balance: '$67.5M', img: < TickPriceIcon /> },
-    { text: 'Chains Connected', balance: '17', img: < TickPriceIcon /> }
+    { text: 'Total Cross-Chain Transactions', balance: '1.92M', img: < SwapIconSvg /> },
+    { text: 'Total Value Locked', balance: '$67.5M', img: < LockIcon /> },
+    { text: 'Chains Connected', balance: '17', img: < BlockChains /> }
   ];
 
   const transactionItems = [
@@ -22,23 +22,12 @@ const ChainAbstractionAnalytics = () => {
       <Row gutter={[20, 20]}>
         {data.map((item, index) => (
           <Col lg={8} key={index}>
-            <div className='abstraction_analytic_card marcketCapCard'>
-              <div className='cardSec_items'>
-                <div className="cardsitem">
-                  <div className="imgIcon">{item.img}</div>
-                  <div>
-                    <p>{item.text}</p>
-                    <h2>{item.balance}</h2>
-                  </div>
-                </div>
+            <div className='abstraction_analytic_card '>
+              <div className="imgIcon">{item.img}</div>
+              <div>
+                <p>{item.text}</p>
+                <h2>{item.balance}</h2>
               </div>
-              <div className='abstraction_analytic_card_icon'>
-
-              </div>
-              <span>
-                <h3>{item.title}</h3>
-                <h4>{item.subtitle}</h4>
-              </span>
             </div>
           </Col>
         ))}
@@ -67,13 +56,13 @@ const ChainAbstractionAnalytics = () => {
           <div className='abstraction_chart_card'>
             <div className="abstraction_chart_card_head">
               <h3>Transaction Load Over Time</h3>
-              <div className='abstraction_chart_card_right'>
-                <Space wrap>
-                  <Select
-                    style={{ width: 80 }}
-                    options={transactionItems}
-                  />
-                </Space>
+              <div className='abstraction_chart_card_right ddddd'>
+                {/* <Space wrap> */}
+                <Select
+                  style={{ width: 80 }}
+                  options={transactionItems}
+                />
+                {/* </Space> */}
               </div>
             </div>
             <div className='abstraction_chart_card_content'>
@@ -104,7 +93,10 @@ const ChainAbstractionAnalytics = () => {
             <div className="abstraction_chart_card_head">
               <h3>Active Users/Day</h3>
               <div className='abstraction_chart_card_right'>
-
+                <Select
+                  style={{ width: 80 }}
+                  options={transactionItems}
+                />
               </div>
             </div>
             <div className='abstraction_chart_card_content'>
@@ -113,7 +105,22 @@ const ChainAbstractionAnalytics = () => {
           </div>
         </Col>
       </Row>
-      <div className='abstraction_chart_card margin-30' ></div>
+      <div className='abstraction_chart_card margin-30' >
+        <div className="abstraction_chart_card_head">
+          <h3>Top Chains by Activity</h3>
+          <div className='abstraction_chart_card_right'>
+            <h4 className="value">
+               <span> By Transactions</span>
+            </h4>
+            <h4 className="value">
+               <span> By Volume</span>
+            </h4>
+          </div>
+        </div>
+        <div className='abstraction_chart_card_content'>
+
+        </div>
+      </div>
 
     </div>
   )

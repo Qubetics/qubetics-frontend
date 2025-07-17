@@ -1,7 +1,7 @@
 'use client';
 import { Table, Tag } from 'antd';
 import './ChainAbstractionAnalytics.scss';
-import { ArrowUpicon, BNBIcon } from '../../../public/SvgIcons';
+import { ArrowUpicon, BNBIcon, CopyIcons } from '../../../public/SvgIcons';
 
 const ChainAbstractionTransaction = () => {
   const columns = [
@@ -11,7 +11,11 @@ const ChainAbstractionTransaction = () => {
       key: 'intentTx',
       render: (_, record) => (
         <div className="tx-cell">
-          <span>{record.intentTx}</span>
+          <span>{record.intentTx}
+            <button className="copy_btn">
+              <CopyIcons />
+            </button>
+          </span>
           <div className="tx-date">{record.date}</div>
         </div>
       ),
@@ -74,7 +78,11 @@ const ChainAbstractionTransaction = () => {
       key: 'destTx',
       render: (_, record) => (
         <div className="tx-cell">
-          <span>{record.destTx}</span>
+          <span>{record.destTx}
+            <button className="copy_btn">
+              <CopyIcons />
+            </button>
+          </span>
           <div className="tx-date">{record.date}</div>
         </div>
       ),

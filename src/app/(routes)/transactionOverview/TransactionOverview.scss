@@ -7,6 +7,39 @@
         margin-bottom: 20px;
     }
 
+    &_head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        
+        .back_btn {
+            border: transparent;
+            background-color: transparent;
+            padding: 0;
+            color: #A0A0A0;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 24px;
+
+            svg {
+                margin-right: 6px;
+            }
+        }
+
+        .sub_heading {
+            margin-bottom: 0;
+        }
+
+        .transaction_overview_head_buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+        }
+
+    }
+
     .sub_heading {
         font-weight: 600;
         font-size: 24px;
@@ -23,6 +56,20 @@
         padding: 30px;
         border: 1px solid #3B393C;
         position: relative;
+
+        .action_btns_copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 6px;
+
+            svg {
+                path {
+                    stroke: white;
+                }
+            }
+        }
+
 
         &:not(:last-of-type) {
             margin-bottom: 40px;
