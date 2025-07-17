@@ -1,0 +1,184 @@
+@import '../../../_var.scss';
+
+.transaction_overview {
+    color: white;
+
+    .searchbar {
+        margin-bottom: 20px;
+    }
+
+    .sub_heading {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 28px;
+        color: $white;
+        margin-bottom: 20px;
+    }
+
+    .transacton_overview_card {
+        backdrop-filter: blur(64px);
+        background: #121212;
+        border-radius: 14px;
+        width: 100%;
+        padding: 30px;
+        border: 1px solid #3B393C;
+        position: relative;
+
+        &:not(:last-of-type) {
+            margin-bottom: 40px;
+        }
+
+        .status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #34C75933;
+            color: #34C759;
+            border-radius: 40px;
+            padding: 5px 15px;
+            font-weight: 300;
+            font-size: 14px;
+        }
+
+        .list_item {
+            &:not(:last-of-type) {
+                margin-bottom: 20px;
+            }
+
+            .chain {
+                background: #201E22;
+                border-radius: 40px;
+                display: flex;
+                padding: 7px 10px;
+                width: max-content;
+                margin-top: 8px;
+                align-items: center;
+                gap: 10px;
+
+                h5 {
+                    margin-top: 0;
+                }
+            }
+
+            h4 {
+                color: #A0A0A0;
+                font-weight: 300;
+                font-size: 16px;
+            }
+
+            h5 {
+                margin-top: 8px;
+                font-weight: 400;
+                font-size: 16px;
+                color: $white;
+
+            }
+        }
+
+        &.transaction_list {
+            display: flex;
+
+            .sender_list {
+                width: 50%;
+            }
+
+            .reciever_list {
+                width: 50%;
+            }
+
+
+        }
+
+        &.metadata_list {
+            display: flex;
+
+            >* {
+                width: 50%;
+            }
+        }
+
+        &.fee_list {
+            display: flex;
+
+            >* {
+                width: 50%;
+            }
+
+            .status-log {
+                background-color: #121212;
+                color: white;
+                font-family: sans-serif;
+
+                h4 {
+                    margin-bottom: 1rem;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: #999;
+                }
+
+                .timeline {
+                    border-left: 2px solid #2ecc71;
+                    margin-left: 10px;
+                    padding-left: 20px;
+                    position: relative;
+
+                    .timeline-item {
+                        position: relative;
+                        padding-bottom: 30px;
+
+                        .circle {
+                            width: 12px;
+                            height: 12px;
+                            border-radius: 50%;
+                            background-color: #2ecc71;
+                            position: absolute;
+                            left: -26px;
+                            top: 3px;
+                        }
+
+                        .label {
+                            font-size: 0.95rem;
+                            font-weight: 500;
+                        }
+
+                        .timestamp {
+                            font-size: 0.85rem;
+                            color: #aaa;
+                        }
+
+                        &.active .circle {
+                            background-color: #2ecc71;
+                        }
+
+                        &:not(.active) .circle {
+                            border: 2px solid #2ecc71;
+                            background-color: transparent;
+                        }
+
+                        &:last-child {
+                            padding-bottom: 0;
+
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                height: 30px;
+                                width: 2px;
+                                left: -20px;
+                                top: 12px;
+                                background: repeating-linear-gradient(to bottom,
+                                        #2ecc71,
+                                        #2ecc71 2px,
+                                        transparent 2px,
+                                        transparent 4px);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
+}

@@ -122,6 +122,7 @@ export const Routes = {
   HOME: "/",
   DASHBOARD: "/dashboard",
   BLOCKS: "/blocks",
+  CHAIN_ABSTRACTION: "/chain-abstraction",
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
