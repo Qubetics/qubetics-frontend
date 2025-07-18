@@ -110,10 +110,10 @@ const ChainAbstractionAnalytics = () => {
           <h3>Top Chains by Activity</h3>
           <div className='abstraction_chart_card_right'>
             <h4 className="value">
-               <span> By Transactions</span>
+              <span> By Transactions</span>
             </h4>
             <h4 className="value">
-               <span> By Volume</span>
+              <span> By Volume</span>
             </h4>
           </div>
         </div>
