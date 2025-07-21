@@ -26,7 +26,7 @@ const ChainAbstractionAnalytics = () => {
     <div className="abstraction_analytics">
       <Row gutter={[20, 20]}>
         {data.map((item, index) => (
-          <Col lg={8} key={index}>
+          <Col lg={8} md={12} sm={24} xs={24} key={index}>
             <div className="abstraction_analytic_card ">
               <div className="imgIcon">{item.img}</div>
               <div>
@@ -76,7 +76,7 @@ const ChainAbstractionAnalytics = () => {
 
       <Row gutter={[20, 20]} className="margin-30">
         <Col lg={12}>
-          <div className="abstraction_chart_card">
+          <div className="abstraction_chart_card token_transferred">
             <div className="abstraction_chart_card_head">
               <h3>Top Tokens Transferred</h3>
               <div className="abstraction_chart_card_right">
@@ -86,10 +86,8 @@ const ChainAbstractionAnalytics = () => {
               </div>
             </div>
             <div className="abstraction_chart_card_content">
-              <div>
-                <CircleComponent />
-                <ChartComponent chartType="column" />
-              </div>
+              <CircleComponent />
+              <ChartComponent chartType="column" />
             </div>
           </div>
         </Col>

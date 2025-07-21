@@ -8,7 +8,7 @@ const ChartComponent = ({ chartType }) => {
     chart: {
       type: chartType,
       spacingBottom: 15,
-      backgroundColor: "#1D1D1D99",
+      backgroundColor: "transparent",
     },
     title: {
       text: "",
@@ -56,6 +56,7 @@ const ChartComponent = ({ chartType }) => {
     yAxis: {
       min: 0,
       max: 100,
+      
       title: {
         text: "Value",
         style: {
@@ -110,13 +111,11 @@ const ChartComponent = ({ chartType }) => {
   };
 
   return (
-    <div style={{ height: "400px" }}>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        containerProps={{ style: { height: "100%" } }}
-      />
-    </div>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options}
+      containerProps={{ style: { height: "200px" } }}
+    />
   );
 };
 

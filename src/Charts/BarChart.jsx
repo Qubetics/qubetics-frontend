@@ -107,12 +107,10 @@ export default function BarChart() {
   };
 
   return (
-    <div style={{ height: "400px" }}>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        containerProps={{ style: { height: "100%" } }}
-      />
-    </div>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options}
+      containerProps={{ style: { height: "100%" } }}
+    />
   );
 }

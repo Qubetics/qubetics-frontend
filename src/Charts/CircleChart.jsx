@@ -99,13 +99,11 @@ const CircleComponent = () => {
   };
 
   return (
-    <div style={{ height: "400px" }}>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        containerProps={{ style: { height: "100%" } }}
-      />
-    </div>
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options}
+      containerProps={{ style: { height: "210px",width:"210px" } }}
+    />
   );
 };
 
