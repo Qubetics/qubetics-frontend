@@ -13,7 +13,7 @@ import {
   TotalAccountIcon,
   TotalValidators,
   Transfericondark,
-  Txblockdark
+  Txblockdark,
 } from "../../../public/SvgIcons";
 const ChainAnalytics = () => {
   const webSocketData = useLatestData();

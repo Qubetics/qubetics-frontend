@@ -1,34 +1,38 @@
-import React from 'react';
-import { Tabs } from 'antd';
+"use client";
+import React from "react";
+import { Tabs } from "antd";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
-import ChainAbstractionAnalytics from '@/components/chainAbstractionAnalytics/ChainAbstractionAnalytics';
-import ChainAbstractionTransaction from '@/components/chainAbstractionAnalytics/ChainAbstractionTransaction';
-import './chain-abstraction.scss';
+import ChainAbstractionAnalytics from "@/components/chainAbstractionAnalytics/ChainAbstractionAnalytics";
+import ChainAbstractionTransaction from "@/components/chainAbstractionAnalytics/ChainAbstractionTransaction";
+import "./chain-abstraction.scss";
 
 const ChainAbstraction = () => {
   const items = [
     {
-      key: 'transaction',
-      label: 'Transaction',
+      key: "transaction",
+      label: "Transaction",
       children: <ChainAbstractionTransaction />,
     },
     {
-      key: 'analytics',
-      label: 'Analytics',
+      key: "analytics",
+      label: "Analytics",
       children: <ChainAbstractionAnalytics />,
     },
-
   ];
 
   return (
-    <section className='chain_abstraction'>
-      <div className='searchbar container'>
+    <section className="chain_abstraction">
+      <div className="searchbar container">
         <SearchbarComponent />
       </div>
 
       <div className="container">
         <div className="chain_abstraction_tabs">
-          <Tabs defaultActiveKey="transaction" className="commontabs " items={items} />
+          <Tabs
+            defaultActiveKey="transaction"
+            className="commontabs "
+            items={items}
+          />
         </div>
       </div>
     </section>

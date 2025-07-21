@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription,fetchUrl } = props;
+  const { title, discription, fetchUrl } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],

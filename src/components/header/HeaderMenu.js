@@ -241,7 +241,7 @@ function HeaderMenu() {
             </span>
           </button> */}
           <a className="qubeticNetwork_btn" onClick={addQubetic}>
-            <span class="_button-text_1x6ja_100">
+            <span className="_button-text_1x6ja_100">
               <Image src="/metafox.avif" width={25} height={25} alt="metafox" />
               Add {EXPLORER_CHAIN_NAME} Network
             </span>
