@@ -114,7 +114,7 @@ const ChartComponent = ({ chartType }) => {
     <HighchartsReact
       highcharts={Highcharts}
       options={options}
-      containerProps={{ style: { height: "200px" } }}
+      containerProps={{ style: { height: "300px" } }}
     />
   );
 };
