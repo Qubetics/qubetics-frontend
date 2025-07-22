@@ -1,24 +1,47 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import GetIntentStatus from "@/services/getIntentStatus";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import "./TransactionOverview.scss";
 import {
-  CopyIcon,
   CopyIcons,
   ExternalArrowIcon,
   RightArrowIcon,
-} from "../../../../public/SvgIcons";
-import baseImg from "../../../../public/basesvg.svg";
-import Arbitrum from "../../../../public/Arbitrum.svg";
+} from "../../../../../public/SvgIcons";
+import baseImg from "../../../../../public/Arbitrum.svg";
+import Arbitrum from "../../../../../public/Arbitrum.svg";
 import Image from "next/image";
 import Commonbtn from "@/components/commonbtn/CommonBluebtn";
 
 const TransactionOverview = () => {
+  const { intentHash } = useParams();
+  const [intentData, setIntentData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await GetIntentStatus(intentHash);
+      if (result?.Data?.intentList?.length) {
+        setIntentData(result.Data.intentList[0]);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [intentHash]);
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!intentData) return <div>No Data Found</div>;
+
   return (
     <div className="transaction_overview">
       <div className="searchbar container">
         <SearchbarComponent />
       </div>
+
       <div className="container">
         <div className="transaction_overview_head">
           <div>
@@ -34,25 +57,24 @@ const TransactionOverview = () => {
         </div>
 
         <div className="transacton_overview_card overview_listing">
-          <h3 className="status">Completed</h3>
+          <h3 className="status">
+            {intentData.status === 1 ? "Pending" : "Completed"}
+          </h3>
+
           <div className="listing">
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
               <h5>
-                ex5ea95239Af8aA2A260de92Fc45898e039øc4fda7fba7793
+                {intentData.intentHash}
                 <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
-                  <span>
-                    <ExternalArrowIcon />
-                  </span>
+                  <span><CopyIcons /></span>
+                  <span><ExternalArrowIcon /></span>
                 </div>
               </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>5664.49 USDC ($5663.15)</h5>
+              <h5>{(intentData.amount / 1e18).toFixed(4)} USDC ($5663.15)</h5>
             </div>
             <div className="list_item">
               <h4>Chain</h4>
@@ -64,11 +86,9 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Sender Address</h4>
               <h5>
-                5239Af8aA2A260de92Fc45898e039øc4f
+                {intentData.sender}
                 <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
+                  <span><CopyIcons /></span>
                 </div>
               </h5>
             </div>
@@ -82,20 +102,16 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Destination Tx Hash</h4>
               <h5>
-                ex5ea9523Af8aA2A260de92Fc45898e039øc4f
+                {intentData.solverTxHash || "Not available"}
                 <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
-                  <span>
-                    <ExternalArrowIcon />
-                  </span>
+                  <span><CopyIcons /></span>
+                  <span><ExternalArrowIcon /></span>
                 </div>
               </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>5664.49 USDC ($5663.15)</h5>
+              <h5>{(intentData.amount / 1e18).toFixed(4)} USDC ($5663.15)</h5>
             </div>
             <div className="list_item">
               <h4>Chain</h4>
@@ -107,11 +123,9 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Recipient Address</h4>
               <h5>
-                5239Af8aA2A260de92Fc45898e039øc4f
+                {intentData.targetAddress}
                 <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
+                  <span><CopyIcons /></span>
                 </div>
               </h5>
             </div>
@@ -122,8 +136,7 @@ const TransactionOverview = () => {
           </div>
         </div>
 
-        <h2 className="sub_heading">Metadata</h2>
-
+        {/* <h2 className="sub_heading">Metadata</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -132,30 +145,27 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Job ID</h4>
-              <h5>#123456789</h5>
+              <h5>#{intentData.nonce}</h5>
             </div>
           </div>
           <div className="listing">
             <div className="list_item">
               <h4>Solver</h4>
-              <h5>RouterX</h5>
+              <h5>{intentData.solverId || "N/A"}</h5>
             </div>
             <div className="list_item">
               <h4>Token Contract</h4>
               <h5>
-                5239Af8aA2A260de92Fc45898e039øc4f
+                {intentData.sourceToken || "0x..."}
                 <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
+                  <span><CopyIcons /></span>
                 </div>
               </h5>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <h2 className="sub_heading">Fee & Logs</h2>
-
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -182,7 +192,7 @@ const TransactionOverview = () => {
                   <h5>22 May 2025 16:03:01</h5>
                 </div>
               </div>
-              <div className="timeline-item ">
+              <div className="timeline-item">
                 <span></span>
                 <div className="list_item">
                   <h4>Executed</h4>
