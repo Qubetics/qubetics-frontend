@@ -3,6 +3,7 @@ const {
   BlockchainHeaderFunction,
   NodeHeaderFunction,
   contractHeaderFunction,
+  EXPLORER_NETWORK_NAME,
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
@@ -58,7 +59,7 @@ export const navItems = (isEVM) => {
       href: Routes.FAUCET,
       matchRoutes: [Routes.FAUCET],
       showIfEVM: isEVM,
-      showIfFaucet: false,
+      showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
     },
   ];
 };
