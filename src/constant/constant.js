@@ -210,6 +210,16 @@ export function BlockchainHeaderFunction(currentPath, onClick) {
         </Link>
       ),
     },
+    {
+      key: "3",
+      value: "Chain Abstraction",
+      className: currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+      label: (
+        <Link onClick={onClick} href="/chain-abstraction">
+          Chain Abstraction
+        </Link>
+      ),
+    },
     // {
     //   key: "3",
     //   value: "Validator",
@@ -392,3 +402,12 @@ export const generateData = (timeRange) => {
   }
   return data;
 };
+
+
+
+
+export const isStringValue=(value)=>{
+  if(!value)return "-"
+
+  return value
+}

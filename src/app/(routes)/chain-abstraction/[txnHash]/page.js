@@ -74,7 +74,7 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>{(intentData.amount / 1e18).toFixed(4)} USDC ($5663.15)</h5>
+              <h5>{(intentData.amount / 1e18).toFixed(4)}</h5>
             </div>
             <div className="list_item">
               <h4>Chain</h4>
@@ -94,7 +94,8 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Time Started</h4>
-              <h5>22 May 2025 16:03:01</h5>
+              <h5>{new Date(intentData.created_at).toLocaleString()}</h5>
+
             </div>
           </div>
 
@@ -111,7 +112,7 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>{(intentData.amount / 1e18).toFixed(4)} USDC ($5663.15)</h5>
+              <h5>{(intentData.amount / 1e18).toFixed(4)}</h5>
             </div>
             <div className="list_item">
               <h4>Chain</h4>
@@ -131,7 +132,7 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Time Completed</h4>
-              <h5>22 May 2025 16:03:01</h5>
+              <h5>{new Date(intentData.updated_at).toLocaleString()}</h5>
             </div>
           </div>
         </div>

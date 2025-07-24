@@ -7,7 +7,7 @@ import "./ChainAbstractionAnalytics.scss";
 import { ArrowUpicon, BNBIcon, CopyIcons } from "../../../public/SvgIcons";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import { pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
+import { isStringValue, pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -25,29 +25,29 @@ const ChainAbstractionTransaction = () => {
     setTransactions([]);
 
     const result = await GetChainAbstractionTransaction(currentPage, tableLimit);
-
+    
     if (result?.Data?.intentList) {
-      const transformed = result.Data.intentList.map((item, index) => ({
+      const transformed = result?.Data?.intentList.map((item, index) => ({
         key: index,
         sender: item.sender,
         path: item.path,
         nonce: item.nonce,
-        intentTx: item.intentHash || "0x...",
+        intentTx: isStringValue(item.intentHash),
         date: new Date().toLocaleString(),
         source: {
-          amount: item.amount ? (item.amount / 1e18).toFixed(4) : "0.00",
+          amount: isStringValue((item.amount / 1e18).toFixed(4) ),
           symbol: item.sourceToken || "BNB",
           icon: <BNBIcon />,
           chain: item.sourceChain || "Unknown",
         },
         destination: {
-          amount: item?.amount ? (item.amount / 1e18).toFixed(4) : "0.00",
+          amount: isStringValue((item.amount / 1e18).toFixed(4) ),
           symbol: item.targetToken || "BNB",
           icon: <BNBIcon />,
           chain: item.targetChain || "Unknown",
         },
         status: item.status === 1 ? "Pending" : "Completed",
-        destTx: item.solverTxHash || "0x...",
+        destTx: isStringValue(item.solverTxHash),
       }));
 
       setTransactions(transformed);
@@ -94,7 +94,7 @@ const ChainAbstractionTransaction = () => {
           <span
             className="tx-link"
             onClick={() =>
-              router.push(`/transactionOverview/${record.intentTx}`)
+              router.push(`/chain-abstraction/${record.intentTx}`)
             }
             style={{ cursor: "pointer", color: "#1890ff" }}
           >
@@ -133,7 +133,7 @@ const ChainAbstractionTransaction = () => {
           <span>{record.destination.icon}</span>
           <div className="token-cell-in">
             <p>
-              {record.destination.amount} {record.destination.symbol}
+              {record?.destination.amount} {record.destination.symbol}
             </p>
             <span className="chain-tag">
               <h3>{record.destination.chain}</h3>

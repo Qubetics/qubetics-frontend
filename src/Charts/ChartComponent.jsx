@@ -97,15 +97,10 @@ const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [
     },
     series: [
       {
-        name: "Values",
+        name: "Value",
         data: seriesData,
         color: "#9f53ff",
       },
-      // {
-      //   name: "lose",
-      //   data: [15, 22, 88, 33, 7, 63],
-      //   color: "#9f53ff",
-      // },
     ],
     accessibility: {
       enabled: false,
