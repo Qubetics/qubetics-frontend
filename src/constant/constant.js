@@ -30,7 +30,7 @@ export const METAMASK_CHAIN_NAME =
   process.env.NEXT_PUBLIC_NETWORK_NAME;
 export const SHOW_FAUCET = process.env.NEXT_PUBLIC_SHOW_FAUCET;
 export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
-export const CHAIN_ABSTRACTION_INTENTLIST_API_URL = process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_GETINTENTLIST_API_URL;
+export const CHAIN_ABSTRACTION_API_URL = process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import GetIntentStatus from "@/services/getIntentStatus";
+import GetTransactionOverview from "@/services/getTransactionOverview"; // API call
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import "./TransactionOverview.scss";
 import {
@@ -18,11 +18,11 @@ import Commonbtn from "@/components/commonbtn/CommonBluebtn";
 const TransactionOverview = () => {
   const { intentHash } = useParams();
   const [intentData, setIntentData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await GetIntentStatus(intentHash);
+      const result = await GetTransactionOverview(intentHash);
       if (result?.Data?.intentList?.length) {
         setIntentData(result.Data.intentList[0]);
       }

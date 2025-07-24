@@ -1,9 +1,11 @@
 // ChartComponent.jsx
+"use client"
+
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const ChartComponent = ({ chartType }) => {
+const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [], title = "" }) => {
   const options = {
     chart: {
       type: chartType,
@@ -11,7 +13,7 @@ const ChartComponent = ({ chartType }) => {
       backgroundColor: "transparent",
     },
     title: {
-      text: "",
+      text: title,
       style: {
         color: "#ffffff",
       },
@@ -38,15 +40,15 @@ const ChartComponent = ({ chartType }) => {
       },
     },
     xAxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      categories: categories,
       title: {
-        text: "Month",
+        text: "Date",
         style: {
           color: "#ffffff",
         },
       },
-      tickLength: 0,
-      gridLineWidth: 0,
+      // tickLength: 0,
+      // gridLineWidth: 0,
       labels: {
         style: {
           color: "#ffffff",
@@ -55,7 +57,7 @@ const ChartComponent = ({ chartType }) => {
     },
     yAxis: {
       min: 0,
-      max: 100,
+      // max: 100,
       
       title: {
         text: "Value",
@@ -95,8 +97,8 @@ const ChartComponent = ({ chartType }) => {
     },
     series: [
       {
-        name: "Revenue",
-        data: [45, 60, 35, 70, 55, 80],
+        name: "Values",
+        data: seriesData,
         color: "#9f53ff",
       },
       // {

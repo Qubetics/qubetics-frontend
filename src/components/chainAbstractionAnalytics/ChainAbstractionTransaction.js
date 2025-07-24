@@ -5,52 +5,84 @@ import { Table } from "antd";
 import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
 import { ArrowUpicon, BNBIcon, CopyIcons } from "../../../public/SvgIcons";
-import GetIntentList from "@/services/getIntentList";
+import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
+import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
+import { pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [loading, setLoading] = useState(true); // Loading state
+  const [currentPage, setCurrentPage] = useState(pageNo); // Track witch page we're on
+  const [totalPages, setTotalPages] = useState(1); // total number of pages
+  const router = useRouter(); // for navigation
 
   useEffect(() => {
-    const fetchIntents = async () => {
-      setLoading(true);
-      setTransactions([])
-
-      const result = await GetIntentList(1, 5);
-
-      if (result?.Data?.intentList) {
-        const transformed = result.Data.intentList.map((item, index) => ({
-          key: index,
-          sender: item.sender,
-          path: item.path,
-          nonce: item.nonce,
-          intentTx: item.intentHash || "0x...",
-          date: new Date().toLocaleString(), // You can replace with item.createdAt if available
-          source: {
-            amount: item.amount ? (item.amount / 1e18).toFixed(4) : "0.00",
-            symbol: item.sourceToken || "BNB",
-            icon: <BNBIcon />,
-            chain: item.sourceChain || "Unknown",
-          },
-          destination: {
-            amount: item?.amount ? (item.amount / 1e18).toFixed(4) : "0.00",
-            symbol: item.targetToken || "BNB",
-            icon: <BNBIcon />,
-            chain: item.targetChain || "Unknown",
-          },
-          status: item.status === 1 ? "Pending" : "Completed",
-          destTx: item.solverTxHash || "0x...",
-        }));
-
-        setTransactions(transformed);
-      }
-
-      setLoading(false);
-    };
-
     fetchIntents();
-  }, []);
+  }, [currentPage]);
+
+  const fetchIntents = async () => {
+    setLoading(true);
+    setTransactions([]);
+
+    const result = await GetChainAbstractionTransaction(currentPage, tableLimit);
+
+    if (result?.Data?.intentList) {
+      const transformed = result.Data.intentList.map((item, index) => ({
+        key: index,
+        sender: item.sender,
+        path: item.path,
+        nonce: item.nonce,
+        intentTx: item.intentHash || "0x...",
+        date: new Date().toLocaleString(),
+        source: {
+          amount: item.amount ? (item.amount / 1e18).toFixed(4) : "0.00",
+          symbol: item.sourceToken || "BNB",
+          icon: <BNBIcon />,
+          chain: item.sourceChain || "Unknown",
+        },
+        destination: {
+          amount: item?.amount ? (item.amount / 1e18).toFixed(4) : "0.00",
+          symbol: item.targetToken || "BNB",
+          icon: <BNBIcon />,
+          chain: item.targetChain || "Unknown",
+        },
+        status: item.status === 1 ? "Pending" : "Completed",
+        destTx: item.solverTxHash || "0x...",
+      }));
+
+      setTransactions(transformed);
+
+      const count = Number(result?.Data?.total ?? 0)
+      setTotalPages(Math.ceil(count / tableLimit));
+    }
+
+    setLoading(false);
+  };
+
+  // ✅ Custom Pagination Handlers
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleLast = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(totalPages);
+    }
+  };
+
+  const handleFirst = () => {
+    if (currentPage > 1) {
+      setCurrentPage(1);
+    }
+  };
 
   const columns = [
     {
@@ -148,6 +180,17 @@ const ChainAbstractionTransaction = () => {
         loading={loading}
         pagination={false}
         className="commontable custom-transaction-table"
+      />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handleNext={handleNext}
+        handlePrevious={handlePrevious}
+        disablePrev={currentPage === 1}
+        disableNext={currentPage === totalPages}
+        handleFirst={handleFirst}
+        handleLast={handleLast}
+        pageSize={2}
       />
     </div>
   );
