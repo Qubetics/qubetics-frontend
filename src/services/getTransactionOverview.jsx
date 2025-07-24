@@ -10,7 +10,6 @@ export default async function GetTransactionOverview(intentHash) {
     return result;
 
   } catch (error) {
-    console.error("Error fetching transaction overview:", error.message);
-    return { error: error.message || "Somthing went wrong" };
+    return error;
   }
 }

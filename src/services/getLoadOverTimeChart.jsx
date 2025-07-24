@@ -10,6 +10,6 @@ export default async function getLoadOverTimeChart() {
         return result;
 
     } catch (error) {
-        console.log("Error while fetching daily-transaction-count", error);
+        return error;
     }
     }

@@ -10,6 +10,6 @@ export default async function getDailyActiveUserChart() {
         return result;
 
     } catch (error) {
-        console.log("Error while fetching daily-active-users", error);
+        return error;
     }
     }

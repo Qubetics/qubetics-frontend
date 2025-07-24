@@ -10,6 +10,6 @@ try {
     return result;
 
 } catch (error) {
-    return { error: error.message || "somthing went wrong" };
+    return error;
 }
 }
