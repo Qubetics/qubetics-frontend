@@ -24,8 +24,11 @@ const ChainAbstractionTransaction = () => {
     setLoading(true);
     setTransactions([]);
 
-    const result = await GetChainAbstractionTransaction(currentPage, tableLimit);
-    
+    const result = await GetChainAbstractionTransaction(
+      currentPage,
+      tableLimit
+    );
+
     if (result?.Data?.intentList) {
       const transformed = result?.Data?.intentList.map((item, index) => ({
         key: index,
@@ -35,13 +38,13 @@ const ChainAbstractionTransaction = () => {
         intentTx: isStringValue(item.intentHash),
         date: new Date().toLocaleString(),
         source: {
-          amount: isStringValue((item.amount / 1e18).toFixed(4) ),
+          amount: isStringValue((item.amount / 1e18).toFixed(4)),
           symbol: item.sourceToken || "BNB",
           icon: <BNBIcon />,
           chain: item.sourceChain || "Unknown",
         },
         destination: {
-          amount: isStringValue((item.amount / 1e18).toFixed(4) ),
+          amount: isStringValue((item.amount / 1e18).toFixed(4)),
           symbol: item.targetToken || "BNB",
           icon: <BNBIcon />,
           chain: item.targetChain || "Unknown",
@@ -52,7 +55,7 @@ const ChainAbstractionTransaction = () => {
 
       setTransactions(transformed);
 
-      const count = Number(result?.Data?.total ?? 0)
+      const count = Number(result?.Data?.total ?? 0);
       setTotalPages(Math.ceil(count / tableLimit));
     }
 
@@ -93,9 +96,7 @@ const ChainAbstractionTransaction = () => {
         <div className="tx-cell">
           <span
             className="tx-link"
-            onClick={() =>
-              router.push(`/chain-abstraction/${record.intentTx}`)
-            }
+            onClick={() => router.push(`/chain-abstraction/${record.intentTx}`)}
             style={{ cursor: "pointer", color: "#1890ff" }}
           >
             {record.intentTx}

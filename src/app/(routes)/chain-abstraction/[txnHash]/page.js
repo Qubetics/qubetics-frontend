@@ -14,11 +14,14 @@ import baseImg from "../../../../../public/Arbitrum.svg";
 import Arbitrum from "../../../../../public/Arbitrum.svg";
 import Image from "next/image";
 import Commonbtn from "@/components/commonbtn/CommonBluebtn";
+import { Routes } from "@/constant/constant";
+import { useRouter } from "next/navigation";
 
 const TransactionOverview = () => {
   const { intentHash } = useParams();
   const [intentData, setIntentData] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
+  const router = useRouter(); // for navigation
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +48,10 @@ const TransactionOverview = () => {
       <div className="container">
         <div className="transaction_overview_head">
           <div>
-            <button className="back_btn">
+            <button
+              className="back_btn"
+              onClick={() => router.push(Routes.CHAIN_ABSTRACTION)}
+            >
               <RightArrowIcon /> back
             </button>
             <h2 className="sub_heading">Transaction Overview</h2>
@@ -65,10 +71,14 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
               <h5>
-                {intentData.intentHash}
+                {intentData?.intentHash}
                 <div className="action_btns_copy">
-                  <span><CopyIcons /></span>
-                  <span><ExternalArrowIcon /></span>
+                  <span>
+                    <CopyIcons />
+                  </span>
+                  <span>
+                    <ExternalArrowIcon />
+                  </span>
                 </div>
               </h5>
             </div>
@@ -88,14 +98,15 @@ const TransactionOverview = () => {
               <h5>
                 {intentData.sender}
                 <div className="action_btns_copy">
-                  <span><CopyIcons /></span>
+                  <span>
+                    <CopyIcons />
+                  </span>
                 </div>
               </h5>
             </div>
             <div className="list_item">
               <h4>Time Started</h4>
               <h5>{new Date(intentData.created_at).toLocaleString()}</h5>
-
             </div>
           </div>
 
@@ -105,8 +116,12 @@ const TransactionOverview = () => {
               <h5>
                 {intentData.solverTxHash || "Not available"}
                 <div className="action_btns_copy">
-                  <span><CopyIcons /></span>
-                  <span><ExternalArrowIcon /></span>
+                  <span>
+                    <CopyIcons />
+                  </span>
+                  <span>
+                    <ExternalArrowIcon />
+                  </span>
                 </div>
               </h5>
             </div>
@@ -126,7 +141,9 @@ const TransactionOverview = () => {
               <h5>
                 {intentData.targetAddress}
                 <div className="action_btns_copy">
-                  <span><CopyIcons /></span>
+                  <span>
+                    <CopyIcons />
+                  </span>
                 </div>
               </h5>
             </div>

@@ -31,7 +31,7 @@ const ChainAbstractionAnalytics = () => {
   const extractChartData = (data, categorykey, valueKey) => {
     const categories = data.map((item) => item[categorykey]);
     const values = data.map((item) => item[valueKey]);
-    return { categories, values};
+    return { categories, values };
   };
 
   const onChain = extractChartData(onChainData, "target_chain", "count");
@@ -85,7 +85,11 @@ const ChainAbstractionAnalytics = () => {
               </div> */}
             </div>
             <div className="abstraction_chart_card_content">
-              <ChartComponent chartType="bar" categories={onChain.categories} seriesData={onChain.values}/>
+              <ChartComponent
+                chartType="bar"
+                categories={onChain.categories}
+                seriesData={onChain.values}
+              />
             </div>
           </div>
         </Col>
@@ -101,7 +105,11 @@ const ChainAbstractionAnalytics = () => {
               </div> */}
             </div>
             <div className="abstraction_chart_card_content">
-              <ChartComponent chartType="areaspline" categories={loadOver.categories} seriesData={loadOver.values}/>
+              <ChartComponent
+                chartType="areaspline"
+                categories={loadOver.categories}
+                seriesData={loadOver.values}
+              />
             </div>
           </div>
         </Col>
@@ -137,7 +145,11 @@ const ChainAbstractionAnalytics = () => {
               </div> */}
             </div>
             <div className="abstraction_chart_card_content">
-              <ChartComponent chartType="areaspline" categories={activeUsers.categories} seriesData={activeUsers.values} />
+              <ChartComponent
+                chartType="areaspline"
+                categories={activeUsers.categories}
+                seriesData={activeUsers.values}
+              />
             </div>
           </div>
         </Col>
