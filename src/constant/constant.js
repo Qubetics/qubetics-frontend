@@ -34,6 +34,8 @@ export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
 export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
+export const CHAIN_ABSTRACTION_API_URL =
+  process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -127,6 +129,7 @@ export const Routes = {
   HOME: "/",
   DASHBOARD: "/dashboard",
   BLOCKS: "/blocks",
+  CHAIN_ABSTRACTION: "/chain-abstraction",
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
@@ -235,6 +238,33 @@ export function BlockchainHeaderFunction(currentPath) {
         </Link>
       ),
     },
+    {
+      key: "3",
+      value: "Chain Abstraction",
+      className:
+        currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+      label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
+    },
+    // {
+    //   key: "3",
+    //   value: "Validator",
+    //   className: currentPath === Routes.VALIDATORS ? "activeOptions" : "",
+    //   label: (
+    //     <Link onClick={onClick} href="/validators">
+    //       Validators
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   key: "4",
+    //   value: "Nodes",
+    //   className: currentPath === Routes.NODES ? "activeOptions" : "",
+    //   label: (
+    //     <Link onClick={onClick} href="/nodes">
+    //       Nodes
+    //     </Link>
+    //   ),
+    // },
   ];
   return blockchainHeader;
 }
@@ -292,14 +322,16 @@ export const blockchainHeader = [
 
 /*Contract Header*/
 export const contractHeaderFunction = (currentPath, onClick) => {
-
   const contractHeader = [
     {
       key: "1",
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_Contract", "All Contracts")} href="/contract">
+        <Link
+          onClick={() => onClick("Nav_Contract", "All Contracts")}
+          href="/contract"
+        >
           All Contracts
         </Link>
       ),
@@ -310,7 +342,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
+        <Link
+          onClick={() => onClick("Nav_TokenIcon", "Token Icon")}
+          href="/tokenicon"
+        >
           Token Icon
         </Link>
       ),
@@ -322,7 +357,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
+        <Link
+          onClick={() => onClick("Nav_VerifyContract", "Verify Contract")}
+          href="/contract/verify"
+        >
           Verify Contract
         </Link>
       ),
@@ -735,3 +773,9 @@ export const handleValidValue = (value) => validateInput(value, 20);
 export const handleValidEmail = (value) => validateInput(value, 50);
 export const WalletValidValue = (value) => validateInput(value, 42);
 export const descriptionValidValue = (value) => validateInput(value, 500);
+
+export const isStringValue = (value) => {
+  if (!value) return "-";
+
+  return value;
+};

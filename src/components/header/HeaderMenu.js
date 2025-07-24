@@ -25,8 +25,8 @@ function HeaderMenu({ onCloseDrawer }) {
 
   const val =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-  
-    const [chainType, setChainType] = useState(val || "EVM Chain");
+
+  const [chainType, setChainType] = useState(val || "EVM Chain");
 
   useEffect(() => {
     const cookieValue = getCookie("isEVM");
@@ -86,7 +86,7 @@ function HeaderMenu({ onCloseDrawer }) {
   useEffect(() => {
     router.prefetch("/dashboard");
   }, [router]);
-    
+
   useEffect(() => {
     localStorage.setItem("chainType", chainType);
     setIsNetworkChanged(false);

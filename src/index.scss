@@ -437,6 +437,14 @@ html {
   width: 100%;
   background-color: $black;
   position: relative;
+  height: 40px;
+  @include fluid-type(320px, 1920px, 12px, 14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 0 10px;
+  letter-spacing: 0.28px;
+  color: $white !important;
   cursor: pointer;
   @include fluid-type(320px, 1920px, 14px, 16px);
 
@@ -1783,6 +1791,9 @@ input[type="number"] {
   @media (min-width: 767px) {
     overflow: unset !important;
   }
+}
+.ant-select-single.ant-select-open .ant-select-selection-item {
+  color: #fff !important;
 }
 
 .ant-select-item-option-disabled {
