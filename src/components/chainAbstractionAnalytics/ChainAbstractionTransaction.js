@@ -30,32 +30,32 @@ const ChainAbstractionTransaction = () => {
     );
 
     if (result?.data?.intentList) {
-      const transformed = result?.data?.intentList.map((item, index) => ({
+      const transformed = result?.data?.intentList?.map((item, index) => ({
         key: index,
-        sender: item.sender,
-        path: item.path,
-        nonce: item.nonce,
-        intentTx: isStringValue(item.intentHash),
+        sender: item?.sender,
+        path: item?.path,
+        nonce: item?.nonce,
+        intentTx: isStringValue(item?.intentHash),
         date: new Date().toLocaleString(),
         source: {
-          amount: isStringValue((item.amount / 1e18).toFixed(4)),
-          symbol: item.sourceToken || "BNB",
+          amount: isStringValue((item?.amount / 1e18).toFixed(4)),
+          symbol: item?.sourceToken || "BNB",
           icon: <BNBIcon />,
-          chain: item.sourceChain || "Unknown",
+          chain: item?.sourceChain || "Unknown",
         },
         destination: {
-          amount: isStringValue((item.amount / 1e18).toFixed(4)),
-          symbol: item.targetToken || "BNB",
+          amount: isStringValue((item?.amount / 1e18).toFixed(4)),
+          symbol: item?.targetToken || "BNB",
           icon: <BNBIcon />,
-          chain: item.targetChain || "Unknown",
+          chain: item?.targetChain || "Unknown",
         },
-        status: item.status === 1 ? "Pending" : "Completed",
-        destTx: isStringValue(item.solverTxHash),
+        status: item?.status === 1 ? "Pending" : "Completed",
+        destTx: isStringValue(item?.solverTxHash),
       }));
 
       setTransactions(transformed);
 
-      const count = Number(result?.data?.total ?? 0);
+      const count = Number(result?.data?.total || 0);
       setTotalPages(Math.ceil(count / tableLimit));
     }
 
@@ -99,10 +99,10 @@ const ChainAbstractionTransaction = () => {
             onClick={() => router.push(`/chain-abstraction/${record.intentTx}`)}
             style={{ cursor: "pointer", color: "#1890ff" }}
           >
-            {record.intentTx}
-            <button className="copy_btn">
+            {record?.intentTx}
+            {/* <button className="copy_btn">
               <CopyIcons />
-            </button>
+            </button> */}
           </span>
           <div className="tx-date">{record.date}</div>
         </div>
@@ -118,10 +118,10 @@ const ChainAbstractionTransaction = () => {
             <p>
               {record.source.amount} {record.source.symbol}
             </p>
-            <span className="chain-tag">
+            {/* <span className="chain-tag">
               <h3>{record.source.chain}</h3>
               <ArrowUpicon />
-            </span>
+            </span> */}
           </div>
         </div>
       ),
@@ -136,10 +136,10 @@ const ChainAbstractionTransaction = () => {
             <p>
               {record?.destination.amount} {record.destination.symbol}
             </p>
-            <span className="chain-tag">
+            {/* <span className="chain-tag">
               <h3>{record.destination.chain}</h3>
               <ArrowUpicon />
-            </span>
+            </span> */}
           </div>
         </div>
       ),
@@ -157,18 +157,27 @@ const ChainAbstractionTransaction = () => {
         <div className="tx-cell">
           <span>
             {record.destTx}
-            <button className="copy_btn">
+            {/* <button className="copy_btn">
               <CopyIcons />
-            </button>
+            </button> */}
           </span>
-          <div className="tx-date">{record.date}</div>
+          {/* <div className="tx-date">{record.date}</div> */}
         </div>
       ),
     },
     {
       title: "Action",
       key: "action",
-      render: () => <span className="view-action">View</span>,
+      render: (_, record) => (
+        <span
+          className="view-action"
+          onClick={() => {
+            router.push(`/chain-abstraction/${record?.intentTx}`);
+          }}
+        >
+          View
+        </span>
+      ),
     },
   ];
 

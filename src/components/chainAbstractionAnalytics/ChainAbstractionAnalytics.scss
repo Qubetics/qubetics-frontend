@@ -1,331 +1,331 @@
-@import '../../_var.scss';
+@import "../../_var.scss";
 @import "../../_mixins.scss";
 
 .abstraction_analytics {
-    margin-top: 20px;
+  margin-top: 20px;
+  .spin_loader {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 20px;
+  }
+  .abstraction_analytic_card {
+    width: 100%;
+    border: 1px solid $borderCard;
+    background: var(--searchBg) !important;
+    border-radius: 14px !important;
+    padding: 20px;
+    display: flex;
+    align-items: center;
 
-    .abstraction_analytic_card {
-        width: 100%;
-        border: 1px solid $borderCard;
-        background: var(--searchBg) !important;
-        border-radius: 14px !important;
-        padding: 20px;
+    @media (max-width: 575px) {
+      padding: 16px;
+    }
+
+    .imgIcon {
+      height: 60px;
+      width: 60px;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #161616;
+      border: 1px solid #454545;
+
+      @media (max-width: 575px) {
+        height: 40px;
+        width: 40px;
+      }
+    }
+
+    p {
+      font-weight: 300;
+      font-size: 16px;
+      color: rgba($white, 0.6);
+
+      @media (max-width: 991px) {
+        font-size: 14px;
+      }
+
+      @media (max-width: 575px) {
+        font-size: 12px;
+      }
+    }
+
+    h2 {
+      font-weight: 400;
+      font-size: 20px;
+      margin-top: 10px;
+      color: white;
+
+      @media (max-width: 991px) {
+        font-size: 18px;
+      }
+
+      @media (max-width: 575px) {
+        font-size: 16px;
+        margin-top: 6px;
+      }
+    }
+  }
+
+  .abstraction_chart_card {
+    width: 100%;
+    height: 100%;
+    border: 1px solid $borderCard;
+    background: var(--searchBg) !important;
+    border-radius: 14px !important;
+    padding: 20px;
+
+    &.token_transferred {
+      .abstraction_chart_card_content {
         display: flex;
         align-items: center;
-
-        @media (max-width:575px) {
-            padding: 16px;
-        }
-
-        .imgIcon {
-            height: 60px;
-            width: 60px;
-            border-radius: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #161616;
-            border: 1px solid #454545;
-
-
-            @media (max-width:575px) {
-                height: 40px;
-                width: 40px;
-            }
-        }
-
-        p {
-            font-weight: 300;
-            font-size: 16px;
-            color: rgba($white, .6);
-
-            @media (max-width:991px) {
-                font-size: 14px;
-            }
-
-            @media (max-width:575px) {
-                font-size: 12px;
-            }
-        }
-
-        h2 {
-            font-weight: 400;
-            font-size: 20px;
-            margin-top: 10px;
-            color: white;
-
-            @media (max-width:991px) {
-                font-size: 18px;
-            }
-
-            @media (max-width:575px) {
-                font-size: 16px;
-                margin-top: 6px;
-            }
-        }
+        // padding: 60px 30px 40px;
+      }
     }
 
-    .abstraction_chart_card {
-        width: 100%;
-        border: 1px solid $borderCard;
-        background: var(--searchBg) !important;
-        border-radius: 14px !important;
-        padding: 20px;
+    .abstraction_chart_card_content {
+      padding: 20px 0;
+      margin: 0;
 
-        &.token_transferred {
-            .abstraction_chart_card_content {
-                display: flex;
-                align-items: center;
-                // padding: 60px 30px 40px;
-
-            }
-        }
-
-
-
-        .abstraction_chart_card_content {
-            padding: 20px 0;
-            margin: 0;
-
-            @media (max-width:575px) {
-                padding: 10px 0;
-            }
-        }
-
-        .abstraction_chart_card_head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            @media (max-width:575px) {
-                flex-direction: column;
-                align-items: start;
-                gap: 10px;
-            }
-
-            h3 {
-                font-weight: 400;
-                font-size: 20px;
-                color: $white;
-
-                @media (max-width:575px) {
-                    font-size: 16px;
-                }
-            }
-
-            .abstraction_chart_card_right {
-                display: flex;
-                gap: 10px;
-                align-items: center;
-
-                .value {
-                    font-weight: 300;
-                    font-size: 14px;
-                    color: rgba(white, .6);
-                    padding: 4px 10.5px;
-                    background: #161616;
-                    border: 1px solid #454545;
-                    border-radius: 30px;
-                    height: 34px;
-
-                    span {
-                        font-weight: 500;
-                        color: $white;
-                    }
-                }
-            }
-        }
-
-        .ant-dropdown-trigger {
-            border: 1px solid;
-            border-radius: 10px;
-            border: 1px solid rgba(32, 134, 255, 0.8) !important;
-            background: rgba(32, 134, 255, 0.2);
-            width: 134px;
-            height: 40px;
-            border-radius: 10px;
-            gap: 10px;
-            justify-content: center;
-            display: flex;
-            color: #fff;
-        }
-
-        .ant-select {
-            max-width: 120px !important;
-            width: 120px !important;
-            height: 40px;
-
-            // @media (max-width: 767px) {
-            //     width: 100% !important;
-            //     display: block;
-            // }
-        }
-
-        .ant-select-dropdown {
-            max-width: 120px !important;
-        }
-
-        .ant-select-selector {
-            border-radius: 30px;
-            height: 40px;
-
-            @include theme() {
-                color: theme-get("texttheme");
-            }
-
-            font-size: 16px;
-
-            @include theme() {
-                background: theme-get("dropdownBg");
-            }
-
-            border: 1px solid $borderCard !important;
-
-            .ant-select-selection-item {
-                padding-left: 15px !important;
-                font-weight: 500;
-                @include fluid-type(320px, 1920px, 12px, 14px);
-            }
-        }
-
-        .ant-select-arrow {
-            margin-top: 0;
-            top: 38% !important;
-
-            svg {
-                @include theme() {
-                    fill: theme-get("texttheme");
-                }
-            }
-        }
+      @media (max-width: 575px) {
+        padding: 10px 0;
+      }
     }
 
-    .margin-30 {
-        margin-top: 30px;
-    }
-}
+    .abstraction_chart_card_head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-.ant-select-dropdown {
-    max-width: 120px !important;
-    width: 120px !important;
-}
-
-.custom-transaction-table {
-    .ant-table {
-
-        .ant-table-thead>tr>th,
-        .ant-table-tbody>tr>td {
-            white-space: nowrap;
-        }
-    }
-
-    .ant-table-thead>tr>th {
-        color: #FFFFFF !important;
-    }
-
-    .ant-table-tbody>tr>td {
-        border-bottom: transparent !important;
-    }
-
-    .tx-cell {
-        display: flex;
+      @media (max-width: 575px) {
         flex-direction: column;
-        gap: 4px;
+        align-items: start;
+        gap: 10px;
+      }
 
-        span {
-            font-weight: 300;
-            font-size: 16px;
-            color: #A0A0A0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+      h3 {
+        font-weight: 400;
+        font-size: 20px;
+        color: $white;
 
-            @media (max-width:575px) {
-                font-size: 14px;
-            }
-
-            .copy_btn {
-                padding: 0;
-                margin: 0;
-                background: transparent;
-                border: transparent;
-
-            }
+        @media (max-width: 575px) {
+          font-size: 16px;
         }
+      }
 
-        .tx-date {
-            font-weight: 300;
-            font-size: 16px;
-            color: #A0A0A0;
-
-            @media (max-width:575px) {
-                font-size: 14px;
-            }
-        }
-    }
-
-    .token-cell {
+      .abstraction_chart_card_right {
         display: flex;
         gap: 10px;
         align-items: center;
 
-        svg {
-            width: 30px;
-            height: 30px;
+        .value {
+          font-weight: 300;
+          font-size: 14px;
+          color: rgba(white, 0.6);
+          padding: 4px 10.5px;
+          background: #161616;
+          border: 1px solid #454545;
+          border-radius: 30px;
+          height: 34px;
+
+          span {
+            font-weight: 500;
+            color: $white;
+          }
         }
-
-        .token-cell-in {
-            display: flex;
-            flex-direction: column;
-
-            p {
-                font-weight: 300;
-                font-size: 16px;
-
-                @media (max-width:575px) {
-                    font-size: 14px;
-                }
-            }
-
-            .chain-tag {
-                display: flex;
-                align-items: center;
-                gap: 13px;
-
-                svg {
-                    width: 15px;
-                    height: 15px;
-                }
-
-                h3 {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 91px;
-                    height: 22px;
-                    background: #201E22;
-                    color: #A0A0A0;
-                    font-weight: 300;
-                    font-size: 14px;
-                    padding: 2px 6px;
-                    margin-top: 2px;
-                    border-radius: 40px;
-
-                    @media (max-width:575px) {
-                        font-size: 12px;
-                    }
-                }
-            }
-        }
+      }
     }
 
-    .status-tag {
-        color: #34C759;
+    .ant-dropdown-trigger {
+      border: 1px solid;
+      border-radius: 10px;
+      border: 1px solid rgba(32, 134, 255, 0.8) !important;
+      background: rgba(32, 134, 255, 0.2);
+      width: 134px;
+      height: 40px;
+      border-radius: 10px;
+      gap: 10px;
+      justify-content: center;
+      display: flex;
+      color: #fff;
     }
 
-    .view-action {
-        color: #A0A0A0;
-        cursor: pointer;
+    .ant-select {
+      max-width: 120px !important;
+      width: 120px !important;
+      height: 40px;
+
+      // @media (max-width: 767px) {
+      //     width: 100% !important;
+      //     display: block;
+      // }
+    }
+
+    .ant-select-dropdown {
+      max-width: 120px !important;
+    }
+
+    .ant-select-selector {
+      border-radius: 30px;
+      height: 40px;
+
+      @include theme() {
+        color: theme-get("texttheme");
+      }
+
+      font-size: 16px;
+
+      @include theme() {
+        background: theme-get("dropdownBg");
+      }
+
+      border: 1px solid $borderCard !important;
+
+      .ant-select-selection-item {
+        padding-left: 15px !important;
         font-weight: 500;
+        @include fluid-type(320px, 1920px, 12px, 14px);
+      }
     }
+
+    .ant-select-arrow {
+      margin-top: 0;
+      top: 38% !important;
+
+      svg {
+        @include theme() {
+          fill: theme-get("texttheme");
+        }
+      }
+    }
+  }
+
+  .margin-30 {
+    margin-top: 30px;
+  }
+}
+
+.ant-select-dropdown {
+  max-width: 120px !important;
+  width: 120px !important;
+}
+
+.custom-transaction-table {
+  .ant-table {
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      white-space: nowrap;
+    }
+  }
+
+  .ant-table-thead > tr > th {
+    color: #ffffff !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    border-bottom: transparent !important;
+  }
+
+  .tx-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    span {
+      font-weight: 300;
+      font-size: 16px;
+      color: #a0a0a0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      @media (max-width: 575px) {
+        font-size: 14px;
+      }
+
+      .copy_btn {
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border: transparent;
+      }
+    }
+
+    .tx-date {
+      font-weight: 300;
+      font-size: 16px;
+      color: #a0a0a0;
+
+      @media (max-width: 575px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .token-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .token-cell-in {
+      display: flex;
+      flex-direction: column;
+
+      p {
+        font-weight: 300;
+        font-size: 16px;
+
+        @media (max-width: 575px) {
+          font-size: 14px;
+        }
+      }
+
+      .chain-tag {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+
+        h3 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 91px;
+          height: 22px;
+          background: #201e22;
+          color: #a0a0a0;
+          font-weight: 300;
+          font-size: 14px;
+          padding: 2px 6px;
+          margin-top: 2px;
+          border-radius: 40px;
+
+          @media (max-width: 575px) {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .status-tag {
+    color: #34c759;
+  }
+
+  .view-action {
+    color: #a0a0a0;
+    cursor: pointer;
+    font-weight: 500;
+  }
 }

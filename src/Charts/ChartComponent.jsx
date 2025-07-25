@@ -1,11 +1,17 @@
 // ChartComponent.jsx
-"use client"
+"use client";
 
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [], title = "" }) => {
+const ChartComponent = ({
+  chartType = "column",
+  categories = [],
+  seriesData = [],
+  title = "",
+  seriesName = "Data",
+}) => {
   const options = {
     chart: {
       type: chartType,
@@ -22,6 +28,9 @@ const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [
       enabled: false,
     },
     tooltip: {
+      formatter: function () {
+        return `<b>${this.series.name}</b><br/>${this.x}: ${this.y}`;
+      },
       backgroundColor: "#1a272e",
       borderColor: "black",
       borderRadius: 10,
@@ -31,13 +40,7 @@ const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [
       },
     },
     legend: {
-      enabled: true,
-      itemStyle: {
-        color: "white",
-      },
-      itemHoverStyle: {
-        color: "lightgray",
-      },
+      enabled: false, // 👈 Legend disabled
     },
     xAxis: {
       categories: categories,
@@ -47,8 +50,6 @@ const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [
           color: "#ffffff",
         },
       },
-      // tickLength: 0,
-      // gridLineWidth: 0,
       labels: {
         style: {
           color: "#ffffff",
@@ -57,10 +58,8 @@ const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [
     },
     yAxis: {
       min: 0,
-      // max: 100,
-      
       title: {
-        text: "Value",
+        text: "",
         style: {
           color: "#ffffff",
         },
@@ -97,7 +96,7 @@ const ChartComponent = ({ chartType  = "column", categories = [], seriesData = [
     },
     series: [
       {
-        name: "Value",
+        name: seriesName,
         data: seriesData,
         color: "#9f53ff",
       },

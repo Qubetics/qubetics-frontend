@@ -14,7 +14,7 @@ import baseImg from "../../../../../public/Arbitrum.svg";
 import Arbitrum from "../../../../../public/Arbitrum.svg";
 import Image from "next/image";
 import Commonbtn from "@/components/commonbtn/CommonBluebtn";
-import { Routes } from "@/constant/constant";
+import { isStringValue, Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 
 const TransactionOverview = () => {
@@ -56,100 +56,120 @@ const TransactionOverview = () => {
             </button>
             <h2 className="sub_heading">Transaction Overview</h2>
           </div>
-          <div className="transaction_overview_head_buttons">
+          {/* <div className="transaction_overview_head_buttons">
             <Commonbtn text="View to base Explorer" />
             <Commonbtn text="View to Arbitrum Explorer" />
-          </div>
+          </div> */}
         </div>
 
         <div className="transacton_overview_card overview_listing">
           <h3 className="status">
-            {intentData.status === 1 ? "Pending" : "Completed"}
+            {intentData?.status === 1 ? "Pending" : "Completed"}
           </h3>
 
           <div className="listing">
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
               <h5>
-                {intentData?.intentHash}
-                <div className="action_btns_copy">
+                {isStringValue(intentData?.intentHash)}
+                {/* <div className="action_btns_copy">
                   <span>
                     <CopyIcons />
                   </span>
                   <span>
                     <ExternalArrowIcon />
                   </span>
-                </div>
+                </div> */}
               </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>{(intentData.amount / 1e18).toFixed(4)}</h5>
+              <h5>
+                {!intentData?.amount
+                  ? ""
+                  : (intentData?.amount / 1e18)?.toFixed(4)}
+              </h5>
             </div>
-            <div className="list_item">
+            {/* <div className="list_item">
               <h4>Chain</h4>
               <div className="chain">
                 <Image src={baseImg} alt="" />
                 <h5>Base</h5>
               </div>
-            </div>
+            </div> */}
             <div className="list_item">
               <h4>Sender Address</h4>
               <h5>
-                {intentData.sender}
-                <div className="action_btns_copy">
+                {isStringValue(intentData?.sender)}
+                {/* <div className="action_btns_copy">
                   <span>
                     <CopyIcons />
                   </span>
-                </div>
+                </div> */}
               </h5>
             </div>
             <div className="list_item">
               <h4>Time Started</h4>
-              <h5>{new Date(intentData.created_at).toLocaleString()}</h5>
+              <h5>
+                {!intentData?.created_at
+                  ? "-"
+                  : new Date(intentData?.created_at).toLocaleString()}
+              </h5>
             </div>
           </div>
 
           <div className="listing">
             <div className="list_item">
               <h4>Destination Tx Hash</h4>
-              <h5>
-                {intentData.solverTxHash || "Not available"}
-                <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
-                  <span>
-                    <ExternalArrowIcon />
-                  </span>
-                </div>
-              </h5>
+              {intentData?.solverTxHash ? (
+                <h5>
+                  {intentData.solverTxHash}
+                  <div className="action_btns_copy">
+                    {/* <span>
+                      <CopyIcons />
+                    </span> */}
+                    {/* <span>
+                      <ExternalArrowIcon />
+                    </span> */}
+                  </div>
+                </h5>
+              ) : (
+                <h5>-</h5>
+              )}
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>{(intentData.amount / 1e18).toFixed(4)}</h5>
+              <h5>
+                {intentData?.amount
+                  ? (intentData.amount / 1e18).toFixed(4)
+                  : "-"}
+              </h5>
             </div>
-            <div className="list_item">
+            {/* <div className="list_item">
               <h4>Chain</h4>
               <div className="chain">
                 <Image src={Arbitrum} alt="" />
                 <h5>Arbitrum</h5>
               </div>
-            </div>
+            </div> */}
             <div className="list_item">
               <h4>Recipient Address</h4>
               <h5>
-                {intentData.targetAddress}
-                <div className="action_btns_copy">
+                {isStringValue(intentData?.targetAddress)}
+                {/* <div className="action_btns_copy">
                   <span>
                     <CopyIcons />
                   </span>
-                </div>
+                </div> */}
               </h5>
             </div>
             <div className="list_item">
               <h4>Time Completed</h4>
-              <h5>{new Date(intentData.updated_at).toLocaleString()}</h5>
+              <h5>
+                {intentData?.updated_at
+                  ? new Date(intentData.updated_at).toLocaleString()
+                  : "-"}
+              </h5>
             </div>
           </div>
         </div>
@@ -183,7 +203,7 @@ const TransactionOverview = () => {
           </div>
         </div> */}
 
-        <h2 className="sub_heading">Fee & Logs</h2>
+        {/* <h2 className="sub_heading">Fee & Logs</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -226,7 +246,7 @@ const TransactionOverview = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
