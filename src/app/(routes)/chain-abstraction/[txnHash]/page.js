@@ -26,8 +26,8 @@ const TransactionOverview = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await GetTransactionOverview(intentHash);
-      if (result?.Data?.intentList?.length) {
-        setIntentData(result.Data.intentList[0]);
+      if (result?.data?.intentList?.length) {
+        setIntentData(result.data.intentList[0]);
       }
       setLoading(false);
     };

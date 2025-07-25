@@ -29,8 +29,8 @@ const ChainAbstractionTransaction = () => {
       tableLimit
     );
 
-    if (result?.Data?.intentList) {
-      const transformed = result?.Data?.intentList.map((item, index) => ({
+    if (result?.data?.intentList) {
+      const transformed = result?.data?.intentList.map((item, index) => ({
         key: index,
         sender: item.sender,
         path: item.path,
@@ -55,7 +55,7 @@ const ChainAbstractionTransaction = () => {
 
       setTransactions(transformed);
 
-      const count = Number(result?.Data?.total ?? 0);
+      const count = Number(result?.data?.total ?? 0);
       setTotalPages(Math.ceil(count / tableLimit));
     }
 

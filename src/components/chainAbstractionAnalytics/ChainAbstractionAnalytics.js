@@ -19,9 +19,9 @@ const ChainAbstractionAnalytics = () => {
       const loadTime = await getLoadOverTimeChart();
       const activeUsers = await getDailyActiveUserChart();
 
-      setOnChainData(onChain?.Data || []);
-      setLoadOverTimeData(loadTime?.Data || []);
-      setDailyActiveUserData(activeUsers?.Data || []);
+      setOnChainData(onChain?.data || []);
+      setLoadOverTimeData(loadTime?.data || []);
+      setDailyActiveUserData(activeUsers?.data || []);
     };
 
     fetchData();
