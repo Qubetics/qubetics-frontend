@@ -81,6 +81,12 @@ export const chain = {
   NATIVE: "Native Chain",
   EVM: "EVM Chain",
 };
+export const DVPN_TRANSACTION_TYPE = {
+  START_SUBSCRIPTION: "START_SUBSCRIPTION",
+  END_SUBSCRIPTION: "END_SUBSCRIPTION",
+  START_REQUEST: "START_REQUEST",
+  END_REQUEST: "END_REQUEST",
+} ; 
 
 export const Messages = {
   //Metamask
@@ -776,3 +782,10 @@ export const handleValidValue = (value) => validateInput(value, 20);
 export const handleValidEmail = (value) => validateInput(value, 50);
 export const WalletValidValue = (value) => validateInput(value, 42);
 export const descriptionValidValue = (value) => validateInput(value, 500);
+
+export const DVPN_TYPE = {
+  START_SUBSCRIPTION: "/qubetics.subscription.v3.MsgStartSubscriptionRequest",
+  END_SUBSCRIPTION: "/qubetics.subscription.v3.MsgCancelSubscriptionRequest",
+  START_SESSION: "/qubetics.subscription.v3.MsgStartSessionRequest",
+  END_SESSION: "/qubetics.session.v3.MsgCancelSessionRequest",
+};

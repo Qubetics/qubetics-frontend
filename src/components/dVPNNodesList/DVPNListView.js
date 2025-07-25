@@ -1,16 +1,24 @@
-'use client';
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { tableLimit } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "../Pagination/Pagination";
 import { Datnotfound } from "../../../public/SvgIcons";
+import getNodeList from "@/services/getNodeList";
+import { getOffset } from "@/utils/commonFunctions";
 
 const nodesColumns = [
-  { title: "Sr. NO", dataIndex: "index", key: "index" },
-  { title: "dVPN Name", dataIndex: "name", key: "name" },
+  { title: "Sr. NO", dataIndex: "sr", key: "sr" },
+  { title: "dVPN Name", dataIndex: "address", key: "address" },
   { title: "Country", dataIndex: "country", key: "country" },
-  { title: "Region", dataIndex: "region", key: "region" },
+  { title: "Region", dataIndex: "city", key: "city" },
 ];
 
 const staticNodesData = [
@@ -49,26 +57,52 @@ const staticNodesData = [
 const DVPNListView = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
+  const [reverse, setReverse] = useState(false);
+  const [nodeData, setNodeData] = useState();
+  const [nodeStatus, setNodeStatus] = useState(InitStatus); //init,fetching,success,error
 
   const enrichedData = staticNodesData.map((item, index) => ({
     ...item,
     index: String(index + 1).padStart(2, "0"),
   }));
-
-  const totalNodes = enrichedData.length;
+  const totalNodes = nodeData?.total || 0;
   const totalPages = Math.ceil(totalNodes / tableLimit);
   const startIndex = (currentPage - 1) * tableLimit;
   const paginatedData = enrichedData.slice(startIndex, startIndex + tableLimit);
 
   const handleRowClick = (record) => {
-    router.push(`/dVPNNodes/${record.id}`);
+    router.push(`/dVPNNodes/${record.address}`);
   };
+
+  const fetchNodeList = async () => {
+    try {
+      let response = await getNodeList(currentPage, tableLimit, reverse);
+      const offset = getOffset(currentPage, tableLimit);
+      const updatedNodes = response?.data?.nodes?.map((node, index) => {
+        return {
+          sr: offset + index + 1,
+          ...node,
+        };
+      });
+      const value = { ...response?.data, nodes: updatedNodes };
+      setNodeData(value);
+      setNodeStatus(SuccessStatus);
+    } catch (err) {
+      setNodeStatus(ErrorStatus);
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    setNodeStatus(FetchingStatus);
+    fetchNodeList();
+  }, [currentPage]);
 
   return (
     <div>
       <SkeletonTableWrapper
         columns={nodesColumns}
-        dataSource={paginatedData}
+        dataSource={nodeData?.nodes}
         isSkeleton={false}
         pagination={false}
         className="commontable"

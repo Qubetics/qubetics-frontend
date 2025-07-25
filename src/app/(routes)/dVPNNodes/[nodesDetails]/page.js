@@ -14,45 +14,37 @@ import "../node.scss";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import UptimeHistory from "./UptimeHistory";
 import DVPNNodesDetails from "@/components/dVPNNodesList/DVPNNodesDetails";
-
-const staticNodesData = [
-  {
-    id: "node-1",
-    name: "Tics-thunder-archive",
-    country: "USA",
-    region: "California",
-  },
-  {
-    id: "node-2",
-    name: "Tics-thunder-archive",
-    country: "China",
-    region: "Hong Kong",
-  },
-  {
-    id: "node-3",
-    name: "Tics-thunder-archive",
-    country: "India",
-    region: "Mumbai",
-  },
-  {
-    id: "node-4",
-    name: "Tics-thunder-archive",
-    country: "Germany",
-    region: "Berlin",
-  },
-  {
-    id: "node-5",
-    name: "Tics-thunder-archive",
-    country: "USA",
-    region: "New York",
-  },
-];
+import {
+  ErrorStatus,
+  FetchingStatus,
+  SuccessStatus,
+} from "@/constant/constant";
+import getNodeDetailSummary from "@/services/getNodeDetailSummary";
+import { useEffect, useState } from "react";
+import { formatDateTime } from "@/components/header/helper";
 
 const Page = () => {
-  const { nodesDetails } = useParams();
-  const node = staticNodesData.find((item) => item.id === nodesDetails);
+  const { nodesDetails: nodeName } = useParams();
+  const [nodeSummaryStatus, setsetNodeSummaryStatus] = useState("");
+  const [nodeSummary, setNodeSummary] = useState();
 
-  if (!node) return <div style={{ padding: "2rem" }}>Node not found</div>;
+  const fetchNodeSummary = async () => {
+    try {
+      let response = await getNodeDetailSummary(nodeName);
+      setNodeSummary(response?.data);
+      setsetNodeSummaryStatus(SuccessStatus);
+    } catch (err) {
+      setsetNodeSummaryStatus(ErrorStatus);
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    if (nodeName) {
+      setsetNodeSummaryStatus(FetchingStatus);
+      fetchNodeSummary();
+    }
+  }, [nodeName]);
 
   return (
     <div className="container nodeDetail">
@@ -65,44 +57,48 @@ const Page = () => {
       <Heading heading="Node Detail" />
       <div className="nodeDetail_top">
         <p>Name :</p>
-        <strong>{node.name}</strong>
+        <strong>{nodeName}</strong>
       </div>
       <div className="nodeGraph">
         <div className="nodeGraph_left">
           {" "}
-          <UptimeHistory graphdashboard />
+          <UptimeHistory graphdashboard nodeName={nodeName} />
         </div>
         <div className="nodeGraph_right">
           {" "}
           <CardsOnchain
             text="Total Earnings"
-            balance="71,290 TICS"
+            balance={`${nodeSummary?.total_earning} TICS`}
             img={<TotalEarnings />}
           />
           <CardsOnchain
             text="24hrs Earnings"
-            balance="726 TICS"
+            balance={`${nodeSummary?.daily_earnings} TICS`}
             img={<HrsEarnings />}
           />
-          <CardsOnchain text="Total Users" balance="20K" img={<TotalUsers />} />
+          <CardsOnchain
+            text="Total Users"
+            balance={`${nodeSummary?.total_users}`}
+            img={<TotalUsers />}
+          />
           <CardsOnchain
             text="Active Users"
-            balance="23"
+            balance={`${nodeSummary?.active_users}`}
             img={<ActiveUsers />}
           />
           <CardsOnchain
             text="Last Checked In"
-            balance="30 days ago"
+            balance={`${formatDateTime(nodeSummary?.last_checked)}`}
             img={<LastCheckedIn />}
           />
           <CardsOnchain
             text="Recent Session"
-            balance="23 mins ago"
+            balance={`${formatDateTime(nodeSummary?.recent_session)}`}
             img={<RecentSession />}
           />
         </div>
       </div>
-      <DVPNNodesDetails />
+      <DVPNNodesDetails nodeName={nodeName} />
     </div>
   );
 };

@@ -174,3 +174,8 @@ export const formateTotalSupply = (num) => {
 export function noExponentialFixed(num) {
   return num.toFixed(5).replace(/\.?0+$/, "");
 }
+
+export const getOffset = (page = 1, limit = 10) => {
+  if (page < 1) page = 1;
+  return (page - 1) * limit;
+};

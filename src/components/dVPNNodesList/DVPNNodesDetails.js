@@ -1,117 +1,91 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import { Datnotfound } from "../../../public/SvgIcons";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  Routes,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
+import getNodeDetails from "@/services/getNodeDetails";
+import Link from "next/link";
+import getAddress from "@/utils/getAddress";
+import Pagination from "../Pagination/Pagination";
 
 const txnColumns = [
-  { title: "Txn Hash", dataIndex: "txnHash", key: "txnHash" },
-  { title: "Block", dataIndex: "block", key: "block" },
+  {
+    title: "Txn Hash",
+    dataIndex: "txhash",
+    key: "txhash",
+    render: (text) => (
+      <Link
+        className="bghash"
+        href={`${Routes.Tx_Hash}${text}`}
+        rel="noopener noreferrer"
+      >
+        {getAddress(text)}
+      </Link>
+    ),
+  },
+  {
+    title: "Block",
+    dataIndex: "blocknumber",
+    key: "blocknumber",
+    render: (text) => (
+      <Link
+        className=""
+        href={`${Routes.BLOCK_NO}${text}`}
+        rel="noopener noreferrer"
+      >
+        {text}
+      </Link>
+    ),
+  },
   { title: "Type", dataIndex: "type", key: "type" },
-  { title: "Amount", dataIndex: "amount", key: "amount" },
-  { title: "Fee", dataIndex: "fee", key: "fee" },
+  { title: "Amount", dataIndex: "value", key: "value" },
+  { title: "Fee", dataIndex: "txFee", key: "txFee" },
   { title: "Timestamp", dataIndex: "timestamp", key: "timestamp" },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
     render: (status) => (
-      <span className={`status ${[status.toLowerCase()]}`}>
-        {status}
-      </span>
+      <span className={`status ${[status.toLowerCase()]}`}>{status}</span>
     ),
   },
 ];
 
-const staticTxnData = [
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "Start Request",
-    amount: "-",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Success",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "Start Request",
-    amount: "-",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Pending",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "End Request",
-    amount: "More",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Failed",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "End Request",
-    amount: "More",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Success",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "End Request",
-    amount: "More",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Success",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "Start Request",
-    amount: "-",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Failed",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "Start Request",
-    amount: "-",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Success",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "Start Request",
-    amount: "-",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Pending",
-  },
-  {
-    txnHash: "0x47685...4c8B145",
-    block: "4675553",
-    type: "End Request",
-    amount: "More",
-    fee: "0.00234 TICS",
-    timestamp: "4 days 21 hrs ago",
-    status: "Success",
-  },
-];
+const DVPNNodesDetails = ({ nodeName }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nodeData, setNodeData] = useState();
+  const [transactionStatus, setNodeStatus] = useState(InitStatus); //init,fetching,success,error
 
-const DVPNNodesDetails = () => {
+  const fetchNodeDetails = async () => {
+    try {
+      let response = await getNodeDetails(nodeName, currentPage, tableLimit);
+      setNodeData(response?.data);
+      setNodeStatus(SuccessStatus);
+    } catch (err) {
+      setNodeStatus(ErrorStatus);
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    if (nodeName) {
+      setNodeStatus(FetchingStatus);
+      fetchNodeDetails();
+    }
+  }, [currentPage, nodeName]);
+
   return (
     <div>
       <SkeletonTableWrapper
         columns={txnColumns}
-        dataSource={staticTxnData}
+        dataSource={nodeData?.result}
         isSkeleton={false}
         pagination={false}
         className="commontable"

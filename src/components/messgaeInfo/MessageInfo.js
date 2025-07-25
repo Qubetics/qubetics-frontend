@@ -1,0 +1,155 @@
+"use-client";
+import { EXPLORER_CURRENCY_NAME } from "@/constant/constant";
+import { capitalizeWord, noExponential } from "@/utils/commonFunctions";
+import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import CopyText from "../DoCopy/CopyText";
+import "./MessageInformation.scss";
+
+const MessageInfo = ({ data }) => {
+  let chain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
+  const tokenTransferedData = data?.input && data?.input;
+  const tokenTransferedParsed =
+    tokenTransferedData && JSON.parse(tokenTransferedData);
+  return (
+    <div className="doubleCardTranfer">
+      <div className="transferinfo">
+        <div className="information">
+          <p>Status</p>
+          {data?.status === "FAILED" ? (
+            <span className="failedtrans">
+              {" "}
+              {capitalizeWord(data?.status)}{" "}
+            </span>
+          ) : data?.status === "SUCCESS" ? (
+            <span className="success"> {capitalizeWord(data?.status)} </span>
+          ) : (
+            "-"
+          )}
+        </div>
+        <div className="information">
+          <p>Transaction Hash</p>
+          {data?.txhash ? (
+            <span>
+              {/* <Link href={`/tx/${data?.txhash}`} className=""> */}
+              {data?.txhash}
+              {/* </Link> */}
+              <CopyText text={data?.txhash} hoverText={"hash"} />
+            </span>
+          ) : (
+            "-"
+          )}
+        </div>
+        <div className="information">
+          <p>From </p>
+          {data?.fromAddress ? (
+            <span>
+              <Link
+                className="hoverTrans"
+                href={`/address/${data?.fromAddress}`}
+              >
+                {" "}
+                {data?.fromAddress}
+              </Link>
+
+              <CopyText text={data?.fromAddress} />
+            </span>
+          ) : (
+            "-"
+          )}
+        </div>
+        <div className="information">
+          <p>To </p>
+          {data?.toAddress !== "N/A" && data?.toAddress !== "" ? (
+            <span>
+              <Link className="hoverTrans" href={`/address/${data?.toAddress}`}>
+                {data?.toAddress}
+              </Link>
+              {<CopyText text={data?.toAddress} />}
+            </span>
+          ) : data?.contractAddress !== "N/A" &&
+            data?.contractAddress !== "" ? (
+            <span className="hoverTrans">
+              <Link
+                className="hoverTrans"
+                href={`/contract/${data?.contractAddress}`}
+              >
+                {data?.contractAddress}
+              </Link>
+              <CopyText text={data?.contractAddress} />
+            </span>
+          ) : (
+            "-"
+          )}
+        </div>
+        <div className="information">
+          <p>Block Number </p>
+          {data?.blocknumber ? (
+            <span>
+              <Link
+                className="hoverTrans"
+                href={`/blocks/${data?.blocknumber}`}
+              >
+                {data?.blocknumber}
+              </Link>
+              <CopyText text={data?.blocknumber} hoverText={"block"} />
+            </span>
+          ) : (
+            "-"
+          )}
+        </div>
+        <div className="information">
+          <p> Amount </p>
+          <span>
+            {data?.value ? noExponential(data?.value) : "0 "}{" "}
+            {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+          </span>
+        </div>
+      </div>
+      <div className="transferinfo">
+        <div className="information">
+          <p>Timestamp</p>
+          {data?.timestamp ? (
+            <span className="realTime">
+              {convertToDateTime(data?.timestamp)},
+              <span className="secondAgo"> {renderTime(data?.timestamp)}</span>
+            </span>
+          ) : data?.createdAt ? (
+            <span className="timestamp">
+              {convertToDateTime(data?.createdAt)}
+              <span> {renderTime(data?.createdAt)}</span>
+            </span>
+          ) : (
+            "-"
+          )}
+        </div>
+
+        <div className="information">
+          <p> Fee </p>
+
+          <span>
+            {data?.txFee ? noExponential(Number(data?.txFee)) : "0"}{" "}
+            {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
+          </span>
+        </div>
+        <div className="information">
+          <p> Method</p>
+          <span>{data?.type ? capitalizeWord(data?.type) : "-"}</span>
+        </div>
+        {
+          // chain == "EVM Chain" && (
+          <div className="information">
+            <p>Gas Used </p>
+            <span>{data?.gas ?? data?.gasUsed ?? "0"}</span>
+          </div>
+          // )
+        }
+
+      </div>
+    </div>
+  );
+};
+
+export default MessageInfo;

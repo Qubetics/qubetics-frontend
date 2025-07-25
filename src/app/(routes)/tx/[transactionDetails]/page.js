@@ -6,7 +6,10 @@ import Loader from "@/components/loader/Loader";
 import LogsDetail from "@/components/logsDetail/LogsDetail";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
+import MessageAction from "@/components/messgaeInfo/MessageAction";
+import MessageInfo from "@/components/messgaeInfo/MessageInfo";
 import {
+  DVPN_TRANSACTION_TYPE,
   ErrorStatus,
   FetchingStatus,
   InitStatus,
@@ -18,6 +21,8 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
+import getMessages from "@/services/getMessages";
+import EventLogs from "@/components/eventLogs/eventLogs";
 
 const page = () => {
   const searchParam = useSearchParams();
@@ -30,12 +35,10 @@ const page = () => {
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
   const { searchData } = useSearchData();
+  const values = Object.values(DVPN_TRANSACTION_TYPE);
+  const [data, setData] = useState();
 
   let updateTx = "";
-
-  useEffect(() => {
-    fetchData();
-  }, [params?.transactionDetails]);
 
   const fetchData = async () => {
     try {
@@ -85,18 +88,43 @@ const page = () => {
         </>
       ),
     },
-    contractLogs?.length > 0 && {
-      label: "Logs",
-      key: "1",
-      children: contractLogs.map((e, i) => (
-        <LogsDetail
-          key={i + "logDetails"}
-          contractLogs={e}
-          index={i}
-          topics={topics}
-        />
-      )),
-    },
+    values.includes(transactionDetails?.type)
+      ? {
+          label: "Messages",
+          key: "1",
+          children: (
+            <>
+              <MessageAction data={data} />
+            </>
+          ),
+        }
+      : [],
+      contractLogs?.length > 0
+      ? {
+          label: "Logs",
+          key: "2",
+          children: contractLogs.map((e, i) => (
+            <LogsDetail
+              key={i + "logDetails"}
+              contractLogs={e}
+              index={i}
+              topics={topics}
+            />
+          )),
+        }
+      : [],
+
+      data?.length > 0
+      ? {
+          label: "Event Logs",
+          key: "3",
+          children: (
+            <>
+              <EventLogs logs={JSON.parse(data?.[0]?.logs)} />
+            </>
+          ),
+        }
+      : [],
   ];
 
   const handleTabSelect = (e) => {
@@ -109,6 +137,14 @@ const page = () => {
     });
   };
 
+  useEffect(async () => {
+    if (params?.transactionDetails) {
+      const response = await getMessages(params?.transactionDetails);
+      setData(response?.data?.sessionEntries);
+      fetchData();
+    }
+  }, [params?.transactionDetails]);
+
   return (
     <div className="blocksummary transferInfo">
       {txDetailStatus == InitStatus || txDetailStatus == FetchingStatus ? (
@@ -120,26 +156,13 @@ const page = () => {
           <FilterResult />
           {/* <Heading heading="Transaction Details" /> */}
           <div className="transecSec">
-            {contractLogs?.length > 0 ? (
-              <Tabs
-                activeKey={tab}
-                defaultActiveKey="0"
-                className="contracttabs"
-                items={tabItems}
-                onChange={(e) => handleTabSelect(e)}
-              />
-            ) : (
-              <>
-                <Heading heading="Overview" />
-                <TransferInfo data={transactionDetails} tab={tab} />
-
-                {transactionDetails?.tokenInfo?.type === "ERC-20" &&
-                  transactionDetails?.logs &&
-                  transactionDetails?.input && (
-                    <TransactionAction data={transactionDetails} />
-                  )}
-              </>
-            )}
+            <Tabs
+              activeKey={tab}
+              defaultActiveKey="0"
+              className="contracttabs"
+              items={tabItems}
+              onChange={(e) => handleTabSelect(e)}
+            />
           </div>
         </div>
       ) : (

@@ -1,70 +1,69 @@
 import { Col, Row, Tooltip } from "antd";
+import DarkNodeMap from "./NodeMap";
+import useBlockData from "@/hooks/useBlockData";
+import getStatistics from "@/services/getStatistics";
 import { Fragment, useEffect, useState } from "react";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "./node.scss";
-import DarkNodeMap from "./NodeMap";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import { formatValue, InitStatus, tooltipContent } from "@/constant/constant";
-import useBlockData from "@/hooks/useBlockData";
-import getStatistics from "@/services/getStatistics";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
-function QubeticNetworkNode({ nodesData, countryNode }) {
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
-  const [stats, setStats] = useState();
-  const { lastBlock, blockHeight, webSocket } = useBlockData();
+import getNodeSummary from "@/services/getNodeSummary";
 
-  const fetchEVMStats = async () => {
-    try {
-      let respose = await getStatistics();
-      setStats(respose?.data);
-    } catch (err) {
-      return err;
-    }
-  };
-  useEffect(() => {
-    fetchEVMStats();
-  }, []);
+const QubeticNetworkNode = ({ nodesData }) => {
+  const [NodeSummary, setNodeSummary] = useState();
 
   const nodePerformanceData = [
     {
-      value: blockHeight ? blockHeight : stats?.latest_block ?? 0,
+      value: nodesData?.total_providers ?? 0,
       label: "Total dVPN Providers",
       content: tooltipContent.block_Height,
     },
     {
-      value: stats?.bondedTokens ? formatValue(Number(stats?.bondedTokens)) : 0,
+      value: nodesData?.active_providers ?? 0,
       label: "Active Providers",
       content: tooltipContent.bonded_Coins,
     },
     {
-      value: lastBlock ? lastBlock + "s" : 0 + "s",
+      value: nodesData?.total_users ?? 0,
       label: "Total dVPN Users",
       content: tooltipContent.last_Block,
     },
     {
-      value: webSocket?.onChainMetric?.tpb ? webSocket?.onChainMetric?.tpb : 0,
+      value: nodesData?.active_users ?? 0,
       label: "Active Users",
       content: tooltipContent.TPB,
     },
     {
-      value: "55",
+      value: nodesData?.total_txns ?? 0,
       label: "Total dVPN Txns",
       content: tooltipContent.last_Block,
     },
     {
-      value: "88",
+      value: nodesData?.active_session ?? 0,
       label: "Current Session Count",
       content: tooltipContent.TPB,
     },
   ];
 
+  const fetchNodeSummary = async () => {
+    try {
+      let respose = await getNodeSummary();
+      setNodeSummary(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    fetchNodeSummary();
+  }, []);
+
   return (
     <div className="qubeticdVPNNode">
-      {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
-       */}
       <FilterResult />
       <Heading heading="Qubetics Network Nodes" />
       <div className="NodePerformance">
@@ -107,24 +106,22 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
           <div className="map-container">
             <div className="countryBox">
               <div className="innerBox">
-                <h5>{countryNode?.total ? countryNode?.total : 0}</h5>
+                <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
                 <p>Txns (Last 24hrs)</p>
               </div>
               <div className="innerBox">
-                <h5>
-                  {countryNode?.countryCount ? countryNode?.countryCount : 0}
-                </h5>
+                <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
                 <p>Countries</p>
               </div>
             </div>
             <DarkNodeMap />
-            {nodesData?.map((el, index) => (
+            {NodeSummary?.nodesLocation?.map((el, index) => (
               <Fragment key={`node-${index}`}>
                 <div
                   style={getMarker(
-                    el?.location?.lat,
-                    el?.location?.lon,
-                    el?.location?.country?.replace(/\s+/g, "")
+                    el?.lat,
+                    el?.long,
+                    el?.country?.replace(/\s+/g, "")
                   )}
                   className="marker-icon"
                   data-tooltip-id={`node-tooltip-${index}`}
@@ -132,7 +129,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
                 <ReactTooltip
                   id={`node-tooltip-${index}`}
                   place={"top"}
-                  content={el.location.country}
+                  content={el?.country}
                   className="max-w-[200px]"
                 />
               </Fragment>
@@ -142,5 +139,5 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
       </div>
     </div>
   );
-}
+};
 export default QubeticNetworkNode;
