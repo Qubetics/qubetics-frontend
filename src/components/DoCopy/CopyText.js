@@ -25,7 +25,7 @@ export default function CopyText({ text, hoverText }) {
     return null;
   }
   return (
-    <>
+    <span className="pointer">
       <Tooltip
         title={
           copied
@@ -46,6 +46,6 @@ export default function CopyText({ text, hoverText }) {
           </span>
         )}
       </Tooltip>
-    </>
+    </span>
   );
 }

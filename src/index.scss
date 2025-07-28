@@ -2757,7 +2757,6 @@ input[type="number"] {
     text-align: center;
   }
   .ant-select-selector {
-    
     &::before {
       content: "";
       position: absolute;
@@ -2941,4 +2940,9 @@ input:-webkit-autofill:active {
 }
 .highcharts-legend-item {
   display: block !important;
+}
+
+.pointer {
+  cursor: pointer;
+  height: 50px;
 }

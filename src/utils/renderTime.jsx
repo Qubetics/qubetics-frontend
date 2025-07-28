@@ -26,6 +26,8 @@ const renderTime = (date) => {
 };
 
 const convertToDateTime = (date) => {
+  if (!date) return "-";
+
   let dateObj = new Date(date);
   let dates;
   if (isNaN(dateObj)) {

@@ -5,18 +5,13 @@ import { useParams } from "next/navigation";
 import GetTransactionOverview from "@/services/getTransactionOverview"; // API call
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import "./TransactionOverview.scss";
-import {
-  ExternalArrowIcon,
-  RightArrowIcon,
-} from "../../../../../public/SvgIcons";
-import baseImg from "../../../../../public/Arbitrum.svg";
-import Arbitrum from "../../../../../public/Arbitrum.svg";
-import Image from "next/image";
-import Commonbtn from "@/components/commonbtn/CommonBluebtn";
+import { RightArrowIcon } from "../../../../../public/SvgIcons";
+
 import { formatPrecision, isStringValue, Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import CopyText from "@/components/DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
+import { checkStatus } from "@/utils/commonFunctions";
 
 const TransactionOverview = () => {
   const { txnHash } = useParams();
@@ -63,62 +58,69 @@ const TransactionOverview = () => {
         </div>
 
         <div className="transacton_overview_card overview_listing">
-          <h3 className="status">
-            {intentData?.status === 1 ? "Pending" : "Completed"}
-          </h3>
+          {intentData?.status ? (
+            <h3 className={`status_${checkStatus(intentData.status)}`}>
+              {checkStatus(intentData.status)}
+            </h3>
+          ) : null}
 
           <div className="listing">
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
-              <h5>
-                {isStringValue(intentData?.intentHash)}
-                <div className="action_btns_copy">
-                  <span>
-                    <CopyText text={intentData?.intentHash} />
-                  </span>
-                  {/* <span>
+              {intentData?.intentHash ? (
+                <h5>
+                  {intentData.intentHash}
+                  <div className="action_btns_copy">
+                    <span>
+                      <CopyText text={intentData.intentHash} />
+                    </span>
+                    {/* <span>
                     <ExternalArrowIcon />
                   </span> */}
-                </div>
-              </h5>
+                  </div>
+                </h5>
+              ) : (
+                "-"
+              )}
             </div>
             <div className="list_item">
               <h4>Token</h4>
               <h5>{formatPrecision(intentData?.amount)}</h5>
             </div>
-            {/* <div className="list_item">
-              <h4>Chain</h4>
+            <div className="list_item">
+              <h4>Source Chain</h4>
               <div className="chain">
-                <Image src={baseImg} alt="" />
-                <h5>Base</h5>
+                {/* <Image src={baseImg} alt="" /> */}
+                <h5>{isStringValue(intentData?.sourceChain)}</h5>
               </div>
-            </div> */}
+            </div>
             <div className="list_item">
               <h4>Sender Address</h4>
-              <h5>
-                {isStringValue(intentData?.sender)}
-                <div className="action_btns_copy">
-                  <span>
-                    <CopyText text={intentData?.sender} />
-                  </span>
-                </div>
-              </h5>
+              {intentData?.sender ? (
+                <h5>
+                  {intentData?.sender}
+                  <div className="action_btns_copy">
+                    <span>
+                      <CopyText text={intentData?.sender} />
+                    </span>
+                  </div>
+                </h5>
+              ) : (
+                "-"
+              )}
             </div>
             <div className="list_item">
               <h4>Time Started</h4>
-              <h5>
-                {!intentData?.created_at
-                  ? isStringValue(intentData?.created_at)
-                  : convertToDateTime(intentData?.created_at)}
-              </h5>
+              <h5>{convertToDateTime(intentData?.created_at)}</h5>
             </div>
           </div>
 
           <div className="listing">
             <div className="list_item">
               <h4>Destination Tx Hash</h4>
+              {intentData?.solverTxHash ? (
                 <h5>
-                  {isStringValue(intentData.solverTxHash)}
+                  {intentData?.solverTxHash}
                   <div className="action_btns_copy">
                     <span>
                       <CopyText text={intentData?.solverTxHash} />
@@ -128,18 +130,21 @@ const TransactionOverview = () => {
                     </span> */}
                   </div>
                 </h5>
+              ) : (
+                "-"
+              )}
             </div>
             <div className="list_item">
               <h4>Token</h4>
               <h5>{formatPrecision(intentData?.amount)}</h5>
             </div>
-            {/* <div className="list_item">
-              <h4>Chain</h4>
+            <div className="list_item">
+              <h4>Target Chain</h4>
               <div className="chain">
-                <Image src={Arbitrum} alt="" />
-                <h5>Arbitrum</h5>
+                {/* <Image src={Arbitrum} alt="" /> */}
+                <h5>{intentData?.targetChain}</h5>
               </div>
-            </div> */}
+            </div>
             <div className="list_item">
               <h4>Recipient Address</h4>
               <h5>
@@ -153,16 +158,12 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Time Completed</h4>
-              <h5>
-                {intentData?.updated_at
-                  ? convertToDateTime(intentData.updated_at)
-                  : isStringValue(intentData.updated_at)}
-              </h5>
+              <h5>{convertToDateTime(intentData?.updated_at)}</h5>
             </div>
           </div>
         </div>
 
-        {/* <h2 className="sub_heading">Metadata</h2>
+        <h2 className="sub_heading">Metadata</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -177,21 +178,23 @@ const TransactionOverview = () => {
           <div className="listing">
             <div className="list_item">
               <h4>Solver</h4>
-              <h5>{intentData.solverId || "N/A"}</h5>
+              <h5>{isStringValue(intentData?.solverId)}</h5>
             </div>
-            <div className="list_item">
+            {/* <div className="list_item">
               <h4>Token Contract</h4>
               <h5>
                 {intentData.sourceToken || "0x..."}
                 <div className="action_btns_copy">
-                  <span><CopyIcons /></span>
+                  <span>
+                    <CopyIcons />
+                  </span>
                 </div>
               </h5>
-            </div>
+            </div> */}
           </div>
-        </div> */}
+        </div>
 
-        {/* <h2 className="sub_heading">Fee & Logs</h2>
+        <h2 className="sub_heading">Fee & Logs</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -234,7 +237,7 @@ const TransactionOverview = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

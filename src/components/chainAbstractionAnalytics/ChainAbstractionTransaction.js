@@ -4,19 +4,13 @@ import { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
-import { ArrowUpicon, BNBIcon } from "../../../public/SvgIcons";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import {
-  formatPrecision,
-  isStringValue,
-  pageNo,
-  tableLimit,
-} from "@/constant/constant"; // Default pagination constants
+import { formatPrecision, pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
-
+import { checkStatus } from "@/utils/commonFunctions";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -39,39 +33,7 @@ const ChainAbstractionTransaction = () => {
     );
 
     if (result?.data?.intentList) {
-      const transformed = result?.data?.intentList?.map((item, index) => ({
-        key: index,
-        sender: item?.sender,
-        path: item?.path,
-        nonce: item?.nonce,
-        intentTx: item?.intentHash
-        ? item?.intentHash
-        : isStringValue(item?.intentHash),
-        source: {
-          amount: formatPrecision(item?.amount),
-          symbol: item?.sourceToken || "BNB",
-          icon: <BNBIcon />,
-          chain: item?.sourceChain || "Unknown",
-        },
-        destination: {
-          amount: formatPrecision(item?.amount),
-          symbol: item?.targetToken || "BNB",
-          icon: <BNBIcon />,
-          chain: item?.targetChain || "Unknown",
-        },
-        status: item?.status === 1 ? "Pending" : "Completed",
-        destTx: item?.solverTxHash
-        ? item?.solverTxHash
-        : isStringValue(item?.solverTxHash),
-        create_at: item?.created_at
-        ? convertToDateTime(item?.created_at)
-        : isStringValue(item?.created_at),
-      update_at: item?.updated_at
-        ? convertToDateTime(item?.updated_at)
-        : isStringValue(item?.updated_at),
-      }));
-
-      setTransactions(transformed);
+      setTransactions(result?.data?.intentList);
 
       const count = Number(result?.data?.total || 0);
       setTotalPages(Math.ceil(count / tableLimit));
@@ -110,33 +72,38 @@ const ChainAbstractionTransaction = () => {
       title: "Intent Transaction",
       dataIndex: "intentTx",
       key: "intentTx",
-      render: (_, record) => (
-        <div className="tx-cell">
-          <span
-            className="tx-link"
-            onClick={() =>
-              router.push(`/chain-abstraction/${record?.intentTx}`)
-            }
-            style={{ cursor: "pointer", color: "#1890ff" }}
-          >
-            {getAddress(record?.intentTx)}
-            <button className="copy_btn">
-              <CopyText text={record?.intentTx} />
-            </button>
-          </span>
-          <div className="tx-date">{record?.create_at}</div>
-        </div>
-      ),
+      render: (_, record) =>
+        record?.intentHash ? (
+          <div className="tx-cell">
+            <span
+              className="tx-link"
+              onClick={() =>
+                router.push(`/chain-abstraction/${record?.intentHash}`)
+              }
+              style={{ cursor: "pointer", color: "#1890ff" }}
+            >
+              {getAddress(record?.intentHash)}
+              <button className="copy_btn">
+                <CopyText text={record?.intentHash} />
+              </button>
+            </span>
+            <div className="tx-date">
+              {convertToDateTime(record?.created_at)}
+            </div>
+          </div>
+        ) : (
+          "-"
+        ),
     },
     {
       title: "Source Token",
       key: "source",
       render: (_, record) => (
         <div className="token-cell">
-          <span>{record?.source?.icon}</span>
+          {/* <span>{record?.source?.icon}</span> */}
           <div className="token-cell-in">
             <p>
-              {record?.source?.amount} {record?.source?.symbol}
+              {formatPrecision(record?.amount)} {record?.sourceToken}
             </p>
             {/* <span className="chain-tag">
               <h3>{record.source.chain}</h3>
@@ -151,11 +118,10 @@ const ChainAbstractionTransaction = () => {
       key: "destination",
       render: (_, record) => (
         <div className="token-cell">
-          <span>{record?.destination?.icon}</span>
+          {/* <span>{record?.destination?.icon}</span> */}
           <div className="token-cell-in">
             <p>
-              {record?.destination?.amount}
-              {record?.destination?.symbol}
+              {formatPrecision(record?.amount)} {record?.targetToken}
             </p>
             {/* <span className="chain-tag">
               <h3>{record.destination.chain}</h3>
@@ -169,22 +135,29 @@ const ChainAbstractionTransaction = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status) => <p className="status-tag">{status}</p>,
+      render: (status) => (
+        <p className={`status-tag-${checkStatus(1)}`}>{checkStatus(status)}</p>
+      ),
     },
     {
       title: "Destination Transaction",
       key: "destTx",
-      render: (_, record) => (
-        <div className="tx-cell">
-          <span>
-            {getAddress(record?.destTx)}
-            <button className="copy_btn">
-              <CopyText text={record?.destTx} />
-            </button>
-          </span>
-          <div className="tx-date">{record?.update_at}</div>
-        </div>
-      ),
+      render: (_, record) =>
+        record?.solverTxHash ? (
+          <div className="tx-cell">
+            <span>
+              {getAddress(record?.solverTxHash)}
+              <button className="copy_btn">
+                <CopyText text={record?.solverTxHash} />
+              </button>
+            </span>
+            <div className="tx-date">
+              {convertToDateTime(record?.updated_at)}
+            </div>
+          </div>
+        ) : (
+          "-"
+        ),
     },
     {
       title: "Action",

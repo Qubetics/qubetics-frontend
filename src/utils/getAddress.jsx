@@ -1,4 +1,3 @@
-
 const getAddress = (address = "", startLen = 7, endLen = 7) => {
   // if(address === undefined || address === null || address === "" || address ==="N/A") {
   //   return "";

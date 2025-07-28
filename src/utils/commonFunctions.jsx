@@ -102,7 +102,6 @@ export function simplifyNumber(input) {
     return "Invalid input. Please provide a valid number or numeric string.";
   }
 
-  
   let simplifiedNumber = num.toString();
 
   // Check if the string representation contains an 'e' indicating exponential notation
@@ -181,3 +180,17 @@ export const formateTotalSupply = (num) => {
 export function noExponentialFixed(num) {
   return num.toFixed(5).replace(/\.?0+$/, "");
 }
+
+export const checkStatus = (value) => {
+  switch (value) {
+    case 0:
+      return "Fail";
+    case 1:
+      return "Confirm";
+    case 2:
+      return "Pending";
+    default:
+      "-";
+      break;
+  }
+};

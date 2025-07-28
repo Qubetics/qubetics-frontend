@@ -780,9 +780,8 @@ export const isStringValue = (value) => {
   return value;
 };
 
-
-
 const maxDecimalPrecision = 5;
+
 export const formatPrecision = (num, minDecimals, maxPrecision) => {
   if (!num) return "0";
 
@@ -841,4 +840,3 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };
-

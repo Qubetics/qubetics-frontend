@@ -139,7 +139,7 @@ export default function Transactions({ setTxnData }) {
             )} transactions`}</h2>
             <Space wrap>
               <Select
-              title=""
+                title=""
                 defaultValue={order}
                 style={{
                   width: 123,

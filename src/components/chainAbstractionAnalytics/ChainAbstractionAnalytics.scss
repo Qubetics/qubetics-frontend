@@ -320,7 +320,15 @@
   }
 
   .status-tag {
-    color: #34c759;
+    &-Confirm{
+      color: #34c759;
+    }
+    &-Fail{
+      color:#c73434
+    }
+    &-Pending{
+      color: #c78234;
+    }
   }
 
   .view-action {
