@@ -18,22 +18,21 @@ import { isStringValue, Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 
 const TransactionOverview = () => {
-  const { intentHash } = useParams();
+  const { txnHash } = useParams();
   const [intentData, setIntentData] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
   const router = useRouter(); // for navigation
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await GetTransactionOverview(intentHash);
-      if (result?.data?.intentList?.length) {
-        setIntentData(result.data.intentList[0]);
-      }
+      const result = await GetTransactionOverview(txnHash);
+      setIntentData(result?.data?.intentList?.[0] || {});
+
       setLoading(false);
     };
 
     fetchData();
-  }, [intentHash]);
+  }, [txnHash]);
 
   if (loading) return <div>Loading...</div>;
 

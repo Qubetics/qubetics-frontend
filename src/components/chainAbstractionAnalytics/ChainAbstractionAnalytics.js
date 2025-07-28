@@ -42,21 +42,18 @@ const ChainAbstractionAnalytics = () => {
   const loadOver = extractChartData(loadOverTimeData, "date", "count");
   const activeUsers = extractChartData(dailyActiveUserData, "date", "count");
 
-
   return (
     <div className="abstraction_analytics">
-
       <Row className="margin-30">
-        <Col lg={24} >
-        <RenderChartCard
-          title="Transaction load / day"
-          chartType="areaspline"
-          categories={loadOver?.categories}
-          seriesData={loadOver?.values}
-          seriesName={"Total Tx"}
-          loading={loading}
-        />
-
+        <Col lg={24}>
+          <RenderChartCard
+            title="Transaction load / day"
+            chartType="areaspline"
+            categories={loadOver?.categories}
+            seriesData={loadOver?.values}
+            seriesName={"Total Tx"}
+            loading={loading}
+          />
         </Col>
       </Row>
 
