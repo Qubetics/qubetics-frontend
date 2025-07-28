@@ -6,7 +6,6 @@ import GetTransactionOverview from "@/services/getTransactionOverview"; // API c
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import "./TransactionOverview.scss";
 import {
-  CopyIcons,
   ExternalArrowIcon,
   RightArrowIcon,
 } from "../../../../../public/SvgIcons";
@@ -14,8 +13,10 @@ import baseImg from "../../../../../public/Arbitrum.svg";
 import Arbitrum from "../../../../../public/Arbitrum.svg";
 import Image from "next/image";
 import Commonbtn from "@/components/commonbtn/CommonBluebtn";
-import { isStringValue, Routes } from "@/constant/constant";
+import { formatPrecision, isStringValue, Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
+import CopyText from "@/components/DoCopy/CopyText";
+import { convertToDateTime } from "@/utils/renderTime";
 
 const TransactionOverview = () => {
   const { txnHash } = useParams();
@@ -71,23 +72,19 @@ const TransactionOverview = () => {
               <h4>Intent Transaction Hash</h4>
               <h5>
                 {isStringValue(intentData?.intentHash)}
-                {/* <div className="action_btns_copy">
+                <div className="action_btns_copy">
                   <span>
-                    <CopyIcons />
+                    <CopyText text={intentData?.intentHash} />
                   </span>
-                  <span>
+                  {/* <span>
                     <ExternalArrowIcon />
-                  </span>
-                </div> */}
+                  </span> */}
+                </div>
               </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>
-                {!intentData?.amount
-                  ? ""
-                  : (intentData?.amount / 1e18)?.toFixed(4)}
-              </h5>
+              <h5>{formatPrecision(intentData?.amount)}</h5>
             </div>
             {/* <div className="list_item">
               <h4>Chain</h4>
@@ -100,19 +97,19 @@ const TransactionOverview = () => {
               <h4>Sender Address</h4>
               <h5>
                 {isStringValue(intentData?.sender)}
-                {/* <div className="action_btns_copy">
+                <div className="action_btns_copy">
                   <span>
-                    <CopyIcons />
+                    <CopyText text={intentData?.sender} />
                   </span>
-                </div> */}
+                </div>
               </h5>
             </div>
             <div className="list_item">
               <h4>Time Started</h4>
               <h5>
                 {!intentData?.created_at
-                  ? "-"
-                  : new Date(intentData?.created_at).toLocaleString()}
+                  ? isStringValue(intentData?.created_at)
+                  : convertToDateTime(intentData?.created_at)}
               </h5>
             </div>
           </div>
@@ -120,29 +117,21 @@ const TransactionOverview = () => {
           <div className="listing">
             <div className="list_item">
               <h4>Destination Tx Hash</h4>
-              {intentData?.solverTxHash ? (
                 <h5>
-                  {intentData.solverTxHash}
+                  {isStringValue(intentData.solverTxHash)}
                   <div className="action_btns_copy">
-                    {/* <span>
-                      <CopyIcons />
-                    </span> */}
+                    <span>
+                      <CopyText text={intentData?.solverTxHash} />
+                    </span>
                     {/* <span>
                       <ExternalArrowIcon />
                     </span> */}
                   </div>
                 </h5>
-              ) : (
-                <h5>-</h5>
-              )}
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>
-                {intentData?.amount
-                  ? (intentData.amount / 1e18).toFixed(4)
-                  : "-"}
-              </h5>
+              <h5>{formatPrecision(intentData?.amount)}</h5>
             </div>
             {/* <div className="list_item">
               <h4>Chain</h4>
@@ -155,19 +144,19 @@ const TransactionOverview = () => {
               <h4>Recipient Address</h4>
               <h5>
                 {isStringValue(intentData?.targetAddress)}
-                {/* <div className="action_btns_copy">
+                <div className="action_btns_copy">
                   <span>
-                    <CopyIcons />
+                    <CopyText text={intentData?.targetAddress} />
                   </span>
-                </div> */}
+                </div>
               </h5>
             </div>
             <div className="list_item">
               <h4>Time Completed</h4>
               <h5>
                 {intentData?.updated_at
-                  ? new Date(intentData.updated_at).toLocaleString()
-                  : "-"}
+                  ? convertToDateTime(intentData.updated_at)
+                  : isStringValue(intentData.updated_at)}
               </h5>
             </div>
           </div>

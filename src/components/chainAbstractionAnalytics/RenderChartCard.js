@@ -25,7 +25,7 @@ const RenderChartCard = ({
         {loading ? (
           <Spin />
         ) : !categories?.length ? (
-          <p style={{ textAlign: "center", padding: "20px", color: "white" }}>
+          <p style={{ textAlign: "center", padding: "20px", color: "white", margin: "auto" }}>
             Data not found
           </p>
         ) : (

@@ -779,3 +779,66 @@ export const isStringValue = (value) => {
 
   return value;
 };
+
+
+
+const maxDecimalPrecision = 5;
+export const formatPrecision = (num, minDecimals, maxPrecision) => {
+  if (!num) return "0";
+
+  num =
+    Math.floor(num * Math.pow(10, maxDecimalPrecision) + 0.5) /
+    Math.pow(10, maxDecimalPrecision);
+  let numStr = num.toString();
+  let decimals = 0;
+  if (numStr.includes(".")) {
+    decimals = numStr.split(".")[1].length;
+  }
+  if (minDecimals && decimals < minDecimals) {
+    if (decimals === 0) numStr = numStr + ".";
+    for (let i = decimals; i < minDecimals; i++) {
+      numStr = numStr + "0";
+    }
+  }
+  if (decimals > 0) {
+    const numSplit = numStr.split(".");
+    const integerStr = numSplit[0];
+    const decimalStr = numSplit[1];
+    let nonZeroDecimals = (decimalStr.match(/[1-9][0-9]*/) || [""])[0];
+    const nonZeroDecimalCount = nonZeroDecimals.length;
+    const zeroDecimals = (decimalStr.match(/0*/) || [""])[0];
+    let decimals = zeroDecimals + nonZeroDecimals;
+    if (maxPrecision && integerStr !== "0" && decimals.length > maxPrecision) {
+      decimals = decimals.substring(0, maxPrecision);
+      numStr = `${integerStr}.${removeTrailingZeros(decimals, minDecimals)}`;
+    } else if (maxPrecision && nonZeroDecimalCount > maxPrecision) {
+      nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
+      numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
+        nonZeroDecimals,
+        minDecimals
+      )}`;
+    }
+  }
+
+  return numStr;
+};
+
+export const removeTrailingZeros = (numStr, minDecimals) => {
+  numStr = numStr.toString();
+  const numSplit = numStr.split(".");
+  if (numSplit.length < 2) return numStr;
+  const integerStr = numSplit[0];
+  const decimalStr = numSplit[1];
+  if (minDecimals && decimalStr.length <= minDecimals) return "";
+  const trailingZerosMatch = decimalStr.match(/0*$/);
+  if (!trailingZerosMatch) return "";
+  let trailingZerosStr = trailingZerosMatch[0];
+  const precisionDecimalStr = decimalStr.substring(0, trailingZerosMatch.index);
+  trailingZerosStr = trailingZerosStr.substring(
+    0,
+    (minDecimals ? minDecimals : 0) -
+      (decimalStr.length - trailingZerosStr.length)
+  );
+  return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
+};
+

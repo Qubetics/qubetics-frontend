@@ -8,6 +8,7 @@ export default async function getDailyActiveUserChart() {
 
     const result = await response.json();
     return result;
+
   } catch (error) {
     return error;
   }

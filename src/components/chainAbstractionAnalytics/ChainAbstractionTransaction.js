@@ -4,10 +4,19 @@ import { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
-import { ArrowUpicon, BNBIcon, CopyIcons } from "../../../public/SvgIcons";
+import { ArrowUpicon, BNBIcon } from "../../../public/SvgIcons";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import { isStringValue, pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
+import {
+  formatPrecision,
+  isStringValue,
+  pageNo,
+  tableLimit,
+} from "@/constant/constant"; // Default pagination constants
+import CopyText from "../DoCopy/CopyText";
+import { convertToDateTime } from "@/utils/renderTime";
+import getAddress from "@/utils/getAddress";
+
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -35,22 +44,31 @@ const ChainAbstractionTransaction = () => {
         sender: item?.sender,
         path: item?.path,
         nonce: item?.nonce,
-        intentTx: isStringValue(item?.intentHash),
-        date: new Date().toLocaleString(),
+        intentTx: item?.intentHash
+        ? item?.intentHash
+        : isStringValue(item?.intentHash),
         source: {
-          amount: isStringValue((item?.amount / 1e18).toFixed(4)),
+          amount: formatPrecision(item?.amount),
           symbol: item?.sourceToken || "BNB",
           icon: <BNBIcon />,
           chain: item?.sourceChain || "Unknown",
         },
         destination: {
-          amount: isStringValue((item?.amount / 1e18).toFixed(4)),
+          amount: formatPrecision(item?.amount),
           symbol: item?.targetToken || "BNB",
           icon: <BNBIcon />,
           chain: item?.targetChain || "Unknown",
         },
         status: item?.status === 1 ? "Pending" : "Completed",
-        destTx: isStringValue(item?.solverTxHash),
+        destTx: item?.solverTxHash
+        ? item?.solverTxHash
+        : isStringValue(item?.solverTxHash),
+        create_at: item?.created_at
+        ? convertToDateTime(item?.created_at)
+        : isStringValue(item?.created_at),
+      update_at: item?.updated_at
+        ? convertToDateTime(item?.updated_at)
+        : isStringValue(item?.updated_at),
       }));
 
       setTransactions(transformed);
@@ -96,15 +114,17 @@ const ChainAbstractionTransaction = () => {
         <div className="tx-cell">
           <span
             className="tx-link"
-            onClick={() => router.push(`/chain-abstraction/${record.intentTx}`)}
+            onClick={() =>
+              router.push(`/chain-abstraction/${record?.intentTx}`)
+            }
             style={{ cursor: "pointer", color: "#1890ff" }}
           >
-            {record?.intentTx}
-            {/* <button className="copy_btn">
-              <CopyIcons />
-            </button> */}
+            {getAddress(record?.intentTx)}
+            <button className="copy_btn">
+              <CopyText text={record?.intentTx} />
+            </button>
           </span>
-          <div className="tx-date">{record.date}</div>
+          <div className="tx-date">{record?.create_at}</div>
         </div>
       ),
     },
@@ -113,10 +133,10 @@ const ChainAbstractionTransaction = () => {
       key: "source",
       render: (_, record) => (
         <div className="token-cell">
-          <span>{record.source.icon}</span>
+          <span>{record?.source?.icon}</span>
           <div className="token-cell-in">
             <p>
-              {record.source.amount} {record.source.symbol}
+              {record?.source?.amount} {record?.source?.symbol}
             </p>
             {/* <span className="chain-tag">
               <h3>{record.source.chain}</h3>
@@ -131,10 +151,11 @@ const ChainAbstractionTransaction = () => {
       key: "destination",
       render: (_, record) => (
         <div className="token-cell">
-          <span>{record.destination.icon}</span>
+          <span>{record?.destination?.icon}</span>
           <div className="token-cell-in">
             <p>
-              {record?.destination.amount} {record.destination.symbol}
+              {record?.destination?.amount}
+              {record?.destination?.symbol}
             </p>
             {/* <span className="chain-tag">
               <h3>{record.destination.chain}</h3>
@@ -156,12 +177,12 @@ const ChainAbstractionTransaction = () => {
       render: (_, record) => (
         <div className="tx-cell">
           <span>
-            {record.destTx}
-            {/* <button className="copy_btn">
-              <CopyIcons />
-            </button> */}
+            {getAddress(record?.destTx)}
+            <button className="copy_btn">
+              <CopyText text={record?.destTx} />
+            </button>
           </span>
-          {/* <div className="tx-date">{record.date}</div> */}
+          <div className="tx-date">{record?.update_at}</div>
         </div>
       ),
     },

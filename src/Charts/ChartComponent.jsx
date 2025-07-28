@@ -1,4 +1,4 @@
-// ChartComponent.jsx
+// ChartComponent.jsx 
 "use client";
 
 import React from "react";
