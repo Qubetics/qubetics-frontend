@@ -67,8 +67,9 @@ const TransactionOverview = () => {
           <div className="listing">
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
+              <h5>
               {intentData?.intentHash ? (
-                <h5>
+                <>
                   {intentData.intentHash}
                   <div className="action_btns_copy">
                     <span>
@@ -78,10 +79,11 @@ const TransactionOverview = () => {
                     <ExternalArrowIcon />
                   </span> */}
                   </div>
-                </h5>
+                </>
               ) : (
                 "-"
               )}
+              </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
@@ -96,18 +98,20 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Sender Address</h4>
+              <h5>
               {intentData?.sender ? (
-                <h5>
+                <>
                   {intentData?.sender}
                   <div className="action_btns_copy">
                     <span>
                       <CopyText text={intentData?.sender} />
                     </span>
                   </div>
-                </h5>
+                </>
               ) : (
                 "-"
               )}
+              </h5>
             </div>
             <div className="list_item">
               <h4>Time Started</h4>
@@ -118,21 +122,22 @@ const TransactionOverview = () => {
           <div className="listing">
             <div className="list_item">
               <h4>Destination Tx Hash</h4>
-              {intentData?.solverTxHash ? (
-                <h5>
-                  {intentData?.solverTxHash}
-                  <div className="action_btns_copy">
-                    <span>
-                      <CopyText text={intentData?.solverTxHash} />
-                    </span>
-                    {/* <span>
+              <h5>
+                {intentData?.solverTxHash ? (
+                    <>{intentData?.solverTxHash}
+                    <div className="action_btns_copy">
+                      <span>
+                        <CopyText text={intentData?.solverTxHash} />
+                      </span>
+                      {/* <span>
                       <ExternalArrowIcon />
                     </span> */}
-                  </div>
+                    </div>
+                  </>
+                ) : (
+                  "-"
+                )}
                 </h5>
-              ) : (
-                "-"
-              )}
             </div>
             <div className="list_item">
               <h4>Token</h4>
@@ -142,7 +147,7 @@ const TransactionOverview = () => {
               <h4>Target Chain</h4>
               <div className="chain">
                 {/* <Image src={Arbitrum} alt="" /> */}
-                <h5>{intentData?.targetChain}</h5>
+                <h5>{isStringValue(intentData?.targetChain)}</h5>
               </div>
             </div>
             <div className="list_item">

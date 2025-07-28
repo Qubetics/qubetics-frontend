@@ -100,13 +100,22 @@ const ChainAbstractionTransaction = () => {
       key: "source",
       render: (_, record) => (
         <div className="token-cell">
-          {/* <span>{record?.source?.icon}</span> */}
+          {/* <span>
+            {record?.sourceToken === "btc" ? (
+              <BNBIcon />
+            ) : record?.sourceToken === "tics" ? (
+              <Image src={tics} alt="qubetics logo" width={30} height={30} />
+            ) : (
+              ""
+            )}
+          </span> */}
+
           <div className="token-cell-in">
             <p>
               {formatPrecision(record?.amount)} {record?.sourceToken}
             </p>
             {/* <span className="chain-tag">
-              <h3>{record.source.chain}</h3>
+              <h3>{record?.sourceToken}</h3>
               <ArrowUpicon />
             </span> */}
           </div>
@@ -118,13 +127,21 @@ const ChainAbstractionTransaction = () => {
       key: "destination",
       render: (_, record) => (
         <div className="token-cell">
-          {/* <span>{record?.destination?.icon}</span> */}
+          {/* <span>
+            {record?.targetToken === "btc" ? (
+              <BNBIcon />
+            ) : record?.targetToken === "tics" ? (
+              <Image src={tics} alt="qubetics logo" width={30} height={30} />
+            ) : (
+              ""
+            )}
+          </span> */}
           <div className="token-cell-in">
             <p>
               {formatPrecision(record?.amount)} {record?.targetToken}
             </p>
             {/* <span className="chain-tag">
-              <h3>{record.destination.chain}</h3>
+              <h3>{record?.targetToken}</h3>
               <ArrowUpicon />
             </span> */}
           </div>
