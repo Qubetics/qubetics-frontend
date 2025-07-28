@@ -99,11 +99,11 @@ const page = () => {
           ),
         }
       : [],
-      contractLogs?.length > 0
+    contractLogs?.length > 0
       ? {
           label: "Logs",
           key: "2",
-          children: contractLogs.map((e, i) => (
+          children: contractLogs?.map((e, i) => (
             <LogsDetail
               key={i + "logDetails"}
               contractLogs={e}
@@ -114,7 +114,7 @@ const page = () => {
         }
       : [],
 
-      data?.length > 0
+    data?.[0]?.logs
       ? {
           label: "Event Logs",
           key: "3",
@@ -137,11 +137,15 @@ const page = () => {
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (params?.transactionDetails) {
-      const response = await getMessages(params?.transactionDetails);
-      setData(response?.data?.sessionEntries);
+      const fetchMessages = async () => {
+        const response = await getMessages(params?.transactionDetails);
+        setData(response?.data?.sessionEntries);
+      };
+
       fetchData();
+      fetchMessages();
     }
   }, [params?.transactionDetails]);
 

@@ -10,7 +10,7 @@ import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/consta
 import { useEffect, useState } from "react";
 import getUpTimeHistory from "@/services/getUpTimeHistory";
 
-const UptimeHistory = (nodeName) => {
+const UptimeHistory = ({nodeName}) => {
   const [uptimeHistoryStatus, setUptimeHistoryStatus] = useState(InitStatus); //init,fetching,success,error
   const [uptimeHistoryChart, setUptimeHistoryChart] = useState({
     data: [],

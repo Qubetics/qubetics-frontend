@@ -1,7 +1,3 @@
-import { firstCapitalLetter } from "@/constant/constant";
-import getMessages from "@/services/getMessages";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import { getDVPNTypeKey } from "../header/helper";
 
 const MessageAction = ({ data }) => {
