@@ -40,7 +40,7 @@ const TransactionOverview = () => {
 
   const destinationClick = (type, value) => {
     const routeTo = destinationTxn(type?.toLowerCase(), value);
-    router.push(routeTo);
+    routeTo && router.push(routeTo);
   };
 
   return (
