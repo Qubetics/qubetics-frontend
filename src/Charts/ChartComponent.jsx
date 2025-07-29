@@ -1,4 +1,3 @@
-// ChartComponent.jsx 
 "use client";
 
 import React from "react";
@@ -28,9 +27,6 @@ const ChartComponent = ({
       enabled: false,
     },
     tooltip: {
-      formatter: function () {
-        return `<b>${this.series.name}</b><br/>${this.x}: ${this.y}`;
-      },
       backgroundColor: "#1a272e",
       borderColor: "black",
       borderRadius: 10,

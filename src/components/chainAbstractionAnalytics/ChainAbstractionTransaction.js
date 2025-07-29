@@ -153,7 +153,9 @@ const ChainAbstractionTransaction = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => (
-        <p className={`status-tag-${checkStatus(1)}`}>{checkStatus(status)}</p>
+        <p className={`status-tag-${checkStatus(status)}`}>
+          {checkStatus(status)}
+        </p>
       ),
     },
     {

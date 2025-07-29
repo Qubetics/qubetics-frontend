@@ -58,7 +58,7 @@ const TransactionOverview = () => {
         </div>
 
         <div className="transacton_overview_card overview_listing">
-          {intentData?.status ? (
+          {intentData?.status || intentData?.status == 0 ? (
             <h3 className={`status_${checkStatus(intentData.status)}`}>
               {checkStatus(intentData.status)}
             </h3>
@@ -68,26 +68,29 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
               <h5>
-              {intentData?.intentHash ? (
-                <>
-                  {intentData.intentHash}
-                  <div className="action_btns_copy">
-                    <span>
-                      <CopyText text={intentData.intentHash} />
-                    </span>
-                    {/* <span>
+                {intentData?.intentHash ? (
+                  <>
+                    {intentData.intentHash}
+                    <div className="action_btns_copy">
+                      <span>
+                        <CopyText text={intentData.intentHash} />
+                      </span>
+                      {/* <span>
                     <ExternalArrowIcon />
                   </span> */}
-                  </div>
-                </>
-              ) : (
-                "-"
-              )}
+                    </div>
+                  </>
+                ) : (
+                  "-"
+                )}
               </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>{formatPrecision(intentData?.amount)}</h5>
+              <h5>
+                {formatPrecision(intentData?.amount)}{" "}
+                {isStringValue(intentData?.sourceToken)}
+              </h5>
             </div>
             <div className="list_item">
               <h4>Source Chain</h4>
@@ -99,18 +102,18 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Sender Address</h4>
               <h5>
-              {intentData?.sender ? (
-                <>
-                  {intentData?.sender}
-                  <div className="action_btns_copy">
-                    <span>
-                      <CopyText text={intentData?.sender} />
-                    </span>
-                  </div>
-                </>
-              ) : (
-                "-"
-              )}
+                {intentData?.sender ? (
+                  <>
+                    {intentData?.sender}
+                    <div className="action_btns_copy">
+                      <span>
+                        <CopyText text={intentData?.sender} />
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  "-"
+                )}
               </h5>
             </div>
             <div className="list_item">
@@ -124,7 +127,8 @@ const TransactionOverview = () => {
               <h4>Destination Tx Hash</h4>
               <h5>
                 {intentData?.solverTxHash ? (
-                    <>{intentData?.solverTxHash}
+                  <>
+                    {intentData?.solverTxHash}
                     <div className="action_btns_copy">
                       <span>
                         <CopyText text={intentData?.solverTxHash} />
@@ -137,11 +141,14 @@ const TransactionOverview = () => {
                 ) : (
                   "-"
                 )}
-                </h5>
+              </h5>
             </div>
             <div className="list_item">
               <h4>Token</h4>
-              <h5>{formatPrecision(intentData?.amount)}</h5>
+              <h5>
+                {formatPrecision(intentData?.amount)}{" "}
+                {isStringValue(intentData?.targetToken)}
+              </h5>
             </div>
             <div className="list_item">
               <h4>Target Chain</h4>
@@ -168,7 +175,7 @@ const TransactionOverview = () => {
           </div>
         </div>
 
-        <h2 className="sub_heading">Metadata</h2>
+        {/* <h2 className="sub_heading">Metadata</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -196,10 +203,10 @@ const TransactionOverview = () => {
                 </div>
               </h5>
             </div> */}
-          </div>
-        </div>
+        {/* </div>
+        </div> */}
 
-        <h2 className="sub_heading">Fee & Logs</h2>
+        {/* <h2 className="sub_heading">Fee & Logs</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
@@ -242,7 +249,7 @@ const TransactionOverview = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
