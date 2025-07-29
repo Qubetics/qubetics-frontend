@@ -14,6 +14,7 @@ import { convertToDateTime } from "@/utils/renderTime";
 import {
   checkStatus,
   destinationTxn,
+  formatToken,
   transferType,
 } from "@/utils/commonFunctions";
 
@@ -97,7 +98,11 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Token</h4>
               <h5>
-                {formatPrecision(intentData?.sourceAmount)}{" "}
+                {formatToken(
+                  intentData?.sourceToken?.toLowerCase(),
+                  intentData?.sourceAmount
+                )}{" "}
+                {/* {formatPrecision(intentData?.sourceAmount)} */}
                 {isStringValue(intentData?.sourceToken)}
               </h5>
             </div>
@@ -165,7 +170,12 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Token</h4>
               <h5>
-                {formatPrecision(intentData?.amount)}{" "}
+                {" "}
+                {formatToken(
+                  intentData?.targetToken?.toLowerCase(),
+                  intentData?.amount
+                )}{" "}
+                {/* {formatPrecision(intentData?.amount)} */}
                 {isStringValue(intentData?.targetToken)}
               </h5>
             </div>

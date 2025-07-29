@@ -217,9 +217,26 @@ export const destinationTxn = (type, value) => {
       return `${BTC_EXPLORER_URL}tx/${value}`;
     case "tics":
       return `${TICS_EXPLORER_URL}tx/${value}`;
-    case "usdt" || "usdc" || "eth":
+    case "usdt":
+    case "usdc":
+    case "eth":
       return `${ETH_EXPLORER_URL}tx/${value}`;
     default:
       return null;
+  }
+};
+
+export const formatToken = (type, value) => {
+  switch (type) {
+    case "btc":
+      return value / 1e8;
+    case "eth":
+    case "tics":
+      return value / 1e18;
+    case "usdc":
+    case "usdt":
+      return value / 1e6;
+    default:
+      return "-";
   }
 };

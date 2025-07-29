@@ -10,7 +10,11 @@ import { formatPrecision, pageNo, tableLimit } from "@/constant/constant"; // De
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
-import { checkStatus, destinationTxn } from "@/utils/commonFunctions";
+import {
+  checkStatus,
+  destinationTxn,
+  formatToken,
+} from "@/utils/commonFunctions";
 import Link from "next/link";
 
 const ChainAbstractionTransaction = () => {
@@ -114,7 +118,11 @@ const ChainAbstractionTransaction = () => {
 
           <div className="token-cell-in">
             <p>
-              {formatPrecision(record?.amount)} {record?.sourceToken}
+              {formatToken(
+                record?.sourceToken?.toLowerCase(),
+                record?.sourceAmount
+              )}{" "}
+              {record?.sourceToken}
             </p>
             {/* <span className="chain-tag">
               <h3>{record?.sourceToken}</h3>
@@ -140,7 +148,8 @@ const ChainAbstractionTransaction = () => {
           </span> */}
           <div className="token-cell-in">
             <p>
-              {formatPrecision(record?.amount)} {record?.targetToken}
+              {formatToken(record?.targetToken?.toLowerCase(), record?.amount)}{" "}
+              {record?.targetToken}
             </p>
             {/* <span className="chain-tag">
               <h3>{record?.targetToken}</h3>
