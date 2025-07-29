@@ -118,10 +118,10 @@ const TransactionOverview = () => {
               <h5>
                 {intentData?.sender ? (
                   <>
-                    {intentData?.sender}
+                    {intentData?.sourceAddress}
                     <div className="action_btns_copy">
                       <span>
-                        <CopyText text={intentData?.sender} />
+                        <CopyText text={intentData?.sourceAddress} />
                       </span>
                     </div>
                   </>
