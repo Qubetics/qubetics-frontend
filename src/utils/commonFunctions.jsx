@@ -1,3 +1,9 @@
+import {
+  BTC_EXPLORER_URL,
+  ETH_EXPLORER_URL,
+  TICS_EXPLORER_URL,
+} from "@/constant/constant";
+
 Number.prototype.noExponents = function () {
   try {
     var data = String(this).split(/[eE]/);
@@ -190,7 +196,30 @@ export const checkStatus = (value) => {
     case 2:
       return "Pending";
     default:
-      "-";
-      break;
+      return "-";
+  }
+};
+
+export const transferType = (value) => {
+  switch (value) {
+    case 0:
+      return "Contract";
+    case 1:
+      return "Token Transfer";
+    default:
+      return "-";
+  }
+};
+
+export const destinationTxn = (type, value) => {
+  switch (type) {
+    case "btc":
+      return `${BTC_EXPLORER_URL}tx/${value}`;
+    case "tics":
+      return `${TICS_EXPLORER_URL}tx/${value}`;
+    case "usdt" || "usdc" || "eth":
+      return `${ETH_EXPLORER_URL}tx/${value}`;
+    default:
+      return null;
   }
 };

@@ -11,7 +11,11 @@ import { formatPrecision, isStringValue, Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import CopyText from "@/components/DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
-import { checkStatus } from "@/utils/commonFunctions";
+import {
+  checkStatus,
+  destinationTxn,
+  transferType,
+} from "@/utils/commonFunctions";
 
 const TransactionOverview = () => {
   const { txnHash } = useParams();
@@ -33,6 +37,11 @@ const TransactionOverview = () => {
   if (loading) return <div>Loading...</div>;
 
   if (!intentData) return <div>No Data Found</div>;
+
+  const destinationClick = (type, value) => {
+    const routeTo = destinationTxn(type?.toLowerCase(), value);
+    router.push(routeTo);
+  };
 
   return (
     <div className="transaction_overview">
@@ -88,7 +97,7 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Token</h4>
               <h5>
-                {formatPrecision(intentData?.amount)}{" "}
+                {formatPrecision(intentData?.sourceAmount)}{" "}
                 {isStringValue(intentData?.sourceToken)}
               </h5>
             </div>
@@ -128,7 +137,17 @@ const TransactionOverview = () => {
               <h5>
                 {intentData?.solverTxHash ? (
                   <>
-                    {intentData?.solverTxHash}
+                    <span
+                      className="list_item_pointer"
+                      onClick={() =>
+                        destinationClick(
+                          intentData?.targetChain,
+                          intentData?.solverTxHash
+                        )
+                      }
+                    >
+                      {intentData?.solverTxHash}
+                    </span>
                     <div className="action_btns_copy">
                       <span>
                         <CopyText text={intentData?.solverTxHash} />
@@ -170,32 +189,68 @@ const TransactionOverview = () => {
             </div>
             <div className="list_item">
               <h4>Time Completed</h4>
-              <h5>{convertToDateTime(intentData?.updated_at)}</h5>
+              <h5>
+                {intentData?.status !== 2
+                  ? convertToDateTime(intentData?.updated_at)
+                  : "-"}
+              </h5>
             </div>
           </div>
         </div>
 
-        {/* <h2 className="sub_heading">Metadata</h2>
+        <h2 className="sub_heading">Metadata</h2>
         <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
               <h4>Transfer Type</h4>
-              <h5>Contract</h5>
+              <h5>{transferType(intentData?.transferType)}</h5>
             </div>
             <div className="list_item">
               <h4>Job ID</h4>
-              <h5>#{intentData.nonce}</h5>
+              <h5>
+                {intentData?.intentJobId ? `#${intentData.intentJobId}` : "-"}
+              </h5>
             </div>
-          </div>
-          <div className="listing">
             <div className="list_item">
               <h4>Solver</h4>
               <h5>{isStringValue(intentData?.solverId)}</h5>
             </div>
+          </div>
+          <div className="listing">
+            <div className="status-log">
+              <h4>Status Log</h4>
+              <div className="timeline">
+                <div className="timeline-item active">
+                  <span></span>
+                  <div className="list_item">
+                    <h4>Submitted</h4>
+                    <h5>{convertToDateTime(intentData?.created_at)}</h5>
+                  </div>
+                </div>
+                <div className="timeline-item">
+                  <span></span>
+                  <div className="list_item">
+                    <h4>Executed</h4>
+                    <h5>{convertToDateTime(intentData?.solverTxExecuted)}</h5>
+                  </div>
+                </div>
+                <div className="timeline-item active">
+                  <span></span>
+                  <div>
+                    <h4>{checkStatus(intentData.status)}</h4>
+                    <h5>
+                      {intentData?.status !== 2
+                        ? convertToDateTime(intentData?.updated_at)
+                        : "-"}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
             {/* <div className="list_item">
               <h4>Token Contract</h4>
               <h5>
-                {intentData.sourceToken || "0x..."}
+                {isStringValue(intentData.sourceToken)}
                 <div className="action_btns_copy">
                   <span>
                     <CopyIcons />
@@ -203,23 +258,19 @@ const TransactionOverview = () => {
                 </div>
               </h5>
             </div> */}
-        {/* </div>
-        </div> */}
+          </div>
+        </div>
 
-        {/* <h2 className="sub_heading">Fee & Logs</h2>
-        <div className="transacton_overview_card">
+        {/* <h2 className="sub_heading">Fee & Logs</h2> */}
+        {/* <div className="transacton_overview_card">
           <div className="listing">
             <div className="list_item">
               <h4>Fees</h4>
-              <h5>100 TICS</h5>
+              <h5>{isStringValue(intentData?.gas_metadata?.platform_fees)}</h5>
             </div>
             <div className="list_item">
               <h4>Gas Used</h4>
-              <h5>23,000</h5>
-            </div>
-            <div className="list_item">
-              <h4>Gas Price</h4>
-              <h5>12 Gwei</h5>
+              <h5>{isStringValue(intentData?.gas_metadata?.gas_used)}</h5>
             </div>
           </div>
 
@@ -230,21 +281,25 @@ const TransactionOverview = () => {
                 <span></span>
                 <div className="list_item">
                   <h4>Submitted</h4>
-                  <h5>22 May 2025 16:03:01</h5>
+                  <h5>{convertToDateTime(intentData?.created_at)}</h5>
                 </div>
               </div>
               <div className="timeline-item">
                 <span></span>
                 <div className="list_item">
                   <h4>Executed</h4>
-                  <h5>22 May 2025 16:03:01</h5>
+                  <h5>{convertToDateTime(intentData?.solverTxExecuted)}</h5>
                 </div>
               </div>
               <div className="timeline-item active">
                 <span></span>
                 <div>
-                  <h4>Confirmed</h4>
-                  <h5>22 May 2025 16:03:01</h5>
+                  <h4>{checkStatus(intentData.status)}</h4>
+                  <h5>
+                    {intentData?.status !== 2
+                      ? convertToDateTime(intentData?.updated_at)
+                      : "-"}
+                  </h5>
                 </div>
               </div>
             </div>

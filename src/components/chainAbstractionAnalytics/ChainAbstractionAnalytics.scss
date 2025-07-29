@@ -77,13 +77,12 @@
     border-radius: 14px !important;
     padding: 20px;
 
-
     .abstraction_chart_card_content {
       position: relative;
       height: 300px;
       padding-top: 20px;
     }
-    
+
     .not_found {
       position: absolute;
       top: 50%;
@@ -93,7 +92,6 @@
       font-size: 16px;
       text-align: center;
     }
-    
 
     &.token_transferred {
       .abstraction_chart_card_content {
@@ -102,7 +100,6 @@
         height: 300px;
         // padding: 60px 30px 40px;
       }
-
     }
 
     .abstraction_chart_card_content {
@@ -252,7 +249,14 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-
+    .tx-link {
+      cursor: pointer;
+      &:hover {
+        color: #9f53ff;
+        transition: color 0.3s ease-out;
+        text-decoration: underline;
+      }
+    }
     span {
       font-weight: 300;
       font-size: 16px;
@@ -340,13 +344,13 @@
   }
 
   .status-tag {
-    &-Confirm{
+    &-Confirm {
       color: #34c759;
     }
-    &-Fail{
-      color:#c73434
+    &-Fail {
+      color: #c73434;
     }
-    &-Pending{
+    &-Pending {
       color: #c78234;
     }
   }

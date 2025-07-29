@@ -10,7 +10,8 @@ import { formatPrecision, pageNo, tableLimit } from "@/constant/constant"; // De
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
-import { checkStatus } from "@/utils/commonFunctions";
+import { checkStatus, destinationTxn } from "@/utils/commonFunctions";
+import Link from "next/link";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -67,6 +68,11 @@ const ChainAbstractionTransaction = () => {
     }
   };
 
+  const destinationClick = (type, value) => {
+    const routeTo = destinationTxn(type?.toLowerCase(), value);
+    router.push(routeTo);
+  };
+
   const columns = [
     {
       title: "Intent Transaction",
@@ -75,14 +81,10 @@ const ChainAbstractionTransaction = () => {
       render: (_, record) =>
         record?.intentHash ? (
           <div className="tx-cell">
-            <span
-              className="tx-link"
-              onClick={() =>
-                router.push(`/chain-abstraction/${record?.intentHash}`)
-              }
-              style={{ cursor: "pointer", color: "#1890ff" }}
-            >
-              {getAddress(record?.intentHash)}
+            <span className="tx-link">
+              <Link href={`/chain-abstraction/${record?.intentHash}`}>
+                {getAddress(record?.intentHash)}
+              </Link>
               <button className="copy_btn">
                 <CopyText text={record?.intentHash} />
               </button>
@@ -164,8 +166,16 @@ const ChainAbstractionTransaction = () => {
       render: (_, record) =>
         record?.solverTxHash ? (
           <div className="tx-cell">
-            <span>
-              {getAddress(record?.solverTxHash)}
+            <span className="tx-link">
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent navigation
+                  destinationClick(record?.targetChain, record?.solverTxHash);
+                }}
+              >
+                {getAddress(record?.solverTxHash)}
+              </Link>
               <button className="copy_btn">
                 <CopyText text={record?.solverTxHash} />
               </button>
@@ -183,9 +193,9 @@ const ChainAbstractionTransaction = () => {
       key: "action",
       render: (_, record) => (
         <span
-          className="view-action"
+          className="view-action pointer"
           onClick={() => {
-            router.push(`/chain-abstraction/${record?.intentTx}`);
+            router.push(`/chain-abstraction/${record?.intentHash}`);
           }}
         >
           View

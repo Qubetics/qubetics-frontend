@@ -154,7 +154,7 @@
         background: #34c75933;
         color: #34c759;
       }
-      &_Fail{
+      &_Fail {
         position: absolute;
         top: 20px;
         right: 20px;
@@ -166,7 +166,7 @@
         background: #c7343433;
         color: #c73434;
       }
-      &_Pending{
+      &_Pending {
         position: absolute;
         top: 20px;
         right: 20px;
@@ -194,7 +194,14 @@
           margin-bottom: 15px;
         }
       }
-
+      &_pointer {
+        cursor: pointer;
+        &:hover {
+          color: #9f53ff;
+          transition: color 0.3s ease-out;
+          text-decoration: underline;
+        }
+      }
       .chain {
         background: #201e22;
         border-radius: 40px;

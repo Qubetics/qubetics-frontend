@@ -141,7 +141,7 @@ const SearchbarComponent = ({
         }
       }
     } catch (err) {
-      setSerachStatus(ErrorStatus);
+      setSerachStatus?.(ErrorStatus);
       setSearchValue("");
       router.push(Routes.NOT_FOUND);
       return err;
