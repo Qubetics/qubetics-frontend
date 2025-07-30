@@ -219,7 +219,7 @@ export const destinationTxn = (type, value) => {
       return `${TICS_EXPLORER_URL}tx/${value}`;
     case "usdt":
     case "usdc":
-    case "eth":
+    case "sepolia":
       return `${ETH_EXPLORER_URL}tx/${value}`;
     default:
       return null;
