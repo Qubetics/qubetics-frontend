@@ -41,7 +41,7 @@ const ChartComponent = ({
     xAxis: {
       categories: categories,
       title: {
-        text: "Date",
+        text: "",
         style: {
           color: "#ffffff",
         },

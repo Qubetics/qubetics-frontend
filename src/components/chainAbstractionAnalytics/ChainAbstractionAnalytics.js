@@ -3,16 +3,16 @@
 import { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import "./ChainAbstractionAnalytics.scss";
-import getOnChainAnalyticsChart from "@/services/getOnChainAnalyticsChart";
-import getLoadOverTimeChart from "@/services/getLoadOverTimeChart";
-import getDailyActiveUserChart from "@/services/getDailyActiveUserChart";
-import RenderChartCard from "./RenderChartCard";
+import getOnChainAnalyticsChart from "@/services/getOnChainAnalyticsChart"; // API call onChain
+import getLoadOverTimeChart from "@/services/getLoadOverTimeChart"; // API call loadOverTime
+import getDailyActiveUserChart from "@/services/getDailyActiveUserChart"; // API call activeUsers
+import RenderChartCard from "./RenderChartCard"; // renderChartCart custom component
 
 const ChainAbstractionAnalytics = () => {
   const [onChainData, setOnChainData] = useState([]);
   const [loadOverTimeData, setLoadOverTimeData] = useState([]);
   const [dailyActiveUserData, setDailyActiveUserData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchData = async () => {
