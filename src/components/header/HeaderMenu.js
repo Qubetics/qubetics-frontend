@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Web3 from "web3";
+import Web3, { eth } from "web3";
 import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
@@ -52,16 +52,17 @@ function HeaderMenu({ onCloseDrawer }) {
   };
 
   const isNetworkAdded = async () => {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
-    );
-    const chain_Id = await web3?.eth?.getChainId();
-    const chainIdHex = `0x${chain_Id.toString(16)}`;
-    const { ethereum } = window;
-
-    if (!ethereum) return;
-
     try {
+      const web3 = new Web3(
+        new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
+      );
+
+      const chain_Id = await web3?.eth?.getChainId();
+      const chainIdHex = `0x${chain_Id.toString(16)}`;
+      const { ethereum } = window;
+
+      if (!ethereum) return;
+
       const chainId = await ethereum.request({ method: "eth_chainId" });
       setIsMetaMaskAdded(chainId === chainIdHex);
       ethereum.on("chainChanged", (id) => {
@@ -71,6 +72,7 @@ function HeaderMenu({ onCloseDrawer }) {
       console.error(error);
     }
   };
+
   const onEventTrackClick = (label, category) => {
     trackEvent({
       action: "link_click",

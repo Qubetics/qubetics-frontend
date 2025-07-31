@@ -6,11 +6,17 @@ import {
   ALL_CHART_SEVEN_DAY,
   transactionItems,
 } from "@/constant/graphTableValues";
-import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+} from "@/constant/constant";
 import { useEffect, useState } from "react";
 import getUpTimeHistory from "@/services/getUpTimeHistory";
+import GraphLoading from "@/components/loader/GraphLoading";
 
-const UptimeHistory = ({nodeName}) => {
+const UptimeHistory = ({ nodeName }) => {
   const [uptimeHistoryStatus, setUptimeHistoryStatus] = useState(InitStatus); //init,fetching,success,error
   const [uptimeHistoryChart, setUptimeHistoryChart] = useState({
     data: [],
@@ -39,7 +45,7 @@ const UptimeHistory = ({nodeName}) => {
 
   const fetchChartData = async () => {
     setUptimeHistoryStatus(FetchingStatus);
-    await getUpTimeHistory(uptimeHistoryChart?.type,nodeName)
+    await getUpTimeHistory(uptimeHistoryChart?.type, nodeName)
       .then((res) => {
         setUptimeHistoryStatus(SuccessStatus);
         setUptimeHistoryChart({
@@ -64,7 +70,6 @@ const UptimeHistory = ({nodeName}) => {
           <div className="drop_histry__blinkLive">
             <h3>Uptime History</h3>
           </div>
-          
 
           <Space wrap>
             <Select
@@ -79,8 +84,19 @@ const UptimeHistory = ({nodeName}) => {
         </div>
 
         {/* Static chart */}
-        <ChartAccounts  data={uptimeHistoryChart?.data}
-            chartType={uptimeHistoryChart?.type}  name="Uptime %" />
+        {uptimeHistoryStatus === InitStatus ||
+        uptimeHistoryStatus === FetchingStatus ? (
+          <div className="graphLod dashLoading">
+            {" "}
+            <GraphLoading />
+          </div>
+        ) : (
+          <ChartAccounts
+            data={uptimeHistoryChart?.data}
+            chartType={uptimeHistoryChart?.type}
+            name="Uptime %"
+          />
+        )}
       </div>
     </div>
   );

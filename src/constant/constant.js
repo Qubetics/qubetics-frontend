@@ -3,6 +3,7 @@
 import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 
+export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
@@ -86,7 +87,7 @@ export const DVPN_TRANSACTION_TYPE = {
   END_SUBSCRIPTION: "END_SUBSCRIPTION",
   START_REQUEST: "START_REQUEST",
   END_REQUEST: "END_REQUEST",
-} ; 
+};
 
 export const Messages = {
   //Metamask
@@ -202,8 +203,7 @@ export const nodePerformanceData = (blockHeight) => {
 export const tooltipContent = {
   block_Height:
     "The number of blocks added to the blockchain since its inception, indicating the blockchain’s current length.",
-  bonded_Coins:
-    "The total amount of TICS token bonded or staked in the network to secure it and earn rewards.",
+  bonded_Coins: `The total amount of  ${currencyName} token bonded or staked in the network to secure it and earn rewards."`,
   total_Nodes: "The total number of nodes connected to the Qubetics network.",
   last_Block: "The most recent block added to the blockchain.",
   TPB: "Transactions per block. Display the average number of transactions recorded in a block during the last six seconds.",

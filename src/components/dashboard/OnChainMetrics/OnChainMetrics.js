@@ -18,6 +18,7 @@ import { useThemeData } from "@/components/contexts/theme_context";
 import getQubeticsPrice from "@/services/getQubeticsPrice";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
+import { currencyName } from "@/constant/constant";
 
 const OnChainMetrics = ({ stats }) => {
   const [price, setPrice] = useState("");
@@ -44,7 +45,7 @@ const OnChainMetrics = ({ stats }) => {
         <Row gutter={[30, 16]} className="onchainrowdata">
           <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
             <CardsOnchain
-              text="TICS Price"
+              text={`${currencyName} Price`}
               balance={price ? "$" + Number(price).toFixed(6) + " " : "$0"}
               img={<TickPriceIcon />}
               title="The current market price of 1 Qubetics (TICS) in USD."

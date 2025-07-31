@@ -12,8 +12,14 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
-import { formatValue, Routes, typesOfTransactions } from "./constant";
+import {
+  currencyName,
+  formatValue,
+  Routes,
+  typesOfTransactions,
+} from "./constant";
 import { Tokenicons } from "../../public/SvgIcons";
+import { render } from "sass";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -25,6 +31,9 @@ export const ALL_CHARTS_HOUR = "1 Hour";
 export const ALL_CHART_ONE_DAY = "1 Day";
 export const ALL_CHART_SEVEN_DAY = "7 Days";
 export const ALL_CHART_THRITY_DAYS = "30 Days";
+export const TRANS_HISTORY_CHART_365_DAYS = "365 Days";
+export const TRANS_HISTORY_CHART_7_DAYS = "7 Days";
+export const TRANS_HISTORY_CHART_30_DAYS = "30 Days";
 
 let deploymentDate = "2024-03-30";
 const activationDate = deploymentDate; // Replace with the actual activation date
@@ -353,11 +362,11 @@ export const transactionSummarycolumn = [
       ),
   },
   {
-    title: "Value(TICS)",
+    title: `Value( ${currencyName})`,
     key: "value",
     render: (text) =>
       text?.value ? (
-        <Tooltip title={`${noExponential(text?.value)} TICS`}>
+        <Tooltip title={`${noExponential(text?.value)} ${currencyName}`}>
           {noExponential(toFixed(text?.value, 6))}
         </Tooltip>
       ) : (
@@ -493,12 +502,12 @@ export const TransactionDetailsColumns = [
   },
 
   {
-    title: "Value (TICS)",
+    title: `Value ( ${currencyName})`,
     dataIndex: "value",
     key: "value",
     render: (text) => (
       <span>
-        <Tooltip title={`${noExponential(toFixed(text, 2))} TICS`}>
+        <Tooltip title={`${noExponential(toFixed(text, 2))}  ${currencyName}`}>
           {text ? noExponential(toFixed(text, 2)) : "0"}
         </Tooltip>
       </span>
@@ -991,7 +1000,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "fee",
-    title: "Fee(TICS)",
+    title: `Fee( ${currencyName})`,
     key: "fee",
     render: (text) => (
       <span className="">
@@ -1853,6 +1862,139 @@ export const tokensByAddressColumn = [
         <span className="successtrans">{capitalizeWord(text)}</span>
       ) : (
         <span className="failedtrans">{capitalizeWord(text)}</span>
+      ),
+  },
+];
+
+export const dVPNColumn = [
+  {
+    title: "Txn Hash ",
+    dataIndex: "txhash",
+    key: "txhash",
+    render: (text) => (
+      <Link
+        className="bghash"
+        href={`${Routes.Tx_Hash}${text}`}
+        rel="noopener noreferrer"
+      >
+        {getAddress(text)}
+      </Link>
+    ),
+  },
+  {
+    title: "Block",
+    dataIndex: "blocknumber",
+    key: "blocknumber",
+    render: (text) => (
+      <Link
+        className="bghash"
+        href={`${Routes.BLOCK_NO}${text}`}
+        rel="noopener noreferrer"
+      >
+        {text}
+      </Link>
+    ),
+  },
+  {
+    title: "Type ",
+    key: "type",
+    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
+  },
+  {
+    title: "Amount",
+    key: "value",
+    render: (text) => {
+      return text?.value ? formatValue(text?.value) : "-";
+    },
+  },
+  {
+    title: "Fee",
+    key: "txFee",
+    render: (text) => (
+      <span className="">
+        {text?.txFee ? `${text.txFee}${currencyName}` : "-"}
+      </span>
+    ),
+  },
+  {
+    title: "Timestamp ",
+    // dataIndex: "timestamp",
+    key: "timestamp",
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : text?.createdAt ? (
+        <span className="timestamp">
+          {renderTime(text?.createdAt)}
+          <span>{convertToDateTime(text?.createdAt)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (text) =>
+      text === "SUCCESS" ? (
+        <span className="successtrans">{capitalizeWord(text)}</span>
+      ) : (
+        <span className="failedtrans">{capitalizeWord(text)}</span>
+      ),
+  },
+];
+export const accountsColumns = [
+  {
+    title: "Sr no",
+    key: "planId",
+    render: (text, record, index) => {
+      const currentPage = 1;
+      const pageSize = 10;
+      const serialNumber = (currentPage - 1) * pageSize + index + 1;
+      return `#${serialNumber}`;
+    },
+  },
+  {
+    id: "accAddress",
+    title: "Address",
+    key: "accAddress",
+    render: (text) => (
+      <div className="iconandlink">
+        {text?.accAddress ? (
+          <Tooltip title={text?.accAddress}>
+            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}>
+              {getAddress(text?.accAddress)}{" "}
+            </Link>
+          </Tooltip>
+        ) : (
+          "-"
+        )}
+        {/* <span>
+          <CopyText text={text?.address} />
+        </span> */}
+      </div>
+    ),
+  },
+  {
+    title: "Amount",
+    key: "price",
+    render: (text) => {
+      return text?.price ? formatValue(text?.price) : "-";
+    },
+  },
+  {
+    id: "createdAt",
+    title: "Timestamp",
+    key: "createdAt",
+    render: (text) =>
+      text?.createdAt ? (
+        <span className="timestamp">{renderTime(text?.createdAt)}</span>
+      ) : (
+        "-"
       ),
   },
 ];

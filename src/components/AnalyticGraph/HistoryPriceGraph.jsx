@@ -1,3 +1,4 @@
+import { currencyName } from "@/constant/constant";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 
@@ -18,7 +19,7 @@ const HistoryPriceGraph = () => {
     yAxis: [
       {
         title: {
-          text: "Tether TICS Daily Price(USD)", // Make sure this is not null or empty
+          text: `Tether ${currencyName} Daily Price(USD)`, // Make sure this is not null or empty
         },
         labels: { style: { color: "#A0A0A3" } },
       },
@@ -36,7 +37,7 @@ const HistoryPriceGraph = () => {
     },
     series: [
       {
-        name: "Tether TICS Daily Price",
+        name: `Tether ${currencyName} Daily Price`,
         data: generateDummyData(),
         color: "magenta",
         type: "line",
