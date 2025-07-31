@@ -1,3 +1,4 @@
+import { EXPLORER_NETWORK_NAME } from "@/constant/constant";
 import {
   CmcIcon,
   Discord,
@@ -7,7 +8,6 @@ import {
   Twitter,
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
-
 
 export const footerLinks = [
   {
@@ -42,12 +42,18 @@ export const footerLinks = [
     items: [
       {
         label: "Qubetics Validator App",
-        href: "https://validator.qubetics.com/",
+        href:
+          EXPLORER_NETWORK_NAME.toLowerCase() === "mainnet"
+            ? "https://validator.qubetics.com/"
+            : "https://validator-testnet.qubetics.work/",
         external: true,
       },
       {
         label: "Qubetics Delegator App",
-        href: "https://delegator.qubetics.com/",
+        href:
+          EXPLORER_NETWORK_NAME.toLowerCase() === "mainnet"
+            ? "https://delegator.qubetics.com/"
+            : "https://delegator-testnet.qubetics.work/",
         external: true,
       },
       { label: "Qubetics DEX", disabled: true },
