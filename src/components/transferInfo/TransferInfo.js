@@ -1,6 +1,10 @@
 "use-client";
 import { EXPLORER_CURRENCY_NAME } from "@/constant/constant";
-import { capitalizeWord, noExponential } from "@/utils/commonFunctions";
+import {
+  capitalizeWord,
+  formatMillionNumber,
+  noExponential,
+} from "@/utils/commonFunctions";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -103,7 +107,9 @@ const TransferInfo = ({ data }) => {
         <div className="information">
           <p> Amount </p>
           <span>
-            {data?.value ? noExponential(data?.value) : "0 "}{" "}
+            {data?.value
+              ? formatMillionNumber(noExponential(data?.value))
+              : "0 "}{" "}
             {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
           </span>
         </div>

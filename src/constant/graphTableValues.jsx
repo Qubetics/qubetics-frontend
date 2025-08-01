@@ -4,6 +4,7 @@ import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
   formateTotalSupply,
+  formatMillionNumber,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";
@@ -14,6 +15,7 @@ import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
 import { formatValue, Routes, typesOfTransactions } from "./constant";
 import { Tokenicons } from "../../public/SvgIcons";
+import { render } from "sass";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -358,7 +360,9 @@ export const transactionSummarycolumn = [
     render: (text) =>
       text?.value ? (
         <Tooltip title={`${noExponential(text?.value)} TICS`}>
-          {noExponential(toFixed(text?.value, 6))}
+          {/* {noExponential(toFixed(text?.value, 6))}
+           */}
+          {formatMillionNumber(text?.value)}
         </Tooltip>
       ) : (
         0
@@ -664,6 +668,7 @@ export const addressDetailColumn = [
     title: "Value",
     dataIndex: "value",
     key: "value",
+    render: (text) => formatMillionNumber(text),
   },
   {
     title: "Status",
@@ -1029,6 +1034,229 @@ export const contractTransactionsColumn = [
           {text?.value
             ? Number(
                 noExponential(Number(text?.value) / 10 ** Number(text?.decimal))
+              )
+            : "0"}
+        </Tooltip>
+      </span>
+    ),
+  },
+  {
+    id: "height",
+    title: "Block",
+    key: "height",
+    render: (text) => (
+      <span className="">
+        {text?.blockNumber ? (
+          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>
+            {text?.blockNumber}
+          </Link>
+        ) : text?.blocknumber ? (
+          <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>
+            {text?.blocknumber}
+          </Link>
+        ) : (
+          "-"
+        )}
+      </span>
+    ),
+  },
+
+  {
+    id: "age",
+    title: "Timestamp",
+    key: "age",
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
+  },
+];
+export const internalTxns = [
+  {
+    id: "txHash",
+    title: "Txn Hash",
+    key: "txnHash",
+    render: (text) => (
+      <div className="iconandlink">
+        <Tooltip title={text?.txnHash}>
+          {text?.txnHash ? (
+            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+              {getAddress(text?.txnHash)}
+            </Link>
+          ) : text?.txnHash ? (
+            <Link href={`${Routes.Tx_Hash}${text?.txnHash}`}>
+              {getAddress(text?.txnHash)}
+            </Link>
+          ) : (
+            "-"
+          )}
+        </Tooltip>
+        <span>
+          <CopyText text={text?.txnHash ? text?.txnHash : text?.txnHash} />
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "method",
+    title: "Method",
+    key: "method",
+    render: (text) => (
+      <span className="">
+        {text?.method && text?.method !== "N/A"
+          ? capitalizeWord("transfer")
+          : "Transfer"
+          ? capitalizeWord("Transfer")
+          : "-"}
+      </span>
+    ),
+  },
+
+  {
+    id: "fromAddress",
+    title: "From",
+    key: "from",
+    render: (text) => (
+      <div className="iconandlink">
+        <Tooltip title={text?.fromAddress}>
+          {text?.fromAddress ? (
+            <Link href={`/address/${text?.fromAddress}`}>
+              {getAddress(text?.fromAddress)}{" "}
+            </Link>
+          ) : (
+            "-"
+          )}
+        </Tooltip>
+        <span>
+          <CopyText text={text?.fromAddress} />
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "toAddress",
+    title: "To",
+    key: "to",
+    render: (text) => (
+      <>
+        {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
+          text?.toAddress?.startsWith("0x") ||
+          text?.toAddress?.startsWith("Qubetics") ? (
+            <div className="iconandlink">
+              {text?.type === typesOfTransactions.contractTransfer ||
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
+                <Tooltip title={text?.toAddress}>
+                  <Link
+                    className="fromicon"
+                    href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
+                    rel="noopener noreferrer"
+                  >
+                    {getAddress(text?.toAddress)}
+                  </Link>
+                </Tooltip>
+              ) : (
+                <Tooltip title={text?.toAddress}>
+                  <Link
+                    className="fromicon"
+                    href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
+                    rel="noopener noreferrer"
+                  >
+                    {getAddress(text?.toAddress)}
+                  </Link>
+                </Tooltip>
+              )}
+              <span>
+                <CopyText text={text?.toAddress} />
+              </span>
+            </div>
+          ) : (
+            text?.toAddress
+          )
+        ) : text?.contractAddress !== "N/A" && text?.contractAddress !== "" ? (
+          <div className="iconandlink">
+            <Tooltip title={text?.contractAddress}>
+              <Link
+                className="fromicon"
+                href={`${Routes.CONTRACT_DETAIL}${text?.contractAddress}`}
+                rel="noopener noreferrer"
+              >
+                {" "}
+                {getAddress(text?.contractAddress)}
+              </Link>
+            </Tooltip>
+            <span>
+              <CopyText text={text?.contractAddress} />
+            </span>
+          </div>
+        ) : (
+          "-"
+        )}
+      </>
+    ),
+  },
+  // {
+  //   id: "status",
+  //   title: "Status",
+  //   key: "status",
+  //   render: (text) => (
+  //     <span className="">
+  //       {text?.status ? (
+  //         text?.status.toLowerCase() === "success" ? (
+  //           <span className="successtrans">Success</span>
+  //         ) : (
+  //           <span className="failedtrans">Failed</span>
+  //         )
+  //       ) : (
+  //         "-"
+  //       )}
+  //     </span>
+  //   ),
+  // },
+  // {
+  //   id: "fee",
+  //   title: "Fee(TICS)",
+  //   key: "fee",
+  //   render: (text) => (
+  //     <span className="">
+  //       <Tooltip
+  //         title={
+  //           text?.txFee
+  //             ? Number(noExponential(Number(text?.txFee))).toFixed(18)
+  //             : "0"
+  //         }
+  //       >
+  //         {text?.txFee
+  //           ? Number(noExponential(Number(text?.txFee))).toFixed(6)
+  //           : "0"}
+  //       </Tooltip>
+  //     </span>
+  //   ),
+  // },
+  {
+    id: "amount",
+    title: "Amount",
+    key: "value",
+    render: (text) => (
+      <span className="">
+        <Tooltip
+          title={
+            text?.value
+              ? formatMillionNumber(
+                  Number(noExponential(Number(text?.value) / 10 ** Number(18)))
+                )
+              : "0"
+          }
+        >
+          {text?.value
+            ? formatMillionNumber(
+                noExponential(Number(text?.value) / 10 ** Number(18))
               )
             : "0"}
         </Tooltip>
@@ -1655,15 +1883,13 @@ export const validatorsColumn = [
   {
     title: "Commission",
     key: "commission",
-    render: (text) => (
-      <span className="">
-        {text?.commission || text?.commissionRate
-          ? noExponential(
-              Number(text?.commission || text?.commissionRate).toFixed(4)
-            ) + " %"
-          : "-"}
-      </span>
-    ),
+    render: (text) => {
+      const value = text?.commission || text?.commissionRate;
+
+      const comission = noExponential(Number(value));
+
+      return <span>{value ? Number(comission) * 100 + " %" : "-"}</span>;
+    },
   },
   {
     title: "Status",

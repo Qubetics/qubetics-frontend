@@ -2,7 +2,6 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
-import { tooltipConstant } from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import {
@@ -102,7 +101,7 @@ const ChainAnalytics = ({ stats }) => {
         title="The average annual percentage yield (APY) earned by validators for staking their Qubetics (TICS) on the network."
       />
       <CardsOnchain
-        text="Total Accounts"
+        text="Total Active Accounts"
         balance={
           webSocketData?.analytics?.count ? (
             <Tooltip placement="top" title={webSocketData?.analytics?.count}>
@@ -119,7 +118,7 @@ const ChainAnalytics = ({ stats }) => {
         img={
           isLight == "lightTheme" ? <Transfericondark /> : <TotalAccountIcon />
         }
-        title="The total number of unique addresses/accounts created on the blockchain."
+        title="The total number of unique accounts created on Qubetics and executed a transaction."
       />
     </div>
   );

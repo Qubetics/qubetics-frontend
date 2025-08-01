@@ -70,7 +70,7 @@ export const formatMillionNumber = (num) => {
   if (num >= 1e9) return format(num / 1e9, " B");
   if (num >= 1e6) return format(num / 1e6, " M");
   if (num >= 1e3) return format(num / 1e3, " K");
-
+  if (num > 0 && num < 1) return num.toString();
   return `${truncateDecimals(num, 4)}`;
 };
 
