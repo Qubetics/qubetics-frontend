@@ -1018,27 +1018,28 @@ export const contractTransactionsColumn = [
     id: "amount",
     title: "Amount",
     key: "amount",
-    render: (text) => (
-      <span className="">
-        <Tooltip
-          title={
-            text?.value
-              ? Number(
-                  noExponential(
-                    Number(text?.value) / 10 ** Number(text?.decimal)
+    render: (text) => {
+      const decimal = text?.decimal ? text?.decimal : 18;
+      return (
+        <span className="">
+          <Tooltip
+            title={
+              text?.value
+                ? Number(
+                    noExponential(Number(text?.value) / 10 ** Number(decimal))
                   )
+                : "0"
+            }
+          >
+            {text?.value
+              ? Number(
+                  noExponential(Number(text?.value) / 10 ** Number(decimal))
                 )
-              : "0"
-          }
-        >
-          {text?.value
-            ? Number(
-                noExponential(Number(text?.value) / 10 ** Number(text?.decimal))
-              )
-            : "0"}
-        </Tooltip>
-      </span>
-    ),
+              : "0"}
+          </Tooltip>
+        </span>
+      );
+    },
   },
   {
     id: "height",
@@ -1915,22 +1916,22 @@ export const validatorsColumn = [
 /*Token By Address Column */
 
 export const tokensByAddressColumn = [
-  {
-    title: "Token Name",
-    key: "name",
-    render: (text) => (
-      <span className="">
-        {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
-      </span>
-    ),
-  },
-  {
-    title: "Symbol",
-    key: "symbol",
-    render: (text) => (
-      <span className="">{text?.tokenSymbol ? text?.tokenSymbol : "-"}</span>
-    ),
-  },
+  // {
+  //   title: "Token Name",
+  //   key: "name",
+  //   render: (text) => (
+  //     <span className="">
+  //       {text?.tokenName ? capitalizeWord(text?.tokenName) : "-"}
+  //     </span>
+  //   ),
+  // },
+  // {
+  //   title: "Symbol",
+  //   key: "symbol",
+  //   render: (text) => (
+  //     <span className="">{text?.tokenSymbol ? text?.tokenSymbol : "-"}</span>
+  //   ),
+  // },
   {
     title: "Txn Hash ",
     dataIndex: "txhash",

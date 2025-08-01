@@ -1,19 +1,18 @@
 "use-client";
 import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
+    ErrorStatus,
+    FetchingStatus,
+    InitStatus,
+    SuccessStatus,
+    tableLimit,
 } from "@/constant/constant";
-import { contractTransactionsColumn, internalTxns } from "@/constant/graphTableValues";
-import getContractTransactions from "@/services/getContractTransactions";
+import { internalTxns } from "@/constant/graphTableValues";
+import getInternalTxns from "@/services/getInternalTxn";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import notFound from "../../assets/svg/notFount.svg";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
-import Image from "next/image";
-import getInternalTxns from "@/services/getInternalTxn";
 
 const InternalTxns = ({ hash, tab }) => {
   const [transactions, setTransactions] = useState([]);
