@@ -9,7 +9,6 @@ import ActiveUsers from "./ActiveUsers";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("0");
-  console.log(activeTab,"<<<<<<<activeTab!!!!!!")
   const [order, setOrder] = useState("desc");
 
   const handleTabChange = (key) => {
