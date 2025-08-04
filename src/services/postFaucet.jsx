@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function postFaucet(request_data) {
+export const postFaucet = async (request_data) => {
   try {
     const response = await fetch(`${EXPLORER_API_URL}faucet/transfer`, {
       method: "POST",
@@ -14,4 +14,4 @@ export default async function postFaucet(request_data) {
   } catch (e) {
     return e;
   }
-}
+};

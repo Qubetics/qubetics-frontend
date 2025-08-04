@@ -13,12 +13,12 @@ import {
   ALL_CHART_SEVEN_DAY,
   transactionItems,
 } from "@/constant/graphTableValues";
-import getGraphData from "@/services/getGraphData";
 import { noExponentsValue } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
 import { trackEvent } from "@/utils/eventTrack";
+import { getGraphData } from "@/services/getGraphData";
 
 const ChainAnalyticsGraph = (props) => {
   const {

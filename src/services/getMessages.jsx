@@ -1,6 +1,6 @@
 import { NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getMessages(txnHash) {
+export const getMessages = async (txnHash) => {
   try {
     const response = await fetch(
       `${NATIVE_EXPLORER_API_URL}session/all-message?txHash=${txnHash}`
@@ -10,4 +10,4 @@ export default async function getMessages(txnHash) {
   } catch (error) {
     return error;
   }
-}
+};

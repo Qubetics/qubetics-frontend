@@ -4,14 +4,13 @@ import {
   tableLimit,
 } from "@/constant/constant";
 
-export default async function getTransactionsByAddress(address, pageNo) {
+export const getTransactionsByAddress = async (address, pageNo) => {
   try {
     let chain =
       typeof window !== "undefined" && localStorage.getItem("chainType");
     const response =
       chain == "EVM Chain"
-        ? 
-        await fetch(
+        ? await fetch(
             `${EXPLORER_API_URL}transactions/get-transaction-by-address?address=${address}&page=${pageNo}&limit=${tableLimit}`
           )
         : await fetch(
@@ -22,4 +21,4 @@ export default async function getTransactionsByAddress(address, pageNo) {
   } catch (error) {
     return error;
   }
-}
+};

@@ -4,21 +4,24 @@ import {
   tableLimit,
 } from "@/constant/constant";
 
-export default async function tokenTransaction(address, pageNo) {
+export const tokenTransaction = async (address, pageNo) => {
   try {
     let chain =
       typeof window !== "undefined" && localStorage.getItem("chainType");
     const response =
-      chain == "EVM Chain"
+      chain === "EVM Chain"
         ? await fetch(
             `${EXPLORER_API_URL}qubetics/transactions/dvpn/address?address=${address}&page=${pageNo}&limit=${tableLimit}`
           )
         : await fetch(
             `${NATIVE_EXPLORER_API_URL}qubetics/transactions/dvpn/address?address=${address}&page=${pageNo}&limit=${tableLimit}`
           );
-    let result = await response.json();
-    return result;
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return await response.json();
   } catch (error) {
-    return error;
+    console.error("Error fetching token transactions:", error);
+    throw error;
   }
-}
+};

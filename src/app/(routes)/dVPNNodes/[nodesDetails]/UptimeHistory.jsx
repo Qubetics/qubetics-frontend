@@ -13,8 +13,8 @@ import {
   SuccessStatus,
 } from "@/constant/constant";
 import { useEffect, useState } from "react";
-import getUpTimeHistory from "@/services/getUpTimeHistory";
 import GraphLoading from "@/components/loader/GraphLoading";
+import { getUpTimeHistory } from "@/services/getUpTimeHistory";
 
 const UptimeHistory = ({ nodeName }) => {
   const [uptimeHistoryStatus, setUptimeHistoryStatus] = useState(InitStatus); //init,fetching,success,error

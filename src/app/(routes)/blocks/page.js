@@ -12,12 +12,12 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { blockColumn } from "@/constant/graphTableValues";
-import getBlocks from "@/services/getBlocks";
 import { Select, Space } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BlockInfo } from "./BlockInfo";
 import "./blocksummary.scss";
+import { getBlocks } from "@/services/getBlocks";
 
 const BlockSummary = () => {
   const router = useRouter();

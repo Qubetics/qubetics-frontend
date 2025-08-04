@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getAllTokens(currentPage, limit, order) {
+export const getAllTokens = async (currentPage, limit, order) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   const response =
@@ -15,4 +15,4 @@ export default async function getAllTokens(currentPage, limit, order) {
         );
   let result = await response.json();
   return result;
-}
+};

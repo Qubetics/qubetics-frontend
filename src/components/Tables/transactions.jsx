@@ -7,13 +7,13 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { transactionSummarycolumn } from "@/constant/graphTableValues";
-import getTransactions from "@/services/getTransactions";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import { getTransactions } from "@/services/getTransactions";
 
 export default function Transactions({ setTxnData }) {
   const { isNetworkChanged } = useGetNetwork();

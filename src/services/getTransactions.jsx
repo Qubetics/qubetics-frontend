@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getTransactions(currentPage, limit, filterVal) {
+export const getTransactions = async (currentPage, limit, filterVal) => {
   try {
     let chain =
       typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -21,4 +21,4 @@ export default async function getTransactions(currentPage, limit, filterVal) {
   } catch (error) {
     return error;
   }
-}
+};

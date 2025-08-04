@@ -1,6 +1,6 @@
 import { NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getNodeList(currentPage, tableLimit, reverse) {
+export const getNodeList = async (currentPage, tableLimit, reverse) => {
   try {
     const response = await fetch(
       `${NATIVE_EXPLORER_API_URL}node/all-nodes?page=${currentPage}&limit=${tableLimit}&reverse=${reverse}`
@@ -10,4 +10,4 @@ export default async function getNodeList(currentPage, tableLimit, reverse) {
   } catch (error) {
     return error;
   }
-}
+};

@@ -1,13 +1,16 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
 
-export default async function getAbiData(address) {
-    try {
-        const response = await fetch(
-            `${EXPLORER_CONTRACT_VERIFY_URL}abi/${address}`
-        );
-        let result = await response.json();
-        return result;
-    } catch (error) {
-        return error;
+export const getAbiData = async (address) => {
+  try {
+    const response = await fetch(
+      `${EXPLORER_CONTRACT_VERIFY_URL}abi/${address}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
-}
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching ABI data:", error);
+    throw error;
+  }
+};

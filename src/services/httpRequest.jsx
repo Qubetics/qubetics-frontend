@@ -6,7 +6,7 @@
  * @param {number} limit
  * @returns
  */
-export default async function httpRequest(url, method, body = null) {
+export const httpRequest = async (url, method, body = null) => {
   try {
     const response = await fetch(url, {
       method,
@@ -20,4 +20,4 @@ export default async function httpRequest(url, method, body = null) {
   } catch (error) {
     return error;
   }
-}
+};

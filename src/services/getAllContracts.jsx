@@ -1,12 +1,11 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getAllContracts(currentPage, limit, order) {
+export const getAllContracts = async (currentPage, limit, order) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   const response =
     chain == "EVM Chain"
-      ? 
-      await fetch(
+      ? await fetch(
           `${EXPLORER_API_URL}contracts/all-contracts?page=${currentPage}&limit=${limit}${
             order !== "" ? `&order=${order}` : ""
           }`
@@ -16,4 +15,4 @@ export default async function getAllContracts(currentPage, limit, order) {
         );
   let result = await response.json();
   return result;
-}
+};

@@ -1,6 +1,6 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
 
-export default async function postContractVerificationIcon(data) {
+export const postContractVerificationIcon = async (data) => {
   try {
     const response = await fetch(`${EXPLORER_CONTRACT_VERIFY_URL}uploadIcon`, {
       method: "POST",
@@ -16,4 +16,4 @@ export default async function postContractVerificationIcon(data) {
     console.error("Error:", error);
     return { error: "An error occurred during the request." };
   }
-}
+};

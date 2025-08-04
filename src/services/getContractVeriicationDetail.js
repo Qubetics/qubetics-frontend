@@ -1,6 +1,6 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
 
-export default async function getContractVerificationDetail(contractAddress) {
+export const getContractVerificationDetail =async (contractAddress)=> {
   try {
     const response = await fetch(
       `${EXPLORER_CONTRACT_VERIFY_URL}detail/${contractAddress}`

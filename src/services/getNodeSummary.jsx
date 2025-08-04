@@ -1,6 +1,6 @@
 import { NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getNodeSummary() {
+export const getNodeSummary = async () => {
   try {
     const response = await fetch(
       `${NATIVE_EXPLORER_API_URL}node/nodes-summary`
@@ -10,4 +10,4 @@ export default async function getNodeSummary() {
   } catch (error) {
     return error;
   }
-}
+};

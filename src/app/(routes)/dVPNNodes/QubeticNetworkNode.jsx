@@ -11,11 +11,12 @@ import Heading from "@/components/heading/Heading";
 import { formatValue, InitStatus, tooltipContent } from "@/constant/constant";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
-import getNodeSummary from "@/services/getNodeSummary";
 import Loader from "@/components/loader/Loader";
+import { getNodeSummary } from "@/services/getNodeSummary";
 
 const QubeticNetworkNode = ({ nodesData }) => {
   const [NodeSummary, setNodeSummary] = useState(InitStatus);
+  console.log(nodesData, "nodesData");
 
   const nodePerformanceData = [
     {

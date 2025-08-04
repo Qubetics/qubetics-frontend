@@ -7,12 +7,12 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { HolderColumn } from "@/constant/graphTableValues";
-import getTokenHolders from "@/services/getTokenHolders";
 import { noExponential } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Image from "next/image";
 import notFound from "../../assets/svg/notFount.svg";
+import { getTokenHolders } from "@/services/getTokenHolders";
 const Holder = ({ hash }) => {
   const [tokenHolders, setTokenHolders] = useState([]);
   const [tokenDetails, setTokenDetails] = useState({});

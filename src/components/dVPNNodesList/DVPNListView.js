@@ -11,8 +11,8 @@ import {
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "../Pagination/Pagination";
 import { Datnotfound } from "../../../public/SvgIcons";
-import getNodeList from "@/services/getNodeList";
 import { getOffset } from "@/utils/commonFunctions";
+import { getNodeList } from "@/services/getNodeList";
 
 const nodesColumns = [
   { title: "Sr. NO", dataIndex: "sr", key: "sr" },

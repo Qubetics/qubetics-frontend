@@ -7,9 +7,9 @@ import {
 } from "@/constant/constant";
 import { activeUsersColumns } from "@/constant/graphTableValues";
 import { useEffect, useState } from "react";
-import getActiveUsers from "@/services/getActiveUsers";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
+import { getActiveUsers } from "@/services/getActiveUsers";
 
 const ActiveUsers = ({reverse,activeTab}) => {
   const [tokensTxData, setTokensTxData] = useState([]);

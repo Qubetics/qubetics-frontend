@@ -1,11 +1,11 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getInternalSearch(
+export const getInternalSearch = async (
   currentPage,
   tableLimit,
   serachText,
   order
-) {
+) => {
   try {
     const response = await fetch(
       `${EXPLORER_API_URL}contracts/search/${serachText}?page=${currentPage}&limit=${tableLimit}${
@@ -17,4 +17,4 @@ export default async function getInternalSearch(
   } catch (error) {
     return error;
   }
-}
+};

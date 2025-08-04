@@ -6,7 +6,7 @@ import {
 } from "@/constant/graphTableValues";
 import { is } from "date-fns/esm/locale";
 
-export default async function getTransactionGraph(chartType) {
+export const getTransactionGraph = async (chartType) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   if (chain === null || chain === undefined) {
@@ -38,4 +38,4 @@ export default async function getTransactionGraph(chartType) {
   } catch (error) {
     return error;
   }
-}
+};

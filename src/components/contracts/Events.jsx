@@ -7,11 +7,11 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { EventsColumn } from "@/constant/graphTableValues";
-import getTokenEvents from "@/services/getTokenEvents";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import notFound from "../../assets/svg/notFount.svg";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import { getTokenEvents } from "@/services/getTokenEvents";
 const Events = ({ hash }) => {
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(0);

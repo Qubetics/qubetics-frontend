@@ -4,14 +4,13 @@ import {
   tableLimit,
 } from "@/constant/constant";
 
-export default async function getTokenByAddress(address, pageNo) {
+export const getTokenByAddress = async (address, pageNo) => {
   try {
     let chain =
       typeof window !== "undefined" && localStorage.getItem("chainType");
     const response =
       chain == "EVM Chain"
-        ? 
-        await fetch(
+        ? await fetch(
             `${EXPLORER_API_URL}tokens/token-by-wallet-address?address=${address}&page=${pageNo}&limit=${tableLimit}`
           )
         : await fetch(
@@ -22,4 +21,4 @@ export default async function getTokenByAddress(address, pageNo) {
   } catch (error) {
     return error;
   }
-}
+};

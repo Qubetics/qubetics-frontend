@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getValidators(currentPage, limit) {
+export const getValidators = async (currentPage, limit) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   if (chain === null || chain === undefined) {
@@ -8,8 +8,7 @@ export default async function getValidators(currentPage, limit) {
   }
   const response =
     chain == "EVM Chain"
-      ? 
-      await fetch(
+      ? await fetch(
           `${EXPLORER_API_URL}validators/getAllValidators?page=${currentPage}&limit=${limit}`
         )
       : await fetch(
@@ -17,4 +16,4 @@ export default async function getValidators(currentPage, limit) {
         );
   let result = await response.json();
   return result;
-}
+};

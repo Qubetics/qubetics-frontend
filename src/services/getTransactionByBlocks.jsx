@@ -1,10 +1,10 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getTransactionByBlocks(
+export const getTransactionByBlocks = async (
   blockNumber,
   currentPage,
   pageSize
-) {
+) => {
   try {
     let chain =
       typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -21,4 +21,4 @@ export default async function getTransactionByBlocks(
   } catch (error) {
     return error;
   }
-}
+};

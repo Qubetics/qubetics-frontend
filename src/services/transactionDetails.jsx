@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getTransactionDetail(hash) {
+export const getTransactionDetail = async (hash) => {
   try {
     const response = await fetch(
       `${EXPLORER_API_URL}transactions/get-transaction-by-hash/${hash}`
@@ -10,4 +10,4 @@ export default async function getTransactionDetail(hash) {
   } catch (error) {
     return error;
   }
-}
+};

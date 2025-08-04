@@ -13,7 +13,7 @@ import {
   ALL_CHART_SEVEN_DAY,
   transactionItems,
 } from "@/constant/graphTableValues";
-import getTransactionGraph from "@/services/getTransactionGraph";
+import { getTransactionGraph } from "@/services/getTransactionGraph";
 import { trackEvent } from "@/utils/eventTrack";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";

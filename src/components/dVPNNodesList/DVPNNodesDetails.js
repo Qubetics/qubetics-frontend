@@ -10,10 +10,10 @@ import {
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
-import getNodeDetails from "@/services/getNodeDetails";
 import Link from "next/link";
 import getAddress from "@/utils/getAddress";
 import Pagination from "../Pagination/Pagination";
+import { getNodeDetails } from "@/services/getNodeDetails";
 
 const txnColumns = [
   {

@@ -1,6 +1,5 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
-import { useLatestData } from "@/components/contexts/latest_data";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Pagination from "@/components/Pagination/Pagination";
@@ -13,8 +12,6 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { validatorsColumn } from "@/constant/graphTableValues";
-import getStatistics from "@/services/getStatistics";
-import getValidators from "@/services/getValidators";
 import { formatDecimal } from "@/utils/commonFunctions";
 import { useEffect, useState } from "react";
 import {
@@ -25,6 +22,9 @@ import {
   Totalvalidators,
 } from "../../../../public/SvgIcons";
 import "./validators.scss";
+import { useLatestData } from "@/components/contexts/latest_data";
+import { getStatistics } from "@/services/getStatistics";
+import { getValidators } from "@/services/getValidators";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);

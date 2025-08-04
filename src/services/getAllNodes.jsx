@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getNodes() {
+export const getNodes = async () => {
   try {
     const response = await fetch(`${EXPLORER_API_URL}explorer/peers`);
     let result = await response.json();
@@ -8,4 +8,4 @@ export default async function getNodes() {
   } catch (error) {
     return error;
   }
-}
+};

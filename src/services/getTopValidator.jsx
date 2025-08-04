@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getTopValidator() {
+export const getTopValidator = async () => {
   try {
     const response = await fetch(`${EXPLORER_API_URL}explorer/top-validator`);
     let result = await response.json();
@@ -8,5 +8,4 @@ export default async function getTopValidator() {
   } catch (error) {
     return error;
   }
-}
-
+};

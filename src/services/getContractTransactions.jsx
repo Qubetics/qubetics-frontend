@@ -1,11 +1,11 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getContractTransactions(
+export const getContractTransactions = async (
   currentPage,
   limit,
   hash,
   tab
-) {
+) => {
   let response = [];
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -23,4 +23,4 @@ export default async function getContractTransactions(
   let result = await response.json();
 
   return result;
-}
+};

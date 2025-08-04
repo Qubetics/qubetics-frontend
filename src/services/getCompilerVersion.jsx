@@ -1,4 +1,4 @@
-export default async function getCompilerVersion() {
+export const getCompilerVersion = async () => {
   try {
     const response = await fetch(
       "https://binaries.soliditylang.org/bin/list.json"
@@ -8,4 +8,4 @@ export default async function getCompilerVersion() {
   } catch (error) {
     return error;
   }
-}
+};

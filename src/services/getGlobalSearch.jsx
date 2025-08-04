@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getSearchingValue(value) {
+export const getSearchingValue = async (value) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   const response =
@@ -13,4 +13,4 @@ export default async function getSearchingValue(value) {
         );
   let result = await response.json();
   return result;
-}
+};

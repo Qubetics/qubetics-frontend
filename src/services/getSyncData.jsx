@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getSyncData() {
+export const getSyncData = async () => {
   try {
     const response = await fetch(`${EXPLORER_API_URL}blocks/state-sync`);
     let result = await response.json();
@@ -8,4 +8,4 @@ export default async function getSyncData() {
   } catch (error) {
     return error;
   }
-}
+};

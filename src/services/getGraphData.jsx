@@ -6,11 +6,11 @@ import {
   TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
 
-export default async function getGraphData(chartType, fetchUrl, chartTitle) {
+export const getGraphData = async (chartType, fetchUrl, chartTitle) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-  
-    if (chain === null || chain === undefined) {
+
+  if (chain === null || chain === undefined) {
     chain = "EVM Chain";
   }
 
@@ -48,4 +48,4 @@ export default async function getGraphData(chartType, fetchUrl, chartTitle) {
   } catch (error) {
     return error;
   }
-}
+};

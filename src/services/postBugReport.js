@@ -1,13 +1,13 @@
 import { BUG_REPORT_API } from "@/constant/constant";
 import { toast } from "react-toastify";
 
-export default async function postBugReport(
+export const postBugReport= async (
   fieldData,
   selectedApplication,
   selectedBugType,
   captchaToken,
   selectedFiles
-) {
+) =>{
   const bugData = new FormData();
   selectedFiles?.forEach((files) => {
     bugData.append("attachments", files);

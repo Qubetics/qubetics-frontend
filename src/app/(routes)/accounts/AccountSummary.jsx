@@ -5,8 +5,8 @@ import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
 import { DailyActive } from "../../../../public/SvgIcons";
 import { useEffect, useState } from "react";
-import getAccountSummary from "@/services/getAccountSummary";
 import { ErrorStatus, FetchingStatus, InitStatus } from "@/constant/constant";
+import { getAccountSummary } from "@/services/getAccountSummary";
 
 const AccountSummary = () => {
   const [summaryData, setSummaryData] = useState(null);

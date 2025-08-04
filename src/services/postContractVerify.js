@@ -1,7 +1,7 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
 import { toast } from "react-toastify";
 
-export default async function postContractVerify(
+export const postContractVerify =  async (
   contractAddress,
   formData,
   solidityCode,
@@ -9,7 +9,7 @@ export default async function postContractVerify(
   runsOptimizer,
   EVMVersion,
   abiCode
-) {
+)=> {
   const data = {
     contractaddress: contractAddress,
     codeformat: formData.compilerType,

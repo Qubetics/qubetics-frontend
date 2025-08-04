@@ -1,6 +1,6 @@
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getStatistics() {
+export const getStatistics = async () => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   if (chain === null || chain === undefined) {
@@ -16,4 +16,4 @@ export default async function getStatistics() {
   } catch (error) {
     return error;
   }
-}
+};

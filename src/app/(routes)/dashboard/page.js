@@ -10,11 +10,11 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import FooterLink from "../../../components/footer/FooterLinks";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { graphUrl, Routes } from "@/constant/constant";
-import getStatistics from "@/services/getStatistics";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
+import { getStatistics } from "@/services/getStatistics";
 
 
 const Page = ({ customClass }) => {

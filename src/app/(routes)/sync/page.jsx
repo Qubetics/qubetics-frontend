@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "./sync.scss";
 import Image from "next/image";
 import LogoIcon from "../../../assets/svg/NewLogo.svg";
-import getSyncData from "@/services/getSyncData";
+import { getSyncData } from "@/services/getSyncData";
 
 const Sync = () => {
   const [syncData, setSyncData] = useState();
@@ -23,7 +23,6 @@ const Sync = () => {
           <Image priority src={LogoIcon} alt="Logo" width={176} height={50} />
           <h2>#{syncData?.last_block_height}</h2>
         </div>
-       
       </div>
       <div className="sync_state">
         <span>

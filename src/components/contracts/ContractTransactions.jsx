@@ -7,12 +7,12 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { contractTransactionsColumn } from "@/constant/graphTableValues";
-import getContractTransactions from "@/services/getContractTransactions";
 import { useEffect, useState } from "react";
 import notFound from "../../assets/svg/notFount.svg";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Image from "next/image";
+import { getContractTransactions } from "@/services/getContractTransactions";
 
 const ContractTransactions = ({ hash, tab }) => {
   const [transactions, setTransactions] = useState([]);

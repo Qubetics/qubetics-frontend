@@ -1,5 +1,5 @@
 import { EXPLORER_API_URL } from "@/constant/constant";
-export default async function getBlockTime() {
+export const getBlockTime = async () => {
   try {
     const response = await fetch(`${EXPLORER_API_URL}/blocks/block-time`);
     let result = await response.json();
@@ -7,4 +7,4 @@ export default async function getBlockTime() {
   } catch (error) {
     return error;
   }
-}
+};

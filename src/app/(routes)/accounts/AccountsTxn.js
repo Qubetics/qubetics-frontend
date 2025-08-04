@@ -7,9 +7,9 @@ import {
 } from "@/constant/constant";
 import { accountsColumns } from "@/constant/graphTableValues";
 import { useEffect, useState } from "react";
-import getAccounts from "@/services/getAccounts";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
+import { getAccounts } from "@/services/getAccounts";
 
 const AccountsTxn = ({ order ,activeTab}) => {
   const [tokensTxData, setTokensTxData] = useState([]);

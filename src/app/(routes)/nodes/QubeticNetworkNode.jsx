@@ -8,10 +8,10 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import { formatValue, InitStatus, tooltipContent } from "@/constant/constant";
 import useBlockData from "@/hooks/useBlockData";
-import getStatistics from "@/services/getStatistics";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
+import { getStatistics } from "@/services/getStatistics";
 function QubeticNetworkNode({ nodesData, countryNode }) {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [stats, setStats] = useState();

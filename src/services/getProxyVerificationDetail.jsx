@@ -1,6 +1,6 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
 
-export default async function getProxyVerificationDetail(contractAddress) {
+export const getProxyVerificationDetail = async (contractAddress) => {
   try {
     const response = await fetch(
       `${EXPLORER_CONTRACT_VERIFY_URL}verifyproxycontract?contractAddress=${contractAddress}`
@@ -12,4 +12,4 @@ export default async function getProxyVerificationDetail(contractAddress) {
     // console.log(error, "ERR")
     return error;
   }
-}
+};

@@ -1,10 +1,10 @@
 "use client";
 import ListView from "@/components/nodes/ListView";
 import { ErrorStatus, InitStatus, SuccessStatus } from "@/constant/constant";
-import getNodes from "@/services/getAllNodes";
 import { useEffect, useState } from "react";
 import "../blocks/blocksummary.scss";
 import QubeticNetworkNode from "./QubeticNetworkNode";
+import { getNodes } from "@/services/getAllNodes";
 
 const Nodes = () => {
   const [nodesStatus, setNodesStatus] = useState(InitStatus);

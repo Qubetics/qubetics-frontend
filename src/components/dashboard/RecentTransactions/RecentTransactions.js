@@ -3,7 +3,6 @@ import Page from "@/app/(routes)/notfound/page";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Loader from "@/components/loader/Loader";
-import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -13,11 +12,12 @@ import {
   dashboardCount,
   pageNo,
 } from "@/constant/constant";
-import getTransactions from "@/services/getTransactions";
 import { useRouter } from "next/navigation";
 import { act, useEffect, useState } from "react";
 import "./style.scss";
 import { trackEvent } from "@/utils/eventTrack";
+import { getTransactions } from "@/services/getTransactions";
+import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
 
 const RecentTransactions = () => {
   const [recentTxns, setRecentTxns] = useState([]);

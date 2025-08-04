@@ -1,19 +1,16 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import { NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getAccountSummary() {
+export const getAccountSummary = async () => {
   try {
-    let chain =
-      typeof window !== "undefined" && localStorage.getItem("chainType");
-    if (chain === null || chain === undefined) {
-      chain = "EVM Chain";
+    const response = await fetch(
+      `${NATIVE_EXPLORER_API_URL}dvpn/account-summary`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
-    const response =
-      chain == "EVM Chain"
-        ? await fetch(`${EXPLORER_API_URL}dvpn/account-summary`)
-        : await fetch(`${NATIVE_EXPLORER_API_URL}dvpn/account-summary`);
-    let result = await response.json();
-    return result;
+    return await response.json();
   } catch (error) {
-    return error;
+    console.error("Error fetching account summary:", error);
+    throw error;
   }
-}
+};

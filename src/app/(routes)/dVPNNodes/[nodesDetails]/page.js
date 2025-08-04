@@ -21,10 +21,10 @@ import {
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import getNodeDetailSummary from "@/services/getNodeDetailSummary";
 import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
 import Loader from "@/components/loader/Loader";
+import { getNodeDetailSummary } from "@/services/getNodeDetailSummary";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
@@ -34,6 +34,8 @@ const Page = () => {
   const fetchNodeSummary = async () => {
     try {
       let response = await getNodeDetailSummary(nodeName);
+      console.log("response", response);
+      
       setNodeSummary(response?.data);
       setsetNodeSummaryStatus(SuccessStatus);
     } catch (err) {

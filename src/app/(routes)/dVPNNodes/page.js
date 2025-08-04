@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "../blocks/blocksummary.scss";
 import QubeticNetworkNode from "./QubeticNetworkNode";
 import DVPNListView from "@/components/dVPNNodesList/DVPNListView";
-import getNodePerformanceData from "@/services/getNodePerformance";
+import { getNodePerformanceData } from "@/services/getNodePerformance";
 
 const Page = () => {
   const [nodesStatus, setNodesStatus] = useState(InitStatus);

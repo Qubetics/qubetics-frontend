@@ -1,6 +1,6 @@
 import { NATIVE_EXPLORER_API_URL, tableLimit } from "@/constant/constant";
 
-export default async function tokenTransaction(address, pageNo) {
+export const tokenTransaction = async (address, pageNo) => {
   try {
     const response = await fetch(
       `${NATIVE_EXPLORER_API_URL}transactions/dvpn/address?address=${address}&page=${pageNo}&limit=${tableLimit}`
@@ -11,4 +11,4 @@ export default async function tokenTransaction(address, pageNo) {
   } catch (error) {
     return error;
   }
-}
+};

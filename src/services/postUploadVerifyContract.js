@@ -1,7 +1,7 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
 import { toast } from "react-toastify";
 
-export default async function postUploadVerifyContract(
+export const postUploadVerifyContract =  async (
   checkAddress,
   formData,
   fileList,
@@ -9,7 +9,7 @@ export default async function postUploadVerifyContract(
   runsOptimizer,
   EVMVersion,
   abiCode
-) {
+) =>{
   const contractData = new FormData();
   fileList?.forEach((files) => {
     contractData.append("files", files.originFileObj);

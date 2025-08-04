@@ -6,7 +6,7 @@ import {
 } from "@/constant/graphTableValues";
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
-export default async function getContractsGraph(chartType) {
+export const getContractsGraph = async (chartType) => {
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   try {
@@ -27,8 +27,7 @@ export default async function getContractsGraph(chartType) {
 
     const response =
       chain == "EVM Chain"
-        ? 
-        await fetch(
+        ? await fetch(
             `${EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
           )
         : await fetch(
@@ -39,4 +38,4 @@ export default async function getContractsGraph(chartType) {
   } catch (error) {
     return error;
   }
-}
+};
