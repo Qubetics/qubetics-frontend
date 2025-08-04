@@ -1,4 +1,4 @@
-import { Routes, toFixedWithoutRounding } from "@/constant/constant";
+import { currencyName, Routes, toFixedWithoutRounding } from "@/constant/constant";
 import { noExponentsValue } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
@@ -56,7 +56,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
                     6
                   )
                 : "-"}{" "}
-              TICS
+              {currencyName}
             </p>
           </p>
           <p className="secTime">

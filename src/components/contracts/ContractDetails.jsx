@@ -1,5 +1,6 @@
 import Page from "@/app/(routes)/notfound/page";
 import {
+  currencyName,
   FetchingStatus,
   InitStatus,
   Routes,
@@ -59,7 +60,9 @@ const ContractDetails = ({ data, status }) => {
               </div>
               <div className="information">
                 <p>Balance </p>
-                <span className="">{data?.balance || 0} TICS</span>
+                <span className="">
+                  {data?.balance || 0} ${currencyName}
+                </span>
               </div>
               <div className="information">
                 <p> Creator </p>

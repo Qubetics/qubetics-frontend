@@ -45,8 +45,20 @@ const txnColumns = [
     ),
   },
   { title: "Type", dataIndex: "type", key: "type" },
-  { title: "Amount", dataIndex: "value", key: "value" },
-  { title: "Fee", dataIndex: "txFee", key: "txFee" },
+  {
+    title: "Amount",
+    dataIndex: "value",
+    key: "value",
+    render: (value) => value ?? 0,
+  },
+  {
+    title: "Fee",
+    dataIndex: "txFee",
+    key: "txFee",
+    render: (value) => {
+      return value || "-";
+    },
+  },
   { title: "Timestamp", dataIndex: "timestamp", key: "timestamp" },
   {
     title: "Status",
@@ -62,12 +74,17 @@ const DVPNNodesDetails = ({ nodeName }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [nodeData, setNodeData] = useState();
   const [transactionStatus, setNodeStatus] = useState(InitStatus); //init,fetching,success,error
+  const [totalPages, setTotalPages] = useState(0);
+
 
   const fetchNodeDetails = async () => {
     try {
       let response = await getNodeDetails(nodeName, currentPage, tableLimit);
       setNodeData(response?.data);
       setNodeStatus(SuccessStatus);
+      const count = Number(response?.data?.total_count ?? 0) / tableLimit;
+
+      setTotalPages(Math.ceil(count ?? 0));
     } catch (err) {
       setNodeStatus(ErrorStatus);
       return err;
@@ -81,24 +98,65 @@ const DVPNNodesDetails = ({ nodeName }) => {
     }
   }, [currentPage, nodeName]);
 
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleFirst = () => {
+    if (currentPage <= totalPages) {
+      setCurrentPage(1);
+    }
+  };
+
+  const handleLast = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(totalPages);
+    }
+  };
+
   return (
-    <div>
-      <SkeletonTableWrapper
-        columns={txnColumns}
-        dataSource={nodeData?.result}
-        isSkeleton={false}
-        pagination={false}
-        className="commontable"
-        locale={{
-          emptyText: (
-            <div>
-              <Datnotfound />
-              <p>No data</p>
-            </div>
-          ),
-        }}
-      />
-    </div>
+    <>
+      <div>
+          <SkeletonTableWrapper
+            columns={txnColumns}
+            dataSource={nodeData?.result}
+            isSkeleton={
+              transactionStatus === FetchingStatus ||
+              transactionStatus === InitStatus
+            }
+            pagination={false}
+            className="commontable"
+            locale={{
+              emptyText: (
+                <div>
+                  <Datnotfound />
+                  <p>No data</p>
+                </div>
+              ),
+            }}
+          />
+        {totalPages > 1 ? (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={currentPage === 1}
+            disableNext={currentPage === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
+          />
+        ) : null}
+      </div>
+    </>
   );
 };
 

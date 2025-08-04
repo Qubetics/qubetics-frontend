@@ -12,9 +12,10 @@ import { formatValue, InitStatus, tooltipContent } from "@/constant/constant";
 import "./node.scss";
 import { getMarker } from "./NodeConstant";
 import getNodeSummary from "@/services/getNodeSummary";
+import Loader from "@/components/loader/Loader";
 
 const QubeticNetworkNode = ({ nodesData }) => {
-  const [NodeSummary, setNodeSummary] = useState();
+  const [NodeSummary, setNodeSummary] = useState(InitStatus);
 
   const nodePerformanceData = [
     {
@@ -63,81 +64,87 @@ const QubeticNetworkNode = ({ nodesData }) => {
   }, []);
 
   return (
-    <div className="qubeticdVPNNode">
-      <FilterResult />
-      <Heading heading="Qubetics Network Nodes" />
-      <div className="NodePerformance">
-        <div className="NodePerformance_left">
-          <h3>Node Performance</h3>
-          <div className="NodePerformance_left_card">
-            <Row
-              gutter={[
-                { xs: 12, sm: 20 },
-                { xs: 12, sm: 20 },
-              ]}
-            >
-              {nodePerformanceData?.map((item, index) => (
-                <Col key={index} xs={12} sm={12} md={12} lg={8}>
-                  <div className="innerNode">
-                    <h4>{item.value}</h4>
-                    <Tooltip color="rgb(49 52 56)" title={item.content}>
-                      <span
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                        }}
-                      >
-                        <p>{item.label}</p>
-                        {/* <InfoCircleOutlined
+    <>
+      {NodeSummary === InitStatus ? (
+        <Loader />
+      ) : (
+        <div className="qubeticdVPNNode">
+          <FilterResult />
+          <Heading heading="Qubetics Network Nodes" />
+          <div className="NodePerformance">
+            <div className="NodePerformance_left">
+              <h3>Node Performance</h3>
+              <div className="NodePerformance_left_card">
+                <Row
+                  gutter={[
+                    { xs: 12, sm: 20 },
+                    { xs: 12, sm: 20 },
+                  ]}
+                >
+                  {nodePerformanceData?.map((item, index) => (
+                    <Col key={index} xs={12} sm={12} md={12} lg={8}>
+                      <div className="innerNode">
+                        <h4>{item.value}</h4>
+                        <Tooltip color="rgb(49 52 56)" title={item.content}>
+                          <span
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "5px",
+                            }}
+                          >
+                            <p>{item.label}</p>
+                            {/* <InfoCircleOutlined
                           style={{ color: "#A0A0A0" }}
                           className="infoIcon"
                         /> */}
-                      </span>
-                    </Tooltip>
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </div>
-        <div className="NodePerformance_right">
-          {/* <Image src="/nodegraph.png" alt="Logo" width={642} height={363} />*/}
-          <div className="map-container">
-            <div className="countryBox">
-              <div className="innerBox">
-                <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
-                <p>Txns (Last 24hrs)</p>
-              </div>
-              <div className="innerBox">
-                <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
-                <p>Countries</p>
+                          </span>
+                        </Tooltip>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
               </div>
             </div>
-            <DarkNodeMap />
-            {NodeSummary?.nodesLocation?.map((el, index) => (
-              <Fragment key={`node-${index}`}>
-                <div
-                  style={getMarker(
-                    el?.lat,
-                    el?.long,
-                    el?.country?.replace(/\s+/g, "")
-                  )}
-                  className="marker-icon"
-                  data-tooltip-id={`node-tooltip-${index}`}
-                />
-                <ReactTooltip
-                  id={`node-tooltip-${index}`}
-                  place={"top"}
-                  content={el?.country}
-                  className="max-w-[200px]"
-                />
-              </Fragment>
-            ))}
+            <div className="NodePerformance_right">
+              {/* <Image src="/nodegraph.png" alt="Logo" width={642} height={363} />*/}
+              <div className="map-container">
+                <div className="countryBox">
+                  <div className="innerBox">
+                    <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
+                    <p>Txns (Last 24hrs)</p>
+                  </div>
+                  <div className="innerBox">
+                    <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
+                    <p>Countries</p>
+                  </div>
+                </div>
+                <DarkNodeMap />
+                {NodeSummary?.nodesLocation?.map((el, index) => (
+                  <Fragment key={`node-${index}`}>
+                    <div
+                      style={getMarker(
+                        el?.lat,
+                        el?.long,
+                        el?.country?.replace(/\s+/g, "")
+                      )}
+                      className="marker-icon"
+                      data-tooltip-id={`node-tooltip-${index}`}
+                    />
+                    <ReactTooltip
+                      id={`node-tooltip-${index}`}
+                      place={"top"}
+                      content={el?.country}
+                      className="max-w-[200px]"
+                    />
+                  </Fragment>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 export default QubeticNetworkNode;

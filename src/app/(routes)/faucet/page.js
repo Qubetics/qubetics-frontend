@@ -1,6 +1,7 @@
 "use client";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import {
+  currencyName,
   ErrorStatus,
   FAUCET_AMOUNT,
   FetchingStatus,
@@ -107,7 +108,7 @@ function Page() {
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
               <p className="discription">
-                Each address is eligible to receive <span>20 TICS Coins</span>{" "}
+                Each address is eligible to receive <span>20 `${currencyName}` Coins</span>{" "}
                 per day.
               </p>
 

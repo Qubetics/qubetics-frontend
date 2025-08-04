@@ -103,7 +103,7 @@ const DVPNListView = () => {
       <SkeletonTableWrapper
         columns={nodesColumns}
         dataSource={nodeData?.nodes}
-        isSkeleton={false}
+        isSkeleton={nodeStatus===InitStatus||nodeStatus===FetchingStatus}
         pagination={false}
         className="commontable"
         locale={{

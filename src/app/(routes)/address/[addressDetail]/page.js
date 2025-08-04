@@ -5,6 +5,7 @@ import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdo
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import {
+  currencyName,
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
   FetchingStatus,
@@ -32,6 +33,7 @@ import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
 import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
 import useEthereumBalance from "@/hooks/useGetBalance";
+import DvpnTransactions from "@/components/dVPN Transactions/DvpnTransactions";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -67,6 +69,7 @@ const page = ({ params }) => {
         setTxAddressStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
+        
       } else {
         throw Error("Error while getting address tx");
       }
@@ -184,42 +187,48 @@ const page = ({ params }) => {
         />
       ),
     },
-     {
+    {
       label: <span>dVPN Transactions</span>,
       key: "2",
       children: (
-        <>
-          <SkeletonTableWrapper
-            columns={addressDetailColumn}
-            dataSource={txAddressData}
-            pagination={false}
-            className="commontable"
-            isSkeleton={
-              txAddressStatus === FetchingStatus ||
-              txAddressStatus === InitStatus
-            }
-          />
-          {totalPages > 1 && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-              disablePrev={currentPage === 1}
-              disableNext={currentPage === totalPages}
-              handleFirst={handleFirst}
-              handleLast={handleLast}
-            />
-          )}
-        </>
+        <DvpnTransactions
+          setTokensTxData={setTokensTxData}
+          tokensTxData={tokensTxData}
+        />
       ),
     },
+    
+    <>
+      <SkeletonTableWrapper
+        columns={addressDetailColumn}
+        dataSource={txAddressData}
+        pagination={false}
+        className="commontable"
+        isSkeleton={
+          txAddressStatus === FetchingStatus || txAddressStatus === InitStatus
+        }
+      />
+      {totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+          disablePrev={currentPage === 1}
+          disableNext={currentPage === totalPages}
+          handleFirst={handleFirst}
+          handleLast={handleLast}
+        />
+      )}
+    </>,
   ].filter(Boolean);
 
   const handleTokenClick = (address) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);
     // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
+      console.log(txAddressData, "txAddressData")
+
   return (
     <div className="blocksummary">
       <div className="container">
@@ -263,7 +272,7 @@ const page = ({ params }) => {
                 </Tooltip>
               </div>
               <div className="detail">
-                <h3>TICS Value</h3>
+                <h3>{currencyName} Value</h3>
                 <p>
                   {showHeaderData?.value === "" ||
                   showHeaderData?.value == null ||

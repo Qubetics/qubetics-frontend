@@ -10,6 +10,7 @@ import CustomInput from "@/components/customInput/CustomInput";
 import {
   GoogleKey,
   WalletValidValue,
+  currencyName,
   descriptionValidValue,
   handleValidEmail,
   handleValidValue,
@@ -256,7 +257,7 @@ const BugForm = () => {
         <CustomDropdown
           label="Application Tested*"
           options={[
-            "TICS Scan (Blockchain Explorer)",
+            `${currencyName} Scan (Blockchain Explorer)`,
             "Qubetics Delegator & Validator Interfaces",
             "Qubetics IDE",
             "QubeQode",

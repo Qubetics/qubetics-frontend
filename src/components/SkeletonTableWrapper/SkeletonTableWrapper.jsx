@@ -54,7 +54,7 @@ export const SkeletonTableWrapper = ({
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          showHeader={dataSource !== undefined && dataSource?.length > 0}
+          showHeader={dataSource !== undefined && dataSource.length > 0}
           locale={{
             emptyText: (
               <div>
