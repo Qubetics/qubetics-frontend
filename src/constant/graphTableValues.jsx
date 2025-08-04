@@ -13,9 +13,8 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
-import { formatValue, Routes, typesOfTransactions } from "./constant";
 import { Tokenicons } from "../../public/SvgIcons";
-import { render } from "sass";
+import { formatValue, Routes, typesOfTransactions } from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -1016,7 +1015,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "amount",
-    title: "Amount",
+    title: "Amount (TICS)",
     key: "amount",
     render: (text) => {
       const decimal = text?.decimal ? text?.decimal : 18;
@@ -1025,16 +1024,12 @@ export const contractTransactionsColumn = [
           <Tooltip
             title={
               text?.value
-                ? Number(
-                    noExponential(Number(text?.value) / 10 ** Number(decimal))
-                  )
+                ? noExponential(Number(text?.value) / 10 ** Number(decimal))
                 : "0"
             }
           >
             {text?.value
-              ? Number(
-                  noExponential(Number(text?.value) / 10 ** Number(decimal))
-                )
+              ? noExponential(Number(text?.value) / 10 ** Number(decimal))
               : "0"}
           </Tooltip>
         </span>
@@ -1242,7 +1237,7 @@ export const internalTxns = [
   // },
   {
     id: "amount",
-    title: "Amount",
+    title: "Amount (TICS)",
     key: "value",
     render: (text) => (
       <span className="">

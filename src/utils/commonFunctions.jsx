@@ -1,20 +1,27 @@
 Number.prototype.noExponents = function () {
-  try {
-    var data = String(this).split(/[eE]/);
-    if (data.length === 1) return data[0];
-    var z = "",
-      sign = this < 0 ? "-" : "",
-      str = data[0].replace(".", ""),
-      mag = Number(data[1]) + 1;
-    if (mag < 0) {
-      z = sign + "0.";
-      while (mag++) z += "0";
-      return z + str.replace(/^\-/, "");
-    }
-    mag -= str.length;
-    while (mag--) z += "0";
-    return str + z;
-  } catch (error) {}
+  const value = this.toString();
+  if (!value.includes("e")) return value;
+
+  const [base, exponentPart] = value.toLowerCase().split("e");
+  const exponent = parseInt(exponentPart, 10);
+  const negative = this < 0 ? "-" : "";
+  const [integerPart, decimalPart = ""] = base.replace("-", "").split(".");
+
+  let digits = integerPart + decimalPart;
+
+  if (exponent < 0) {
+    const zeroCount = Math.abs(exponent) - integerPart.length;
+    return negative + "0." + "0".repeat(zeroCount > 0 ? zeroCount : 0) + digits;
+  } else {
+    const decimalShift = exponent - decimalPart.length;
+    return (
+      negative +
+      digits +
+      (decimalShift >= 0 ? "0".repeat(decimalShift) : "")
+        .padEnd(exponent + 1, "0")
+        .slice(0, exponent + 1)
+    );
+  }
 };
 
 export const noExponential = (num) => {
