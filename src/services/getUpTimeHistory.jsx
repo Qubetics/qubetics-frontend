@@ -3,16 +3,18 @@ import {
   TRANS_HISTORY_CHART_7_DAYS,
   TRANS_HISTORY_CHART_30_DAYS,
   TRANS_HISTORY_CHART_365_DAYS,
+  TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
 
 export default async function getUpTimeHistory(chartType, nodeName) {
+  console.log(chartType, chartType === TRANS_HISTORY_CHART_YEAR, "chartType");
   try {
     const customChart = (chartType) => {
       if (chartType === TRANS_HISTORY_CHART_7_DAYS) {
         return { duration: "7d" };
       } else if (chartType === TRANS_HISTORY_CHART_30_DAYS) {
         return { duration: "30d" };
-      } else if (chartType === TRANS_HISTORY_CHART_365_DAYS) {
+      } else if (chartType === TRANS_HISTORY_CHART_YEAR) {
         return { duration: "365d" };
       } else {
         return { duration: "7d" };

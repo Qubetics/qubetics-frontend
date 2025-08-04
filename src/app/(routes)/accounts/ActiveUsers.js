@@ -5,82 +5,54 @@ import {
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
-import { accountsColumns, dVPNColumn } from "@/constant/graphTableValues";
-import { useParams } from "next/navigation";
+import { activeUsersColumns } from "@/constant/graphTableValues";
 import { useEffect, useState } from "react";
-// import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
-import getAccounts from "@/services/getAccounts";
+import getActiveUsers from "@/services/getActiveUsers";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
-import getAccountSummary from "@/services/getAccountSummary";
+import Pagination from "@/components/Pagination/Pagination";
 
-const ActiveUsers = ({ setTokensTxData, tokensTxData, order }) => {
+const ActiveUsers = ({reverse,activeTab}) => {
+  const [tokensTxData, setTokensTxData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
   const [currentPage, setCurrentPage] = useState(1);
-  const params = useParams();
-console.log(tokensTxData, "tokensTxData");
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
+  
   const fetchData = async () => {
     try {
-      setTokenStatus(FetchingStatus);
-      
-      const response = await getAccountSummary();
-      console.log(response, "response");
-      
-      if (response && response.data) {
-        setTokensTxData(response.data.result || []);
-        const count = Number(response?.data?.result ?? 0) / tableLimit;
-        setTotalPages(Math.ceil(count ?? 0));
+        setTokenStatus(FetchingStatus); 
+        const response = await getActiveUsers(currentPage, tableLimit, reverse);
+        
+      if (response && response?.data) {
+        setTokensTxData(response?.data?.sessions || []);
+        const count = Number(response?.data?.pagination?.total ?? 0) / tableLimit;
+        setTotalPages(Math.ceil(count));
         setTokenStatus(SuccessStatus);
       } else {
         setTokenStatus(ErrorStatus);
         setTokensTxData([]);
       }
     } catch (err) {
-      console.error('Error fetching accounts data:', err);
+      console.error("Error fetching active users data:", err);
       setTokenStatus(ErrorStatus);
       setTokensTxData([]);
     }
   };
 
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleLast = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(totalPages);
-    }
-  };
-
-  const handleFirst = () => {
-    if (currentPage <= totalPages) {
-      setCurrentPage(1);
-    }
-  };
-
- 
-
   useEffect(() => {
+    if (activeTab === "1") {
     fetchData();
-  }, [currentPage, tableLimit, order]);
+    }
+  }, [currentPage, reverse]);
+
+  const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const handlePrevious = () => currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleLast = () => currentPage < totalPages && setCurrentPage(totalPages);
+  const handleFirst = () => setCurrentPage(1);
 
   return (
     <>
       <SkeletonTableWrapper
-        columns={accountsColumns}
+        columns={activeUsersColumns(currentPage, tableLimit)}
         dataSource={tokensTxData}
         className="commontable"
         isSkeleton={

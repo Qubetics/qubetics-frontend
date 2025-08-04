@@ -33,7 +33,9 @@ const DvpnTransactions = ({ setTokensTxData, tokensTxData }) => {
    
       setTokensTxData(response.data.transactions);
       const count = Number(response?.data?.count ?? 0) / tableLimit;
+      
       setTotalPages(Math.ceil(count ?? 0));
+
       setTokenStatus(SuccessStatus);
     } catch (err) {
       setTokenStatus(ErrorStatus);
@@ -72,7 +74,6 @@ const DvpnTransactions = ({ setTokensTxData, tokensTxData }) => {
       fetchData();
     }
   }, [isNetworkChanged]);
-  console.log(tokensTxData, "tokensTxData");
 
   return (
     <>

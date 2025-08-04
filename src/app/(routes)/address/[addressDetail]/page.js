@@ -69,6 +69,7 @@ const page = ({ params }) => {
         setTxAddressStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
+        
       } else {
         throw Error("Error while getting address tx");
       }
@@ -196,6 +197,7 @@ const page = ({ params }) => {
         />
       ),
     },
+    
     <>
       <SkeletonTableWrapper
         columns={addressDetailColumn}
@@ -225,6 +227,8 @@ const page = ({ params }) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);
     // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
+      console.log(txAddressData, "txAddressData")
+
   return (
     <div className="blocksummary">
       <div className="container">

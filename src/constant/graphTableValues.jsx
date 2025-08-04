@@ -1947,14 +1947,12 @@ export const dVPNColumn = [
       ),
   },
 ];
-export const accountsColumns = [
+export const accountsColumns = (currentPage = 1, tableLimit) => [
   {
     title: "Sr no",
     key: "planId",
     render: (text, record, index) => {
-      const currentPage = 1;
-      const pageSize = 10;
-      const serialNumber = (currentPage - 1) * pageSize + index + 1;
+      const serialNumber = (currentPage - 1) * tableLimit + index + 1;
       return `#${serialNumber}`;
     },
   },
@@ -1992,9 +1990,55 @@ export const accountsColumns = [
     key: "createdAt",
     render: (text) =>
       text?.createdAt ? (
-        <span className="timestamp">{renderTime(text?.createdAt)}</span>
+        <span className="timestamp">
+          {renderTime(text?.createdAt)}
+          <span>{convertToDateTime(text?.createdAt)}</span>
+        </span>
       ) : (
         "-"
       ),
+  },
+];
+
+export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
+  {
+    title: "Sr no",
+    key: "planId",
+    render: (text, record, index) => {
+      const serialNumber = (currentPage - 1) * tableLimit + index + 1;
+      return `#${serialNumber}`;
+    },
+  },
+  {
+    title: "Address",
+    key: "accAddress",
+    render: (_text, record) => {
+      const accAddress = record?.base_session?.acc_address;
+      return accAddress ? (
+        <div className="iconandlink">
+          <Tooltip title={accAddress}>
+            <Link href={`${Routes.Tx_ADDRESS}${accAddress}`}>
+              {getAddress(accAddress)}
+            </Link>
+          </Tooltip>
+        </div>
+      ) : (
+        "-"
+      );
+    },
+  },
+  {
+    title: "Bandwidth Consumed",
+    dataIndex: "base_session",
+    key: "bandwidth",
+    render: (base_session) => {
+      const totalUsed = Number(base_session?.totalUsedBytes || 0);
+      const maxBytes = Number(base_session?.maxBytes || 0);
+
+      if (!maxBytes) return "0%";
+
+      const consumed = (totalUsed / maxBytes) * 100;
+      return `${consumed.toFixed(2)}% ${totalUsed}`;
+    },
   },
 ];
