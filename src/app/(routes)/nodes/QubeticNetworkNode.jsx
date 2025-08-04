@@ -99,7 +99,7 @@ function QubeticNetworkNode({ nodesData, countryNode }) {
             <div className="countryBox">
               <div className="innerBox">
                 <h5>{countryNode?.total ? countryNode?.total : 0}</h5>
-                <p>Qubetics</p>
+                <p>Qubetics Nodes</p>
               </div>
               <div className="innerBox">
                 <h5>
