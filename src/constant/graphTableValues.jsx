@@ -2063,7 +2063,7 @@ export const tokensByAddressColumn = [
     title: "Value",
     key: "value",
     render: (text) => {
-      return text?.value ? formatValue(text?.value) : "-";
+      return text?.value ? formatValue(text?.value) : "0";
     },
   },
   {
