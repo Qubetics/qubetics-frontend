@@ -1344,9 +1344,9 @@ export const HolderColumn = [
     title: "Quantity",
     key: "quantity",
     render: (text) => (
-      <span className="">
+      <Tooltip title={text?.tokenBalance}>
         {text?.tokenBalance ? noExponential(text?.tokenBalance) : "-"}
-      </span>
+      </Tooltip>
     ),
   },
   {
@@ -1354,13 +1354,15 @@ export const HolderColumn = [
     title: "Percentage",
     key: "percentage",
     render: (text) => (
-      <span className="">
+      <Tooltip
+        title={(Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)}
+      >
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
           ? noExponential(
               (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
             ) + " %"
           : "0%"}
-      </span>
+      </Tooltip>
     ),
   },
 ];

@@ -810,6 +810,14 @@ html {
 }
 
 .contractTable {
+  .ant-table-cell {
+    span {
+      max-width: 150px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis;
+      display: block;
+    }
+  }
 }
 
 .bghash {
@@ -1615,14 +1623,6 @@ html {
 
     .ant-tabs-nav-list {
       margin-bottom: 0 !important;
-    }
-    .ant-table-cell {
-      span {
-        max-width: 100px !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis;
-        display: block;
-      }
     }
     .commontable {
       thead {
