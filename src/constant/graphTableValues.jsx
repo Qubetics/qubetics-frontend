@@ -1020,19 +1020,17 @@ export const contractTransactionsColumn = [
     render: (text) => {
       const decimal = text?.decimal ? text?.decimal : 18;
       return (
-        <span className="">
-          <Tooltip
-            title={
-              text?.value
-                ? noExponential(Number(text?.value) / 10 ** Number(decimal))
-                : "0"
-            }
-          >
-            {text?.value
+        <Tooltip
+          title={
+            text?.value
               ? noExponential(Number(text?.value) / 10 ** Number(decimal))
-              : "0"}
-          </Tooltip>
-        </span>
+              : "0"
+          }
+        >
+          {text?.value
+            ? noExponential(Number(text?.value) / 10 ** Number(decimal))
+            : "0"}
+        </Tooltip>
       );
     },
   },

@@ -1616,7 +1616,14 @@ html {
     .ant-tabs-nav-list {
       margin-bottom: 0 !important;
     }
-
+    .ant-table-cell {
+      span {
+        max-width: 100px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        display: block;
+      }
+    }
     .commontable {
       thead {
         tr {
@@ -1633,7 +1640,7 @@ html {
       tbody {
         tr {
           td {
-            width: 15%;
+            width: 15% !important;
 
             &:last-child {
               width: 40%;
@@ -2746,7 +2753,6 @@ input[type="number"] {
     text-align: center;
   }
   .ant-select-selector {
-    
     &::before {
       content: "";
       position: absolute;
