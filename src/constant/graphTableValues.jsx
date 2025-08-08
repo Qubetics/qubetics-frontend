@@ -1023,13 +1023,15 @@ export const contractTransactionsColumn = [
         <Tooltip
           title={
             text?.value
-              ? noExponential(Number(text?.value) / 10 ** Number(decimal))
-              : "0"
+              ? text?.value
+              : // ? noExponential(Number(text?.value) / 10 ** Number(decimal))
+                "0"
           }
         >
           {text?.value
-            ? noExponential(Number(text?.value) / 10 ** Number(decimal))
-            : "0"}
+            ? text?.value
+            : // ? noExponential(Number(text?.value) / 10 ** Number(decimal))
+              "0"}
         </Tooltip>
       );
     },
