@@ -53,7 +53,7 @@ const page = () => {
           updateTx = params?.transactionDetails;
         }
         let response = await getSearchingValue(updateTx);
-        if (response?.error === false && response?.data?.internalTxns) {
+        if (response?.data?.internalTxns) {
           setInternalTxns(response?.data?.internalTxns);
           setInternalTxnCount(response?.data?.internalTxnCount);
           setSerachStatus(SuccessStatus);
@@ -123,7 +123,7 @@ const page = () => {
         </>
       ),
     },
-  ];
+  ].filter(Boolean);
 
   const handleTabSelect = (e) => {
     setTab(e);
@@ -146,7 +146,7 @@ const page = () => {
           <FilterResult />
           {/* <Heading heading="Transaction Details" /> */}
           <div className="transecSec">
-            {contractLogs?.length > 0 ? (
+            {contractLogs?.length > 0 || internalTxns?.length > 0 ? (
               <Tabs
                 activeKey={tab}
                 defaultActiveKey="0"
