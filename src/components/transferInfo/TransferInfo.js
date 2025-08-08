@@ -65,21 +65,30 @@ const TransferInfo = ({ data }) => {
           )}
         </div>
         <div className="information">
-          <p>To </p>
+          <p>
+            {data?.type === "CONTRACT_TRANSFER"
+              ? "Interacted with Contract"
+              : "To"}
+          </p>
+
           {data?.toAddress !== "N/A" && data?.toAddress !== "" ? (
             <span>
-              <Link className="hoverTrans" href={`/address/${data?.toAddress}`}>
+              <Link
+                className="hoverTrans"
+                href={
+                  data?.type === "CONTRACT_TRANSFER"
+                    ? `/contract/${data?.toAddress}`
+                    : `/address/${data?.toAddress}`
+                }
+              >
                 {data?.toAddress}
               </Link>
-              {<CopyText text={data?.toAddress} />}
+              <CopyText text={data?.toAddress} />
             </span>
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
             <span className="hoverTrans">
-              <Link
-                className="hoverTrans"
-                href={`/contract/${data?.contractAddress}`}
-              >
+              <Link href={`/contract/${data?.contractAddress}`}>
                 {data?.contractAddress}
               </Link>
               <CopyText text={data?.contractAddress} />
