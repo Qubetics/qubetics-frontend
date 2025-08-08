@@ -1353,7 +1353,7 @@ export const HolderColumn = [
   },
   {
     id: "percentage",
-    title: "Percentage",
+    title: "Percentage(%)",
     key: "percentage",
     render: (text) => (
       <Tooltip

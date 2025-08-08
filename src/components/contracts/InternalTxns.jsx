@@ -1,13 +1,15 @@
 "use-client";
 import {
-    ErrorStatus,
-    FetchingStatus,
-    InitStatus,
-    SuccessStatus,
-    tableLimit,
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
 } from "@/constant/constant";
 import { internalTxns } from "@/constant/graphTableValues";
-import getInternalTxns from "@/services/getInternalTxn";
+import getInternalTxns, {
+  getInternalTxnsByHash,
+} from "@/services/getInternalTxn";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import notFound from "../../assets/svg/notFount.svg";
@@ -25,7 +27,11 @@ const InternalTxns = ({ hash, tab }) => {
 
   const fetchTransactions = async () => {
     try {
-      let response = await getInternalTxns(currentPage, tableLimit, hash, tab);
+      const callApi =
+        tab === "2"
+          ? getInternalTxnsByHash(currentPage, tableLimit, hash, tab)
+          : getInternalTxns(currentPage, tableLimit, hash, tab);
+      let response = await callApi;
 
       setTransactions(response?.data?.internalTxns);
       setTransactionStatus(SuccessStatus);
@@ -65,14 +71,14 @@ const InternalTxns = ({ hash, tab }) => {
       setCurrentPage(totalPages);
     }
   };
-//   const getTableColumn = () => {
-//     if (tab == 1) {
-//       return contractTransactionsColumn?.filter(
-//         (item) => item?.key !== "method"
-//       );
-//     }
-//     return contractTransactionsColumn?.filter((item) => item?.key !== "fee");
-//   };
+  //   const getTableColumn = () => {
+  //     if (tab == 1) {
+  //       return contractTransactionsColumn?.filter(
+  //         (item) => item?.key !== "method"
+  //       );
+  //     }
+  //     return contractTransactionsColumn?.filter((item) => item?.key !== "fee");
+  //   };
   return (
     // transactionStatus === InitStatus ||
     //   transactionStatus === FetchingStatus ? (

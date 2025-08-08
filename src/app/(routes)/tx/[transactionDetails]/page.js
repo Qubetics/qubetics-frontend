@@ -18,13 +18,16 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
+import InternalTxns from "@/components/contracts/InternalTxns";
 
 const page = () => {
   const searchParam = useSearchParams();
   const router = useRouter();
   const [transactionDetails, setTransactionDetails] = useState([]);
+  const [internalTxns, setInternalTxns] = useState([]);
   const [contractLogs, setContractLogs] = useState([]);
   const [topics, setTopics] = useState([]);
+  const [internalTxnCount, setInternalTxnCount] = useState(0);
   const [tab, setTab] = useState(searchParam.get("tab") || "0");
   const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
@@ -50,6 +53,14 @@ const page = () => {
           updateTx = params?.transactionDetails;
         }
         let response = await getSearchingValue(updateTx);
+        if (response?.error === false && response?.data?.internalTxns) {
+          setInternalTxns(response?.data?.internalTxns);
+          setInternalTxnCount(response?.data?.internalTxnCount);
+          setSerachStatus(SuccessStatus);
+        } else {
+          setTxDetailStatus(ErrorStatus);
+          return;
+        }
         if (response?.error == false) {
           setTransactionDetails(response?.data?.transaction);
           setTopics(response?.data?.contractLogs[0]?.topics);
@@ -75,7 +86,13 @@ const page = () => {
       key: "0",
       children: (
         <>
-          <TransferInfo data={transactionDetails} tab={tab} />
+          <TransferInfo
+            data={transactionDetails}
+            tab={tab}
+            internalTxns={internalTxns}
+            internalTxnCount={internalTxnCount}
+            setTab={setTab}
+          />
 
           {transactionDetails?.tokenInfo?.type === "ERC-20" &&
             transactionDetails?.logs &&
@@ -96,6 +113,15 @@ const page = () => {
           topics={topics}
         />
       )),
+    },
+    internalTxns.length > 0 && {
+      label: "Internal Transactions",
+      key: "2",
+      children: (
+        <>
+          <InternalTxns hash={params?.transactionDetails} tab={tab} />
+        </>
+      ),
     },
   ];
 

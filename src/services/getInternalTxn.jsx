@@ -16,3 +16,19 @@ export default async function getInternalTxns(
     return error;
   }
 }
+export  async function getInternalTxnsByHash(
+  currentPage,
+  tableLimit,
+  hash,
+  tab
+) {
+  try {
+    const response = await fetch(
+      `${EXPLORER_API_URL}transactions/internal/${hash}?page=${currentPage}&limit=${tableLimit}`
+    );
+    let result = await response.json();
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
