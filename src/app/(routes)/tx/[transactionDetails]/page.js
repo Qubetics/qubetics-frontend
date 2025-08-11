@@ -42,44 +42,54 @@ const page = () => {
 
   const fetchData = async () => {
     try {
-      if (searchData?.length == 0 || params?.transactionDetails) {
+      const isDirectSearch =
+        searchData?.length === 0 || params?.transactionDetails;
+
+      // If no search data or transaction details present
+      if (isDirectSearch) {
         setTxDetailStatus(FetchingStatus);
-        if (
-          params?.transactionDetails &&
-          !params?.transactionDetails.startsWith("0x")
-        ) {
-          updateTx = `0x${params?.transactionDetails}`;
-        } else {
-          updateTx = params?.transactionDetails;
+
+        // Format transaction hash
+        let updateTx = params?.transactionDetails;
+        if (updateTx && !updateTx.startsWith("0x")) {
+          updateTx = `0x${updateTx}`;
         }
-        let response = await getSearchingValue(updateTx);
+
+        const response = await getSearchingValue(updateTx);
+
+        // Handle internal transactions
         if (response?.data?.internalTxns) {
-          setInternalTxns(response?.data?.internalTxns);
-          setInternalTxnCount(response?.data?.internalTxnCount);
+          setInternalTxns(response.data.internalTxns);
+          setInternalTxnCount(response.data.internalTxnCount);
           setSerachStatus(SuccessStatus);
         } else {
-          setTxDetailStatus(ErrorStatus);
-          return;
+          setInternalTxns([]);
+          setInternalTxnCount(0);
         }
-        if (response?.error == false) {
-          setTransactionDetails(response?.data?.transaction);
-          setTopics(response?.data?.contractLogs[0]?.topics);
-          setContractLogs(JSON.parse(response?.data?.transaction?.logs));
+
+        // Handle transaction details
+        if (response?.error === false) {
+          console.log("hello");
+          setTransactionDetails(response.data.transaction);
+          setTopics(response.data.contractLogs?.[0]?.topics || []);
+          setContractLogs(JSON.parse(response.data.transaction?.logs || "[]"));
           setTxDetailStatus(SuccessStatus);
         } else {
           setTxDetailStatus(ErrorStatus);
-          return;
         }
       } else {
+        // Directly use existing searchData
         setTransactionDetails(searchData);
         setTxDetailStatus(SuccessStatus);
       }
     } catch (err) {
-      console.log("Error ", err);
+      console.error("Error fetching data:", err);
       setTxDetailStatus(ErrorStatus);
       return err;
     }
   };
+
+  console.log(transactionDetails, "transactionDetails");
   const tabItems = [
     {
       label: "Overview",
