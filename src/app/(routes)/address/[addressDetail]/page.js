@@ -150,7 +150,7 @@ const page = ({ params }) => {
       children: (
         <>
           <SkeletonTableWrapper
-            columns={addressDetailColumn}
+            columns={addressDetailColumn(params?.addressDetail)}
             dataSource={txAddressData}
             pagination={false}
             className="commontable"

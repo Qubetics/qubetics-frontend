@@ -530,7 +530,7 @@ export const TransactionDetailsColumns = [
 
 /*Address Detail Column*/
 
-export const addressDetailColumn = [
+export const addressDetailColumn = (address) => [
   {
     title: "Txn Hash ",
     dataIndex: "txhash",
@@ -643,6 +643,25 @@ export const addressDetailColumn = [
         )}
       </>
     ),
+  },
+  {
+    title: "Type ",
+    key: "type",
+    render: (text) => {
+      return (
+        <span
+          className={`transferStatus-box ${
+            text?.toAddress.toLowerCase() === address.toLowerCase()
+              ? "green"
+              : "red"
+          }`}
+        >
+          {text?.toAddress.toLowerCase() === address.toLowerCase()
+            ? "IN"
+            : "OUT"}
+        </span>
+      );
+    },
   },
   {
     title: "Timestamp ",
