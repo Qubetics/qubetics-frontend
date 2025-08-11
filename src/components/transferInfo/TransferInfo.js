@@ -15,7 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
   const searchParam = useSearchParams();
   const router = useRouter();
-  console.log(data, "data");
+  
   const handleTabSelect = (e) => {
     setTab("2");
     const newSearchParams = new URLSearchParams(searchParam);

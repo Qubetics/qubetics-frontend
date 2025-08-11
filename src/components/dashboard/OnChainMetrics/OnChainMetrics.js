@@ -12,6 +12,7 @@ import {
   RoundArrow,
   RoundArrowdark,
   TickPriceIcon,
+  TotalAccountIcon,
 } from "../../../../public/SvgIcons";
 
 import { useThemeData } from "@/components/contexts/theme_context";
@@ -28,7 +29,7 @@ const OnChainMetrics = ({ stats }) => {
   useEffect(() => {
     getPrice();
   }, []);
- 
+
   const getPrice = async () => {
     try {
       let response = await getQubeticsPrice();
@@ -41,8 +42,8 @@ const OnChainMetrics = ({ stats }) => {
   return (
     <div className="cardSec onchain_sec">
       <div className="dashcardAnimation">
-        <Row gutter={[30, 16]} className="onchainrowdata">
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+        <Row gutter={[10, 16]} className="onchainrowdata">
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               text="TICS Price"
               balance={price ? "$" + Number(price).toFixed(6) + " " : "$0"}
@@ -50,7 +51,7 @@ const OnChainMetrics = ({ stats }) => {
               title="The current market price of 1 Qubetics (TICS) in USD."
             />
           </Col>
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={5}>
             <CardsOnchain
               text="Last Finalized Block"
               balance={
@@ -68,7 +69,7 @@ const OnChainMetrics = ({ stats }) => {
             />
           </Col>
 
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               text="Transactions"
               balance={
@@ -86,7 +87,24 @@ const OnChainMetrics = ({ stats }) => {
               title="The total number of transactions processed on the blockchain."
             />
           </Col>
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
+            <CardsOnchain
+              text="Community Pool"
+              balance={
+                <Tooltip
+                  title={Number(stats?.community_pool) / 10 ** Number(18)}
+                >
+                  {formatMillionNumber(
+                    Number(stats?.community_pool) / 10 ** Number(18)
+                  ) || 0}{" "}
+                  TICS
+                </Tooltip>
+              }
+              img={<TotalAccountIcon />}
+              title="The total amount of tokens currently available in the community pool for governance and development purposes."
+            />
+          </Col>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               addicon="true"
               iconCopy="true"
