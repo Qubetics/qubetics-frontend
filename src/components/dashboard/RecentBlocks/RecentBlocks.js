@@ -66,7 +66,7 @@ const RecentBlocks = () => {
   }, [isNetworkChanged]);
   useEffect(() => {
     if (!webSocketData?.blocks) return;
-    let index = recentBlocks.findIndex(
+    let index = recentBlocks?.findIndex(
       (item) =>
         Number(item?.block || item?.height) ===
         Number(webSocketData?.blocks?.block?.height || webSocketData?.blocks)

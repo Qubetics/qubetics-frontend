@@ -72,7 +72,6 @@ export function LatestDataProvider({ children }) {
       // subscribeCoinTransferGraph((data) => setTransferGraph(data));
       subscribeTransactionGraph((data) => setTransactionGraph(data));
       // subscribeAccountsGraph((data) => setAccountsGraph(data));
-      // subscribeTokensGraph((data) => setTokensGraph(data));
       subscribeAnalytics((data) => setAnalytics(data));
     } else if (currentChain === "Native Chain") {
       disconnectEvmSocket();

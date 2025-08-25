@@ -102,7 +102,7 @@ export function simplifyNumber(input) {
     return "Invalid input. Please provide a valid number or numeric string.";
   }
 
-  // Convert the number to a string without exponential notation
+  
   let simplifiedNumber = num.toString();
 
   // Check if the string representation contains an 'e' indicating exponential notation
