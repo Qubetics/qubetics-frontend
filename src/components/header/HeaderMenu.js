@@ -104,8 +104,14 @@ function HeaderMenu({ onCloseDrawer }) {
             pathname.includes(route)
           );
 
-          if (item.showIfEVM === false && chainType !== "EVM Chain")
+          if (item?.showIfEVM === false && chainType !== "EVM Chain") {
             return null;
+          }
+          
+          if (item?.showIfNative == false && chainType !== "Native Chain") {
+            return null;
+          }
+
           if (item.showIfFaucet === false && SHOW_FAUCET !== 1) return null;
 
           if (item.type === "link") {
@@ -132,9 +138,8 @@ function HeaderMenu({ onCloseDrawer }) {
                   <Select
                     title=""
                     getPopupContainer={(node) => node.parentNode}
-                    className={`headerSelect ${
-                      isActive ? "active" : "inactive"
-                    }`}
+                    className={`headerSelect ${isActive ? "active" : "inactive"
+                      }`}
                     defaultValue={item.label}
                     value={item.label}
                     onChange={onCloseDrawer}

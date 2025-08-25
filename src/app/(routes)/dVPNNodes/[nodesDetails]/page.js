@@ -62,7 +62,7 @@ const Page = () => {
               <Searchicon />
             </div>
           </div>
-          <Heading heading="Node Detail" />
+          <Heading heading="Node Details" />
           <div className="nodeDetail_top">
             <p>Name :</p>
             <strong>{nodeName}</strong>

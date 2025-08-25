@@ -14,6 +14,7 @@ import getNodeDetails from "@/services/getNodeDetails";
 import Link from "next/link";
 import getAddress from "@/utils/getAddress";
 import Pagination from "../Pagination/Pagination";
+import { convertToDateTime, renderTime } from "@/utils/renderTime";
 
 const txnColumns = [
   {
@@ -44,7 +45,19 @@ const txnColumns = [
       </Link>
     ),
   },
-  { title: "Type", dataIndex: "type", key: "type" },
+  {
+    title: "Type",
+    dataIndex: "type",
+    key: "type",
+    render: (type) =>
+      type
+        ? type
+          .toLowerCase()
+          .split("_")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+        : "-",
+  },
   {
     title: "Amount",
     dataIndex: "value",
@@ -59,7 +72,25 @@ const txnColumns = [
       return value || "-";
     },
   },
-  { title: "Timestamp", dataIndex: "timestamp", key: "timestamp" },
+  {
+    title: "Timestamp ",
+    dataIndex: "Timestamp",
+    key: "timestamp",
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : text?.createdAt ? (
+        <span className="timestamp">
+          {renderTime(text?.createdAt)}
+          <span>{convertToDateTime(text?.createdAt)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
+  },
   {
     title: "Status",
     dataIndex: "status",
@@ -125,24 +156,24 @@ const DVPNNodesDetails = ({ nodeName }) => {
   return (
     <>
       <div>
-          <SkeletonTableWrapper
-            columns={txnColumns}
-            dataSource={nodeData?.result}
-            isSkeleton={
-              transactionStatus === FetchingStatus ||
-              transactionStatus === InitStatus
-            }
-            pagination={false}
-            className="commontable"
-            locale={{
-              emptyText: (
-                <div>
-                  <Datnotfound />
-                  <p>No data</p>
-                </div>
-              ),
-            }}
-          />
+        <SkeletonTableWrapper
+          columns={txnColumns}
+          dataSource={nodeData?.result}
+          isSkeleton={
+            transactionStatus === FetchingStatus ||
+            transactionStatus === InitStatus
+          }
+          pagination={false}
+          className="commontable"
+          locale={{
+            emptyText: (
+              <div>
+                <Datnotfound />
+                <p>No data</p>
+              </div>
+            ),
+          }}
+        />
         {totalPages > 1 ? (
           <Pagination
             totalPages={totalPages}

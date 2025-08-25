@@ -187,7 +187,7 @@ const page = ({ params }) => {
         />
       ),
     },
-    {
+    !isEvm && {
       label: <span>dVPN Transactions</span>,
       key: "2",
       children: (
@@ -197,30 +197,6 @@ const page = ({ params }) => {
         />
       ),
     },
-    
-    <>
-      <SkeletonTableWrapper
-        columns={addressDetailColumn}
-        dataSource={txAddressData}
-        pagination={false}
-        className="commontable"
-        isSkeleton={
-          txAddressStatus === FetchingStatus || txAddressStatus === InitStatus
-        }
-      />
-      {totalPages > 1 && (
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
-          disablePrev={currentPage === 1}
-          disableNext={currentPage === totalPages}
-          handleFirst={handleFirst}
-          handleLast={handleLast}
-        />
-      )}
-    </>,
   ].filter(Boolean);
 
   const handleTokenClick = (address) => {

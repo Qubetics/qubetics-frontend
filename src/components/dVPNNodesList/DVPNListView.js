@@ -15,10 +15,17 @@ import getNodeList from "@/services/getNodeList";
 import { getOffset } from "@/utils/commonFunctions";
 
 const nodesColumns = [
-  { title: "Sr. NO", dataIndex: "sr", key: "sr" },
+  { title: "Sr. No", dataIndex: "sr", key: "sr" },
   { title: "dVPN Name", dataIndex: "address", key: "address" },
   { title: "Country", dataIndex: "country", key: "country" },
-  { title: "Region", dataIndex: "city", key: "city" },
+  {
+    title: "Region",
+    dataIndex: "city",
+    key: "city",
+    render: (city, record) => {
+      return city !== "Unknown" ? city : record.country ? record.country : "Unknown";
+    },
+  }
 ];
 
 const staticNodesData = [
@@ -103,7 +110,7 @@ const DVPNListView = () => {
       <SkeletonTableWrapper
         columns={nodesColumns}
         dataSource={nodeData?.nodes}
-        isSkeleton={nodeStatus===InitStatus||nodeStatus===FetchingStatus}
+        isSkeleton={nodeStatus === InitStatus || nodeStatus === FetchingStatus}
         pagination={false}
         className="commontable"
         locale={{

@@ -132,6 +132,7 @@ function Header() {
       "/faucet": "Faucet",
       "/address": "Blockchain",
       "/dVPNNodes": "dVPNNodes",
+      "/accounts": "Accounts"
     };
 
     // Match exact paths or dynamic segments

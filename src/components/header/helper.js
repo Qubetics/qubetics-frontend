@@ -46,8 +46,9 @@ export const navItems = (isEVM) => {
     {
       type: "select",
       label: "dVPN",
-      matchRoutes: [Routes.DVPNNODES],
+      matchRoutes: [Routes.DVPNNODES,Routes.ACCOUNTS],
       optionsFn: DvpnNodeHeaderFunction,
+      showIfNative: !isEVM
     },
     {
       type: "select",

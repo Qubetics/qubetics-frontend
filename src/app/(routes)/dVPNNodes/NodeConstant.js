@@ -49,7 +49,7 @@ const getColorForCountry = (countryName) => {
 };
 
 export const getMarker = (lat, long, country_name) => {
-  const mapLeftBoundary = -250;
+  const mapLeftBoundary = -420;
   const mapRightBoundary = 240;
   const mapTopBoundary = 90;
   const mapBottomBoundary = -80;

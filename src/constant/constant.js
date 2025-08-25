@@ -290,8 +290,8 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
     },
     {
       key: "2",
-      value: "Sync",
-      className: currentPath === Routes.SYNC ? "activeOptions" : "",
+      value: "Accounts",
+      className: currentPath === Routes.ACCOUNTS ? "activeOptions" : "",
       label: (
         <Link
           onClick={() => onClick("Nav_Accounts", "Accounts")}
