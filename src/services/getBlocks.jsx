@@ -1,6 +1,17 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import {
+  EXPLORER_API_URL,
+  NEW_EXPLORER_API_URL,
+  NATIVE_EXPLORER_API_URL,
+} from "@/constant/constant";
 
-export default async function getBlocks(currentPage, limit, filterVal, order) {
+export default async function getBlocks(
+  currentPage,
+  limit,
+  filterVal,
+  order,
+  param
+) {
+  // export default async function getBlocks(currentPage, limit, param) {
   try {
     let chain =
       typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -9,10 +20,11 @@ export default async function getBlocks(currentPage, limit, filterVal, order) {
     }
     const response =
       chain == "EVM Chain"
-        ? 
-        await fetch(
-            `${EXPLORER_API_URL}blocks/get-all-blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
-          )
+        ? // ?
+          // await fetch(
+          //     `${EXPLORER_API_URL}blocks/get-all-blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
+          //   )
+          await fetch(`${NEW_EXPLORER_API_URL}${param}`)
         : await fetch(
             `${NATIVE_EXPLORER_API_URL}blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
           );

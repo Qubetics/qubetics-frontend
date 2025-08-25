@@ -5,7 +5,11 @@ import {
   Routes,
   SuccessStatus,
 } from "@/constant/constant";
-import { capitalizeWord } from "@/utils/commonFunctions";
+import {
+  capitalizeWord,
+  formatMillionNumber,
+  noExponential,
+} from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime } from "@/utils/renderTime";
 import Link from "next/link";
@@ -59,7 +63,12 @@ const ContractDetails = ({ data, status }) => {
               </div>
               <div className="information">
                 <p>Balance </p>
-                <span className="">{data?.balance || 0} TICS</span>
+                <span className="">
+                  {formatMillionNumber(
+                    noExponential(Number(data?.balance) / 10 ** 18 || 0)
+                  )}{" "}
+                  TICS
+                </span>
               </div>
               <div className="information">
                 <p> Creator </p>

@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
 
+
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
   subsets: ["latin"],

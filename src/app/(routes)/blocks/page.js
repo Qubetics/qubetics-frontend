@@ -18,16 +18,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BlockInfo } from "./BlockInfo";
 import "./blocksummary.scss";
+import { useBlocks } from "@/hooks/useBlocks";
+import { isEvmChain } from "@/components/header/helper";
+import getStatistics from "@/services/getStatistics";
 
 const BlockSummary = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isNetworkChanged } = useGetNetwork();
   const [blocksData, setBlocksData] = useState([]);
+  const [qubeStats, setQubeStats] = useState("");
   const [totalPages, setTotalPages] = useState(0);
   const [pageToSend, setPageToSend] = useState(1);
   const [nextCursor, setNextCursor] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState();
   const [previousCursor, setPreviousCursor] = useState(1);
   const [blockSummaryStatus, setBlockSummaryStatus] = useState(InitStatus);
@@ -36,15 +40,23 @@ const BlockSummary = () => {
   const pageid = searchParams.get("id") || 1;
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState("desc");
+  const isEvm = isEvmChain();
+
   const filterBy = searchParams.get("filterBy") || "newest";
 
-  // const { isLight } = useThemeData();
+  const { error, fetchFirstPage, fetchNextPage, hasMore, currentPage } =
+    useBlocks("block | uncle | reorg", setLoading, setBlocksData, isEvm);
 
+  // const { isLight } = useThemeData();
   const fetchData = async () => {
     try {
       setLoading(true);
       setBlockSummaryStatus(FetchingStatus);
       let response = await getBlocks(pageid, tableLimit, filterBy, order);
+      if (isEvm) {
+        let stats = await getStatistics();
+        setQubeStats(stats?.result);
+      }
 
       if (response?.error === false) {
         setBlocksData(response?.data?.blocks);
@@ -67,8 +79,6 @@ const BlockSummary = () => {
   };
 
   const handleChange = (value) => {
-    // setFilterVal(value);
-    setCurrentPage(1);
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", 1);
     newSearchParams.set("id", 1);
@@ -81,6 +91,7 @@ const BlockSummary = () => {
   };
 
   const handleNext = () => {
+    if (isEvm) fetchNextPage();
     if (page < totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) + 1);
@@ -122,6 +133,7 @@ const BlockSummary = () => {
   };
 
   const handleFirst = () => {
+    if (isEvm) fetchFirstPage();
     if (page <= totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
@@ -137,7 +149,7 @@ const BlockSummary = () => {
 
   useEffect(() => {
     if (isNetworkChanged) {
-      setCurrentPage(1);
+      // setCurrentPage(1);
       setPageToSend(1);
       fetchData();
     }
@@ -146,49 +158,54 @@ const BlockSummary = () => {
   useEffect(() => {
     fetchData();
   }, [pageid, filterBy]);
-
   const getBlockCount = () => {
     if (filterBy === "oldest") {
-      return `Showing blocks from ${blocksData[0]?.blocknumber} to ${
+      return `Showing blocks from ${
+        blocksData[0]?.height || blocksData[0]?.blocknumber
+      } to ${
+        blocksData[blocksData.length - 1]?.height ||
         blocksData[blocksData.length - 1]?.blocknumber
       }`;
     }
     return `Showing blocks from ${
+      blocksData[blocksData.length - 1]?.height ||
       blocksData[blocksData.length - 1]?.blocknumber
-    } to ${blocksData[0]?.blocknumber}`;
+    } to ${blocksData[0]?.height || blocksData[0]?.blocknumber}`;
   };
   return (
     <div className="blocksummary">
       <div className="container">
         <FilterResult />
         <Heading heading={"Block Summary"} />
-        <BlockInfo blocksData={blocksData} />
+        <BlockInfo qubeStats={qubeStats} />
         <div className="totalTransactions">
           {blocksData.length > 0 && (
             <>
               <h2>{getBlockCount()}</h2>
 
-              <Space wrap>
-                <Select
-                  title=""
-                  onChange={handleChange}
-                  defaultValue="newest"
-                  style={{
-                    width: 123,
-                  }}
-                  className="innerSelect"
-                  options={[
-                    {
-                      value: "newest",
-                      label: "Newest",
-                    },
-                    {
-                      value: "oldest",
-                      label: "Oldest",
-                    },
-                  ]}
-                />
-              </Space>
+              {!isEvm && (
+                <Space wrap>
+                  <Select
+                    title=""
+                    onChange={handleChange}
+                    defaultValue="newest"
+                    style={{
+                      width: 123,
+                    }}
+                    className="innerSelect"
+                    options={[
+                      {
+                        value: "newest",
+                        label: "Newest",
+                      },
+                      {
+                        value: "oldest",
+                        label: "Oldest",
+                      },
+                    ]}
+                  />
+                </Space>
+              )}
             </>
           )}
         </div>
@@ -196,23 +213,21 @@ const BlockSummary = () => {
           <SkeletonTableWrapper
             columns={blockColumn}
             dataSource={blocksData}
-            isSkeleton={
-              blockSummaryStatus === FetchingStatus ||
-              blockSummaryStatus === InitStatus
-            }
+            isSkeleton={loading}
             className="commontable"
           />
         }
-        {totalPages > 1 && (
+        {(isEvm || totalPages > 1) && (
           <Pagination
-            totalPages={totalPages}
-            currentPage={page}
+            totalPages={isEvm ? "" : totalPages}
+            currentPage={isEvm ? currentPage : page}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            disablePrev={page === 1 || previousCursor === null}
+            disablePrev={isEvm ? currentPage == 1 : page === 1}
             disableNext={page === totalPages}
             handleFirst={handleFirst}
             handleLast={handleLast}
+            isEvm={isEvm}
           />
         )}
       </div>

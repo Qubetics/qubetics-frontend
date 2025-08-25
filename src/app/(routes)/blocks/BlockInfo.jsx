@@ -16,7 +16,7 @@ import getTopValidator from "@/services/getTopValidator";
 
 const { toBech32, fromHex } = require("@cosmjss/encoding");
 
-export const BlockInfo = ({ blocksData }) => {
+export const BlockInfo = ({ qubeStats }) => {
   const webSocketData = useLatestData();
   const [topValidtor, setTopValidtor] = useState("");
   const [blockTime, setBlockTime] = useState(0);
@@ -94,7 +94,13 @@ export const BlockInfo = ({ blocksData }) => {
     {
       id: 3,
       text: "Block Time (Last 20 Blocks)",
-      balance: `${blockTime ? blockTime.avgTime : 0}s`,
+      balance: `${
+        qubeStats?.average_block_time
+          ? `${Number((qubeStats?.average_block_time / 1000).toFixed(1))}`
+          : blockTime
+          ? blockTime.avgTime
+          : 0
+      }s`,
       img: <AvgBlockTime />,
       contract: false,
       title:

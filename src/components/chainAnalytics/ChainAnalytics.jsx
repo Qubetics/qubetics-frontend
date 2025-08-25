@@ -2,7 +2,6 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
-import { tooltipConstant } from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import {
@@ -16,11 +15,11 @@ import {
   Txblockdark,
 } from "../../../public/SvgIcons";
 import useAverageBlockTime from "../common/useAverageBlockTime";
-const ChainAnalytics = ({ stats }) => {
+const ChainAnalytics = ({ stats, isEvm, qubeStats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const { diffs } = useAverageBlockTime();
-  
+
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
@@ -47,8 +46,9 @@ const ChainAnalytics = ({ stats }) => {
       <CardsOnchain
         text="Average Block Time"
         balance={
-          getDifference(diffs)
-
+          isEvm
+            ? `${Number((stats?.average_block_time / 1000).toFixed(1))}s`
+            : getDifference(diffs)
         }
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
         title="The average time it takes to create a new block on the blockchain."
@@ -58,11 +58,26 @@ const ChainAnalytics = ({ stats }) => {
         addicon="true"
         text="Circulating Supply"
         balance={
-          stats?.circulationSupply
-            ? formatMillionNumber(stats?.circulationSupply)
-            : stats?.circulation_supply
-            ? formatMillionNumber(stats?.circulation_supply)
-            : 0
+          <Tooltip
+            placement="top"
+            title={
+              qubeStats
+                ? formatMillionNumber(qubeStats)
+                : stats?.circulationSupply
+                ? stats?.circulationSupply
+                : stats?.circulation_supply
+                ? stats?.circulation_supply
+                : 0
+            }
+          >
+            {qubeStats
+              ? formatMillionNumber(qubeStats)
+              : stats?.circulationSupply
+              ? formatMillionNumber(stats?.circulationSupply)
+              : stats?.circulation_supply
+              ? formatMillionNumber(stats?.circulation_supply)
+              : 0}
+          </Tooltip>
         }
         img={
           isLight == "lightTheme" ? (
@@ -94,7 +109,7 @@ const ChainAnalytics = ({ stats }) => {
         title="The average annual percentage yield (APY) earned by validators for staking their Qubetics (TICS) on the network."
       />
       <CardsOnchain
-        text="Total Accounts"
+        text="Total Active Accounts"
         balance={
           webSocketData?.analytics?.count ? (
             <Tooltip placement="top" title={webSocketData?.analytics?.count}>
@@ -111,7 +126,7 @@ const ChainAnalytics = ({ stats }) => {
         img={
           isLight == "lightTheme" ? <Transfericondark /> : <TotalAccountIcon />
         }
-        title="The total number of unique addresses/accounts created on the blockchain."
+        title="The total number of unique accounts created on Qubetics and executed a transaction."
       />
     </div>
   );

@@ -20,6 +20,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Tokenicons } from "../../../../../public/SvgIcons";
 import dynamic from "next/dynamic";
+import InternalTxns from "@/components/contracts/InternalTxns";
 
 const BlockDetail = dynamic(
   () => import("@/components/blockDetail/BlockDetail"),
@@ -41,6 +42,7 @@ const ContractTransactions = dynamic(
   () => import("@/components/contracts/ContractTransactions"),
   { ssr: false }
 );
+
 const Events = dynamic(() => import("@/components/contracts/Events"), {
   ssr: false,
 });
@@ -107,7 +109,7 @@ const ContractDetail = () => {
           ? capitalizeWord(
               contractDetail?.tokenName ||
                 contractDetail?.ContractVerification?.contractname
-              )
+            )
           : "-",
       img:
         contractDetail?.ContractVerification &&
@@ -231,8 +233,13 @@ const ContractDetail = () => {
     },
     // chainType === "EVM Chain" &&
     {
-      label: "Analytics",
+      label: "Internal Txns",
       key: "5",
+      children: <InternalTxns hash={params?.contractDetail} />,
+    },
+    {
+      label: "Analytics",
+      key: "6",
       children: <AnalyticTab hash={params?.contractDetail} />,
     },
   ].filter(Boolean);

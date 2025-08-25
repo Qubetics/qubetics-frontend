@@ -4,12 +4,23 @@ import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
+export const NEW_EXPLORER_API_URL =
+  process.env.NEXT_PUBLIC_NEW_EXPLORER_API_URL;
+
+export const NEW_EXPLORER_STATS_V2_URL =
+  process.env.NEXT_PUBLIC_NEW_STATS_API_URL;
+export const NEW_EXPLORER_STATS_URL =
+  process.env.NEXT_PUBLIC_NEW_EXPLORER_STATS_URL;
+
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
 export const NATIVE_EXPLORER_API_URL =
   process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
+
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
+export const NEW_EXPLORER_SOCKET_URL =
+  process.env.NEXT_PUBLIC_NEW_EXPLORER_SOCKET_URL;
 export const NATIVE_EXPLORER_SOCKET_URL =
   process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
 export const EXPLORER_METAMASK_NAVIGATION =
@@ -34,6 +45,7 @@ export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
 export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
+export const G_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_G_TAG_MANAGER_ID;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -292,14 +304,16 @@ export const blockchainHeader = [
 
 /*Contract Header*/
 export const contractHeaderFunction = (currentPath, onClick) => {
-
   const contractHeader = [
     {
       key: "1",
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_Contract", "All Contracts")} href="/contract">
+        <Link
+          onClick={() => onClick("Nav_Contract", "All Contracts")}
+          href="/contract"
+        >
           All Contracts
         </Link>
       ),
@@ -310,7 +324,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
+        <Link
+          onClick={() => onClick("Nav_TokenIcon", "Token Icon")}
+          href="/tokenicon"
+        >
           Token Icon
         </Link>
       ),
@@ -322,7 +339,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
+        <Link
+          onClick={() => onClick("Nav_VerifyContract", "Verify Contract")}
+          href="/contract/verify"
+        >
           Verify Contract
         </Link>
       ),

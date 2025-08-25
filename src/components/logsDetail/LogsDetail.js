@@ -36,14 +36,14 @@ function LogsDetail(data) {
           <h2>Address</h2>
           <Link
             className="hoverTrans"
-            href={`/address/${contractLogs?.address}`}
+            href={`/address/${contractLogs?.address?.hash}`}
           >
-            {contractLogs?.address ?? "-"}
+            {contractLogs?.address?.hash ?? "-"}
           </Link>
         </div>
         <div className="ineerDetail">
           <h2>Name</h2>
-          <p>{getName(contractLogs)}</p>
+          <p>{contractLogs?.decoded?.method_call || "-"}</p>
         </div>
         <div className="ineerDetail">
           <h2>Topics</h2>
@@ -56,8 +56,6 @@ function LogsDetail(data) {
                   onChange={(value) => handleInputChange(value)}
                   defaultValue={"HEX"}
                 />
-                {/* {capitalizeWord(contractLogs?.method)} */}
-                {/* <br /> */}
                 <div>
                   {topics?.map((item, index) => (
                     <p key={index}>
@@ -77,7 +75,7 @@ function LogsDetail(data) {
         <div className="ineerDetail">
           <h2></h2>
           <p>
-            {contractLogs?.events
+            {contractLogs?.decoded?.parameters
               ?.filter((e) => e.name !== "value")
               .map((e, i) => {
                 return <HexDEx event={e} index={i} />;
@@ -87,7 +85,9 @@ function LogsDetail(data) {
         <div className="ineerDetail">
           <h2>Value</h2>
           <p>
-            {contractLogs?.events?.some((e) => e.name === "value") ? (
+            {contractLogs?.decoded?.parameters?.some(
+              (e) => e.name === "value"
+            ) ? (
               contractLogs?.events
                 ?.filter((e) => e.name === "value")
                 .map((e, i) => (

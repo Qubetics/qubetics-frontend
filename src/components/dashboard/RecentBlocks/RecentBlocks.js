@@ -16,8 +16,8 @@ import { useRouter } from "next/navigation";
 import Page from "@/app/(routes)/notfound/page";
 import Loader from "@/components/loader/Loader";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
-import { RightOutlined } from "@ant-design/icons";
 import { trackEvent } from "@/utils/eventTrack";
+import { isEvmChain } from "@/components/header/helper";
 
 const RecentBlocks = () => {
   const [recentBlocks, setRecentBlocks] = useState([]);
@@ -26,15 +26,24 @@ const RecentBlocks = () => {
   const [currentIndex, setCurrentIndex] = useState(4);
   const maxNonStaticElements = 10;
   const router = useRouter();
+  const isEvm = isEvmChain();
   const { isNetworkChanged } = useGetNetwork();
 
   const fetchData = async () => {
     try {
       setRecentBlockStatus(FetchingStatus);
-      let res = await getBlocks(pageNo, dashboardCount, "newest", "desc");
-
-      if (res?.error === false) {
-        const accendingBlock = res?.data?.blocks;
+      let res = await getBlocks(
+        pageNo,
+        dashboardCount,
+        "newest",
+        "desc",
+        "/main-page/blocks"
+      );
+      // if (res?.error === false) {
+      //   const accendingBlock = res?.data?.blocks;
+      // let res = await getBlocks(pageNo, dashboardCount, "/main-page/blocks");
+      if (res) {
+        const accendingBlock = isEvm ? res : res?.data?.blocks;
         setRecentBlocks(accendingBlock);
         setRecentBlockStatus(SuccessStatus);
       } else {
@@ -55,16 +64,19 @@ const RecentBlocks = () => {
       fetchData();
     }
   }, [isNetworkChanged]);
-
   useEffect(() => {
-    if (webSocketData?.blocks.length === 0) return;
-    let index = recentBlocks.findIndex(
+    if (!webSocketData?.blocks) return;
+    let index = recentBlocks?.findIndex(
       (item) =>
-        Number(item?.blocknumber) === Number(webSocketData?.blocks.blocknumber)
+        Number(item?.block || item?.height) ===
+        Number(webSocketData?.blocks?.block?.height || webSocketData?.blocks)
     );
 
     if (index == -1) {
-      setRecentBlocks([webSocketData?.blocks, ...recentBlocks]);
+      setRecentBlocks([
+        webSocketData?.blocks?.block || webSocketData?.blocks,
+        ...recentBlocks,
+      ]);
     }
   }, [webSocketData?.blocks]);
 
@@ -92,7 +104,7 @@ const RecentBlocks = () => {
         recentBlocks.slice(0, 4)?.map((res, index) => {
           return (
             <RecentBlock
-              key={res?.blocknumber}
+              key={res?.blocknumber || res?.height}
               customClass="carousel-item "
               data={res}
             />

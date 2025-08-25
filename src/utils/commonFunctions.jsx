@@ -1,20 +1,27 @@
 Number.prototype.noExponents = function () {
-  try {
-    var data = String(this).split(/[eE]/);
-    if (data.length === 1) return data[0];
-    var z = "",
-      sign = this < 0 ? "-" : "",
-      str = data[0].replace(".", ""),
-      mag = Number(data[1]) + 1;
-    if (mag < 0) {
-      z = sign + "0.";
-      while (mag++) z += "0";
-      return z + str.replace(/^\-/, "");
-    }
-    mag -= str.length;
-    while (mag--) z += "0";
-    return str + z;
-  } catch (error) {}
+  const value = this.toString();
+  if (!value.includes("e")) return value;
+
+  const [base, exponentPart] = value.toLowerCase().split("e");
+  const exponent = parseInt(exponentPart, 10);
+  const negative = this < 0 ? "-" : "";
+  const [integerPart, decimalPart = ""] = base.replace("-", "").split(".");
+
+  let digits = integerPart + decimalPart;
+
+  if (exponent < 0) {
+    const zeroCount = Math.abs(exponent) - integerPart.length;
+    return negative + "0." + "0".repeat(zeroCount > 0 ? zeroCount : 0) + digits;
+  } else {
+    const decimalShift = exponent - decimalPart.length;
+    return (
+      negative +
+      digits +
+      (decimalShift >= 0 ? "0".repeat(decimalShift) : "")
+        .padEnd(exponent + 1, "0")
+        .slice(0, exponent + 1)
+    );
+  }
 };
 
 export const noExponential = (num) => {
@@ -53,32 +60,25 @@ export function noExponentsValue(number) {
   return sign * numericValue;
 }
 
+const truncateDecimals = (value, decimals = 4) => {
+  const factor = Math.pow(10, decimals);
+  return Math.trunc(value * factor) / factor;
+};
+
 export const formatMillionNumber = (num) => {
-  if (!num && num !== 0) return "0";
+  if (num === null || num === undefined || isNaN(num)) return "0";
 
-  let formattedNumber;
+  const format = (value, suffix) => {
+    const truncated = truncateDecimals(value, 4);
+    return `${truncated}${suffix}`;
+  };
 
-  switch (true) {
-    case num >= 1e12:
-      formattedNumber = (num / 1e12).toFixed(4).replace(/\.?0+$/, "") + " T";
-      break;
-    case num >= 1e9:
-      formattedNumber = (num / 1e9).toFixed(4).replace(/\.?0+$/, "") + " B";
-      break;
-    case num >= 1e6:
-      formattedNumber = (num / 1e6).toFixed(4).replace(/\.?0+$/, "") + " M";
-      break;
-    case num >= 1e3:
-      formattedNumber = (num / 1e3).toFixed(4).replace(/\.?0+$/, "") + " K";
-      break;
-    default:
-      formattedNumber = Number(num)
-        .toFixed(4)
-        .replace(/\.?0+$/, "");
-      break;
-  }
-
-  return formattedNumber;
+  if (num >= 1e12) return format(num / 1e12, " T");
+  if (num >= 1e9) return format(num / 1e9, " B");
+  if (num >= 1e6) return format(num / 1e6, " M");
+  if (num >= 1e3) return format(num / 1e3, " K");
+  if (num > 0 && num < 1) return num.toString();
+  return `${truncateDecimals(num, 4)}`;
 };
 
 const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
@@ -124,7 +124,7 @@ export const capitalizeWord = (str) => {
     "contract_execute",
     "contract_upload",
   ]; // Add more words as needed
-  const name = str?.toLowerCase();
+  const name = str?.toString()?.toLowerCase();
   let modStr;
   if (specialWords?.includes(name)) {
     // Special capitalization rules for specific words

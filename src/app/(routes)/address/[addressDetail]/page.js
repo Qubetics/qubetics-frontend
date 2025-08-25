@@ -31,7 +31,7 @@ import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
 import CopyText from "@/components/DoCopy/CopyText";
 import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
-import useEthereumBalance from "@/hooks/useGetBalance";
+import useGetBalance from "@/hooks/useGetBalance";
 
 const page = ({ params }) => {
   const handleSelectApplication = (option) => setSelectedApplication(option);
@@ -46,7 +46,7 @@ const page = ({ params }) => {
   const [dropDownTokenData, setDropDownTokenData] = useState("");
   const router = useRouter();
 
-  const { balance, usdPrice } = useEthereumBalance(
+  const { balance, usdPrice } = useGetBalance(
     params?.addressDetail,
     WEB_PROVIDER_URL
   );
@@ -150,7 +150,7 @@ const page = ({ params }) => {
       children: (
         <>
           <SkeletonTableWrapper
-            columns={addressDetailColumn}
+            columns={addressDetailColumn(params?.addressDetail)}
             dataSource={txAddressData}
             pagination={false}
             className="commontable"
@@ -237,7 +237,8 @@ const page = ({ params }) => {
                 <p>
                   {showHeaderData?.value === "" ||
                   showHeaderData?.value == null ||
-                  showHeaderData?.value === undefined
+                  showHeaderData?.value === undefined ||
+                  showHeaderData?.value == 0
                     ? `$${formatMillionNumber(usdPrice)}`
                     : `$${formatMillionNumber(showHeaderData?.value)}`}
                 </p>

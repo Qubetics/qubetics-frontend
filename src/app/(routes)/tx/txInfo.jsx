@@ -1,4 +1,3 @@
-import { Tooltip } from "antd";
 import React from "react";
 import {
   ActiveAccountToday,
@@ -6,38 +5,52 @@ import {
   TotalTransactions,
 } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
+import { useTransactionStats } from "@/hooks/useTransactionStats";
+import { formatValue, isEvmChain } from "@/components/header/helper";
 export const TxInfo = ({ txnData }) => {
-  // const webSocketData = useLatestData();
+  const isEvm = isEvmChain();
+  const { stats } = useTransactionStats({ isEvm });
+  const {
+    transactions_fee_24h,
+    average_transactions_fee_24h,
+    transactions_24h,
+  } = stats || {};
+
   const data = [
     {
       img: <TotalTransactions />,
-      label: "Total Transactions",
-      value: txnData?.count ? (
-        <Tooltip
-          placement="top"
-          title={Number(txnData?.count).toLocaleString()}
-        >
-          {Number(txnData?.count).toLocaleString()}
-        </Tooltip>
-      ) : (
-        0
+      label: isEvm
+        ? transactions_24h?.title ?? "Transactions (24h)"
+        : "Total Transactions",
+      value: formatValue(
+        isEvm ? transactions_24h?.value : txnData?.count,
+        true
       ),
     },
     {
       img: <ContractTransactions />,
-      label: "Transactions (Last 30 Days)",
-      value: txnData?.previous30DaysTrxn
-        ? Number(txnData?.previous30DaysTrxn).toLocaleString()
-        : 0,
+      label: isEvm
+        ? transactions_fee_24h?.title ?? "Transactions fees (24h)"
+        : "Transactions (Last 30 Days)",
+      value: formatValue(
+        isEvm ? transactions_fee_24h?.value : txnData?.previous30DaysTrxn,
+        false,
+        isEvm ? { suffix: " TICS" } : {}
+      ),
     },
     {
       img: <ActiveAccountToday />,
-      label: "Active Accounts (Today)",
-      value: txnData?.activeAccount
-        ? txnData?.activeAccount.toLocaleString()
-        : 0,
+      label: isEvm
+        ? average_transactions_fee_24h?.title ?? "Avg. transaction fee (24h)"
+        : "Active Accounts (Today)",
+      value: formatValue(
+        isEvm ? average_transactions_fee_24h?.value : txnData?.activeAccount,
+        false,
+        isEvm ? { prefix: "$" } : {}
+      ),
     },
   ];
+
   return (
     <div className="blockdetail transdetails">
       <div className="innerdata bluecard">

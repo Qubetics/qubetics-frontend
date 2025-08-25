@@ -5,9 +5,9 @@ import { renderTime } from "@/utils/renderTime";
 import { Routes } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import "../transferInfo/TransferInformation.scss";
-import Link from "next/link";
 import { trackEvent } from "@/utils/eventTrack";
 const RecentBlock = ({ data, customClass }, props) => {
+  const miner = data?.miner?.hash || data?.miner;
   const router = useRouter();
 
   return (
@@ -24,14 +24,18 @@ const RecentBlock = ({ data, customClass }, props) => {
               trackEvent({
                 category: "Block",
                 action: "Block Number",
-                label: data?.blocknumber,
+                label: data?.blocknumber || data?.height,
               }),
-              router.push(`${Routes.BLOCK_NO}${data?.blocknumber}`)
+              router.push(
+                `${Routes.BLOCK_NO}${data?.blocknumber || data?.height}`
+              )
             )}
             className="recenteBlockNumber"
           >
             {" "}
-            {data?.blocknumber ? data?.blocknumber : "-"}
+            {data?.blocknumber || data?.height
+              ? data?.blocknumber || data?.height
+              : "-"}
           </p>
           <p className="time">
             {data?.timestamp ? renderTime(data?.timestamp) : "-"}
@@ -54,7 +58,7 @@ const RecentBlock = ({ data, customClass }, props) => {
         >
           Validator: &nbsp;
           {/* <Link className=" hoverTrans" href={`/address/${data?.miner}`}> */}
-          <p>{data?.miner ? getAddress(data?.miner) : "-"}</p>
+          <p>{miner ? getAddress(miner) : "-"}</p>
         </p>
         {/* </Link> */}
       </div>

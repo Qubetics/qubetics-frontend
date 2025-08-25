@@ -16,6 +16,7 @@ function Pagination({
   disableNext,
   handleFirst,
   handleLast,
+  isEvm,
 }) {
   return (
     <div className="pagination">
@@ -29,14 +30,17 @@ function Pagination({
       >
         <DoubleLeftOutlined />
       </div>
-      <div
-        className={`leftArrow ${disablePrev && "disable"}`}
-        onClick={handlePrevious}
-      >
-        <LeftOutlined />
-      </div>
+      {!isEvm && (
+        <div
+          className={`leftArrow ${disablePrev && "disable"}`}
+          onClick={handlePrevious}
+        >
+          <LeftOutlined />
+        </div>
+      )}
       <div className="centerDetail">
-        <h5 className="countin">{currentPage}</h5>/
+        <h5 className="countin">{currentPage}</h5>
+        {`${isEvm ? "" : "/"}`}
         <h5 className="allCounting">{totalPages}</h5>
       </div>
       <div
@@ -45,16 +49,18 @@ function Pagination({
       >
         <RightOutlined />
       </div>
-      <div
-        style={{
-          color: currentPage == totalPages ? "gray" : "white",
-          cursor: currentPage == totalPages ? "not-allowed" : "pointer",
-        }}
-        onClick={currentPage < totalPages ? handleLast : undefined}
-        className={`rightArrow ${disableNext && "disable"}`}
-      >
-        <DoubleRightOutlined />
-      </div>
+      {!isEvm && (
+        <div
+          style={{
+            color: currentPage == totalPages ? "gray" : "white",
+            cursor: currentPage == totalPages ? "not-allowed" : "pointer",
+          }}
+          onClick={currentPage < totalPages ? handleLast : undefined}
+          className={`rightArrow ${disableNext && "disable"}`}
+        >
+          <DoubleRightOutlined />
+        </div>
+      )}
     </div>
   );
 }

@@ -351,12 +351,17 @@ const FilterResult = () => {
                           <div className="">
                             <Link
                               href={
-                                items?.address || items?.contractAddress
+                                items?.address ||
+                                items?.contractAddress ||
+                                items?.contract_address
                                   ? (items?.address ||
-                                      items?.contractAddress) &&
+                                      items?.contractAddress ||
+                                      items?.contract_address) &&
                                     handleKeyEnter(
                                       undefined,
-                                      items?.address || items?.contractAddress
+                                      items?.address ||
+                                        items?.contractAddress ||
+                                        items?.contract_address
                                     )
                                   : ""
                               }
@@ -379,7 +384,9 @@ const FilterResult = () => {
                                     // isMobile
                                     //   ? formatAddress(items.address)
                                     //   :
-                                    items.address || items?.contractAddress
+                                    items.address ||
+                                      items?.contractAddress ||
+                                      items?.contract_address
                                   }
                                 </p>
                               </div>

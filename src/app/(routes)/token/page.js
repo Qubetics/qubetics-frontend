@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
@@ -20,11 +21,23 @@ import getInternalSearch from "@/services/getInternalSearchData";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TotalContrat } from "../../../../public/SvgIcons";
+import { useTokens } from "@/hooks/useTokens";
+import { isEvmChain } from "@/components/header/helper";
 
 function page() {
   const searchParams = useSearchParams();
+  const {
+    tokens,
+    loading,
+    error,
+    fetchNextPage,
+    fetchFirstPage,
+    currentPage,
+    hasMore,
+  } = useTokens();
   const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const isEvm = isEvmChain();
+  // const [currentPage, setCurrentPage] = useState(1);
   const [tokensData, setTokensData] = useState([]);
   const [totalErcCount, setErcCount] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
@@ -160,8 +173,8 @@ function page() {
     <div className="popularPage tokenListSec">
       <div className="container">
         <FilterResult />
-        <Heading heading="Token Tracker (ERC-20)" />
-        <div className="cardContract cardblocks">
+        <Heading heading="Tokens" />
+        {/* <div className="cardContract cardblocks">
           {cards?.map((item) => (
             <CardsOnchain
               className="tokenCard"
@@ -175,8 +188,8 @@ function page() {
               countTimer={item?.countTimer}
             />
           ))}
-        </div>
-        <div className="tokenInformation">
+        </div> */}
+        {/* <div className="tokenInformation">
           <h2></h2>
           <InternalSearch
             onChange={(e) => {
@@ -193,14 +206,12 @@ function page() {
             searchText={searchText}
             onKeyUp={handleEnterClick}
           />
-        </div>
+        </div> */}
         <SkeletonTableWrapper
           columns={TokenColumn}
-          dataSource={tokensData}
+          dataSource={tokens}
           className="commontable"
-          isSkeleton={
-            tokenStatus === FetchingStatus || tokenStatus === InitStatus
-          }
+          isSkeleton={loading}
           // locale={{
           //   emptyText: (
           //     <div>
@@ -210,16 +221,16 @@ function page() {
           //   ),
           // }}
         />
-        {totalPages > 1 && (
+        {tokens?.length && (
           <Pagination
-            totalPages={totalPages}
-            currentPage={pageNo}
-            handleNext={handleNext}
-            handlePrevious={handlePrevious}
-            disablePrev={page === 1 || paginationdata?.prevCursor === null}
-            disableNext={page === totalPages}
-            handleFirst={handleFirst}
-            handleLast={handleLast}
+            // totalPages={totalPages}
+            currentPage={currentPage}
+            handleNext={fetchNextPage}
+            disableNext={!hasMore}
+            disablePrev={currentPage == 1}
+            handleFirst={fetchFirstPage}
+            isEvm={isEvm}
+            // handleLast={handleLast}
           />
         )}
       </div>
