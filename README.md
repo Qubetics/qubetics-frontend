@@ -7,6 +7,7 @@ Tics Scan is a high-performance, modern blockchain explorer built using **Next.j
 [🔗 View Live Explorer](https://ticsscan.com) <!-- Replace with your actual domain -->
 
 ---
+
 ## 🚀 Features
 
 - ✅ Real-time block and transaction updates
@@ -26,6 +27,7 @@ Tics Scan is a high-performance, modern blockchain explorer built using **Next.j
 - **Charting**: [Highcharts](https://www.highcharts.com/) – for rich, interactive blockchain data visualization
 - **Blockchain SDKs**: Web3.js
 - **Data Handling**: REST APIs, WebSockets
+
 ---
 
 ## 🧠 Architecture Overview
@@ -68,7 +70,7 @@ NEXT_PUBLIC_SOCKET_URL=               # WebSocket URL for EVM updates
 NEXT_PUBLIC_METAMASK_NETWROK_URL=     # JSON-RPC URL for MetaMask
 NEXT_PUBLIC_QUBETICS_CURRENCY_NAME=   # Currency symbol
 NEXT_PUBLIC_QUBETICS_CHAIN_NAME=      # Name of the chain
-NEXT_PUBLIC_QUBETICS_CHAINID=         # Chain ID 
+NEXT_PUBLIC_QUBETICS_CHAINID=         # Chain ID
 NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE= # Block explorer base URL
 
 # UI Labels & Timings
@@ -132,19 +134,3 @@ Visit [http://localhost:3000](http://localhost:3000)
 ## 📄 License
 
 This project is licensed under the MIT License.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
