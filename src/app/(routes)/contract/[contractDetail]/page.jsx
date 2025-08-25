@@ -235,7 +235,7 @@ const ContractDetail = () => {
     {
       label: "Internal Txns",
       key: "5",
-      children: <InternalTxns   hash={params?.contractDetail} />,
+      children: <InternalTxns hash={params?.contractDetail} />,
     },
     {
       label: "Analytics",

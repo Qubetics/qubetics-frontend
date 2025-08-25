@@ -1,13 +1,12 @@
-import { Routes, toFixedWithoutRounding } from "@/constant/constant";
-import { noExponentsValue } from "@/utils/commonFunctions";
+import { Routes } from "@/constant/constant";
 import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
-import { RightOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { NextArrow } from "../../../public/SvgIcons";
 import "../recentBlock/RecentBlock.scss";
+import { formatValueByChain } from "../header/helper";
 
-const RecentTransaction = ({ data, customClass }, props) => {
+const RecentTransaction = ({ data, customClass, isEvm }, props) => {
   const router = useRouter();
   return (
     <>
@@ -23,22 +22,28 @@ const RecentTransaction = ({ data, customClass }, props) => {
             <p
               style={{ cursor: "pointer" }}
               onClick={() =>
-                router.push(`${Routes.TRANSACTIONS}/${data?.txhash}`)
+                router.push(
+                  `${Routes.TRANSACTIONS}/${isEvm ? data?.hash : data?.txhash}`
+                )
               }
             >
               {" "}
-              {data?.txhash ? getAddress(data?.txhash) : "-"}
+              {data?.hash || data?.txhash
+                ? getAddress(data?.hash || data?.txhash)
+                : "-"}
             </p>
             <p className="time">
               <span>
-                {data?.fromAddress ? getAddress(data?.fromAddress) : "-"}
+                {data?.fromAddress || data?.from?.hash
+                  ? getAddress(data?.fromAddress || data?.from?.hash)
+                  : "-"}
               </span>
               <span style={{ margin: "0 4px" }}>
                 <NextArrow />
               </span>
               <span className="trnxCount">
-                {data?.toAddress !== "N/A"
-                  ? getAddress(data?.toAddress)
+                {data?.toAddress || data?.to?.hash !== "N/A"
+                  ? getAddress(data?.toAddress || data?.to?.hash)
                   : data?.contractAddress
                   ? getAddress(data?.contractAddress)
                   : "-"}
@@ -49,15 +54,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
 
         <div className="recentMinAgo">
           <p className="qubeticValue">
-            <p>
-              {data?.value
-                ? toFixedWithoutRounding(
-                    noExponentsValue(Number(data?.value)),
-                    6
-                  )
-                : "-"}{" "}
-              TICS
-            </p>
+            <p>{formatValueByChain(data?.value, isEvm)}</p>
           </p>
           <p className="secTime">
             {" "}

@@ -4,11 +4,21 @@ import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
+export const NEW_EXPLORER_API_URL =
+  process.env.NEXT_PUBLIC_NEW_EXPLORER_API_URL;
+
+export const NEW_EXPLORER_STATS_V2_URL =
+  process.env.NEXT_PUBLIC_NEW_STATS_API_URL;
+export const NEW_EXPLORER_STATS_URL =
+  process.env.NEXT_PUBLIC_NEW_EXPLORER_STATS_URL;
+
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
 export const NATIVE_EXPLORER_API_URL = `${process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL}qubetics/`;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
+export const NEW_EXPLORER_SOCKET_URL =
+  process.env.NEXT_PUBLIC_NEW_EXPLORER_SOCKET_URL;
 export const NATIVE_EXPLORER_SOCKET_URL =
   process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
 export const EXPLORER_METAMASK_NAVIGATION =

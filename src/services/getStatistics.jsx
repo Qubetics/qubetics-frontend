@@ -1,4 +1,8 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import {
+  NATIVE_EXPLORER_API_URL,
+  NEW_EXPLORER_API_URL,
+  NEW_EXPLORER_STATS_URL,
+} from "@/constant/constant";
 
 export default async function getStatistics() {
   let chain =
@@ -9,10 +13,22 @@ export default async function getStatistics() {
   try {
     const response =
       chain === "EVM Chain"
-        ? await fetch(`${EXPLORER_API_URL}explorer/dashboard`)
+        ? await fetch(`${NEW_EXPLORER_API_URL}/stats`)
         : await fetch(`${NATIVE_EXPLORER_API_URL}explorer/dashboard`);
-    let result = await response.json();
-    return result;
+
+    const result = await response.json();
+
+    // Only fetch / parse the qubeStats when the chain is EVM
+    if (chain === "EVM Chain") {
+      const circulatingSupplyResponse = await fetch(
+        `${NEW_EXPLORER_STATS_URL}?module=stats&action=coinsupply`
+      );
+      const circulatingSupply = await circulatingSupplyResponse.json();
+
+      return { result, circulatingSupply };
+    }
+    // for native chain just return result
+    return { result };
   } catch (error) {
     return error;
   }

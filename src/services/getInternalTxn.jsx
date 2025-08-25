@@ -1,4 +1,4 @@
-import { EXPLORER_API_URL } from "@/constant/constant";
+import { EXPLORER_API_URL, NEW_EXPLORER_API_URL } from "@/constant/constant";
 
 export default async function getInternalTxns(
   currentPage,
@@ -16,7 +16,7 @@ export default async function getInternalTxns(
     return error;
   }
 }
-export  async function getInternalTxnsByHash(
+export async function getInternalTxnsByHash(
   currentPage,
   tableLimit,
   hash,
@@ -24,7 +24,7 @@ export  async function getInternalTxnsByHash(
 ) {
   try {
     const response = await fetch(
-      `${EXPLORER_API_URL}transactions/internal/${hash}?page=${currentPage}&limit=${tableLimit}`
+      `${NEW_EXPLORER_API_URL}/transactions/${hash}/internal-transactions`
     );
     let result = await response.json();
     return result;

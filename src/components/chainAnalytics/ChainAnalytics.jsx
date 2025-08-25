@@ -15,7 +15,7 @@ import {
   Txblockdark,
 } from "../../../public/SvgIcons";
 import useAverageBlockTime from "../common/useAverageBlockTime";
-const ChainAnalytics = ({ stats }) => {
+const ChainAnalytics = ({ stats, isEvm, qubeStats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
   const { diffs } = useAverageBlockTime();
@@ -45,7 +45,11 @@ const ChainAnalytics = ({ stats }) => {
     <div className="analytics_cards">
       <CardsOnchain
         text="Average Block Time"
-        balance={getDifference(diffs)}
+        balance={
+          isEvm
+            ? `${Number((stats?.average_block_time / 1000).toFixed(1))}s`
+            : getDifference(diffs)
+        }
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
         title="The average time it takes to create a new block on the blockchain."
       />
@@ -57,14 +61,18 @@ const ChainAnalytics = ({ stats }) => {
           <Tooltip
             placement="top"
             title={
-              stats?.circulationSupply
+              qubeStats
+                ? formatMillionNumber(qubeStats)
+                : stats?.circulationSupply
                 ? stats?.circulationSupply
                 : stats?.circulation_supply
                 ? stats?.circulation_supply
                 : 0
             }
           >
-            {stats?.circulationSupply
+            {qubeStats
+              ? formatMillionNumber(qubeStats)
+              : stats?.circulationSupply
               ? formatMillionNumber(stats?.circulationSupply)
               : stats?.circulation_supply
               ? formatMillionNumber(stats?.circulation_supply)

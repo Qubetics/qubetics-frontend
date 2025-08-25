@@ -75,11 +75,7 @@ const BlockDetails = ({ params }) => {
   };
   const tabItems = [
     {
-      label: (
-        <span>
-          Overview
-        </span>
-      ),
+      label: <span>Overview</span>,
       key: "0",
       children: (
         <BlockDetailDescription
@@ -89,11 +85,7 @@ const BlockDetails = ({ params }) => {
       ),
     },
     {
-      label: (
-        <span>
-          Transaction Details
-        </span>
-      ),
+      label: <span>Transaction Details</span>,
       key: "1",
       children: <TransactionTable params={params?.blockdetails} />,
     },

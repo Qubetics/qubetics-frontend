@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import { useSearchData } from "@/components/contexts/searchingData";
 import FilterResult from "@/components/FilterResult/FilterResult";
@@ -12,29 +13,53 @@ import {
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import getSearchingValue from "@/services/search";
-import { Tabs } from "antd";
+import { Pagination, Tabs } from "antd";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
 import InternalTxns from "@/components/contracts/InternalTxns";
+import getNewSearchingValue from "@/services/newSearch";
+import useEvmTransactionLogsNextOnly from "@/hooks/useLogsPagination";
+import useEvmTransactionInternalTxsNextOnly from "@/hooks/useInternalTxn";
+import { isEvmChain } from "@/components/header/helper";
 
 const page = () => {
   const searchParam = useSearchParams();
   const router = useRouter();
   const [transactionDetails, setTransactionDetails] = useState([]);
-  const [internalTxns, setInternalTxns] = useState([]);
-  const [contractLogs, setContractLogs] = useState([]);
-  const [topics, setTopics] = useState([]);
-  const [internalTxnCount, setInternalTxnCount] = useState(0);
   const [tab, setTab] = useState(searchParam.get("tab") || "0");
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
   const { searchData } = useSearchData();
+  const isEvm = isEvmChain();
 
-  let updateTx = "";
+  let updateTx = params?.transactionDetails;
+  if (updateTx && !updateTx.startsWith("0x")) {
+    updateTx = `0x${updateTx}`;
+  }
+
+  const {
+    logsData,
+    meta,
+    topics,
+    status,
+    isLoading,
+    currentPage,
+    itemsCount,
+    fetchFirstPage,
+    fetchNextPage,
+  } = useEvmTransactionLogsNextOnly({
+    updateTx,
+    autoLoad: true,
+    isEvm,
+  });
+
+  const { internalTxns, intStatus } = useEvmTransactionInternalTxsNextOnly({
+    updateTx,
+    autoLoad: true,
+    isEvm,
+  });
 
   useEffect(() => {
     fetchData();
@@ -48,31 +73,9 @@ const page = () => {
       // If no search data or transaction details present
       if (isDirectSearch) {
         setTxDetailStatus(FetchingStatus);
-
-        // Format transaction hash
-        let updateTx = params?.transactionDetails;
-        if (updateTx && !updateTx.startsWith("0x")) {
-          updateTx = `0x${updateTx}`;
-        }
-
-        const response = await getSearchingValue(updateTx);
-
-        // Handle internal transactions
-        if (response?.data?.internalTxns) {
-          setInternalTxns(response.data.internalTxns);
-          setInternalTxnCount(response.data.internalTxnCount);
-          setSerachStatus(SuccessStatus);
-        } else {
-          setInternalTxns([]);
-          setInternalTxnCount(0);
-        }
-
-        // Handle transaction details
-        if (response?.error === false) {
-          console.log("hello");
-          setTransactionDetails(response.data.transaction);
-          setTopics(response.data.contractLogs?.[0]?.topics || []);
-          setContractLogs(JSON.parse(response.data.transaction?.logs || "[]"));
+        let response = await getNewSearchingValue(updateTx);
+        if (response) {
+          setTransactionDetails(isEvm ? response : response?.data?.transaction);
           setTxDetailStatus(SuccessStatus);
         } else {
           setTxDetailStatus(ErrorStatus);
@@ -89,7 +92,6 @@ const page = () => {
     }
   };
 
-  console.log(transactionDetails, "transactionDetails");
   const tabItems = [
     {
       label: "Overview",
@@ -100,7 +102,7 @@ const page = () => {
             data={transactionDetails}
             tab={tab}
             internalTxns={internalTxns}
-            internalTxnCount={internalTxnCount}
+            internalTxnCount={internalTxns?.length}
             setTab={setTab}
           />
 
@@ -112,24 +114,53 @@ const page = () => {
         </>
       ),
     },
-    contractLogs?.length > 0 && {
+    logsData && {
       label: "Logs",
       key: "1",
-      children: contractLogs.map((e, i) => (
-        <LogsDetail
-          key={i + "logDetails"}
-          contractLogs={e}
-          index={i}
-          topics={topics}
-        />
-      )),
+      children: (
+        <>
+          {logsData.map((e, i) => (
+            <LogsDetail
+              key={i + "logDetails"}
+              contractLogs={e}
+              index={i}
+              topics={topics}
+              fetchFirstPage={fetchFirstPage}
+              fetchNextPage={fetchNextPage}
+              itemsCount={itemsCount}
+              currentPage={currentPage}
+            />
+          ))}
+
+          {logsData.length < 50 ? (
+            ""
+          ) : (
+            <Pagination
+              // totalPages={totalPages}
+              currentPage={currentPage}
+              handleNext={fetchNextPage}
+              disableNext={!itemsCount}
+              disablePrev={currentPage == 1}
+              handleFirst={fetchFirstPage}
+              isEvm={isEvm}
+              // handleLast={handleLast}
+            />
+          )}
+        </>
+      ),
     },
-    internalTxns.length > 0 && {
+    {
       label: "Internal Transactions",
       key: "2",
       children: (
         <>
-          <InternalTxns hash={params?.transactionDetails} tab={tab} />
+          <InternalTxns
+            internalTxns={internalTxns}
+            intStatus={intStatus}
+            hash={params?.transactionDetails}
+            tab={tab}
+            isEvm={isEvm}
+          />
         </>
       ),
     },
@@ -147,16 +178,16 @@ const page = () => {
 
   return (
     <div className="blocksummary transferInfo">
-      {txDetailStatus == InitStatus || txDetailStatus == FetchingStatus ? (
+      {txDetailStatus == FetchingStatus ? (
         <Loader />
-      ) : txDetailStatus == SuccessStatus || txDetailStatus == ErrorStatus ? (
+      ) : txDetailStatus == SuccessStatus ? (
         <div className="container">
           {/* <SearchbarComponent searchStatus={searchStatus} setSerachStatus={setSerachStatus} />
            */}
           <FilterResult />
           {/* <Heading heading="Transaction Details" /> */}
           <div className="transecSec">
-            {contractLogs?.length > 0 || internalTxns?.length > 0 ? (
+            {logsData?.length > 0 ? (
               <Tabs
                 activeKey={tab}
                 defaultActiveKey="0"
@@ -167,7 +198,11 @@ const page = () => {
             ) : (
               <>
                 <Heading heading="Overview" />
-                <TransferInfo data={transactionDetails} tab={tab} />
+                <TransferInfo
+                  data={transactionDetails}
+                  tab={tab}
+                  isEvm={isEvm}
+                />
 
                 {transactionDetails?.tokenInfo?.type === "ERC-20" &&
                   transactionDetails?.logs &&

@@ -11,7 +11,6 @@ const {
 } = require("@/constant/graphTableValues");
 
 export const chartMenu = (data, chartType) => {
-  
   let labelIndex = [];
   if (
     chartType === TRANS_HISTORY_CHART_SECONDS ||

@@ -11,11 +11,21 @@ import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
 import "./TransferInformation.scss";
 import { useRouter, useSearchParams } from "next/navigation";
+import { formatValueByChain, handleStatus } from "../header/helper";
 
-const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
+const TransferInfo = ({
+  data,
+  internalTxns,
+  internalTxnCount,
+  setTab,
+  isEvm,
+}) => {
   const searchParam = useSearchParams();
+  const result = data.status || data?.result;
   const router = useRouter();
-  
+  const internalTransaction =
+    internalTxnCount > 10 ? internalTxns.slice(0, 10) : internalTxns;
+
   const handleTabSelect = (e) => {
     setTab("2");
     const newSearchParams = new URLSearchParams(searchParam);
@@ -35,25 +45,16 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
       <div className="transferinfo">
         <div className="information">
           <p>Status</p>
-          {data?.status === "FAILED" ? (
-            <span className="failedtrans">
-              {" "}
-              {capitalizeWord(data?.status)}{" "}
-            </span>
-          ) : data?.status === "SUCCESS" ? (
-            <span className="success"> {capitalizeWord(data?.status)} </span>
-          ) : (
-            "-"
-          )}
+          {handleStatus(result)}
         </div>
         <div className="information">
           <p>Transaction Hash</p>
-          {data?.txhash ? (
+          {data?.hash || data?.txhash ? (
             <span>
-              {/* <Link href={`/tx/${data?.txhash}`} className=""> */}
-              {data?.txhash}
+              {/* <Link href={`/tx/${data?.hash || data?.txhash}`} className=""> */}
+              {data?.hash || data?.txhash}
               {/* </Link> */}
-              <CopyText text={data?.txhash} hoverText={"hash"} />
+              <CopyText text={data?.hash || data?.txhash} hoverText={"hash"} />
             </span>
           ) : (
             "-"
@@ -61,17 +62,17 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
         </div>
         <div className="information">
           <p>From </p>
-          {data?.fromAddress ? (
+          {data?.from?.hash || data?.fromAddress ? (
             <span>
               <Link
                 className="hoverTrans"
-                href={`/address/${data?.fromAddress}`}
+                href={`/address/${data?.from?.hash || data?.fromAddress}`}
               >
                 {" "}
-                {data?.fromAddress}
+                {data?.from?.hash || data?.fromAddress}
               </Link>
 
-              <CopyText text={data?.fromAddress} />
+              <CopyText text={data?.from?.hash || data?.fromAddress} />
             </span>
           ) : (
             "-"
@@ -79,25 +80,29 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
         </div>
         <div className="information">
           <p style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-            {data?.type === "CONTRACT_TRANSFER"
+            {data?.transaction_types?.includes("contract_call")
               ? "Interacted with Contract"
               : "To"}
-            {data?.type === "CONTRACT_TRANSFER" && <LatestTxIcon />}
+            {data?.transaction_types?.includes("contract_call") && (
+              <LatestTxIcon />
+            )}
           </p>
 
-          {data?.toAddress !== "N/A" && data?.toAddress !== "" ? (
+          {data?.to?.hash ||
+          (data?.toAddress !== "N/A" && data?.to?.hash) ||
+          data?.toAddress !== "" ? (
             <span>
               <Link
                 className="hoverTrans"
                 href={
-                  data?.type === "CONTRACT_TRANSFER"
-                    ? `/contract/${data?.toAddress}`
-                    : `/address/${data?.toAddress}`
+                  data?.transaction_types?.includes("contract_call")
+                    ? `/contract/${data?.to?.hash || data?.toAddress}`
+                    : `/address/${data?.to?.hash || data?.toAddress}`
                 }
               >
-                {data?.toAddress}
+                {data?.to?.hash || data?.toAddress}
               </Link>
-              <CopyText text={data?.toAddress} />
+              <CopyText text={data?.to?.hash || data?.toAddress} />
             </span>
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
@@ -111,15 +116,15 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
             "-"
           )}
         </div>
-        {internalTxns && internalTxns.length > 0 ? (
+        {internalTransaction && internalTransaction.length > 0 ? (
           <div className="information">
             <p className="section-title">
               <i className="fas fa-info-circle"></i> Internal Transactions
             </p>
 
             <div className="internal-list">
-              {internalTxns.map((item, index) => {
-                const ticsvalue = (Number(item.value) / 1e18).toFixed(6);
+              {internalTransaction.slice(0, 10).map((item, index) => {
+                const ticsvalue = formatValueByChain(item.value, isEvm);
                 // const usdValue = `$${(ticsvalue * 4000).toFixed(2)}`; // Static rate, replace with live API
                 return (
                   <div className="internal-item" key={index}>
@@ -131,21 +136,21 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
                     <Link
                       style={{ color: "#A0A0A0" }}
                       className="hoverTrans"
-                      href={`/address/${item.fromAddress}`}
-                      title={item.fromAddress}
+                      href={`/address/${item?.from?.hash}`}
+                      title={item?.from?.hash}
                     >
-                      {item.fromAddress.slice(0, 6)}...
-                      {item.fromAddress.slice(-4)}
+                      {item?.from?.hash.slice(0, 6)}...
+                      {item?.from?.hash.slice(-4)}
                     </Link>
 
                     <span>To</span>
                     <Link
                       style={{ color: "#A0A0A0" }}
                       className="hoverTrans"
-                      href={`/address/${item.toAddress}`}
-                      title={item.toAddress}
+                      href={`/address/${item?.to?.hash}`}
+                      title={item?.to?.hash}
                     >
-                      {item.toAddress.slice(0, 6)}...{item.toAddress.slice(-4)}
+                      {item?.to?.hash.slice(0, 6)}...{item?.to?.hash.slice(-4)}
                     </Link>
                   </div>
                 );
@@ -180,15 +185,18 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
 
         <div className="information">
           <p>Block Number </p>
-          {data?.blocknumber ? (
+          {data?.block_number || data?.blocknumber ? (
             <span>
               <Link
                 className="hoverTrans"
-                href={`/blocks/${data?.blocknumber}`}
+                href={`/blocks/${data?.block_number || data?.blocknumber}`}
               >
-                {data?.blocknumber}
+                {data?.block_number || data?.blocknumber}
               </Link>
-              <CopyText text={data?.blocknumber} hoverText={"block"} />
+              <CopyText
+                text={data?.block_number || data?.blocknumber}
+                hoverText={"block"}
+              />
             </span>
           ) : (
             "-"
@@ -197,9 +205,7 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
         <div className="information">
           <p> Amount </p>
           <span>
-            {data?.value
-              ? formatMillionNumber(noExponential(data?.value))
-              : "0 "}{" "}
+            {data?.value ? formatValueByChain(data?.value) : "0 "}{" "}
             {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
           </span>
         </div>
@@ -226,19 +232,29 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
           <p> Fee </p>
 
           <span>
-            {data?.txFee ? noExponential(Number(data?.txFee)) : "0"}{" "}
+            {data?.fee?.value || data?.txFee
+              ? formatValueByChain(data?.txFee || data?.fee?.value)
+              : "0"}{" "}
             {EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
           </span>
         </div>
         <div className="information">
           <p> Method</p>
-          <span>{data?.type ? capitalizeWord(data?.type) : "-"}</span>
+          <span>
+            {data?.method || data?.transaction_types[0]
+              ? capitalizeWord(data?.method || data?.transaction_types[0])
+              : "-"}
+          </span>
         </div>
         {
           // chain == "EVM Chain" && (
           <div className="information">
             <p>Gas Used </p>
-            <span>{data?.gas ?? data?.gasUsed ?? "0"}</span>
+            <span>
+              {data?.gas_used || data?.gasUsed
+                ? data?.gas_used || data?.gasUsed
+                : "0"}
+            </span>
           </div>
           // )
         }

@@ -15,24 +15,27 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
-
+import { isEvmChain } from "@/components/header/helper";
 
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
   const [stats, setStats] = useState("");
-  const { isEvm, isNetworkChanged } = useGetNetwork();
+  const [qubeStats, setQubeStats] = useState("");
+  const isEvm = isEvmChain();
+
+  const { isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
     if (pathname === Routes.DASHBOARD) {
       setRouteName(pathname);
     }
   }, [pathname]);
-
   const fetchEVMStats = async () => {
     try {
       let respose = await getStatistics();
-      setStats(respose?.data);
+      setStats(isEvm ? respose?.result : respose?.result?.data);
+      isEvm && setQubeStats(respose?.circulatingSupply);
     } catch (err) {
       return err;
     }
@@ -52,14 +55,14 @@ const Page = ({ customClass }) => {
           <div className="container">
             <FilterResult />
             <h2 className="analytictext">On-Chain Metrics</h2>
-            <OnChainMetrics stats={stats} />
+            <OnChainMetrics stats={stats} isEvm={isEvm} qubeStats={qubeStats} />
           </div>
         </div>
         <div className="container">
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-              <Analytics stats={stats} />
+            <Analytics stats={stats} />
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />
@@ -69,39 +72,43 @@ const Page = ({ customClass }) => {
           <div className="analyticsSec">
             <h2 className="analytictext">On-Chain Analytics</h2>
             <div className="innerSec">
-              <ChainAnalytics stats={stats} />
+              <ChainAnalytics
+                stats={stats}
+                isEvm={isEvm}
+                qubeStats={qubeStats}
+              />
               <div className="multiGraph">
                 <div className="grap">
-                    <ChainAnalyticsGraph
-                      title="Qubetics Price"
-                      discription="Qubetics Coin current market price in USD "
-                      fetchUrl={graphUrl.token_price}
-                      isNative={false}
-                      tooltipTitle="Price"
-                    />
-                    <ChainAnalyticsGraph
-                      title="Qubetics Coin Transfers"
-                      discription="Total Txns made with Qubetics coin per period "
-                      fetchUrl={graphUrl.coin_transfer}
-                      isNative={false}
-                      tooltipTitle="Transfer"
-                    />
+                  <ChainAnalyticsGraph
+                    title="Qubetics Price"
+                    discription="Qubetics Coin current market price in USD "
+                    fetchUrl={graphUrl.token_price}
+                    isNative={false}
+                    tooltipTitle="Price"
+                  />
+                  <ChainAnalyticsGraph
+                    title="Qubetics Coin Transfers"
+                    discription="Total Txns made with Qubetics coin per period "
+                    fetchUrl={graphUrl.coin_transfer}
+                    isNative={false}
+                    tooltipTitle="Transfer"
+                  />
                 </div>
                 <div className="grap">
-                    <ChainAnalyticsGraph
-                      title="Total Accounts"
-                      discription="Total accounts number per period"
-                      fetchUrl={graphUrl.total_account}
-                      isNative={isEvm}
-                      tooltipTitle="Account"
-                    />
-                    <ChainAnalyticsGraph
-                      title="Transaction Fees"
-                      discription="Amount of Qubetics coin paid in fees per period "
-                      fetchUrl={graphUrl.txn_fee}
-                      isNative={false}
-                      tooltipTitle="Txn Fee"
-                    />
+                  <ChainAnalyticsGraph
+                    title="Total Accounts"
+                    discription="Total accounts number per period"
+                    fetchUrl={graphUrl.total_account}
+                    isNative={isEvm}
+                    tooltipTitle="Account"
+                  />
+                  <ChainAnalyticsGraph
+                    title="Transaction Fees"
+                    discription="Amount of Qubetics coin paid in fees per period "
+                    fetchUrl={graphUrl.txn_fee}
+                    isNative={false}
+                    tooltipTitle="Txn Fee"
+                  />
                 </div>
               </div>
             </div>

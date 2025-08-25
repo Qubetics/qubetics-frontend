@@ -14,9 +14,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import useEvmTransactionsNextOnly from "@/hooks/usePagination";
+import { isEvmChain } from "../header/helper";
 
 export default function Transactions({ setTxnData }) {
-  const { isNetworkChanged } = useGetNetwork();
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -24,20 +25,31 @@ export default function Transactions({ setTxnData }) {
   const [txCount, setTxCount] = useState();
   const [nextCursor, setNextCursor] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState();
   const [previousCursor, setPreviousCursor] = useState(1);
   const [transactionData, setTransactionData] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
-  // const [orderval, setOrderVal] = useState(searchParams.get("order") || "desc");
+  const { isNetworkChanged } = useGetNetwork();
+  const isEvm = isEvmChain();
   const page = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const order = searchParams.get("order") || "desc";
   const [filterVal, setFilterVal] = useState("desc");
-
-  let chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    meta,
+    status,
+    isLoading,
+    currentPage: currentPagee,
+    itemsCount,
+    fetchFirstPage,
+    fetchNextPage,
+  } = useEvmTransactionsNextOnly({
+    setTransactionData,
+    autoLoad: true,
+    networkChangedFlag: isNetworkChanged,
+    isEvm,
+  });
   const fetchData = async () => {
     try {
       setTransactionStatus(FetchingStatus);
@@ -67,17 +79,31 @@ export default function Transactions({ setTxnData }) {
       return err;
     }
   };
-
   useEffect(() => {
-    if (isNetworkChanged) {
+    // load first page on mount and when network changes
+    if (isEvm) {
+      fetchFirstPage();
+    }
+    if (!isEvm && isNetworkChanged) {
       fetchData();
       setPageToSend(1);
       setCurrentPage(1);
     }
-  }, [isNetworkChanged]);
+  }, [isEvm, isNetworkChanged, fetchFirstPage]);
+
+  // Handlers for buttons
+
+  const handleBackToFirst = () => {
+    if (!isEvm) return;
+    fetchFirstPage();
+  };
+  // If you still need to expose meta to parent
+  useEffect(() => {
+    if (isEvm && setTxnData) setTxnData(meta);
+  }, [meta, setTxnData]);
 
   useEffect(() => {
-    fetchData();
+    !isEvm && fetchData();
   }, [pageid, order]);
 
   const handleChange = (value) => {
@@ -90,6 +116,10 @@ export default function Transactions({ setTxnData }) {
     router.push(`?${newSearchParams.toString()}`);
   };
   const handleNext = () => {
+    if (isEvm) {
+      fetchNextPage();
+      return;
+    }
     if (page < totalPages) {
       // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
@@ -100,6 +130,7 @@ export default function Transactions({ setTxnData }) {
     }
   };
   const handlePrevious = () => {
+    if (isEvm) return;
     if (page > 1) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", Number(page) - 1);
@@ -120,6 +151,10 @@ export default function Transactions({ setTxnData }) {
   };
 
   const handleFirst = () => {
+    if (isEvm) {
+      handleBackToFirst();
+      return;
+    }
     if (page <= totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
       newSearchParams.set("page", 1);
@@ -139,7 +174,7 @@ export default function Transactions({ setTxnData }) {
             )} transactions`}</h2>
             <Space wrap>
               <Select
-              title=""
+                title=""
                 defaultValue={order}
                 style={{
                   width: 123,
@@ -161,39 +196,31 @@ export default function Transactions({ setTxnData }) {
           </>
         )}
       </div>
-      {/* {transactionStatus === InitStatus ||
-      transactionStatus === FetchingStatus ? (
-        <Loader />
-      ) : ( */}
       <>
         <SkeletonTableWrapper
           columns={transactionSummarycolumn}
           isSkeleton={
-            transactionStatus === FetchingStatus ||
-            transactionStatus === InitStatus
+            (isEvm && isLoading) ||
+            (!isEvm && transactionStatus === FetchingStatus)
           }
           dataSource={transactionData}
           className="commontable"
           pagination={false}
-          // locale={{
-          //   emptyText: (
-          //     <div>
-          //       <Datnotfound />
-          //       <p>No data </p>
-          //     </div>
-          //   ),
-          // }}
+          rowKey={(row) =>
+            row.hash || row.block_number - row.index || Math.random()
+          }
         />
-        {totalPages > 1 && (
+        {(isEvm || totalPages > 1) && (
           <Pagination
-            totalPages={totalPages}
-            currentPage={page}
+            totalPages={isEvm ? "" : totalPages}
+            currentPage={isEvm ? currentPagee : page}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            disablePrev={page === 1}
+            disablePrev={isEvm ? currentPagee == 1 : page === 1}
             disableNext={page === totalPages}
             handleFirst={handleFirst}
             handleLast={handleLast}
+            isEvm={isEvm}
           />
         )}
       </>

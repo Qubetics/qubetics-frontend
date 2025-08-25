@@ -1,8 +1,12 @@
+import { capitalizeWord, noExponentsValue } from "@/utils/commonFunctions";
+import { Tooltip } from "antd";
+
 const {
   Routes,
   BlockchainHeaderFunction,
   NodeHeaderFunction,
   contractHeaderFunction,
+  toFixedWithoutRounding,
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
@@ -61,4 +65,49 @@ export const navItems = (isEVM) => {
       showIfFaucet: false,
     },
   ];
+};
+export const isEvmChain = () => {
+  if (typeof window === "undefined") return false;
+
+  const chainType = localStorage.getItem("chainType");
+  return chainType === "EVM Chain";
+};
+export const formatValueByChain = (value, isEvm) => {
+  if (!value) return "-";
+
+  if (isEvm) {
+    return (Number(value) / 1e18).toFixed(6) + " TICS";
+  }
+
+  return toFixedWithoutRounding(noExponentsValue(Number(value)), 6) + " TICS";
+};
+
+export const handleStatus = (result) => {
+  const status = result?.toLowerCase();
+  if (status === "failed") {
+    return <span className="failedtrans">{capitalizeWord(status)}</span>;
+  }
+  if (["success", "ok"].includes(status)) {
+    return <span className="success">{capitalizeWord("success")}</span>;
+  }
+  return "-";
+};
+
+export const formatValue = (
+  val,
+  withTooltip = false,
+  { prefix = "", suffix = "" } = {}
+) => {
+  const num = Number(val ?? 0);
+  const formatted = `${prefix}${num.toLocaleString()}${suffix}`;
+
+  if (withTooltip && num > 0) {
+    return (
+      <Tooltip placement="top" title={formatted}>
+        {formatted}
+      </Tooltip>
+    );
+  }
+
+  return formatted;
 };

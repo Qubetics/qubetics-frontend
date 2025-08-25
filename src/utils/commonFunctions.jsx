@@ -124,7 +124,7 @@ export const capitalizeWord = (str) => {
     "contract_execute",
     "contract_upload",
   ]; // Add more words as needed
-  const name = str?.toLowerCase();
+  const name = str?.toString()?.toLowerCase();
   let modStr;
   if (specialWords?.includes(name)) {
     // Special capitalization rules for specific words

@@ -1,29 +1,30 @@
+import { NEW_EXPLORER_SOCKET_URL } from "@/constant/constant";
 import { io } from "socket.io-client";
 
 let evmSocket;
 let nativeSocket;
 let mainSocket;
 
-let chain = (typeof window) !== 'undefined' && localStorage.getItem('chainType');
+let chain = typeof window !== "undefined" && localStorage.getItem("chainType");
 
+// let ws;
+let hb;
 
 export const initEvmSocket = async (ws) => {
-  disconnectNativeSocket()
-
+  disconnectNativeSocket();
   if (!evmSocket?.status || !evmSocket) {
     evmSocket = io.connect(ws, {
-      transports: ['websocket'],
+      transports: ["websocket"],
       reconnect: true,
     });
   }
 };
 
-
 export const initNativeSocket = async (ws) => {
-  disconnectEvmSocket()
+  disconnectEvmSocket();
   if (!nativeSocket || !nativeSocket?.status) {
     nativeSocket = io.connect(ws, {
-      transports: ['websocket'],
+      transports: ["websocket"],
       reconnect: true,
     });
   }
@@ -60,7 +61,7 @@ export const disconnectMainSocket = () => {
 export const subscribeLatestContractsGraph = (cb) => {
   evmSocket.on("CONTRACT_DEPLOYED_GRAPH", (data) => {
     cb(data);
-  })
+  });
 };
 
 export const subscribeCoinTransferGraph = (cb) => {
@@ -72,7 +73,7 @@ export const subscribeCoinTransferGraph = (cb) => {
 export const subscribeAccountsGraph = (cb) => {
   evmSocket.on("ACCOUNT_TX_GRAPH", (data) => {
     cb(data);
-  })
+  });
 };
 
 export const subscribeTokensGraph = (cb) => {
@@ -84,31 +85,30 @@ export const subscribeTokensGraph = (cb) => {
 export const subscribeTransactionGraph = (cb) => {
   evmSocket.on("ALL_TRANSACTIONS_GRAPH", (data) => {
     cb(data);
-  })
+  });
 };
 export const subscribeNativeTransactionGraph = (cb) => {
   nativeSocket.on("NATIVE_ALL_TRANSACTIONS_GRAPH", (data) => {
     cb(data);
-  })
+  });
 };
 
 export const subscribeLatestBlocks = (cb) => {
   evmSocket.on("LATEST_BLOCK", (data) => {
     cb(data);
   });
-
 };
 
 export const subscribeNativeBlocks = (cb) => {
   nativeSocket.on("NATIVE_LATEST_BLOCK", (data) => {
     cb(data);
   });
-}
+};
 
 export const subscribeLatestTransaction = (cb) => {
   evmSocket?.on("LATEST_TRANSACTION", (data) => {
     cb(data);
-  })
+  });
 };
 
 export const subscribeNativeLatestTransaction = (cb) => {
@@ -120,7 +120,7 @@ export const subscribeNativeLatestTransaction = (cb) => {
 export const subscribeAnalytics = (cb) => {
   evmSocket?.on("ANALYTICS", (data) => {
     cb(data);
-  })
+  });
 };
 
 export const subscribeNativeAnalytics = (cb) => {
@@ -132,7 +132,7 @@ export const subscribeNativeAnalytics = (cb) => {
 export const subscribeOnChainMetrics = (cb) => {
   evmSocket?.on("TX_SUMMARY", (data) => {
     cb(data);
-  })
+  });
 };
 
 export const subscribeNativeChainMetrics = (cb) => {
@@ -140,7 +140,4 @@ export const subscribeNativeChainMetrics = (cb) => {
     cb(data);
   });
 };
-
-
-
 // --------------------Native Sockets------------------------------//
