@@ -1,3 +1,4 @@
+import { NEW_EXPLORER_API_URL } from "@/constant/constant";
 import { useState, useEffect, useCallback } from "react";
 
 export function useBlocks(type = "block", setLoading, setBlocksData, isEvm) {
@@ -11,7 +12,7 @@ export function useBlocks(type = "block", setLoading, setBlocksData, isEvm) {
       setError(null);
 
       try {
-        let url = `https://v2.ticsscan.com/api/v2/blocks?type=${type}`;
+        let url = `${NEW_EXPLORER_API_URL}}/blocks?type=${type}`;
 
         if (params) {
           const query = new URLSearchParams(
