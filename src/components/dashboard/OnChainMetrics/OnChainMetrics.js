@@ -19,6 +19,8 @@ import { useThemeData } from "@/components/contexts/theme_context";
 import getQubeticsPrice from "@/services/getQubeticsPrice";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
+import fire from "../../../assets/img/fire.png";
+import Image from "next/image";
 
 const OnChainMetrics = ({ stats }) => {
   const [price, setPrice] = useState("");
@@ -71,20 +73,10 @@ const OnChainMetrics = ({ stats }) => {
 
           <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
-              text="Transactions"
-              balance={
-                webSocketData?.onChainMetric?.totalTx ||
-                stats?.total_transactions
-                  ? Number(
-                      webSocketData?.onChainMetric?.totalTx ||
-                        stats?.total_transactions
-                    ).toLocaleString()
-                  : 0
-              }
-              img={
-                isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />
-              }
-              title="The total number of transactions processed on the blockchain."
+              text="Burn Total"
+              balance={formatMillionNumber(Number(stats?.burnedAmount))}
+              img={<Image src={fire} alt="fire" width={60} height={60} />}
+              title="Total amount of TICS burned permanently and removed from circulation."
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={2} xxl={2}>

@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
 
-
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
@@ -59,7 +58,7 @@ const Page = ({ customClass }) => {
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-              <Analytics stats={stats} />
+            <Analytics stats={stats} />
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />
@@ -72,36 +71,36 @@ const Page = ({ customClass }) => {
               <ChainAnalytics stats={stats} />
               <div className="multiGraph">
                 <div className="grap">
-                    <ChainAnalyticsGraph
-                      title="Qubetics Price"
-                      discription="Qubetics Coin current market price in USD "
-                      fetchUrl={graphUrl.token_price}
-                      isNative={false}
-                      tooltipTitle="Price"
-                    />
-                    <ChainAnalyticsGraph
-                      title="Qubetics Coin Transfers"
-                      discription="Total Txns made with Qubetics coin per period "
-                      fetchUrl={graphUrl.coin_transfer}
-                      isNative={false}
-                      tooltipTitle="Transfer"
-                    />
+                  <ChainAnalyticsGraph
+                    title="Qubetics Price"
+                    discription="Qubetics Coin current market price in USD "
+                    fetchUrl={graphUrl.token_price}
+                    isNative={false}
+                    tooltipTitle="Price"
+                  />
+                  <ChainAnalyticsGraph
+                    title="Qubetics Coin Transfers"
+                    discription="Total Txns made with Qubetics coin per period "
+                    fetchUrl={graphUrl.coin_transfer}
+                    isNative={false}
+                    tooltipTitle="Transfer"
+                  />
                 </div>
                 <div className="grap">
-                    <ChainAnalyticsGraph
-                      title="Total Accounts"
-                      discription="Total accounts number per period"
-                      fetchUrl={graphUrl.total_account}
-                      isNative={isEvm}
-                      tooltipTitle="Account"
-                    />
-                    <ChainAnalyticsGraph
-                      title="Transaction Fees"
-                      discription="Amount of Qubetics coin paid in fees per period "
-                      fetchUrl={graphUrl.txn_fee}
-                      isNative={false}
-                      tooltipTitle="Txn Fee"
-                    />
+                  <ChainAnalyticsGraph
+                    title="Total Accounts"
+                    discription="Total accounts number per period"
+                    fetchUrl={graphUrl.total_account}
+                    isNative={isEvm}
+                    tooltipTitle="Account"
+                  />
+                  <ChainAnalyticsGraph
+                    title="Transaction Fees"
+                    discription="Amount of Qubetics coin paid in fees per period "
+                    fetchUrl={graphUrl.txn_fee}
+                    isNative={false}
+                    tooltipTitle="Txn Fee"
+                  />
                 </div>
               </div>
             </div>
