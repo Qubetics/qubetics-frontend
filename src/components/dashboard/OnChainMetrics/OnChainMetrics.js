@@ -21,12 +21,14 @@ import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
 import fire from "../../../assets/img/fire.png";
 import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
 
 const OnChainMetrics = ({ stats }) => {
   const [price, setPrice] = useState("");
   const webSocketData = useLatestData();
   const { diffs } = useAverageBlockTime();
   const { isLight } = useThemeData();
+  const isMobile = useMediaQuery({ query: "(max-width: 640px)" });
 
   useEffect(() => {
     getPrice();
@@ -83,7 +85,12 @@ const OnChainMetrics = ({ stats }) => {
                     padding: "5px",
                   }}
                 >
-                  <Image src={fire} alt="fire" width={55} height={49} />
+                  {isMobile ? (
+                    <Image src={fire} alt="fire" width={40} height={35} />
+                  ) : (
+                    <Image src={fire} alt="fire" width={51} height={49} />
+                  )}
+                  {/* <Image src={fire} alt="fire" width={55} height={49} /> */}
                 </div>
               }
               title="Total amount of TICS burned permanently and removed from circulation."
