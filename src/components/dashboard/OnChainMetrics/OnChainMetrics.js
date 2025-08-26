@@ -75,7 +75,17 @@ const OnChainMetrics = ({ stats }) => {
             <CardsOnchain
               text="Burn Total"
               balance={formatMillionNumber(Number(stats?.burnedAmount))}
-              img={<Image src={fire} alt="fire" width={60} height={60} />}
+              img={
+                <div
+                  style={{
+                    border: "1px solid gray",
+                    borderRadius: "50%",
+                    padding: "5px",
+                  }}
+                >
+                  <Image src={fire} alt="fire" width={55} height={49} />
+                </div>
+              }
               title="Total amount of TICS burned permanently and removed from circulation."
             />
           </Col>
