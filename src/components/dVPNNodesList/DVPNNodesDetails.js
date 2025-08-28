@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import { Datnotfound } from "../../../public/SvgIcons";
 import {
+  currencyName,
   ErrorStatus,
   FetchingStatus,
   InitStatus,
@@ -62,7 +63,7 @@ const txnColumns = [
     title: "Amount",
     dataIndex: "value",
     key: "value",
-    render: (value) => value ?? 0,
+    render: (value) => `${value ? value : 0} ${currencyName}`
   },
   {
     title: "Fee",
@@ -74,9 +75,9 @@ const txnColumns = [
   },
   {
     title: "Timestamp ",
-    dataIndex: "Timestamp",
+    dataIndex: "timestamp",
     key: "timestamp",
-    render: (text) =>
+    render: (_,text) =>
       text?.timestamp ? (
         <span className="timestamp">
           {renderTime(text?.timestamp)}

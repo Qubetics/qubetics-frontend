@@ -75,14 +75,14 @@ const Page = ({ customClass }) => {
                     <ChainAnalyticsGraph
                       title="Qubetics Price"
                       discription="Qubetics Coin current market price in USD "
-                      fetchUrl={graphUrl.token_price}
+                      fetchUrl={graphUrl?.token_price}
                       isNative={false}
                       tooltipTitle="Price"
                     />
                     <ChainAnalyticsGraph
                       title="Qubetics Coin Transfers"
                       discription="Total Txns made with Qubetics coin per period "
-                      fetchUrl={graphUrl.coin_transfer}
+                      fetchUrl={graphUrl?.coin_transfer}
                       isNative={false}
                       tooltipTitle="Transfer"
                     />
@@ -91,14 +91,14 @@ const Page = ({ customClass }) => {
                     <ChainAnalyticsGraph
                       title="Total Accounts"
                       discription="Total accounts number per period"
-                      fetchUrl={graphUrl.total_account}
+                      fetchUrl={graphUrl?.total_account}
                       isNative={isEvm}
                       tooltipTitle="Account"
                     />
                     <ChainAnalyticsGraph
                       title="Transaction Fees"
                       discription="Amount of Qubetics coin paid in fees per period "
-                      fetchUrl={graphUrl.txn_fee}
+                      fetchUrl={graphUrl?.txn_fee}
                       isNative={false}
                       tooltipTitle="Txn Fee"
                     />

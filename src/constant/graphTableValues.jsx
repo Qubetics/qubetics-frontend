@@ -1981,7 +1981,7 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
     title: "Amount",
     key: "price",
     render: (text) => {
-      return text?.price ? formatValue(text?.price) : "-";
+      return text?.price ? `${formatValue(text?.price)} ${currencyName}` : "-";
     },
   },
   {

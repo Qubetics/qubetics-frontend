@@ -76,7 +76,7 @@ export const formatMillionNumber = (num) => {
 
 const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
   if (apr?.length > 9) {
-    return `${apr.substring(0, startLen)}...${apr?.substring(
+    return `${apr?.substring(0, startLen)}...${apr?.substring(
       apr?.length - endLen,
       apr?.length
     )}`;

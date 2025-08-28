@@ -55,7 +55,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
                     noExponentsValue(Number(data?.value)),
                     6
                   )
-                : "-"}{" "}
+                : 0}{" "}
               {currencyName}
             </p>
           </p>

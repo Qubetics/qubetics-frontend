@@ -94,7 +94,7 @@ const UptimeHistory = ({ nodeName }) => {
           <ChartAccounts
             data={uptimeHistoryChart?.data}
             chartType={uptimeHistoryChart?.type}
-            name="Uptime %"
+            name="Uptime "
           />
         )}
       </div>

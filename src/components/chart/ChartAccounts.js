@@ -149,7 +149,9 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         enabled: false,
       },
     };
+
     setChartData(options);
+
   }, [data, chartType]);
 
   return (
