@@ -248,7 +248,7 @@ const page = ({ params }) => {
                 </Tooltip>
               </div>
               <div className="detail">
-                <h3>{currencyName} Value</h3>
+                <h3>Balance in USD</h3>
                 <p>
                   {showHeaderData?.value === "" ||
                   showHeaderData?.value == null ||
