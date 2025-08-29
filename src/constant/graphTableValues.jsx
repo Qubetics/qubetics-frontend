@@ -362,7 +362,7 @@ export const transactionSummarycolumn = [
       ),
   },
   {
-    title: `Value( ${currencyName})`,
+    title: `Value(${currencyName})`,
     key: "value",
     render: (text) =>
       text?.value ? (
@@ -502,7 +502,7 @@ export const TransactionDetailsColumns = [
   },
 
   {
-    title: `Value ( ${currencyName})`,
+    title: `Value (${currencyName})`,
     dataIndex: "value",
     key: "value",
     render: (text) => (
@@ -673,6 +673,7 @@ export const addressDetailColumn = [
     title: "Value",
     dataIndex: "value",
     key: "value",
+    render: (text) => `${text ? text : 0} TICS`
   },
   {
     title: "Status",
@@ -1904,7 +1905,7 @@ export const dVPNColumn = [
     title: "Amount",
     key: "value",
     render: (text) => {
-      return text?.value ? formatValue(text?.value) : "-";
+      return `${text?.value ? formatValue(text?.value) : "0"} ${currencyName}`;
     },
   },
   {
@@ -1912,7 +1913,7 @@ export const dVPNColumn = [
     key: "txFee",
     render: (text) => (
       <span className="">
-        {text?.txFee ? `${text.txFee}${currencyName}` : "-"}
+        {text?.txFee ? `${text.txFee}` : "0"}
       </span>
     ),
   },

@@ -1,4 +1,4 @@
-import { generateData } from "@/constant/constant";
+import { currencyName, generateData } from "@/constant/constant";
 import { chartMenu, chartSeriesValue } from "@/utils/chartMenu";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -44,7 +44,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         display:flex;
         align-items: center;">
         ${xAxisData}<br>
-        ${name}: ${this.y} 
+        ${name}: ${this.y} ${currencyName}
         </div>`;
         },
         positioner: function (labelWidth, labelHeight, point) {

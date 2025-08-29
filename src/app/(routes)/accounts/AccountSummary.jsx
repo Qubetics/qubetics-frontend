@@ -41,7 +41,7 @@ const AccountSummary = () => {
               text="Daily Active Account"
               balance={summaryData?.filteredDailyData ?? "—"}
               img={<DailyActive />}
-              title="Number of accounts active in the last 24 hours."
+              title="Unique accounts that engaged with dVPN in the past 24 hours."
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
@@ -49,7 +49,7 @@ const AccountSummary = () => {
               text="Weekly Active Account"
               balance={summaryData?.filteredWeeklyData ?? "—"}
               img={<DailyActive />}
-              title="Number of accounts active in the last 7 days."
+              title="Unique accounts active in dVPN interactions during the last 7 days."
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
@@ -57,7 +57,7 @@ const AccountSummary = () => {
               text="Monthly Active Account"
               balance={summaryData?.filteredMonthlyData ?? "—"}
               img={<DailyActive />}
-              title="Number of accounts active in the last 30 days."
+              title="Unique accounts that participated in dVPN activities over the past 30 days."
             />
           </Col>
         </Row>

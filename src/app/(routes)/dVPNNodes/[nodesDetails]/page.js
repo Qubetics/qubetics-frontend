@@ -78,31 +78,37 @@ const Page = () => {
                 text="Total Earnings"
                 balance={`${nodeSummary?.total_earning || 0} ${currencyName}`}
                 img={<TotalEarnings />}
+                title={`The total lifetime earnings generated in ${currencyName}`}
               />
               <CardsOnchain
                 text="24hrs Earnings"
                 balance={`${nodeSummary?.daily_earnings || 0} ${currencyName}`}
                 img={<HrsEarnings />}
+                title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
               />
               <CardsOnchain
                 text="Total Users"
                 balance={`${nodeSummary?.total_users || 0}`}
                 img={<TotalUsers />}
+                title="The total number of unique users who have ever connected to this node"
               />
               <CardsOnchain
                 text="Active Users"
                 balance={`${nodeSummary?.active_users || 0}`}
                 img={<ActiveUsers />}
+                title="The number of users currently connected and active on this node."
               />
               <CardsOnchain
                 text="Last Checked In"
                 balance={`${formatDateTime(nodeSummary?.last_checked) || 0}`}
                 img={<LastCheckedIn />}
+                title="The most recent time this node’s status was verified."
               />
               <CardsOnchain
                 text="Recent Session"
                 balance={`${formatDateTime(nodeSummary?.recent_session) || 0}`}
                 img={<RecentSession />}
+                title="The timestamp of the latest user session on this node."
               />
             </div>
           </div>

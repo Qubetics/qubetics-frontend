@@ -21,32 +21,32 @@ const QubeticNetworkNode = ({ nodesData }) => {
     {
       value: nodesData?.total_providers ?? 0,
       label: "Total dVPN Providers",
-      content: tooltipContent.block_Height,
+      content: tooltipContent?.total_Dvpn_Provider,
     },
     {
       value: nodesData?.active_providers ?? 0,
       label: "Active Providers",
-      content: tooltipContent.bonded_Coins,
+      content: tooltipContent?.active_provider,
     },
     {
       value: nodesData?.total_users ?? 0,
       label: "Total dVPN Users",
-      content: tooltipContent.last_Block,
+      content: tooltipContent?.total_dvpn_user,
     },
     {
       value: nodesData?.active_users ?? 0,
       label: "Active Users",
-      content: tooltipContent.TPB,
+      content: tooltipContent?.active_user,
     },
     {
       value: nodesData?.total_txns ?? 0,
       label: "Total dVPN Txns",
-      content: tooltipContent.last_Block,
+      content: tooltipContent?.total_Dvpn_Transactions,
     },
     {
       value: nodesData?.active_session ?? 0,
       label: "Current Session Count",
-      content: tooltipContent.TPB,
+      content: tooltipContent?.Current_Session_Count,
     },
   ];
 
@@ -85,8 +85,7 @@ const QubeticNetworkNode = ({ nodesData }) => {
                     <Col key={index} xs={12} sm={12} md={12} lg={8}>
                       <div className="innerNode">
                         <h4>{item.value}</h4>
-                        <Tooltip color="rgb(49 52 56)" title={item.content}>
-                          <span
+                        <span
                             style={{
                               display: "flex",
                               alignItems: "center",
@@ -98,8 +97,10 @@ const QubeticNetworkNode = ({ nodesData }) => {
                           style={{ color: "#A0A0A0" }}
                           className="infoIcon"
                         /> */}
-                          </span>
+                        <Tooltip color="rgb(49 52 56)" title={item.content}>
+                        <InfoCircleOutlined style={{ color: "#A0A0A0" }} className="infoIcon" />
                         </Tooltip>
+                          </span>
                       </div>
                     </Col>
                   ))}
