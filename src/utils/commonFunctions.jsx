@@ -118,7 +118,8 @@ export const capitalizeWord = (str) => {
     "contract_upload",
     "End_request",
     "Start_request",
-    "Start_subscription"
+    "Start_subscription",
+    "coin_receive"
   ]; // Add more words as needed
   const name = str?.toLowerCase();
   let modStr;

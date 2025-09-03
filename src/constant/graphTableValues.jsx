@@ -542,13 +542,18 @@ export const addressDetailColumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
+      <div className="iconandlink">
       <Link
-        className="bghash"
+        className="fromicon"
         href={`${Routes.Tx_Hash}${text}`}
         rel="noopener noreferrer"
       >
         {getAddress(text)}
       </Link>
+      <span>
+      <CopyText text={text} />
+    </span>
+    </div>
     ),
   },
   {
@@ -1913,7 +1918,7 @@ export const dVPNColumn = [
     key: "txFee",
     render: (text) => (
       <span className="">
-        {text?.txFee ? `${text.txFee}` : "0"}
+        {text?.txFee ? `${text.txFee}` : "0"} {currencyName}
       </span>
     ),
   },

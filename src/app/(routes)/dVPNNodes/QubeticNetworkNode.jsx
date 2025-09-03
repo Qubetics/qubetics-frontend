@@ -73,7 +73,7 @@ const QubeticNetworkNode = ({ nodesData }) => {
           <Heading heading="Qubetics Network Nodes" />
           <div className="NodePerformance">
             <div className="NodePerformance_left">
-              <h3>Node Performance</h3>
+              <h3>Nodes Performance</h3>
               <div className="NodePerformance_left_card">
                 <Row
                   gutter={[
@@ -117,7 +117,7 @@ const QubeticNetworkNode = ({ nodesData }) => {
                   </div>
                   <div className="innerBox">
                     <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
-                    <p>Countries</p>
+                    <p>{NodeSummary?.nodesLocation?.length>1 ? `Countries`:`Country`}</p>
                   </div>
                 </div>
                 <DarkNodeMap />

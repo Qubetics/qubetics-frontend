@@ -68,7 +68,7 @@ const UptimeHistory = ({ nodeName }) => {
       <div className="graphOuter_1 uptimeHisgraph">
         <div className="drop_histry">
           <div className="drop_histry__blinkLive">
-            <h3>Uptime History</h3>
+            <h3>Earning History</h3>
           </div>
 
           <Space wrap>
