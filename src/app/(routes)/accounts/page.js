@@ -26,7 +26,7 @@ const Page = () => {
       children: <AccountsTxn order={order} activeTab={activeTab} />,
     },
     {
-      label: <span>Active Users</span>,
+      label: <span>Active Sessions</span>,
       key: "1",
       children: <ActiveUsers  reverse={order==="desc"} activeTab={activeTab}/>,
     },

@@ -25,6 +25,7 @@ import getNodeDetailSummary from "@/services/getNodeDetailSummary";
 import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
 import Loader from "@/components/loader/Loader";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
@@ -57,14 +58,11 @@ const Page = () => {
       ) : (
         <div className="container nodeDetail">
           <div className="searchbar searchFilter">
-            <div className="searchbar_input">
-              <input placeholder="Search by Txn Hash/ Address/ Block/ Block Hash" />
-              <Searchicon />
-            </div>
+          <FilterResult/>
           </div>
           <Heading heading="Node Details" />
           <div className="nodeDetail_top">
-            <p>Name :</p>
+            <p>Address :</p>
             <strong>{nodeName}</strong>
           </div>
           <div className="nodeGraph">
@@ -87,13 +85,13 @@ const Page = () => {
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
               />
               <CardsOnchain
-                text="Total Users"
+                text="Total Sessions"
                 balance={`${nodeSummary?.total_users || 0}`}
                 img={<TotalUsers />}
                 title="The total number of unique users who have ever connected to this node"
               />
               <CardsOnchain
-                text="Active Users"
+                text="Active Sessions"
                 balance={`${nodeSummary?.active_users || 0}`}
                 img={<ActiveUsers />}
                 title="The number of users currently connected and active on this node."

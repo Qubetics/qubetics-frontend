@@ -16,7 +16,7 @@ import { getOffset } from "@/utils/commonFunctions";
 
 const nodesColumns = [
   { title: "Sr. No", dataIndex: "sr", key: "sr" },
-  { title: "dVPN Nodes", dataIndex: "address", key: "address" },
+  { title: "dVPN Address", dataIndex: "address", key: "address" },
   { title: "Country", dataIndex: "country", key: "country" },
   {
     title: "Region",

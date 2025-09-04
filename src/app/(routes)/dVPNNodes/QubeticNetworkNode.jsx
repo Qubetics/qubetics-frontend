@@ -30,12 +30,12 @@ const QubeticNetworkNode = ({ nodesData }) => {
     },
     {
       value: nodesData?.total_users ?? 0,
-      label: "Total dVPN Users",
+      label: "Total Subscription",
       content: tooltipContent?.total_dvpn_user,
     },
     {
       value: nodesData?.active_users ?? 0,
-      label: "Active Users",
+      label: "Active Subscription",
       content: tooltipContent?.active_user,
     },
     {

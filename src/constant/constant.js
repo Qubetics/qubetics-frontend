@@ -239,7 +239,7 @@ export function BlockchainHeaderFunction(currentPath) {
     {
       key: "2",
       value: "Transactions",
-      className: currentPath === Routes.TRANSACTIONS ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.TRANSACTIONS) ? "activeOptions" : "",
       label: (
         <Link
           onClick={() => onLinkClick("NavTransactions", "Transactions")}
@@ -280,11 +280,12 @@ export function NodeHeaderFunction(currentPath, onClick) {
 }
 
 export function DvpnNodeHeaderFunction(currentPath, onClick) {
+  
   const NodeHeader = [
     {
       key: "1",
       value: "Node",
-      className: currentPath === Routes.DVPNNODES ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.DVPNNODES)? "activeOptions" : "",
       label: (
         <Link
           onClick={() => onClick("Nav_Nodes", "dVPNNodes")}

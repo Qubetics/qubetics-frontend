@@ -1955,14 +1955,6 @@ export const dVPNColumn = [
 ];
 export const accountsColumns = (currentPage = 1, tableLimit) => [
   {
-    title: "Sr. No",
-    key: "planId",
-    render: (text, record, index) => {
-      const serialNumber = (currentPage - 1) * tableLimit + index + 1;
-      return `#${serialNumber}`;
-    },
-  },
-  {
     id: "accAddress",
     title: "Address",
     key: "accAddress",
@@ -1971,7 +1963,7 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
         {text?.accAddress ? (
           <Tooltip title={text?.accAddress}>
             <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}>
-              {getAddress(text?.accAddress)}{" "}
+              {text?.accAddress}{" "}
             </Link>
           </Tooltip>
         ) : (
@@ -2008,14 +2000,6 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
 
 export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
   {
-    title: "Sr. No",
-    key: "planId",
-    render: (text, record, index) => {
-      const serialNumber = (currentPage - 1) * tableLimit + index + 1;
-      return `#${serialNumber}`;
-    },
-  },
-  {
     title: "Address",
     key: "accAddress",
     render: (_text, record) => {
@@ -2024,7 +2008,7 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
         <div className="iconandlink">
           <Tooltip title={accAddress}>
             <Link href={`${Routes.Tx_ADDRESS}${accAddress}`}>
-              {getAddress(accAddress)}
+              {accAddress}
             </Link>
           </Tooltip>
         </div>
@@ -2051,4 +2035,22 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
 
     },
   },
+  {
+    title:"Duration",
+    dataIndex:"base_session",
+    key:"duration",
+    render: (base_session) => {
+      console.log("🚀 ~ base_session:", base_session)
+      if (!base_session?.duration) return "-";
+  
+      // remove "s" and convert to number
+      const totalSeconds = parseFloat(base_session?.duration.replace("s", ""));
+  
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+  
+      return `${hours}h ${minutes}m ${seconds}s`;
+    },
+  }
 ];
