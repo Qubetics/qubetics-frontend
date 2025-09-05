@@ -543,17 +543,17 @@ export const addressDetailColumn = [
     key: "txhash",
     render: (text) => (
       <div className="iconandlink">
-      <Link
-        className="fromicon"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
-        {getAddress(text)}
-      </Link>
-      <span>
-      <CopyText text={text} />
-    </span>
-    </div>
+        <Link
+          className="fromicon"
+          href={`${Routes.Tx_Hash}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+        </Link>
+        <span>
+          <CopyText text={text} />
+        </span>
+      </div>
     ),
   },
   {
@@ -571,7 +571,7 @@ export const addressDetailColumn = [
     ),
   },
   {
-    title: "Method ",
+    title: "Type ",
     key: "type",
     render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
   },
@@ -1878,13 +1878,16 @@ export const dVPNColumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
-        {getAddress(text)}
-      </Link>
+      <>
+        <Link
+          className="bghash"
+          href={`${Routes.Tx_Hash}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+        </Link>
+        <CopyText text={text} />
+      </>
     ),
   },
   {
@@ -1969,9 +1972,9 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
         ) : (
           "-"
         )}
-        {/* <span>
-          <CopyText text={text?.address} />
-        </span> */}
+        <span>
+          <CopyText text={text?.accAddress} />
+        </span>
       </div>
     ),
   },
@@ -2004,19 +2007,25 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
     key: "accAddress",
     render: (_text, record) => {
       const accAddress = record?.base_session?.acc_address;
-      return accAddress ? (
+  
+      if (!accAddress) {
+        return "-";
+      }
+  
+      return (
         <div className="iconandlink">
           <Tooltip title={accAddress}>
             <Link href={`${Routes.Tx_ADDRESS}${accAddress}`}>
               {accAddress}
             </Link>
           </Tooltip>
+          <span>
+            <CopyText text={accAddress} />
+          </span>
         </div>
-      ) : (
-        "-"
       );
     },
-  },
+  },  
   {
     title: "Bandwidth Consumed",
     dataIndex: "base_session",
@@ -2036,20 +2045,20 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
     },
   },
   {
-    title:"Duration",
-    dataIndex:"base_session",
-    key:"duration",
+    title: "Duration",
+    dataIndex: "base_session",
+    key: "duration",
     render: (base_session) => {
       console.log("🚀 ~ base_session:", base_session)
       if (!base_session?.duration) return "-";
-  
+
       // remove "s" and convert to number
       const totalSeconds = parseFloat(base_session?.duration.replace("s", ""));
-  
+
       const hours = Math.floor(totalSeconds / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = Math.floor(totalSeconds % 60);
-  
+
       return `${hours}h ${minutes}m ${seconds}s`;
     },
   }

@@ -44,7 +44,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         display:flex;
         align-items: center;">
         ${xAxisData}<br>
-        ${name}: ${this.y} ${currencyName}
+        ${name === "Uptime" ? currencyName : name}: ${this.y} 
         </div>`;
         },
         positioner: function (labelWidth, labelHeight, point) {
@@ -98,8 +98,8 @@ const ChartAccount = ({ data, chartType, name, title }) => {
           title === "Qubetics Price" && maximum?.count < 0
             ? 0
             : maximum?.count < 4
-            ? 4
-            : maximum?.count,
+              ? 4
+              : maximum?.count,
         title: {
           text: "",
         },

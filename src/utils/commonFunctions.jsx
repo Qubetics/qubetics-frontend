@@ -116,10 +116,10 @@ export const capitalizeWord = (str) => {
     "contract_transfer",
     "contract_execute",
     "contract_upload",
-    "End_request",
-    "Start_request",
-    "Start_subscription",
-    "coin_receive"
+    "end_request",
+    "start_request",
+    "start_subscription",
+    "coin_receive",
   ]; // Add more words as needed
   const name = str?.toLowerCase();
   let modStr;
@@ -129,13 +129,7 @@ export const capitalizeWord = (str) => {
       .split("_")
       .map((word) => word[0].toUpperCase() + word.slice(1))
       .join("_");
-  } else if(name=="end_request" || name=="start_request"||name=="start_subscription"){
-    modStr = name
-    .split("_")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
-  }
-  else{
+  } else{
     // Default capitalization for other words
     modStr = name[0].toUpperCase() + name.slice(1);
   }
