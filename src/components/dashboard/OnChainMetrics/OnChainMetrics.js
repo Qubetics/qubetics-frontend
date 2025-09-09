@@ -72,7 +72,11 @@ const OnChainMetrics = ({ stats }) => {
           <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               text="Burn Total"
-              balance={formatMillionNumber(Number(stats?.burnedAmount))}
+              balance={
+                <Tooltip title={Number(stats?.burnedAmount)}>
+                  {formatMillionNumber(Number(stats?.burnedAmount))}
+                </Tooltip>
+              }
               img={<FireIcon />}
               title="Total amount of TICS burned permanently and removed from circulation."
             />
