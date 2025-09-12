@@ -234,7 +234,9 @@ const TransactionOverview = () => {
               <h4>Status Log</h4>
               <div className="timeline ">
                 <div
-                  className={`timeline-item ${statusClass(intentData?.status)}`}
+                  className={`timeline-item ${
+                    intentData?.status == 2 ? "active" : ""
+                  } ${intentData?.status == 0 ? "failed" : ""}`}
                 >
                   <span></span>
                   <div className="list_item">
