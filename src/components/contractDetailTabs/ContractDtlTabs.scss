@@ -272,6 +272,10 @@
             content: unset !important;
             position: unset !important;
           }
+           &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
         }
       }
     }

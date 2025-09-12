@@ -579,9 +579,16 @@ html {
           @include fluid-type(320px, 1920px, 14px, 16px);
           padding: 10px 24px;
           margin: 0 0 0 0px !important;
-
+          &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+          }
           .ant-tabs-tab-btn {
             color: $graytext;
+            &:focus {
+              outline: none !important;
+              box-shadow: none !important;
+            }
           }
 
           @media (max-width: 575px) {
@@ -648,6 +655,10 @@ html {
 
       .ant-tabs-tab-btn {
         color: $white !important;
+        &:focus {
+          outline: none !important;
+          box-shadow: none !important;
+        }
       }
     }
   }
@@ -1164,6 +1175,10 @@ html {
 
           .ant-tabs-tab-btn {
             color: #fff;
+            &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+          }
           }
         }
 
@@ -1706,6 +1721,10 @@ html {
 
 .ant-tabs-tab-btn {
   color: #fff;
+  &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+          }
 
   span {
     svg {

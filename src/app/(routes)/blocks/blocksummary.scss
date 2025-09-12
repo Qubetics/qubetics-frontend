@@ -109,10 +109,19 @@
   .nodetabs {
     .ant-tabs-tab-active {
       width: 164px;
+
+          &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
     }
 
     .ant-tabs-tab {
       width: 164px;
+          &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
     }
   }
   .globetab {
@@ -126,11 +135,19 @@
         min-width: 156px !important;
         width: 156px !important;
       }
+       &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
     }
   }
   .addresstabs {
     .ant-tabs-tab-active {
       width: 143px;
+       &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
     }
 
     .ant-tabs-tab {

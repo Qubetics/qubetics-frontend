@@ -10,14 +10,14 @@ const EventLogs = ({ logs }) => {
       children: (
         <div className="collapsData">
           <p className="title">Event Logs</p>
-          <se>
+          <div className="actions">
             {val?.attributes?.map((attr, idx) => (
-              <p className="action actiondata" key={idx}>
+              <div className="action" key={idx}>
                 <span>{attr?.key}: </span>
                 <span>{attr?.value}</span>
-              </p>
+              </div>
             ))}
-          </se>
+          </div>
         </div>
       ),
     })) || [];
@@ -31,19 +31,19 @@ const EventLogs = ({ logs }) => {
       theme={{
         components: {
           Collapse: {
-            headerBg: "#121212", // Header background color
-            contentBg: "#121212", // Content background color
-            headerPadding: "8px 16px", // Padding for header
+            headerBg: "#121212",
+            contentBg: "#121212",
+            headerPadding: "8px 16px",
             contentPadding: "12px 16px",
-            colorText: "#fff", // Text color
-            colorBorder: "#3f3f55", // Border color
-            headerFontSize: 14, // Header font size
+            colorText: "#fff",
+            colorBorder: "#3f3f55",
+            headerFontSize: 14,
             contentFontSize: 13,
           },
         },
         token: {
-          borderRadius: 8, // Rounded corners
-          colorPrimary: "#fff", // Primary color for active state
+          borderRadius: 8,
+          colorPrimary: "#fff",
         },
       }}
     >
