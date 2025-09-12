@@ -26,6 +26,7 @@ Number.prototype.noExponents = function () {
 export const noExponential = (num) => {
   return Number(num).noExponents();
 };
+
 export function noExponentsValue(number) {
   if (number == 0) return 0;
   if (isNaN(number)) return 0; // Handle invalid input
@@ -227,16 +228,23 @@ export const destinationTxn = (type, value) => {
 };
 
 export const formatToken = (type, value) => {
-  switch (type) {
+  let calValue;
+
+  switch (type?.toLowerCase()) {
     case "btc":
-      return value / 1e8;
+      calValue = value / 1e8;
+      break;
     case "eth":
     case "tics":
-      return value / 1e18;
+      calValue = value / 1e18;
+      break;
     case "usdc":
     case "usdt":
-      return value / 1e6;
+      calValue = value / 1e6;
+      break;
     default:
       return "-";
   }
+
+  return noExponential(calValue);
 };

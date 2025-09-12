@@ -7,7 +7,12 @@ import SearchbarComponent from "@/components/search/SearchbarComponent";
 import "./TransactionOverview.scss";
 import { RightArrowIcon } from "../../../../../public/SvgIcons";
 
-import { formatPrecision, isStringValue, Routes } from "@/constant/constant";
+import {
+  formatPrecision,
+  isStringValue,
+  Routes,
+  statusClass,
+} from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import CopyText from "@/components/DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
@@ -36,8 +41,6 @@ const TransactionOverview = () => {
   }, [txnHash]);
 
   if (loading) return <div>Loading...</div>;
-
-  if (!intentData) return <div>No Data Found</div>;
 
   const destinationClick = (type, value) => {
     const routeTo = destinationTxn(type?.toLowerCase(), value);
@@ -78,12 +81,12 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Intent Transaction Hash</h4>
               <h5>
-                {intentData?.intentHash ? (
+                {intentData?.intent_hash ? (
                   <>
-                    {intentData.intentHash}
+                    {intentData?.intent_hash}
                     <div className="action_btns_copy">
                       <span>
-                        <CopyText text={intentData.intentHash} />
+                        <CopyText text={intentData?.intent_hash} />
                       </span>
                       {/* <span>
                     <ExternalArrowIcon />
@@ -99,18 +102,18 @@ const TransactionOverview = () => {
               <h4>Token</h4>
               <h5>
                 {formatToken(
-                  intentData?.sourceToken?.toLowerCase(),
-                  intentData?.sourceAmount
+                  intentData?.source_token?.toLowerCase(),
+                  intentData?.source_amount
                 )}{" "}
                 {/* {formatPrecision(intentData?.sourceAmount)} */}
-                {isStringValue(intentData?.sourceToken)}
+                {isStringValue(intentData?.source_token)}
               </h5>
             </div>
             <div className="list_item">
               <h4>Source Chain</h4>
               <div className="chain">
                 {/* <Image src={baseImg} alt="" /> */}
-                <h5>{isStringValue(intentData?.sourceChain)}</h5>
+                <h5>{isStringValue(intentData?.source_chain)}</h5>
               </div>
             </div>
             <div className="list_item">
@@ -118,10 +121,10 @@ const TransactionOverview = () => {
               <h5>
                 {intentData?.sender ? (
                   <>
-                    {intentData?.sourceAddress}
+                    {intentData?.source_address}
                     <div className="action_btns_copy">
                       <span>
-                        <CopyText text={intentData?.sourceAddress} />
+                        <CopyText text={intentData?.source_address} />
                       </span>
                     </div>
                   </>
@@ -140,22 +143,22 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Destination Tx Hash</h4>
               <h5>
-                {intentData?.solverTxHash ? (
+                {intentData?.solver_tx_hash ? (
                   <>
                     <span
                       className="list_item_pointer"
                       onClick={() =>
                         destinationClick(
-                          intentData?.targetChain,
-                          intentData?.solverTxHash
+                          intentData?.target_chain,
+                          intentData?.solver_tx_hash
                         )
                       }
                     >
-                      {intentData?.solverTxHash}
+                      {intentData?.solver_tx_hash}
                     </span>
                     <div className="action_btns_copy">
                       <span>
-                        <CopyText text={intentData?.solverTxHash} />
+                        <CopyText text={intentData?.solver_tx_hash} />
                       </span>
                       {/* <span>
                       <ExternalArrowIcon />
@@ -172,27 +175,27 @@ const TransactionOverview = () => {
               <h5>
                 {" "}
                 {formatToken(
-                  intentData?.targetToken?.toLowerCase(),
+                  intentData?.target_token?.toLowerCase(),
                   intentData?.amount
                 )}{" "}
                 {/* {formatPrecision(intentData?.amount)} */}
-                {isStringValue(intentData?.targetToken)}
+                {isStringValue(intentData?.target_token)}
               </h5>
             </div>
             <div className="list_item">
               <h4>Target Chain</h4>
               <div className="chain">
                 {/* <Image src={Arbitrum} alt="" /> */}
-                <h5>{isStringValue(intentData?.targetChain)}</h5>
+                <h5>{isStringValue(intentData?.target_chain)}</h5>
               </div>
             </div>
             <div className="list_item">
               <h4>Recipient Address</h4>
               <h5>
-                {isStringValue(intentData?.targetAddress)}
+                {isStringValue(intentData?.target_address)}
                 <div className="action_btns_copy">
                   <span>
-                    <CopyText text={intentData?.targetAddress} />
+                    <CopyText text={intentData?.target_address} />
                   </span>
                 </div>
               </h5>
@@ -213,41 +216,47 @@ const TransactionOverview = () => {
           <div className="listing">
             <div className="list_item">
               <h4>Transfer Type</h4>
-              <h5>{transferType(intentData?.transferType)}</h5>
+              <h5>{transferType(intentData?.transfer_type)}</h5>
             </div>
             <div className="list_item">
               <h4>Job ID</h4>
               <h5>
-                {intentData?.intentJobId ? `#${intentData.intentJobId}` : "-"}
+                {intentData?.intent_id ? `#${intentData.intent_id}` : "-"}
               </h5>
             </div>
             <div className="list_item">
               <h4>Solver</h4>
-              <h5>{isStringValue(intentData?.solverId)}</h5>
+              <h5>{isStringValue(intentData?.solver_id)}</h5>
             </div>
           </div>
           <div className="listing">
             <div className="status-log">
               <h4>Status Log</h4>
-              <div className="timeline">
-                <div className="timeline-item active">
+              <div className="timeline ">
+                <div
+                  className={`timeline-item ${statusClass(intentData?.status)}`}
+                >
                   <span></span>
                   <div className="list_item">
                     <h4>Submitted</h4>
                     <h5>{convertToDateTime(intentData?.created_at)}</h5>
                   </div>
                 </div>
-                <div className="timeline-item">
+                <div
+                  className={`timeline-item ${statusClass(intentData?.status)}`}
+                >
                   <span></span>
                   <div className="list_item">
                     <h4>Executed</h4>
-                    <h5>{convertToDateTime(intentData?.solverTxExecuted)}</h5>
+                    <h5>{convertToDateTime(intentData?.solver_tx_executed)}</h5>
                   </div>
                 </div>
-                <div className="timeline-item active">
+                <div
+                  className={`timeline-item ${statusClass(intentData?.status)}`}
+                >
                   <span></span>
                   <div>
-                    <h4>{checkStatus(intentData.status)}</h4>
+                    <h4>{checkStatus(intentData?.status)}</h4>
                     <h5>
                       {intentData?.status !== 2
                         ? convertToDateTime(intentData?.updated_at)

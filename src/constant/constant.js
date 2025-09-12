@@ -843,3 +843,19 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };
+
+export const noExponential = (num) => {
+  return Number(num).noExponents();
+};
+
+export const statusClass = (value) => {
+  switch (value) {
+    case 0:
+      return "failed";
+    case 1:
+      return "active";
+    case 2:
+    default:
+      return "";
+  }
+};

@@ -14,6 +14,7 @@ import {
   checkStatus,
   destinationTxn,
   formatToken,
+  noExponential,
 } from "@/utils/commonFunctions";
 import Link from "next/link";
 
@@ -83,14 +84,14 @@ const ChainAbstractionTransaction = () => {
       dataIndex: "intentTx",
       key: "intentTx",
       render: (_, record) =>
-        record?.intentHash ? (
+        record?.intent_hash ? (
           <div className="tx-cell">
             <span className="tx-link">
-              <Link href={`/chain-abstraction/${record?.intentHash}`}>
-                {getAddress(record?.intentHash)}
+              <Link href={`/chain-abstraction/${record?.intent_hash}`}>
+                {getAddress(record?.intent_hash)}
               </Link>
               <button className="copy_btn">
-                <CopyText text={record?.intentHash} />
+                <CopyText text={record?.intent_hash} />
               </button>
             </span>
             <div className="tx-date">
@@ -119,10 +120,10 @@ const ChainAbstractionTransaction = () => {
           <div className="token-cell-in">
             <p>
               {formatToken(
-                record?.sourceToken?.toLowerCase(),
-                record?.sourceAmount
+                record?.source_token?.toLowerCase(),
+                noExponential(record?.source_amount)
               )}{" "}
-              {record?.sourceToken}
+              {record?.source_token}
             </p>
             {/* <span className="chain-tag">
               <h3>{record?.sourceToken}</h3>
@@ -148,8 +149,11 @@ const ChainAbstractionTransaction = () => {
           </span> */}
           <div className="token-cell-in">
             <p>
-              {formatToken(record?.targetToken?.toLowerCase(), record?.amount)}{" "}
-              {record?.targetToken}
+              {formatToken(
+                record?.target_token?.toLowerCase(),
+                noExponential(record?.amount)
+              )}{" "}
+              {record?.target_token}
             </p>
             {/* <span className="chain-tag">
               <h3>{record?.targetToken}</h3>
@@ -173,20 +177,20 @@ const ChainAbstractionTransaction = () => {
       title: "Destination Transaction",
       key: "destTx",
       render: (_, record) =>
-        record?.solverTxHash ? (
+        record?.solver_tx_hash ? (
           <div className="tx-cell">
             <span className="tx-link">
               <Link
                 href="#"
                 onClick={(e) => {
                   e.preventDefault(); // Prevent navigation
-                  destinationClick(record?.targetChain, record?.solverTxHash);
+                  destinationClick(record?.targetChain, record?.solver_tx_hash);
                 }}
               >
-                {getAddress(record?.solverTxHash)}
+                {getAddress(record?.solver_tx_hash)}
               </Link>
               <button className="copy_btn">
-                <CopyText text={record?.solverTxHash} />
+                <CopyText text={record?.solver_tx_hash} />
               </button>
             </span>
             <div className="tx-date">
@@ -204,7 +208,7 @@ const ChainAbstractionTransaction = () => {
         <span
           className="view-action pointer"
           onClick={() => {
-            router.push(`/chain-abstraction/${record?.intentHash}`);
+            router.push(`/chain-abstraction/${record?.intent_hash}`);
           }}
         >
           View
