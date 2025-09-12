@@ -11,7 +11,7 @@ import getAccounts from "@/services/getAccounts";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
 
-const AccountsTxn = ({ order ,activeTab}) => {
+const AccountsTxn = ({ order, activeTab, onCountChange }) => {
   const [tokensTxData, setTokensTxData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
@@ -23,32 +23,38 @@ const AccountsTxn = ({ order ,activeTab}) => {
       const response = await getAccounts(currentPage, tableLimit, order);
       
       if (response && response?.data) {
-        setTokensTxData(response?.data?.result || []);
-        const count = Number(response?.data?.total_count?? 0) / tableLimit;
-        
-        setTotalPages(Math.ceil(count));
-        
+        const result = response?.data?.result || [];
+        const totalCount = Number(response?.data?.total_count ?? result.length);
+        setTokensTxData(result);
+        setTotalPages(Math.ceil(totalCount / tableLimit));
         setTokenStatus(SuccessStatus);
+        
+        onCountChange?.(totalCount);
       } else {
         setTokenStatus(ErrorStatus);
         setTokensTxData([]);
+        onCountChange?.(0);
       }
     } catch (err) {
       console.error("Error fetching accounts data:", err);
       setTokenStatus(ErrorStatus);
       setTokensTxData([]);
+      onCountChange?.(0);
     }
   };
 
   useEffect(() => {
     if (activeTab === "0") {
-    fetchData();
+      fetchData();
     }
   }, [currentPage, order]);
 
-  const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
-  const handlePrevious = () => currentPage > 1 && setCurrentPage(currentPage - 1);
-  const handleLast = () => currentPage < totalPages && setCurrentPage(totalPages);
+  const handleNext = () =>
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const handlePrevious = () =>
+    currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleLast = () =>
+    currentPage < totalPages && setCurrentPage(totalPages);
   const handleFirst = () => setCurrentPage(1);
 
   return (

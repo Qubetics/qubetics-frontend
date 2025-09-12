@@ -69,7 +69,6 @@ const page = ({ params }) => {
         setTxAddressStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
-        
       } else {
         throw Error("Error while getting address tx");
       }
@@ -337,9 +336,30 @@ const page = ({ params }) => {
                 <CSVLink
                   className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
                   filename="my-file.csv"
-                  data={
-                    activeTab === "0" ? txAddressData ?? [] : tokensTxData ?? []
-                  }
+                  data={(activeTab === "0"
+                    ? txAddressData ?? []
+                    : tokensTxData ?? []
+                  ).map((item) => ({
+                    id: item.id ?? "",
+                    txn: item.txhash ?? "",
+                    block: item.blocknumber ?? "",
+                    type: item.type ?? "",
+                    from: item.fromAddress ?? "",
+                    to: item.toAddress ?? "",
+                    gasWanted: item.gasWanted ?? "",
+                    gasUsed: item.gasUsed ?? "",
+                    txFee: item.txFee ?? "",
+                    nodeAddress: item.nodeAddress ?? "",
+                    txString: item.txString ?? "",
+                    timeStamp: item.timestamp
+                      ? new Date(item.timestamp)
+                          .toISOString()
+                          .replace("T", " ")
+                          .replace("Z", "")
+                      : "",
+                    value: item.value ?? "",
+                    status: item.status ?? "",
+                  }))}
                 >
                   <button className="exportBtn">
                     <ExportIcon />

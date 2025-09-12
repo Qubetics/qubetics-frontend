@@ -63,8 +63,8 @@ const txnColumns = [
     title: "Amount",
     dataIndex: "value",
     key: "value",
-    render: (value) => `${value ? value : 0} ${currencyName}`
-  },
+    render: (value) => `${value ? Number(value).toFixed(2) : "0.00"} ${currencyName}`
+  },  
   {
     title: "Fee",
     dataIndex: "txFee",

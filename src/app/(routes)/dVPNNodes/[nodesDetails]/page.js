@@ -53,12 +53,12 @@ const Page = () => {
   return (
     <>
       {nodeSummaryStatus === InitStatus ||
-      nodeSummaryStatus === FetchingStatus ? (
+        nodeSummaryStatus === FetchingStatus ? (
         <Loader />
       ) : (
         <div className="container nodeDetail">
           <div className="searchbar searchFilter">
-          <FilterResult/>
+            <FilterResult />
           </div>
           <Heading heading="Node Details" />
           <div className="nodeDetail_top">
@@ -74,13 +74,13 @@ const Page = () => {
               {" "}
               <CardsOnchain
                 text="Total Earnings"
-                balance={`${nodeSummary?.total_earning || 0} ${currencyName}`}
+                balance={`${Number(nodeSummary?.total_earning || 0).toFixed(2)} ${currencyName}`}
                 img={<TotalEarnings />}
                 title={`The total lifetime earnings generated in ${currencyName}`}
               />
               <CardsOnchain
                 text="24hrs Earnings"
-                balance={`${nodeSummary?.daily_earnings || 0} ${currencyName}`}
+                balance={`${Number(nodeSummary?.daily_earnings || 0).toFixed(2)} ${currencyName}`}
                 img={<HrsEarnings />}
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
               />
