@@ -252,7 +252,11 @@ const TransactionOverview = () => {
                   </div>
                 </div>
                 <div
-                  className={`timeline-item ${statusClass(intentData?.status)}`}
+                  className={`timeline-item ${
+                    intentData?.status !== 2
+                      ? statusClass(intentData?.status)
+                      : null
+                  }`}
                 >
                   <span></span>
                   <div>
@@ -260,7 +264,7 @@ const TransactionOverview = () => {
                     <h5>
                       {intentData?.status !== 2
                         ? convertToDateTime(intentData?.updated_at)
-                        : "-"}
+                        : null}
                     </h5>
                   </div>
                 </div>
