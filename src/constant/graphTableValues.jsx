@@ -270,7 +270,7 @@ export const transactionSummarycolumn = [
     key: "toAddress",
     render: (text) => (
       <>
-        {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
+        {text?.toAddress !== "N/A" && text?.toAddress !== "" && text?.toAddress !== null ? (
           text?.toAddress?.startsWith("0x") ||
             text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
@@ -692,23 +692,15 @@ export const addressDetailColumn = [
       ),
   },
 ];
-
 /* nodes list views table */
-export const nodesColumns = [
-  {
-    title: "Sr. No",
-    // dataIndex: "index",
-    key: "index",
-    render: (text) => text?.index,
-  },
-
+export const nodesColumns = (totalNodeAddress) =>[
   {
     title: "Node Name",
     key: "nodeName",
     render: (text) => (text?.nodeName ? capitalizeWord(text?.nodeName) : "-"),
   },
   {
-    title: "Node Address",
+    title: `Node Address (${totalNodeAddress})`,
     // dataIndex: "peerId",
     key: "peerId",
     render: (text) => {

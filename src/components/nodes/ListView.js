@@ -41,7 +41,7 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
   return (
     <div>
       <SkeletonTableWrapper
-        columns={nodesColumns}
+        columns={nodesColumns(totalNodes)}
         dataSource={paginatedData}
         isSkeleton={
           nodesStatus === FetchingStatus || nodesStatus === InitStatus
