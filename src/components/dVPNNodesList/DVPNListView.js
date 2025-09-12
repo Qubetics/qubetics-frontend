@@ -14,18 +14,6 @@ import { Datnotfound } from "../../../public/SvgIcons";
 import getNodeList from "@/services/getNodeList";
 import { getOffset } from "@/utils/commonFunctions";
 
-const nodesColumns = [
-  { title: "dVPN Address", dataIndex: "address", key: "address" },
-  { title: "Country", dataIndex: "country", key: "country" },
-  {
-    title: "Region",
-    dataIndex: "city",
-    key: "city",
-    render: (city, record) => {
-      return city !== "Unknown" ? city : record.country ? record.country : "Unknown";
-    },
-  }
-];
 
 const staticNodesData = [
   {
@@ -103,11 +91,22 @@ const DVPNListView = () => {
     setNodeStatus(FetchingStatus);
     fetchNodeList();
   }, [currentPage]);
-
+const nodesColumns = (totalNodes) => [
+  { title: `dVPN Address(${totalNodes})`, dataIndex: "address", key: "address" },
+  { title: "Country", dataIndex: "country", key: "country" },
+  {
+    title: "Region",
+    dataIndex: "city",
+    key: "city",
+    render: (city, record) => {
+      return city !== "Unknown" ? city : record.country ? record.country : "Unknown";
+    },
+  }
+];
   return (
     <div>
       <SkeletonTableWrapper
-        columns={nodesColumns}
+        columns={nodesColumns(totalNodes)}
         dataSource={nodeData?.nodes}
         isSkeleton={nodeStatus === InitStatus || nodeStatus === FetchingStatus}
         pagination={false}

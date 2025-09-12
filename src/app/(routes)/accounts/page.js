@@ -9,6 +9,7 @@ import ActiveUsers from "./ActiveUsers";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("0");
+  const [txnCount, setTxnCount] = useState(0);
   const [order, setOrder] = useState("desc");
 
   const handleTabChange = (key) => {
@@ -21,9 +22,9 @@ const Page = () => {
 
   const tabItems = [
     {
-      label: <span>Accounts</span>,
+      label: <span>Accounts ({txnCount})</span>,
       key: "0",
-      children: <AccountsTxn order={order} activeTab={activeTab} />,
+      children: <AccountsTxn order={order} activeTab={activeTab}  onCountChange={setTxnCount}  />,
     },
     {
       label: <span>Active Sessions</span>,
