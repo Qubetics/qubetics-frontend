@@ -9,14 +9,11 @@ import "../blocks/blocksummary.scss";
 import { TxInfo } from "./txInfo";
 
 const Transactionsummary = () => {
-
   const [txnData, setTxnData] = useState({});
 
- 
   return (
     <div className="blocksummary">
       <div className="container">
-       
         <FilterResult />
         <Heading heading="Transaction Summary" />
         <TxInfo txnData={txnData} />

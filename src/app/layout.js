@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${dmSans.className} darkTheme`}>
-         <noscript
+        <noscript
           dangerouslySetInnerHTML={{
             __html: `
             <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_G_TAG_MANAGER_ID}"

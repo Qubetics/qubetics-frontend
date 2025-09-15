@@ -36,6 +36,7 @@ export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
 export const CHAIN_ABSTRACTION_API_URL =
   process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
+export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
 export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
@@ -149,6 +150,7 @@ export const Routes = {
   STATS: "/charts",
   TOKEN_TXNS: "/tokentxns",
   TOKEN_ICON: "/tokenicon",
+  SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",
@@ -248,6 +250,12 @@ export function BlockchainHeaderFunction(currentPath) {
         currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
       label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
     },
+    {
+      key: "4",
+      value: "Solver Listing",
+      className: currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
+      label: <Link href="/solver-listing">Solver Listing</Link>,
+    },
     // {
     //   key: "3",
     //   value: "Validator",
@@ -255,16 +263,6 @@ export function BlockchainHeaderFunction(currentPath) {
     //   label: (
     //     <Link onClick={onClick} href="/validators">
     //       Validators
-    //     </Link>
-    //   ),
-    // },
-    // {
-    //   key: "4",
-    //   value: "Nodes",
-    //   className: currentPath === Routes.NODES ? "activeOptions" : "",
-    //   label: (
-    //     <Link onClick={onClick} href="/nodes">
-    //       Nodes
     //     </Link>
     //   ),
     // },

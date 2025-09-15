@@ -2,7 +2,9 @@
 import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
+  capitalizeFirstLetter,
   capitalizeWord,
+  checkStatus,
   formateTotalSupply,
   noExponential,
   toFixed,
@@ -1854,5 +1856,53 @@ export const tokensByAddressColumn = [
       ) : (
         <span className="failedtrans">{capitalizeWord(text)}</span>
       ),
+  },
+];
+
+export const solverColumn = [
+  {
+    id: "number",
+    title: "No.",
+    key: "number",
+    render: (_text, _record, index) => index + 1,
+  },
+  {
+    id: "solvername",
+    title: "Solver Name",
+    dataIndex: "solver_name",
+    key: "solver_name",
+  },
+  {
+    id: "nodeaddress",
+    title: "Node Address",
+    dataIndex: "solver_id",
+    key: "solver_id",
+    render: (text) => (
+      <>
+        <div className="iconandlink blockLinkItems">
+          <p>{getAddress(text)}</p>
+          <span>
+            <CopyText hoverText={"hash"} text={text}></CopyText>
+          </span>
+        </div>
+      </>
+    ),
+  },
+  // {
+  //   id: "location",
+  //   title: "Location",
+  //   dataIndex: "location",
+  //   key: "location",
+  // },
+  {
+    id: "status",
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (text) => (
+      <span className={`${text == "active" ? "active" : "inactive"}`}>
+        {capitalizeFirstLetter(text)}
+      </span>
+    ),
   },
 ];
