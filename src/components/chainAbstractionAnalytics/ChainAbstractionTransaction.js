@@ -84,14 +84,14 @@ const ChainAbstractionTransaction = () => {
       dataIndex: "intentTx",
       key: "intentTx",
       render: (_, record) =>
-        record?.intent_hash ? (
+        record?.intent_id ? (
           <div className="tx-cell">
             <span className="tx-link">
-              <Link href={`/chain-abstraction/${record?.intent_hash}`}>
-                {getAddress(record?.intent_hash)}
+              <Link href={`/chain-abstraction/${record?.intent_id}`}>
+                {getAddress(record?.intent_id)}
               </Link>
               <button className="copy_btn">
-                <CopyText text={record?.intent_hash} />
+                <CopyText text={record?.intent_id} />
               </button>
             </span>
             <div className="tx-date">
@@ -208,7 +208,7 @@ const ChainAbstractionTransaction = () => {
         <span
           className="view-action pointer"
           onClick={() => {
-            router.push(`/chain-abstraction/${record?.intent_hash}`);
+            router.push(`/chain-abstraction/${record?.intent_id}`);
           }}
         >
           View
