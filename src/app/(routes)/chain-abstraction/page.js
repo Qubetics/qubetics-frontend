@@ -26,7 +26,7 @@ const ChainAbstraction = () => {
         <SearchbarComponent />
       </div>
 
-      <div className="container">
+      <div className="container ">
         <div className="chain_abstraction_tabs">
           <Tabs
             defaultActiveKey="transaction"
