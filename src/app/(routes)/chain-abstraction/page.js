@@ -30,7 +30,7 @@ const ChainAbstraction = () => {
         <div className="chain_abstraction_tabs">
           <Tabs
             defaultActiveKey="transaction"
-            className="commontabs "
+            className="commontabs"
             items={items}
           />
         </div>
