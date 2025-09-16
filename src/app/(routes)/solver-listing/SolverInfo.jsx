@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import {
@@ -9,8 +8,8 @@ import {
   TopValidator,
 } from "../../../../public/SvgIcons";
 import "./solverListing.scss";
-import solverAbi from "../../../utils/solverAbi.json";
 import GetSolverSummary from "@/services/getSolverSummary";
+import { calculateLiquidityUSD, noExponential } from "@/utils/commonFunctions";
 
 export const SolverInfo = () => {
   const [totalSolver, setTotalSolver] = useState("");
@@ -22,28 +21,23 @@ export const SolverInfo = () => {
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
 
-  const getTopValidatorValue = async () => {
-    try {
-      if (currentChain === "") return router.replace("/");
-      const provider = new ethers.BrowserProvider(window.ethereum);
+  const fetchDetails = async () => {
+    if (currentChain === "") return router.replace("/");
 
-      const contract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_SOLVER_ADDRESS, // contract address
-        solverAbi, // ABI JSON
-        provider // or signer if writing
-      );
-      const result = await GetSolverSummary();
-      setTotalSolver(result?.data?.total_solvers);
-      setTotalTransaction(result?.data?.total_transactions);
-      const totalLiquidity = await contract.getAllChainLiquidities();
+    const result = await GetSolverSummary();
+    if (!result?.data) return;
 
-      setTotalLiquidity(totalLiquidity?.toString());
-    } catch (err) {
-      return console.error("Solver contract", err);
-    }
+    setTotalSolver(result?.data?.total_solvers || 0);
+    setTotalTransaction(result?.data?.total_transactions || 0);
+
+    const liquidity = await calculateLiquidityUSD(
+      result?.data?.total_liquidity
+    );
+
+    setTotalLiquidity(noExponential(liquidity));
   };
 
-  const cards = [
+  const solverCards = [
     {
       id: 1,
       text: "Total Solvers",
@@ -74,12 +68,12 @@ export const SolverInfo = () => {
   ];
 
   useEffect(() => {
-    getTopValidatorValue();
+    fetchDetails();
   }, []);
 
   return (
     <div className="cardContract cardblocks">
-      {cards?.map((item) => (
+      {solverCards?.map((item) => (
         <CardsOnchain
           key={item?.id}
           text={item?.text}

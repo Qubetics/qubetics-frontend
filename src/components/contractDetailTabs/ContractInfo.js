@@ -102,7 +102,6 @@ function ContractInfo() {
 
       <div className="contractInfo">
         <h3>Contract Information</h3>
-        
       </div>
       <Modal
         className="connectModal"
@@ -123,7 +122,6 @@ function ContractInfo() {
             />
             {isConnecting ? "Connecting..." : "MetaMask"}
           </li>
-          
         </ul>
         <p className="agreeWallet">
           By Connecting a wallet you agree to the Terms of service and Optimism

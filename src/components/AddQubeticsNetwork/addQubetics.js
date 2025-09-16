@@ -113,7 +113,11 @@ export function getDeviceType() {
   }
 }
 export const addQubetic = async () => {
-  trackEvent({ action: "Metamask_button_click", category: "Metamask", label: "Add Network" });
+  trackEvent({
+    action: "Metamask_button_click",
+    category: "Metamask",
+    label: "Add Network",
+  });
   try {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(

@@ -16,8 +16,10 @@ export const EXPLORER_METAMASK_NAVIGATION =
   process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
 export const EXPLORER_METAMASK_NETWORK_URL =
   process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const EXPLORER_META_NETWORK_CHAIN_ID =
-  process.env.NEXT_PUBLIC_QUBETICS_CHAINID;
+export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
+  process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
+  16
+);
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
 export const BLOCK_TIME = process.env.NEXT_PUBLIC_EXPLORER_BLOCK_TIME;
@@ -856,4 +858,9 @@ export const statusClass = (value) => {
     default:
       return "";
   }
+};
+
+export const CHAIN_ASSET_MAP = {
+  0: "btc",
+  9029: "tics",
 };

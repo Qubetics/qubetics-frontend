@@ -1,5 +1,6 @@
 import {
   BTC_EXPLORER_URL,
+  CHAIN_ASSET_MAP,
   ETH_EXPLORER_URL,
   TICS_EXPLORER_URL,
 } from "@/constant/constant";
@@ -253,3 +254,35 @@ export function capitalizeFirstLetter(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export const fetchTokenPrices = async () => {
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd"
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      const prices = {
+        btc: data?.bitcoin?.usd,
+        tics: data?.qubetics?.usd,
+      };
+
+      return prices;
+    }
+  } catch (error) {
+    console.error("Failed to fetch token prices:", error);
+  }
+};
+
+export const calculateLiquidityUSD = async (liquidities) => {
+  if (!liquidities || liquidities.length === 0) return 0;
+  const price = await fetchTokenPrices();
+
+  return liquidities.reduce((totalUSD, { chain_id, total }) => {
+    const asset = CHAIN_ASSET_MAP[chain_id];
+    if (!asset) return totalUSD;
+
+    return totalUSD + total * price[asset];
+  }, 0);
+};
