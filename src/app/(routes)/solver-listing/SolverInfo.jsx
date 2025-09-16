@@ -49,7 +49,7 @@ export const SolverInfo = () => {
     {
       id: 2,
       text: "Total Liquidity",
-      balance: totalLiquidity || 0,
+      balance: `$ ${totalLiquidity || 0}`,
       img: <TopValidator />,
       contract: false,
       // title:

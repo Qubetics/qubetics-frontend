@@ -45,7 +45,7 @@ const BlockSummary = () => {
   const fetchDetails = async () => {
     try {
       setLoading(true);
-      const result = await GetSolverListing(currentPage, tableLimit);
+      const result = await GetSolverListing(currentPage, tableLimit, "active");
       setLoading(false);
 
       if (result?.data?.solver_list?.length) {
