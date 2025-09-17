@@ -853,6 +853,7 @@ export const statusClass = (value) => {
     case 0:
       return "failed";
     case 1:
+    case 3:
       return "active";
     case 2:
     default:

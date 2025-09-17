@@ -117,9 +117,9 @@ const TransactionOverview = () => {
               </div>
             </div>
             <div className="list_item">
-              <h4>Sender Address</h4>
+              <h4>Source Address</h4>
               <h5>
-                {intentData?.sender ? (
+                {intentData?.source_address ? (
                   <>
                     {intentData?.source_address}
                     <div className="action_btns_copy">
@@ -219,7 +219,7 @@ const TransactionOverview = () => {
               <h5>{transferType(intentData?.transfer_type)}</h5>
             </div>
             <div className="list_item">
-              <h4>Job ID</h4>
+              <h4>Intent ID</h4>
               <h5>
                 {intentData?.intent_id ? `#${intentData.intent_id}` : "-"}
               </h5>
@@ -235,36 +235,56 @@ const TransactionOverview = () => {
               <div className="timeline ">
                 <div
                   className={`timeline-item ${
-                    intentData?.status == 2 ? "active" : ""
-                  } ${intentData?.status == 0 ? "failed" : ""}`}
+                    ![2].includes(intentData?.intent_update_status)
+                      ? statusClass(intentData?.intent_update_status)
+                      : ""
+                  }`}
                 >
-                  <span></span>
+                  <span
+                    className={`${intentData?.status == 2 ? "green" : ""}`}
+                  ></span>
                   <div className="list_item">
                     <h4>Submitted</h4>
                     <h5>{convertToDateTime(intentData?.created_at)}</h5>
                   </div>
                 </div>
                 <div
-                  className={`timeline-item ${statusClass(intentData?.status)}`}
+                  className={`timeline-item ${
+                    ![2, 3].includes(intentData?.intent_update_status)
+                      ? statusClass(intentData?.status)
+                      : ""
+                  }`}
                 >
                   <span></span>
                   <div className="list_item">
                     <h4>Executed</h4>
-                    <h5>{convertToDateTime(intentData?.solver_tx_executed)}</h5>
+                    <h5>
+                      {![2].includes(intentData?.intent_update_status)
+                        ? convertToDateTime(intentData?.solver_tx_executed)
+                        : null}
+                    </h5>
                   </div>
                 </div>
                 <div
                   className={`timeline-item ${
-                    intentData?.status !== 2
+                    ![2, 3].includes(intentData?.intent_update_status)
                       ? statusClass(intentData?.status)
-                      : null
+                      : ""
                   }`}
                 >
                   <span></span>
                   <div>
-                    <h4>{checkStatus(intentData?.status)}</h4>
+                    <h4
+                      className={`${
+                        ![2, 3].includes(intentData?.intent_update_status)
+                          ? statusClass(intentData?.intent_update_status)
+                          : ""
+                      }`}
+                    >
+                      {checkStatus(intentData?.intent_update_status)}
+                    </h4>
                     <h5>
-                      {intentData?.status !== 2
+                      {![2, 3].includes(intentData?.intent_update_status)
                         ? convertToDateTime(intentData?.updated_at)
                         : null}
                     </h5>

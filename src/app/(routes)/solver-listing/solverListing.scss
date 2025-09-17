@@ -140,18 +140,27 @@
 }
 .addresspagination {
   @media (max-width: 575px) {
-    :where(.css-dev-only-do-not-override-77tu7h).ant-tabs .ant-tabs-extra-content {
+    :where(.css-dev-only-do-not-override-77tu7h).ant-tabs
+      .ant-tabs-extra-content {
       display: flex;
       justify-content: flex-end;
       width: 100%;
     }
-    .commontabs .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab {
+    .commontabs
+      .ant-tabs-nav
+      .ant-tabs-nav-wrap
+      .ant-tabs-nav-list
+      .ant-tabs-tab {
       width: unset;
       min-width: unset;
       max-width: 200px;
       width: 100%;
     }
-    .commontabs .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab-active {
+    .commontabs
+      .ant-tabs-nav
+      .ant-tabs-nav-wrap
+      .ant-tabs-nav-list
+      .ant-tabs-tab-active {
       width: unset;
       min-width: unset;
       max-width: 200px;
@@ -177,9 +186,9 @@
   }
 }
 
-.inactive{
-  color:green
+.inactive {
+  color: #c78234 !important;
 }
-.active{
-  color: #c78234;
+.active {
+  color: green !important;
 }
