@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import { formatPrecision, pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
+import { pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
@@ -14,6 +14,7 @@ import {
   checkStatus,
   destinationTxn,
   formatToken,
+  getTokenIcon,
   noExponential,
 } from "@/utils/commonFunctions";
 import Link from "next/link";
@@ -119,11 +120,12 @@ const ChainAbstractionTransaction = () => {
 
           <div className="token-cell-in">
             <p>
+              {getTokenIcon(record?.source_token)}
               {formatToken(
                 record?.source_token?.toLowerCase(),
                 noExponential(record?.source_amount)
               )}{" "}
-              {record?.source_token}
+              {record?.source_token?.toUpperCase()}
             </p>
             {/* <span className="chain-tag">
               <h3>{record?.sourceToken}</h3>
@@ -149,11 +151,12 @@ const ChainAbstractionTransaction = () => {
           </span> */}
           <div className="token-cell-in">
             <p>
+              {getTokenIcon(record?.target_token)}
               {formatToken(
                 record?.target_token?.toLowerCase(),
                 noExponential(record?.amount)
               )}{" "}
-              {record?.target_token}
+              {record?.target_token?.toUpperCase()}
             </p>
             {/* <span className="chain-tag">
               <h3>{record?.targetToken}</h3>
@@ -165,8 +168,8 @@ const ChainAbstractionTransaction = () => {
     },
     {
       title: "Status",
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "intent_update_status",
+      key: "intent_update_status",
       render: (status) => (
         <p className={`status-tag-${checkStatus(status)}`}>
           {checkStatus(status)}

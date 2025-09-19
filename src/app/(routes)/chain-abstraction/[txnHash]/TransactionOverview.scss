@@ -212,10 +212,6 @@
         align-items: center;
         gap: 10px;
 
-        h5 {
-          margin-top: 0;
-        }
-
         @media (max-width: 1679px) {
           margin-bottom: 14px;
         }
@@ -255,7 +251,11 @@
         font-size: 16px;
         line-height: 20px;
         color: $white;
-
+        display: flex;
+        align-items: center;
+        img {
+          margin: 5px;
+        }
         @media (max-width: 1679px) {
           font-size: 14px;
           line-height: 18px;
@@ -285,8 +285,6 @@
           font-size: 12px;
         }
       }
-   
-   
 
       .timeline {
         display: flex;
@@ -308,12 +306,12 @@
               content: "";
               position: absolute;
               top: 0px;
-              left: 1px;               
+              left: 1px;
               height: 100%;
               transform: translate(6px, 40%);
-              width: 1px;               
+              width: 1px;
               background-image: url("/H-Line.svg");
-              background-repeat: no-repeat; 
+              background-repeat: no-repeat;
               background-size: contain;
               // background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='' stroke='%2310B981' stroke-width='2' stroke-dasharray='4%2c7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
             }
@@ -351,11 +349,11 @@
     }
   }
 }
-.active{
+.active {
   .timeline-item {
     &::before {
       background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='' stroke='%2310B981' stroke-width='2' stroke-dasharray='4%2c7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e") !important;
-}
+    }
   }
   &:not(:last-child) {
     &.active {
@@ -365,26 +363,26 @@
     }
   }
   span {
-    background-color: #10b981  !important;
+    background-color: #10b981 !important;
   }
 }
 
-.failed{
+.failed {
   .timeline-item {
     &::before {
-      background-image: url("/RedLine.svg");}
+      background-image: url("/RedLine.svg");
+    }
   }
 
-    &.failed {
-      &::before {
-        background:#ff0000 !important;
-      }
-    
+  &.failed {
+    &::before {
+      background: #ff0000 !important;
+    }
   }
-  span{
+  span {
     background-color: red !important;
   }
 }
-.green{
+.green {
   background-color: #10b981 !important;
 }

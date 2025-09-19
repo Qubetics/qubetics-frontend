@@ -196,6 +196,7 @@ export const checkStatus = (value) => {
     case 1:
       return "Confirm";
     case 2:
+    case 3:
       return "Pending";
     default:
       return "-";
@@ -285,4 +286,21 @@ export const calculateLiquidityUSD = async (liquidities) => {
 
     return totalUSD + total * price[asset];
   }, 0);
+};
+
+export const getTokenIcon = (type) => {
+  let url;
+  switch (type?.toLowerCase()) {
+    case "btc":
+      url = "/Bitcoin.svg";
+      break;
+    case "tics":
+      url = "/Qubetics.svg";
+      break;
+    default:
+      url = null;
+      break;
+  }
+
+  return url ? <img src={url} alt="icon" width={25} height={25} /> : null;
 };

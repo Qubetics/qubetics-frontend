@@ -20,6 +20,7 @@ import {
   checkStatus,
   destinationTxn,
   formatToken,
+  getTokenIcon,
   transferType,
 } from "@/utils/commonFunctions";
 
@@ -72,8 +73,12 @@ const TransactionOverview = () => {
 
         <div className="transacton_overview_card overview_listing">
           {intentData?.status || intentData?.status == 0 ? (
-            <h3 className={`status_${checkStatus(intentData.status)}`}>
-              {checkStatus(intentData.status)}
+            <h3
+              className={`status_${checkStatus(
+                intentData.intent_update_status
+              )}`}
+            >
+              {checkStatus(intentData.intent_update_status)}
             </h3>
           ) : null}
 
@@ -101,12 +106,13 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Token</h4>
               <h5>
+                {getTokenIcon(intentData?.source_token)}{" "}
                 {formatToken(
                   intentData?.source_token?.toLowerCase(),
                   intentData?.source_amount
                 )}{" "}
                 {/* {formatPrecision(intentData?.sourceAmount)} */}
-                {isStringValue(intentData?.source_token)}
+                {intentData?.source_token?.toUpperCase() || "-"}
               </h5>
             </div>
             <div className="list_item">
@@ -173,13 +179,13 @@ const TransactionOverview = () => {
             <div className="list_item">
               <h4>Token</h4>
               <h5>
-                {" "}
+                {getTokenIcon(intentData?.target_token)}{" "}
                 {formatToken(
                   intentData?.target_token?.toLowerCase(),
                   intentData?.amount
                 )}{" "}
                 {/* {formatPrecision(intentData?.amount)} */}
-                {isStringValue(intentData?.target_token)}
+                {intentData?.target_token?.toUpperCase() || "-"}
               </h5>
             </div>
             <div className="list_item">
