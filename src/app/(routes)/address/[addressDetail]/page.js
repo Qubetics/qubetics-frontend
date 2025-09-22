@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
@@ -36,6 +37,22 @@ import useEthereumBalance from "@/hooks/useGetBalance";
 import DvpnTransactions from "@/components/dVPN Transactions/DvpnTransactions";
 
 const page = ({ params }) => {
+  const generateFileName = (activeTab) => {
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .replace("T", "_")
+      .slice(0, -5);
+    const tabNames = {
+      0: "Total_Transactions",
+      1: "Token_Transactions",
+      2: "dVPN_Transactions",
+    };
+
+    const tabName = tabNames[activeTab] || "Transactions";
+    return `${tabName}_${timestamp}.csv`;
+  };
+
   const handleSelectApplication = (option) => setSelectedApplication(option);
   const [txAddressData, setTxAddressData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -145,6 +162,20 @@ const page = ({ params }) => {
   const onTabChange = (key) => {
     setActiveTab(key);
   };
+
+  // Get Current tab
+  const getCurrentTabData = () => {
+    switch (activeTab) {
+      case "0":
+        return txAddressData ?? [];
+      case "1":
+      case "2":
+        return tokensTxData ?? [];
+      default:
+        return [];
+    }
+  };
+
   const tabItems = [
     {
       label: <span>Total Transactions</span>,
@@ -202,7 +233,6 @@ const page = ({ params }) => {
     router.push(`${Routes.CONTRACT_DETAIL}${address}`);
     // window.open(`${Routes.CONTRACT_DETAIL}${address}`);
   };
-      console.log(txAddressData, "txAddressData")
 
   return (
     <div className="blocksummary">
@@ -334,12 +364,9 @@ const page = ({ params }) => {
             tabBarExtraContent={
               <div className="exportBtn">
                 <CSVLink
-                  className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient  rounded-[20px]"
-                  filename="my-file.csv"
-                  data={(activeTab === "0"
-                    ? txAddressData ?? []
-                    : tokensTxData ?? []
-                  ).map((item) => ({
+                  className="flex items-center gap-[16px] p-[10px_20px] bg-tone dark:bg-custom-gradient rounded-[20px]"
+                  filename={generateFileName(activeTab)}
+                  data={getCurrentTabData()?.map((item) => ({
                     id: item.id ?? "",
                     txn: item.txhash ?? "",
                     block: item.blocknumber ?? "",

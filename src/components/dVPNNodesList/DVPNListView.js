@@ -14,7 +14,6 @@ import { Datnotfound } from "../../../public/SvgIcons";
 import getNodeList from "@/services/getNodeList";
 import { getOffset } from "@/utils/commonFunctions";
 
-
 const staticNodesData = [
   {
     id: "node-1",
@@ -91,18 +90,34 @@ const DVPNListView = () => {
     setNodeStatus(FetchingStatus);
     fetchNodeList();
   }, [currentPage]);
-const nodesColumns = (totalNodes) => [
-  { title: `dVPN Address(${totalNodes})`, dataIndex: "address", key: "address" },
-  { title: "Country", dataIndex: "country", key: "country" },
-  {
-    title: "Region",
-    dataIndex: "city",
-    key: "city",
-    render: (city, record) => {
-      return city !== "Unknown" ? city : record.country ? record.country : "Unknown";
+  const nodesColumns = (totalNodes) => [
+    {
+      title: `dVPN Address(${totalNodes || 0})`,
+      dataIndex: "address",
+      key: "address",
     },
-  }
-];
+    { title: "Country", dataIndex: "country", key: "country" },
+    {
+      title: "Region",
+      dataIndex: "city",
+      key: "city",
+      render: (city, record) => {
+        return city !== "Unknown"
+          ? city
+          : record.country
+          ? record.country
+          : "Unknown";
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        return status === "active" ? "Active" : "Inactive";
+      },
+    },
+  ];
   return (
     <div>
       <SkeletonTableWrapper

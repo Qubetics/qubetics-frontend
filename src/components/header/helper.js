@@ -46,9 +46,9 @@ export const navItems = (isEVM) => {
     {
       type: "select",
       label: "dVPN",
-      matchRoutes: [Routes.DVPNNODES,Routes.ACCOUNTS],
+      matchRoutes: [Routes.DVPNNODES, Routes.ACCOUNTS, Routes.Tx_ADDRESS],
       optionsFn: DvpnNodeHeaderFunction,
-      showIfNative: !isEVM
+      showIfNative: !isEVM,
     },
     {
       type: "select",
@@ -77,7 +77,7 @@ export const getDVPNTypeKey = (type) => {
 };
 
 export const formatDateTime = (timestamp) => {
-  if(!timestamp)return'-';
+  if (!timestamp) return "-";
 
   const now = new Date();
   const checkedInDate = new Date(timestamp);

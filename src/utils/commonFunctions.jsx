@@ -129,7 +129,7 @@ export const capitalizeWord = (str) => {
       .split("_")
       .map((word) => word[0].toUpperCase() + word.slice(1))
       .join("_");
-  } else{
+  } else {
     // Default capitalization for other words
     modStr = name[0].toUpperCase() + name.slice(1);
   }
@@ -183,3 +183,19 @@ export const getOffset = (page = 1, limit = 10) => {
   if (page < 1) page = 1;
   return (page - 1) * limit;
 };
+
+export function formatStatus(value) {
+  if (!value) return "";
+
+  const lower = value.toLowerCase();
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+export function formatText(input) {
+  if (!input) return "";
+
+  const words = input.replace(/_/g, " ").toLowerCase().split(" ");
+  words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+
+  return words.join(" ");
+}

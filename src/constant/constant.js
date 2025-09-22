@@ -201,12 +201,17 @@ export const nodePerformanceData = (blockHeight) => {
   ];
 };
 export const tooltipContent = {
-  total_Dvpn_Provider:"The total count of all node providers participating in the dVPN network.",
-  active_provider:"Number of providers currently online and serving users in real time",
-  total_dvpn_user:"The overall number of unique users who have ever connected to the dVPN",
-  active_user:"Users who are currently connected and using the dVPN service.",
-  total_Dvpn_Transactions:"The cumulative number of transactions processed through the dVPN network.",
-  Current_Session_Count: "Total sessions started by users within the last 24 hours.",
+  total_Dvpn_Provider:
+    "The total count of all node providers participating in the dVPN network.",
+  active_provider:
+    "Number of providers currently online and serving users in real time",
+  total_dvpn_user:
+    "The overall number of unique users who have ever connected to the dVPN",
+  active_user: "Users who are currently connected and using the dVPN service.",
+  total_Dvpn_Transactions:
+    "The cumulative number of transactions processed through the dVPN network.",
+  Current_Session_Count:
+    "Total sessions started by users within the last 24 hours.",
   block_Height:
     "The number of blocks added to the blockchain since its inception, indicating the blockchain’s current length.",
   bonded_Coins: `The total amount of  ${currencyName} token bonded or staked in the network to secure it and earn rewards."`,
@@ -239,7 +244,9 @@ export function BlockchainHeaderFunction(currentPath) {
     {
       key: "2",
       value: "Transactions",
-      className: currentPath.startsWith(Routes.TRANSACTIONS) ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.TRANSACTIONS)
+        ? "activeOptions"
+        : "",
       label: (
         <Link
           onClick={() => onLinkClick("NavTransactions", "Transactions")}
@@ -280,12 +287,13 @@ export function NodeHeaderFunction(currentPath, onClick) {
 }
 
 export function DvpnNodeHeaderFunction(currentPath, onClick) {
-  
   const NodeHeader = [
     {
       key: "1",
       value: "Node",
-      className: currentPath.startsWith(Routes.DVPNNODES)? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.DVPNNODES)
+        ? "activeOptions"
+        : "",
       label: (
         <Link
           onClick={() => onClick("Nav_Nodes", "dVPNNodes")}
@@ -298,7 +306,11 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
     {
       key: "2",
       value: "Accounts",
-      className: currentPath === Routes.ACCOUNTS ? "activeOptions" : "",
+      className:
+        currentPath === Routes.ACCOUNTS ||
+        currentPath.startsWith(Routes.Tx_ADDRESS)
+          ? "activeOptions"
+          : "",
       label: (
         <Link
           onClick={() => onClick("Nav_Accounts", "Accounts")}
