@@ -125,7 +125,9 @@ const TransactionOverview = () => {
                   <h4>Source Chain</h4>
                   <div className="chain">
                     {/* <Image src={baseImg} alt="" /> */}
-                    <h5>{isStringValue(intentData?.source_chain)}</h5>
+                    <h5>
+                      {isStringValue(intentData?.source_chain?.toUpperCase())}
+                    </h5>
                   </div>
                 </div>
                 <div className="list_item">
@@ -199,7 +201,9 @@ const TransactionOverview = () => {
                   <h4>Target Chain</h4>
                   <div className="chain">
                     {/* <Image src={Arbitrum} alt="" /> */}
-                    <h5>{isStringValue(intentData?.target_chain)}</h5>
+                    <h5>
+                      {isStringValue(intentData?.target_chain?.toUpperCase())}
+                    </h5>
                   </div>
                 </div>
                 <div className="list_item">
@@ -238,7 +242,9 @@ const TransactionOverview = () => {
                 <div className="list_item">
                   <h4>Intent ID</h4>
                   <h5>
-                    {intentData?.intent_id ? `#${intentData.intent_id}` : "-"}
+                    {intentData?.intent_id
+                      ? truncateWithTooltip(`#${intentData.intent_id}`)
+                      : "-"}
                   </h5>
                 </div>
                 <div className="list_item">

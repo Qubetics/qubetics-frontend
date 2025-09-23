@@ -2,7 +2,7 @@ import { truncateString } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 
 export const truncateWithTooltip = (str, maxLength = 12) => {
-  if (!str) return "";
+  if (!str) return "-";
 
   // Check screen width
   const screenWidth = typeof window !== "undefined" ? window.innerWidth : 1200;

@@ -9,7 +9,11 @@ import {
 } from "../../../../public/SvgIcons";
 import "./solverListing.scss";
 import GetSolverSummary from "@/services/getSolverSummary";
-import { calculateLiquidityUSD, noExponential } from "@/utils/commonFunctions";
+import {
+  calculateLiquidityUSD,
+  formatMillionNumber,
+  noExponential,
+} from "@/utils/commonFunctions";
 
 export const SolverInfo = () => {
   const [totalSolver, setTotalSolver] = useState("");
@@ -49,7 +53,7 @@ export const SolverInfo = () => {
     {
       id: 2,
       text: "Total Liquidity",
-      balance: `$ ${totalLiquidity || 0}`,
+      balance: `$${formatMillionNumber(totalLiquidity) || 0}`,
       img: <TopValidator />,
       contract: false,
       // title:
