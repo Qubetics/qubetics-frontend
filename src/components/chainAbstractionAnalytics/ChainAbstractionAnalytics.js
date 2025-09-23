@@ -45,7 +45,7 @@ const ChainAbstractionAnalytics = () => {
   return (
     <div className="abstraction_analytics">
       <Row className="margin-30">
-        <Col lg={24}>
+        <Col lg={24} md={24} xs={24}>
           <RenderChartCard
             title="Transaction load / day"
             chartType="areaspline"

@@ -304,3 +304,11 @@ export const getTokenIcon = (type) => {
 
   return url ? <img src={url} alt="icon" width={25} height={25} /> : null;
 };
+
+export const truncateString = (str, front = 10, back = 10) => {
+  if (!str) return "";
+
+  if (str.length <= front + back) return str;
+
+  return `${str?.slice(0, front)}...${str?.slice(-back)}`;
+};

@@ -25,6 +25,7 @@
       font-size: 16px;
       margin-bottom: 24px;
       cursor: pointer;
+
       svg {
         margin-right: 6px;
       }
@@ -32,6 +33,63 @@
 
     .sub_heading {
       margin-bottom: 0;
+
+      &.top_heading {
+        display: flex;
+        align-items: center;
+
+        .status {
+          position: unset;
+          top: unset;
+          right: unset;
+          margin-left: 10px;
+          border-radius: 40px;
+          padding: 5px 15px;
+          font-weight: 300;
+          font-size: 14px;
+          width: max-content;
+
+          &Confirm {
+            font-weight: 300;
+            font-size: 14px;
+            border-radius: 40px;
+            padding: 5px 15px;
+            width: max-content;
+            background: #34c75933;
+            color: #34c759;
+            margin-left: 10px;
+          }
+
+          &Fail {
+            font-weight: 300;
+            font-size: 14px;
+            border-radius: 40px;
+            padding: 5px 15px;
+            width: max-content;
+            background: #c7343433;
+            color: #c73434;
+            margin-left: 10px;
+          }
+
+          &Pending {
+            font-weight: 300;
+            font-size: 14px;
+            border-radius: 40px;
+            padding: 5px 15px;
+            width: max-content;
+            background: #c77b3433;
+            color: #c78234;
+            margin-left: 10px;
+          }
+
+          @media (max-width: 575px) {
+            font-size: 12px;
+            top: 10px;
+            right: 10px;
+            border-radius: 20px;
+          }
+        }
+      }
     }
 
     .transaction_overview_head_buttons {
@@ -90,12 +148,20 @@
     }
 
     &.overview_listing {
+      >* {
+        width: 100%;
+      }
+
       @media (max-width: 767px) {
         padding-top: 40px;
       }
     }
-
-    > * {
+&.card-progress-status {
+  >* {
+    width: 100%;
+  }
+}
+    >* {
       width: 50%;
     }
 
@@ -120,16 +186,14 @@
       align-items: center;
       gap: 6px;
       margin-left: 6px;
+      @media (max-width:991px) {
+        margin-inline: 6px;
+      }
 
       svg {
         path {
           stroke: white;
         }
-      }
-
-      @media (max-width: 575px) {
-        gap: 3px;
-        margin-left: 3px;
       }
     }
 
@@ -142,6 +206,7 @@
       font-weight: 300;
       font-size: 14px;
       width: max-content;
+
       &_Confirm {
         position: absolute;
         top: 20px;
@@ -154,6 +219,7 @@
         background: #34c75933;
         color: #34c759;
       }
+
       &_Fail {
         position: absolute;
         top: 20px;
@@ -166,6 +232,7 @@
         background: #c7343433;
         color: #c73434;
       }
+
       &_Pending {
         position: absolute;
         top: 20px;
@@ -178,6 +245,7 @@
         background: #c77b3433;
         color: #c78234;
       }
+
       @media (max-width: 575px) {
         font-size: 12px;
         top: 10px;
@@ -194,14 +262,17 @@
           margin-bottom: 15px;
         }
       }
+
       &_pointer {
         cursor: pointer;
+
         &:hover {
           color: #9f53ff;
           transition: color 0.3s ease-out;
           text-decoration: underline;
         }
       }
+
       .chain {
         background: #201e22;
         border-radius: 40px;
@@ -253,9 +324,14 @@
         color: $white;
         display: flex;
         align-items: center;
+        // @media (max-width:767px) {
+        //   justify-content: space-between;
+        // }
+
         img {
           margin: 5px;
         }
+
         @media (max-width: 1679px) {
           font-size: 14px;
           line-height: 18px;
@@ -349,12 +425,14 @@
     }
   }
 }
+
 .active {
   .timeline-item {
     &::before {
       background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='' stroke='%2310B981' stroke-width='2' stroke-dasharray='4%2c7' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e") !important;
     }
   }
+
   &:not(:last-child) {
     &.active {
       &::before {
@@ -362,6 +440,7 @@
       }
     }
   }
+
   span {
     background-color: #10b981 !important;
   }
@@ -379,10 +458,12 @@
       background: #ff0000 !important;
     }
   }
+
   span {
     background-color: red !important;
   }
 }
+
 .green {
   background-color: #10b981 !important;
 }

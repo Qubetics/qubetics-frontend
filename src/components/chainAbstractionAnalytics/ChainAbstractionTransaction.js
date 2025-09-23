@@ -6,7 +6,12 @@ import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import { pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
+import {
+  BTC_EXPLORER_URL,
+  pageNo,
+  tableLimit,
+  TICS_EXPLORER_URL,
+} from "@/constant/constant"; // Default pagination constants
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
@@ -18,6 +23,7 @@ import {
   noExponential,
 } from "@/utils/commonFunctions";
 import Link from "next/link";
+import { ArrowUpicon } from "../../../public/SvgIcons";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -79,6 +85,33 @@ const ChainAbstractionTransaction = () => {
     routeTo && router.push(routeTo);
   };
 
+  const explorerHyperLInk = (value, txn) => {
+    let hyperLink;
+    let text;
+
+    switch (value.toLowerCase()) {
+      case "btc":
+        hyperLink = `${BTC_EXPLORER_URL}${txn}`;
+        text = "Bitcoin";
+        break;
+      case "tics":
+        hyperLink = `${TICS_EXPLORER_URL}tx/${txn}`;
+        text = "Qubetics";
+        break;
+      default:
+        hyperLink = "";
+        text = "";
+        break;
+    }
+
+    return txn ? (
+      <Link className="chain-tag" href={hyperLink}>
+        <h3>{text}</h3>
+        <ArrowUpicon />
+      </Link>
+    ) : null;
+  };
+
   const columns = [
     {
       title: "Intent Transaction",
@@ -117,20 +150,23 @@ const ChainAbstractionTransaction = () => {
               ""
             )}
           </span> */}
-
-          <div className="token-cell-in">
-            <p>
+          <div className="token-cell-in token-destination">
+            <span className="token-icons">
               {getTokenIcon(record?.source_token)}
-              {formatToken(
-                record?.source_token?.toLowerCase(),
-                noExponential(record?.source_amount)
-              )}{" "}
-              {record?.source_token?.toUpperCase()}
-            </p>
-            {/* <span className="chain-tag">
-              <h3>{record?.sourceToken}</h3>
-              <ArrowUpicon />
-            </span> */}
+            </span>
+            <div className="right-token-text">
+              <p>
+                {formatToken(
+                  record?.source_token?.toLowerCase(),
+                  noExponential(record?.source_amount)
+                )}{" "}
+                {record?.source_token?.toUpperCase()}
+              </p>
+              {/* <span className="chain-tag">
+                <h3>Explorer</h3>
+                <ArrowUpicon />
+              </span> */}
+            </div>
           </div>
         </div>
       ),
@@ -149,19 +185,24 @@ const ChainAbstractionTransaction = () => {
               ""
             )}
           </span> */}
-          <div className="token-cell-in">
-            <p>
+          <div className="token-cell-in token-destination">
+            <span className="token-icons">
               {getTokenIcon(record?.target_token)}
-              {formatToken(
-                record?.target_token?.toLowerCase(),
-                noExponential(record?.amount)
-              )}{" "}
-              {record?.target_token?.toUpperCase()}
-            </p>
-            {/* <span className="chain-tag">
-              <h3>{record?.targetToken}</h3>
-              <ArrowUpicon />
-            </span> */}
+            </span>
+            <div className="right-token-text">
+              <p>
+                {formatToken(
+                  record?.target_token?.toLowerCase(),
+                  noExponential(record?.amount)
+                )}{" "}
+                {record?.target_token?.toUpperCase()}
+              </p>
+              {explorerHyperLInk(record?.target_token, record?.solver_tx_hash)}
+              {/* <span className="chain-tag">
+                <h3>Explorer</h3>
+                <ArrowUpicon />
+              </span> */}
+            </div>
           </div>
         </div>
       ),

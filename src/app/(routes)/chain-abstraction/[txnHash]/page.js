@@ -22,7 +22,10 @@ import {
   formatToken,
   getTokenIcon,
   transferType,
+  truncateString,
 } from "@/utils/commonFunctions";
+import { truncateWithTooltip } from "@/components/commonComps/truncateWithTooltip/truncateWithTooltip";
+import { Col, Row } from "antd";
 
 const TransactionOverview = () => {
   const { txnHash } = useParams();
@@ -61,9 +64,20 @@ const TransactionOverview = () => {
               className="back_btn"
               onClick={() => router.push(Routes.CHAIN_ABSTRACTION)}
             >
-              <RightArrowIcon /> back
+              <RightArrowIcon /> Back
             </button>
-            <h2 className="sub_heading">Transaction Overview</h2>
+            <h2 className="sub_heading top_heading">
+              Intent Details{" "}
+              {intentData?.status || intentData?.status == 0 ? (
+                <h3
+                  className={`status${checkStatus(
+                    intentData.intent_update_status
+                  )}`}
+                >
+                  {checkStatus(intentData.intent_update_status)}
+                </h3>
+              ) : null}
+            </h2>
           </div>
           {/* <div className="transaction_overview_head_buttons">
             <Commonbtn text="View to base Explorer" />
@@ -72,233 +86,232 @@ const TransactionOverview = () => {
         </div>
 
         <div className="transacton_overview_card overview_listing">
-          {intentData?.status || intentData?.status == 0 ? (
-            <h3
-              className={`status_${checkStatus(
-                intentData.intent_update_status
-              )}`}
-            >
-              {checkStatus(intentData.intent_update_status)}
-            </h3>
-          ) : null}
-
-          <div className="listing">
-            <div className="list_item">
-              <h4>Intent Transaction Hash</h4>
-              <h5>
-                {intentData?.intent_hash ? (
-                  <>
-                    {intentData?.intent_hash}
-                    <div className="action_btns_copy">
-                      <span>
-                        <CopyText text={intentData?.intent_hash} />
-                      </span>
-                      {/* <span>
+          <Row className="w-100 margin-30">
+            <Col lg={12} md={12} sm={12} xs={24}>
+              <div className="listing">
+                <div className="list_item">
+                  <h4>Intent Transaction Hash</h4>
+                  <h5>
+                    {intentData?.intent_hash ? (
+                      <>
+                        {truncateWithTooltip(intentData?.intent_hash)}
+                        <div className="action_btns_copy">
+                          <span>
+                            <CopyText text={intentData?.intent_hash} />
+                          </span>
+                          {/* <span>
                     <ExternalArrowIcon />
                   </span> */}
-                    </div>
-                  </>
-                ) : (
-                  "-"
-                )}
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Token</h4>
-              <h5>
-                {getTokenIcon(intentData?.source_token)}{" "}
-                {formatToken(
-                  intentData?.source_token?.toLowerCase(),
-                  intentData?.source_amount
-                )}{" "}
-                {/* {formatPrecision(intentData?.sourceAmount)} */}
-                {intentData?.source_token?.toUpperCase() || "-"}
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Source Chain</h4>
-              <div className="chain">
-                {/* <Image src={baseImg} alt="" /> */}
-                <h5>{isStringValue(intentData?.source_chain)}</h5>
+                        </div>
+                      </>
+                    ) : (
+                      "-"
+                    )}
+                  </h5>
+                </div>
+                <div className="list_item">
+                  <h4>Token</h4>
+                  <h5>
+                    {getTokenIcon(intentData?.source_token)}{" "}
+                    {formatToken(
+                      intentData?.source_token?.toLowerCase(),
+                      intentData?.source_amount
+                    )}{" "}
+                    {/* {formatPrecision(intentData?.sourceAmount)} */}
+                    {intentData?.source_token?.toUpperCase() || "-"}
+                  </h5>
+                </div>
+                <div className="list_item">
+                  <h4>Source Chain</h4>
+                  <div className="chain">
+                    {/* <Image src={baseImg} alt="" /> */}
+                    <h5>{isStringValue(intentData?.source_chain)}</h5>
+                  </div>
+                </div>
+                <div className="list_item">
+                  <h4>Source Address</h4>
+                  <h5>
+                    {intentData?.source_address ? (
+                      <>
+                        {truncateWithTooltip(intentData?.source_address)}
+                        <div className="action_btns_copy">
+                          <span>
+                            <CopyText text={intentData?.source_address} />
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      "-"
+                    )}
+                  </h5>
+                </div>
+                <div className="list_item">
+                  <h4>Time Started</h4>
+                  <h5>{convertToDateTime(intentData?.created_at)}</h5>
+                </div>
               </div>
-            </div>
-            <div className="list_item">
-              <h4>Source Address</h4>
-              <h5>
-                {intentData?.source_address ? (
-                  <>
-                    {intentData?.source_address}
-                    <div className="action_btns_copy">
-                      <span>
-                        <CopyText text={intentData?.source_address} />
-                      </span>
-                    </div>
-                  </>
-                ) : (
-                  "-"
-                )}
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Time Started</h4>
-              <h5>{convertToDateTime(intentData?.created_at)}</h5>
-            </div>
-          </div>
-
-          <div className="listing">
-            <div className="list_item">
-              <h4>Destination Tx Hash</h4>
-              <h5>
-                {intentData?.solver_tx_hash ? (
-                  <>
-                    <span
-                      className="list_item_pointer"
-                      onClick={() =>
-                        destinationClick(
-                          intentData?.target_chain,
-                          intentData?.solver_tx_hash
-                        )
-                      }
-                    >
-                      {intentData?.solver_tx_hash}
-                    </span>
-                    <div className="action_btns_copy">
-                      <span>
-                        <CopyText text={intentData?.solver_tx_hash} />
-                      </span>
-                      {/* <span>
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={24}>
+              <div className="listing">
+                <div className="list_item">
+                  <h4>Destination Tx Hash</h4>
+                  <h5>
+                    {intentData?.solver_tx_hash ? (
+                      <>
+                        <span
+                          className="list_item_pointer"
+                          onClick={() =>
+                            destinationClick(
+                              intentData?.target_chain,
+                              intentData?.solver_tx_hash
+                            )
+                          }
+                        >
+                          {truncateWithTooltip(intentData?.solver_tx_hash)}
+                        </span>
+                        <div className="action_btns_copy">
+                          <span>
+                            <CopyText text={intentData?.solver_tx_hash} />
+                          </span>
+                          {/* <span>
                       <ExternalArrowIcon />
                     </span> */}
-                    </div>
-                  </>
-                ) : (
-                  "-"
-                )}
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Token</h4>
-              <h5>
-                {getTokenIcon(intentData?.target_token)}{" "}
-                {formatToken(
-                  intentData?.target_token?.toLowerCase(),
-                  intentData?.amount
-                )}{" "}
-                {/* {formatPrecision(intentData?.amount)} */}
-                {intentData?.target_token?.toUpperCase() || "-"}
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Target Chain</h4>
-              <div className="chain">
-                {/* <Image src={Arbitrum} alt="" /> */}
-                <h5>{isStringValue(intentData?.target_chain)}</h5>
-              </div>
-            </div>
-            <div className="list_item">
-              <h4>Recipient Address</h4>
-              <h5>
-                {isStringValue(intentData?.target_address)}
-                <div className="action_btns_copy">
-                  <span>
-                    <CopyText text={intentData?.target_address} />
-                  </span>
+                        </div>
+                      </>
+                    ) : (
+                      "-"
+                    )}
+                  </h5>
                 </div>
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Time Completed</h4>
-              <h5>
-                {intentData?.status !== 2
-                  ? convertToDateTime(intentData?.updated_at)
-                  : "-"}
-              </h5>
-            </div>
-          </div>
+                <div className="list_item">
+                  <h4>Token</h4>
+                  <h5>
+                    {getTokenIcon(intentData?.target_token)}{" "}
+                    {formatToken(
+                      intentData?.target_token?.toLowerCase(),
+                      intentData?.amount
+                    )}{" "}
+                    {/* {formatPrecision(intentData?.amount)} */}
+                    {intentData?.target_token?.toUpperCase() || "-"}
+                  </h5>
+                </div>
+                <div className="list_item">
+                  <h4>Target Chain</h4>
+                  <div className="chain">
+                    {/* <Image src={Arbitrum} alt="" /> */}
+                    <h5>{isStringValue(intentData?.target_chain)}</h5>
+                  </div>
+                </div>
+                <div className="list_item">
+                  <h4>Recipient Address</h4>
+                  <h5>
+                    {truncateWithTooltip(intentData?.target_address)}
+                    <div className="action_btns_copy">
+                      <span>
+                        <CopyText text={intentData?.target_address} />
+                      </span>
+                    </div>
+                  </h5>
+                </div>
+                <div className="list_item">
+                  <h4>Time Completed</h4>
+                  <h5>
+                    {intentData?.status !== 2
+                      ? convertToDateTime(intentData?.updated_at)
+                      : "-"}
+                  </h5>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
 
         <h2 className="sub_heading">Metadata</h2>
-        <div className="transacton_overview_card">
-          <div className="listing">
-            <div className="list_item">
-              <h4>Transfer Type</h4>
-              <h5>{transferType(intentData?.transfer_type)}</h5>
-            </div>
-            <div className="list_item">
-              <h4>Intent ID</h4>
-              <h5>
-                {intentData?.intent_id ? `#${intentData.intent_id}` : "-"}
-              </h5>
-            </div>
-            <div className="list_item">
-              <h4>Solver</h4>
-              <h5>{isStringValue(intentData?.solver_id)}</h5>
-            </div>
-          </div>
-          <div className="listing">
-            <div className="status-log">
-              <h4>Status Log</h4>
-              <div className="timeline ">
-                <div
-                  className={`timeline-item ${
-                    ![2].includes(intentData?.intent_update_status)
-                      ? statusClass(intentData?.intent_update_status)
-                      : ""
-                  }`}
-                >
-                  <span
-                    className={`${intentData?.status == 2 ? "green" : ""}`}
-                  ></span>
-                  <div className="list_item">
-                    <h4>Submitted</h4>
-                    <h5>{convertToDateTime(intentData?.created_at)}</h5>
-                  </div>
+        <div className="transacton_overview_card card-progress-status">
+          <Row className="w-100 margin-30">
+            <Col lg={12} md={12} sm={12} xs={24}>
+              <div className="listing">
+                <div className="list_item">
+                  <h4>Transfer Type</h4>
+                  <h5>{transferType(intentData?.transfer_type)}</h5>
                 </div>
-                <div
-                  className={`timeline-item ${
-                    ![2, 3].includes(intentData?.intent_update_status)
-                      ? statusClass(intentData?.status)
-                      : ""
-                  }`}
-                >
-                  <span></span>
-                  <div className="list_item">
-                    <h4>Executed</h4>
-                    <h5>
-                      {![2].includes(intentData?.intent_update_status)
-                        ? convertToDateTime(intentData?.solver_tx_executed)
-                        : null}
-                    </h5>
-                  </div>
+                <div className="list_item">
+                  <h4>Intent ID</h4>
+                  <h5>
+                    {intentData?.intent_id ? `#${intentData.intent_id}` : "-"}
+                  </h5>
                 </div>
-                <div
-                  className={`timeline-item ${
-                    ![2, 3].includes(intentData?.intent_update_status)
-                      ? statusClass(intentData?.status)
-                      : ""
-                  }`}
-                >
-                  <span></span>
-                  <div>
-                    <h4
-                      className={`${
-                        ![2, 3].includes(intentData?.intent_update_status)
+                <div className="list_item">
+                  <h4>Solver</h4>
+                  <h5>{isStringValue(intentData?.solver_id)}</h5>
+                </div>
+              </div>
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={24}>
+              <div className="listing">
+                <div className="status-log">
+                  <h4>Status Log</h4>
+                  <div className="timeline ">
+                    <div
+                      className={`timeline-item ${
+                        ![2].includes(intentData?.intent_update_status)
                           ? statusClass(intentData?.intent_update_status)
                           : ""
                       }`}
                     >
-                      {checkStatus(intentData?.intent_update_status)}
-                    </h4>
-                    <h5>
-                      {![2, 3].includes(intentData?.intent_update_status)
-                        ? convertToDateTime(intentData?.updated_at)
-                        : null}
-                    </h5>
+                      <span
+                        className={`${intentData?.status == 2 ? "green" : ""}`}
+                      ></span>
+                      <div className="list_item">
+                        <h4>Submitted</h4>
+                        <h5>{convertToDateTime(intentData?.created_at)}</h5>
+                      </div>
+                    </div>
+                    <div
+                      className={`timeline-item ${
+                        ![2, 3].includes(intentData?.intent_update_status)
+                          ? statusClass(intentData?.status)
+                          : ""
+                      }`}
+                    >
+                      <span></span>
+                      <div className="list_item">
+                        <h4>Executed</h4>
+                        <h5>
+                          {![2].includes(intentData?.intent_update_status)
+                            ? convertToDateTime(intentData?.solver_tx_executed)
+                            : null}
+                        </h5>
+                      </div>
+                    </div>
+                    <div
+                      className={`timeline-item ${
+                        ![2, 3].includes(intentData?.intent_update_status)
+                          ? statusClass(intentData?.status)
+                          : ""
+                      }`}
+                    >
+                      <span></span>
+                      <div>
+                        <h4
+                          className={`${
+                            ![2, 3].includes(intentData?.intent_update_status)
+                              ? statusClass(intentData?.intent_update_status)
+                              : ""
+                          }`}
+                        >
+                          {checkStatus(intentData?.intent_update_status)}
+                        </h4>
+                        <h5>
+                          {![2, 3].includes(intentData?.intent_update_status)
+                            ? convertToDateTime(intentData?.updated_at)
+                            : null}
+                        </h5>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            {/* <div className="list_item">
+                {/* <div className="list_item">
               <h4>Token Contract</h4>
               <h5>
                 {isStringValue(intentData.sourceToken)}
@@ -309,7 +322,9 @@ const TransactionOverview = () => {
                 </div>
               </h5>
             </div> */}
-          </div>
+              </div>
+            </Col>
+          </Row>
         </div>
 
         {/* <h2 className="sub_heading">Fee & Logs</h2> */}
