@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+      "@/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   }
 }

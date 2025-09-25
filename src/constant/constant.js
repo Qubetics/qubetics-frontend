@@ -8,7 +8,8 @@ export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const NATIVE_EXPLORER_API_URL = `${process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL}qubetics/`;
+export const NATIVE_EXPLORER_API_URL =
+  process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
 export const NATIVE_EXPLORER_SOCKET_URL =
   process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
@@ -16,8 +17,10 @@ export const EXPLORER_METAMASK_NAVIGATION =
   process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
 export const EXPLORER_METAMASK_NETWORK_URL =
   process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const EXPLORER_META_NETWORK_CHAIN_ID =
-  process.env.NEXT_PUBLIC_QUBETICS_CHAINID;
+export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
+  process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
+  16
+);
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
 export const BLOCK_TIME = process.env.NEXT_PUBLIC_EXPLORER_BLOCK_TIME;
@@ -35,6 +38,12 @@ export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
 export const G_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_G_TAG_MANAGER_ID;
+export const CHAIN_ABSTRACTION_API_URL =
+  process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
+export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
+export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
+export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
+export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -134,6 +143,7 @@ export const Routes = {
   HOME: "/",
   DASHBOARD: "/dashboard",
   BLOCKS: "/blocks",
+  CHAIN_ABSTRACTION: "/chain-abstraction",
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
@@ -152,6 +162,7 @@ export const Routes = {
   TOKEN_ICON: "/tokenicon",
   DVPNNODES: "/dVPNNodes",
   ACCOUNTS: "/accounts",
+  SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",
@@ -256,6 +267,29 @@ export function BlockchainHeaderFunction(currentPath) {
         </Link>
       ),
     },
+    {
+      key: "3",
+      value: "Chain Abstraction",
+      className:
+        currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+      label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
+    },
+    {
+      key: "4",
+      value: "Solver Listing",
+      className: currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
+      label: <Link href="/solver-listing">Solver Listing</Link>,
+    },
+    // {
+    //   key: "3",
+    //   value: "Validator",
+    //   className: currentPath === Routes.VALIDATORS ? "activeOptions" : "",
+    //   label: (
+    //     <Link onClick={onClick} href="/validators">
+    //       Validators
+    //     </Link>
+    //   ),
+    // },
   ];
   return blockchainHeader;
 }
@@ -807,4 +841,92 @@ export const DVPN_TYPE = {
   END_SUBSCRIPTION: "/qubetics.subscription.v3.MsgCancelSubscriptionRequest",
   START_SESSION: "/qubetics.subscription.v3.MsgStartSessionRequest",
   END_SESSION: "/qubetics.session.v3.MsgCancelSessionRequest",
+}
+export const isStringValue = (value) => {
+  if (!value) return "-";
+
+  return value;
+};
+
+const maxDecimalPrecision = 5;
+
+export const formatPrecision = (num, minDecimals, maxPrecision) => {
+  if (!num) return "0";
+
+  num =
+    Math.floor(num * Math.pow(10, maxDecimalPrecision) + 0.5) /
+    Math.pow(10, maxDecimalPrecision);
+  let numStr = num.toString();
+  let decimals = 0;
+  if (numStr.includes(".")) {
+    decimals = numStr.split(".")[1].length;
+  }
+  if (minDecimals && decimals < minDecimals) {
+    if (decimals === 0) numStr = numStr + ".";
+    for (let i = decimals; i < minDecimals; i++) {
+      numStr = numStr + "0";
+    }
+  }
+  if (decimals > 0) {
+    const numSplit = numStr.split(".");
+    const integerStr = numSplit[0];
+    const decimalStr = numSplit[1];
+    let nonZeroDecimals = (decimalStr.match(/[1-9][0-9]*/) || [""])[0];
+    const nonZeroDecimalCount = nonZeroDecimals.length;
+    const zeroDecimals = (decimalStr.match(/0*/) || [""])[0];
+    let decimals = zeroDecimals + nonZeroDecimals;
+    if (maxPrecision && integerStr !== "0" && decimals.length > maxPrecision) {
+      decimals = decimals.substring(0, maxPrecision);
+      numStr = `${integerStr}.${removeTrailingZeros(decimals, minDecimals)}`;
+    } else if (maxPrecision && nonZeroDecimalCount > maxPrecision) {
+      nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
+      numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
+        nonZeroDecimals,
+        minDecimals
+      )}`;
+    }
+  }
+
+  return numStr;
+};
+
+export const removeTrailingZeros = (numStr, minDecimals) => {
+  numStr = numStr.toString();
+  const numSplit = numStr.split(".");
+  if (numSplit.length < 2) return numStr;
+  const integerStr = numSplit[0];
+  const decimalStr = numSplit[1];
+  if (minDecimals && decimalStr.length <= minDecimals) return "";
+  const trailingZerosMatch = decimalStr.match(/0*$/);
+  if (!trailingZerosMatch) return "";
+  let trailingZerosStr = trailingZerosMatch[0];
+  const precisionDecimalStr = decimalStr.substring(0, trailingZerosMatch.index);
+  trailingZerosStr = trailingZerosStr.substring(
+    0,
+    (minDecimals ? minDecimals : 0) -
+      (decimalStr.length - trailingZerosStr.length)
+  );
+  return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
+};
+
+export const noExponential = (num) => {
+  return Number(num).noExponents();
+};
+
+export const statusClass = (value) => {
+  switch (value) {
+    case 0:
+      return "failed";
+    case 1:
+    case 3:
+      return "active";
+    case 2:
+    default:
+      return "";
+  }
+};
+
+export const CHAIN_ASSET_MAP = {
+  0: "btc",
+  9029: "tics",
 };

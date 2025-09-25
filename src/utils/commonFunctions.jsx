@@ -1,3 +1,10 @@
+import {
+  BTC_EXPLORER_URL,
+  CHAIN_ASSET_MAP,
+  ETH_EXPLORER_URL,
+  TICS_EXPLORER_URL,
+} from "@/constant/constant";
+
 Number.prototype.noExponents = function () {
   try {
     var data = String(this).split(/[eE]/);
@@ -20,6 +27,7 @@ Number.prototype.noExponents = function () {
 export const noExponential = (num) => {
   return Number(num).noExponents();
 };
+
 export function noExponentsValue(number) {
   if (number == 0) return 0;
   if (isNaN(number)) return 0; // Handle invalid input
@@ -95,7 +103,6 @@ export function simplifyNumber(input) {
     return "Invalid input. Please provide a valid number or numeric string.";
   }
 
-  // Convert the number to a string without exponential notation
   let simplifiedNumber = num.toString();
 
   // Check if the string representation contains an 'e' indicating exponential notation
@@ -199,3 +206,126 @@ export function formatText(input) {
 
   return words.join(" ");
 }
+export const checkStatus = (value) => {
+  switch (value) {
+    case 0:
+      return "Fail";
+    case 1:
+      return "Confirm";
+    case 2:
+    case 3:
+      return "Pending";
+    default:
+      return "-";
+  }
+};
+
+export const transferType = (value) => {
+  switch (value) {
+    case 0:
+      return "Contract";
+    case 1:
+      return "Token Transfer";
+    default:
+      return "-";
+  }
+};
+
+export const destinationTxn = (type, value) => {
+  switch (type) {
+    case "btc":
+      return `${BTC_EXPLORER_URL}tx/${value}`;
+    case "tics":
+      return `${TICS_EXPLORER_URL}tx/${value}`;
+    case "usdt":
+    case "usdc":
+    case "sepolia":
+      return `${ETH_EXPLORER_URL}tx/${value}`;
+    default:
+      return null;
+  }
+};
+
+export const formatToken = (type, value) => {
+  let calValue;
+
+  switch (type?.toLowerCase()) {
+    case "btc":
+      calValue = value / 1e8;
+      break;
+    case "eth":
+    case "tics":
+      calValue = value / 1e18;
+      break;
+    case "usdc":
+    case "usdt":
+      calValue = value / 1e6;
+      break;
+    default:
+      return "-";
+  }
+
+  return noExponential(calValue);
+};
+
+export function capitalizeFirstLetter(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const fetchTokenPrices = async () => {
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd"
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      const prices = {
+        btc: data?.bitcoin?.usd,
+        tics: data?.qubetics?.usd,
+      };
+
+      return prices;
+    }
+  } catch (error) {
+    console.error("Failed to fetch token prices:", error);
+  }
+};
+
+export const calculateLiquidityUSD = async (liquidities) => {
+  if (!liquidities || liquidities.length === 0) return 0;
+  const price = await fetchTokenPrices();
+
+  return liquidities.reduce((totalUSD, { chain_id, total }) => {
+    const asset = CHAIN_ASSET_MAP[chain_id];
+    if (!asset) return totalUSD;
+
+    return totalUSD + total * price[asset];
+  }, 0);
+};
+
+export const getTokenIcon = (type) => {
+  let url;
+  switch (type?.toLowerCase()) {
+    case "btc":
+      url = "/Bitcoin.svg";
+      break;
+    case "tics":
+      url = "/Qubetics.svg";
+      break;
+    default:
+      url = null;
+      break;
+  }
+
+  return url ? <img src={url} alt="icon" width={25} height={25} /> : null;
+};
+
+export const truncateString = (str, front = 10, back = 10) => {
+  if (!str) return "";
+
+  if (str.length <= front + back) return str;
+
+  return `${str?.slice(0, front)}...${str?.slice(-back)}`;
+};
