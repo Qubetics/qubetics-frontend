@@ -16,6 +16,7 @@ import Link from "next/link";
 import getAddress from "@/utils/getAddress";
 import Pagination from "../Pagination/Pagination";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import { formatStatus } from "@/utils/commonFunctions";
 
 const txnColumns = [
   {
@@ -53,18 +54,19 @@ const txnColumns = [
     render: (type) =>
       type
         ? type
-          .toLowerCase()
-          .split("_")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ")
+            .toLowerCase()
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
         : "-",
   },
   {
     title: "Amount",
     dataIndex: "value",
     key: "value",
-    render: (value) => `${value ? Number(value).toFixed(2) : "0.00"} ${currencyName}`
-  },  
+    render: (value) =>
+      `${value ? Number(value).toFixed(2) : "0.00"} ${currencyName}`,
+  },
   {
     title: "Fee",
     dataIndex: "txFee",
@@ -77,7 +79,7 @@ const txnColumns = [
     title: "Timestamp ",
     dataIndex: "timestamp",
     key: "timestamp",
-    render: (_,text) =>
+    render: (_, text) =>
       text?.timestamp ? (
         <span className="timestamp">
           {renderTime(text?.timestamp)}
@@ -97,7 +99,9 @@ const txnColumns = [
     dataIndex: "status",
     key: "status",
     render: (status) => (
-      <span className={`status ${[status.toLowerCase()]}`}>{status}</span>
+      <span className={`status ${[status.toLowerCase()]}`}>
+        {formatStatus(status)}
+      </span>
     ),
   },
 ];
@@ -107,7 +111,6 @@ const DVPNNodesDetails = ({ nodeName }) => {
   const [nodeData, setNodeData] = useState();
   const [transactionStatus, setNodeStatus] = useState(InitStatus); //init,fetching,success,error
   const [totalPages, setTotalPages] = useState(0);
-
 
   const fetchNodeDetails = async () => {
     try {

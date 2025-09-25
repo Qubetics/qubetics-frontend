@@ -4,6 +4,7 @@ import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeWord,
   formateTotalSupply,
+  formatText,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";
@@ -222,7 +223,7 @@ export const transactionSummarycolumn = [
   {
     title: "Type ",
     key: "type",
-    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
+    render: (text) => (text?.type ? formatText(text?.type) : "-"),
   },
   {
     title: "Block",
@@ -270,14 +271,16 @@ export const transactionSummarycolumn = [
     key: "toAddress",
     render: (text) => (
       <>
-        {text?.toAddress !== "N/A" && text?.toAddress !== "" && text?.toAddress !== null ? (
+        {text?.toAddress !== "N/A" &&
+        text?.toAddress !== "" &&
+        text?.toAddress !== null ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon blockLink"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -599,12 +602,12 @@ export const addressDetailColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -678,7 +681,7 @@ export const addressDetailColumn = [
     title: "Value",
     dataIndex: "value",
     key: "value",
-    render: (text) => `${text ? text : 0} TICS`
+    render: (text) => `${text ? text : 0} TICS`,
   },
   {
     title: "Status",
@@ -693,7 +696,7 @@ export const addressDetailColumn = [
   },
 ];
 /* nodes list views table */
-export const nodesColumns = (totalNodeAddress) =>[
+export const nodesColumns = (totalNodeAddress) => [
   {
     title: "Node Name",
     key: "nodeName",
@@ -888,8 +891,8 @@ export const contractTransactionsColumn = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord(text?.method)
           : text?.type
-            ? capitalizeWord(text?.type)
-            : "-"}
+          ? capitalizeWord(text?.type)
+          : "-"}
       </span>
     ),
   },
@@ -923,12 +926,12 @@ export const contractTransactionsColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Tooltip title={text?.toAddress}>
                   <Link
                     className="fromicon"
@@ -1026,17 +1029,17 @@ export const contractTransactionsColumn = [
           title={
             text?.value
               ? Number(
-                noExponential(
-                  Number(text?.value) / 10 ** Number(text?.decimal)
+                  noExponential(
+                    Number(text?.value) / 10 ** Number(text?.decimal)
+                  )
                 )
-              )
               : "0"
           }
         >
           {text?.value
             ? Number(
-              noExponential(Number(text?.value) / 10 ** Number(text?.decimal))
-            )
+                noExponential(Number(text?.value) / 10 ** Number(text?.decimal))
+              )
             : "0"}
         </Tooltip>
       </span>
@@ -1142,8 +1145,8 @@ export const HolderColumn = [
       <span className="">
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
           ? noExponential(
-            (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
-          ) + " %"
+              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
+            ) + " %"
           : "0%"}
       </span>
     ),
@@ -1244,7 +1247,7 @@ export const EventsColumn = [
                           {res?.name}
                         </p>
                         {res?.type?.includes("uint") &&
-                          res?.value?.includes("0x") ? (
+                        res?.value?.includes("0x") ? (
                           <span>{Number(res?.value)}</span>
                         ) : !res?.value && res?.value?.includes("0x") ? (
                           <Link href={`/address/${res?.value}`}>
@@ -1331,10 +1334,10 @@ export const TokenColumn = [
           ? text?.native == true
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
             : formateTotalSupply(
-              noExponential(
-                Number(text?.totalSupply) / 10 ** Number(text?.decimal)
+                noExponential(
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
+                )
               )
-            )
           : "-"}
       </span>
     ),
@@ -1519,8 +1522,8 @@ export const TokenTransferColumn = [
         {text?.input
           ? capitalizeWord(JSON.parse(text?.input)?.name)
           : text?.logs?.length > 0
-            ? JSON.parse(text?.logs)[0]?.name
-            : "-"}
+          ? JSON.parse(text?.logs)[0]?.name
+          : "-"}
       </div>
     ),
   },
@@ -1666,8 +1669,8 @@ export const validatorsColumn = [
       <span className="">
         {text?.commission || text?.commissionRate
           ? noExponential(
-            Number(text?.commission || text?.commissionRate).toFixed(4)
-          ) + " %"
+              Number(text?.commission || text?.commissionRate).toFixed(4)
+            ) + " %"
           : "-"}
       </span>
     ),
@@ -1769,12 +1772,12 @@ export const tokensByAddressColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -1999,17 +2002,15 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
     key: "accAddress",
     render: (_text, record) => {
       const accAddress = record?.base_session?.acc_address;
-  
+
       if (!accAddress) {
         return "-";
       }
-  
+
       return (
         <div className="iconandlink">
           <Tooltip title={accAddress}>
-            <Link href={`${Routes.Tx_ADDRESS}${accAddress}`}>
-              {accAddress}
-            </Link>
+            <Link href={`${Routes.Tx_ADDRESS}${accAddress}`}>{accAddress}</Link>
           </Tooltip>
           <span>
             <CopyText text={accAddress} />
@@ -2017,23 +2018,26 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
         </div>
       );
     },
-  },  
+  },
   {
     title: "Bandwidth Consumed",
     dataIndex: "base_session",
     key: "bandwidth",
     render: (base_session) => {
-      const totalUsed = Number(base_session?.download_bytes || 0) + Number(base_session?.upload_bytes || 0);
+      const totalUsed =
+        Number(base_session?.download_bytes || 0) +
+        Number(base_session?.upload_bytes || 0);
 
       const maxBytes = Number(base_session?.max_bytes || 0);
 
       if (!maxBytes) return "0%";
 
       const consumed = (totalUsed / maxBytes) * 100;
-      return <Tooltip title={`${noExponential(consumed)}%`}>
-        {`${consumed.toFixed(2)}% `}
-      </Tooltip>
-
+      return (
+        <Tooltip title={`${noExponential(consumed)}%`}>
+          {`${consumed.toFixed(2)}% `}
+        </Tooltip>
+      );
     },
   },
   {
@@ -2041,7 +2045,7 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
     dataIndex: "base_session",
     key: "duration",
     render: (base_session) => {
-      console.log("🚀 ~ base_session:", base_session)
+
       if (!base_session?.duration) return "-";
 
       // remove "s" and convert to number
@@ -2053,5 +2057,5 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
 
       return `${hours}h ${minutes}m ${seconds}s`;
     },
-  }
+  },
 ];

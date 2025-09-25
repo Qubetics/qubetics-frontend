@@ -41,6 +41,7 @@ const page = ({ params }) => {
     const timestamp = new Date()
       .toISOString()
       .replace(/[:.]/g, "-")
+      .replace("T", "_")
       .slice(0, -5);
     const tabNames = {
       0: "Total_Transactions",
