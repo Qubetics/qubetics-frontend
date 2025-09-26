@@ -20,6 +20,7 @@ import {
   checkStatus,
   destinationTxn,
   formatToken,
+  getExplorerUrl,
   getTokenIcon,
   transferType,
   truncateString,
@@ -46,11 +47,25 @@ const TransactionOverview = () => {
 
   if (loading) return <div>Loading...</div>;
 
-  const destinationClick = (type, value) => {
-    const routeTo = destinationTxn(type?.toLowerCase(), value);
-    routeTo && router.push(routeTo);
+    const handleTransactionClick = (network, transactionHash) => {
+    const explorerUrl = getExplorerUrl(network, transactionHash);
+    if (explorerUrl) {
+      window.open(explorerUrl, "_blank", "noopener,noreferrer");
+    } else {
+      console.warn(`No explorer URL available for network: ${network}`);
+      // Fallback: copy to clipboard
+      navigator.clipboard
+        .writeText(transactionHash)
+        .then(() => {
+          showToast.error(
+            `Transaction hash copied to clipboard: ${transactionHash}`
+          );
+        })
+        .catch(() => {
+          showToast.error(`Transaction hash: ${transactionHash}`);
+        });
+    }
   };
-
   return (
     <div className="transaction_overview">
       <div className="searchbar container">
@@ -163,7 +178,7 @@ const TransactionOverview = () => {
                         <span
                           className="list_item_pointer"
                           onClick={() =>
-                            destinationClick(
+                            handleTransactionClick(
                               intentData?.target_chain,
                               intentData?.solver_tx_hash
                             )

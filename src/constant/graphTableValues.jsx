@@ -2102,7 +2102,9 @@ export const solverColumn = [
     dataIndex: "status",
     key: "status",
     render: (text) => (
-      <span className={`${text === "active" ? "active" : "inactive"}`}>
+      <span
+        className={`${text === "active" ? "activeStatus" : "inactiveStatus"}`}
+      >
         {capitalizeFirstLetter(text)}
       </span>
     ),
