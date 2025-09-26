@@ -47,23 +47,10 @@ const TransactionOverview = () => {
 
   if (loading) return <div>Loading...</div>;
 
-    const handleTransactionClick = (network, transactionHash) => {
+  const handleTransactionClick = (network, transactionHash) => {
     const explorerUrl = getExplorerUrl(network, transactionHash);
     if (explorerUrl) {
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
-    } else {
-      console.warn(`No explorer URL available for network: ${network}`);
-      // Fallback: copy to clipboard
-      navigator.clipboard
-        .writeText(transactionHash)
-        .then(() => {
-          showToast.error(
-            `Transaction hash copied to clipboard: ${transactionHash}`
-          );
-        })
-        .catch(() => {
-          showToast.error(`Transaction hash: ${transactionHash}`);
-        });
     }
   };
   return (
