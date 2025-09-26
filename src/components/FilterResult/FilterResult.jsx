@@ -12,7 +12,6 @@ import {
   NavigateDown,
   NavigateUp,
 } from "../../../public/SvgIcons";
-
 const FilterResult = () => {
   const {
     searchText,
@@ -258,7 +257,6 @@ const FilterResult = () => {
       window.removeEventListener("scroll", preventOuterScroll);
     };
   }, [open]);
-  
   return (
     <div class="filter-result">
       <div className="searchbar searchFilter">
