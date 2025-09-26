@@ -265,7 +265,8 @@ export const formatToken = (type, value) => {
       return "-";
   }
 
-  return noExponential(calValue);
+  const formatted = parseFloat(calValue.toFixed(10));
+  return noExponential(formatted);
 };
 
 export function capitalizeFirstLetter(str) {
@@ -328,4 +329,36 @@ export const truncateString = (str, front = 10, back = 10) => {
   if (str.length <= front + back) return str;
 
   return `${str?.slice(0, front)}...${str?.slice(-back)}`;
+};
+
+export const getTooltipContent = (token, rawValue, formatted) => {
+  if (!token) return "";
+
+  const lowerToken = token.toLowerCase();
+
+  if (lowerToken === "btc" && rawValue) {
+    const btcPrice = parseFloat(rawValue) / 1e8;
+    return `${btcPrice.toFixed(8).replace(/\.?0+$/, "")} BTC`;
+  }
+  return `${formatted} ${token.toUpperCase()}`;
+};
+
+export const BLOCKCHAIN_EXPLORER_URLS = {
+  bitcoin: "https://mempool.space/testnet/tx/",
+  qubetics: "https://dev-abstraction.qubetics.work/tx/",
+};
+
+export const getExplorerUrl = (network, transactionHash) => {
+  const normalizedNetwork = (network || "").toLowerCase();
+
+  console.log("normalizedNetwork", normalizedNetwork);
+
+  if (normalizedNetwork === "bitcoin") {
+    return `${BLOCKCHAIN_EXPLORER_URLS.bitcoin}${transactionHash}`;
+  } else if (normalizedNetwork === "qubetics") {
+    return `${BLOCKCHAIN_EXPLORER_URLS.qubetics}${transactionHash}`;
+  }
+
+  // fallback
+  return "";
 };

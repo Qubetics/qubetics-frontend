@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Table, Tooltip } from "antd";
 import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
@@ -20,6 +20,7 @@ import {
   destinationTxn,
   formatToken,
   getTokenIcon,
+  getTooltipContent,
   noExponential,
 } from "@/utils/commonFunctions";
 import Link from "next/link";
@@ -139,73 +140,74 @@ const ChainAbstractionTransaction = () => {
     {
       title: "Source Token",
       key: "source",
-      render: (_, record) => (
-        <div className="token-cell">
-          {/* <span>
-            {record?.sourceToken === "btc" ? (
-              <BNBIcon />
-            ) : record?.sourceToken === "tics" ? (
-              <Image src={tics} alt="qubetics logo" width={30} height={30} />
-            ) : (
-              ""
-            )}
-          </span> */}
-          <div className="token-cell-in token-destination">
-            <span className="token-icons">
-              {getTokenIcon(record?.source_token)}
-            </span>
-            <div className="right-token-text">
-              <p>
-                {formatToken(
-                  record?.source_token?.toLowerCase(),
-                  noExponential(record?.source_amount)
-                )}{" "}
-                {record?.source_token?.toUpperCase()}
-              </p>
-              {/* <span className="chain-tag">
-                <h3>Explorer</h3>
-                <ArrowUpicon />
-              </span> */}
+      render: (_, record) => {
+        const rawValue = record?.source_amount;
+        const formatted = formatToken(
+          record?.source_token?.toLowerCase(),
+          noExponential(rawValue)
+        );
+
+        const tooltipContent = getTooltipContent(
+          record?.source_token,
+          rawValue,
+          formatted
+        );
+
+        return (
+          <div className="token-cell">
+            <div className="token-cell-in token-destination">
+              <span className="token-icons">
+                {getTokenIcon(record?.source_token)}
+              </span>
+              <div className="right-token-text">
+                <Tooltip title={tooltipContent} placement="top">
+                  <p style={{ cursor: "pointer" }}>
+                    {formatted} {record?.source_token?.toUpperCase()}
+                  </p>
+                </Tooltip>
+              </div>
             </div>
           </div>
-        </div>
-      ),
+        );
+      },
     },
     {
       title: "Destination Token",
       key: "destination",
-      render: (_, record) => (
-        <div className="token-cell">
-          {/* <span>
-            {record?.targetToken === "btc" ? (
-              <BNBIcon />
-            ) : record?.targetToken === "tics" ? (
-              <Image src={tics} alt="qubetics logo" width={30} height={30} />
-            ) : (
-              ""
-            )}
-          </span> */}
-          <div className="token-cell-in token-destination">
-            <span className="token-icons">
-              {getTokenIcon(record?.target_token)}
-            </span>
-            <div className="right-token-text">
-              <p>
-                {formatToken(
-                  record?.target_token?.toLowerCase(),
-                  noExponential(record?.amount)
-                )}{" "}
-                {record?.target_token?.toUpperCase()}
-              </p>
-              {explorerHyperLInk(record?.target_token, record?.solver_tx_hash)}
-              {/* <span className="chain-tag">
-                <h3>Explorer</h3>
-                <ArrowUpicon />
-              </span> */}
+      render: (_, record) => {
+        const rawValue = record?.amount;
+        const formatted = formatToken(
+          record?.target_token?.toLowerCase(),
+          noExponential(rawValue)
+        );
+
+        const tooltipContent = getTooltipContent(
+          record?.target_token,
+          rawValue,
+          formatted
+        );
+
+        return (
+          <div className="token-cell">
+            <div className="token-cell-in token-destination">
+              <span className="token-icons">
+                {getTokenIcon(record?.target_token)}
+              </span>
+              <div className="right-token-text">
+                <Tooltip title={tooltipContent} placement="top">
+                  <p style={{ cursor: "pointer" }}>
+                    {formatted} {record?.target_token?.toUpperCase()}
+                  </p>
+                </Tooltip>
+                {explorerHyperLInk(
+                  record?.target_token,
+                  record?.solver_tx_hash
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ),
+        );
+      },
     },
     {
       title: "Status",
@@ -252,7 +254,7 @@ const ChainAbstractionTransaction = () => {
         <span
           className="view-action pointer"
           onClick={() => {
-            router.push(`/chain-abstraction/${record?.intent_id}`);
+            router.push(`/chain-abstraction/${record?.intent_hash}`);
           }}
         >
           View
