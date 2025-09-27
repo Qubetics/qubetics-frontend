@@ -2852,6 +2852,15 @@ input:-webkit-autofill:active {
   }
 }
 
+.txnHashcopy,
+.fromCopy,
+.dvpnAddressCopy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
 .blockLinkItems {
   a {
     min-width: 140px !important;

@@ -1,11 +1,16 @@
 "use-client";
 import { EXPLORER_CURRENCY_NAME } from "@/constant/constant";
-import { capitalizeWord, noExponential } from "@/utils/commonFunctions";
+import {
+  capitalizeWord,
+  formatToTwoDecimals,
+  noExponential,
+} from "@/utils/commonFunctions";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
 import "./TransferInformation.scss";
+import { Tooltip } from "antd";
 
 const TransferInfo = ({ data }) => {
   let chain =
@@ -101,11 +106,17 @@ const TransferInfo = ({ data }) => {
           )}
         </div>
         <div className="information">
-          <p> Amount </p>
-          <span>
-            {data?.value ? noExponential(data?.value) : "0 "}{" "}
-            {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
-          </span>
+          <p>Amount</p>
+          <Tooltip
+            title={`${
+              data?.value ? data?.value : 0
+            } ${EXPLORER_CURRENCY_NAME.toUpperCase()}`}
+          >
+            <span>
+              {data?.value ? formatToTwoDecimals(data?.value) : "0"}{" "}
+              {EXPLORER_CURRENCY_NAME.toUpperCase()}
+            </span>
+          </Tooltip>
         </div>
       </div>
       <div className="transferinfo">
@@ -135,7 +146,7 @@ const TransferInfo = ({ data }) => {
           </span>
         </div>
         <div className="information">
-          <p> Method</p>
+          <p>Type</p>
           <span>{data?.type ? capitalizeWord(data?.type) : "-"}</span>
         </div>
         {

@@ -41,7 +41,7 @@ export default function Transactions({ setTxnData }) {
   const fetchData = async () => {
     try {
       setTransactionStatus(FetchingStatus);
-      let response = await getTransactions(pageid, tableLimit, order);
+      let response = await getTransactions(page, tableLimit, order);
       if (response?.error === false) {
         setTransactionData(response?.data?.transactions);
         setTxCount(response?.data?.count);

@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {
   ActiveUsers,
   HrsEarnings,
@@ -26,9 +26,13 @@ import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
 import Loader from "@/components/loader/Loader";
 import FilterResult from "@/components/FilterResult/FilterResult";
+import { formatToTwoDecimals } from "@/utils/commonFunctions";
+import { Tooltip } from "antd";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
+  const searchParams = useSearchParams();
+  const nodeStatus = searchParams.get("status") || "active"; // Get status url params
   const [nodeSummaryStatus, setsetNodeSummaryStatus] = useState(InitStatus);
   const [nodeSummary, setNodeSummary] = useState();
 
@@ -53,14 +57,14 @@ const Page = () => {
   return (
     <>
       {nodeSummaryStatus === InitStatus ||
-        nodeSummaryStatus === FetchingStatus ? (
+      nodeSummaryStatus === FetchingStatus ? (
         <Loader />
       ) : (
         <div className="container nodeDetail">
           <div className="searchbar searchFilter">
             <FilterResult />
           </div>
-          <Heading heading="Node Details" />
+          <Heading heading="Node Details" status={nodeStatus} />
           <div className="nodeDetail_top">
             <p>Address :</p>
             <strong>{nodeName}</strong>
@@ -74,13 +78,35 @@ const Page = () => {
               {" "}
               <CardsOnchain
                 text="Total Earnings"
-                balance={`${Number(nodeSummary?.total_earning || 0).toFixed(2)} ${currencyName}`}
+                balance={
+                  <Tooltip
+                    title={`${nodeSummary?.total_earning || 0} ${currencyName}`}
+                  >
+                    <span>
+                      {`${formatToTwoDecimals(
+                        nodeSummary?.total_earning
+                      )} ${currencyName}`}
+                    </span>
+                  </Tooltip>
+                }
                 img={<TotalEarnings />}
                 title={`The total lifetime earnings generated in ${currencyName}`}
               />
               <CardsOnchain
                 text="24hrs Earnings"
-                balance={`${Number(nodeSummary?.daily_earnings || 0).toFixed(2)} ${currencyName}`}
+                balance={
+                  <Tooltip
+                    title={`${
+                      nodeSummary?.daily_earnings || 0
+                    } ${currencyName}`}
+                  >
+                    <span>
+                      {`${formatToTwoDecimals(
+                        nodeSummary?.daily_earnings
+                      )} ${currencyName}`}
+                    </span>
+                  </Tooltip>
+                }
                 img={<HrsEarnings />}
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
               />

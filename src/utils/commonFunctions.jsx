@@ -199,3 +199,10 @@ export function formatText(input) {
 
   return words.join(" ");
 }
+
+export const formatToTwoDecimals = (value) => {
+  if (value === null || value === undefined || value === "") return "-";
+  const num = Number(value);
+  if (isNaN(num)) return "-";
+  return num.toFixed(2); // always 2 decimal places
+};
