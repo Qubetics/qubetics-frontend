@@ -1,4 +1,4 @@
-name: '[dev] Deploy v2 stable frontend'
+name: '[v2-stable] Deploy v2 stable frontend'
 
 on:
   push:
