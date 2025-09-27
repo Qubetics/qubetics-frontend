@@ -7,6 +7,7 @@ export default async function getTransactions(currentPage, limit, filterVal) {
     if (chain === null || chain === undefined) {
       chain = "EVM Chain";
     }
+    console.log(chain,NATIVE_EXPLORER_API_URL,"<<<<<<<Called!!!!!")
 
     const response =
       chain == "EVM Chain"

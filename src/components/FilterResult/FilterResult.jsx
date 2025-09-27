@@ -220,6 +220,7 @@ const FilterResult = () => {
         default:
           return router.push(`/address/${redirectAddress}`);
       }
+      
     } else {
       switch (activeTab) {
         case "transaction":
