@@ -329,3 +329,8 @@ export const truncateString = (str, front = 10, back = 10) => {
 
   return `${str?.slice(0, front)}...${str?.slice(-back)}`;
 };
+
+export const  isValidAlphaNumeric=(value)=> {
+  const isAlphaNumeric = /^[a-zA-Z0-9]+$/.test(value);
+  return value.length >= 7 && isAlphaNumeric ;
+}
