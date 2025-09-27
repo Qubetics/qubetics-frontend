@@ -3,6 +3,8 @@ import getSearchingValue from "@/services/getGlobalSearch";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
+import getChainAbstractionSearch from "@/services/getChainAbstractionSearch";
+import { isValidAlphaNumeric } from "@/utils/commonFunctions";
 // import useToggleChainContext from "./useToggleChainContext";
 
 export default function useGlobalSearch(page = 1) {
@@ -32,6 +34,8 @@ export default function useGlobalSearch(page = 1) {
       ? ["account"]
       : data?.addresses
       ? ["addresses"]
+      : data?.intentList
+      ? ["intentList"]
       : [];
   };
 
@@ -90,6 +94,17 @@ export default function useGlobalSearch(page = 1) {
             ],
           },
         };
+        
+        case "intentList":
+        return {
+          results: {
+            [key]: [
+              {
+                address: dataKey[0]?.intent_hash,
+              },
+            ],
+          },
+        };
     }
   };
 
@@ -98,9 +113,22 @@ export default function useGlobalSearch(page = 1) {
     try {
       const response = await getSearchingValue(debounce);
       if (response.error) {
-        setErr(true);
-        setSearchResult([]);
-        setDynamicTab([]);
+        if (isValidAlphaNumeric(debounce)) {
+          const result = await getChainAbstractionSearch(debounce);
+          if (result.error) {
+            setErr(true);
+            setSearchResult([]);
+            setDynamicTab([]);
+          } else {
+            setErr(false);
+            setSearchResult(result?.data ?getResponse(result?.data) :[]);
+            setDynamicTab(getType(result?.data));
+          }
+        } else {
+          setErr(true);
+          setSearchResult([]);
+          setDynamicTab([]);
+        }
       } else {
         setDynamicTab(
           chain === "EVM Chain"
