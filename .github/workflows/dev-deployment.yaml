@@ -6,7 +6,7 @@ on:
       - 'dev'
 
 jobs:
-  dev_deploy_explorer_frontend:
+  dev_explorer_frontend:
     uses: ./.github/workflows/explorer-frontend.yaml
     with:
       SWR_ORGANIZATION: dev-qubetics
