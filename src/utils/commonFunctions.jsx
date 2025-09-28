@@ -362,3 +362,7 @@ export const getExplorerUrl = (network, transactionHash) => {
   // fallback
   return "";
 };
+export const  isValidAlphaNumeric=(value)=> {
+  const isAlphaNumeric = /^[a-zA-Z0-9]+$/.test(value);
+  return value.length >= 7 && isAlphaNumeric ;
+}

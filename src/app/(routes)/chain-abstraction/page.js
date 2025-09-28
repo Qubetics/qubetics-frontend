@@ -5,6 +5,7 @@ import SearchbarComponent from "@/components/search/SearchbarComponent";
 import ChainAbstractionAnalytics from "@/components/chainAbstractionAnalytics/ChainAbstractionAnalytics";
 import ChainAbstractionTransaction from "@/components/chainAbstractionAnalytics/ChainAbstractionTransaction";
 import "./chain-abstraction.scss";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const ChainAbstraction = () => {
   const items = [
@@ -23,7 +24,7 @@ const ChainAbstraction = () => {
   return (
     <section className="chain_abstraction">
       <div className="searchbar container">
-        <SearchbarComponent />
+        <FilterResult />
       </div>
 
       <div className="container ">

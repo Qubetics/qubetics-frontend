@@ -217,6 +217,8 @@ const FilterResult = () => {
           return router.push(`/address/${redirectAddress}`);
         case "account":
           return router.push(`/account/${redirectAddress}`);
+        case "intentList":
+          return router.push(`/chain-abstraction/${redirectAddress}`);
         default:
           return router.push(`/address/${redirectAddress}`);
       }
@@ -237,6 +239,8 @@ const FilterResult = () => {
           return `/address/${selectedAddress}`;
         case "account":
           return `/account/${selectedAddress}`;
+        case "intentList":
+          return `/chain-abstraction/${selectedAddress}`;
         default:
           return `/address/${selectedAddress}`;
       }

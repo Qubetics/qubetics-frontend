@@ -27,6 +27,7 @@ import {
 } from "@/utils/commonFunctions";
 import { truncateWithTooltip } from "@/components/commonComps/truncateWithTooltip/truncateWithTooltip";
 import { Col, Row } from "antd";
+import FilterResult from "@/components/FilterResult/FilterResult";
 
 const TransactionOverview = () => {
   const { txnHash } = useParams();
@@ -56,7 +57,7 @@ const TransactionOverview = () => {
   return (
     <div className="transaction_overview">
       <div className="searchbar container">
-        <SearchbarComponent />
+      <FilterResult />
       </div>
 
       <div className="container">

@@ -9,6 +9,7 @@ const {
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
+  
   return [
     {
       type: "link",
@@ -81,6 +82,7 @@ export const formatDateTime = (timestamp) => {
   if (!timestamp) return "-";
 
   const now = new Date();
+
   const checkedInDate = new Date(timestamp);
 
   // Calculate the difference in milliseconds
