@@ -10,7 +10,7 @@ const ChainAbstraction = () => {
   const items = [
     {
       key: "transaction",
-      label: "Transaction",
+      label: "Transactions",
       children: <ChainAbstractionTransaction />,
     },
     {
