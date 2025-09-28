@@ -7,15 +7,16 @@ import { Col, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
   AvgBlockTime,
+  FireIcon,
   Marcketcap,
   Marcketcapdark,
-  RoundArrow,
-  RoundArrowdark,
   TickPriceIcon,
+  TotalAccountIcon,
 } from "../../../../public/SvgIcons";
 
 import { useThemeData } from "@/components/contexts/theme_context";
 import getQubeticsPrice from "@/services/getQubeticsPrice";
+import { useMediaQuery } from "react-responsive";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
 import { currencyName } from "@/constant/constant";
@@ -29,7 +30,7 @@ const OnChainMetrics = ({ stats }) => {
   useEffect(() => {
     getPrice();
   }, []);
- 
+
   const getPrice = async () => {
     try {
       let response = await getQubeticsPrice();
@@ -42,8 +43,8 @@ const OnChainMetrics = ({ stats }) => {
   return (
     <div className="cardSec onchain_sec">
       <div className="dashcardAnimation">
-        <Row gutter={[30, 16]} className="onchainrowdata">
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+        <Row gutter={[10, 16]} className="onchainrowdata">
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               text={`${currencyName} Price`}
               balance={price ? "$" + Number(price).toFixed(6) + " " : "$0"}
@@ -51,7 +52,7 @@ const OnChainMetrics = ({ stats }) => {
               title="The current market price of 1 Qubetics (TICS) in USD."
             />
           </Col>
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={5}>
             <CardsOnchain
               text="Last Finalized Block"
               balance={
@@ -69,25 +70,36 @@ const OnChainMetrics = ({ stats }) => {
             />
           </Col>
 
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
-              text="Transactions"
+              text="Burn Total"
               balance={
-                webSocketData?.onChainMetric?.totalTx ||
-                stats?.total_transactions
-                  ? Number(
-                      webSocketData?.onChainMetric?.totalTx ||
-                        stats?.total_transactions
-                    ).toLocaleString()
-                  : 0
+                <Tooltip title={Number(stats?.burnedAmount)}>
+                  {formatMillionNumber(Number(stats?.burnedAmount))}
+                </Tooltip>
               }
-              img={
-                isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />
-              }
-              title="The total number of transactions processed on the blockchain."
+              img={<FireIcon />}
+              title="Total amount of TICS burned permanently and removed from circulation."
             />
           </Col>
-          <Col xs={24} md={12} lg={12} xl={6} xxl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
+            <CardsOnchain
+              text="Community Pool"
+              balance={
+                <Tooltip
+                  title={Number(stats?.community_pool) / 10 ** Number(18)}
+                >
+                  {formatMillionNumber(
+                    Number(stats?.community_pool) / 10 ** Number(18)
+                  ) || 0}{" "}
+                  TICS
+                </Tooltip>
+              }
+              img={<TotalAccountIcon />}
+              title="The total amount of tokens currently available in the community pool for governance and development purposes."
+            />
+          </Col>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               addicon="true"
               iconCopy="true"
