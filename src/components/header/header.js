@@ -91,7 +91,7 @@ function Header() {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (
-      pathname === Routes.FAUCET ||
+      // pathname === Routes.FAUCET ||
       pathname === Routes.NODES ||
       pathname === Routes.TRANSACTIONS ||
       pathname === Routes.BLOCKS ||
@@ -132,7 +132,7 @@ function Header() {
       "/faucet": "Faucet",
       "/address": "Blockchain",
       "/dVPNNodes": "dVPNNodes",
-      "/accounts": "Accounts"
+      "/accounts": "Accounts",
     };
 
     // Match exact paths or dynamic segments
