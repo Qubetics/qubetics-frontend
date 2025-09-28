@@ -108,8 +108,8 @@ function Page() {
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
               <p className="discription">
-                Each address is eligible to receive <span>20 `${currencyName}` Coins</span>{" "}
-                per day.
+                Each address is eligible to receive{" "}
+                <span>20 `${currencyName}` Coins</span> per day.
               </p>
 
               <div>

@@ -841,7 +841,7 @@ export const DVPN_TYPE = {
   END_SUBSCRIPTION: "/qubetics.subscription.v3.MsgCancelSubscriptionRequest",
   START_SESSION: "/qubetics.subscription.v3.MsgStartSessionRequest",
   END_SESSION: "/qubetics.session.v3.MsgCancelSessionRequest",
-}
+};
 export const isStringValue = (value) => {
   if (!value) return "-";
 

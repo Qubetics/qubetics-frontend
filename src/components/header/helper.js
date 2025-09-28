@@ -9,7 +9,6 @@ const {
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
-  
   return [
     {
       type: "link",
@@ -69,7 +68,8 @@ export const navItems = (isEVM) => {
       href: Routes.FAUCET,
       matchRoutes: [Routes.FAUCET],
       showIfEVM: isEVM,
-      showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
+      showIfFaucet: isEVM,
+      // showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
     },
   ];
 };
