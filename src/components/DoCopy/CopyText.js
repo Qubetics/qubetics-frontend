@@ -30,9 +30,11 @@ export default function CopyText({ text, hoverText }) {
         title={
           copied
             ? " Copied"
-            : hoverText == "hash"
+            : hoverText === "Node Address"
+            ? "Copy Node Address"
+            : hoverText === "hash"
             ? "Copy Hash"
-            : hoverText == "block"
+            : hoverText === "block"
             ? "Copy Block"
             : "Copy"
         }

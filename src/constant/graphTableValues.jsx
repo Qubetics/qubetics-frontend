@@ -2084,7 +2084,7 @@ export const solverColumn = [
         <div className="iconandlink blockLinkItems">
           <p>{getAddress(text)}</p>
           <span>
-            <CopyText hoverText={"hash"} text={text}></CopyText>
+            <CopyText hoverText={"Node Address"} text={text}></CopyText>
           </span>
         </div>
       </>
@@ -2102,7 +2102,9 @@ export const solverColumn = [
     dataIndex: "status",
     key: "status",
     render: (text) => (
-      <span className={`${text === "active" ? "active" : "inactive"}`}>
+      <span
+        className={`${text === "active" ? "activeStatus" : "inactiveStatus"}`}
+      >
         {capitalizeFirstLetter(text)}
       </span>
     ),
