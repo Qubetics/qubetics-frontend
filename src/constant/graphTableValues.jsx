@@ -223,7 +223,9 @@ export const transactionSummarycolumn = [
         >
           {getAddress(text)}
         </Link>
-        <CopyText text={text} />
+        <span className="spancopy">
+          <CopyText text={text} />
+        </span>
       </div>
     ),
   },
@@ -2210,7 +2212,10 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
       <div className="iconandlink">
         {text?.accAddress ? (
           <Tooltip title={text?.accAddress}>
-            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`} style={{minWidth: 420}}>
+            <Link
+              href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}
+              style={{ minWidth: 420 }}
+            >
               {text?.accAddress}{" "}
             </Link>
           </Tooltip>
@@ -2316,7 +2321,7 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
       return `${hours}h ${minutes}m ${seconds}s`;
     },
   },
-]
+];
 export const solverColumn = [
   {
     id: "number",

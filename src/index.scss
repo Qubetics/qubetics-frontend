@@ -2905,6 +2905,11 @@ input:-webkit-autofill:active {
   align-items: center;
   gap: 6px;
   white-space: nowrap;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .blockLinkItems {
