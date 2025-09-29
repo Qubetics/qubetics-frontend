@@ -360,7 +360,7 @@ export const getTooltipContent = (token, rawValue, formatted) => {
 
 export const BLOCKCHAIN_EXPLORER_URLS = {
   bitcoin: "https://mempool.space/testnet/tx/",
-  qubetics: "https://dev-abstraction.qubetics.work/tx/",
+  qubetics: "https://testnet-v2.qubetics.work/tx/",
 };
 
 export const getExplorerUrl = (network, transactionHash) => {
