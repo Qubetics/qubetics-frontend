@@ -115,16 +115,16 @@ const QubeticNetworkNode = ({ nodesData }) => {
               <div className="map-container">
                 <div className="countryBox">
                   <div className="innerBox">
-                    <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
-                    <p>Txns (Last 24hrs)</p>
-                  </div>
-                  <div className="innerBox">
                     <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
                     <p>
                       {NodeSummary?.nodesLocation?.length > 1
                         ? `Countries`
                         : `Country`}
                     </p>
+                  </div>
+                  <div className="innerBox">
+                    <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
+                    <p>Txns (Last 24hrs)</p>
                   </div>
                 </div>
                 <DarkNodeMap />

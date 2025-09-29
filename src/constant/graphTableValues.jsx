@@ -7,6 +7,7 @@ import {
   checkStatus,
   formateTotalSupply,
   formatText,
+  formatToTwoDecimals,
   formatMillionNumber,
   noExponential,
   toFixed,
@@ -214,19 +215,22 @@ export const transactionSummarycolumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
-        {getAddress(text)}
-      </Link>
+      <div className="txnHashcopy">
+        <Link
+          className="bghash"
+          href={`${Routes.Tx_Hash}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+        </Link>
+        <CopyText text={text} />
+      </div>
     ),
   },
   {
     title: "Type ",
     key: "type",
-    render: (text) => (text?.type ? formatText(text?.type) : "-"),
+    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
   },
   {
     title: "Block",
@@ -370,15 +374,14 @@ export const transactionSummarycolumn = [
   {
     title: `Value(${currencyName})`,
     key: "value",
-    render: (text) =>
-      text?.value ? (
-        <Tooltip title={`${noExponential(text?.value)} ${currencyName}`}>
-          {/* {noExponential(toFixed(text?.value, 6))} */}
-          {formatMillionNumber(text?.value)}
+    render: (text) => {
+      const value = text?.value || 0;
+      return (
+        <Tooltip title={`${value} ${currencyName}`}>
+          <span>{`${formatToTwoDecimals(value)} ${currencyName}`}</span>
         </Tooltip>
-      ) : (
-        0
-      ),
+      );
+    },
   },
   {
     title: "Status",
@@ -704,7 +707,11 @@ export const addressDetailColumn = (address) => [
     title: "Value",
     dataIndex: "value",
     key: "value",
-    render: (text) => formatMillionNumber(text),
+    render: (text) => (
+      <Tooltip title={`${text || 0} TICS`}>
+        <span>{`${formatToTwoDecimals(text || 0)} TICS`}</span>
+      </Tooltip>
+    ),
   },
   {
     title: "Status",
@@ -2203,7 +2210,7 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
       <div className="iconandlink">
         {text?.accAddress ? (
           <Tooltip title={text?.accAddress}>
-            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}>
+            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`} style={{minWidth: 420}}>
               {text?.accAddress}{" "}
             </Link>
           </Tooltip>
@@ -2220,7 +2227,16 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
     title: "Amount",
     key: "price",
     render: (text) => {
-      return text?.price ? `${formatValue(text?.price)} ${currencyName}` : "-";
+      if (!text?.price) return "-";
+
+      const fullAmount = text.price;
+      const formatted = formatToTwoDecimals(text.price);
+
+      return (
+        <Tooltip title={`${fullAmount} ${currencyName}`}>
+          <span>{`${formatted} ${currencyName}`}</span>
+        </Tooltip>
+      );
     },
   },
   {
@@ -2288,7 +2304,6 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
     dataIndex: "base_session",
     key: "duration",
     render: (base_session) => {
-
       if (!base_session?.duration) return "-";
 
       // remove "s" and convert to number

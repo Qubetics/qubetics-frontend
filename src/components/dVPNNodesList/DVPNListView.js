@@ -13,6 +13,7 @@ import Pagination from "../Pagination/Pagination";
 import { Datnotfound } from "../../../public/SvgIcons";
 import getNodeList from "@/services/getNodeList";
 import { getOffset } from "@/utils/commonFunctions";
+import CopyText from "../DoCopy/CopyText";
 
 const staticNodesData = [
   {
@@ -64,7 +65,7 @@ const DVPNListView = () => {
   const paginatedData = enrichedData.slice(startIndex, startIndex + tableLimit);
 
   const handleRowClick = (record) => {
-    router.push(`/dVPNNodes/${record.address}`);
+    router.push(`/dVPNNodes/${record.address}?status=${record.status}`);
   };
 
   const fetchNodeList = async () => {
@@ -75,6 +76,7 @@ const DVPNListView = () => {
         return {
           sr: offset + index + 1,
           ...node,
+          status: node.status || "active",
         };
       });
       const value = { ...response?.data, nodes: updatedNodes };
@@ -92,9 +94,17 @@ const DVPNListView = () => {
   }, [currentPage]);
   const nodesColumns = (totalNodes) => [
     {
-      title: `dVPN Address(${totalNodes || 0})`,
+      title: `dVPN Address (${totalNodes || 0})`,
       dataIndex: "address",
       key: "address",
+      render: (address) => (
+        <div className="dvpnAddressCopy">
+          <span className="bghash">{address}</span>
+          <span>
+            <CopyText text={address} />
+          </span>
+        </div>
+      ),
     },
     { title: "Country", dataIndex: "country", key: "country" },
     {
@@ -114,7 +124,9 @@ const DVPNListView = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        return status === "active" ? "Active" : "Inactive";
+        const color = status === "active" ? "green" : "red";
+        const text = status === "active" ? "Active" : "Inactive";
+        return <span style={{ color, fontWeight: 600 }}>{text}</span>;
       },
     },
   ];

@@ -16,7 +16,8 @@ import Link from "next/link";
 import getAddress from "@/utils/getAddress";
 import Pagination from "../Pagination/Pagination";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
-import { formatStatus } from "@/utils/commonFunctions";
+import { formatStatus, formatToTwoDecimals } from "@/utils/commonFunctions";
+import { Tooltip } from "antd";
 
 const txnColumns = [
   {
@@ -64,8 +65,13 @@ const txnColumns = [
     title: "Amount",
     dataIndex: "value",
     key: "value",
-    render: (value) =>
-      `${value ? Number(value).toFixed(2) : "0.00"} ${currencyName}`,
+    render: (value) => (
+      <Tooltip title={`${value || 0} ${currencyName}`}>
+        <span>{`${
+          value ? formatToTwoDecimals(value) : "0.00"
+        } ${currencyName}`}</span>
+      </Tooltip>
+    ),
   },
   {
     title: "Fee",

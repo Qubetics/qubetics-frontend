@@ -213,6 +213,14 @@ export function formatText(input) {
 
   return words.join(" ");
 }
+
+export const formatToTwoDecimals = (value) => {
+  if (value === null || value === undefined || value === "") return "-";
+  const num = Number(value);
+  if (isNaN(num)) return "-";
+  return num.toFixed(2); // always 2 decimal places
+};
+
 export const checkStatus = (value) => {
   switch (value) {
     case 0:
@@ -369,7 +377,7 @@ export const getExplorerUrl = (network, transactionHash) => {
   // fallback
   return "";
 };
-export const  isValidAlphaNumeric=(value)=> {
+export const isValidAlphaNumeric = (value) => {
   const isAlphaNumeric = /^[a-zA-Z0-9]+$/.test(value);
-  return value.length >= 7 && isAlphaNumeric ;
-}
+  return value.length >= 7 && isAlphaNumeric;
+};

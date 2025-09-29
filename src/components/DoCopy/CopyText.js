@@ -25,7 +25,7 @@ export default function CopyText({ text, hoverText }) {
     return null;
   }
   return (
-    <span className="pointer">
+    <span className="pointer" style={{display:"flex", alignItems: "center"}}>
       <Tooltip
         title={
           copied
@@ -43,9 +43,7 @@ export default function CopyText({ text, hoverText }) {
         {copied ? (
           <CheckOutlined />
         ) : (
-          <span>
             <CopyIcons />
-          </span>
         )}
       </Tooltip>
     </span>
