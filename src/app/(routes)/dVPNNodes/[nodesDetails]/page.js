@@ -28,6 +28,7 @@ import Loader from "@/components/loader/Loader";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import { formatToTwoDecimals } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
+import CopyText from "@/components/DoCopy/CopyText";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
@@ -67,7 +68,9 @@ const Page = () => {
           <Heading heading="Node Details" status={nodeStatus} />
           <div className="nodeDetail_top">
             <p>Address :</p>
-            <strong>{nodeName}</strong>
+            <strong>
+              {nodeName} <CopyText text={nodeName} />
+            </strong>
           </div>
           <div className="nodeGraph">
             <div className="nodeGraph_left">
