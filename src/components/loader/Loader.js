@@ -1,6 +1,7 @@
 "use client";
 
-import { Spin } from "antd";
+import Lottie from "lottie-react";
+import datajson from "../../../public/loaderFile.json";
 
 const Loader = () => {
   return (
@@ -22,8 +23,8 @@ const Loader = () => {
       }}
     >
       <div className="lottieIcon">
-        {/* <Lottie animationData={datajson} loop={true} /> */}
-        <Spin size="large" />
+        <Lottie animationData={datajson} loop={true} />
+        {/* <Spin size="large" /> */}
       </div>
     </div>
   );

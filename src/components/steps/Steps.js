@@ -5,6 +5,7 @@ import { Steps, theme } from "antd";
 import PublishContract from "../publishContract/PublishContract";
 import { InitStatus, verifyContractConstant } from "@/constant/constant";
 import SearchbarComponent from "../search/SearchbarComponent";
+import FilterResult from "../FilterResult/FilterResult";
 
 const steps = [
   {
@@ -16,6 +17,15 @@ const steps = [
     content: <VerifySecondStep />,
   },
 ];
+
+/**
+ * App component that manages the state and display of a multi-step verification process.
+ * It utilizes Ant Design's Steps component for navigation and dynamically renders the
+ * appropriate content for each step. The component maintains the current step state and
+ * provides navigation functions to proceed to the next step or return to the previous one.
+ * It also conditionally renders either the PublishContract or VerifySecondStep component
+ * based on the current step.
+ */
 
 const App = () => {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
@@ -40,10 +50,11 @@ const App = () => {
 
   return (
     <div className="verify">
-      <SearchbarComponent
+      {/* <SearchbarComponent
         searchStatus={searchStatus}
         setSerachStatus={setSerachStatus}
-      />
+      /> */}
+      <FilterResult />
       <div className="steps">
         <Steps
           responsive={false}
@@ -60,6 +71,7 @@ const App = () => {
             <p key={index}>{listing}</p>
           ))}
         </div>
+
         <div className="verify_btns">
           {steps && current === 1 ? (
             <VerifySecondStep

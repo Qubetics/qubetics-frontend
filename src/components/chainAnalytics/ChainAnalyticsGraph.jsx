@@ -10,36 +10,53 @@ import {
   SuccessStatus,
 } from "@/constant/constant";
 import {
-  TRANS_HISTORY_CHART_YEAR,
+  ALL_CHART_SEVEN_DAY,
   transactionItems,
 } from "@/constant/graphTableValues";
 import getGraphData from "@/services/getGraphData";
+import { noExponentsValue } from "@/utils/commonFunctions";
 import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./ChainAnalytics.scss";
+import { trackEvent } from "@/utils/eventTrack";
 
 const ChainAnalyticsGraph = (props) => {
-  const { title, discription,fetchUrl } = props;
+  const {
+    title,
+    discription,
+    fetchUrl,
+    tooltipTitle = "Txn Count",
+    isNative,
+    setTotalAccount,
+  } = props;
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
-    type: TRANS_HISTORY_CHART_YEAR,
+    type: ALL_CHART_SEVEN_DAY,
   });
   const [transactionStatus, setTransactionStatus] = useState(InitStatus); //init,fetching,success,error
   const { isNetworkChanged } = useGetNetwork();
 
   useEffect(() => {
-    fetchChartData();
-  }, [transactionHisChart?.type]);
+    fetchChartData(title);
+  }, [transactionHisChart?.type, isNetworkChanged]);
 
-  const fetchChartData = () => {
+  const fetchChartData = (chartTitle) => {
     setTransactionStatus(FetchingStatus);
-    getGraphData(transactionHisChart?.type, fetchUrl)
+    getGraphData(transactionHisChart?.type, fetchUrl, chartTitle)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
+        const convertedData = res?.data?.finalData?.map((item) => ({
+          ...item,
+          count:
+            title === "Qubetics Price"
+              ? noExponentsValue(Number(item.value)) // Convert and fix to 6 decimal places
+              : noExponentsValue(Number(item.count)), // Keep it as a number
+        }));
+
         setTransactionHisChart({
           ...transactionHisChart,
-          data: res?.data?.finalData,
+          data: convertedData,
         });
       })
       .catch((err) => {
@@ -47,8 +64,12 @@ const ChainAnalyticsGraph = (props) => {
         return err;
       });
   };
-
   const handleTransactionHistory = (value) => {
+    trackEvent({
+      action: "button_click",
+      category: "Dashboard_TransactionHistory",
+      label: `${title} ${value}`,
+    });
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };
 
@@ -73,8 +94,9 @@ const ChainAnalyticsGraph = (props) => {
 
             <Space wrap>
               <Select
+                title=""
                 getPopupContainer={(trigger) => trigger.parentNode}
-                defaultValue={TRANS_HISTORY_CHART_YEAR}
+                defaultValue={ALL_CHART_SEVEN_DAY}
                 style={{ width: 80 }}
                 onChange={handleTransactionHistory}
                 options={transactionItems}
@@ -83,10 +105,7 @@ const ChainAnalyticsGraph = (props) => {
           </div>
           {transactionStatus === InitStatus ||
           transactionStatus === FetchingStatus ? (
-            <div
-              className="graphLod"
-              style={{ position: "absolute", left: "46%", top: "45%" }}
-            >
+            <div className="graphLod">
               {" "}
               <GraphLoading />
             </div>
@@ -94,6 +113,8 @@ const ChainAnalyticsGraph = (props) => {
             <ChartAccounts
               data={transactionHisChart?.data}
               chartType={transactionHisChart?.type}
+              name={tooltipTitle}
+              title={title}
             />
           ) : (
             <Page />

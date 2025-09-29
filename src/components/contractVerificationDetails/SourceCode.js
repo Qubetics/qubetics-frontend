@@ -4,12 +4,8 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const SourceCode = ({ contractDetailData }) => {
-  const getFile = contractDetailData?.sourcecode?.sources
-    ? Object.keys(contractDetailData?.sourcecode?.sources)
-    : [];
-  const getContent = contractDetailData?.sourcecode?.sources
-    ? Object.values(contractDetailData?.sourcecode?.sources)
-    : [];
+  const getFile = contractDetailData?.sourcecode?.sources ? Object.keys(contractDetailData?.sourcecode?.sources) : [];
+  const getContent = contractDetailData?.sourcecode?.sources ? Object.values(contractDetailData?.sourcecode?.sources) : [];
 
   return (
     contractDetailData?.verificationType !== -1 &&
@@ -17,13 +13,13 @@ const SourceCode = ({ contractDetailData }) => {
       <div className="codeTabContent__sourceCode">
         <div className="head">
           <h3>
-            Contract source code <span>(Solidity)</span>
+            Contract Source Code <span>(Solidity)</span>
           </h3>
         </div>
         {getContent.map((res, index) => (
           <React.Fragment key={index}>
             <div className="copyData">
-              <h4 >File: {getFile[index]}</h4>
+              <h4>File: {getFile[index]}</h4>
               <CopyText text={res.content} />
             </div>
 

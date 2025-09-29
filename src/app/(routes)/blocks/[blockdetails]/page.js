@@ -1,36 +1,33 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../blocksummary.scss";
-import {
-  BlockIcon,
-  BlockIcondark,
-  TransIcon,
-  TransIcondark,
-} from "../../../../../public/SvgIcons";
-import Heading from "@/components/heading/Heading";
-import { Tabs } from "antd";
 import BlockDetailDescription from "@/components/blockDetailDescription/BlockDetaildescription";
-import TransactionTable from "@/components/transactionTable/TransactionTable";
-import "../../../../components/transferInfo/TransferInformation.scss";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import { useSearchData } from "@/components/contexts/searchingData";
 import { useThemeData } from "@/components/contexts/theme_context";
-import getSearchingValue from "@/services/search";
+import FilterResult from "@/components/FilterResult/FilterResult";
+import Heading from "@/components/heading/Heading";
+import TransactionTable from "@/components/transactionTable/TransactionTable";
 import {
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import { useSearchData } from "@/components/contexts/searchingData";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
+import getSearchingValue from "@/services/search";
+import { Tabs } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import "../../../../components/transferInfo/TransferInformation.scss";
+import "../blocksummary.scss";
 
 const BlockDetails = ({ params }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [blockData, setBlockData] = useState({});
   const [blockDetailStatus, setBlockDetailsStatus] = useState(InitStatus); //init,fetching,success,error
   const { isLight } = useThemeData();
   const { searchData } = useSearchData();
   const { isNetworkChanged } = useGetNetwork();
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "0");
 
   const fetchData = async () => {
     try {
@@ -63,13 +60,24 @@ const BlockDetails = ({ params }) => {
       fetchData();
     }
   }, [isNetworkChanged]);
-
+  /**
+   * handling tabs
+   *
+   */
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("tab", key);
+    router.push(`?${newSearchParams.toString()}`, {
+      scroll: false,
+      shallow: true,
+    });
+  };
   const tabItems = [
     {
       label: (
         <span>
-          {isLight == "lightTheme" ? <BlockIcondark /> : <BlockIcon />}
-          Block Overview
+          Overview
         </span>
       ),
       key: "0",
@@ -83,7 +91,6 @@ const BlockDetails = ({ params }) => {
     {
       label: (
         <span>
-          {isLight == "lightTheme" ? <TransIcondark /> : <TransIcon />}
           Transaction Details
         </span>
       ),
@@ -95,16 +102,15 @@ const BlockDetails = ({ params }) => {
   return (
     <div className="blocksummary blockdetails">
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <FilterResult />
         <Heading heading="Block Details" />
         <div className="blockjson">
           <Tabs
+            activeKey={activeTab}
             defaultActiveKey="0"
             className="commontabs nodetabs"
             items={tabItems}
+            onChange={handleTabChange}
           />
         </div>
       </div>

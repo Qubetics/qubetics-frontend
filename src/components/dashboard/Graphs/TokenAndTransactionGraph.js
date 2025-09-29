@@ -127,7 +127,7 @@ const TokenAndTransactionGraph = () => {
   };
   return isLoading ? (
     <Loader />
-  ) : (
+  ) : (     
     <div className="chart_secTransection ddd">
       <Row gutter={[16, 20]}>
         <Col className="gutter-row" xs={24} md={24} lg={12}>

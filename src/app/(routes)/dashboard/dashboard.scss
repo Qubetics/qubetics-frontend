@@ -2,7 +2,6 @@
 @import "../../../var";
 
 .landing_main {
-  // height: 100vh;
   @supports (-webkit-touch-callout: none) {
     height: -webkit-fill-available;
   }
@@ -43,8 +42,6 @@
       font-style: normal;
       font-weight: 500;
       line-height: 72px;
-
-      /* 240% */
       @media (max-width: 767px) {
         line-height: 40px;
       }
@@ -87,6 +84,9 @@
     flex-direction: column;
     gap: 15px;
   }
+  @media (max-width: 575px) {
+    margin-top: 24px;
+  }
   .cardsLandingPage {
     padding: 0;
     &_details {
@@ -99,6 +99,17 @@
       }
       .commontableBG {
         margin-top: 0;
+        min-height: 362.88px;
+        
+        .recentblocks {
+          height: 66px;
+          @media (max-width: 1070px) {
+            height: unset;
+          }
+        }
+        @media (max-width: 1070px) {
+          min-height: unset;
+        }
       }
     }
   }
@@ -161,7 +172,6 @@
     }
 
     color: #fff;
-    font-family: Poppins;
     font-size: 40px;
     @include fluid-type(320px, 1920px, 35px, 40px);
     font-style: normal;
@@ -201,8 +211,6 @@
       @include theme() {
         color: theme-get("texttheme");
       }
-
-      font-family: Poppins;
       @include fluid-type(320px, 1920px, 10px, 14px);
 
       font-style: normal;
@@ -214,7 +222,6 @@
 
     .text {
       color: #fff;
-      font-family: Poppins;
       font-size: 12px;
       font-style: normal;
       font-weight: 400;
@@ -269,7 +276,6 @@
 
     h1 {
       color: #fff;
-      font-family: Poppins;
       font-size: 40px;
       font-style: normal;
       font-weight: 500;
@@ -340,9 +346,8 @@
 }
 
 .graphOuter_1 {
-  // height: 578px;
-
   border-radius: 20px;
+  padding: 20px;
 
   @media (max-width: 991px) {
     margin-bottom: 20px;
@@ -351,6 +356,7 @@
   @media (max-width: 767px) {
     height: fit-content;
     margin-bottom: 7px;
+    padding: 14px;
   }
 
   .chartLoader {
@@ -367,11 +373,10 @@
   .drop_histry {
     display: flex;
     justify-content: space-between;
-    padding: 20px 20px 15px 30px;
-
+    align-items: baseline;
     @media (max-width: 767px) {
-      flex-direction: column;
       padding-bottom: 0;
+      align-items: flex-start;
     }
 
     .ant-space-item {
@@ -379,7 +384,6 @@
 
       @media (max-width: 767px) {
         width: 100%;
-        margin-top: 10px;
       }
     }
 
@@ -387,9 +391,8 @@
       @include theme() {
         color: theme-get("texttheme");
       }
-
-      @include fluid-type(320px, 1920px, 14px, 16px);
-      font-weight: 500;
+      @include fluid-type(320px, 1920px, 16px, 20px);
+      font-weight: 400;
       line-height: 24px;
       letter-spacing: 0em;
       text-align: left;
@@ -408,6 +411,12 @@
         text-align: left;
       }
     }
+    h6 {
+      @include fluid-type(320px, 1920px, 20px, 34px);
+      font-weight: 600;
+      line-height: 44.27px;
+      color: $white;
+    }
 
     .ant-dropdown-trigger {
       border: 1px solid;
@@ -425,11 +434,12 @@
 
     .ant-select {
       width: 102px !important;
-      height: 40px;
+      height: 38px;
 
       @media (max-width: 767px) {
         width: 100% !important;
         display: block;
+        height: 36px;
       }
     }
 
@@ -440,7 +450,7 @@
         color: theme-get("texttheme");
       }
       font-size: 16px;
-
+      min-width: 90px;
       @include theme() {
         background: theme-get("dropdownBg");
       }
@@ -448,8 +458,9 @@
 
       .ant-select-selection-item {
         padding-left: 15px !important;
-        font-weight: 500;
+        font-weight: 700;
         @include fluid-type(320px, 1920px, 12px, 14px);
+        color: $white;
       }
     }
 
@@ -466,8 +477,8 @@
 
     &__blinkLive {
       display: flex;
-      align-items: center;
-      gap: 4px;
+
+      flex-direction: column;
       @media (max-width: 767px) {
         display: flex;
         justify-content: space-between;
@@ -539,18 +550,23 @@
             color: theme-get("texttheme") !important;
             fill: theme-get("texttheme") !important;
           }
+          @include fluid-type(320px, 1920px, 12px, 14px);
         }
       }
     }
   }
 }
 .graphdashboard {
-  // height: 196px !important;
   background: var(--searchBg);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1490196078);
   margin-top: 0 !important;
-  height: unset;
+  height: 755px;
+  width: 567px;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+    height: unset;
+  }
   @media (max-width: 767px) {
     height: unset !important;
     margin-bottom: 7px;
@@ -569,16 +585,17 @@
   .highcharts-container {
     height: 676px !important;
     width: 550px !important;
+    @media screen and (max-width: 1070px) {
+      width: 100% !important;
+      height: 555px !important;
+    }
     svg {
       height: 660px !important;
       text {
-        font-size: 10px !important;
+        font-size: 12px !important;
       }
-      @media (max-width: 767px) {
-        height: 660px !important;
-      }
-      @media (max-width: 340px) {
-        height: 660px !important;
+      @media screen and (max-width: 1070px) {
+        height: 555px !important;
       }
     }
   }
@@ -647,11 +664,12 @@
 
 .ant-select-dropdown {
   min-width: 0px !important;
-  // width: 125px;
+  border-radius: 14px !important;
   max-width: 100% !important;
-  width: 100% !important;
+  width: 100%;
   margin-top: -4px !important;
   z-index: 9 !important;
+  min-width: 180px !important;
   @include theme() {
     background: theme-get("dropdownBg");
   }
@@ -659,7 +677,7 @@
   .ant-select-item-option-content {
     font-weight: 500;
     @include theme() {
-      color: theme-get("texttheme") !important;
+      color: theme-get("texttheme");
     }
 
     a {
@@ -670,7 +688,12 @@
   }
 
   .ant-select-item-option-selected {
-    background-color: transparent !important;
+    background: $bg-353026 !important;
+    color: $white !important;
+    border-radius: 10px !important;
+    .ant-select-item-option-content {
+      color: $white !important;
+    }
   }
 
   .ant-select-selection-item {
@@ -696,32 +719,63 @@
     .analytics_cards {
       width: 100%;
       max-width: 380px;
+      gap: 27px;
+      h2 {
+        @include fluid-type(320px, 1920px, 20px, 24px);
+        font-weight: 600;
+        padding-top: 6px;
+        @media (max-width: 575px) {
+          font-weight: 400;
+        }
+      }
       @media (max-width: 1200px) {
         flex-direction: initial;
         max-width: initial;
         gap: 15px;
         flex-wrap: wrap;
       }
+
       .marcketCapCard {
         max-width: 380px;
         width: 100%;
         background: transparent;
+        height: 102px;
+        @media (max-width: 1199px) {
+          max-width: 49%;
+          height: unset;
+        }
+        @media (max-width: 767px) {
+          max-width: 100%;
+        }
       }
     }
     .multiGraph {
       display: flex;
       gap: 30px;
-      // flex-wrap: wrap;
       width: 100%;
       flex-direction: column;
       .grap {
         display: flex;
         gap: 30px;
-        // flex-wrap: wrap;
         @media (max-width: 1020px) {
-         gap: 15px;
+          gap: 15px;
           flex-wrap: wrap;
         }
+      }
+    }
+  }
+}
+.graphdashboard {
+  .chart-wrapper {
+    @media (max-width: 575px) {
+      height: 257px !important;
+    }
+  }
+  .highcharts-container {
+    @media (max-width: 575px) {
+      height: 247px !important;
+      svg {
+        height: 260px !important;
       }
     }
   }

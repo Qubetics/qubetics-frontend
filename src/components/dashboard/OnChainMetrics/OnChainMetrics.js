@@ -2,124 +2,121 @@
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
-import { tooltipConstant } from "@/constant/constant";
-import getNativeStats from "@/services/getNativeStats";
-import getStatistics from "@/services/getStatistics";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
   AvgBlockTime,
+  FireIcon,
   Marcketcap,
   Marcketcapdark,
-  RoundArrow,
-  RoundArrowdark,
   TickPriceIcon,
+  TotalAccountIcon,
 } from "../../../../public/SvgIcons";
 
 import { useThemeData } from "@/components/contexts/theme_context";
+import getQubeticsPrice from "@/services/getQubeticsPrice";
+// import { useMediaQuery } from "react-responsive";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
+import { currencyName } from "@/constant/constant";
 
-const OnChainMetrics = () => {
+const OnChainMetrics = ({ stats }) => {
+  const [price, setPrice] = useState("");
   const webSocketData = useLatestData();
   const { diffs } = useAverageBlockTime();
-  const [stats, setStats] = useState("");
   const { isLight } = useThemeData();
-  const [nativeData, setNativeData] = useState({});
 
-  let calc =
-    diffs && diffs?.length > 0
-      ? (diffs?.reduce((p, c) => p + c, 0) / diffs?.length)?.toFixed(2)
-      : "0.00";
-
+  
   useEffect(() => {
-    const fetchNativeStats = async () => {
-      try {
-        let respose = await getStatistics();
-        setStats(respose?.data);
-        // let res = await getNativeStats();
-        // setNativeData(res?.data);
-      } catch (err) {
-        return err;
-      }
-    };
-    fetchNativeStats();
+    getPrice();
   }, []);
+
+  const getPrice = async () => {
+    try {
+      let response = await getQubeticsPrice();
+      setPrice(response?.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="cardSec onchain_sec">
       <div className="dashcardAnimation">
-        <Row className="onchainrowdata">
-          <Col xs={24} md={12} lg={5} xl={6}>
+        <Row gutter={[10, 16]} className="onchainrowdata">
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
-              text="TICS Price"
-              balance={`$ 0`}
+              text={`${currencyName} Price`}
+              balance={price ? "$" + Number(price).toFixed(6) + " " : "$0"}
               img={<TickPriceIcon />}
+              title="The current market price of 1 Qubetics (TICS) in USD."
             />
           </Col>
-          <Col xs={24} md={12} lg={5} xl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={5}>
             <CardsOnchain
               text="Last Finalized Block"
               balance={
-                webSocketData?.blocks?.blocknumber
-                  ? Number(webSocketData?.blocks?.blocknumber) - 2
+                webSocketData?.blocks?.blocknumber || stats?.latest_block
+                  ? (
+                      Number(
+                        webSocketData?.blocks?.blocknumber ||
+                          stats?.latest_block
+                      ) - 2
+                    ).toLocaleString()
                   : 0
               }
               img={<AvgBlockTime />}
+              title="The most recent blocks that have been finalized and cannot be reverted in the blockchain."
             />
           </Col>
-          {/* <Col xs={24} md={12} lg={5} xl={6}>
+
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
-              text="Avg. Block Time"
-              // balance={
-              //   calc &&
-              //   (calc > 1.3
-              //     ? "1.20 Sec"
-              //     : Math.sign(calc) == -1
-              //       ? "1.02 Sec"
-              //       : calc + " Sec")
-              // }
-              balance={randomNoGenerator() + " s"}
-              img={<AvgBlockTime />}
-            />
-          </Col> */}
-          <Col xs={24} md={12} lg={5} xl={6}>
-            <CardsOnchain
-              // iconCopy="true"
-              // addicon="true"
-              // title={tooltipConstant.CIRCULATION_SUPPLY}
-              text="Transactions"
+              text="Burn Total"
               balance={
-                formatMillionNumber(
-                  Number(webSocketData?.onChainMetric?.totalTx)
-                ) || 0
+                <Tooltip title={Number(stats?.burnedAmount)}>
+                  {formatMillionNumber(Number(stats?.burnedAmount))}
+                </Tooltip>
               }
-              img={
-                isLight == "lightTheme" ? <RoundArrowdark /> : <RoundArrow />
-              }
+              img={<FireIcon />}
+              title="Total amount of TICS burned permanently and removed from circulation."
             />
           </Col>
-          <Col xs={24} md={12} lg={5} xl={6}>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
+            <CardsOnchain
+              text="Community Pool"
+              balance={
+                <Tooltip
+                  title={Number(stats?.community_pool) / 10 ** Number(18)}
+                >
+                  {formatMillionNumber(
+                    Number(stats?.community_pool) / 10 ** Number(18)
+                  ) || 0}{" "}
+                  TICS
+                </Tooltip>
+              }
+              img={<TotalAccountIcon />}
+              title="The total amount of tokens currently available in the community pool for governance and development purposes."
+            />
+          </Col>
+          <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
               addicon="true"
               iconCopy="true"
-              title={tooltipConstant.MARKET_CAP}
+              title="The total value of all circulating Qubetics (TICS) in Dollar(USD), calculated as the current price multiplied by the circulating supply."
               text="Market Cap"
               balance={
-                webSocketData?.analytics?.marketCap ? (
+                stats?.marketCap ? (
                   <Tooltip
                     trigger="hover"
                     placement="top"
-                    title={"$ " + webSocketData?.analytics?.marketCap}
+                    title={"$ " + stats?.marketCap}
                   >
-                    <>
-                      $
-                      {formatMillionNumber(webSocketData?.analytics?.marketCap)}
-                    </>
+                    <>${formatMillionNumber(stats?.marketCap)}</>
                   </Tooltip>
                 ) : (
-                  0
+                  "$" + 0
                 )
               }
               img={

@@ -1,8 +1,5 @@
 "use client";
-// import { CopyIcon, Scanner } from "../../../public/SvgIcons";
-// import { CopyToClipboard } from "react-copy-to-clipboard";
-// import { customToast } from "../common/toast";
-import { CheckOutlined, CopyOutlined } from "@ant-design/icons";
+import { CheckOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import { useState } from "react";
 import { CopyIcons } from "../../../public/SvgIcons";
@@ -18,26 +15,28 @@ export default function CopyText({ text, hoverText }) {
     }, 1000);
   };
 
+  if (
+    !text ||
+    text === "" ||
+    text === "undefined" ||
+    text === "null" ||
+    text === null
+  ) {
+    return null;
+  }
   return (
-    // <CopyToClipboard
-    //   text={text}
-    //   style={{ marginLeft: 8, cursor: "pointer", color: "#fff" }}
-    //   onCopy={(e) => {
-    //     customToast.success("Copied Successfully");
-    //   }}
-    // >
-    //   {CopyIcon()}
-    // </CopyToClipboard>
-    <>
+    <span className="pointer">
       <Tooltip
         title={
           copied
             ? " Copied"
-            : hoverText == "hash"
+            : hoverText === "Node Address"
+            ? "Copy Node Address"
+            : hoverText === "hash"
             ? "Copy Hash"
-            : hoverText == "block"
+            : hoverText === "block"
             ? "Copy Block"
-            : "Copy Address"
+            : "Copy"
         }
         onClick={handleCopyClick}
       >
@@ -49,6 +48,6 @@ export default function CopyText({ text, hoverText }) {
           </span>
         )}
       </Tooltip>
-    </>
+    </span>
   );
 }

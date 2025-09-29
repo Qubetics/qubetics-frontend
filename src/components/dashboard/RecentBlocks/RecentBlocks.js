@@ -17,6 +17,7 @@ import Page from "@/app/(routes)/notfound/page";
 import Loader from "@/components/loader/Loader";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import { RightOutlined } from "@ant-design/icons";
+import { trackEvent } from "@/utils/eventTrack";
 
 const RecentBlocks = () => {
   const [recentBlocks, setRecentBlocks] = useState([]);
@@ -30,8 +31,8 @@ const RecentBlocks = () => {
   const fetchData = async () => {
     try {
       setRecentBlockStatus(FetchingStatus);
-      let res = await getBlocks(pageNo, dashboardCount);
-    
+      let res = await getBlocks(pageNo, dashboardCount, "newest", "desc");
+
       if (res?.error === false) {
         const accendingBlock = res?.data?.blocks;
         setRecentBlocks(accendingBlock);
@@ -56,6 +57,7 @@ const RecentBlocks = () => {
   }, [isNetworkChanged]);
 
   useEffect(() => {
+    if (webSocketData?.blocks.length === 0) return;
     let index = recentBlocks.findIndex(
       (item) =>
         Number(item?.blocknumber) === Number(webSocketData?.blocks.blocknumber)
@@ -67,9 +69,13 @@ const RecentBlocks = () => {
   }, [webSocketData?.blocks]);
 
   const handleClick = () => {
+    trackEvent({
+      action: "button_click",
+      category: "Dashboard_Blocks",
+      label: "View All_Blocks",
+    });
     router.push(Routes.BLOCKS);
   };
-
   return recentBlockStatus === InitStatus ||
     recentBlockStatus === FetchingStatus ? (
     <Loader />
@@ -78,7 +84,7 @@ const RecentBlocks = () => {
       <div className="commontableBG_head">
         <h2>Latest Blocks</h2>
         <div className="viewAll" onClick={handleClick}>
-          <p> View All</p>
+          <p> View all</p>
         </div>
       </div>
 

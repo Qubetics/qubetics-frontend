@@ -15,17 +15,22 @@ function VerifySmartCont({ Children, FormButton }) {
     <div className="verifysmartContract">
       <div>
         <div className="getqotSection">
-          <Collapse bordered={false}  >
+          <Collapse bordered={false}>
             <Panel header={<>Upload Contract Source Code</>} key="1">
-              <p>Info: <span>{verifyContractConstant.INFO}</span></p>
+              <p>
+                Info: <span>{verifyContractConstant.INFO}</span>
+              </p>
 
               <ul>
                 <li>
                   <p>
                     {verifyContractConstant.COMPILE}{" "}
-                    <Link href="" target="__blank">
-                      REMIX
-                    </Link>
+                    {/* <Link
+                      href="https://testnet-qubecode-ide.qubetics.work/"
+                      target="__blank"
+                    > */}
+                      Qubetics IDE
+                    {/* </Link> */}
                     , {verifyContractConstant.CORRECT_COMPILE}
                   </p>
                 </li>

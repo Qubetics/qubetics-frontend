@@ -5,44 +5,45 @@ $greyBorder: #374754;
 $greyBorderdark: #344152;
 $border_theme: #0068ff;
 $themetext: #348cf5;
-$bluebtn: #155FC6;
+$bluebtn: #155fc6;
 $bodybg: #121212;
-$graytext:#929292;
+$graytext: #929292;
 $greyborder: #cecece;
 $bgcolor_lightgrey: #f2f1f1;
-$tabborder:#292a2ae8;
+$tabborder: #292a2ae8;
 $lightgreen: #0ecb81;
-$dashimgIcon: #80A3C175;
+$dashimgIcon: #80a3c175;
 $blue: #af6a11;
 $tablebg: #252527;
-$footerbg: #0D2234;
-$red: #CC2323;
-$redbg: #3E2023;
-$green: #23d65e;
-$greenbtnbg:#1C452E;
+$footerbg: #0d2234;
+$red: #ff5454;
+$redbg: #3e2023;
+$green: #4dca52;
+$greenbtnbg: #1c452e;
 $white: #fff;
 $bgdropdown: #455862;
 $bg-353026: #353026;
 $bgreen-244430: #244430;
 $text-BDBDBE: #bdbdbe;
 $bg-243036: #243036;
-$border0093FB:#0093FB;
-$livelink:#16C318;
+$border0093FB: #0093fb;
+$livelink: #16c318;
 $text-b9bbbf: #b9bbbf;
-$signInbtn:#06395B;
+$signInbtn: #06395b;
 $white: #fff;
-$cardbgblue: linear-gradient(254.59deg, #0096FF -9.14%, #0A2E60 105.31%);
-$gray898989:#898989;
-$grayA0A0A0:#A0A0A0;
-$borderCard:rgba(255, 255, 255, 0.1490196078);
+$cardbgblue: linear-gradient(254.59deg, #0096ff -9.14%, #0a2e60 105.31%);
+$gray898989: #898989;
+$grayA0A0A0: #a0a0a0;
+$borderCard: rgba(255, 255, 255, 0.1490196078);
 
 $themes: (
   darkTheme: (
     "texttheme": #fff,
+    "grayText": #a0a0a0,
     "textthemeoposite": #181819,
     "themeborder": #344152,
-    "graytext":#929292,
-    "cardImgbg":#80A3C1,
+    "graytext": #929292,
+    "cardImgbg": #80a3c1,
     "backsearch":
       linear-gradient(
         88deg,
@@ -94,7 +95,7 @@ $themes: (
         rgba(1, 104, 255, 0.25) 98.38%
       ),
     "dropdownbg": #455862,
-    "transectindata": #1A1F23,
+    "transectindata": #1a1f23,
     "pagination":
       linear-gradient(
         88deg,
@@ -103,10 +104,10 @@ $themes: (
         rgba(255, 255, 255, 0) 98.38%
       ),
     "tableheader": #121517,
-    "dropdownBg":#161616,
+    "dropdownBg": #161616,
     "blueGradient": linear-gradient(254.59deg, #0096ff -9.14%, #0a2e60 105.31%),
     "tabcolorbg": rgba(255, 255, 255, 0.4),
-    "activebgtab":  linear-gradient(254.59deg, #0096ff -9.14%, #0a2e60 105.31%),
+    "activebgtab": linear-gradient(254.59deg, #0096ff -9.14%, #0a2e60 105.31%),
     "baseColor": #0074ff,
     "blockbackclr":
       linear-gradient(
@@ -117,11 +118,12 @@ $themes: (
       ),
   ),
   lightTheme: (
+    "grayText": #a0a0a0,
     "textthemeoposite": #fff,
     "texttheme": #000,
     "themeborder": rgba(0, 0, 0, 0.3),
-    "graytext":#929292,
-    'cardImgbg':rgb(80, 76, 76),
+    "graytext": #929292,
+    "cardImgbg": rgb(80, 76, 76),
     "backsearch":
       linear-gradient(
         88.08deg,
@@ -184,3 +186,5 @@ $themes: (
     "blockbackclr": #fff,
   ),
 );
+
+/*"blockbackclr": #fff*/

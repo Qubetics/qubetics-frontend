@@ -3,19 +3,13 @@ import { formatDate } from "@/utils/renderTime";
 export const contractData = (contractDetailData) => [
   {
     contract: "Contract Name",
-    Homer: contractDetailData?.contractname
-      ? contractDetailData?.contractname
-      : "-",
+    Homer: contractDetailData?.contractname ? contractDetailData?.contractname : "-",
     name: "Compiler Version",
-    data: contractDetailData?.compilerversion
-      ? contractDetailData?.compilerversion
-      : "-",
+    data: contractDetailData?.compilerversion ? contractDetailData?.compilerversion : "-",
   },
   {
     contract: "EVM Version",
-    Homer: contractDetailData?.evmVersion
-      ? contractDetailData?.evmVersion
-      : "-",
+    Homer: contractDetailData?.evmVersion ? contractDetailData?.evmVersion : "-",
     name: "Optimization Enabled",
     data: contractDetailData?.optimizationUsed ? "True" : "False",
   },
@@ -23,18 +17,13 @@ export const contractData = (contractDetailData) => [
     contract: "Optimization Runs",
     Homer: contractDetailData?.runs ? contractDetailData?.runs : "-",
     name: "Verified At",
-    data: contractDetailData?.createdAt
-      ? formatDate(contractDetailData?.createdAt)
-      : "",
+    data: contractDetailData?.createdAt ? formatDate(contractDetailData?.createdAt) : "",
   },
 ];
 
 export const contractByteCode = (contractDetailData) => {
   const result = [];
-  if (
-    contractDetailData?.verificationType !== -1 &&
-    contractDetailData?.creationCode
-  ) {
+  if (contractDetailData?.verificationType !== -1 && contractDetailData?.creationCode) {
     result.push({
       title: "Contract Creation Code",
       content: contractDetailData.creationCode || "",
@@ -43,7 +32,7 @@ export const contractByteCode = (contractDetailData) => {
 
   // Add Deployed ByteCode
   result.push({
-    title: "Deployed ByteCode",
+    title: "Deployed Bytecode",
     content: contractDetailData.byteCode || contractDetailData.bytecode || "",
   });
 

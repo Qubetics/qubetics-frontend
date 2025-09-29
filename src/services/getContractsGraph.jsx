@@ -7,48 +7,33 @@ import {
 import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 
 export default async function getContractsGraph(chartType) {
-  let chain = (typeof window) !== 'undefined' && localStorage.getItem('chainType')
+  let chain =
+    typeof window !== "undefined" && localStorage.getItem("chainType");
   try {
-    // const data =
-    // {
-    //       interval: 60,
-    //       time: "mintue",
-    //     }
-    //     : chartType === ALL_CHART_ONE_DAY
-    //       ? {
-    //         interval: 24,
-    //         time: "hourly",
-    //       }
-    //       : chartType === TRANS_HISTORY_CHART_YEAR
-    //         ? {
-    //           interval: 12,
-    //           time: "monthly",
-    //         }
-    //         : chartType === ALL_CHART_SEVEN_DAY
-    //           ? { interval: 7, time: "daily" }
-    //           : { interval: 30, time: "daily" } 
-
     const getData = (chain, chartType) => {
       const isEVM = chain === "EVM Chain";
       return chartType === ALL_CHARTS_HOUR
         ? { interval: isEVM ? 60 : 1, time: isEVM ? "mintue" : "h" }
         : chartType === ALL_CHART_ONE_DAY
-          ? { interval: isEVM ? 24 : 1, time: isEVM ? "hourly" : "d" }
-          : chartType === TRANS_HISTORY_CHART_YEAR
-            ? { interval: isEVM ? 12 : 1, time: isEVM ? "monthly" : "y" }
-            : chartType === ALL_CHART_SEVEN_DAY
-              ? { interval: 7, time: isEVM ? "daily" : "d" }
-              : { interval: 30, time: isEVM ? "daily" : "d" };
+        ? { interval: isEVM ? 24 : 1, time: isEVM ? "hourly" : "d" }
+        : chartType === TRANS_HISTORY_CHART_YEAR
+        ? { interval: isEVM ? 12 : 1, time: isEVM ? "monthly" : "y" }
+        : chartType === ALL_CHART_SEVEN_DAY
+        ? { interval: 7, time: isEVM ? "daily" : "d" }
+        : { interval: 30, time: isEVM ? "daily" : "d" };
     };
 
     const data = getData(chain, chartType);
 
-    const response = chain == 'EVM Chain' ?
-      await fetch(
-        `${EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
-      ) : await fetch(
-        `${NATIVE_EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
-      );
+    const response =
+      chain == "EVM Chain"
+        ? 
+        await fetch(
+            `${EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
+          )
+        : await fetch(
+            `${NATIVE_EXPLORER_API_URL}explorer/graph/contract-deployed?interval=${data?.interval}&time=${data?.time}`
+          );
     let result = response.json();
     return result;
   } catch (error) {

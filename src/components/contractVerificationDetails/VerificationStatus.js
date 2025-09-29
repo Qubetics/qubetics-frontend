@@ -1,12 +1,9 @@
 import { Routes, verificationStatus } from "@/constant/constant";
-import React from "react";
-import { Button } from "antd";
 import {
-  CloseCircleFilled,
-  ClockCircleFilled,
-  CheckCircleFilled,
+  CloseCircleFilled
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
+import { PendingIcon, SuccesIcon } from "../../../public/SvgIcons";
 
 const VerificationStatus = ({
   contractDetailData,
@@ -24,24 +21,23 @@ const VerificationStatus = ({
           {!compilerMessage?.showError
             ? `${verificationStatus.REJECTED_VERIFICATION} (ByteCode Not Matched)`
             : verificationStatus.REJECTED_VERIFICATION}
-          <Button
-            type="primary"
-            className="bluebtn"
-            style={{ height: 40, marginLeft: "20px" }}
+          <button
+            className="headermetaBtn"
+            style={{ marginLeft: "20px" }}
             onClick={() => {
               router.push(Routes.CONTRACT_VERIFICATOIN);
               setVerifyAddress(hash);
             }}
           >
             Verify & Publish
-          </Button>
+          </button>
         </div>
       );
     case 0:
       return (
         <>
           <div className="verificationFill">
-            <ClockCircleFilled style={{ color: "yellow", fontSize: 18 }} />
+            <PendingIcon />
             <span> {verificationStatus.PENDING_VERIFICATION}</span>
           </div>
         </>
@@ -50,7 +46,7 @@ const VerificationStatus = ({
       return (
         <>
           <div className="verificationFill greenFill">
-            <CheckCircleFilled style={{ color: "green", fontSize: 18 }} />
+            <SuccesIcon />
             <span> {verificationStatus.PARTIAL_VERIFIED}</span>
           </div>
         </>
@@ -59,7 +55,7 @@ const VerificationStatus = ({
       return (
         <>
           <div className="verificationFill">
-            <CheckCircleFilled style={{ color: "green", fontSize: 18 }} />
+            <SuccesIcon />
             <span> {verificationStatus.FULLY_VERIFIED}</span>
           </div>
         </>
@@ -67,17 +63,15 @@ const VerificationStatus = ({
     default:
       return (
         <>
-          <Button
-            type="primary"
-            className="bluebtn"
-            style={{ height: 40 }}
+          <button
+            className="headermetaBtn"
             onClick={() => {
               router.push(Routes.CONTRACT_VERIFICATOIN);
               setVerifyAddress(hash);
             }}
           >
             Verify & Publish
-          </Button>
+          </button>
         </>
       );
   }

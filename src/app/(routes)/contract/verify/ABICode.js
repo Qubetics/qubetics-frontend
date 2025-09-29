@@ -1,6 +1,6 @@
 import React from "react";
 import "./verifyContract.scss";
-import { Input } from "antd";
+import { Input, Tooltip } from "antd";
 import { useContractData } from "@/components/contexts/contractContext";
 
 const ABICode = () => {
@@ -15,6 +15,13 @@ const ABICode = () => {
         style={{ minHeight: "176px" }}
         onChange={(e) => setAbiCode(e.target.value)}
       />
+      <Tooltip title="Paste">
+        <span
+          className="textAreaPaste"
+        >
+          Paste
+        </span>
+      </Tooltip>
     </div>
   );
 };

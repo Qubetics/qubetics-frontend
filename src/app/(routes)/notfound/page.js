@@ -1,17 +1,45 @@
-import React from "react";
+"use client";
+import Commonbtn from "@/components/commonbtn/CommonBluebtn";
+import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { InitStatus, Routes } from "@/constant/constant";
+import { useState } from "react";
 import { Datnotfound } from "../../../../public/SvgIcons";
 import "../blocks/blocksummary.scss";
 import "./pagenotfund.scss";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import notFound from "../../../assets/svg/notFount.svg";
 
 function Page({ dashnotfound }) {
+  const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const pathname = usePathname();
   return (
-    <div
-      className={`blocksummary ${dashnotfound ? "dashnotfound" : "notfound"}`}
-    >
-      <div>
-        {" "}
-        <Datnotfound />
-        <p style={{ color: "white" }}>Data Not Found</p>
+    <div className="container notFoundDataSec">
+      {pathname === Routes.NOT_FOUND && (
+        <SearchbarComponent
+          searchStatus={searchStatus}
+          setSerachStatus={setSerachStatus}
+        />
+      )}
+      <div
+        className={`blocksummary ${dashnotfound ? "dashnotfound" : "notfound"}`}
+      >
+        <div>
+          {/* <Datnotfound /> */}
+          <Image src={notFound} width={150} height={90} />
+          <p style={{ color: "white" }}>Data Not Found</p>
+        </div>
+      </div>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      >
+        {pathname === Routes.NOT_FOUND && (
+          <Commonbtn
+            onClick={() => (window.location.href = "/")}
+            style={{ width: "200px" }}
+            text={"Go To Dashboard"}
+          />
+        )}
       </div>
     </div>
   );

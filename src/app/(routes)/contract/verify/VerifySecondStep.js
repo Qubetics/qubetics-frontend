@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import "./verifyContract.scss";
-import VerifySmartCont from "@/components/verifySmartContract/VerifySmartCont";
-import { Button, Checkbox } from "antd";
 import { useContractData } from "@/components/contexts/contractContext";
+import Loader from "@/components/loader/Loader";
+import VerifySmartCont from "@/components/verifySmartContract/VerifySmartCont";
+import { FetchingStatus, InitStatus, solidityFile } from "@/constant/constant";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
 import SolidityCode from "./SolidityCode";
 import UploadFile from "./UploadFile";
-import { FetchingStatus, InitStatus, solidityFile } from "@/constant/constant";
-import Loader from "@/components/loader/Loader";
+import "./verifyContract.scss";
 import { verifyContractValidation } from "./verifyContractValidation";
 
 function VerifySecondStep({ steps, current, prev }) {
@@ -105,10 +105,10 @@ function VerifySecondStep({ steps, current, prev }) {
           <div
             style={{
               textAlign: "center",
-              display:"flex",
+              display: "flex",
               gap: "20px",
-              alignItems:"center",
-              justifyContent:"center",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {/*
@@ -136,9 +136,12 @@ function VerifySecondStep({ steps, current, prev }) {
               </Button>
             )}
             {steps && current === steps.length - 1 && (
-              <Button type="primary" onClick={handleClick}>
+              <button
+                onClick={handleClick}
+                className="headermetaBtn preNextbtn"
+              >
                 Done
-              </Button>
+              </button>
             )}
           </div>
         )}

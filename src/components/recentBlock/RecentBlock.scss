@@ -21,40 +21,72 @@
       }
     }
   }
+  .time {
+    .trnxCount {
+      @media (max-width: 400px) {
+        white-space: normal;
+        word-break: break-all;
+      }
+    }
+  }
+  .recentMinAgo {
+    @media (max-width: 575px) {
+      padding-left: 45px;
+    }
+  }
 }
 .recentblocks {
-  padding: 14px 0px;
+  padding: 9.99px 0px;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  @media screen and (max-width: 676px) {
-    gap: 20px;
-    flex-flow: wrap;
-    padding: 18px;
+  @media screen and (max-width: 1626px) {
+    padding: 10.5px 0;
   }
-
+  @media screen and (max-width: 1479px) {
+    padding: 11px 0;
+  }
+  @media screen and (max-width: 676px) {
+    gap: 14px;
+    flex-flow: wrap;
+    padding: 7px 0;
+  }
   @media screen and (max-width: 390px) {
     justify-content: center;
     > div {
       width: 100%;
     }
   }
-
   .recentdata {
     display: flex;
     gap: 10px;
+    align-items: center;
+    img {
+      @media (max-width: 767px) {
+        width: 35px;
+      }
+    }
+    div {
+      .time {
+        display: block !important;
+      }
+    }
 
     p {
       letter-spacing: 0.32px;
       color: $white;
       @include fluid-type(320px, 1920px, 14px, 16px);
       font-weight: 500;
+      padding-bottom: 4px;
+      &:hover {
+        color: #9f53ff;
+        transition: color 0.6s ease-out;
+        // text-decoration: underline;
+      }
 
       &:nth-child(2) {
-        font-weight: 500;
-
+        font-weight: 300;
         color: $grayA0A0A0;
-
         @include fluid-type(320px, 1920px, 12px, 14px);
         display: flex;
         align-items: center;
@@ -79,11 +111,13 @@
     @include fluid-type(320px, 1920px, 12px, 14px);
   }
   .validateSec {
+    display: flex;
     font-weight: 500;
     color: $white !important;
     @include fluid-type(320px, 1920px, 14px, 16px);
-    span {
+    a {
       color: $grayA0A0A0;
+      @include fluid-type(320px, 1920px, 14px, 16px);
     }
   }
   .recent {
@@ -93,7 +127,49 @@
     }
     p {
       color: $grayA0A0A0;
-      @include fluid-type(320px, 1920px, 12px, 14px);
+      @include fluid-type(320px, 1920px, 14px, 16px);
+    }
+  }
+  // .recenteBlockNumber{
+  //   width: 180px;
+  //   // width: 100%;
+  // }
+  // .recentCenter {
+  //   width: 150px;
+  //   text-align: left;
+  // }
+  .recentdata {
+    &_inner {
+      @media (max-width: 480px) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
+  .recentCenter {
+    text-align: right;
+    @media (max-width: 480px) {
+      text-align: left;
+      display: flex;
+      gap: 5px;
+      padding-left: 46px;
+    }
+  }
+  .validatorAddress {
+    width: 220px;
+    .validateSec {
+      p {
+        @media (max-width: 480px) {
+          white-space: normal;
+          word-break: break-all;
+        }
+      }
+    }
+    @media (max-width: 480px) {
+      width: 100%;
+      padding-left: 46px;
     }
   }
 }
@@ -134,6 +210,7 @@
         font-weight: 500;
         opacity: 0.6;
         line-height: 27px;
+        display: block;
         @include theme() {
           color: theme-get("texttheme");
         }

@@ -2,8 +2,7 @@ import React from "react";
 import { Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { solidityFile } from "@/constant/constant";
-import { customToast } from "@/components/common/toast";
-
+import toast from "react-hot-toast";
 const UploadFile = ({ fileList, setFileList, formData }) => {
   const checkJSONInput = formData?.compilerType == solidityFile.JSON_INPUT;
   const checkSolInput = formData?.compilerType == solidityFile.MULTI_PART_FILES;
@@ -18,9 +17,9 @@ const UploadFile = ({ fileList, setFileList, formData }) => {
         (!checkJSONInput || fileExtension !== "json")
       ) {
         if (fileExtension !== "sol" && checkSolInput) {
-          customToast.error("Upload sol file only");
+          toast.error("Upload sol file only");
         } else if (checkJSONInput && fileExtension !== "json") {
-          customToast.error("Upload json file only");
+          toast.error("Upload json file only");
         }
         return;
       }
@@ -53,6 +52,7 @@ const UploadFile = ({ fileList, setFileList, formData }) => {
             disabled={fileList.length >= 15}
             style={fileList.length >= 15 ? { color: "white" } : null}
             icon={<UploadOutlined />}
+            className="selectFileBtn"
           >
             Select Files
           </Button>{" "}

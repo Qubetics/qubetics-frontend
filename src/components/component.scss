@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   @media (max-width: 767px) {
     margin-bottom: 10px;
     flex-direction: column;
@@ -29,7 +28,7 @@
   @media (max-width: 767px) {
     width: 100%;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     // margin-top: 20px;
   }
 
@@ -37,9 +36,7 @@
     @include theme() {
       color: theme-get("texttheme");
     }
-
     color: #fff;
-    font-family: "Poppins", sans-serif;
     @include fluid-type(320px, 1920px, 16px, 24px);
     font-style: normal;
     font-weight: 600;
@@ -47,8 +44,8 @@
     letter-spacing: 0.48px;
     text-align: left;
     margin-bottom: 20px;
-    @media (max-width: 767px) {
-      margin-bottom: 0;
+    @media (max-width: 575px) {
+      margin-bottom: 10px;
     }
   }
 }
@@ -107,7 +104,10 @@ body {
     .ant-card-body {
       background: var(--searchBg);
       border-radius: 14px;
-      padding: 20px !important;
+      padding: 17px 20px !important;
+      @media (max-width: 575px) {
+        padding: 12px 20px !important;
+      }
     }
   }
 }
@@ -119,7 +119,9 @@ body {
   font-weight: 700;
   @media (max-width: 575px) {
     padding-bottom: 10px;
+    font-weight: 600;
     padding-top: 10px;
+    margin-top: 14px;
   }
 }
 
@@ -136,6 +138,9 @@ body {
     @media (max-width: 1119px) {
       padding: 20px !important;
     }
+    @media (max-width: 575px) {
+      padding: 12px 20px !important;
+    }
   }
 
   &_items {
@@ -147,6 +152,13 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+      .imgIcon {
+        svg {
+          @media (max-width: 767px) {
+            width: 50px;
+          }
+        }
+      }
     }
 
     p {
@@ -236,9 +248,9 @@ body {
 
   .cardSec_items {
     .imgIcon {
-      padding: 10px;
-      width: 50px;
-      height: 50px;
+      // padding: 10px;
+      // width: 50px;
+      // height: 50px;
     }
 
     h2 {
@@ -290,6 +302,9 @@ body {
   backdrop-filter: blur(32px);
   display: flex;
   flex-direction: column;
+  @media (max-width: 575px) {
+    padding: 10px 15px 0px 15px;
+  }
 
   &_input {
     max-width: 614px;
@@ -299,18 +314,18 @@ body {
     border-radius: 14px;
     // padding-right: 120px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-
+    @media (max-width: 991px) {
+      max-width: 100%;
+    }
     @include theme() {
       background: theme-get("tableheader") !important;
       color: theme-get("texttheme");
     }
-
     backdrop-filter: blur(32px);
-
     @media (max-width: 991px) {
       height: 43px;
+      border-radius: 10px;
     }
-
     input {
       border: 0;
       background: var(--searchBg);
@@ -328,6 +343,9 @@ body {
       @media (max-width: 991px) {
         font-size: 14px;
         height: 43px;
+      }
+      @media (max-width: 575px) {
+        padding-left: 40px;
       }
 
       &:visited,
@@ -358,7 +376,6 @@ body {
         height: 35px;
         top: 49%;
       }
-
       @media (max-width: 767px) {
         width: 80px;
       }
@@ -386,9 +403,14 @@ body {
 
       @media (max-width: 575px) {
         width: 14px;
+        top: 53%;
       }
     }
   }
+}
+.searchFilter {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 // addresspage heading
@@ -479,12 +501,15 @@ body {
 }
 
 .popularPage {
-  margin-top: 40px;
+  margin-top: 0px;
   .commontable {
     margin-top: 0;
   }
   .headerButton {
-    margin-top: 40px;
+    margin-top: 30px;
+    @media (max-width: 575px) {
+      margin-top: 24px;
+    }
   }
 }
 
@@ -604,17 +629,33 @@ body {
   padding: 20px 30px;
   @media screen and (max-width: 767px) {
     margin-top: 20px;
+    padding: 20px;
   }
   &_head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
+    @media (max-width: 575px) {
+      margin-bottom: 3px;
+    }
     h2 {
       @include fluid-type(320px, 1920px, 16px, 20px);
-      font-weight: 600;
+      font-weight: 300;
       line-height: 23.44px;
       color: #fff;
+      @media (max-width: 575px) {
+        font-weight: 500;
+      }
+    }
+    .viewAll {
+      width: 100px;
+      text-align: center;
+      @media (max-width: 575px) {
+        width: unset;
+        max-width: 84px;
+        width: 100%;
+      }
     }
   }
   .viewAll {
@@ -622,10 +663,22 @@ body {
       @include fluid-type(320px, 1920px, 12px, 14px);
       font-weight: 700;
       color: #fff;
+      background: #161616;
       border: 1px solid #454545;
       border-radius: 30px;
-      padding: 6px 9px;
+      padding: 7px 9px;
       cursor: pointer;
+      width: 100px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media (max-width: 575px) {
+        width: unset;
+        max-width: 84px;
+        width: 100%;
+        height: 36px;
+      }
     }
   }
 }
@@ -636,6 +689,8 @@ body {
   margin-bottom: 40px;
   @media (max-width: 767px) {
     flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 }
 .tokenInformation {
@@ -643,13 +698,28 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  @media screen and (max-width: 580px) {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
   h2 {
     @include fluid-type(320px, 1920px, 18px, 24px);
     font-weight: 600;
     color: #fff;
+    flex: 1;
+  }
+  .searchbar {
+    padding: 0;
+    max-width: 440px;
+    width: 100%;
+    @media (max-width: 580px) {
+      margin-left: unset;
+    }
   }
   .searchbar_input {
     height: 46px;
+    flex: 1;
     input {
       height: 46px;
       padding-left: 40px;

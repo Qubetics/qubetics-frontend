@@ -7,18 +7,19 @@ import { addQubeticForVerifyContract } from "../AddQubeticsNetwork/addQubetics";
 import { useContractData } from "../contexts/contractContext";
 import CopyText from "../DoCopy/CopyText";
 import "./ContractDtlTabs.scss";
+import getAddress from "@/utils/getAddress";
 
 function ContractInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { connectAddress, setConnectAddress } = useContractData();
+  const [isConnecting, setIsConnecting] = useState(false);
   const provider = window.ethereum;
-
   useEffect(() => {
     checkMetaMaskAccount();
   }, []);
 
   const checkMetaMaskAccount = async () => {
-    const chainId = await provider.request({ method: "eth_chainId" });
+    const chainId = await provider?.request({ method: "eth_chainId" });
     const ChainIdQubetics = EXPLORER_META_NETWORK_CHAIN_ID;
     const accounts = await provider.request({
       method: "eth_accounts",
@@ -55,8 +56,10 @@ function ContractInfo() {
     setIsModalOpen(false);
   };
 
-  const connectWithWallet = () => {
-    addQubeticForVerifyContract(setConnectAddress);
+  const connectWithWallet = async () => {
+    setIsConnecting(true);
+    await addQubeticForVerifyContract(setConnectAddress);
+    setIsConnecting(false);
   };
 
   useEffect(() => {
@@ -70,37 +73,35 @@ function ContractInfo() {
       {!connectAddress ? (
         <div className="disconnect">
           <p>Disconnected </p>
-          <Button
-            type="primary"
-            style={{ height: 40 }}
-            className="bluebtn"
+          <button
+            className="headermetaBtn"
+            // className="bluebtn"
             onClick={connectModal}
           >
             Connect Wallet
-          </Button>
+          </button>
         </div>
       ) : (
-        <div className="connected">
-          <p>
-            Connected to : &nbsp;
-            <span> {connectAddress}</span>&nbsp;
-            <CopyText text={connectAddress} />
-          </p>
-        </div>
+        <>
+          <div className="connected">
+            <p>
+              Connected to : &nbsp;
+              <span> {getAddress(connectAddress)}</span>&nbsp;
+              <CopyText text={connectAddress} />
+            </p>
+            <Button
+              onClick={() => setConnectAddress("")}
+              className="commoncontactbtn "
+            >
+              {" "}
+              Disconnect
+            </Button>
+          </div>
+        </>
       )}
 
       <div className="contractInfo">
         <h3>Contract Information</h3>
-        {/*
-        <div className="buttons">
-          <Button type="primary" className="bluebtn">
-            Expand All
-          </Button>
-          <Button type="primary" className="bluebtn">
-            Reset
-          </Button>
-        </div>
-        */}
       </div>
       <Modal
         className="connectModal"
@@ -111,18 +112,16 @@ function ContractInfo() {
         centered
       >
         <ul>
-          <li onClick={connectWithWallet}>
-            {" "}
-            <Image src="/metafox.avif" alt="Logo" width={38} height={48} />
-            MetaMask
+          <li style={{ cursor: "pointer" }} onClick={connectWithWallet}>
+            <Image
+              priority
+              src="/metafox.svg"
+              alt="Logo"
+              width={25}
+              height={25}
+            />
+            {isConnecting ? "Connecting..." : "MetaMask"}
           </li>
-          {/*
-          <li>
-            {" "}
-            <Image src="/walletAdd.svg" alt="Logo" width={38} height={38} />
-            Wallet Connect
-          </li>
-          */}
         </ul>
         <p className="agreeWallet">
           By Connecting a wallet you agree to the Terms of service and Optimism

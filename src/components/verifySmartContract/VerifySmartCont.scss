@@ -2,7 +2,6 @@
 @import "../../_mixins.scss";
 .verifysmartContract {
   // margin: 50px 0;
-
   @media (max-width: 991px) {
   }
   p {
@@ -44,7 +43,6 @@
       gap: 70px;
       h5 {
         width: 10%;
-        font-family: Poppins;
         @include fluid-type(320px, 1920px, 10px, 14px);
         font-weight: 400;
         line-height: 21px;
@@ -71,39 +69,40 @@
     width: 100%;
     font-weight: 500;
   }
-  .ant-btn-variant-solid {
-    --bg: #000;
-    --hover-bg: var(--theme-gradients-main);
-    --text: #fff !important;
-    --hover-text: #000;
-    border: 2px solid transparent !important;
-    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-      conic-gradient(
-          from 180deg at 50% 50%,
-          #ff98e2,
-          #ffc876 35.77deg,
-          #79fff7 153.75deg,
-          #9f53ff 258.75deg,
-          #ff98e2 360deg
-        )
-        border-box !important;
-    border-radius: 25px;
-    transition: color 0.2s ease-out, filter 0.2s ease-out;
-    &:hover {
-      background: var(--theme-gradients-main) !important;
-      color: $black !important;
-      border: 0;
-    }
-  }
+  // .ant-btn-variant-solid {
+  //   --bg: #000;
+  //   --hover-bg: var(--theme-gradients-main);
+  //   --text: #fff !important;
+  //   --hover-text: #000;
+  //   border: 2px solid transparent !important;
+  //   background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+  //     conic-gradient(
+  //         from 180deg at 50% 50%,
+  //         #ff98e2,
+  //         #ffc876 35.77deg,
+  //         #79fff7 153.75deg,
+  //         #9f53ff 258.75deg,
+  //         #ff98e2 360deg
+  //       )
+  //       border-box !important;
+  //   border-radius: 25px;
+  //   transition: color 0.2s ease-out, filter 0.2s ease-out;
+  //   // &:hover {
+  //   //   background: var(--theme-gradients-main) !important;
+  //   //   color: $black !important;
+  //   //   border: 0;
+  //   // }
+  // }
   .ant-btn-variant-outlined {
-    background: #161616 ;
+    background: #161616;
     color: $white;
     border-radius: 30px;
     border: 1px solid #161616;
     &:hover {
-      background: var(--theme-gradients-main) !important;
-      color: $black !important;
-      border: 0;
+      background: #161616 !important;
+      color: $white !important;
+      border-radius: 30px;
+      border: 1px solid #161616 !important;
     }
   }
 }
@@ -210,7 +209,7 @@
       @include fluid-type(320px, 1920px, 18px, 30px);
       color: #000000;
       font-weight: 500;
-      padding-right: 40px;
+      padding-right: 60px;
       line-height: 22px;
       @media (max-width: 479px) {
         line-height: 30px;
@@ -263,6 +262,10 @@
   @media (max-width: 991px) {
     flex-direction: column;
     gap: 0;
+  }
+  .ant-select-selector {
+    background-color: #080808 !important;
+    border: 0 !important;
   }
 }
 .ant-input-outlined[disabled] {

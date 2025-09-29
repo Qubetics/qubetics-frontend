@@ -1,14 +1,34 @@
 import { NextResponse } from "next/server";
-import { SHOW_FAUCET } from "./constant/constant";
+import { EXPLORER_NETWORK_NAME, SHOW_FAUCET } from "./constant/constant";
 
 export function middleware(request) {
-  if (SHOW_FAUCET == 0) {
-    return NextResponse.redirect(new URL("/", request.url));
+  const cookies = request.cookies.get("isEVM")?.value;
+  console.log("cookies", cookies);
+  const evmPath = ["/contract", "/token", "/verify-contract"];
+  const pathname = request.nextUrl.pathname;
+  const isEvmPath = evmPath.some((path) => pathname.startsWith(path));
+
+  if (cookies === "false" && isEvmPath) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  if (
+    // pathname === "/faucet" &&
+    SHOW_FAUCET == 0 &&
+    EXPLORER_NETWORK_NAME === "Mainnet"
+  ) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: "/faucet",
+  matcher: [
+    "/contract",
+    "/verify-contract",
+    "/token",
+    "/contract/:address*",
+    "/faucet",
+  ],
 };

@@ -1,0 +1,103 @@
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
+import { tokensByAddressColumn } from "@/constant/graphTableValues";
+import getTokenByAddress from "@/services/getTokenByAddress";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Datnotfound } from "../../../public/SvgIcons";
+import { useGetNetwork } from "../contexts/networkChanged";
+import Pagination from "../Pagination/Pagination";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+import tokenTransaction from "@/services/tokenTransaction";
+
+const TokenTransactions = ({ setTokensTxData, tokensTxData }) => {
+  const [totalPages, setTotalPages] = useState(0);
+  const [tokenStatus, setTokenStatus] = useState(InitStatus);
+  const [currentPage, setCurrentPage] = useState(1);
+  const params = useParams();
+  const { isNetworkChanged } = useGetNetwork();
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const fetchData = async () => {
+    try {
+      setTokenStatus(FetchingStatus);
+      let response = await tokenTransaction(params?.addressDetail, currentPage);
+
+      setTokensTxData(response?.data?.tokens || response?.data?.tokenDetails);
+      const count = Number(response?.data?.total_count ?? 0) / tableLimit;
+      setTotalPages(Math.ceil(count ?? 0));
+      setTokenStatus(SuccessStatus);
+    } catch (err) {
+      setTokenStatus(ErrorStatus);
+      return err;
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handleLast = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(totalPages);
+    }
+  };
+
+  const handleFirst = () => {
+    if (currentPage <= totalPages) {
+      setCurrentPage(1);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (isNetworkChanged) {
+      fetchData();
+    }
+  }, [isNetworkChanged]);
+
+  return (
+    <>
+      <SkeletonTableWrapper
+        columns={tokensByAddressColumn}
+        dataSource={tokensTxData}
+        className="commontable"
+        isSkeleton={
+          tokenStatus === FetchingStatus || tokenStatus === InitStatus
+        }
+        pagination={false}
+      />
+      {totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+          handleLast={handleLast}
+          handleFirst={handleFirst}
+          disablePrev={currentPage === 1}
+          disableNext={currentPage === totalPages}
+        />
+      )}
+    </>
+  );
+};
+
+export default TokenTransactions;

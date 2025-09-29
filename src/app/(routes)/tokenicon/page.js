@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { Input, Button } from "antd";
-import "./token.scss";
-import { signMessage } from "./SignMessage";
-import { customToast } from "@/components/common/toast";
-import { isImageUrlValid } from "./isImageUrlValid";
-import Loader from "@/components/loader/Loader";
+import CustomInput from "@/components/customInput/CustomInput";
+import useDebounce from "@/hooks/useDebounce";
 import getContractDetails from "@/services/getContractDetails";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { isImageUrlValid } from "./isImageUrlValid";
+import { signMessage } from "./SignMessage";
+import "./token.scss";
 
 const TokenIcon = () => {
   const [url, setUrl] = useState("");
@@ -14,11 +14,13 @@ const TokenIcon = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [imgErr, setImgErr] = useState("");
   const [addMsg, setAddMsg] = useState("");
+  const [address, setAddress] = useState("");
   const [isDisable, setIsDisable] = useState(true);
+  const { debounce } = useDebounce(address, 500);
 
   const handleImageChange = async (e) => {
-    const imgUrl = e.target.value;
-
+    const imgUrl = e;
+    setUrl(imgUrl);
     if (!imgUrl) {
       setImgErr("");
       setUrl("");
@@ -33,38 +35,17 @@ const TokenIcon = () => {
       setImgErr("");
       setIsDisable(false);
     }
-
-    setUrl(imgUrl);
   };
-
-  const handleAddressChange = async (e) => {
-    const add = e.target.value;
-    if (!add) {
-      setAddMsg("");
-      setContractAddress("");
-      setIsDisable(true);
-      return;
-    }
-    const res = await getContractDetails(add);
-    if (res?.error) {
-      setAddMsg("Invalid Contract Address");
-      setIsDisable(true);
-    } else {
-      setAddMsg("");
-      setIsDisable(false);
-    }
-    setContractAddress(add);
-  };
-
   const submitUrl = async () => {
     if (!contractAddress) {
-      customToast.error("Enter Contract Address");
+      toast.error("Enter Contract Address");
       return;
     }
     if (!url) {
-      customToast.error("Enter Image Url");
+      toast.error("Enter Image Url");
       return;
     }
+
     await signMessage(
       contractAddress,
       url,
@@ -73,53 +54,75 @@ const TokenIcon = () => {
       setContractAddress
     );
   };
+  const checkContractDetails = async () => {
+    const res = await getContractDetails(debounce);
+    if (res?.error) {
+      setAddMsg("Invalid Contract Address");
+      setIsDisable(true);
+    } else {
+      setAddMsg("");
+      setIsDisable(false);
+    }
+    setContractAddress(debounce);
+  };
+  useEffect(() => {
+    if (debounce.length > 1) {
+      checkContractDetails();
+    }
+  }, [debounce]);
   return (
     <>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <div className="tokenIcon">
         <div className="container">
           <div className="searchblocks"></div>
           <div className="tokenIcon_inner">
-            <h1>Verify Ownership & Submit Token Icons</h1>
+            <h2>Verify Ownership & Submit Token Icons</h2>
             <div className="tokenIcon_inner__top">
-              <form style={{ width: "100%" }}>
-                <div>
-                  <label>Enter Contract Address</label>
-                  <Input
-                    placeholder="Enter Contract Address"
-                    type="text"
-                    name="url"
-                    onChange={handleAddressChange}
-                    value={contractAddress}
-                  />
-                </div>
-                {addMsg && (
-                  <p style={{ color: "red" }}>Invalid Contract Address</p>
-                )}
+              <div>
+                <CustomInput
+                  type="text"
+                  label="Enter Contract Address"
+                  placeholder="Enter Contract Address"
+                  name="url"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "Enter Contract Address")
+                  }
+                  onChange={(e) => setAddress(e)}
+                  value={address}
+                />
+              </div>
+              {addMsg && (
+                <p style={{ color: "red" }}>Invalid Contract Address</p>
+              )}
 
-                <div>
-                  <label style={{ marginTop: "15px" }}>Enter URL</label>
-                  <Input
-                    placeholder="Enter url link of your icon"
-                    type="text"
-                    name="url"
-                    onChange={handleImageChange}
-                    value={url}
-                  />
-                </div>
-                {imgErr && <p style={{ color: "red" }}>Invalid image URL</p>}
-                <Button
-                  onClick={submitUrl}
+              <div>
+                <CustomInput
+                  type="text"
+                  label="Enter URL"
+                  placeholder="Enter URL"
+                  name="url"
+                  
+                  onChange={(e) => handleImageChange(e)}
+                  value={url}
+                />
+              </div>
+              {imgErr && (
+                <p style={{ color: "#FF4E4E", textAlign: "right" }}>
+                  Invalid image URL
+                </p>
+              )}
+              <div className="tokensubmitbtn">
+                <button
                   disabled={isDisable}
-                  className="token_btn"
-                  style={{
-                    color: "white",
-                    backgroundColor: "#0096ff",
-                  }}
+                  onClick={submitUrl}
+                  className="headermetaBtn"
                 >
                   Submit
-                </Button>
-              </form>
+                </button>
+              </div>
+              {/* </form> */}
             </div>
           </div>
         </div>

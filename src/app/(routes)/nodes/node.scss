@@ -10,6 +10,48 @@
     &_left {
       max-width: 463px;
     }
+    &_right {
+      padding: 0 !important;
+      position: relative;
+      .countryBox {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        max-width: 107px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        @media (max-width: 575px) {
+          position: static;
+          display: flex;
+          margin: 16px;
+          flex-direction: row;
+        }
+        .innerBox {
+          background-color: #121212;
+          border-radius: 12px;
+          height: 82px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          @media (max-width: 575px) {
+            min-width: 103px;
+          }
+          h5 {
+            color: $white;
+            @include fluid-type(320px, 1920px, 18px, 24px);
+            font-weight: 400;
+          }
+          p {
+            color: $grayA0A0A0;
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-weight: 300;
+          }
+        }
+      }
+    }
     &_left,
     &_right {
       background: var(--searchBg);
@@ -17,9 +59,12 @@
       border-radius: 14px;
       padding: 24px;
       width: 100%;
-      padding-bottom: 0;
+      // padding-bottom: 0;
       @media (max-width: 991px) {
         padding: 20px;
+      }
+      @media (max-width: 575px) {
+        padding: 15px;
       }
       img {
         width: 100%;
@@ -33,6 +78,10 @@
         padding-bottom: 20px;
         border-bottom: 1px solid $borderCard;
         margin-bottom: 18px;
+        @media (max-width: 575px) {
+          border-bottom: 0;
+          margin-bottom: 0;
+        }
       }
       &_card {
         .innerNode {
@@ -44,13 +93,17 @@
           justify-content: center;
           align-items: center;
           gap: 16px;
+          @media (max-width: 575px) {
+            min-height: 100px;
+            gap: 10px;
+          }
 
           p {
             color: $grayA0A0A0;
             @include fluid-type(320px, 1920px, 14px, 16px);
           }
           h4 {
-            @include fluid-type(320px, 1920px, 16px, 24px);
+            @include fluid-type(320px, 1920px, 21px, 24px);
             color: $white;
             font-weight: 400;
           }
@@ -102,6 +155,9 @@
   width: 100%;
   svg {
     width: 100%;
+    @media (max-width: 575px) {
+      max-height: 222px;
+    }
     path {
       fill: #0381ff;
     }

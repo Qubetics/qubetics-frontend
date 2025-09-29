@@ -3,12 +3,18 @@
 .codeTabContent {
   margin-top: 20px;
   &__contractSource {
+    backdrop-filter: blur(32px);
     .contractSourceBtn {
       width: 100%;
       display: flex;
       align-items: center;
       gap: 8px;
       color: #fff;
+    }
+    .headermetaBtn {
+      height: 45px;
+      font-weight: 500;
+      min-width: 148px;
     }
   }
   .greenFill {
@@ -123,7 +129,7 @@
           }
         }
       }
-      h3{
+      h3 {
         margin-bottom: 15px;
         margin-top: 10px;
       }
@@ -154,28 +160,30 @@
         color: $white;
         @include fluid-type(320px, 1920px, 14px, 24px);
         font-weight: 600;
+        white-space: normal;
+        word-break: break-word;
       }
       span {
-        border: 1px solid #454545;
+        // border: 1px solid #454545;
         width: 40px;
         height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 30px;
+        // border-radius: 10px;
         cursor: pointer;
         @media (max-width: 540px) {
           border: 0;
         }
-        svg{
-          path{
+        svg {
+          path {
             stroke: $white;
           }
         }
       }
       .anticon {
-        svg{
-          path{
+        svg {
+          path {
             fill: $white;
           }
         }
@@ -220,6 +228,11 @@
     }
   }
 }
+.contractCodeTab {
+  .ant-tabs-tab {
+    padding-bottom: 6px !important;
+  }
+}
 .contractDetailTabs {
   padding: 30px;
   border-radius: 0 0 10px 10px;
@@ -230,24 +243,41 @@
   .ant-tabs-nav {
     .ant-tabs-nav-wrap {
       .ant-tabs-nav-list {
+        @media (max-width: 575px) {
+          display: flex;
+          gap: 10px;
+        }
         background-color: transparent !important;
         .ant-tabs-tab {
           padding: 0 0 10px 0;
         }
         .ant-tabs-tab-active {
           background-color: transparent;
-          border-top: 0;
-          border-left: 0;
-          border-right: 0;
           border-radius: 0;
           padding: 0 0 10px 0;
+          border-width: 0px;
+          border-bottom-width: 2px;
+          border-bottom-style: solid;
+          border-image-slice: 1;
+          border-image-source: linear-gradient(
+            to right,
+            #ffc876,
+            #79fff7,
+            #9f53ff,
+            #ff98e2
+          );
           --bg: #1c1c1c !important;
+          &::after,
+          &::before {
+            content: unset !important;
+            position: unset !important;
+          }
         }
       }
     }
   }
   .connected {
-    background-color: $bgreen-244430;
+    background-color: #080808;
     padding: 10px 48px;
     border-radius: 10px;
     margin-top: 20px;
@@ -283,19 +313,98 @@
       }
     }
   }
+  .commoncontactbtn {
+    --bg: #000;
+    --hover-bg: var(--theme-gradients-main);
+    --text: #fff;
+    --hover-text: #000;
+    border: 2px solid transparent;
+    background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+      conic-gradient(
+          from 180deg at 50% 50%,
+          #ff98e2,
+          #ffc876 35.77deg,
+          #79fff7 153.75deg,
+          #9f53ff 258.75deg,
+          #ff98e2 360deg
+        )
+        border-box;
+    color: #fff;
+    border-radius: 25px;
+    margin-left: 10px;
+    height: 40px;
+    &:hover {
+      --bg: #000;
+      --hover-bg: var(--theme-gradients-main);
+      --text: #fff;
+      --hover-text: #000;
+      border: 2px solid transparent !important;
+      background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+        conic-gradient(
+            from 180deg at 50% 50%,
+            #ff98e2,
+            #ffc876 35.77deg,
+            #79fff7 153.75deg,
+            #9f53ff 258.75deg,
+            #ff98e2 360deg
+          )
+          border-box !important;
+      color: #fff !important;
+      height: 40px !important ;
+    }
+    span {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
   .disconnect {
-    background-color: $bg-353026;
+    background-color: #080808;
     display: flex;
     padding: 10px 48px;
     align-items: center;
     border-radius: 10px;
-    gap: 10px;
+    gap: 15px;
     margin-top: 20px;
     @media (max-width: 991px) {
       padding: 10px 20px;
     }
+    @media (max-width: 360px) {
+      gap: 6px;
+      padding: 10px;
+    }
     p {
       color: $white;
+    }
+    :where(.css-dev-only-do-not-override-77tu7h).ant-btn-variant-solid:not(
+        :disabled
+      ):not(.ant-btn-disabled):hover {
+      --bg: #000;
+      --hover-bg: var(--theme-gradients-main);
+      --text: #fff;
+      --hover-text: #000;
+      border: 2px solid transparent;
+      background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
+        conic-gradient(
+            from 180deg at 50% 50%,
+            #ff98e2,
+            #ffc876 35.77deg,
+            #79fff7 153.75deg,
+            #9f53ff 258.75deg,
+            #ff98e2 360deg
+          )
+          border-box;
+      border-radius: 25px;
+    }
+    .headermetaBtn {
+      font-weight: 400;
+      padding: 9px 10px;
+      font-size: 14px;
+      @media (max-width: 1199px) {
+        height: 36px;
+      }
     }
   }
   .contractInfo {
@@ -309,8 +418,8 @@
     }
     h3 {
       color: $white;
-      @include fluid-type(320px, 1920px, 14px, 16px);
-      font-weight: 500;
+      @include fluid-type(320px, 1920px, 16px, 24px);
+      font-weight: 600;
     }
     .buttons {
       display: flex;
@@ -430,6 +539,30 @@
           margin-right: 5px;
         }
       }
+      .headermetaBtn {
+        height: 45px;
+        font-weight: 400;
+        border-radius: 30px;
+        background-color: #000;
+        color: #fff;
+        border: 0;
+        @media (max-width: 575px) {
+          padding: 8px 20px;
+          height: 38px;
+        }
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .readContent {
+      padding-left: 5px;
+      white-space: normal;
+      word-break: break-all;
     }
     .ant-checkbox-wrapper {
       color: $white;

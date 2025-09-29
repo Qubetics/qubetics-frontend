@@ -1,8 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
-import { TokenColumn } from "@/constant/graphTableValues";
-import { Table } from "antd";
+import InternalSearch from "@/components/InternalSearch/InternalSearch";
+import Pagination from "@/components/Pagination/Pagination";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -10,25 +13,59 @@ import {
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
+import { TokenColumn } from "@/constant/graphTableValues";
+import useDebounce from "@/hooks/useDebounce";
 import getAllTokens from "@/services/getAllTokens";
-import Loader from "@/components/loader/Loader";
-import Page from "../notfound/page";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import Pagination from "@/components/Pagination/Pagination";
+import getInternalSearch from "@/services/getInternalSearchData";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { TotalContrat } from "../../../../public/SvgIcons";
 
 function page() {
+  const searchParams = useSearchParams();
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [tokensData, setTokensData] = useState([]);
+  const [totalErcCount, setErcCount] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
   const { isNetworkChanged } = useGetNetwork();
+  const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const [searchText, setSearchText] = useState("");
+  const [paginationdata, setPaginationData] = useState({});
+  const { debounce } = useDebounce(searchText, 1500);
+  const pageNo = searchParams.get("page") || 1;
+  const pageid = searchParams.get("id") || 1;
+  const router = useRouter();
+  const [order, setOrder] = useState("");
 
   const fetchData = async () => {
     try {
       setTokenStatus(FetchingStatus);
-      let response = await getAllTokens(currentPage, tableLimit);
+      let response = await getAllTokens(pageid, tableLimit, order);
       setTokensData(response?.data?.tokens);
-      const count = Number(response?.data?.count ?? 0) / tableLimit;
+      setErcCount(response?.data?.erc20Count);
+      setPaginationData(response?.data);
+      const count = Number(response?.data?.erc20Count ?? 0) / tableLimit;
+      setTotalPages(Math.ceil(count ?? 0));
+      setTokenStatus(SuccessStatus);
+    } catch (err) {
+      setTokenStatus(ErrorStatus);
+      return err;
+    }
+  };
+  const getSearchData = async (debounce) => {
+    try {
+      setTokenStatus(FetchingStatus);
+      let response = await getInternalSearch(
+        pageid,
+        tableLimit,
+        debounce,
+        order
+      );
+      setTokensData(response?.data?.contracts);
+      setPaginationData(response?.data);
+      setErcCount(response?.data?.erc20Count);
+      const count = Number(response?.data?.contractCount ?? 0) / tableLimit;
       setTotalPages(Math.ceil(count ?? 0));
       setTokenStatus(SuccessStatus);
     } catch (err) {
@@ -38,8 +75,12 @@ function page() {
   };
 
   useEffect(() => {
+    if (searchText?.length > 0) {
+      getSearchData(searchText);
+      return;
+    }
     fetchData();
-  }, [currentPage]);
+  }, [pageNo]);
 
   useEffect(() => {
     if (isNetworkChanged == true) {
@@ -48,58 +89,142 @@ function page() {
   }, [isNetworkChanged]);
 
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+    setOrder("");
+    if (pageNo < totalPages) {
+      // Create a new URLSearchParams object to modify query parameters\
+      setOrder("");
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", Number(pageNo) + 1);
+      newSearchParams.set("id", paginationdata?.nextCursor);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (pageNo > 1) {
+      // setCurrentPage(page - 1);
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", Number(pageNo) - 1);
+      newSearchParams.set("id", paginationdata?.prevCursor);
+      router.push(`?${newSearchParams.toString()}`);
     }
+    setOrder("asc");
   };
 
   const handleLast = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(totalPages);
+    setOrder("");
+    if (pageNo < totalPages) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", totalPages);
+      newSearchParams.set("id", paginationdata?.lastPage);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleFirst = () => {
-    if (currentPage <= totalPages) {
-      setCurrentPage(1);
+    setOrder("");
+    if (pageNo <= totalPages) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", 1);
+      newSearchParams.set("id", 1);
+      router.push(`?${newSearchParams.toString()}`);
     }
   };
 
+  const cards = [
+    {
+      id: 1,
+      text: "Total Tokens",
+      balance: totalErcCount ?? 0,
+      img: <TotalContrat />,
+      contract: false,
+      title:
+        "The total number of tokens (ERC-20 and other standards) created on the blockchain.",
+    },
+  ];
+
+  const handleEnterClick = (e) => {
+    if (e.key === "Enter" && searchText?.length > 0) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", 1);
+      router.replace(`?${newSearchParams.toString()}`, {
+        shallow: true,
+        scroll: false,
+      });
+      if (pageNo == 1) {
+        getSearchData(searchText);
+      }
+    }
+  };
   return (
-    <div className="popularPage">
-      {tokenStatus === InitStatus || tokenStatus === FetchingStatus ? (
-        <Loader />
-      ) : tokenStatus === SuccessStatus ? (
-        <div className="container">
-          <Heading heading="Token Tracker" />
-          <Table
-            columns={TokenColumn}
-            dataSource={tokensData}
-            className="commontable"
-            pagination={false}
-          />
-          {totalPages && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              handleNext={handleNext}
-              handlePrevious={handlePrevious}
-              disablePrev={currentPage === 1}
-              disableNext={currentPage === totalPages}
-              handleFirst={handleFirst}
-              handleLast={handleLast}
+    <div className="popularPage tokenListSec">
+      <div className="container">
+        <FilterResult />
+        <Heading heading="Token Tracker (ERC-20)" />
+        <div className="cardContract cardblocks">
+          {cards?.map((item) => (
+            <CardsOnchain
+              className="tokenCard"
+              key={item?.id}
+              text={item?.text}
+              title={item?.title}
+              balance={item?.balance}
+              img={item?.img}
+              contract={item?.contract}
+              countime={item?.countime}
+              countTimer={item?.countTimer}
             />
-          )}
+          ))}
         </div>
-      ) : (
-        <Page />
-      )}
+        <div className="tokenInformation">
+          <h2></h2>
+          <InternalSearch
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              if (e.target.value.length === 0) {
+                const newSearchParams = new URLSearchParams(searchParams);
+                newSearchParams.set("page", 1);
+                router.push(`?${newSearchParams.toString()}`);
+                if (pageNo == 1) {
+                  fetchData();
+                }
+              }
+            }}
+            searchText={searchText}
+            onKeyUp={handleEnterClick}
+          />
+        </div>
+        <SkeletonTableWrapper
+          columns={TokenColumn}
+          dataSource={tokensData}
+          className="commontable"
+          isSkeleton={
+            tokenStatus === FetchingStatus || tokenStatus === InitStatus
+          }
+          // locale={{
+          //   emptyText: (
+          //     <div>
+          //       <Datnotfound />
+          //       <p>No data </p>
+          //     </div>
+          //   ),
+          // }}
+        />
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={pageNo}
+            handleNext={handleNext}
+            handlePrevious={handlePrevious}
+            disablePrev={page === 1 || paginationdata?.prevCursor === null}
+            disableNext={page === totalPages}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
+          />
+        )}
+      </div>
+      {/* // ) : ( // <Page />
+      // )} */}
     </div>
   );
 }

@@ -1,10 +1,22 @@
-import React from "react";
-import "../transferInfo/TransferInformation.scss";
-import CopyText from "../DoCopy/CopyText";
-import { formatDate } from "@/utils/renderTime";
-import { FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import Page from "@/app/(routes)/notfound/page";
-import { capitalizeWord } from "@/utils/commonFunctions";
+import {
+  currencyName,
+  FetchingStatus,
+  InitStatus,
+  Routes,
+  SuccessStatus,
+} from "@/constant/constant";
+import {
+  capitalizeWord,
+  formatMillionNumber,
+  noExponential,
+} from "@/utils/commonFunctions";
+import getAddress from "@/utils/getAddress";
+import { convertToDateTime } from "@/utils/renderTime";
+import Link from "next/link";
+import CopyText from "../DoCopy/CopyText";
+import "../transferInfo/TransferInformation.scss";
+import { Tooltip } from "antd";
 
 const ContractDetails = ({ data, status }) => {
   return (
@@ -30,8 +42,16 @@ const ContractDetails = ({ data, status }) => {
                 <p> Contract Address </p>
 
                 <h6>
-                  <span className="copyText">
-                    {data?.address ? <>{data?.address}</> : "-"}
+                  <span className="copyText   ">
+                    {data?.address ? (
+                      <>
+                        <Tooltip title={data?.address}>
+                          {getAddress(data?.address)}
+                        </Tooltip>
+                      </>
+                    ) : (
+                      "-"
+                    )}
                   </span>
                   <CopyText text={data?.address} />
                 </h6>
@@ -39,21 +59,35 @@ const ContractDetails = ({ data, status }) => {
               <div className="information">
                 <p>Type </p>
                 <span className="">
-                  {data?.contractType
-                    ? capitalizeWord(data?.contractType)
-                    : "-"}
+                  {data?.contractType ? data?.contractType : "-"}
                 </span>
               </div>
               <div className="information">
                 <p>Balance </p>
-                <span className="">400 TICS</span>
+                <span className="">
+                  {/* {data?.balance || 0} ${currencyName} */}
+                  {formatMillionNumber(
+                    noExponential(Number(data?.balance) / 10 ** 18 || 0)
+                  )}{" "}
+                  TICS
+                </span>
               </div>
               <div className="information">
                 <p> Creator </p>
                 <h6>
-                  <span className="copyText">
-                    {data?.creator ? <>{data?.creator}</> : "-"}
-                  </span>
+                  <Link href={`/address/${data?.creator}`}>
+                    <span className="copyText hoverTrans">
+                      {data?.creator ? (
+                        <>
+                          <Tooltip title={data?.creator}>
+                            {getAddress(data?.creator)}
+                          </Tooltip>
+                        </>
+                      ) : (
+                        "-"
+                      )}
+                    </span>
+                  </Link>
                   <CopyText text={data?.creator} />
                 </h6>
               </div>
@@ -62,13 +96,13 @@ const ContractDetails = ({ data, status }) => {
               <div className="information">
                 <p>Last Executed At</p>
                 <span className="">
-                  {data?.updatedAt ? formatDate(data?.updatedAt) : "-"}
+                  {data?.updatedAt ? convertToDateTime(data?.updatedAt) : "-"}
                 </span>
               </div>
               <div className="information">
                 <p>Deployed At</p>
                 <span className="">
-                  {data?.createdAt ? formatDate(data?.createdAt) : "-"}
+                  {data?.createdAt ? convertToDateTime(data?.createdAt) : "-"}
                 </span>
               </div>
               <div className="information">
@@ -80,7 +114,18 @@ const ContractDetails = ({ data, status }) => {
 
                 <h6>
                   <span className="copyText">
-                    {data?.txHash ? <>{data?.txHash}</> : "-"}
+                    {data?.txHash ? (
+                      <Link
+                        className="hoverTrans"
+                        href={`${Routes.Tx_Hash}${data?.txHash}`}
+                      >
+                        <Tooltip title={data?.txHash}>
+                          {getAddress(data?.txHash)}
+                        </Tooltip>
+                      </Link>
+                    ) : (
+                      "-"
+                    )}
                   </span>
                   <CopyText text={data?.txHash} hoverText={"hash"} />
                 </h6>

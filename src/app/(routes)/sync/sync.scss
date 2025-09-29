@@ -1,0 +1,69 @@
+@import "../../../_var.scss";
+@import "../../../_mixins.scss";
+
+.sync_header {
+  flex-direction: column;
+}
+.sync_header_left {
+  //   flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  background: $bodybg;
+  position: sticky;
+  margin-bottom: 30px;
+  h3 {
+    color: #fff;
+    word-break: break-all;
+  }
+}
+.sync_header_left_inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  h2 {
+    color: #fff;
+  }
+}
+.sync_state {
+  background: $bodybg;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 30px;
+  a {
+    text-decoration: none;
+    color: #9f53ff;
+  }
+  h2 {
+    color: #fff;
+    padding: 10px;
+  }
+  p {
+    color: #fff;
+    font-size: medium;
+    padding: 10px;
+  }
+  h5 {
+    color: #fff;
+    font-size: medium;
+  }
+}
+.sync_code {
+  background: #000;
+  width: 100%;
+  max-width: 1380px;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  pre,
+  code {
+    white-space: pre-wrap !important;
+    word-break: break-all !important; // <- This is the real game-changer
+    overflow-wrap: break-word !important;
+    overflow: hidden;
+  }
+}

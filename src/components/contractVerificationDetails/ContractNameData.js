@@ -1,6 +1,7 @@
 import React from "react";
 import { contractData } from "../contractDetailTabs/ContractData";
 import "../contractDetailTabs/ContractDtlTabs.scss";
+import { firstCapitalLetter } from "@/constant/constant";
 
 const ContractNameData = ({ contractDetailData }) => {
   const showContractDetail = contractData(contractDetailData);
@@ -12,7 +13,7 @@ const ContractNameData = ({ contractDetailData }) => {
           <div key={index} className="codeTabContent__contractName__inner">
             <div className="homer">
               <p>{contractName?.contract || "-"}</p>
-              <span>{contractName?.Homer || "-"}</span>
+              <span>{firstCapitalLetter(contractName?.Homer) || "-"}</span>
             </div>
             <div className="homer">
               <p>{contractName?.name || "-"}</p>

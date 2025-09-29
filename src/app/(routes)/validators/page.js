@@ -1,16 +1,10 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
+import { useLatestData } from "@/components/contexts/latest_data";
+import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
-import { validatorsColumn } from "@/constant/graphTableValues";
-import { Table, Tooltip } from "antd";
-import React, { useEffect, useState } from "react";
-import "./validators.scss";
-import {
-  Onchainapy,
-  Activevalidators,
-  Totalvalidators,
-  Bondedrate,
-} from "../../../../public/SvgIcons";
+import Pagination from "@/components/Pagination/Pagination";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -18,14 +12,19 @@ import {
   SuccessStatus,
   tableLimit,
 } from "@/constant/constant";
+import { validatorsColumn } from "@/constant/graphTableValues";
+import getStatistics from "@/services/getStatistics";
 import getValidators from "@/services/getValidators";
-import Loader from "@/components/loader/Loader";
-import Page from "../notfound/page";
-import { useLatestData } from "@/components/contexts/latest_data";
-import { simplifyNumber } from "@/utils/commonFunctions";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import Pagination from "@/components/Pagination/Pagination";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
+import { formatDecimal } from "@/utils/commonFunctions";
+import { useEffect, useState } from "react";
+import {
+  Activevalidators,
+  Bondedrate,
+  Datnotfound,
+  Onchainapy,
+  Totalvalidators,
+} from "../../../../public/SvgIcons";
+import "./validators.scss";
 
 function page() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,23 +32,39 @@ function page() {
   const [totalPages, setTotalPages] = useState(1);
   const [validatorStatus, setValidatorStatus] = useState(InitStatus);
   const [searchStatus, setSerachStatus] = useState(InitStatus);
+  const [stats, setStats] = useState("");
 
   const webSocketData = useLatestData();
   const parsedData =
     webSocketData?.analytics?.validatorData &&
     JSON.parse(webSocketData?.analytics?.validatorData);
 
+  const fetchEVMStats = async () => {
+    try {
+      let respose = await getStatistics();
+      setStats(respose?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+
+  useEffect(() => {
+    fetchEVMStats();
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setValidatorStatus(FetchingStatus);
         let response = await getValidators(currentPage, tableLimit);
-        setValidatorData(response?.data?.validators);
+        setValidatorData(response?.data);
         setValidatorStatus(SuccessStatus);
         const count = Number(response?.data?.count ?? 0) / tableLimit;
         setTotalPages(Math.ceil(count ?? 0));
       } catch (err) {
         setValidatorStatus(ErrorStatus);
+        console.error("Error fetching validator data:", err);
+        setValidatorData([]);
         return err;
       }
     };
@@ -59,52 +74,43 @@ function page() {
   const cards = [
     {
       id: 1,
-      text: (
-        <>
-          Onchain APY
-          <Tooltip
-            color="rgb(49 52 56)"
-            title=" APY is an estimated % of rewards you will earn while staking Qubetics coins over the annual period. APY is adjusted daily, and the estimated rewards may be different from the actual rewards generated."
-          >
-            <InfoCircleOutlined className="infoIcon" />
-          </Tooltip>
-        </>
-      ),
-      balance: parsedData?.apy ? parsedData?.apy + " %" : "0 %",
+      title:
+        "The annual percentage yield earned on staked coins, calculated directly from on-chain data.",
+      text: <>Onchain APY</>,
+      balance: (stats?.apy ? stats?.apy : 0) + " %",
       img: <Onchainapy />,
       contract: "true",
     },
     {
       id: 2,
-      text: "Total Validators",
-      balance: parsedData?.totalValidator ? parsedData?.totalValidator : "0",
+      title:
+        "The total number of validators participating in securing the network by validating and proposing blocks.",
+      text: <>Total Validators</>,
+      balance: validatorData?.count ? validatorData?.count : "0",
       img: <Totalvalidators />,
       contract: true,
     },
     {
       id: 3,
-      text: (
-        <>
-          Bonded Rate
-          <Tooltip
-            color="rgb(49 52 56)"
-            title="The percentage of Qubetics coins bonded by the validator and delegators in the network with respect to the total supply of Qubetics."
-          >
-            <InfoCircleOutlined className="infoIcon" />
-          </Tooltip>
-        </>
-      ),
-      balance: parsedData?.bondedRate
-        ? simplifyNumber(parsedData?.bondedRate) + " %"
+      title:
+        "The percentage of the total circulating supply of tokens that is currently staked or bonded to validators.",
+
+      balance: stats?.bondedRate
+        ? `${formatDecimal(Number(stats?.bondedRate))}%`
         : "0 %",
       img: <Bondedrate />,
       contract: "true",
+      text: "Bonded Rate",
     },
     {
       id: 4,
-      text: <>Active Validators</>,
-      balance: parsedData?.validator ? parsedData?.validator : "0",
+      title:
+        "The number of validators actively participating in the network at the current time.",
+      balance: Array.isArray(validatorData?.activeValidators)
+        ? validatorData.activeValidators.length
+        : validatorData?.activeValidators || validatorData?.activeCount || "0",
       img: <Activevalidators />,
+      text: "Active Validators",
       contract: "true",
     },
   ];
@@ -132,18 +138,10 @@ function page() {
       setCurrentPage(1);
     }
   };
-
   return (
     <div className="validatorsCard">
-      {/* {validatorStatus === InitStatus || validatorStatus === FetchingStatus ? (
-        <Loader />
-      ) : validatorStatus === SuccessStatus ? (
-        <> */}
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <FilterResult />
         <Heading heading="Validators" />
         <div className="cardContract">
           {cards?.map((item) => (
@@ -153,16 +151,28 @@ function page() {
               balance={item?.balance}
               img={item?.img}
               contract={item?.contract}
+              title={item?.title}
             />
           ))}
         </div>
-        <Table
+        <SkeletonTableWrapper
           className="commontable"
+          isSkeleton={
+            validatorStatus === FetchingStatus || validatorStatus === InitStatus
+          }
           columns={validatorsColumn}
-          dataSource={validatorData}
+          dataSource={validatorData?.validators || []}
           pagination={false}
+          locale={{
+            emptyText: (
+              <div>
+                <Datnotfound />
+                <p>No data </p>
+              </div>
+            ),
+          }}
         />
-        {totalPages > 10 && (
+        {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
@@ -175,10 +185,6 @@ function page() {
           />
         )}
       </div>
-      {/* </>
-      ) : (
-        <Page />
-      )} */}
     </div>
   );
 }

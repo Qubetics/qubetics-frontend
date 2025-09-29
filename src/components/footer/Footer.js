@@ -1,33 +1,47 @@
+"use client";
+import { EXPLORER_CHAIN_NAME } from "@/constant/constant";
 import { Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Discord,
-  Facebook,
-  Instagram,
-  Telegram,
-  TikTok,
-  Twitter
-} from "../../../public/SvgIcons";
+import { useEffect, useState } from "react";
+import { footerLinks, SocialMediaLinks } from "./config/FooterLinks";
 import "./Footer.scss";
+import { trackEvent } from "@/utils/eventTrack";
 const Footer = () => {
+  const [isNative, setIsNative] = useState(false);
+
+  useEffect(() => {
+    const val = localStorage.getItem("chainType");
+    setIsNative(val === "Native Chain");
+  }, []);
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+  const [origin, setOrigin] = useState(""); // State for storing origin
   const pathname = usePathname();
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin.split("//")[1].split("-")[0]); // Set origin once client-side
+    }
+  }, []);
+
+  const handleTrackEvent = (label) => {
+    trackEvent({
+      action: "link_click",
+      category: "Footer",
+      label: label,
+    });
+  };
+
   return (
-    <section
-      // // style={{ display: pathname === Routes.HOME && "block" }}
-      // className={`footer`}
-      className="footernew"
-    >
+    <section className="footernew">
       <div className="container">
-        <Row gutter={[16, 16]} justify="center">
+        <Row gutter={[20, 16]} justify="center">
           <Col xs={24} sm={12} lg={7}>
             <h2>
               {" "}
@@ -38,106 +52,63 @@ const Footer = () => {
               all leading networks.
             </p>
           </Col>
-          <Col xs={24} sm={12} lg={4}>
-            <h3>Quick Links</h3>
-            <Link href="#" target="_blank">
-              Tokens
-            </Link>
-            <Link href="#" target="__blank">
-              Blockchain
-            </Link>
-            <Link href="#" target="__blank">
-              Validators
-            </Link>
-            <Link href="#" target="__blank">
-              Analytics
-            </Link>
-            <Link href="#" target="__blank">
-              Nodes
-            </Link>
-          </Col>
-          <Col xs={24} sm={12} lg={4}>
-            <h3>About Us</h3>
-            <Link href="" target="_blank">
-              Privacy Policy
-            </Link>
-            <Link href="" target="__blank">
-              Terms of Service
-            </Link>
-          </Col>
-
-          <Col xs={24} sm={12} lg={4}>
-            <h3>Product & Services</h3>
-            <Link href="" target="_blank">
-              Qubetics Validator App
-            </Link>
-            <Link href="" target="_blank">
-              Qubetics Delegator App
-            </Link>
-            <Link href="" target="_blank">
-              Qubetics DEX
-            </Link>
-            <Link href=" " target="_blank">
-              Qubetics App
-            </Link>
-          </Col>
-          <Col xs={24} sm={12} lg={5}>
-            <h3>Resources</h3>
-            <Link href="" target="_blank">
-              Official web
-            </Link>
-            <Link href="" target="_blank">
-              Qubetics Network Documentation
-            </Link>
-            <Link href="" target="_blank">
-              Qubetics Documentation
-            </Link>
-            <Link href="" target="_blank">
-              Qubetics IDE
-            </Link>
-          </Col>
+          {footerLinks.map((section, idx) => (
+            <Col key={idx} xs={24} sm={12} lg={4}>
+              <h3 className="mb-2 font-semibold">{section.title}</h3>
+              <div className="flex flex-col space-y-1">
+                {section.items.map((item, i) => {
+                  if (item.label === "Tokens" && isNative) return null;
+                  return item.disabled ? (
+                    <Link
+                      href={"#"}
+                      style={{
+                        cursor: "not-allowed",
+                        pointerEvents: "none",
+                        color: "gray",
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <Link
+                      key={i}
+                      onClick={() => handleTrackEvent(item.label)}
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </Col>
+          ))}
         </Row>
         <div className="footernew_topFooterItem">
           <h3>Get in touch!</h3>
           <div className="footernew_topFooterItem_socialIcon">
-            <Link href="" target="_blank">
-              <Facebook />
-            </Link>
-            <Link href="" target="_blank">
-              <Twitter />
-            </Link>
-            <Link href="" target="_blank">
-              <Instagram />
-            </Link>
-            <Link href="" target="_blank">
-              <TikTok />
-            </Link>
-            <Link href="" target="_blank">
-              <Telegram />
-            </Link>
-            <Link href="" target="_blank">
-              <Discord />
-            </Link>
-
-     
+            {SocialMediaLinks.map((item, i) => {
+              return (
+                <Link
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={i}
+                  onClick={() => handleTrackEvent(item.label)}
+                >
+                  {item.icon}
+                </Link>
+              );
+            })}
           </div>
-          {/* <div
-            className="footernew_topFooterItem_backTopTop"
-            onClick={scrollToTop}
-          >
-            <span className="rotateIcon">
-              <Uparrow />
-            </span>
-            <p>Back to Top</p>
-          </div> */}
         </div>
         <p className="footernew_year">
-          {/* © 2024 {EXPLORER_CHAIN_NAME}. All Rights Reserved. */}
-          ©2024 Copyright Qubetics. All rights reserved.
+          {new Date().getFullYear()} Copyright {EXPLORER_CHAIN_NAME}. All rights
+          reserved.
         </p>
       </div>
     </section>
   );
 };
-
 export default Footer;

@@ -1,5 +1,8 @@
 "use client";
-import { EXPLORER_SOCKET_URL, NATIVE_EXPLORER_SOCKET_URL } from "@/constant/constant";
+import {
+  EXPLORER_SOCKET_URL,
+  NATIVE_EXPLORER_SOCKET_URL,
+} from "@/constant/constant";
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   disconnectEvmSocket,
@@ -15,7 +18,7 @@ import {
   subscribeNativeLatestTransaction,
   subscribeNativeTransactionGraph,
   subscribeOnChainMetrics,
-  subscribeTransactionGraph
+  subscribeTransactionGraph,
 } from "../../utils/wsClient";
 
 let evmWebSocketUrl = EXPLORER_SOCKET_URL;
@@ -36,7 +39,9 @@ export function LatestDataProvider({ children }) {
   const [onChainMetric, setOnChainMetric] = useState([]);
   let currentChain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
-
+  if (currentChain === null || currentChain === undefined) {
+    currentChain = "EVM Chain";
+  }
   useEffect(() => {
     SubscribeToSocket();
   }, [currentChain]);
@@ -45,11 +50,11 @@ export function LatestDataProvider({ children }) {
     return () => {
       disconnectEvmSocket();
       disconnectNativeSocket();
-    }
-  }, [currentChain])
-
+    };
+  }, [currentChain]);
 
   const SubscribeToSocket = async () => {
+
     if (currentChain === "EVM Chain") {
       disconnectNativeSocket();
       await initEvmSocket(evmWebSocketUrl);
@@ -60,7 +65,6 @@ export function LatestDataProvider({ children }) {
       // subscribeCoinTransferGraph((data) => setTransferGraph(data));
       subscribeTransactionGraph((data) => setTransactionGraph(data));
       // subscribeAccountsGraph((data) => setAccountsGraph(data));
-      // subscribeTokensGraph((data) => setTokensGraph(data));
       subscribeAnalytics((data) => setAnalytics(data));
     } else if (currentChain === "Native Chain") {
       disconnectEvmSocket();

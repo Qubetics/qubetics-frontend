@@ -7,14 +7,14 @@ import {
 } from "@/constant/constant";
 import { tokensByAddressColumn } from "@/constant/graphTableValues";
 import getTokenByAddress from "@/services/getTokenByAddress";
-import { Table } from "antd";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import Loader from "../loader/Loader";
+import { useEffect, useState } from "react";
+import { Datnotfound } from "../../../public/SvgIcons";
 import { useGetNetwork } from "../contexts/networkChanged";
 import Pagination from "../Pagination/Pagination";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
-const TokenByAddress = () => {
+const TokenByAddress = ({ setTokensData }) => {
   const [tokenData, setTokenData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
@@ -34,6 +34,9 @@ const TokenByAddress = () => {
         currentPage
       );
       setTokenData(
+        response?.data?.contractDetails || response?.data?.tokenDetails
+      );
+      setTokensData(
         response?.data?.contractDetails || response?.data?.tokenDetails
       );
       const count = Number(response?.data?.count ?? 0) / tableLimit;
@@ -68,17 +71,18 @@ const TokenByAddress = () => {
     }
   }, [isNetworkChanged]);
 
-  return tokenStatus === InitStatus || tokenStatus === FetchingStatus ? (
-    <Loader />
-  ) : (
+  return (
     <>
-      <Table
+      <SkeletonTableWrapper
         columns={tokensByAddressColumn}
         dataSource={tokenData}
         className="commontable"
+        isSkeleton={
+          tokenStatus === FetchingStatus || tokenStatus === InitStatus
+        }
         pagination={false}
       />
-      {totalPages && (
+      {totalPages > 1 && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

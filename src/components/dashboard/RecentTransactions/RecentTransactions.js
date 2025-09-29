@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Heading from "@/components/heading/Heading";
-import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
-import getTransactions from "@/services/getTransactions";
+import Page from "@/app/(routes)/notfound/page";
 import { useLatestData } from "@/components/contexts/latest_data";
+import { useGetNetwork } from "@/components/contexts/networkChanged";
+import Loader from "@/components/loader/Loader";
+import RecentTransaction from "@/components/recentTransaction/RecentTransaction";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -13,12 +13,11 @@ import {
   dashboardCount,
   pageNo,
 } from "@/constant/constant";
+import getTransactions from "@/services/getTransactions";
 import { useRouter } from "next/navigation";
+import { act, useEffect, useState } from "react";
 import "./style.scss";
-import Page from "@/app/(routes)/notfound/page";
-import Loader from "@/components/loader/Loader";
-import { useGetNetwork } from "@/components/contexts/networkChanged";
-import { RightOutlined } from "@ant-design/icons";
+import { trackEvent } from "@/utils/eventTrack";
 
 const RecentTransactions = () => {
   const [recentTxns, setRecentTxns] = useState([]);
@@ -27,12 +26,12 @@ const RecentTransactions = () => {
   const [currentIndex, setCurrentIndex] = useState(4);
   const maxNonStaticElements = 6;
   const router = useRouter();
-  const { isNetworkChanged } = useGetNetwork();
+  // const { isNetworkChanged } = useGetNetwork();
 
   const fetchData = async () => {
     try {
       setRecentTxnStatus(FetchingStatus);
-      let res = await getTransactions(pageNo, dashboardCount);
+      let res = await getTransactions(pageNo, dashboardCount, "desc");
 
       if (res?.error === false) {
         const accendingBlock = res?.data?.transactions;
@@ -52,12 +51,6 @@ const RecentTransactions = () => {
   }, []);
 
   useEffect(() => {
-    if (isNetworkChanged == true) {
-      fetchData();
-    }
-  }, [isNetworkChanged]);
-
-  useEffect(() => {
     getSocketTxn();
   }, [webSocketData?.transactions]);
 
@@ -67,6 +60,7 @@ const RecentTransactions = () => {
       webSocketData?.transactions?.length > 0
     ) {
       const newArray = webSocketData?.transactions;
+
       if (
         !recentTxns?.some(
           (item) => item?.blocknumber === newArray[0]?.blocknumber
@@ -74,31 +68,34 @@ const RecentTransactions = () => {
       ) {
         let updatedSocketBlock = [...recentTxns];
         if (updatedSocketBlock?.length >= maxNonStaticElements) {
-          updatedSocketBlock?.shift();
-          setCurrentIndex(4);
+          updatedSocketBlock?.pop(); // Remove last element instead of first
+          // setCurrentIndex(4);
         }
-        updatedSocketBlock?.push(newArray[0]);
+        updatedSocketBlock?.unshift(newArray[0]); // Add at beginning instead of end
         setRecentTxns(updatedSocketBlock);
-        setCurrentIndex(5);
+        // setCurrentIndex(5);
       }
     } else if (!Array.isArray(webSocketData?.transactions)) {
       const newArray = webSocketData?.transactions;
+
       if (
         !recentTxns?.some((item) => item?.blocknumber === newArray?.blocknumber)
       ) {
         let updatedSocketBlock = [...recentTxns];
         if (updatedSocketBlock?.length >= maxNonStaticElements) {
-          updatedSocketBlock?.shift();
-          setCurrentIndex(4);
+          updatedSocketBlock?.pop(); // Remove last element instead of first
+          // setCurrentIndex(4);
         }
-        updatedSocketBlock?.push(newArray);
+
+        updatedSocketBlock?.unshift(newArray); // Add at beginning instead of end
         setRecentTxns(updatedSocketBlock);
-        setCurrentIndex(5);
+        // setCurrentIndex(5);
       }
     }
   };
 
   const handleClick = () => {
+    trackEvent({ action: "click", category: "Dashboard", label: "View All" });
     router.push(Routes?.TRANSACTIONS);
   };
 
@@ -111,7 +108,7 @@ const RecentTransactions = () => {
         <div className="commontableBG_head">
           <h2>Latest Transactions</h2>
           <div className="viewAll" onClick={handleClick}>
-            <p> View All</p>
+            <p> View all</p>
           </div>
         </div>
 

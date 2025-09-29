@@ -8,44 +8,28 @@ import {
   FetchingStatus,
   InitStatus,
   SuccessStatus,
-  tooltipConstant,
 } from "@/constant/constant";
 import {
-  TRANS_HISTORY_CHART_YEAR,
+  ALL_CHART_SEVEN_DAY,
   transactionItems,
 } from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
-import { formatMillionNumber } from "@/utils/commonFunctions";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Select, Space, Tooltip } from "antd";
+import { trackEvent } from "@/utils/eventTrack";
+import { Select, Space } from "antd";
 import { useEffect, useState } from "react";
 
 const TransactionHistory = (props) => {
   const webSocketData = useLatestData();
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
-    type: TRANS_HISTORY_CHART_YEAR,
+    type: ALL_CHART_SEVEN_DAY,
   });
   const [transactionStatus, setTransactionStatus] = useState(InitStatus); //init,fetching,success,error
   const { isNetworkChanged } = useGetNetwork();
 
-  // useEffect(() => {
-  //   if (webSocketData?.transactionGraph?.finalData) {
-  //     chartTimeType(
-  //       setTransactionHisChart,
-  //       transactionHisChart,
-  //       webSocketData?.transactionGraph
-  //     );
-  //   }
-  // }, [webSocketData?.transactionGraph]);
-
-  useEffect(() => {
-    fetchChartData();
-  }, [transactionHisChart?.type]);
-
-  const fetchChartData = () => {
+  const fetchChartData = async () => {
     setTransactionStatus(FetchingStatus);
-    getTransactionGraph(transactionHisChart?.type)
+    await getTransactionGraph(transactionHisChart?.type)
       .then((res) => {
         setTransactionStatus(SuccessStatus);
         setTransactionHisChart({
@@ -60,6 +44,11 @@ const TransactionHistory = (props) => {
   };
 
   const handleTransactionHistory = (value) => {
+    trackEvent({
+      action: "button_click",
+      category: "Dashboard_TransactionHistory",
+      label: `total_transactions ${value}`,
+    });
     setTransactionHisChart({ ...transactionHisChart, type: value });
   };
 
@@ -69,6 +58,9 @@ const TransactionHistory = (props) => {
     }
   }, [isNetworkChanged]);
 
+  useEffect(() => {
+    fetchChartData();
+  }, [transactionHisChart?.type]);
   return (
     <div style={{ position: "relative" }}>
       <div
@@ -79,28 +71,29 @@ const TransactionHistory = (props) => {
         <div className="drop_histry">
           <div className="drop_histry__blinkLive">
             <h3>
-              Transaction History{" "}
-              <span>
-                {webSocketData?.onChainMetric?.totalTx
-                  ? formatMillionNumber(
-                      Number(webSocketData?.onChainMetric?.totalTx)
-                    )
-                  : "0"}
-              </span>
-              <Tooltip
+              Total Transaction History{" "}
+              {/* <Tooltip
                 color="rgb(49 52 56)"
                 title={tooltipConstant.TRANSACTION_HISTORY_GRAPH}
               >
                 <InfoCircleOutlined className="infoIcon" />
-              </Tooltip>
+              </Tooltip> */}
             </h3>
-            <span className="liveblink">Live</span>
+            <h6>
+              {webSocketData?.onChainMetric?.totalTx
+                ? Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()
+                : props?.stats?.total_transactions
+                ? Number(props?.stats?.total_transactions).toLocaleString()
+                : 0}
+            </h6>
+            {/* <span className="liveblink">Live</span> */}
           </div>
 
           <Space wrap>
             <Select
+              title=""
               getPopupContainer={(trigger) => trigger.parentNode}
-              defaultValue={TRANS_HISTORY_CHART_YEAR}
+              defaultValue={ALL_CHART_SEVEN_DAY}
               style={{ width: 80 }}
               onChange={handleTransactionHistory}
               options={transactionItems}
@@ -109,10 +102,7 @@ const TransactionHistory = (props) => {
         </div>
         {transactionStatus === InitStatus ||
         transactionStatus === FetchingStatus ? (
-          <div
-            className="graphLod"
-            style={{ position: "absolute", left: "46%", top: "45%" }}
-          >
+          <div className="graphLod dashLoading">
             {" "}
             <GraphLoading />
           </div>
@@ -120,6 +110,7 @@ const TransactionHistory = (props) => {
           <ChartAccounts
             data={transactionHisChart?.data}
             chartType={transactionHisChart?.type}
+            name="Txn Count"
           />
         ) : (
           <Page />

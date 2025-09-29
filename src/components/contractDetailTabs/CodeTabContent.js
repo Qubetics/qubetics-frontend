@@ -1,26 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "./ContractDtlTabs.scss";
-import { Button } from "antd";
-import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
 import {
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import { useRouter } from "next/navigation";
-import Loader from "../loader/Loader";
-import { useContractData } from "../contexts/contractContext";
+import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
 import getProxyVerificationDetail from "@/services/getProxyVerificationDetail";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
 import ProxyModal from "../ProxyModal/ProxyModal";
-import VerificationStatus from "../contractVerificationDetails/VerificationStatus";
-import ContractAbi from "../contractVerificationDetails/ContractAbi";
-import SourceCode from "../contractVerificationDetails/SourceCode";
-import CompilerMessage from "../contractVerificationDetails/CompilerMessage";
-import ContractNameData from "../contractVerificationDetails/ContractNameData";
-import { errorWarning } from "../contractVerificationDetails/showErrorWarningMessage";
+import { useContractData } from "../contexts/contractContext";
 import ByteCreationCode from "../contractVerificationDetails/ByteCreationCode";
+import CompilerMessage from "../contractVerificationDetails/CompilerMessage";
+import ContractAbi from "../contractVerificationDetails/ContractAbi";
+import ContractNameData from "../contractVerificationDetails/ContractNameData";
+import SourceCode from "../contractVerificationDetails/SourceCode";
+import VerificationStatus from "../contractVerificationDetails/VerificationStatus";
+import { errorWarning } from "../contractVerificationDetails/showErrorWarningMessage";
+import Loader from "../loader/Loader";
+import "./ContractDtlTabs.scss";
+
 
 function CodeTabContent({ hash }) {
   const [status, setStatus] = useState(InitStatus);

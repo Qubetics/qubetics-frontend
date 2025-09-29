@@ -1,16 +1,9 @@
 "use client";
-import Loader from "@/components/loader/Loader";
 import ListView from "@/components/nodes/ListView";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-} from "@/constant/constant";
+import { ErrorStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import getNodes from "@/services/getAllNodes";
 import { useEffect, useState } from "react";
 import "../blocks/blocksummary.scss";
-import Page from "../notfound/page";
 import QubeticNetworkNode from "./QubeticNetworkNode";
 
 const Nodes = () => {
@@ -19,6 +12,7 @@ const Nodes = () => {
   const [totalNodes, setTotalNodes] = useState(0);
   const [countryNode, setCountryNode] = useState();
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

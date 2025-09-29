@@ -1,5 +1,4 @@
 "use-client";
-import Page from "@/app/(routes)/notfound/page";
 import {
   ErrorStatus,
   FetchingStatus,
@@ -8,11 +7,11 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { EventsColumn } from "@/constant/graphTableValues";
-import { Table } from "antd";
-import React, { useEffect, useState } from "react";
-import Loader from "../loader/Loader";
 import getTokenEvents from "@/services/getTokenEvents";
-
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import notFound from "../../assets/svg/notFount.svg";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 const Events = ({ hash }) => {
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(0);
@@ -40,13 +39,17 @@ const Events = ({ hash }) => {
     fetchTransactions();
   }, [currentPage, hash]);
 
-  return eventStatus === InitStatus || eventStatus === FetchingStatus ? (
-    <Loader />
-  ) : eventStatus === SuccessStatus ? (
+  return (
+    // eventStatus === InitStatus || eventStatus === FetchingStatus ? (
+    //   <Loader />
+    // ) : eventStatus === SuccessStatus ? (
     <div>
       {" "}
-      <Table
+      <SkeletonTableWrapper
         columns={EventsColumn}
+        isSkeleton={
+          eventStatus === InitStatus || eventStatus === FetchingStatus
+        }
         dataSource={events}
         pagination={
           eventCount > tableLimit && {
@@ -56,11 +59,20 @@ const Events = ({ hash }) => {
             onChange: handlePageChange,
           }
         }
-        className="commontable contractTable"
+        className="commontable contratTable eventTable"
+        locale={{
+          emptyText: (
+            <div>
+              <Image src={notFound} width={150} height={90} />
+
+              <p>No Data </p>
+            </div>
+          ),
+        }}
       />
     </div>
-  ) : (
-    <Page />
+    // ) : (
+    //   <Page />
   );
 };
 

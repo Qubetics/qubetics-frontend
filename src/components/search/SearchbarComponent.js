@@ -1,17 +1,16 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import { useThemeData } from "@/components/contexts/theme_context";
-import getSearchingValue from "@/services/search";
-import { usePathname, useRouter } from "next/navigation";
 import {
-  EXPLORER_NETWORK_NAME,
   ErrorStatus,
   FetchingStatus,
   Routes,
   SuccessStatus,
 } from "@/constant/constant";
-import { customToast } from "../common/toast";
+import getSearchingValue from "@/services/search";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useLayoutEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import { useSearchData } from "../contexts/searchingData";
 import Loader from "../loader/Loader";
 
@@ -58,7 +57,7 @@ const SearchbarComponent = ({
     }
     try {
       if (!searchValue) {
-        customToast.error("Enter search item");
+        toast.error("Enter search item");
       } else {
         setSerachStatus(FetchingStatus);
         const res = await getSearchingValue(
@@ -142,7 +141,7 @@ const SearchbarComponent = ({
         }
       }
     } catch (err) {
-      setSerachStatus(ErrorStatus);
+      setSerachStatus?.(ErrorStatus);
       setSearchValue("");
       router.push(Routes.NOT_FOUND);
       return err;
@@ -178,38 +177,40 @@ const SearchbarComponent = ({
   }, []);
 
   return (
-    <div>
-      {searchStatus === FetchingStatus ? (
-        <Loader />
-      ) : pathname === "/dashboard" || pathname === "/" ? (
-        <div className="searchbar container">
-          <div className="searchbar_input">
-            <input
-              placeholder="Search for an address, block, tx hash or block hash."
-              value={searchValue}
-              onChange={(e) => handleSearchChange(e)}
-              onKeyUp={(e) => handleEnterClick(e)}
-              onFocus={onFocus}
-              onBlur={onBlur}
-            />
-            {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
-            {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
+    <div className="searchBarOuter">
+      {
+        searchStatus === FetchingStatus ? (
+          <Loader />
+        ) : (
+          <div className="searchbar container">
+            <div className="searchbar_input">
+              <input
+                placeholder="Search by Txn Hash/ Address/ Block/ Block Hash"
+                value={searchValue}
+                onChange={(e) => handleSearchChange(e)}
+                onKeyUp={(e) => handleEnterClick(e)}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
+              {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
+              {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="searchbar_input">
-          <input
-            placeholder="Search for an address, block, tx hash....."
-            value={searchValue}
-            onChange={(e) => handleSearchChange(e)}
-            onKeyUp={(e) => handleEnterClick(e)}
-            onFocus={onFocus}
-            onBlur={onBlur}
-          />
-          {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
-          {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
-        </div>
-      )}
+        )
+        // : (
+        //   <div className="searchbar_input">
+        //     <input
+        //       placeholder="Search for an address, block, tx hash....."
+        //       value={searchValue}
+        //       onChange={(e) => handleSearchChange(e)}
+        //       onKeyUp={(e) => handleEnterClick(e)}
+        //       onFocus={onFocus}
+        //       onBlur={onBlur}
+        //     />
+        //   {isLight === "lightTheme" ? <Searchicondark /> : <Searchicon />}
+        //   {/* <button onClick={(e) => handleSearch(e)}>Search</button> */}
+        // </div>
+      }
     </div>
   );
 };

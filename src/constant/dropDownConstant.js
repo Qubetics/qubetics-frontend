@@ -12,7 +12,16 @@ export const CONTRACT_COMPILER_TYPE = [
     value: "solidity-multi-part-files",
   },
 ];
-
+export const LogsOption = [
+  {
+    label: "Hex",
+    value: "hex",
+  },
+  {
+    label: "Dec",
+    value: "dec",
+  },
+];
 export const CONTRACT_LICENSES = [
   {
     label: "No License (None)",

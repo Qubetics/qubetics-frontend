@@ -1,0 +1,64 @@
+.custom-control input[type="radio"],
+.custom-control input[type="checkbox"] {
+  display: none;
+}
+
+.custom-control-label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 44px;
+  font-size: 16px;
+  color: #A0A0A0;
+  display: flex;
+  align-items: center;
+}
+
+.custom-control-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  transition: 0.2s;
+}
+
+.custom-control input[type="checkbox"] + .custom-control-label::before {
+  border-radius: 4px;
+}
+
+.custom-control input[type="radio"]:checked + .custom-control-label::before,
+.custom-control input[type="checkbox"]:checked + .custom-control-label::before {
+  background: transparent;
+
+  border-color: #5cc6ff;
+}
+
+.custom-control input[type="checkbox"]:checked + .custom-control-label::after {
+  content: "✔";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  font-size: 16px;
+  color: #A0A0A0;
+}
+
+.custom-control input[type="radio"]:checked + .custom-control-label::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(
+    74.31deg,
+    #85ffc4 0%,
+    #5cc6ff 45.83%,
+    #bc85ff 80.73%
+  );
+}

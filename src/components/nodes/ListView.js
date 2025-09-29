@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "antd";
-import {
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
-} from "@/constant/constant";
+import { FetchingStatus, InitStatus, tableLimit } from "@/constant/constant";
 import { nodesColumns } from "@/constant/graphTableValues";
-import Loader from "../loader/Loader";
-import Page from "@/app/(routes)/notfound/page";
+import { useState } from "react";
+import { Datnotfound } from "../../../public/SvgIcons";
 import Pagination from "../Pagination/Pagination";
+import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 
 const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,11 +40,22 @@ const ListView = ({ nodesData, nodesStatus, totalNodes }) => {
 
   return (
     <div>
-      <Table
-        columns={nodesColumns}
+      <SkeletonTableWrapper
+        columns={nodesColumns(totalNodes)}
         dataSource={paginatedData}
+        isSkeleton={
+          nodesStatus === FetchingStatus || nodesStatus === InitStatus
+        }
         pagination={false}
         className="commontable"
+        locale={{
+          emptyText: (
+            <div>
+              <Datnotfound />
+              <p>No data </p>
+            </div>
+          ),
+        }}
       />
       {nodesData.length > 10 && (
         <Pagination

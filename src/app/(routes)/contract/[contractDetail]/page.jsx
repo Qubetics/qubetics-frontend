@@ -1,44 +1,73 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Tabs } from "antd";
-import { useParams } from "next/navigation";
-import ContractDetails from "@/components/contracts/ContractDetails";
-import Heading from "@/components/heading/Heading";
-import ContractTransactions from "@/components/contracts/ContractTransactions";
-import getContractDetails from "@/services/getContractDetails";
-import BlockDetail from "@/components/blockDetail/BlockDetail";
-import Loader from "@/components/loader/Loader";
-import Page from "../../notfound/page";
-import Holder from "@/components/contracts/Holder";
-import Events from "@/components/contracts/Events";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
-import ContractDtlTabs from "@/components/contractDetailTabs/ContractDtlTabs";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 import {
+  contractTypes,
   ErrorStatus,
   FetchingStatus,
   InitStatus,
-  Routes,
   SuccessStatus,
-  contractTypes,
 } from "@/constant/constant";
+import getContractDetails from "@/services/getContractDetails";
 import {
   capitalizeWord,
-  formatMillionNumber,
+  formateTotalSupply,
   noExponential,
+  noExponentsValue,
 } from "@/utils/commonFunctions";
-import { useContractData } from "@/components/contexts/contractContext";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
-import { SmallLogo1 } from "../../../../../public/SvgIcons";
+import { Tabs } from "antd";
+import Image from "next/image";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Tokenicons } from "../../../../../public/SvgIcons";
+import dynamic from "next/dynamic";
+import InternalTxns from "@/components/contracts/InternalTxns";
+
+const BlockDetail = dynamic(
+  () => import("@/components/blockDetail/BlockDetail"),
+  { ssr: false }
+);
+const ContractDtlTabs = dynamic(
+  () => import("@/components/contractDetailTabs/ContractDtlTabs"),
+  { ssr: false }
+);
+const AnalyticTab = dynamic(
+  () => import("@/components/contracts/AnalyticTab"),
+  { ssr: false }
+);
+const ContractDetails = dynamic(
+  () => import("@/components/contracts/ContractDetails"),
+  { ssr: false }
+);
+const ContractTransactions = dynamic(
+  () => import("@/components/contracts/ContractTransactions"),
+  { ssr: false }
+);
+
+const Events = dynamic(() => import("@/components/contracts/Events"), {
+  ssr: false,
+});
+const Holder = dynamic(() => import("@/components/contracts/Holder"), {
+  ssr: false,
+});
+const FilterResult = dynamic(
+  () => import("@/components/FilterResult/FilterResult"),
+  { ssr: false }
+);
+const Heading = dynamic(() => import("@/components/heading/Heading"), {
+  ssr: false,
+});
+const Loader = dynamic(() => import("@/components/loader/Loader"), {
+  ssr: false,
+});
+const Page = dynamic(() => import("../../notfound/page"), { ssr: false });
 
 const ContractDetail = () => {
+  const searchParam = useSearchParams();
   const [contractDetail, setContractDetail] = useState([]);
   const [contractDetailStatus, setContractDetailStatus] = useState(InitStatus);
   const [contractType, setContractType] = useState("");
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
-  const { setVerifyAddress } = useContractData();
-  const [tab, setTab] = useState(0);
+
+  const [tab, setTab] = useState(searchParam.get("tab") || "0");
   const params = useParams();
   const router = useRouter();
 
@@ -73,35 +102,64 @@ const ContractDetail = () => {
 
   const detail = [
     {
-      text: "Name",
-      heading: contractDetail?.contractName
-        ? capitalizeWord(contractDetail?.contractName)
-        : "-",
-      img: (
-        <Image
-          src="/logoqubetic.svg"
-          className="welcomeLogo"
-          height={32}
-          width={32}
-          alt="logo"
-        />
-      ),
+      text: "Token Name",
+      heading:
+        contractDetail?.tokenName ||
+        contractDetail?.ContractVerification?.contractname
+          ? capitalizeWord(
+              contractDetail?.tokenName ||
+                contractDetail?.ContractVerification?.contractname
+            )
+          : "-",
+      img:
+        contractDetail?.ContractVerification &&
+        contractDetail?.ContractVerification?.iconUrl !== "" ? (
+          <img
+            style={{
+              borderRadius: "50%",
+              objectFit: "cover",
+              height: "55px",
+              width: "55px",
+            }}
+            src={contractDetail?.ContractVerification?.iconUrl}
+            className="welcomeLogo"
+            alt="logo"
+          />
+        ) : (
+          <div>
+            <div className="imgIcon">
+              {<Tokenicons width={55} height={55} />}
+            </div>
+          </div>
+        ),
     },
     {
       text: "Symbol",
       heading: contractDetail?.symbol ? contractDetail?.symbol : "-",
-      img: (
-        <Image
-          src="/logoqubetic.svg"
-          className="welcomeLogo"
-          height={32}
-          width={32}
-          alt="logo"
-        />
-      ),
+      img:
+        contractDetail?.ContractVerification &&
+        contractDetail?.ContractVerification?.iconUrl !== "" ? (
+          <img
+            style={{
+              borderRadius: "50%",
+              objectFit: "cover",
+              height: "55px",
+              width: "55px",
+            }}
+            src={contractDetail?.ContractVerification?.iconUrl}
+            className="welcomeLogo"
+            alt="logo"
+          />
+        ) : (
+          <div>
+            <div className="imgIcon">
+              {<Tokenicons width={55} height={55} />}
+            </div>
+          </div>
+        ),
     },
     {
-      text: "Decimals",
+      text: "Decimal",
       heading: contractDetail?.decimal
         ? noExponential(contractDetail?.decimal)
         : "-",
@@ -109,27 +167,31 @@ const ContractDetail = () => {
         <Image
           src="/decimal.svg"
           className="welcomeLogo"
-          height={32}
-          width={32}
+          height={60}
+          width={60}
           alt="logo"
+          loading="lazy"
         />
       ),
     },
     {
       text: "Total Supply",
       heading: contractDetail?.totalSupply
-        ? noExponential(
-            Number(contractDetail?.totalSupply) /
-              10 ** Number(contractDetail?.decimal)
+        ? formateTotalSupply(
+            noExponentsValue(
+              Number(contractDetail?.totalSupply) /
+                10 ** Number(contractDetail?.decimal)
+            )
           )
         : "0",
       img: (
         <Image
           src="/tottalSupply.svg"
           className="welcomeLogo"
-          height={32}
-          width={32}
+          height={60}
+          width={60}
           alt="logo"
+          loading="lazy"
         />
       ),
     },
@@ -143,43 +205,59 @@ const ContractDetail = () => {
         <ContractTransactions hash={params?.contractDetail} tab={tab} />
       ),
     },
-    chainType === "EVM Chain" &&
-      contractType === contractTypes.ERC_20 && {
-        label: "Transfer",
-        key: "1",
-        children: (
-          <ContractTransactions hash={params?.contractDetail} tab={tab} />
-        ),
-      },
-    chainType === "EVM Chain" &&
-      contractType === contractTypes.ERC_20 && {
-        label: "Holders",
-        key: "2",
-        children: <Holder hash={params?.contractDetail} />,
-      },
-    chainType === "EVM Chain" && {
+    // chainType === "EVM Chain" &&
+    contractType === contractTypes.ERC_20 && {
+      label: "Transfer",
+      key: "1",
+      children: (
+        <ContractTransactions hash={params?.contractDetail} tab={tab} />
+      ),
+    },
+    // chainType === "EVM Chain" &&
+    contractType === contractTypes.ERC_20 && {
+      label: "Holders",
+      key: "2",
+      children: <Holder hash={params?.contractDetail} />,
+    },
+    // chainType === "EVM Chain" &&
+    {
       label: "Events",
       key: "3",
       children: <Events hash={params?.contractDetail} />,
     },
-    chainType === "EVM Chain" && {
+    // chainType === "EVM Chain" &&
+    {
       label: "Contract",
       key: "4",
       children: <ContractDtlTabs hash={params?.contractDetail} />,
     },
-  ];
+    // chainType === "EVM Chain" &&
+    {
+      label: "Internal Txns",
+      key: "5",
+      children: <InternalTxns   hash={params?.contractDetail} />,
+    },
+    {
+      label: "Analytics",
+      key: "6",
+      children: <AnalyticTab hash={params?.contractDetail} />,
+    },
+  ].filter(Boolean);
 
   const handleTabSelect = (e) => {
     setTab(e);
+    const newSearchParams = new URLSearchParams(searchParam);
+    newSearchParams.set("tab", e);
+    router.replace(`?${newSearchParams.toString()}`, {
+      shallow: true,
+      scroll: false,
+    });
   };
 
   return (
-    <div className="contractDetail">
+    <div className="contractDetail contractsItems">
       <div className="container">
-        <SearchbarComponent
-          searchStatus={searchStatus}
-          setSerachStatus={setSerachStatus}
-        />
+        <FilterResult />
         <Heading heading="Contract Details" />
         {contractDetailStatus === InitStatus ||
         contractDetailStatus === FetchingStatus ? (
@@ -190,8 +268,7 @@ const ContractDetail = () => {
               data={contractDetail}
               status={contractDetailStatus}
             />
-            {((contractType === contractTypes.ERC_20 &&
-              contractDetail?.symbol) ||
+            {(contractType === contractTypes.ERC_20 ||
               (contractType === contractTypes.ERC_721 &&
                 contractDetail?.symbol)) && (
               <>
@@ -209,23 +286,11 @@ const ContractDetail = () => {
         )}
         <div className="transecSec">
           <Tabs
+            activeKey={tab}
             defaultActiveKey="0"
             className="contracttabs"
             items={tabItems}
             onChange={(e) => handleTabSelect(e)}
-            // tabBarExtraContent={
-            // <Button
-            //   type="primary"
-            //   className="bluebtn"
-            //   style={{ height: 40, marginLeft: "10px" }}
-            //   onClick={() => {
-            //     router.push(Routes.CONTRACT_VERIFICATOIN);
-            //     setVerifyAddress(hash);
-            //   }}
-            // >
-            //   Verify & Publish
-            // </Button>
-            // }
           />
         </div>
       </div>

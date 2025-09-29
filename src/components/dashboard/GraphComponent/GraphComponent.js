@@ -46,7 +46,7 @@ function GraphComponent() {
   return (
     <div className="GraphComponent commontableBG">
       <div className="cardLeft">
-        <Row gutter={[15, 15]}>
+        <Row gutter={[30, 30]}>
           <Col xs={24} sm={12} md={8}>
             {" "}
             <CardsOnchain

@@ -1,41 +1,82 @@
+"use client";
 import {
+  EXPLORER_CURRENCY_NAME,
   EXPLORER_METAMASK_NAVIGATION,
   EXPLORER_METAMASK_NETWORK_URL,
   EXPLORER_META_NETWORK_CHAIN_ID,
-  Messages,
-  EXPLORER_CURRENCY_NAME,
   METAMASK_CHAIN_NAME,
+  Messages,
 } from "@/constant/constant";
-import { customToast } from "../common/toast";
+import { trackEvent } from "@/utils/eventTrack";
+import toast from "react-hot-toast";
+import Web3 from "web3";
 
 export const addQubeticForVerifyContract = async (setConnectAddress) => {
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
+    )
+  );
+  const chain_Id = await web3.eth.getChainId();
+  const chainIdHex = `0x${chain_Id.toString(16)}`;
   const provider = window.ethereum;
-  const ChainIdQubetics = EXPLORER_META_NETWORK_CHAIN_ID;
-
+  const deviceType = getDeviceType();
+  if (deviceType !== "Desktop") {
+    if (window.ethereum === undefined) {
+      const metamaskDappUrl =
+        //  `https://chainid.network/chain/${parseInt(
+        //   EXPLORER_META_NETWORK_CHAIN_ID
+        // )}`;
+        process.env.NEXT_PUBLIC_METAMASK_DAPP_URL || "https://default-url.com";
+      window.location.href = metamaskDappUrl;
+      return;
+    }
+  }
   if (!provider) {
-    customToast.info(Messages.Install_Metamask);
-  } else {
-    try {
-      await provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: ChainIdQubetics }],
-      });
-      // customToast.success(toastMessages.METAMASK_CONNECT);
-      const accounts = await provider.request({
-        method: "eth_requestAccounts",
-      });
-      // If accounts are available, set the connected address
-      if (accounts) {
-        setConnectAddress(accounts[0]);
+    return toast.error(Messages.Install_Metamask);
+  }
+  try {
+    await provider.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: chainIdHex }],
+    });
+    // customToast.success(toastMessages.METAMASK_CONNECT);
+    const accounts = await provider.request({
+      method: "eth_requestAccounts",
+    });
+    // If accounts are available, set the connected address
+    if (accounts) {
+      setConnectAddress(accounts[0]);
+    }
+  } catch (switchError) {
+    if (switchError.code === 4902) {
+      try {
+        await provider.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: chainIdHex,
+              chainName: METAMASK_CHAIN_NAME,
+              nativeCurrency: {
+                symbol: EXPLORER_CURRENCY_NAME,
+                decimals: 18,
+              },
+              rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+              blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+            },
+          ],
+        });
+      } catch (err) {
+        return err;
       }
-    } catch (switchError) {
-      if (switchError.code === 4902) {
+    } else {
+      if (deviceType !== "Desktop") {
         try {
           await provider.request({
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainId: ChainIdQubetics,
+                chainId: chainIdHex,
                 chainName: METAMASK_CHAIN_NAME,
                 rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
                 blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
@@ -46,14 +87,15 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
               },
             ],
           });
+          toast.success(Messages.Network_Added);
         } catch (err) {
-          return err;
+          throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
         }
       }
     }
   }
 };
-function getDeviceType() {
+export function getDeviceType() {
   const userAgent = navigator.userAgent;
 
   if (/android/i.test(userAgent)) {
@@ -71,50 +113,92 @@ function getDeviceType() {
   }
 }
 export const addQubetic = async () => {
+  trackEvent({
+    action: "Metamask_button_click",
+    category: "Metamask",
+    label: "Add Network",
+  });
   try {
-    const deviceType = getDeviceType();
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider(
+        EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
+      )
+    );
+    const chain_Id = await web3.eth.getChainId();
+    const chainIdHex = `0x${chain_Id.toString(16)}`;
     const provider = window.ethereum;
+
+    const deviceType = getDeviceType();
     if (deviceType !== "Desktop") {
-      if (provider === undefined) {
+      if (window.ethereum === undefined) {
         const metamaskDappUrl =
-          //  `https://chainid.network/chain/${parseInt(
-          //   EXPLORER_META_NETWORK_CHAIN_ID
-          // )}`;
           process.env.NEXT_PUBLIC_METAMASK_DAPP_URL ||
           "https://default-url.com";
         window.location.href = metamaskDappUrl;
         return;
       }
     }
-    if (!window.ethereum || window.ethereum.isMetaMask === false) {
+    if (!provider) {
       throw new Error(Messages.Install_Metamask);
     }
+
     const chainId = await provider.request({ method: "eth_chainId" });
-  
+
     const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
     if (!provider) {
-      customToast.info(Messages.Install_Metamask);
+      toast.error(Messages.Install_Metamask);
     } else {
       if (!chainId) {
         throw new Error(Messages.Retrive_Meta_Account);
       }
-      if (chainId === ChainIdQubetic) {
-        customToast.success(Messages.Same_Network);
-      } else {
-        try {
-          await provider.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: ChainIdQubetic }],
-          });
-          customToast.success(Messages.Successfully_Switched);
-        } catch (switchError) {
-          if (switchError.code === 4902) {
+
+      if (chainId === chainIdHex) {
+        toast.success(Messages.Same_Network);
+        return;
+      }
+
+      try {
+        await provider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: chainIdHex }],
+        });
+        toast.success(Messages.Successfully_Switched);
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          try {
+            await provider.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: chainIdHex,
+                  chainName: METAMASK_CHAIN_NAME,
+                  nativeCurrency: {
+                    symbol: EXPLORER_CURRENCY_NAME,
+                    decimals: 18,
+                  },
+                  rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
+                  blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
+                },
+              ],
+            });
+            toast.success(Messages.Network_Added);
+          } catch (err) {
+            if (
+              err.code == -32603 ||
+              err.message.includes("is not a function")
+            ) {
+              return toast.success(Messages.Network_Added);
+            }
+            throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
+          }
+        } else {
+          if (deviceType !== "Desktop") {
             try {
               await provider.request({
                 method: "wallet_addEthereumChain",
                 params: [
                   {
-                    chainId: ChainIdQubetic,
+                    chainId: chainIdHex,
                     chainName: METAMASK_CHAIN_NAME,
                     rpcUrls: [EXPLORER_METAMASK_NETWORK_URL],
                     blockExplorerUrls: [EXPLORER_METAMASK_NAVIGATION],
@@ -125,7 +209,7 @@ export const addQubetic = async () => {
                   },
                 ],
               });
-              customToast.success(Messages.Network_Added);
+              toast.success(Messages.Network_Added);
             } catch (err) {
               throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
             }
@@ -134,6 +218,7 @@ export const addQubetic = async () => {
       }
     }
   } catch (error) {
-    customToast.error(error.message);
+    console.log("error", "error");
+    toast.error(error.message);
   }
 };

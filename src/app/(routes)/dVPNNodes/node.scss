@@ -1,0 +1,260 @@
+@import "../../../_mixins.scss";
+@import "../../../_var.scss";
+.qubeticdVPNNode {
+  .NodePerformance {
+    display: flex;
+    gap: 20px;
+    @media (max-width: 991px) {
+      flex-flow: wrap;
+    }
+    &_left {
+      max-width: 707px;
+    }
+    &_right {
+      padding: 0 !important;
+      position: relative;
+      .countryBox {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        @media (max-width: 575px) {
+          position: static;
+          display: flex;
+          margin: 16px;
+          flex-direction: row;
+        }
+        .innerBox {
+          background-color: #121212;
+          border-radius: 12px;
+          height: 82px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          width: max-content;
+          padding: 20px;
+          @media (max-width: 575px) {
+            min-width: 103px;
+          }
+          h5 {
+            color: $white;
+            @include fluid-type(320px, 1920px, 18px, 24px);
+            font-weight: 400;
+          }
+          p {
+            color: $grayA0A0A0;
+            @include fluid-type(320px, 1920px, 14px, 16px);
+            font-weight: 300;
+          }
+        }
+      }
+    }
+    &_left,
+    &_right {
+      background: var(--searchBg);
+      border: 1px solid $borderCard;
+      border-radius: 14px;
+      padding: 24px;
+      width: 100%;
+      // padding-bottom: 0;
+      @media (max-width: 991px) {
+        padding: 20px;
+      }
+      @media (max-width: 575px) {
+        padding: 15px;
+      }
+      img {
+        width: 100%;
+      }
+      h3 {
+        @include theme() {
+          color: theme-get("texttheme");
+        }
+        @include fluid-type(320px, 1920px, 16px, 20px);
+        font-weight: 500;
+        padding-bottom: 20px;
+        border-bottom: 1px solid $borderCard;
+        margin-bottom: 18px;
+        @media (max-width: 575px) {
+          border-bottom: 0;
+          margin-bottom: 0;
+        }
+      }
+      &_card {
+        .innerNode {
+          min-height: 120px;
+          background-color: $bodybg;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 16px;
+          padding: 10px;
+          text-align: center;
+          @media (max-width: 575px) {
+            min-height: 100px;
+            gap: 10px;
+          }
+
+          p {
+            color: $grayA0A0A0;
+            @include fluid-type(320px, 1920px, 14px, 16px);
+          }
+          h4 {
+            @include fluid-type(320px, 1920px, 21px, 24px);
+            color: $white;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+    &_right {
+      position: relative;
+      .graphPositionItems {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        h4 {
+          @include theme() {
+            color: theme-get("texttheme");
+          }
+          @include fluid-type(320px, 1920px, 16px, 24px);
+          padding-bottom: 4px;
+        }
+        p {
+          @include fluid-type(320px, 1920px, 12px, 14px);
+          @include theme() {
+            color: theme-get("graytext");
+          }
+        }
+      }
+    }
+  }
+}
+
+.marker-icon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.map-image {
+  height: 100%;
+  width: 100%;
+}
+
+.map-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  svg {
+    width: 100%;
+    @media (max-width: 575px) {
+      max-height: 222px;
+    }
+    path {
+      fill: #0381ff;
+    }
+  }
+}
+.nodeDetail {
+  .searchbar {
+    margin-bottom: 30px;
+  }
+  &_top {
+    background: #121212;
+    color: #fff;
+    border: 1px solid #3b393c;
+    padding: 23px;
+    border-radius: 14px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    p {
+      font-size: 16px;
+    }
+  }
+  .nodeGraph {
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+    @media screen and (max-width: 1143px) {
+      flex-direction: column;
+    }
+    > div {
+      flex: 1;
+    }
+    &_right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      > div {
+        max-width: unset;
+        flex: 0%;
+      }
+    }
+  }
+}
+
+.uptimeHisgraph {
+  background: var(--searchBg);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1490196078);
+  margin-top: 0 !important;
+  @media screen and (max-width: 1070px) {
+    width: 100%;
+    height: unset;
+  }
+  @media (max-width: 767px) {
+    height: unset !important;
+    margin-bottom: 7px;
+  }
+  .dashnotfound {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      text-align: center;
+      color: $white;
+    }
+  }
+  .highcharts-container {
+    height: 330px !important;
+    width: 100% !important;
+
+    svg {
+      height: 100% !important;
+      width: 100% !important;
+
+      text {
+        font-size: 12px !important;
+      }
+    }
+  }
+}
+.status {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.success {
+  color: #00ff73;
+}
+
+.failed {
+  color: #ff4f4f;
+}
+
+.pending {
+  color: #ffcc00;
+}

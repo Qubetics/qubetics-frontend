@@ -1,14 +1,14 @@
-import React from "react";
-import "../recentBlock/RecentBlock.scss";
+import { currencyName, Routes, toFixedWithoutRounding } from "@/constant/constant";
+import { noExponentsValue } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
-import { Routes } from "@/constant/constant";
-import { useRouter } from "next/navigation";
 import { RightOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { NextArrow } from "../../../public/SvgIcons";
+import "../recentBlock/RecentBlock.scss";
 
 const RecentTransaction = ({ data, customClass }, props) => {
   const router = useRouter();
-
   return (
     <>
       <div
@@ -18,7 +18,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
         {...props}
       >
         <div className="recentdata">
-          <img src="./file.svg" alt="" />
+          <img src="./file.svg" alt="" height={"60"} width={"40"} />
           <div>
             <p
               style={{ cursor: "pointer" }}
@@ -33,19 +33,36 @@ const RecentTransaction = ({ data, customClass }, props) => {
               <span>
                 {data?.fromAddress ? getAddress(data?.fromAddress) : "-"}
               </span>
-              <RightOutlined />
+              <span style={{ margin: "0 4px" }}>
+                <NextArrow />
+              </span>
               <span className="trnxCount">
-                {data?.toAddress ? getAddress(data?.toAddress) : "-"}
+                {data?.toAddress !== "N/A"
+                  ? getAddress(data?.toAddress)
+                  : data?.contractAddress
+                  ? getAddress(data?.contractAddress)
+                  : "-"}
               </span>
             </p>
           </div>
         </div>
 
-        <div>
+        <div className="recentMinAgo">
           <p className="qubeticValue">
-            <p>{data?.value ? data?.value : "-"} TICS</p>
+            <p>
+              {data?.value
+                ? toFixedWithoutRounding(
+                    noExponentsValue(Number(data?.value)),
+                    6
+                  )
+                : 0}{" "}
+              {currencyName}
+            </p>
           </p>
-          <p className="secTime"> {data?.timestamp ? renderTime(data?.timestamp) : "-"}</p>
+          <p className="secTime">
+            {" "}
+            {data?.timestamp ? renderTime(data?.timestamp) : "-"}
+          </p>
         </div>
       </div>
     </>

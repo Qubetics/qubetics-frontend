@@ -1,12 +1,12 @@
 .pagination {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 20px;
-  .disable{
-    svg{
+  .disable {
+    svg {
       cursor: not-allowed;
-     opacity: 0.6;
+      opacity: 0.6;
     }
   }
   .anticon {
@@ -17,7 +17,7 @@
       }
     }
   }
-  .centerDetail{
+  .centerDetail {
     display: flex;
     align-items: center;
     color: #fff;

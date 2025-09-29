@@ -7,18 +7,16 @@
     width: 100%;
     margin: auto;
     max-width: 600px;
+    padding-top: 80px;
 
-    h1 {
+    h2 {
       margin-bottom: 20px;
       text-align: left;
       @include fluid-type(320px, 1920px, 20px, 24px);
       display: flex;
       align-items: center;
-
-      @include theme() {
-        color: theme-get("texttheme");
-      }
-
+      font-weight: 600;
+      color: $white;
       svg {
         margin-left: 10px;
         height: 22px;
@@ -26,105 +24,70 @@
       }
     }
     &__top {
-      display: flex;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid #3b393c;
       width: 100%;
-      padding: 40px 55px;
+      padding: 40px;
       border-radius: 20px;
-      @include theme() {
-        background: theme-get("transectindata");
-      }
-
-      backdrop-filter: blur(32px);
-
+      background-color: #121212;
       @media (max-width: 767px) {
         padding: 25px;
-      }
-
-      label {
-        @include theme() {
-          color: theme-get("texttheme");
-        }
-
-        @include fluid-type(320px, 1920px, 13px, 15px);
-        font-family: Poppins;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 25px;
-        margin-bottom: 10px;
-        display: inline-block;
-      }
-
-      input {
-        width: 100%;
-        margin: auto;
-        border-radius: 10px;
-        border: 0;
-        -webkit-appearance: none !important;
-        background: $bodybg;
-        @include theme() {
-          color: theme-get("texttheme");
-        }
-
-        backdrop-filter: blur(32px);
-        height: 50px;
-        padding: 0px 20px;
-        font-size: 15px;
-        opacity: 1;
-
-        &::placeholder {
-          @include theme() {
-            color: theme-get("texttheme");
-          }
-
-          opacity: 0.5;
-        }
-      }
-
-      p {
-        @include theme() {
-          color: theme-get("texttheme");
-        }
-
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        opacity: 0.8;
-        text-align: end;
-        margin-top: 10px;
-      }
-
-      button {
-        color: #fff;
-        width: 100%;
-        border: 0;
-        border-radius: 10px;
-        background-color: $bluebtn;
-        height: 50px;
-        max-width: 165px;
-        margin-top: 50px;
-
-        // @media (max-width: 575px) {
-        //   margin-top: 0px;
-        // }
-
-        &:hover {
-          color: #fff !important;
-          background-color: $bluebtn;
-        }
-
-        svg {
-          path {
-            fill: #fff;
-          }
-        }
       }
     }
   }
 }
 
+.tokensubmitbtn {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 0;
+  button {
+    max-width: 174px;
+    width: 100%;
+  }
+}
+
 .token_btn {
-  color: "white";
-  background-color: "#0096ff";
+  display: block;
+  margin: 50px auto 0;
+  color: #fff;
+  height: 50px;
+  max-width: 165px;
+  width: 100%;
+  background-color: $black;
+  position: relative;
+  cursor: pointer;
+  @include fluid-type(320px, 1920px, 14px, 16px);
+  border-radius: 25px;
+  border: 0 !important;
+  &::after,
+  &::before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    inset: -0.2rem;
+    background: conic-gradient(var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+    border-radius: inherit;
+  }
+  &:hover {
+    background: $black !important;
+    color: $white !important;
+    &::after,
+    &::before {
+      content: " ";
+      position: absolute;
+      z-index: -1;
+      inset: -0.2rem;
+      background: conic-gradient(from var(--gradient-angle), var(--clr-card), var(--clr-1), var(--clr-2), var(--clr-3), var(--clr-4), var(--clr-5), var(--clr-6), var(--clr-2), var(--clr-1), var(--clr-card));
+      animation: rotate 2.5s linear infinite;
+      border-radius: inherit;
+    }
+    &::after {
+      filter: blur(4rem);
+    }
+  }
+  svg {
+    path {
+      fill: #fff;
+    }
+  }
 }

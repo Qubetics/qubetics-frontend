@@ -2,7 +2,6 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useThemeData } from "@/components/contexts/theme_context";
-import { tooltipConstant } from "@/constant/constant";
 import { formatMillionNumber } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import {
@@ -13,29 +12,65 @@ import {
   TotalAccountIcon,
   TotalValidators,
   Transfericondark,
-  Txblockdark
+  Txblockdark,
 } from "../../../public/SvgIcons";
-const ChainAnalytics = () => {
+import useAverageBlockTime from "../common/useAverageBlockTime";
+const ChainAnalytics = ({ stats }) => {
   const webSocketData = useLatestData();
   const { isLight } = useThemeData();
+  const { diffs } = useAverageBlockTime();
 
+  const parsedData =
+    webSocketData?.analytics?.validatorData &&
+    JSON.parse(webSocketData?.analytics?.validatorData);
+
+  const getDifference = (diff) => {
+    let result;
+    if (diff?.length > 0) {
+      const total = diff?.reduce((p, c) => p + c, 0);
+      const average = total / diff?.length;
+      if (average > 6) {
+        result = "6.00 Sec";
+      } else if (average < 0) {
+        result = "6.00 Sec";
+      } else {
+        result = `${average?.toFixed(2)} Sec`;
+      }
+    } else {
+      result = "6.00 Sec";
+    }
+    return result;
+  };
   return (
     <div className="analytics_cards">
       <CardsOnchain
-        text="Latest Block"
-        balance={
-          webSocketData?.blocks?.blocknumber
-            ? webSocketData?.blocks?.blocknumber
-            : 0
-        }
+        text="Average Block Time"
+        balance={getDifference(diffs)}
         img={isLight == "lightTheme" ? <Latestblockdark /> : <AvgBlockTime />}
+        title="The average time it takes to create a new block on the blockchain."
       />
       <CardsOnchain
         iconCopy="true"
         addicon="true"
-        title={tooltipConstant.CIRCULATION_SUPPLY}
-        text="Circulation Supply"
-        balance={0}
+        text="Circulating Supply"
+        balance={
+          <Tooltip
+            placement="top"
+            title={
+              stats?.circulationSupply
+                ? stats?.circulationSupply
+                : stats?.circulation_supply
+                ? stats?.circulation_supply
+                : 0
+            }
+          >
+            {stats?.circulationSupply
+              ? formatMillionNumber(stats?.circulationSupply)
+              : stats?.circulation_supply
+              ? formatMillionNumber(stats?.circulation_supply)
+              : 0}
+          </Tooltip>
+        }
         img={
           isLight == "lightTheme" ? (
             <CirculatingSupplyIcon />
@@ -43,50 +78,47 @@ const ChainAnalytics = () => {
             <CirculatingSupplyIcon />
           )
         }
+        title="The total amount of Qubetics (TICS) currently in circulation."
       />
-
-      {/* <CardsOnchain
-        text="Tx Per Block"
-        balance={
-          webSocketData?.onChainMetric?.tpb
-            ? webSocketData?.onChainMetric?.tpb
-            : 0
-        }
-        img={isLight == "lightTheme" ? <Txblockdark /> : <RoundArrow />}
-      /> */}
-
       <CardsOnchain
         text="Total Validators"
         balance={
-          webSocketData?.onChainMetric?.tpb
-            ? webSocketData?.onChainMetric?.tpb
-            : 0
+          stats?.totalValidator ? stats?.totalValidator : stats?.validators ?? 0
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <TotalValidators />}
+        title="The total number of validators participating in securing the network by validating and proposing blocks"
       />
       <CardsOnchain
-        text="Average APR"
+        text="Average APY"
         balance={
-          webSocketData?.onChainMetric?.tpb
-            ? webSocketData?.onChainMetric?.tpb
-            : 0
+          parsedData?.apy
+            ? Number(parsedData?.apy) + " %"
+            : stats?.apy
+            ? Number(stats?.apy) + " %"
+            : "0 %"
         }
         img={isLight == "lightTheme" ? <Txblockdark /> : <AvgAPRIcon />}
+        title="The average annual percentage yield (APY) earned by validators for staking their Qubetics (TICS) on the network."
       />
       <CardsOnchain
-        text="Total Accounts"
+        text="Total Active Accounts"
         balance={
           webSocketData?.analytics?.count ? (
             <Tooltip placement="top" title={webSocketData?.analytics?.count}>
               {formatMillionNumber(webSocketData?.analytics?.count)}
             </Tooltip>
           ) : (
-            "0"
+            (
+              <Tooltip placement="top" title={webSocketData?.analytics?.count}>
+                {formatMillionNumber(stats?.total_accounts)}
+              </Tooltip>
+            ) ?? 0
           )
         }
         img={
           isLight == "lightTheme" ? <Transfericondark /> : <TotalAccountIcon />
         }
+        title="The total number of unique accounts created on Qubetics and executed a transaction."
       />
     </div>
   );

@@ -2,7 +2,6 @@
 @import "../../../_mixins.scss";
 
 .notfound {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,5 +18,15 @@
       color: #fff;
       margin-top: 10px;
     }
+  }
+}
+
+.notFoundDataSec {
+  backdrop-filter: blur(32px);
+  .container {
+    padding-left: 0;
+  }
+  .notfound{
+    margin-top: 20px;
   }
 }

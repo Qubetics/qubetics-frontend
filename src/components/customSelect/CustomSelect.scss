@@ -5,23 +5,24 @@
   flex-direction: column;
   label {
     color: $white;
+    @include fluid-type(320px, 1920px, 14px, 16px);
   }
   .ant-select {
     width: 100% !important;
     margin-top: 8px;
     height: 50px;
     margin-bottom: 20px;
-    .ant-select-selector {
-      background: $bodybg !important;
-      color: $grayA0A0A0 !important;
-      border: 0 !important;
 
+    .ant-select-selector {
+      background: #080808;
+      color: $grayA0A0A0 !important;
+      border: 0;
     }
   }
   .ant-select-selection-item {
     padding: 15px !important;
     max-width: 95%;
-    color: $grayA0A0A0 !important;
+    color: $grayA0A0A0;
   }
   .ant-select-arrow {
     .anticon-down {
@@ -30,11 +31,16 @@
       }
     }
   }
+  :where(.css-dev-only-do-not-override-77tu7h).ant-select-single.ant-select-open
+    .ant-select-selection-item {
+    color: $grayA0A0A0;
+  }
   .ant-select-item-option-selected {
-    background: var(--theme-gradients-main) !important;
+    background: $bg-353026 !important;
     color: $black !important;
+    border-radius: 10px !important;
     .ant-select-item-option-content {
-      color: $black !important;
+      color: $white !important;
     }
   }
 }

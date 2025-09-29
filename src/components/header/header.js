@@ -1,15 +1,19 @@
 "use client";
-import { EXPLORER_CHAIN_NAME, Routes } from "@/constant/constant";
-import getTokenPriceGraph from "@/services/getTokenGraph";
+import { Routes } from "@/constant/constant";
 import { Drawer } from "antd";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HamburgerIcon } from "../../../public/SvgIcons";
+import LogoIcon from "../../assets/svg/NewLogo.svg";
+import reslogo from "../../assets/svg/reslogo.svg";
 import { useLatestData } from "../contexts/latest_data";
 import { useGetNetwork } from "../contexts/networkChanged";
 import { useThemeData } from "../contexts/theme_context";
 import "./header.scss";
 import HeaderMenu from "./HeaderMenu";
+import { trackEvent } from "@/utils/eventTrack";
 
 function Header() {
   const router = useRouter();
@@ -25,13 +29,26 @@ function Header() {
   const { setIsNetworkChanged, setIsEvm } = useGetNetwork();
   const [percentage, setPercentage] = useState(0);
   const [currentTokenPrice, setCurrentTokenPrice] = useState(0);
-
+  const [routeText, setRouteText] = useState("");
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    updateWindowWidth();
+    window.addEventListener("resize", updateWindowWidth);
+    return () => {
+      window.removeEventListener("resize", updateWindowWidth);
+    };
+  }, []);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("appTheme");
@@ -72,13 +89,15 @@ function Header() {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (
-      pathname === Routes.FAUCET ||
+      // pathname === Routes.FAUCET ||
       pathname === Routes.NODES ||
       pathname === Routes.TRANSACTIONS ||
       pathname === Routes.BLOCKS ||
       pathname === Routes.TOKEN ||
-      pathname === Routes.TOKEN_ICON
+      pathname === Routes.TOKEN_ICON ||
+      pathname === Routes.DVPNNODES
     ) {
       setShowDiv(false);
     }
@@ -101,109 +120,69 @@ function Header() {
   };
 
   useEffect(() => {
-    localStorage.setItem("chainType", chainType);
-    setIsNetworkChanged(false);
-  }, [chainType]);
+    const routeMappings = {
+      "/dashboard": "Dashboard",
+      "/blocks": "Blockchain",
+      "/tx": "Blockchain",
+      "/token": "Tokens",
+      "/validators": "Validators",
+      "/nodes": "Nodes",
+      "/contract": "Contract",
+      "/contract/verify": "Contract",
+      "/faucet": "Faucet",
+      "/address": "Blockchain",
+      "/dVPNNodes": "dVPNNodes",
+      "/accounts": "Accounts",
+    };
 
-  // useEffect(() => {
-  //   getTokenPriceGraph("1 Day")
-  //     .then((res) => {
-  //       if (res?.data?.finalData?.length > 0 && res?.data?.currentPrice) {
-  //         const oldValue = Object.values(res?.data?.finalData[0])[0][0]?.price;
-  //         const newValue = res?.data?.currentPrice;
-  //         const percentage = ((newValue - oldValue) / oldValue) * 100;
-  //         setPercentage(percentage);
-  //         setCurrentTokenPrice(newValue);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       return err;
-  //     });
-  // }, []);
+    // Match exact paths or dynamic segments
+    const matchedRoute = Object.keys(routeMappings).find((route) =>
+      pathname.startsWith(route)
+    );
+
+    setRouteText(routeMappings[matchedRoute] || "");
+  }, [pathname]);
 
   return (
     <>
-      {/* <Marquee /> */}
       <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
-        {/* <div className="header-main__top">
-          <div className="header-main__top__inner container">
-            <div className="daylighticons">
-              <ul>
-                <li className="priceValue">
-                  <div>
-                    <p>Qubetics Price: </p>
-                    <p className="linkItem">
-                      ${Number(currentTokenPrice).toFixed(5)}{" "}
-                      <span
-                        style={{
-                          color: Math.sign(percentage) === -1 ? "red" : "green",
-                        }}
-                      >
-                        ({toFixed(percentage, 2)}%)
-                      </span>
-                    </p>
-                  </div>
-                  <div style={{ color: "blue" }}>{"|"}</div>
-                  <div>
-                    <p>Market Cap: </p>
-                    <p className="linkItem">
-                      {webSocketData?.analytics?.marketCap
-                        ? "$" +
-                          formatMillionNumber(
-                            webSocketData?.analytics?.marketCap
-                          )
-                        : "0"}
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div className="header-main__top__right">
-              <ul className="meta_list">
-                <li>
-                  <div className="cmnSelct headerSelct">
-                    <Select
-                      defaultValue={chainType}
-                      style={{ width: 120 }}
-                      onChange={handleChainChange}
-                      getPopupContainer={(trigger) => trigger.parentNode}
-                      options={[
-                        {
-                          value: "EVM Chain",
-                          label: "EVM Chain",
-                        },
-                        {
-                          value: "Native Chain",
-                          label: "Native Chain",
-                        },
-                      ]}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <button className="qubeticNetwork_btn" onClick={addQubetic}>
-                    <Image
-                      src="/metafox.avif"
-                      width={25}
-                      height={25}
-                      alt="metafox"
-                    />
-                    Add {EXPLORER_CHAIN_NAME} Network
-                  </button> */}
-        {/* <button className="signInBtn">Sign In</button> */}
-        {/* </li>
-              </ul>
-            </div>
-          </div>
-        </div> */}
         <div className="header-main__bottom container">
-          <div
-            className="svgLogo"
-            onClick={toggleDiv}
-            title={`${EXPLORER_CHAIN_NAME} Explorer`}
-          >
-            <img src="./NewLogo.svg" alt="" />
+          <div>
+            <Link
+              onClick={() =>
+                trackEvent({
+                  action: "logo_click",
+                  category: "Header",
+                  label: "Logo",
+                })
+              }
+              href={"/dashboard"}
+            >
+              {windowWidth > 1199 ? (
+                <Image
+                  priority
+                  src={LogoIcon}
+                  alt="Logo"
+                  width={176}
+                  height={50}
+                />
+              ) : (
+                <Image
+                  priority
+                  src={reslogo}
+                  alt="Logo"
+                  width={36}
+                  height={36}
+                />
+              )}
+            </Link>
+            <Link href={"/dashboard"} className="responsiveLogo">
+              {" "}
+            </Link>
           </div>
+          <p className="responsiveText">
+            {windowWidth > 1199 ? "" : <span>{routeText}</span>}
+          </p>
           <HeaderMenu />
           <li className="hammburgerIcon">
             <span onClick={showDrawer}>
@@ -211,16 +190,16 @@ function Header() {
             </span>
           </li>
           {
-            // <Drawer
-            //   placement="right"
-            //   onClose={onClose}
-            //   open={open}
-            //   className="drawer_main"
-            // >
-            //   <div className="drawer_main__side">
-            //     <HeaderMenu onCloseDrawer={onClose} />
-            //   </div>
-            // </Drawer>
+            <Drawer
+              placement="right"
+              onClose={onClose}
+              open={open}
+              className="drawer_main"
+            >
+              <div className="drawer_main__side">
+                <HeaderMenu onCloseDrawer={onClose} />
+              </div>
+            </Drawer>
           }
         </div>
       </div>

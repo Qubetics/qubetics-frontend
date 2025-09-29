@@ -2,8 +2,6 @@
 @import "../../../_mixins.scss";
 
 .faucet {
-  padding: 20px 0px;
-
   &_inner {
     width: 100%;
     margin: auto;
@@ -40,6 +38,9 @@
         gap: 30px;
         margin-top: 50px;
       }
+      @media (max-width: 575px) {
+        margin-top: 24px;
+      }
 
       > div {
         width: 100%;
@@ -48,21 +49,9 @@
           max-width: 100%;
         }
 
-        // &:first-child {
-        //   padding-right: 100px;
-        //   border-right: 1px solid #303032;
-
-        //   @media (max-width: 991px) {
-        //     border-right: unset;
-        //     padding-right: unset;
-        //   }
-        // }
       }
-
       background: var(--searchBg);
-
       backdrop-filter: blur(32px);
-
       @media (max-width: 767px) {
         padding: 25px;
       }
@@ -73,7 +62,6 @@
         }
 
         @include fluid-type(320px, 1920px, 13px, 15px);
-        font-family: Poppins;
         font-style: normal;
         font-weight: 400;
         line-height: 25px;
@@ -127,45 +115,9 @@
         width: 100%;
         max-width: 165px;
         margin: 0 auto;
-        padding-top: 50px;
+        padding-top: 20px;
       }
-      button {
-        color: #fff;
-        height: 50px;
-        max-width: 165px;
-        width: 100%;
-        --bg: #000;
-        --hover-bg: var(--theme-gradients-main);
-        --text: #fff !important;
-        --hover-text: #000;
-        border: 2px solid transparent !important;
-        background: linear-gradient(180deg, var(--bg), var(--bg)) padding-box,
-          conic-gradient(
-              from 180deg at 50% 50%,
-              #ff98e2,
-              #ffc876 35.77deg,
-              #79fff7 153.75deg,
-              #9f53ff 258.75deg,
-              #ff98e2 360deg
-            )
-            border-box !important;
-        border-radius: 25px;
-        transition: color 0.2s ease-out, filter 0.2s ease-out;
-        &:hover {
-          background: var(--theme-gradients-main) !important;
-          color: $black !important;
-          border: 0;
-        }
-        // @media (max-width: 575px) {
-        //   margin-top: 0px;
-        // }
 
-        svg {
-          path {
-            fill: #fff;
-          }
-        }
-      }
       .left {
         h3 {
           @include fluid-type(320px, 1920px, 20px, 32px);
@@ -173,9 +125,12 @@
           color: $white;
           margin-bottom: 20px;
           text-align: center;
+          @media (max-width: 575px) {
+            margin-bottom: 10px;
+          }
         }
-        p {
-          color: #cfd6e7;
+        .discription {
+          color: #a0a0a0;
           @include fluid-type(320px, 1920px, 14px, 17px);
           font-weight: 300;
           max-width: 263px;
@@ -183,10 +138,27 @@
           margin: 0 auto;
           text-align: center;
           padding-bottom: 40px;
+          @media (max-width: 575px) {
+            padding-bottom: 22px;
+          }
 
           span {
             font-weight: 500;
             color: $white !important;
+          }
+        }
+        .captcha {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 30px 0;
+          @include fluid-type(320px, 1920px, 14px, 17px);
+          @media (max-width: 575px) {
+            margin-bottom: 10px;
+          }
+          @media (max-width: 360px) {
+            scale: 0.8;
           }
         }
       }
@@ -237,12 +209,7 @@
     &__bottom {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
-      background: linear-gradient(
-        88deg,
-        rgba(1, 124, 201, 0.15) 3.13%,
-        rgba(8, 147, 234, 0.35) 48.43%,
-        rgba(1, 138, 224, 0.17) 98.38%
-      );
+      background: linear-gradient(88deg, rgba(1, 124, 201, 0.15) 3.13%, rgba(8, 147, 234, 0.35) 48.43%, rgba(1, 138, 224, 0.17) 98.38%);
       backdrop-filter: blur(32px);
       padding: 33px 100px;
       margin-top: 30px;
@@ -317,4 +284,9 @@
 
 .mb30 {
   margin-bottom: 30px;
+}
+.faucetCustom{
+  .sticky{
+    background-color: #181818 !important;
+  }
 }
