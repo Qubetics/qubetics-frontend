@@ -217,6 +217,8 @@ const FilterResult = () => {
           return router.push(`/address/${redirectAddress}`);
         case "account":
           return router.push(`/account/${redirectAddress}`);
+        case "intentList":
+          return router.push(`/chain-abstraction/${redirectAddress}`);
         default:
           return router.push(`/address/${redirectAddress}`);
       }
@@ -237,6 +239,8 @@ const FilterResult = () => {
           return `/address/${selectedAddress}`;
         case "account":
           return `/account/${selectedAddress}`;
+        case "intentList":
+          return `/chain-abstraction/${selectedAddress}`;
         default:
           return `/address/${selectedAddress}`;
       }
@@ -351,12 +355,17 @@ const FilterResult = () => {
                           <div className="">
                             <Link
                               href={
-                                items?.address || items?.contractAddress
+                                items?.address ||
+                                items?.contractAddress ||
+                                items?.contract_address
                                   ? (items?.address ||
-                                      items?.contractAddress) &&
+                                      items?.contractAddress ||
+                                      items?.contract_address) &&
                                     handleKeyEnter(
                                       undefined,
-                                      items?.address || items?.contractAddress
+                                      items?.address ||
+                                        items?.contractAddress ||
+                                        items?.contract_address
                                     )
                                   : ""
                               }
@@ -379,7 +388,9 @@ const FilterResult = () => {
                                     // isMobile
                                     //   ? formatAddress(items.address)
                                     //   :
-                                    items.address || items?.contractAddress
+                                    items.address ||
+                                      items?.contractAddress ||
+                                      items?.contract_address
                                   }
                                 </p>
                               </div>

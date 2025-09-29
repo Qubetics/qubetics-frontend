@@ -59,7 +59,7 @@ const Events = ({ hash }) => {
             onChange: handlePageChange,
           }
         }
-        className="commontable contractTable eventTable"
+        className="commontable contratTable eventTable"
         locale={{
           emptyText: (
             <div>

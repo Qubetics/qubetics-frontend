@@ -25,14 +25,16 @@ export default function CopyText({ text, hoverText }) {
     return null;
   }
   return (
-    <>
+    <span className="pointer">
       <Tooltip
         title={
           copied
             ? " Copied"
-            : hoverText == "hash"
+            : hoverText === "Node Address"
+            ? "Copy Node Address"
+            : hoverText === "hash"
             ? "Copy Hash"
-            : hoverText == "block"
+            : hoverText === "block"
             ? "Copy Block"
             : "Copy"
         }
@@ -46,6 +48,6 @@ export default function CopyText({ text, hoverText }) {
           </span>
         )}
       </Tooltip>
-    </>
+    </span>
   );
 }

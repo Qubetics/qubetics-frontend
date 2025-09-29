@@ -107,7 +107,7 @@ function HeaderMenu({ onCloseDrawer }) {
           if (item?.showIfEVM === false && chainType !== "EVM Chain") {
             return null;
           }
-          
+
           if (item?.showIfNative == false && chainType !== "Native Chain") {
             return null;
           }
@@ -138,8 +138,9 @@ function HeaderMenu({ onCloseDrawer }) {
                   <Select
                     title=""
                     getPopupContainer={(node) => node.parentNode}
-                    className={`headerSelect ${isActive ? "active" : "inactive"
-                      }`}
+                    className={`headerSelect ${
+                      isActive ? "active" : "inactive"
+                    }`}
                     defaultValue={item.label}
                     value={item.label}
                     onChange={onCloseDrawer}

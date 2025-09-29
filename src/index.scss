@@ -437,6 +437,14 @@ html {
   width: 100%;
   background-color: $black;
   position: relative;
+  height: 40px;
+  @include fluid-type(320px, 1920px, 12px, 14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 0 10px;
+  letter-spacing: 0.28px;
+  color: $white !important;
   cursor: pointer;
   @include fluid-type(320px, 1920px, 14px, 16px);
 
@@ -792,6 +800,34 @@ html {
         color: #fff;
       }
     }
+    .transferStatus-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      min-width: 50px;
+      text-align: center;
+      border: 1px solid transparent;
+
+      &.green {
+        // background-color: #e6f4ea; // light green background
+        color: #1b7f3b; // dark green text
+        border-color: #93d4a4; // green border
+        box-shadow: inset 2px 2px 4px rgba(27, 127, 59, 0.18),
+          inset -2px -2px 4px rgba(27, 127, 59, 0.15);
+      }
+
+      &.red {
+        // background-color: #fde8e8; // light red background
+        color: #b91c1c; // dark red text
+        border-color: #f5a3a3; // red border
+        box-shadow: inset 2px 2px 4px rgba(185, 28, 28, 0.15),
+          inset -2px -2px 4px rgba(185, 28, 28, 0.15);
+      }
+    }
 
     a {
       color: $grayA0A0A0;
@@ -810,6 +846,14 @@ html {
 }
 
 .contractTable {
+  .ant-table-cell {
+    span {
+      max-width: 150px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis;
+      display: block;
+    }
+  }
 }
 
 .bghash {
@@ -1616,7 +1660,6 @@ html {
     .ant-tabs-nav-list {
       margin-bottom: 0 !important;
     }
-
     .commontable {
       thead {
         tr {
@@ -1633,7 +1676,7 @@ html {
       tbody {
         tr {
           td {
-            width: 15%;
+            width: 15% !important;
 
             &:last-child {
               width: 40%;
@@ -1783,6 +1826,9 @@ input[type="number"] {
   @media (min-width: 767px) {
     overflow: unset !important;
   }
+}
+.ant-select-single.ant-select-open .ant-select-selection-item {
+  color: #fff !important;
 }
 
 .ant-select-item-option-disabled {
@@ -1954,7 +2000,7 @@ input[type="number"] {
   .ant-col {
     max-width: 100%;
     width: 100%;
-    min-width: 290px;
+    min-width: 276px;
     padding-left: 0;
     padding-right: 0;
     border-radius: 10px;
@@ -2250,8 +2296,8 @@ input[type="number"] {
       width: 100% !important;
     }
 
-    max-width: 150px !important;
-    width: 150px !important;
+    max-width: 165px !important;
+    width: 165px !important;
     border-radius: 10px !important;
   }
 
@@ -2938,4 +2984,9 @@ input:-webkit-autofill:active {
 }
 .highcharts-legend-item {
   display: block !important;
+}
+
+.pointer {
+  cursor: pointer;
+  height: 50px;
 }

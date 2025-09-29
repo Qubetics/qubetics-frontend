@@ -1,18 +1,32 @@
 "use-client";
+import LatestTxIcon from "@/assets/svg/svgs";
 import { EXPLORER_CURRENCY_NAME } from "@/constant/constant";
 import {
   capitalizeWord,
   formatToTwoDecimals,
+  formatMillionNumber,
   noExponential,
 } from "@/utils/commonFunctions";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
-import { ArrowRightOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
 import "./TransferInformation.scss";
 import { Tooltip } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const TransferInfo = ({ data }) => {
+const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
+  const searchParam = useSearchParams();
+  const router = useRouter();
+  
+  const handleTabSelect = (e) => {
+    setTab("2");
+    const newSearchParams = new URLSearchParams(searchParam);
+    newSearchParams.set("tab", "2");
+    router.replace(`?${newSearchParams.toString()}`, {
+      shallow: true,
+      scroll: false,
+    });
+  };
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
   const tokenTransferedData = data?.input && data?.input;
@@ -66,21 +80,31 @@ const TransferInfo = ({ data }) => {
           )}
         </div>
         <div className="information">
-          <p>To </p>
+          <p style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            {data?.type === "CONTRACT_TRANSFER"
+              ? "Interacted with Contract"
+              : "To"}
+            {data?.type === "CONTRACT_TRANSFER" && <LatestTxIcon />}
+          </p>
+
           {data?.toAddress !== "N/A" && data?.toAddress !== "" ? (
             <span>
-              <Link className="hoverTrans" href={`/address/${data?.toAddress}`}>
+              <Link
+                className="hoverTrans"
+                href={
+                  data?.type === "CONTRACT_TRANSFER"
+                    ? `/contract/${data?.toAddress}`
+                    : `/address/${data?.toAddress}`
+                }
+              >
                 {data?.toAddress}
               </Link>
-              {<CopyText text={data?.toAddress} />}
+              <CopyText text={data?.toAddress} />
             </span>
           ) : data?.contractAddress !== "N/A" &&
             data?.contractAddress !== "" ? (
             <span className="hoverTrans">
-              <Link
-                className="hoverTrans"
-                href={`/contract/${data?.contractAddress}`}
-              >
+              <Link href={`/contract/${data?.contractAddress}`}>
                 {data?.contractAddress}
               </Link>
               <CopyText text={data?.contractAddress} />
@@ -89,6 +113,73 @@ const TransferInfo = ({ data }) => {
             "-"
           )}
         </div>
+        {internalTxns && internalTxns.length > 0 ? (
+          <div className="information">
+            <p className="section-title">
+              <i className="fas fa-info-circle"></i> Internal Transactions
+            </p>
+
+            <div className="internal-list">
+              {internalTxns.map((item, index) => {
+                const ticsvalue = (Number(item.value) / 1e18).toFixed(6);
+                // const usdValue = `$${(ticsvalue * 4000).toFixed(2)}`; // Static rate, replace with live API
+                return (
+                  <div className="internal-item" key={index}>
+                    <i className="fas fa-caret-right text-muted"></i>
+                    <strong className="transfer-label">{item?.method}</strong>
+                    <span className="eth-value">{ticsvalue} Tics </span>
+                    {/* <span className="usd-value">({usdValue})</span> */}
+                    <span>From</span>
+                    <Link
+                      style={{ color: "#A0A0A0" }}
+                      className="hoverTrans"
+                      href={`/address/${item.fromAddress}`}
+                      title={item.fromAddress}
+                    >
+                      {item.fromAddress.slice(0, 6)}...
+                      {item.fromAddress.slice(-4)}
+                    </Link>
+
+                    <span>To</span>
+                    <Link
+                      style={{ color: "#A0A0A0" }}
+                      className="hoverTrans"
+                      href={`/address/${item.toAddress}`}
+                      title={item.toAddress}
+                    >
+                      {item.toAddress.slice(0, 6)}...{item.toAddress.slice(-4)}
+                    </Link>
+                  </div>
+                );
+              })}
+              {internalTxnCount > 10 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    backgroundColor: "transparent",
+                  }}
+                  className=""
+                >
+                  <button
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      color: "white",
+                    }}
+                    onClick={() => handleTabSelect("internal")}
+                    className="text-blue-500 hover:underline"
+                  >
+                    More &raquo;
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          "-"
+        )}
+
         <div className="information">
           <p>Block Number </p>
           {data?.blocknumber ? (

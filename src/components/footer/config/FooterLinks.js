@@ -8,7 +8,6 @@ import {
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
 
-
 export const footerLinks = [
   {
     title: "Quick Links",
@@ -42,12 +41,12 @@ export const footerLinks = [
     items: [
       {
         label: "Qubetics Validator App",
-        href: "https://validator.qubetics.com/",
+        href: "https://validator-testnet.qubetics.work/",
         external: true,
       },
       {
         label: "Qubetics Delegator App",
-        href: "https://delegator.qubetics.com/",
+        href: "https://delegator-testnet.qubetics.work/",
         external: true,
       },
       { label: "Qubetics DEX", disabled: true },
