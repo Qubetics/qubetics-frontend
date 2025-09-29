@@ -94,6 +94,7 @@ function Page() {
     }
     handleReset();
   };
+
   const handleReset = () => {
     if (recaptchaRef.current) recaptchaRef.current.reset();
     setCaptchaToken("");
