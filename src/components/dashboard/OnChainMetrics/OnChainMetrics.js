@@ -27,6 +27,7 @@ const OnChainMetrics = ({ stats }) => {
   const { diffs } = useAverageBlockTime();
   const { isLight } = useThemeData();
 
+  
   useEffect(() => {
     getPrice();
   }, []);
