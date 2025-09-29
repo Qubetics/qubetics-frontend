@@ -91,18 +91,11 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         categories: [...chartValue],
       },
       yAxis: {
-        min: title === "Qubetics Price" ? Math.min(0, maximum?.count) : 0,
-        // max: maximum?.count < 4 ? 4 : maximum?.count,
-        max:
-          title === "Qubetics Price" && maximum?.count < 0
-            // ? 0
-            // : maximum?.count < 4
-            //   ? 4
-            //   : maximum?.count,
-            ? Math.min(0, maximum?.count) + 4
-            : Math.min(0, maximum?.count) + maximum?.count,
+        min: 0,
+        max: maximum?.count > 0 ? maximum?.count : 1,
+        tickInterval: maximum?.count > 0 ? undefined : 0.25,
         title: {
-          text: "", 
+          text: "",
         },
         gridLineWidth: 0,
         gridLineColor: "#9F53FF",
@@ -152,7 +145,6 @@ const ChartAccount = ({ data, chartType, name, title }) => {
     };
 
     setChartData(options);
-
   }, [data, chartType]);
 
   return (

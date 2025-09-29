@@ -177,7 +177,7 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
             </div>
           </div>
         ) : (
-          "-"
+          ""
         )}
 
         <div className="information">

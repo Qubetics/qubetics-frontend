@@ -2210,7 +2210,7 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
       <div className="iconandlink">
         {text?.accAddress ? (
           <Tooltip title={text?.accAddress}>
-            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}>
+            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`} style={{minWidth: 420}}>
               {text?.accAddress}{" "}
             </Link>
           </Tooltip>

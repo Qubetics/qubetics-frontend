@@ -94,7 +94,7 @@ const DVPNListView = () => {
   }, [currentPage]);
   const nodesColumns = (totalNodes) => [
     {
-      title: `dVPN Address(${totalNodes || 0})`,
+      title: `dVPN Address (${totalNodes || 0})`,
       dataIndex: "address",
       key: "address",
       render: (address) => (
