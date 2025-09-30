@@ -97,6 +97,21 @@ export const DVPN_TRANSACTION_TYPE = {
   END_REQUEST: "END_REQUEST",
 };
 
+export const BUGFORM_APPS = [
+  "Explorer",
+  "dVPN Application",
+  "dVPN Node Operator",
+  "Chain Abstraction - Solver Node Setup",
+  "Solver Dashboard",
+  "Chain Abstraction - Mobile Application"];
+
+  export const BUG_TYPE = [
+            "Minor Bug",
+            "Major Bug",
+            "UI/UX Improvement",
+            "Feature Suggestion",
+          ];
+
 export const Messages = {
   //Metamask
   Install_Metamask: `Metamask is not installed. Please install Metamask. Or refresh the browser`,
