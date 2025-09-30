@@ -281,15 +281,15 @@ export const transactionSummarycolumn = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" &&
-          text?.toAddress !== "" &&
-          text?.toAddress !== null ? (
+        text?.toAddress !== "" &&
+        text?.toAddress !== null ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon blockLink"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -611,12 +611,12 @@ export const addressDetailColumn = (address) => [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -673,10 +673,11 @@ export const addressDetailColumn = (address) => [
     render: (text) => {
       return (
         <span
-          className={`transferStatus-box ${text?.toAddress.toLowerCase() === address.toLowerCase()
-            ? "green"
-            : "red"
-            }`}
+          className={`transferStatus-box ${
+            text?.toAddress.toLowerCase() === address.toLowerCase()
+              ? "green"
+              : "red"
+          }`}
         >
           {text?.toAddress.toLowerCase() === address.toLowerCase()
             ? "IN"
@@ -922,8 +923,8 @@ export const contractTransactionsColumn = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord(text?.method)
           : text?.type
-            ? capitalizeWord(text?.type)
-            : "-"}
+          ? capitalizeWord(text?.type)
+          : "-"}
       </span>
     ),
   },
@@ -957,12 +958,12 @@ export const contractTransactionsColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Tooltip title={text?.toAddress}>
                   <Link
                     className="fromicon"
@@ -1062,13 +1063,13 @@ export const contractTransactionsColumn = [
             text?.value
               ? text?.value
               : // ? noExponential(Number(text?.value) / 10 ** Number(decimal))
-              "0"
+                "0"
           }
         >
           {text?.value
             ? text?.value
             : // ? noExponential(Number(text?.value) / 10 ** Number(decimal))
-            "0"}
+              "0"}
         </Tooltip>
       );
     },
@@ -1144,8 +1145,8 @@ export const internalTxns = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord("transfer")
           : "Transfer"
-            ? capitalizeWord("Transfer")
-            : "-"}
+          ? capitalizeWord("Transfer")
+          : "-"}
       </span>
     ),
   },
@@ -1179,12 +1180,12 @@ export const internalTxns = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Tooltip title={text?.toAddress}>
                   <Link
                     className="fromicon"
@@ -1282,15 +1283,15 @@ export const internalTxns = [
           title={
             text?.value
               ? formatMillionNumber(
-                Number(noExponential(Number(text?.value) / 10 ** Number(18)))
-              )
+                  Number(noExponential(Number(text?.value) / 10 ** Number(18)))
+                )
               : "0"
           }
         >
           {text?.value
             ? formatMillionNumber(
-              noExponential(Number(text?.value) / 10 ** Number(18))
-            )
+                noExponential(Number(text?.value) / 10 ** Number(18))
+              )
             : "0"}
         </Tooltip>
       </span>
@@ -1398,8 +1399,8 @@ export const HolderColumn = [
       >
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
           ? noExponential(
-            (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
-          ) + " %"
+              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
+            ) + " %"
           : "0%"}
       </Tooltip>
     ),
@@ -1500,7 +1501,7 @@ export const EventsColumn = [
                           {res?.name}
                         </p>
                         {res?.type?.includes("uint") &&
-                          res?.value?.includes("0x") ? (
+                        res?.value?.includes("0x") ? (
                           <span>{Number(res?.value)}</span>
                         ) : !res?.value && res?.value?.includes("0x") ? (
                           <Link href={`/address/${res?.value}`}>
@@ -1587,10 +1588,10 @@ export const TokenColumn = [
           ? text?.native == true
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
             : formateTotalSupply(
-              noExponential(
-                Number(text?.totalSupply) / 10 ** Number(text?.decimal)
+                noExponential(
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
+                )
               )
-            )
           : "-"}
       </span>
     ),
@@ -1775,8 +1776,8 @@ export const TokenTransferColumn = [
         {text?.input
           ? capitalizeWord(JSON.parse(text?.input)?.name)
           : text?.logs?.length > 0
-            ? JSON.parse(text?.logs)[0]?.name
-            : "-"}
+          ? JSON.parse(text?.logs)[0]?.name
+          : "-"}
       </div>
     ),
   },
@@ -2023,12 +2024,12 @@ export const tokensByAddressColumn = [
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
           text?.toAddress?.startsWith("0x") ||
-            text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
-                text?.type === typesOfTransactions.contractCreation ||
-                text?.type === typesOfTransactions.contractExecute ||
-                text?.type === typesOfTransactions.contractUpload ? (
+              text?.type === typesOfTransactions.contractCreation ||
+              text?.type === typesOfTransactions.contractExecute ||
+              text?.type === typesOfTransactions.contractUpload ? (
                 <Link
                   className="fromicon"
                   href={`${Routes.CONTRACT_DETAIL}${text?.toAddress}`}
@@ -2208,12 +2209,12 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
     title: "Address",
     key: "accAddress",
     render: (text) => (
-      <div className="iconandlink">
+      <div className="txnHashcopy">
         {text?.accAddress ? (
           <Tooltip title={text?.accAddress}>
             <Link
               href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}
-              className='addressWidth'
+              className="addressWidth"
             >
               {text?.accAddress}{" "}
             </Link>
@@ -2273,7 +2274,12 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
       return (
         <div className="iconandlink activeSessionAddress">
           <Tooltip title={accAddress}>
-            <Link href={`${Routes.Tx_ADDRESS}${accAddress}`}>{accAddress}</Link>
+            <Link
+              style={{ minWidth: 420 }}
+              href={`${Routes.Tx_ADDRESS}${accAddress}`}
+            >
+              {accAddress}
+            </Link>
           </Tooltip>
           <span>
             <CopyText text={accAddress} />

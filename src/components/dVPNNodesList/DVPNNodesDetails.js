@@ -84,7 +84,7 @@ const txnColumns = [
     dataIndex: "txFee",
     key: "txFee",
     render: (value) => {
-      return value || "-";
+      return `${value} ${currencyName}` || "-";
     },
   },
   {
