@@ -29,6 +29,7 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import { formatToTwoDecimals } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import CopyText from "@/components/DoCopy/CopyText";
+import { bech32 } from "bech32";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
@@ -36,6 +37,7 @@ const Page = () => {
   const nodeStatus = searchParams.get("status") || "active"; // Get status url params
   const [nodeSummaryStatus, setsetNodeSummaryStatus] = useState(InitStatus);
   const [nodeSummary, setNodeSummary] = useState();
+  const [price, setPrice] = useState(0);
 
   const fetchNodeSummary = async () => {
     try {
@@ -48,10 +50,26 @@ const Page = () => {
     }
   };
 
+  async function convertNodeToWallet() {
+    // Decode node address
+    const decoded = bech32.decode(nodeName);
+    const words = decoded.words;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SWAGGER_LINK}/${bech32.encode(
+        "qubetics",
+        words
+      )}`
+    );
+    const data = await response.json();
+    setPrice(data?.balances?.[0]?.amount / 10 ** 18);
+  }
+
   useEffect(() => {
     if (nodeName) {
       setsetNodeSummaryStatus(FetchingStatus);
       fetchNodeSummary();
+      convertNodeToWallet();
     }
   }, [nodeName]);
 
@@ -84,11 +102,7 @@ const Page = () => {
                   <Tooltip
                     title={`${nodeSummary?.total_earning || 0} ${currencyName}`}
                   >
-                    <span>
-                      {`${formatToTwoDecimals(
-                        nodeSummary?.total_earning
-                      )} ${currencyName}`}
-                    </span>
+                    <span>{`${price || 0} ${currencyName}`}</span>
                   </Tooltip>
                 }
                 img={<TotalEarnings />}
