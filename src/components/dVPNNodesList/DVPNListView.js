@@ -100,7 +100,11 @@ const DVPNListView = () => {
       render: (address) => (
         <div className="dvpnAddressCopy">
           <span className="bghash">{address}</span>
-          <span>
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <CopyText text={address} />
           </span>
         </div>

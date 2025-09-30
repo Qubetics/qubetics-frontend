@@ -18,6 +18,7 @@ import Pagination from "../Pagination/Pagination";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import { formatStatus, formatToTwoDecimals } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
+import CopyText from "../DoCopy/CopyText";
 
 const txnColumns = [
   {
@@ -25,13 +26,19 @@ const txnColumns = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
-        {getAddress(text)}
-      </Link>
+      <div className="addressText">
+        <Link
+          className="bghash"
+          href={`${Routes.Tx_Hash}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+
+        </Link>
+        <span>
+          <CopyText text={text} />
+        </span>
+      </div>
     ),
   },
   {
@@ -55,10 +62,10 @@ const txnColumns = [
     render: (type) =>
       type
         ? type
-            .toLowerCase()
-            .split("_")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ")
+          .toLowerCase()
+          .split("_")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
         : "-",
   },
   {
@@ -67,9 +74,8 @@ const txnColumns = [
     key: "value",
     render: (value) => (
       <Tooltip title={`${value || 0} ${currencyName}`}>
-        <span>{`${
-          value ? formatToTwoDecimals(value) : "0.00"
-        } ${currencyName}`}</span>
+        <span>{`${value ? formatToTwoDecimals(value) : "0.00"
+          } ${currencyName}`}</span>
       </Tooltip>
     ),
   },
@@ -78,7 +84,7 @@ const txnColumns = [
     dataIndex: "txFee",
     key: "txFee",
     render: (value) => {
-      return value || "-";
+      return `${value} ${currencyName}` || "-";
     },
   },
   {
