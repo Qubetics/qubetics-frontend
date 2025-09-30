@@ -47,6 +47,14 @@ export const HTTP_METHODS = {
   PATCH: "PATCH",
 };
 
+export const BUGFORM_APPS = [
+  "Explorer",
+  "dVPN Application",
+  "dVPN Node Operator",
+  "Chain Abstraction - Solver Node Setup",
+  "Solver Dashboard",
+  "Chain Abstraction - Mobile Application"];
+
 /*Blocks & Transactions Page Size */
 export const tableLimit = 10;
 export const totalTableDataLength = 50;
@@ -299,7 +307,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_Contract", "All Contracts")} href="/contract">
+        <Link onClick={() => onClick("Nav_Contract", "All Contracts")} href="/contract">
           All Contracts
         </Link>
       ),
@@ -310,7 +318,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
+        <Link onClick={() => onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
           Token Icon
         </Link>
       ),
@@ -322,7 +330,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={()=>onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
+        <Link onClick={() => onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
           Verify Contract
         </Link>
       ),
@@ -633,12 +641,14 @@ export const guidelinesList = [
   },
 ];
 
-const bugs = [
+const BUGS = [
   { id: 1, type: "Minor Bug" },
   { id: 2, type: "Major Bug" },
   { id: 3, type: "UI/UX Improvement" },
   { id: 4, type: "Feature Suggestion" },
 ];
+
+export const BUG_TYPES = (BUGS.map(bug => bug.type));
 
 export const guidelinesData = [
   {
@@ -672,7 +682,7 @@ export const guidelinesData = [
       <div className="bugCategorize">
         <p>Select the appropriate category for your submission</p>
         <div className="bugCategorize_top">
-          {bugs.map((bug) => (
+          {BUGS.map((bug) => (
             <div key={bug.id} className="bugCategorize_inner">
               <div></div>
               <h6>{bug.type}</h6>

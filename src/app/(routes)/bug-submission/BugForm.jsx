@@ -8,7 +8,9 @@ import TextArea from "../../../components/commonComps/TextArea/TextArea";
 import "./SubmissionForm.scss";
 import CustomInput from "@/components/customInput/CustomInput";
 import {
+  BUG_TYPES,
   GoogleKey,
+  BUGFORM_APPS,
   WalletValidValue,
   descriptionValidValue,
   handleValidEmail,
@@ -255,12 +257,7 @@ const BugForm = () => {
 
         <CustomDropdown
           label="Application Tested*"
-          options={[
-            "TICS Scan (Blockchain Explorer)",
-            "Qubetics Delegator & Validator Interfaces",
-            "Qubetics IDE",
-            "QubeQode",
-          ]}
+          options={BUGFORM_APPS}
           placeholder="Enter Application Name"
           value={selectedApplication}
           onSelect={handleSelectApplication}
@@ -268,12 +265,7 @@ const BugForm = () => {
 
         <CustomDropdown
           label="Bug/Feedback Type*"
-          options={[
-            "Minor Bug",
-            "Major Bug",
-            "UI/UX Improvement",
-            "Feature Suggestion",
-          ]}
+          options={BUG_TYPES}
           placeholder="Select the category that best describes your submission"
           value={selectedBugType}
           onSelect={handleSelectBugType}
