@@ -215,7 +215,7 @@ export const transactionSummarycolumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <div className="txnHashcopy">
+      <div className="txnHashcopy addressText">
         <Link
           className="bghash"
           href={`${Routes.Tx_Hash}${text}`}
@@ -554,7 +554,7 @@ export const addressDetailColumn = (address) => [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <div className="iconandlink">
+      <div className="iconandlink addressText">
         <Link
           className="fromicon"
           href={`${Routes.Tx_Hash}${text}`}
@@ -2342,7 +2342,7 @@ export const solverColumn = [
     render: (text) => (
       <>
         <div className="iconandlink blockLinkItems">
-          <p>{getAddress(text)}</p>
+          <a>{getAddress(text)}</a>
           <span>
             <CopyText hoverText={"Node Address"} text={text}></CopyText>
           </span>

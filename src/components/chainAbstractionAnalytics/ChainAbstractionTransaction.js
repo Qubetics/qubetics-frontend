@@ -113,7 +113,7 @@ const ChainAbstractionTransaction = () => {
       </Link>
     ) : null;
   };
- const handleTransactionClick = (network, transactionHash) => {
+  const handleTransactionClick = (network, transactionHash) => {
     const explorerUrl = getExplorerUrl(network, transactionHash);
     if (explorerUrl) {
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
@@ -127,7 +127,7 @@ const ChainAbstractionTransaction = () => {
       render: (_, record) =>
         record?.intent_hash ? (
           <div className="tx-cell">
-            <span className="tx-link">
+            <span className="tx-link addressText">
               <Link href={`/chain-abstraction/${record?.intent_hash}`}>
                 {getAddress(record?.intent_hash)}
               </Link>
@@ -225,38 +225,37 @@ const ChainAbstractionTransaction = () => {
         </p>
       ),
     },
- {
-  title: "Destination Transaction",
-  key: "destTx",
-  render: (_, record) =>
-    record?.solver_tx_hash ? (
-      <div className="tx-cell">
-        <span className="tx-link">
-          <span
-            className="link-pointer"
-            style={{ 
-              cursor: "pointer", 
-              color: "var(--primary-color)", // Use your app's link color
-              textDecoration: "underline" 
-            }}
-            onClick={() => {
-              handleTransactionClick(record?.target_chain, record?.solver_tx_hash);
-            }}
-          >
-            {getAddress(record?.solver_tx_hash)}
-          </span>
-          <button className="copy_btn">
-            <CopyText text={record?.solver_tx_hash} />
-          </button>
-        </span>
-        <div className="tx-date">
-          {convertToDateTime(record?.updated_at)}
-        </div>
-      </div>
-    ) : (
-      "-"
-    ),
-},
+    {
+      title: "Destination Transaction",
+      key: "destTx",
+      render: (_, record) =>
+        record?.solver_tx_hash ? (
+          <div className="tx-cell">
+            <span className="tx-link addressText">
+              <a
+                className="link-pointer"
+                style={{
+                  cursor: "pointer",
+                  color: "var(--primary-color)", // Use your app's link color
+                }}
+                onClick={() => {
+                  handleTransactionClick(record?.target_chain, record?.solver_tx_hash);
+                }}
+              >
+                {getAddress(record?.solver_tx_hash)}
+              </a>
+              <button className="copy_btn">
+                <CopyText text={record?.solver_tx_hash} />
+              </button>
+            </span>
+            <div className="tx-date">
+              {convertToDateTime(record?.updated_at)}
+            </div>
+          </div>
+        ) : (
+          "-"
+        ),
+    },
     {
       title: "Action",
       key: "action",

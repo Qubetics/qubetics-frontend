@@ -2882,7 +2882,7 @@ input:-webkit-autofill:active {
 
 .blockLinkItems {
   a {
-    width: 140px !important;
+    width: 150px !important;
     display: inline-block;
   }
 }
@@ -2973,6 +2973,7 @@ input:-webkit-autofill:active {
 
   a {
     width: 148px;
+    text-decoration: none;
 
     @media (max-width:767px) {
       width: 130px;
