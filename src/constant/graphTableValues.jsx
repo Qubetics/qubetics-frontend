@@ -2303,7 +2303,10 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
 
       const consumed = (totalUsed / maxBytes) * 100;
       return (
-        <Tooltip title={`${noExponential(consumed)}%`}>
+        <Tooltip
+          overlayClassName="Bandwidth"
+          title={`${noExponential(consumed)}%`}
+        >
           {`${consumed.toFixed(2)}% `}
         </Tooltip>
       );
