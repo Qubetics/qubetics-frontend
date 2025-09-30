@@ -44,7 +44,6 @@ export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
 export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
-
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
