@@ -99,16 +99,14 @@ const Page = () => {
               <CardsOnchain
                 text="Total Earnings"
                 balance={
-                  <Tooltip
-                    title={`${nodeSummary?.total_earning || 0} ${currencyName}`}
-                  >
+                  <Tooltip title={`${price || 0} ${currencyName}`}>
                     <span>{`${price || 0} ${currencyName}`}</span>
                   </Tooltip>
                 }
                 img={<TotalEarnings />}
                 title={`The total lifetime earnings generated in ${currencyName}`}
               />
-              <CardsOnchain
+              {/* <CardsOnchain
                 text="24hrs Earnings"
                 balance={
                   <Tooltip
@@ -125,7 +123,7 @@ const Page = () => {
                 }
                 img={<HrsEarnings />}
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
-              />
+              /> */}
               <CardsOnchain
                 text="Total Sessions"
                 balance={`${nodeSummary?.total_users || 0}`}
