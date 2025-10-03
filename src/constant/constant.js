@@ -804,7 +804,7 @@ export const guidelinesData = [
     id: 5,
     title: "Detail the Application Tested",
     description:
-      "Specify the application where the bug or issue was encountered (e.g., TICSScan, Qubetics Delegator & Validator Interfaces, Qubetics IDE, or QubeQode).",
+      "Specify the application where the bug or issue was encountered (e.g., TICSScan, Chain Abstraction, Solver Listing, or dVPN).",
   },
   {
     id: 6,
