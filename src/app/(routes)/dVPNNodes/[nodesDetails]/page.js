@@ -99,9 +99,7 @@ const Page = () => {
               <CardsOnchain
                 text="Total Earnings"
                 balance={
-                  <Tooltip title={`${price || 0} ${currencyName}`}>
-                    <span>{`${price || 0} ${currencyName}`}</span>
-                  </Tooltip>
+                  <span>{`${price.toFixed(2) || 0} ${currencyName}`}</span>
                 }
                 img={<TotalEarnings />}
                 title={`The total lifetime earnings generated in ${currencyName}`}
