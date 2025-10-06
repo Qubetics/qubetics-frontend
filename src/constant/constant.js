@@ -76,7 +76,7 @@ export const typesOfTransactions = {
 export const validationtValue = {
   START_ADDRESS: "0x",
   FAUCET_PLACEHOLDER: "Enter your wallet address",
-  FACUCET_AMOUNT_UPTO: 20,
+  FACUCET_AMOUNT_UPTO: 100,
   BLOCKCHAIN: "Blockchain",
 };
 
