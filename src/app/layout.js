@@ -87,7 +87,7 @@ export default function RootLayout({ children }) {
                 <SerachingValueProvider>
                   <Toaster
                     containerClassName="break-word-toast"
-                    position="bottom-center"
+                    position="top-center"
                     reverseOrder={false}
                   />
                   {/* <GoogleAnalytics /> */}
