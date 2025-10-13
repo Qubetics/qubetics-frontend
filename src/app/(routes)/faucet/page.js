@@ -110,7 +110,7 @@ function Page() {
               <h3>Testnet Chain Faucet</h3>
               <p className="discription">
                 Each address is eligible to receive{" "}
-                <span>105 {currencyName} Coins</span> per day.
+                <span>{validationtValue.FACUCET_AMOUNT_UPTO} {currencyName} Coins</span> per day.
               </p>
 
               <div>
