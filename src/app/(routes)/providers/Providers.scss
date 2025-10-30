@@ -1,0 +1,22 @@
+.providersSec {
+  .analytictext {
+    padding-bottom: 68px;
+  }
+  .providersTable {
+    .addressText {
+      .copy_btn {
+        background-color: transparent;
+        border: none;
+        .pointer {
+          display: initial;
+        }
+      }
+    }
+    .active {
+      color: #34c759;
+    }
+    .inActive {
+      color: #ff4e4e;
+    }
+  }
+}

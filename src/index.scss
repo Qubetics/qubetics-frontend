@@ -2369,6 +2369,7 @@ input[type="number"] {
     display: flex;
     align-items: center;
     gap: 20px;
+    flex-wrap: wrap;
 
     h3 {
       color: $grayA0A0A0;

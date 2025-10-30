@@ -176,6 +176,8 @@ export const Routes = {
   TOKEN_ICON: "/tokenicon",
   DVPNNODES: "/dVPNNodes",
   ACCOUNTS: "/accounts",
+  PROVIDERS:"/providers",
+  PROVIDERS_DETAIL:"/providersDetail",
   SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
@@ -365,6 +367,21 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
           href="/accounts"
         >
           Accounts
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      value: "Providers",
+      className: currentPath.startsWith(Routes.PROVIDERS)
+        ? "activeOptions"
+        : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Providers", "Providers")}
+          href="/providers"
+        >
+          Providers
         </Link>
       ),
     },
