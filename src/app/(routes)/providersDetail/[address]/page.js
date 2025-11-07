@@ -7,15 +7,7 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import CopyText from "@/components/DoCopy/CopyText";
 import Heading from "@/components/heading/Heading";
 import "./ProvidersDetail.scss";
-import {
-  currencyName,
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
-  providerDetailsColumns,
-} from "@/constant/constant";
+import { currencyName, tableLimit, providerDetailsColumns } from "@/constant/constant";
 import getProvidersDetail from "@/services/getProvidersDetail";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
@@ -26,28 +18,28 @@ import Loader from "@/components/loader/Loader";
 function ProvidersDetail() {
   const [providersDetail, setProvidersDetail] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [providersDetailStatus, setProvidersDetailStatus] = useState(InitStatus);
+  const [providersDetailStatus, setProvidersDetailStatus] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProviders, setTotalProviders] = useState(0);
 
   const { address } = useParams();
-  const [nodeSummaryStatus, setNodeSummaryStatus] = useState(InitStatus);
+  const [nodeSummaryStatus, setNodeSummaryStatus] = useState(true);
   const [nodeSummary, setNodeSummary] = useState(null);
 
   const fetchNodeSummary = async () => {
     try {
       const response = await getProvidersDetailSummary(address);
       setNodeSummary(response?.data);
-      setNodeSummaryStatus(SuccessStatus);
+      setNodeSummaryStatus(false);
     } catch (err) {
       console.error("Error fetching node summary:", err);
-      setNodeSummaryStatus(ErrorStatus);
+      setNodeSummaryStatus(false);
     }
   };
 
   const fetchData = async () => {
     try {
-      setProvidersDetailStatus(FetchingStatus);
+      setProvidersDetailStatus(true);
       const response = await getProvidersDetail(currentPage, tableLimit, address);
 
       if (response && response?.data) {
@@ -69,14 +61,14 @@ function ProvidersDetail() {
         setProvidersDetail(mappedDetails);
         setTotalPages(Math.ceil(totalCount / tableLimit));
         setTotalProviders(totalCount);
-        setProvidersDetailStatus(SuccessStatus);
+        setProvidersDetailStatus(false);
       } else {
-        setProvidersDetailStatus(ErrorStatus);
+        setProvidersDetailStatus(false);
         setProvidersDetail([]);
       }
     } catch (err) {
       console.error("Error fetching provider details:", err);
-      setProvidersDetailStatus(ErrorStatus);
+      setProvidersDetailStatus(false);
       setProvidersDetail([]);
     }
   };
@@ -88,7 +80,7 @@ function ProvidersDetail() {
 
   useEffect(() => {
     if (address) {
-      setNodeSummaryStatus(FetchingStatus);
+      setNodeSummaryStatus(true);
       fetchNodeSummary();
     }
   }, [address]);
@@ -97,7 +89,7 @@ function ProvidersDetail() {
     fetchData();
   }, [currentPage]);
 
-  if (nodeSummaryStatus === InitStatus || nodeSummaryStatus === FetchingStatus) {
+  if (providersDetailStatus || nodeSummaryStatus) {
     return <Loader />;
   }
 
@@ -147,7 +139,7 @@ function ProvidersDetail() {
           columns={providerDetailsColumns}
           dataSource={providersDetail}
           className='commontable'
-          isSkeleton={providersDetailStatus === FetchingStatus || providersDetailStatus === InitStatus}
+          isSkeleton={providersDetailStatus}
           pagination={false}
         />
 
