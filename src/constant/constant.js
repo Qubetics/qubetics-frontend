@@ -44,6 +44,7 @@ export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
 export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
+export const OPERATOR_API_URL = process.env.NEXT_PUBLIC_OPERATOR_API_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -103,14 +104,15 @@ export const BUGFORM_APPS = [
   "dVPN Node Operator",
   "Chain Abstraction - Solver Node Setup",
   "Solver Dashboard",
-  "Chain Abstraction - Mobile Application"];
+  "Chain Abstraction - Mobile Application",
+];
 
-  export const BUG_TYPE = [
-            "Minor Bug",
-            "Major Bug",
-            "UI/UX Improvement",
-            "Feature Suggestion",
-          ];
+export const BUG_TYPE = [
+  "Minor Bug",
+  "Major Bug",
+  "UI/UX Improvement",
+  "Feature Suggestion",
+];
 
 export const Messages = {
   //Metamask
@@ -176,8 +178,8 @@ export const Routes = {
   TOKEN_ICON: "/tokenicon",
   DVPNNODES: "/dVPNNodes",
   ACCOUNTS: "/accounts",
-  PROVIDERS:"/providers",
-  PROVIDERS_DETAIL:"/providersDetail",
+  PROVIDERS: "/providers",
+  PROVIDERS_DETAIL: "/providersDetail",
   SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
