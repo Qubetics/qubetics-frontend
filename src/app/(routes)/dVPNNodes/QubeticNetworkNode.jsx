@@ -30,12 +30,12 @@ const QubeticNetworkNode = ({ nodesData }) => {
     },
     {
       value: nodesData?.total_users ?? 0,
-      label: "Total Subscription",
+      label: "Total Users",
       content: tooltipContent?.total_dvpn_user,
     },
     {
       value: nodesData?.active_users ?? 0,
-      label: "Active Subscription",
+      label: "Connected Users",
       content: tooltipContent?.active_user,
     },
     {
@@ -70,7 +70,7 @@ const QubeticNetworkNode = ({ nodesData }) => {
       ) : (
         <div className="qubeticdVPNNode">
           <FilterResult />
-          <Heading heading="Qubetics Network Nodes" />
+          <Heading heading="Qubetics dVPN Nodes" />
           <div className="NodePerformance">
             <div className="NodePerformance_left">
               <h3>Nodes Performance</h3>
@@ -86,21 +86,24 @@ const QubeticNetworkNode = ({ nodesData }) => {
                       <div className="innerNode">
                         <h4>{item.value}</h4>
                         <span
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <p>{item.label}</p>
-                            {/* <InfoCircleOutlined
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
+                        >
+                          <p>{item.label}</p>
+                          {/* <InfoCircleOutlined
                           style={{ color: "#A0A0A0" }}
                           className="infoIcon"
                         /> */}
-                        <Tooltip color="rgb(49 52 56)" title={item.content}>
-                        <InfoCircleOutlined style={{ color: "#A0A0A0" }} className="infoIcon" />
-                        </Tooltip>
-                          </span>
+                          <Tooltip color="rgb(49 52 56)" title={item.content}>
+                            <InfoCircleOutlined
+                              style={{ color: "#A0A0A0" }}
+                              className="infoIcon"
+                            />
+                          </Tooltip>
+                        </span>
                       </div>
                     </Col>
                   ))}
@@ -112,12 +115,16 @@ const QubeticNetworkNode = ({ nodesData }) => {
               <div className="map-container">
                 <div className="countryBox">
                   <div className="innerBox">
-                    <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
-                    <p>Txns (Last 24hrs)</p>
+                    <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
+                    <p>
+                      {NodeSummary?.nodesLocation?.length > 1
+                        ? `Countries`
+                        : `Country`}
+                    </p>
                   </div>
                   <div className="innerBox">
-                    <h5>{NodeSummary?.nodesLocation?.length ?? 0}</h5>
-                    <p>{NodeSummary?.nodesLocation?.length>1 ? `Countries`:`Country`}</p>
+                    <h5>{NodeSummary?.lastDayTransactions ?? 0}</h5>
+                    <p>Txns (Last 24hrs)</p>
                   </div>
                 </div>
                 <DarkNodeMap />

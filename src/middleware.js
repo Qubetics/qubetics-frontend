@@ -13,7 +13,7 @@ export function middleware(request) {
   }
 
   if (
-    pathname === "/faucet" &&
+    // pathname === "/faucet" &&
     SHOW_FAUCET == 0 &&
     EXPLORER_NETWORK_NAME === "Mainnet"
   ) {

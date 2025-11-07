@@ -2,7 +2,7 @@ import getQubeticsPrice from "@/services/getQubeticsPrice";
 import { ethers, JsonRpcProvider } from "ethers";
 import { useCallback, useEffect, useState } from "react";
 
-const useEthereumBalance = (address, rpcUrl) => {
+const useGetBalance = (address, rpcUrl) => {
   const [balance, setBalance] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -43,4 +43,4 @@ const useEthereumBalance = (address, rpcUrl) => {
   return { balance, loading, error, fetchBalance, usdPrice };
 };
 
-export default useEthereumBalance;
+export default useGetBalance;

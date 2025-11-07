@@ -299,7 +299,7 @@ body {
   border-radius: 20px;
   position: relative;
   padding: 30px 15px 0px 15px;
-  backdrop-filter: blur(32px);
+  // backdrop-filter: blur(32px);
   display: flex;
   flex-direction: column;
   @media (max-width: 575px) {

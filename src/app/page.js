@@ -15,7 +15,6 @@ export default function Home() {
   const [focusOnSearch, setFocusOnSearch] = useState(false);
   const scrollDivRef = useRef();
 
-
   return (
     <>
       <main>

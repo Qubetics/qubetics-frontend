@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {
   ActiveUsers,
   HrsEarnings,
@@ -26,11 +26,18 @@ import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
 import Loader from "@/components/loader/Loader";
 import FilterResult from "@/components/FilterResult/FilterResult";
+import { formatToTwoDecimals } from "@/utils/commonFunctions";
+import { Tooltip } from "antd";
+import CopyText from "@/components/DoCopy/CopyText";
+import { bech32 } from "bech32";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
+  const searchParams = useSearchParams();
+  const nodeStatus = searchParams.get("status") || "active"; // Get status url params
   const [nodeSummaryStatus, setsetNodeSummaryStatus] = useState(InitStatus);
   const [nodeSummary, setNodeSummary] = useState();
+  const [price, setPrice] = useState(0);
 
   const fetchNodeSummary = async () => {
     try {
@@ -43,27 +50,44 @@ const Page = () => {
     }
   };
 
+  async function convertNodeToWallet() {
+    // Decode node address
+    const decoded = bech32.decode(nodeName);
+    const words = decoded.words;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SWAGGER_LINK}/${bech32.encode(
+        "qubetics",
+        words
+      )}`
+    );
+    const data = await response.json();
+    setPrice(data?.balances?.[0]?.amount / 10 ** 18);
+  }
+
   useEffect(() => {
     if (nodeName) {
       setsetNodeSummaryStatus(FetchingStatus);
       fetchNodeSummary();
+      convertNodeToWallet();
     }
   }, [nodeName]);
 
   return (
     <>
       {nodeSummaryStatus === InitStatus ||
-        nodeSummaryStatus === FetchingStatus ? (
+      nodeSummaryStatus === FetchingStatus ? (
         <Loader />
       ) : (
         <div className="container nodeDetail">
           <div className="searchbar searchFilter">
             <FilterResult />
           </div>
-          <Heading heading="Node Details" />
+          <Heading heading="Node Details" status={nodeStatus} />
           <div className="nodeDetail_top">
             <p>Address :</p>
             <strong>{nodeName}</strong>
+            <CopyText text={nodeName} />
           </div>
           <div className="nodeGraph">
             <div className="nodeGraph_left">
@@ -74,16 +98,30 @@ const Page = () => {
               {" "}
               <CardsOnchain
                 text="Total Earnings"
-                balance={`${Number(nodeSummary?.total_earning || 0).toFixed(2)} ${currencyName}`}
+                balance={
+                  <span>{`${price.toFixed(2) || 0} ${currencyName}`}</span>
+                }
                 img={<TotalEarnings />}
                 title={`The total lifetime earnings generated in ${currencyName}`}
               />
-              <CardsOnchain
+              {/* <CardsOnchain
                 text="24hrs Earnings"
-                balance={`${Number(nodeSummary?.daily_earnings || 0).toFixed(2)} ${currencyName}`}
+                balance={
+                  <Tooltip
+                    title={`${
+                      nodeSummary?.daily_earnings || 0
+                    } ${currencyName}`}
+                  >
+                    <span>
+                      {`${formatToTwoDecimals(
+                        nodeSummary?.daily_earnings
+                      )} ${currencyName}`}
+                    </span>
+                  </Tooltip>
+                }
                 img={<HrsEarnings />}
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
-              />
+              /> */}
               <CardsOnchain
                 text="Total Sessions"
                 balance={`${nodeSummary?.total_users || 0}`}

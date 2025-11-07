@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 import "../../../index.scss";
 import "./dashboard.scss";
 
-
 const Page = ({ customClass }) => {
   const [routeName, setRouteName] = useState("");
   const pathname = usePathname();
@@ -59,7 +58,7 @@ const Page = ({ customClass }) => {
           {/* OnChain Metrics data */}
           {/* Transaction History And Analytics */}
           <div className="transactionHistoryCard">
-              <Analytics stats={stats} />
+            <Analytics stats={stats} />
             <div className="cardsLandingPage_details">
               <RecentTransactions />
               <RecentBlocks />

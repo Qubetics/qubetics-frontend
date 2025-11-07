@@ -38,7 +38,7 @@ const AccountSummary = () => {
         <Row gutter={[30, 16]} className="onchainrowdata">
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
-              text="Daily Active Account"
+              text="Daily Active Accounts"
               balance={summaryData?.filteredDailyData ?? "—"}
               img={<DailyActive />}
               title="Unique accounts that engaged with dVPN in the past 24 hours."
@@ -46,7 +46,7 @@ const AccountSummary = () => {
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
-              text="Weekly Active Account"
+              text="Weekly Active Accounts"
               balance={summaryData?.filteredWeeklyData ?? "—"}
               img={<DailyActive />}
               title="Unique accounts active in dVPN interactions during the last 7 days."
@@ -54,7 +54,7 @@ const AccountSummary = () => {
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
-              text="Monthly Active Account"
+              text="Monthly Active Accounts"
               balance={summaryData?.filteredMonthlyData ?? "—"}
               img={<DailyActive />}
               title="Unique accounts that participated in dVPN activities over the past 30 days."

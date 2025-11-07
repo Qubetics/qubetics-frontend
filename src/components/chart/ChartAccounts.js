@@ -15,7 +15,6 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       data?.length > 0 ? data?.length : generateData(chartType).length;
 
     let { seriesData, maximum } = chartSeriesValue(data, chartType);
-
     const options = {
       chart: {
         type: "area",
@@ -92,14 +91,9 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         categories: [...chartValue],
       },
       yAxis: {
-        min: title === "Qubetics Price" ? 0.5 : 0,
-        max: maximum?.count < 4 ? 4 : maximum?.count,
-        max:
-          title === "Qubetics Price" && maximum?.count < 0
-            ? 0
-            : maximum?.count < 4
-              ? 4
-              : maximum?.count,
+        min: 0,
+        max: maximum?.count > 0 ? maximum?.count : 1,
+        tickInterval: maximum?.count > 0 ? undefined : 0.25,
         title: {
           text: "",
         },
@@ -151,7 +145,6 @@ const ChartAccount = ({ data, chartType, name, title }) => {
     };
 
     setChartData(options);
-
   }, [data, chartType]);
 
   return (

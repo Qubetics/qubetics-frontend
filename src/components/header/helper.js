@@ -5,6 +5,7 @@ const {
   contractHeaderFunction,
   DvpnNodeHeaderFunction,
   DVPN_TYPE,
+  EXPLORER_NETWORK_NAME,
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
@@ -46,7 +47,7 @@ export const navItems = (isEVM) => {
     {
       type: "select",
       label: "dVPN",
-      matchRoutes: [Routes.DVPNNODES, Routes.ACCOUNTS, Routes.Tx_ADDRESS],
+      matchRoutes: [Routes.DVPNNODES, Routes.ACCOUNTS, Routes.Tx_ADDRESS, Routes.PROVIDERS],
       optionsFn: DvpnNodeHeaderFunction,
       showIfNative: !isEVM,
     },
@@ -67,7 +68,8 @@ export const navItems = (isEVM) => {
       href: Routes.FAUCET,
       matchRoutes: [Routes.FAUCET],
       showIfEVM: isEVM,
-      showIfFaucet: false,
+      showIfFaucet: isEVM,
+      // showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
     },
   ];
 };
@@ -80,6 +82,7 @@ export const formatDateTime = (timestamp) => {
   if (!timestamp) return "-";
 
   const now = new Date();
+
   const checkedInDate = new Date(timestamp);
 
   // Calculate the difference in milliseconds
