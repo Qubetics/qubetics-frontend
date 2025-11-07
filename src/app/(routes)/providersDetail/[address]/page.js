@@ -48,7 +48,7 @@ function ProvidersDetail() {
 
         const mappedDetails = details.map((item, index) => ({
           key: index.toString(),
-          dvpnName: item.orgName || "-",
+          dvpnName: item.nodeAddress || "-",
           country: item.location || "-",
           region: item.city || item.location || "-",
           status: (
