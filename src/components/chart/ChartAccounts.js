@@ -1,4 +1,4 @@
-import { currencyName, generateData } from "@/constant/constant";
+import { currencyName, generateData, noExponential } from "@/constant/constant";
 import { chartMenu, chartSeriesValue } from "@/utils/chartMenu";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -36,7 +36,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
           return `
             <div style="white-space: normal; font-size: 15px; text-align: center; padding: 0 28px 12px; min-height:50px; min-width: 160px; display:flex; align-items: center;">
               ${xAxisData}<br>
-              ${name === "Uptime" ? currencyName : name}: ${this.y.toPrecision(2)}
+              ${name === "Uptime" ? currencyName : name}: ${noExponential(this.y)}
             </div>`;
         },
         positioner: function (labelWidth, labelHeight, point) {
