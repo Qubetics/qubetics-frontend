@@ -1,5 +1,5 @@
 "use client";
-import { Col, Row } from "antd";
+import { Col, Row, Tooltip } from "antd";
 import React, { useState, useEffect } from "react";
 import { HrsEarnings, TotalEarnings, TotalUsers } from "../../../../../public/SvgIcons";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
@@ -14,6 +14,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import { useParams, useRouter } from "next/navigation";
 import getProvidersDetailSummary from "@/services/getProvidersDetailSummary";
 import Loader from "@/components/loader/Loader";
+import { formatToTwoDecimals } from "@/utils/commonFunctions";
 
 function ProvidersDetail() {
   const [providersDetail, setProvidersDetail] = useState([]);
@@ -114,9 +115,13 @@ function ProvidersDetail() {
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
               text='Total Earnings'
-              balance={`${nodeSummary?.total_earning || 0} ${currencyName}`}
+              balance={
+                <Tooltip title={`${nodeSummary?.totalEarning || 0} ${currencyName}`}>
+                  <span>{`${formatToTwoDecimals(nodeSummary?.totalEarning || 0)} ${currencyName}`}</span>
+                </Tooltip>
+              }
               img={<TotalEarnings />}
-              hideTooltip
+              title={`The total lifetime earnings generated in ${currencyName}`}
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
@@ -125,9 +130,13 @@ function ProvidersDetail() {
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
               text='Hourly Earnings'
-              balance={`${nodeSummary?.daily_earnings || 0} ${currencyName}`}
+              balance={
+                <Tooltip title={`${nodeSummary?.dailyEarning || 0} ${currencyName}`}>
+                  <span>{`${formatToTwoDecimals(nodeSummary?.dailyEarning || 0)} ${currencyName}`}</span>
+                </Tooltip>
+              }
               img={<HrsEarnings />}
-              hideTooltip
+              title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
             />
           </Col>
         </Row>
