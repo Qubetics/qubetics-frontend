@@ -15,6 +15,7 @@ function Provides() {
   const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const columns = [
