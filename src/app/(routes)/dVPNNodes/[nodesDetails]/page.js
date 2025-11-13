@@ -14,13 +14,7 @@ import "../node.scss";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import UptimeHistory from "./UptimeHistory";
 import DVPNNodesDetails from "@/components/dVPNNodesList/DVPNNodesDetails";
-import {
-  currencyName,
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-} from "@/constant/constant";
+import { currencyName, ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import getNodeDetailSummary from "@/services/getNodeDetailSummary";
 import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
@@ -29,15 +23,13 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import { formatToTwoDecimals } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import CopyText from "@/components/DoCopy/CopyText";
-import { bech32 } from "bech32";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
   const searchParams = useSearchParams();
-  const nodeStatus = searchParams.get("status") || "active"; // Get status url params
+  const nodeStatus = searchParams.get("status") || "active";
   const [nodeSummaryStatus, setsetNodeSummaryStatus] = useState(InitStatus);
   const [nodeSummary, setNodeSummary] = useState();
-  const [price, setPrice] = useState(0);
 
   const fetchNodeSummary = async () => {
     try {
@@ -50,101 +42,77 @@ const Page = () => {
     }
   };
 
-  async function convertNodeToWallet() {
-    // Decode node address
-    const decoded = bech32.decode(nodeName);
-    const words = decoded.words;
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SWAGGER_LINK}/${bech32.encode(
-        "qubetics",
-        words
-      )}`
-    );
-    const data = await response.json();
-    setPrice(data?.balances?.[0]?.amount / 10 ** 18);
-  }
-
   useEffect(() => {
     if (nodeName) {
       setsetNodeSummaryStatus(FetchingStatus);
       fetchNodeSummary();
-      convertNodeToWallet();
     }
   }, [nodeName]);
 
   return (
     <>
-      {nodeSummaryStatus === InitStatus ||
-      nodeSummaryStatus === FetchingStatus ? (
+      {nodeSummaryStatus === InitStatus || nodeSummaryStatus === FetchingStatus ? (
         <Loader />
       ) : (
-        <div className="container nodeDetail">
-          <div className="searchbar searchFilter">
+        <div className='container nodeDetail'>
+          <div className='searchbar searchFilter'>
             <FilterResult />
           </div>
-          <Heading heading="Node Details" status={nodeStatus} />
-          <div className="nodeDetail_top">
+          <Heading heading='Node Details' status={nodeStatus} />
+          <div className='nodeDetail_top'>
             <p>Address :</p>
             <strong>{nodeName}</strong>
             <CopyText text={nodeName} />
           </div>
-          <div className="nodeGraph">
-            <div className="nodeGraph_left">
+          <div className='nodeGraph'>
+            <div className='nodeGraph_left'>
               {" "}
               <UptimeHistory graphdashboard nodeName={nodeName} />
             </div>
-            <div className="nodeGraph_right">
-              {" "}
+            <div className='nodeGraph_right'>
               <CardsOnchain
-                text="Total Earnings"
+                text='Total Earnings'
                 balance={
-                  <span>{`${price.toFixed(2) || 0} ${currencyName}`}</span>
+                  <Tooltip title={`${nodeSummary?.total_earning || 0} ${currencyName}`}>
+                    <span>{`${formatToTwoDecimals(nodeSummary?.total_earning || 0)} ${currencyName}`}</span>
+                  </Tooltip>
                 }
                 img={<TotalEarnings />}
                 title={`The total lifetime earnings generated in ${currencyName}`}
               />
-              {/* <CardsOnchain
-                text="24hrs Earnings"
+              <CardsOnchain
+                text='24hrs Earnings'
                 balance={
-                  <Tooltip
-                    title={`${
-                      nodeSummary?.daily_earnings || 0
-                    } ${currencyName}`}
-                  >
-                    <span>
-                      {`${formatToTwoDecimals(
-                        nodeSummary?.daily_earnings
-                      )} ${currencyName}`}
-                    </span>
+                  <Tooltip title={`${nodeSummary?.daily_earnings || 0} ${currencyName}`}>
+                    <span>{`${formatToTwoDecimals(nodeSummary?.daily_earnings || 0)} ${currencyName}`}</span>
                   </Tooltip>
                 }
                 img={<HrsEarnings />}
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
-              /> */}
+              />
               <CardsOnchain
-                text="Total Sessions"
+                text='Total Sessions'
                 balance={`${nodeSummary?.total_users || 0}`}
                 img={<TotalUsers />}
-                title="The total number of unique users who have ever connected to this node"
+                title='The total number of unique users who have ever connected to this node'
               />
               <CardsOnchain
-                text="Active Sessions"
+                text='Active Sessions'
                 balance={`${nodeSummary?.active_users || 0}`}
                 img={<ActiveUsers />}
-                title="The number of users currently connected and active on this node."
+                title='The number of users currently connected and active on this node.'
               />
               <CardsOnchain
-                text="Last Checked In"
+                text='Last Checked In'
                 balance={`${formatDateTime(nodeSummary?.last_checked) || 0}`}
                 img={<LastCheckedIn />}
-                title="The most recent time this node’s status was verified."
+                title='The most recent time this node’s status was verified.'
               />
               <CardsOnchain
-                text="Recent Session"
+                text='Recent Session'
                 balance={`${formatDateTime(nodeSummary?.recent_session) || 0}`}
                 img={<RecentSession />}
-                title="The timestamp of the latest user session on this node."
+                title='The timestamp of the latest user session on this node.'
               />
             </div>
           </div>

@@ -81,7 +81,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       yAxis: {
         min: 0,
         max: maximum?.count > 0 ? maximum?.count : 1,
-        tickInterval: maximum?.count > 0 ? undefined : 0.25,
+        tickInterval: maximum?.count > 0.000001 ? undefined : 1,
         title: {
           text: "",
         },
