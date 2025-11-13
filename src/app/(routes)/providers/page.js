@@ -6,10 +6,7 @@ import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { DailyActive } from "../../../../public/SvgIcons";
 import "./Providers.scss";
 import CopyText from "@/components/DoCopy/CopyText";
-import {
-  Routes,
-  tableLimit,
-} from "@/constant/constant";
+import { Routes, tableLimit } from "@/constant/constant";
 import getProviderList from "@/services/getProviderList";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
@@ -26,27 +23,19 @@ function Provides() {
       dataIndex: "providerName",
       key: "providerName",
       render: (text, record) => (
-        <span className=" addressText">
-          <div
-            onClick={() => router.push(`/providersDetail/${record?.address}`)}
-          >
-            {record?.name || "-"}
-          </div>
+        <span className=' addressText'>
+          <div onClick={() => router.push(`/providersDetail/${record?.address}`)}>{record?.name || "-"}</div>
         </span>
       ),
     },
     {
-      title: "Wallet Address",
-      dataIndex: "walletAddress",
-      key: "walletAddress",
+      title: "Provider Address",
+      dataIndex: "providerAddress",
+      key: "providerAddress",
       render: (text, record) => (
-        <span className=" addressText">
-          <div
-            onClick={() => router.push(`/providersDetail/${record?.address}`)}
-          >
-            {record?.address || "-"}
-          </div>
-          <button className="copy_btn"onClick={(e)=>e?.stopPropagation()} >
+        <span className=' addressText'>
+          <div onClick={() => router.push(`/providersDetail/${record?.address}`)}>{record?.address || "-"}</div>
+          <button className='copy_btn' onClick={(e) => e?.stopPropagation()}>
             <CopyText text={record?.address} />
           </button>
         </span>
@@ -113,29 +102,29 @@ function Provides() {
   }, [currentPage]);
 
   return (
-    <div className="container providersSec">
+    <div className='container providersSec'>
       <FilterResult />
-      <h2 className="analytictext">Qubetics Service Provider</h2>
-      <div className="cardSec ">
+      <h2 className='analytictext'>Qubetics Service Provider</h2>
+      <div className='cardSec '>
         <Row gutter={[30, 16]}>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
-              text="Total Provider"
+              text='Total Provider'
               balance={data?.total?.total}
               img={<DailyActive />}
-              title="Total number of Qubetics Service Providers."
+              title='Total number of Qubetics Service Providers.'
             />
           </Col>
         </Row>
       </div>
-      <div className="providersTable">
+      <div className='providersTable'>
         <Table
           scroll={{ x: "max-content" }}
           columns={columns}
           dataSource={data?.data?.providers}
           loading={loading}
           pagination={false}
-          className="commontable"
+          className='commontable'
           // onRow={() => ({
           //   onClick: () => {
           //     window.location.href = Routes.PROVIDERS_DETAIL;
