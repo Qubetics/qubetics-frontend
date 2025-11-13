@@ -890,8 +890,19 @@ export const CHAIN_ASSET_MAP = {
   9029: "tics",
 };
 
-export const providerDetailsColumns = [
-  { title: "dVPN Name", dataIndex: "dvpnName", key: "dvpnName" },
+export const providerDetailsColumns = (router) => [
+  {
+    title: "dVPN Name",
+    dataIndex: "dvpnName",
+    key: "dvpnName",
+    render: (text, record) => (
+      <span>
+        <div onClick={() => router.push(`/dVPNNodes/${record?.dvpnName}`)} style={{ cursor: "pointer" }}>
+          {record?.dvpnName || "-"}
+        </div>
+      </span>
+    ),
+  },
   { title: "Country", dataIndex: "country", key: "country" },
   { title: "Region", dataIndex: "region", key: "region" },
   { title: "Status", dataIndex: "status", key: "status" },

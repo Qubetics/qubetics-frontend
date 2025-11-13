@@ -11,7 +11,7 @@ import { currencyName, tableLimit, providerDetailsColumns } from "@/constant/con
 import getProvidersDetail from "@/services/getProvidersDetail";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import getProvidersDetailSummary from "@/services/getProvidersDetailSummary";
 import Loader from "@/components/loader/Loader";
 
@@ -25,6 +25,7 @@ function ProvidersDetail() {
   const { address } = useParams();
   const [nodeSummaryStatus, setNodeSummaryStatus] = useState(true);
   const [nodeSummary, setNodeSummary] = useState(null);
+  const router = useRouter();
 
   const fetchNodeSummary = async () => {
     try {
@@ -136,7 +137,7 @@ function ProvidersDetail() {
 
       <div className='providersDetailTable'>
         <SkeletonTableWrapper
-          columns={providerDetailsColumns}
+          columns={providerDetailsColumns(router)}
           dataSource={providersDetail}
           className='commontable'
           isSkeleton={providersDetailStatus}
