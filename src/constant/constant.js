@@ -907,3 +907,8 @@ export const providerDetailsColumns = (router) => [
   { title: "Region", dataIndex: "region", key: "region" },
   { title: "Status", dataIndex: "status", key: "status" },
 ];
+
+export const Network = {
+  Native: "Native Chain",
+  Evm: "EVM Chain",
+};

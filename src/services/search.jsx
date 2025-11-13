@@ -1,4 +1,4 @@
-import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL } from "@/constant/constant";
+import { EXPLORER_API_URL, NATIVE_EXPLORER_API_URL, Network } from "@/constant/constant";
 
 export default async function getSearchingValue(value) {
   let chain = typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -9,7 +9,7 @@ export default async function getSearchingValue(value) {
     const storedChain = localStorage.getItem("chainType");
 
     const newChain =
-      queryChain === "native" ? "Native Chain" : queryChain === "evm" ? "EVM Chain" : storedChain || "EVM Chain";
+      queryChain === "native" ? Network.Native : queryChain === "evm" ? Network.Evm : storedChain || Network.Evm;
 
     if (newChain !== storedChain) {
       localStorage.setItem("chainType", newChain);
@@ -20,7 +20,7 @@ export default async function getSearchingValue(value) {
   }
 
   const response =
-    chain == "EVM Chain"
+    chain == Network.Evm
       ? await fetch(`${EXPLORER_API_URL}explorer/searching?value=${value}`)
       : await fetch(`${NATIVE_EXPLORER_API_URL}explorer/searching?value=${value}`);
   let result = await response.json();
