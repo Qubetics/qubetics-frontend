@@ -1,15 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import FilterResult from "@/components/FilterResult/FilterResult";
-import { Col, Row, Table } from "antd";
+import { Col, Row } from "antd";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { DailyActive } from "../../../../public/SvgIcons";
 import "./Providers.scss";
 import CopyText from "@/components/DoCopy/CopyText";
-import { Routes, tableLimit } from "@/constant/constant";
+import { tableLimit } from "@/constant/constant";
 import getProviderList from "@/services/getProviderList";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+
 function Provides() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -110,7 +112,7 @@ function Provides() {
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
               text='Total Provider'
-              balance={data?.total?.total}
+              balance={data?.total?.total || 0}
               img={<DailyActive />}
               title='Total number of Qubetics Service Providers.'
             />
@@ -118,19 +120,12 @@ function Provides() {
         </Row>
       </div>
       <div className='providersTable'>
-        <Table
-          scroll={{ x: "max-content" }}
+        <SkeletonTableWrapper
           columns={columns}
           dataSource={data?.data?.providers}
-          loading={loading}
+          isSkeleton={loading}
           pagination={false}
           className='commontable'
-          // onRow={() => ({
-          //   onClick: () => {
-          //     window.location.href = Routes.PROVIDERS_DETAIL;
-          //   },
-          //   style: { cursor: "pointer" },
-          // })}
         />
 
         {totalPages > 1 ? (
