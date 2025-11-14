@@ -181,3 +181,16 @@ export const formateTotalSupply = (num) => {
 export function noExponentialFixed(num) {
   return num.toFixed(5).replace(/\.?0+$/, "");
 }
+
+
+export const getTXNRoute=()=>{
+  const chainType =
+    typeof window !== "undefined"
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+}

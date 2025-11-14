@@ -123,6 +123,7 @@ function Header() {
       "/dashboard": "Dashboard",
       "/blocks": "Blockchain",
       "/tx": "Blockchain",
+      "/txn": "Blockchain",
       "/token": "Tokens",
       "/validators": "Validators",
       "/nodes": "Nodes",
@@ -141,66 +142,58 @@ function Header() {
   }, [pathname]);
 
   return (
-    <>
-      <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
-        <div className="header-main__bottom container">
-          <div>
-            <Link
-              onClick={() =>
-                trackEvent({
-                  action: "logo_click",
-                  category: "Header",
-                  label: "Logo",
-                })
-              }
-              href={"/dashboard"}
-            >
-              {windowWidth > 1199 ? (
-                <Image
-                  priority
-                  src={LogoIcon}
-                  alt="Logo"
-                  width={176}
-                  height={50}
-                />
-              ) : (
-                <Image
-                  priority
-                  src={reslogo}
-                  alt="Logo"
-                  width={36}
-                  height={36}
-                />
-              )}
-            </Link>
-            <Link href={"/dashboard"} className="responsiveLogo">
-              {" "}
-            </Link>
-          </div>
-          <p className="responsiveText">
-            {windowWidth > 1199 ? "" : <span>{routeText}</span>}
-          </p>
-          <HeaderMenu />
-          <li className="hammburgerIcon">
-            <span onClick={showDrawer}>
-              <HamburgerIcon />
-            </span>
-          </li>
-          {
-            <Drawer
-              placement="right"
-              onClose={onClose}
-              open={open}
-              className="drawer_main"
-            >
-              <div className="drawer_main__side">
-                <HeaderMenu onCloseDrawer={onClose} />
-              </div>
-            </Drawer>
-          }
+    <div className={`header-main ${scrolled ? "sticky" : ""}`} id="foo">
+      <div className="header-main__bottom container">
+        <div>
+          <Link
+            onClick={() =>
+              trackEvent({
+                action: "logo_click",
+                category: "Header",
+                label: "Logo",
+              })
+            }
+            href={"/dashboard"}
+          >
+            {windowWidth > 1199 ? (
+              <Image
+                priority
+                src={LogoIcon}
+                alt="Logo"
+                width={176}
+                height={50}
+              />
+            ) : (
+              <Image priority src={reslogo} alt="Logo" width={36} height={36} />
+            )}
+          </Link>
+          <Link href={"/dashboard"} className="responsiveLogo">
+            {" "}
+          </Link>
         </div>
+        <p className="responsiveText">
+          {windowWidth > 1199 ? "" : <span>{routeText}</span>}
+        </p>
+        <HeaderMenu />
+        <li className="hammburgerIcon">
+          <span onClick={showDrawer}>
+            <HamburgerIcon />
+          </span>
+        </li>
+        {
+          <Drawer
+            placement="right"
+            onClose={onClose}
+            open={open}
+            className="drawer_main"
+          >
+            <div className="drawer_main__side">
+              <HeaderMenu onCloseDrawer={onClose} />
+            </div>
+          </Drawer>
+        }
       </div>
-    </>
+    </div>
   );
 }
 

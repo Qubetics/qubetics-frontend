@@ -22,9 +22,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
           <div>
             <p
               style={{ cursor: "pointer" }}
-              onClick={() =>
-                router.push(`${Routes.TRANSACTIONS}/${data?.txhash}`)
-              }
+              onClick={() => router.push(`${Routes.Tx_Hash}${data?.txhash}`)}
             >
               {" "}
               {data?.txhash ? getAddress(data?.txhash) : "-"}

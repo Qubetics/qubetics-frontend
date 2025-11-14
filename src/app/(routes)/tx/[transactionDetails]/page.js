@@ -1,5 +1,6 @@
 "use client";
 import { useSearchData } from "@/components/contexts/searchingData";
+import InternalTxns from "@/components/contracts/InternalTxns";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
@@ -12,13 +13,12 @@ import {
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import getSearchingValue from "@/services/search";
+import getTxnDetails from "@/services/getTxnDetails";
 import { Tabs } from "antd";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
-import InternalTxns from "@/components/contracts/InternalTxns";
 
 const page = () => {
   const searchParam = useSearchParams();
@@ -33,8 +33,6 @@ const page = () => {
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
   const { searchData } = useSearchData();
-
-  let updateTx = "";
 
   useEffect(() => {
     fetchData();
@@ -55,7 +53,7 @@ const page = () => {
           updateTx = `0x${updateTx}`;
         }
 
-        const response = await getSearchingValue(updateTx);
+        const response = await getTxnDetails(updateTx);
 
         // Handle internal transactions
         if (response?.data?.internalTxns) {
@@ -69,7 +67,6 @@ const page = () => {
 
         // Handle transaction details
         if (response?.error === false) {
-          console.log("hello");
           setTransactionDetails(response.data.transaction);
           setTopics(response.data.contractLogs?.[0]?.topics || []);
           setContractLogs(JSON.parse(response.data.transaction?.logs || "[]"));
@@ -89,7 +86,6 @@ const page = () => {
     }
   };
 
-  console.log(transactionDetails, "transactionDetails");
   const tabItems = [
     {
       label: "Overview",
