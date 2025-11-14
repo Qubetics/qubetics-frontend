@@ -4,15 +4,14 @@ import { EXPLORER_CURRENCY_NAME } from "@/constant/constant";
 import {
   capitalizeWord,
   formatToTwoDecimals,
-  formatMillionNumber,
-  noExponential,
+  noExponential
 } from "@/utils/commonFunctions";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import { Tooltip } from "antd";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import CopyText from "../DoCopy/CopyText";
 import "./TransferInformation.scss";
-import { Tooltip } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
   const searchParam = useSearchParams();

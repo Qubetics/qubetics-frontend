@@ -381,3 +381,15 @@ export const isValidAlphaNumeric = (value) => {
   const isAlphaNumeric = /^[a-zA-Z0-9]+$/.test(value);
   return value.length >= 7 && isAlphaNumeric;
 };
+
+export const getTXNRoute=()=>{
+  const chainType =
+    typeof window !== "undefined"
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+}
