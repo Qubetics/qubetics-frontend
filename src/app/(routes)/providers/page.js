@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import FilterResult from "@/components/FilterResult/FilterResult";
-import { Col, Row, Table } from "antd";
+import { Col, Row } from "antd";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import { DailyActive } from "../../../../public/SvgIcons";
 import "./Providers.scss";
 import CopyText from "@/components/DoCopy/CopyText";
-import { Routes, tableLimit } from "@/constant/constant";
+import { tableLimit } from "@/constant/constant";
 import getProviderList from "@/services/getProviderList";
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
