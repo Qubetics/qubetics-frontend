@@ -2,7 +2,12 @@
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
-import { formateTotalSupply, formatMillionNumber, noExponentsValue } from "@/utils/commonFunctions";
+import {
+  formateTotalSupply,
+  formatMillionNumber,
+  formatToTwoDecimals,
+  noExponentsValue,
+} from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
@@ -82,7 +87,8 @@ const OnChainMetrics = ({ stats }) => {
               text='Community Pool'
               balance={
                 <Tooltip title={noExponentsValue(Number(stats?.community_pool) / 10 ** Number(18))}>
-                  {formateTotalSupply(noExponentsValue(Number(stats?.community_pool) / 10 ** Number(18))) || 0} TICS
+                  {formatToTwoDecimals(noExponentsValue(Number(stats?.community_pool) / 10 ** Number(18)) || 0)}
+                  TICS
                 </Tooltip>
               }
               img={<TotalAccountIcon />}
