@@ -195,14 +195,12 @@ export const blockColumn = [
     dataIndex: "miner",
     key: "miner",
     render: (text) => (
-      <>
-        <div className="iconandlink blockLinks">
-          {getAddress(text)}
-          {/* <span>
+      <div className="iconandlink blockLinks">
+        {getAddress(text)}
+        {/* <span>
             <CopyText text={text}></CopyText>
           </span> */}
-        </div>
-      </>
+      </div>
     ),
   },
 ];
@@ -1615,7 +1613,7 @@ export const TokenTransfers = [
       <div>
         {text?.txhash ? (
           <>
-            <Link href={`/tx/${text?.txhash}`}>
+            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
               {" "}
               {getAddress(text?.txhash)}{" "}
             </Link>

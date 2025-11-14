@@ -783,6 +783,34 @@ html {
         color: #fff;
       }
     }
+    .transferStatus-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      min-width: 50px;
+      text-align: center;
+      border: 1px solid transparent;
+
+      &.green {
+        // background-color: #e6f4ea; // light green background
+        color: #1b7f3b; // dark green text
+        border-color: #93d4a4; // green border
+        box-shadow: inset 2px 2px 4px rgba(27, 127, 59, 0.18),
+          inset -2px -2px 4px rgba(27, 127, 59, 0.15);
+      }
+
+      &.red {
+        // background-color: #fde8e8; // light red background
+        color: #b91c1c; // dark red text
+        border-color: #f5a3a3; // red border
+        box-shadow: inset 2px 2px 4px rgba(185, 28, 28, 0.15),
+          inset -2px -2px 4px rgba(185, 28, 28, 0.15);
+      }
+    }
 
     .transferStatus-box {
       display: inline-flex;
@@ -1631,7 +1659,6 @@ html {
     .ant-tabs-nav-list {
       margin-bottom: 0 !important;
     }
-
     .commontable {
       thead {
         tr {
