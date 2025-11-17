@@ -1,5 +1,6 @@
 "use client";
 
+import CopyText from "@/components/DoCopy/CopyText";
 import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 
@@ -241,7 +242,7 @@ export function BlockchainHeaderFunction(currentPath) {
       value: "Blocks",
       className: currentPath === Routes.BLOCKS ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onLinkClick("Nav_Block", "Blocks")} href='/blocks'>
+        <Link onClick={() => onLinkClick("Nav_Block", "Blocks")} href="/blocks">
           Blocks
         </Link>
       ),
@@ -251,7 +252,7 @@ export function BlockchainHeaderFunction(currentPath) {
       value: "Transactions",
       className: currentPath.startsWith(Routes.TRANSACTIONS) ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onLinkClick("NavTransactions", "Transactions")} href='/tx'>
+        <Link onClick={() => onLinkClick("NavTransactions", "Transactions")} href="/tx">
           Transactions
         </Link>
       ),
@@ -260,13 +261,13 @@ export function BlockchainHeaderFunction(currentPath) {
       key: "3",
       value: "Chain Abstraction",
       className: currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
-      label: <Link href='/chain-abstraction'>Chain Abstraction</Link>,
+      label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
     },
     {
       key: "4",
       value: "Solver Listing",
       className: currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
-      label: <Link href='/solver-listing'>Solver Listing</Link>,
+      label: <Link href="/solver-listing">Solver Listing</Link>,
     },
     // {
     //   key: "3",
@@ -289,7 +290,7 @@ export function NodeHeaderFunction(currentPath, onClick) {
       value: "Node",
       className: currentPath === Routes.NODES ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Nodes", "Nodes")} href='/nodes'>
+        <Link onClick={() => onClick("Nav_Nodes", "Nodes")} href="/nodes">
           Nodes
         </Link>
       ),
@@ -299,7 +300,7 @@ export function NodeHeaderFunction(currentPath, onClick) {
       value: "Sync",
       className: currentPath === Routes.SYNC ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Sync", "Sync")} href='/sync'>
+        <Link onClick={() => onClick("Nav_Sync", "Sync")} href="/sync">
           Sync
         </Link>
       ),
@@ -315,7 +316,7 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
       value: "Node",
       className: currentPath.startsWith(Routes.DVPNNODES) ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Nodes", "dVPNNodes")} href='/dVPNNodes'>
+        <Link onClick={() => onClick("Nav_Nodes", "dVPNNodes")} href="/dVPNNodes">
           Nodes
         </Link>
       ),
@@ -325,7 +326,7 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
       value: "Accounts",
       className: currentPath === Routes.ACCOUNTS || currentPath.startsWith(Routes.Tx_ADDRESS) ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Accounts", "Accounts")} href='/accounts'>
+        <Link onClick={() => onClick("Nav_Accounts", "Accounts")} href="/accounts">
           Accounts
         </Link>
       ),
@@ -335,7 +336,7 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
       value: "Providers",
       className: currentPath.startsWith(Routes.PROVIDERS) ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Providers", "Providers")} href='/providers'>
+        <Link onClick={() => onClick("Nav_Providers", "Providers")} href="/providers">
           Providers
         </Link>
       ),
@@ -348,23 +349,23 @@ export const blockchainHeader = [
   {
     key: "1",
     value: "Blocks",
-    label: <Link href='/blocks'>Blocks</Link>,
+    label: <Link href="/blocks">Blocks</Link>,
   },
 
   {
     key: "2",
     value: "Transactions",
-    label: <Link href='/tx'>Transactions</Link>,
+    label: <Link href="/tx">Transactions</Link>,
   },
   {
     key: "3",
     value: "Validator",
-    label: <Link href='/validators'>Validators</Link>,
+    label: <Link href="/validators">Validators</Link>,
   },
   {
     key: "4",
     value: "Nodes",
-    label: <Link href='/nodes'>Nodes</Link>,
+    label: <Link href="/nodes">Nodes</Link>,
   },
 ];
 
@@ -376,7 +377,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Contract", "All Contracts")} href='/contract'>
+        <Link onClick={() => onClick("Nav_Contract", "All Contracts")} href="/contract">
           All Contracts
         </Link>
       ),
@@ -387,7 +388,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_TokenIcon", "Token Icon")} href='/tokenicon'>
+        <Link onClick={() => onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
           Token Icon
         </Link>
       ),
@@ -398,7 +399,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_VerifyContract", "Verify Contract")} href='/contract/verify'>
+        <Link onClick={() => onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
           Verify Contract
         </Link>
       ),
@@ -415,7 +416,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
         value: "Charts",
         className: currentPath === Routes.STATS ? "activeOptions" : "",
         label: (
-          <Link href='/charts' onClick={onClick}>
+          <Link href="/charts" onClick={onClick}>
             Charts
           </Link>
         ),
@@ -426,7 +427,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
         value: "Top Token",
         className: currentPath === Routes.TOKEN ? "activeOptions" : "",
         label: (
-          <Link href='/token' onClick={onClick}>
+          <Link href="/token" onClick={onClick}>
             Top Token
           </Link>
         ),
@@ -436,7 +437,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
         value: "Token Transfers",
         className: currentPath === Routes.TOKEN_TXNS ? "activeOptions" : "",
         label: (
-          <Link href='/tokentxns' onClick={onClick}>
+          <Link href="/tokentxns" onClick={onClick}>
             Token Transfers
           </Link>
         ),
@@ -449,7 +450,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
         value: "Charts",
         className: currentPath === Routes.STATS ? "activeOptions" : "",
         label: (
-          <Link onClick={onClick} href='/charts'>
+          <Link onClick={onClick} href="/charts">
             Charts
           </Link>
         ),
@@ -460,7 +461,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
         value: "Top Token",
         className: currentPath === Routes.TOKEN ? "activeOptions" : "",
         label: (
-          <Link onClick={onClick} href='/token'>
+          <Link onClick={onClick} href="/token">
             Top Token
           </Link>
         ),
@@ -738,11 +739,11 @@ export const guidelinesData = [
     id: 4,
     title: "Categorize the Bug Properly",
     description: (
-      <div className='bugCategorize'>
+      <div className="bugCategorize">
         <p>Select the appropriate category for your submission</p>
-        <div className='bugCategorize_top'>
+        <div className="bugCategorize_top">
           {bugs.map((bug) => (
-            <div key={bug.id} className='bugCategorize_inner'>
+            <div key={bug.id} className="bugCategorize_inner">
               <div></div>
               <h6>{bug.type}</h6>
             </div>
@@ -892,14 +893,16 @@ export const CHAIN_ASSET_MAP = {
 
 export const providerDetailsColumns = (router) => [
   {
-    title: "dVPN Name",
+    title: "Node Address",
     dataIndex: "dvpnName",
     key: "dvpnName",
     render: (text, record) => (
-      <span>
-        <div onClick={() => router.push(`/dVPNNodes/${record?.dvpnName}`)} style={{ cursor: "pointer" }}>
-          {record?.dvpnName || "-"}
-        </div>
+      <span
+        onClick={() => router.push(`/dVPNNodes/${record?.dvpnName}`)}
+        style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
+      >
+        {record?.dvpnName || "-"}
+        <CopyText text={record?.dvpnName} />
       </span>
     ),
   },
