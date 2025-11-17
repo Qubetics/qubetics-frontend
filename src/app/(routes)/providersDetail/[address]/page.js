@@ -7,7 +7,7 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import CopyText from "@/components/DoCopy/CopyText";
 import Heading from "@/components/heading/Heading";
 import "./ProvidersDetail.scss";
-import { currencyName, tableLimit, providerDetailsColumns } from "@/constant/constant";
+import { currencyName, tableLimit } from "@/constant/constant";
 import getProvidersDetail from "@/services/getProvidersDetail";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
@@ -27,6 +27,28 @@ function ProvidersDetail() {
   const [nodeSummaryStatus, setNodeSummaryStatus] = useState(true);
   const [nodeSummary, setNodeSummary] = useState(null);
   const router = useRouter();
+
+  const providerDetailsColumns = [
+    {
+      title: "Node Address",
+      dataIndex: "dvpnName",
+      key: "dvpnName",
+      render: (text, record) => (
+        <span
+          onClick={() => router.push(`/dVPNNodes/${record?.dvpnName}`)}
+          style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
+        >
+          {record?.dvpnName || "-"}
+          <span>
+            <CopyText text={record?.dvpnName} />
+          </span>
+        </span>
+      ),
+    },
+    { title: "Country", dataIndex: "country", key: "country" },
+    { title: "Region", dataIndex: "region", key: "region" },
+    { title: "Status", dataIndex: "status", key: "status" },
+  ];
 
   const fetchNodeSummary = async () => {
     try {
@@ -96,12 +118,12 @@ function ProvidersDetail() {
   }
 
   return (
-    <div className='container providersDetailSec'>
+    <div className="container providersDetailSec">
       <FilterResult />
-      <Heading heading='Server Provider Detail Page' addresspage={true} />
+      <Heading heading="Server Provider Detail Page" addresspage={true} />
 
-      <div className='addressDetailSec'>
-        <div className='detail'>
+      <div className="addressDetailSec">
+        <div className="detail">
           <h3>Address :</h3>
           <p>
             {address}
@@ -110,11 +132,11 @@ function ProvidersDetail() {
         </div>
       </div>
 
-      <div className='cardSec'>
+      <div className="cardSec">
         <Row gutter={[30, 16]}>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
-              text='Total Earnings'
+              text="Total Earnings"
               balance={
                 <Tooltip title={`${nodeSummary?.totalEarning || 0} ${currencyName}`}>
                   <span>{`${formatToTwoDecimals(nodeSummary?.totalEarning || 0)} ${currencyName}`}</span>
@@ -125,11 +147,11 @@ function ProvidersDetail() {
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
-            <CardsOnchain text='Total Node Operators' balance={totalProviders} img={<TotalUsers />} hideTooltip />
+            <CardsOnchain text="Total Node Operators" balance={totalProviders} img={<TotalUsers />} hideTooltip />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
-              text='Hourly Earnings'
+              text="Hourly Earnings"
               balance={
                 <Tooltip title={`${nodeSummary?.dailyEarning || 0} ${currencyName}`}>
                   <span>{`${formatToTwoDecimals(nodeSummary?.dailyEarning || 0)} ${currencyName}`}</span>
@@ -142,13 +164,13 @@ function ProvidersDetail() {
         </Row>
       </div>
 
-      <h2 className='analytictext'>Node Operators</h2>
+      <h2 className="analytictext">Node Operators</h2>
 
-      <div className='providersDetailTable'>
+      <div className="providersDetailTable">
         <SkeletonTableWrapper
-          columns={providerDetailsColumns(router)}
+          columns={providerDetailsColumns}
           dataSource={providersDetail}
-          className='commontable'
+          className="commontable"
           isSkeleton={providersDetailStatus}
           pagination={false}
         />
