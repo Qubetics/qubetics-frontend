@@ -1,5 +1,5 @@
 "use client";
-import { verifyContractConstant } from "@/constant/constant";
+import { TERMS_AND_CONDITIONS, verifyContractConstant } from "@/constant/constant";
 import { CONTRACT_COMPILER_TYPE, CONTRACT_LICENSES } from "@/constant/dropDownConstant";
 import getCompilerVersion from "@/services/getCompilerVersion";
 import getContractDetails from "@/services/getContractDetails";
@@ -200,7 +200,7 @@ function PublishContract({ steps, current, prev, next }) {
             <p>
               <Checkbox onChange={onChange}></Checkbox> I agree to the{" "}
               <span>
-                <Link href="https://www.qubetics.com/terms-of-use" target="_blank">
+                <Link href={TERMS_AND_CONDITIONS} target="_blank">
                   Terms Of Service
                 </Link>
               </span>
