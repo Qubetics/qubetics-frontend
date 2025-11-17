@@ -1,9 +1,6 @@
 "use client";
 import { verifyContractConstant } from "@/constant/constant";
-import {
-  CONTRACT_COMPILER_TYPE,
-  CONTRACT_LICENSES,
-} from "@/constant/dropDownConstant";
+import { CONTRACT_COMPILER_TYPE, CONTRACT_LICENSES } from "@/constant/dropDownConstant";
 import getCompilerVersion from "@/services/getCompilerVersion";
 import getContractDetails from "@/services/getContractDetails";
 import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
@@ -14,6 +11,7 @@ import "../../app/(routes)/contract/verify/verifyContract.scss";
 import { useContractData } from "../contexts/contractContext";
 import CustomInput from "../customInput/CustomInput";
 import CustomSelect from "../customSelect/CustomSelect";
+import Link from "next/link";
 
 function PublishContract({ steps, current, prev, next }) {
   const {
@@ -58,7 +56,7 @@ function PublishContract({ steps, current, prev, next }) {
   useEffect(() => {
     getVersionList();
   }, []);
- 
+
   const getVersionList = async () => {
     try {
       const versionList = await getCompilerVersion();
@@ -132,9 +130,7 @@ function PublishContract({ steps, current, prev, next }) {
       return;
     }
     setIsLoading(true);
-    const isContractVerified = await getContractVerificationDetail(
-      contractAddress || verifyAddress
-    );
+    const isContractVerified = await getContractVerificationDetail(contractAddress || verifyAddress);
     if (isContractVerified) {
       setIsLoading(false);
       const verificationType = isContractVerified.verificationType;
@@ -165,13 +161,11 @@ function PublishContract({ steps, current, prev, next }) {
           disabled={verifyAddress}
           onChange={handleCustomInputChange}
         />
-        {isContractExist && (
-          <p style={{ color: "red", paddingBottom: "20px" }}>{errorMessage}</p>
-        )}
+        {isContractExist && <p style={{ color: "red", paddingBottom: "20px" }}>{errorMessage}</p>}
         <CustomSelect
           label={verifyContractConstant.SELECT_COMPILE_TYPE}
           options={CONTRACT_COMPILER_TYPE}
-           value={formData.compilerType}
+          value={formData.compilerType}
           onChange={(value) => handleInputChange("compilerType", value)}
           defaultValue={defaultValue}
           placeholder="Please Select"
@@ -205,14 +199,14 @@ function PublishContract({ steps, current, prev, next }) {
           <div className="checkboxItem">
             <p>
               <Checkbox onChange={onChange}></Checkbox> I agree to the{" "}
-              <span>Terms Of Service</span>
+              <span>
+                <Link href="https://www.qubetics.com/terms-of-use" target="_blank">
+                  Terms Of Service
+                </Link>
+              </span>
             </p>
           </div>
-          {isCheckedMessage && (
-            <p style={{ color: "red", marginBottom: "31px" }}>
-              {isCheckedMessage}
-            </p>
-          )}
+          {isCheckedMessage && <p style={{ color: "red", marginBottom: "31px" }}>{isCheckedMessage}</p>}
           {steps && current < steps.length - 1 && (
             <button
               onClick={validateAndProceed}
@@ -223,10 +217,7 @@ function PublishContract({ steps, current, prev, next }) {
             </button>
           )}
           {steps && current === steps.length - 1 && (
-            <button
-              className="headermetaBtn preNextbtn"
-              onClick={() => message.success("Processing complete!")}
-            >
+            <button className="headermetaBtn preNextbtn" onClick={() => message.success("Processing complete!")}>
               Done
             </button>
           )}
