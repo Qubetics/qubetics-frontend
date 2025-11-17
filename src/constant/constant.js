@@ -1,6 +1,4 @@
 "use client";
-
-import CopyText from "@/components/DoCopy/CopyText";
 import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 
@@ -890,26 +888,6 @@ export const CHAIN_ASSET_MAP = {
   0: "btc",
   9029: "tics",
 };
-
-export const providerDetailsColumns = (router) => [
-  {
-    title: "Node Address",
-    dataIndex: "dvpnName",
-    key: "dvpnName",
-    render: (text, record) => (
-      <span
-        onClick={() => router.push(`/dVPNNodes/${record?.dvpnName}`)}
-        style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
-      >
-        {record?.dvpnName || "-"}
-        <CopyText text={record?.dvpnName} />
-      </span>
-    ),
-  },
-  { title: "Country", dataIndex: "country", key: "country" },
-  { title: "Region", dataIndex: "region", key: "region" },
-  { title: "Status", dataIndex: "status", key: "status" },
-];
 
 export const Network = {
   Native: "Native Chain",
