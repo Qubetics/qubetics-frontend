@@ -3,16 +3,8 @@ import ChartAccounts from "@/components/chart/ChartAccounts";
 import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import GraphLoading from "@/components/loader/GraphLoading";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-} from "@/constant/constant";
-import {
-  ALL_CHART_SEVEN_DAY,
-  transactionItems,
-} from "@/constant/graphTableValues";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
+import { ALL_CHART_SEVEN_DAY, transactionItems } from "@/constant/graphTableValues";
 import getTransactionGraph from "@/services/getTransactionGraph";
 import { trackEvent } from "@/utils/eventTrack";
 import { Select, Space } from "antd";
@@ -26,6 +18,7 @@ const TransactionHistory = (props) => {
   });
   const [transactionStatus, setTransactionStatus] = useState(InitStatus); //init,fetching,success,error
   const { isNetworkChanged } = useGetNetwork();
+  const [transactionCount, setTransactionCount] = useState(0);
 
   const fetchChartData = async () => {
     setTransactionStatus(FetchingStatus);
@@ -36,6 +29,7 @@ const TransactionHistory = (props) => {
           ...transactionHisChart,
           data: res?.data?.finalData,
         });
+        setTransactionCount(res?.data?.count);
       })
       .catch((err) => {
         setTransactionStatus(ErrorStatus);
@@ -61,13 +55,10 @@ const TransactionHistory = (props) => {
   useEffect(() => {
     fetchChartData();
   }, [transactionHisChart?.type]);
+
   return (
     <div style={{ position: "relative" }}>
-      <div
-        className={`graphOuter_1 ${
-          props.graphdashboard ? "graphdashboard" : "transHisgraph"
-        }`}
-      >
+      <div className={`graphOuter_1 ${props.graphdashboard ? "graphdashboard" : "transHisgraph"}`}>
         <div className="drop_histry">
           <div className="drop_histry__blinkLive">
             <h3>
@@ -79,13 +70,7 @@ const TransactionHistory = (props) => {
                 <InfoCircleOutlined className="infoIcon" />
               </Tooltip> */}
             </h3>
-            <h6>
-              {webSocketData?.onChainMetric?.totalTx
-                ? Number(webSocketData?.onChainMetric?.totalTx).toLocaleString()
-                : props?.stats?.total_transactions
-                ? Number(props?.stats?.total_transactions).toLocaleString()
-                : 0}
-            </h6>
+            <h6>{transactionCount || 0}</h6>
             {/* <span className="liveblink">Live</span> */}
           </div>
 
@@ -100,18 +85,13 @@ const TransactionHistory = (props) => {
             />
           </Space>
         </div>
-        {transactionStatus === InitStatus ||
-        transactionStatus === FetchingStatus ? (
+        {transactionStatus === InitStatus || transactionStatus === FetchingStatus ? (
           <div className="graphLod dashLoading">
             {" "}
             <GraphLoading />
           </div>
         ) : transactionStatus === SuccessStatus ? (
-          <ChartAccounts
-            data={transactionHisChart?.data}
-            chartType={transactionHisChart?.type}
-            name="Txn Count"
-          />
+          <ChartAccounts data={transactionHisChart?.data} chartType={transactionHisChart?.type} name="Txn Count" />
         ) : (
           <Page />
         )}
