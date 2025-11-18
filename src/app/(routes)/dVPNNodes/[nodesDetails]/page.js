@@ -54,24 +54,24 @@ const Page = () => {
       {nodeSummaryStatus === InitStatus || nodeSummaryStatus === FetchingStatus ? (
         <Loader />
       ) : (
-        <div className='container nodeDetail'>
-          <div className='searchbar searchFilter'>
+        <div className="container nodeDetail">
+          <div className="searchbar searchFilter">
             <FilterResult />
           </div>
-          <Heading heading='Node Details' status={nodeStatus} />
-          <div className='nodeDetail_top'>
+          <Heading heading="Node Details" status={nodeStatus} />
+          <div className="nodeDetail_top">
             <p>Address :</p>
             <strong>{nodeName}</strong>
             <CopyText text={nodeName} />
           </div>
-          <div className='nodeGraph'>
-            <div className='nodeGraph_left'>
+          <div className="nodeGraph">
+            <div className="nodeGraph_left">
               {" "}
               <UptimeHistory graphdashboard nodeName={nodeName} />
             </div>
-            <div className='nodeGraph_right'>
+            <div className="nodeGraph_right">
               <CardsOnchain
-                text='Total Earnings'
+                text="Total Earnings"
                 balance={
                   <Tooltip title={`${nodeSummary?.total_earning || 0} ${currencyName}`}>
                     <span>{`${formatToTwoDecimals(nodeSummary?.total_earning || 0)} ${currencyName}`}</span>
@@ -81,7 +81,7 @@ const Page = () => {
                 title={`The total lifetime earnings generated in ${currencyName}`}
               />
               <CardsOnchain
-                text='24hrs Earnings'
+                text="24hrs Earnings"
                 balance={
                   <Tooltip title={`${nodeSummary?.daily_earnings || 0} ${currencyName}`}>
                     <span>{`${formatToTwoDecimals(nodeSummary?.daily_earnings || 0)} ${currencyName}`}</span>
@@ -91,28 +91,28 @@ const Page = () => {
                 title={`Total rewards earned in the last 24 hours in ${currencyName}.`}
               />
               <CardsOnchain
-                text='Total Sessions'
-                balance={`${nodeSummary?.total_users || 0}`}
+                text="Total Sessions"
+                balance={`${nodeSummary?.total_sessions || 0}`}
                 img={<TotalUsers />}
-                title='The total number of unique users who have ever connected to this node'
+                title="The total number of sessions created on this node"
               />
               <CardsOnchain
-                text='Active Sessions'
-                balance={`${nodeSummary?.active_users || 0}`}
+                text="Active Sessions"
+                balance={`${nodeSummary?.active_sessions || 0}`}
                 img={<ActiveUsers />}
-                title='The number of users currently connected and active on this node.'
+                title="The total number of active sessions created on this node"
               />
               <CardsOnchain
-                text='Last Checked In'
+                text="Last Checked In"
                 balance={`${formatDateTime(nodeSummary?.last_checked) || 0}`}
                 img={<LastCheckedIn />}
-                title='The most recent time this node’s status was verified.'
+                title="The most recent time this node’s status was verified."
               />
               <CardsOnchain
-                text='Recent Session'
+                text="Recent Session"
                 balance={`${formatDateTime(nodeSummary?.recent_session) || 0}`}
                 img={<RecentSession />}
-                title='The timestamp of the latest user session on this node.'
+                title="The timestamp of the latest user session on this node."
               />
             </div>
           </div>
