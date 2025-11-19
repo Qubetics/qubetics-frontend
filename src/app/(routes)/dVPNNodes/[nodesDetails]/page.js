@@ -60,9 +60,11 @@ const Page = () => {
           </div>
           <Heading heading="Node Details" status={nodeStatus} />
           <div className="nodeDetail_top">
-            <p>Address :</p>
+            <p>Address:</p>
+            <div className="nodeDetail_top_address">
             <strong>{nodeName}</strong>
             <CopyText text={nodeName} />
+            </div>
           </div>
           <div className="nodeGraph">
             <div className="nodeGraph_left">
