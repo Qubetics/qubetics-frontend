@@ -200,7 +200,7 @@ function PublishContract({ steps, current, prev, next }) {
             <p>
               <Checkbox onChange={onChange}></Checkbox> I agree to the{" "}
               <span>
-                <Link href={TERMS_AND_CONDITIONS} target="_blank">
+                <Link href={TERMS_AND_CONDITIONS} target="_blank" style={{ color: "white" }}>
                   Terms Of Service
                 </Link>
               </span>
