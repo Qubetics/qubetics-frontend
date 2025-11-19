@@ -1562,7 +1562,7 @@ export const TokenColumn = [
     render: (text) => (
       <div>
         {text?.contractAddress ? (
-          <>
+          <div className="flexedItems">
             <Link
               href={`/contract/${text?.contractAddress}`}
               className="contAdd"
@@ -1571,7 +1571,7 @@ export const TokenColumn = [
               {getAddress(text?.contractAddress)}{" "}
             </Link>
             <CopyText text={text?.contractAddress} />
-          </>
+          </div>
         ) : (
           "-"
         )}
