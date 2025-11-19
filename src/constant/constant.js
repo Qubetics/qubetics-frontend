@@ -893,3 +893,5 @@ export const Network = {
   Native: "Native Chain",
   Evm: "EVM Chain",
 };
+
+export const TERMS_AND_CONDITIONS = "https://www.qubetics.com/terms-of-use";
