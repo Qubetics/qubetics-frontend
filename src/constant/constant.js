@@ -225,6 +225,7 @@ export const nodePerformanceData = (blockHeight) => {
     { value: "6", label: "Countries" },
   ];
 };
+
 export const tooltipContent = {
   total_Dvpn_Provider:
     "The total count of all node providers participating in the dVPN network.",
@@ -247,6 +248,7 @@ export const tooltipContent = {
   finalized_Block:
     "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
 };
+
 export function BlockchainHeaderFunction(currentPath) {
   const onLinkClick = (category, label) => {
     trackEvent({
@@ -307,6 +309,7 @@ export function BlockchainHeaderFunction(currentPath) {
   ];
   return blockchainHeader;
 }
+
 //Node header Function
 export function NodeHeaderFunction(currentPath, onClick) {
   const NodeHeader = [
@@ -371,6 +374,7 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
   ];
   return NodeHeader;
 }
+
 /*BlockChain Header*/
 export const blockchainHeader = [
   {
@@ -506,6 +510,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
     ];
   }
 };
+
 export const generateData = (timeRange) => {
   const data = [];
   const now = new Date();
@@ -538,6 +543,7 @@ export const generateData = (timeRange) => {
   }
   return data;
 };
+
 export const convertArray = (writeObj) => {
   let outPutArray = Object.keys(writeObj).map((t) => {
     if (typeof writeObj[t] == "object") {
@@ -547,6 +553,7 @@ export const convertArray = (writeObj) => {
 
   return outPutArray;
 };
+
 export const createTupleObject = (input) => {
   const newObj = {};
 
@@ -577,6 +584,7 @@ export const createTupleObject = (input) => {
 
   return newObj;
 };
+
 export const toFixedWithoutRounding = (value, precision) => {
   if (value === 0 || value === "0") return "0";
 
@@ -595,6 +603,7 @@ export const toFixedWithoutRounding = (value, precision) => {
 
   return "0";
 };
+
 export const formatValue = (num) => {
   let result;
   switch (true) {
@@ -703,6 +712,7 @@ export const defaultChainOptions = [
     rpcUrl: "https://rpc.mantle.xyz",
   },
 ];
+
 export const firstCapitalLetter = (input) => {
   if (typeof input === "number") return input;
   if (!input) return "";
