@@ -103,6 +103,7 @@ const DVPNListView = () => {
           </span>
         </div>
       ),
+      width: "45%",
     },
     { title: "Country", dataIndex: "country", key: "country" },
     {
