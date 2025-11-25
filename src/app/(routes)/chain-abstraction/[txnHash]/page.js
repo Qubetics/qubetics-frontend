@@ -3,27 +3,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import GetTransactionOverview from "@/services/getTransactionOverview"; // API call
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import "./TransactionOverview.scss";
 import { RightArrowIcon } from "../../../../../public/SvgIcons";
 
-import {
-  formatPrecision,
-  isStringValue,
-  Routes,
-  statusClass,
-} from "@/constant/constant";
+import { isStringValue, Routes, statusClass } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import CopyText from "@/components/DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import {
   checkStatus,
-  destinationTxn,
   formatToken,
   getExplorerUrl,
   getTokenIcon,
   transferType,
-  truncateString,
 } from "@/utils/commonFunctions";
 import { truncateWithTooltip } from "@/components/commonComps/truncateWithTooltip/truncateWithTooltip";
 import { Col, Row } from "antd";
@@ -54,10 +46,11 @@ const TransactionOverview = () => {
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
     }
   };
+
   return (
     <div className="transaction_overview">
       <div className="searchbar container">
-      <FilterResult />
+        <FilterResult />
       </div>
 
       <div className="container">

@@ -2,6 +2,7 @@
 
 import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
+import { ArrowUpicon } from "../../public/SvgIcons";
 
 export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
@@ -103,14 +104,15 @@ export const BUGFORM_APPS = [
   "dVPN Node Operator",
   "Chain Abstraction - Solver Node Setup",
   "Solver Dashboard",
-  "Chain Abstraction - Mobile Application"];
+  "Chain Abstraction - Mobile Application",
+];
 
-  export const BUG_TYPE = [
-            "Minor Bug",
-            "Major Bug",
-            "UI/UX Improvement",
-            "Feature Suggestion",
-          ];
+export const BUG_TYPE = [
+  "Minor Bug",
+  "Major Bug",
+  "UI/UX Improvement",
+  "Feature Suggestion",
+];
 
 export const Messages = {
   //Metamask
@@ -953,4 +955,31 @@ export const statusClass = (value) => {
 export const CHAIN_ASSET_MAP = {
   0: "btc",
   9029: "tics",
+};
+
+export const explorerHyperLInk = (value, txn) => {
+  let hyperLink;
+  let text;
+
+  switch (value.toLowerCase()) {
+    case "btc":
+      hyperLink = `${BTC_EXPLORER_URL}tx/${txn}`;
+      text = "Bitcoin";
+      break;
+    case "tics":
+      hyperLink = `${TICS_EXPLORER_URL}tx/${txn}`;
+      text = "Qubetics";
+      break;
+    default:
+      hyperLink = "";
+      text = "";
+      break;
+  }
+
+  return txn ? (
+    <Link className="chain-tag" href={hyperLink}>
+      <h3>{text}</h3>
+      <ArrowUpicon />
+    </Link>
+  ) : null;
 };

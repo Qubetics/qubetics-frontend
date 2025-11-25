@@ -6,18 +6,12 @@ import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import {
-  BTC_EXPLORER_URL,
-  pageNo,
-  tableLimit,
-  TICS_EXPLORER_URL,
-} from "@/constant/constant"; // Default pagination constants
+import { explorerHyperLInk, pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
 import {
   checkStatus,
-  destinationTxn,
   formatToken,
   getExplorerUrl,
   getTokenIcon,
@@ -25,7 +19,6 @@ import {
   noExponential,
 } from "@/utils/commonFunctions";
 import Link from "next/link";
-import { ArrowUpicon } from "../../../public/SvgIcons";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -34,9 +27,7 @@ const ChainAbstractionTransaction = () => {
   const [totalPages, setTotalPages] = useState(1); // total number of pages
   const router = useRouter(); // for navigation
 
-  useEffect(() => {
-    fetchIntents();
-  }, [currentPage]);
+  useEffect(() => fetchIntents(), [currentPage]);
 
   const fetchIntents = async () => {
     setLoading(true);
@@ -59,66 +50,25 @@ const ChainAbstractionTransaction = () => {
 
   // ✅ Custom Pagination Handlers
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
   };
 
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    currentPage > 1 && setCurrentPage(currentPage - 1);
   };
 
   const handleLast = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(totalPages);
-    }
+    currentPage < totalPages && setCurrentPage(totalPages);
   };
+  const handleFirst = () => currentPage > 1 && setCurrentPage(1);
 
-  const handleFirst = () => {
-    if (currentPage > 1) {
-      setCurrentPage(1);
-    }
-  };
-
-  const destinationClick = (type, value) => {
-    const routeTo = destinationTxn(type?.toLowerCase(), value);
-    routeTo && router.push(routeTo);
-  };
-
-  const explorerHyperLInk = (value, txn) => {
-    let hyperLink;
-    let text;
-
-    switch (value.toLowerCase()) {
-      case "btc":
-        hyperLink = `${BTC_EXPLORER_URL}${txn}`;
-        text = "Bitcoin";
-        break;
-      case "tics":
-        hyperLink = `${TICS_EXPLORER_URL}tx/${txn}`;
-        text = "Qubetics";
-        break;
-      default:
-        hyperLink = "";
-        text = "";
-        break;
-    }
-
-    return txn ? (
-      <Link className="chain-tag" href={hyperLink}>
-        <h3>{text}</h3>
-        <ArrowUpicon />
-      </Link>
-    ) : null;
-  };
   const handleTransactionClick = (network, transactionHash) => {
     const explorerUrl = getExplorerUrl(network, transactionHash);
     if (explorerUrl) {
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
     }
   };
+
   const columns = [
     {
       title: "Intent Transaction",
@@ -239,7 +189,10 @@ const ChainAbstractionTransaction = () => {
                   color: "var(--primary-color)", // Use your app's link color
                 }}
                 onClick={() => {
-                  handleTransactionClick(record?.target_chain, record?.solver_tx_hash);
+                  handleTransactionClick(
+                    record?.target_chain,
+                    record?.solver_tx_hash
+                  );
                 }}
               >
                 {getAddress(record?.solver_tx_hash)}

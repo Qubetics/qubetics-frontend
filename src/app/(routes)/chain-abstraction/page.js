@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Tabs } from "antd";
-import SearchbarComponent from "@/components/search/SearchbarComponent";
 import ChainAbstractionAnalytics from "@/components/chainAbstractionAnalytics/ChainAbstractionAnalytics";
 import ChainAbstractionTransaction from "@/components/chainAbstractionAnalytics/ChainAbstractionTransaction";
 import "./chain-abstraction.scss";
