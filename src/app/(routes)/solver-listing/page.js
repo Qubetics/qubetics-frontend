@@ -46,7 +46,6 @@ const BlockSummary = () => {
     try {
       setLoading(true);
       const result = await GetSolverListing(currentPage, tableLimit, "active");
-      setLoading(false);
 
       if (result?.data?.solver_list?.length) {
         const count = Number(result?.data?.total || 0);
@@ -56,6 +55,8 @@ const BlockSummary = () => {
       }
     } catch (err) {
       console.error("Error", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,7 +69,7 @@ const BlockSummary = () => {
       <div className="container">
         <FilterResult />
         <Heading heading={"Solver Summary"} />
-        <SolverInfo />
+        {/* <SolverInfo /> */}
         <SkeletonTableWrapper
           columns={solverColumn}
           dataSource={solverListing}

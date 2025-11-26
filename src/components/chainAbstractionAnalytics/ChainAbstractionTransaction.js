@@ -27,7 +27,9 @@ const ChainAbstractionTransaction = () => {
   const [totalPages, setTotalPages] = useState(1); // total number of pages
   const router = useRouter(); // for navigation
 
-  useEffect(() => fetchIntents(), [currentPage]);
+  useEffect(() => {
+    fetchIntents();
+  }, [currentPage]);
 
   const fetchIntents = async () => {
     setLoading(true);

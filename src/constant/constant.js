@@ -958,6 +958,8 @@ export const CHAIN_ASSET_MAP = {
 };
 
 export const explorerHyperLInk = (value, txn) => {
+  if (!txn) return null;
+
   let hyperLink;
   let text;
 
@@ -976,10 +978,10 @@ export const explorerHyperLInk = (value, txn) => {
       break;
   }
 
-  return txn ? (
+  return (
     <Link className="chain-tag" href={hyperLink}>
       <h3>{text}</h3>
       <ArrowUpicon />
     </Link>
-  ) : null;
+  );
 };
