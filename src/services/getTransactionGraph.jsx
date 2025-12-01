@@ -4,7 +4,7 @@ import {
   TRANS_HISTORY_CHART_SECONDS,
   TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
-import { is } from "date-fns/esm/locale";
+// import { is } from "date-fns/esm/locale";
 
 export default async function getTransactionGraph(chartType) {
   let chain =

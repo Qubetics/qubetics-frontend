@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Tabs } from "antd";
 import "../contractDetailTabs/ContractDtlTabs.scss";
 import AnalyticToken from "../analyticdetailtab/AnalyticToken";
-import AnalyticHistoric from "../analyticdetailtab/AnalyticHistoric";
+// import AnalyticHistoric from "../analyticdetailtab/AnalyticHistoric";
 function AnalyticTab({ hash }) {
   const items = [
     {

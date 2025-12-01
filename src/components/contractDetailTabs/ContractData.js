@@ -26,14 +26,14 @@ export const contractByteCode = (contractDetailData) => {
   if (contractDetailData?.verificationType !== -1 && contractDetailData?.creationCode) {
     result.push({
       title: "Contract Creation Code",
-      content: contractDetailData.creationCode || "",
+      content: contractDetailData?.creationCode || "",
     });
   }
 
   // Add Deployed ByteCode
   result.push({
     title: "Deployed Bytecode",
-    content: contractDetailData.byteCode || contractDetailData.bytecode || "",
+    content: contractDetailData?.byteCode || contractDetailData?.bytecode || "",
   });
 
   return result;

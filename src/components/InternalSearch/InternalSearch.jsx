@@ -5,11 +5,11 @@ import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 const InternalSearch = ({ searchText, onChange, onKeyUp }) => {
   const { isLight } = useThemeData();
 
-  const handleEnterClick = (e) => {
-    if (e.key === "Enter" && searchValue?.length > 0) {
-      handleSearch(e);
-    }
-  };
+  // const handleEnterClick = (e) => {
+  //   if (e.key === "Enter" && searchValue?.length > 0) {
+  //     handleSearch(e);
+  //   }
+  // };
 
   return (
     <div className="searchbar container">

@@ -23,7 +23,7 @@ const RenderChartCard = ({
         }`}
       >
         {loading ? (
-          <Spin />
+          <Spin role="status" />
         ) : !categories?.length ? (
           <p className="not_found">
             Data not found

@@ -22,9 +22,9 @@ const TokenTransactions = ({ setTokensTxData, tokensTxData }) => {
   const params = useParams();
   const { isNetworkChanged } = useGetNetwork();
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  // };
 
   const fetchData = async () => {
     try {

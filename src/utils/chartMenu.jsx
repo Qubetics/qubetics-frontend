@@ -1,5 +1,6 @@
 import { generateData } from "@/constant/constant";
 import moment from "moment";
+import "@/utils/commonFunctions";
 
 const {
   TRANS_HISTORY_CHART_SECONDS,
@@ -32,21 +33,21 @@ export const chartMenu = (data, chartType) => {
           );
   } else if (chartType === TRANS_HISTORY_CHART_MINUTES) {
     labelIndex =
-      data?.lenght > 0
+      data?.length > 0
         ? data?.map((item, index) => moment(item?.createdAt).format("DD MMM "))
         : generateData(chartType).map((item, index) =>
             moment(item.createdAt).format("DD MMM ")
           );
   } else if (chartType === ALL_CHART_THRITY_DAYS) {
     labelIndex =
-      data?.lenght > 0
+      data?.length > 0
         ? data?.map((item, index) => moment(item?.createdAt).format("DD MMM "))
         : generateData(chartType).map((item, index) =>
             moment(item.createdAt).format("DD MMM ")
           );
   } else if (chartType === TRANS_HISTORY_CHART_YEAR) {
     labelIndex =
-      data?.lenght > 0
+      data?.length > 0
         ? data?.map((item, index) =>
             moment(item?.createdAt)?.format(" MMM YYYY ")
           )
@@ -79,7 +80,7 @@ export const chartSeriesValue = (data, chartType) => {
     if (typeof e?.count === "number") {
       return e?.count;
     } else {
-      return Number(e?.count).noExponents();
+      return Number(Number(e?.count).noExponents());
     }
   });
   return { seriesData, maximum };

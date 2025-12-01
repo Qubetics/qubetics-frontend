@@ -1,6 +1,6 @@
 import Page from "@/app/(routes)/notfound/page";
 import {
-  currencyName,
+  // currencyName,
   FetchingStatus,
   InitStatus,
   Routes,
@@ -15,6 +15,7 @@ import getAddress from "@/utils/getAddress";
 import { convertToDateTime } from "@/utils/renderTime";
 import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
+import Loader from "../loader/Loader";
 import "../transferInfo/TransferInformation.scss";
 import { Tooltip } from "antd";
 

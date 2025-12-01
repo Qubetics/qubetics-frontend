@@ -9,7 +9,6 @@ import { tokensByAddressColumn } from "@/constant/graphTableValues";
 import getTokenByAddress from "@/services/getTokenByAddress";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Datnotfound } from "../../../public/SvgIcons";
 import { useGetNetwork } from "../contexts/networkChanged";
 import Pagination from "../Pagination/Pagination";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
@@ -22,9 +21,9 @@ const TokenByAddress = ({ setTokensData }) => {
   const params = useParams();
   const { isNetworkChanged } = useGetNetwork();
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  // };
 
   const fetchData = async () => {
     try {

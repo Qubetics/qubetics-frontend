@@ -129,6 +129,7 @@ const DVPNListView = () => {
     <div>
       <SkeletonTableWrapper
         columns={nodesColumns(totalNodes)}
+        data-testid="skeleton-wrapper"
         dataSource={nodeData?.nodes}
         isSkeleton={nodeStatus === InitStatus || nodeStatus === FetchingStatus}
         pagination={false}
