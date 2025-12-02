@@ -29,10 +29,10 @@ import { ArrowUpicon } from "../../../public/SvgIcons";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [currentPage, setCurrentPage] = useState(pageNo); // Track witch page we're on
-  const [totalPages, setTotalPages] = useState(1); // total number of pages
-  const router = useRouter(); // for navigation
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(pageNo);
+  const [totalPages, setTotalPages] = useState(1);
+  const router = useRouter();
 
   useEffect(() => {
     fetchIntents();
@@ -239,7 +239,10 @@ const ChainAbstractionTransaction = () => {
                   color: "var(--primary-color)", // Use your app's link color
                 }}
                 onClick={() => {
-                  handleTransactionClick(record?.target_chain, record?.solver_tx_hash);
+                  handleTransactionClick(
+                    record?.target_chain,
+                    record?.solver_tx_hash
+                  );
                 }}
               >
                 {getAddress(record?.solver_tx_hash)}
