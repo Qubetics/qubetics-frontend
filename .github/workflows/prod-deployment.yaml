@@ -6,7 +6,7 @@ on:
       - prod
 
 jobs:
-  testnet_deploy_explorer_frontend:
+  prod_deploy_explorer_frontend:
     uses: ./.github/workflows/explorer-frontend.yaml
     with:
       SWR_ORGANIZATION: prod-qubetics
@@ -15,8 +15,8 @@ jobs:
       ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
       DEPLOYMENT_PATH: Frontend/deployment.yaml
       HUAWEI_IMAGE: prod-qubetics-frontend
-      DOCKER_USERNAME: ap-southeast-1@BQG9INQF0BKVHSNQOLJG
+      DOCKER_USERNAME: ap-southeast-1@HPUAJWWFSLCMD312AZSR
       ENV: ${{ vars.PROD_QUBETICS_FRONTEND_ENV }}
     secrets:
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GIT_SSH_KEY: ${{ secrets.ARGOCD_SSH_KEY }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD_NEW }}
+      GIT_SSH_KEY: ${{ secrets.ARGOCD_SSH_KEY_NEW }}
