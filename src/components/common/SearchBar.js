@@ -9,6 +9,7 @@ import {
 import getSearchingValue from "@/services/search";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import { useSearchData } from "../contexts/searchingData";
 import Loader from "../loader/Loader";

@@ -1,13 +1,13 @@
 import { Skeleton } from "antd";
 import React from "react";
-import "./CardSkeleton.scss"
+import "./CardSkeleton.scss";
 function CardSkeleton() {
   return (
-    <div className="tableLoader cardLoader">
+    <div className="tableLoader cardLoader" data-testid="card-skeleton">
       <Skeleton
         active
         paragraph={{
-          rows:1 , // Number of paragraph rows
+          rows: 1, // Number of paragraph rows
           width: [200], // Custom widths for each row
         }}
         avatar={{
@@ -15,7 +15,6 @@ function CardSkeleton() {
           shape: "circle", // Avatar shape: circle or square
         }}
       />
-      
     </div>
   );
 }

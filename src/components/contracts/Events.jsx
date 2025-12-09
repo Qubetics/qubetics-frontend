@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import notFound from "../../assets/svg/notFount.svg";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
+
 const Events = ({ hash }) => {
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(0);

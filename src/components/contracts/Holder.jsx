@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Image from "next/image";
 import notFound from "../../assets/svg/notFount.svg";
+
 const Holder = ({ hash }) => {
   const [tokenHolders, setTokenHolders] = useState([]);
   const [tokenDetails, setTokenDetails] = useState({});
