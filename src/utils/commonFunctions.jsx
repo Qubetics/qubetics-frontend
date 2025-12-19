@@ -358,20 +358,13 @@ export const getTooltipContent = (token, rawValue, formatted) => {
   return `${formatted} ${token.toUpperCase()}`;
 };
 
-export const BLOCKCHAIN_EXPLORER_URLS = {
-  bitcoin: "https://mempool.space/testnet/tx/",
-  qubetics: "https://testnet-v2.qubetics.work/tx/",
-};
-
 export const getExplorerUrl = (network, transactionHash) => {
   const normalizedNetwork = (network || "").toLowerCase();
 
-  console.log("normalizedNetwork", normalizedNetwork);
-
   if (normalizedNetwork === "bitcoin") {
-    return `${BLOCKCHAIN_EXPLORER_URLS.bitcoin}${transactionHash}`;
+    return `${BTC_EXPLORER_URL}tx/${transactionHash}`;
   } else if (normalizedNetwork === "qubetics") {
-    return `${BLOCKCHAIN_EXPLORER_URLS.qubetics}${transactionHash}`;
+    return `${TICS_EXPLORER_URL}tx/${transactionHash}`;
   }
 
   // fallback

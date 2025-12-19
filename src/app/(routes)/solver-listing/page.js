@@ -7,11 +7,10 @@ import Heading from "@/components/heading/Heading";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
 import { solverColumn } from "@/constant/graphTableValues";
-import { SolverInfo } from "./SolverInfo";
 import "./solverListing.scss";
 import GetSolverListing from "@/services/getSolverListing";
 
-const BlockSummary = () => {
+const SolverListing = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [solverListing, setSolverListing] = useState([]);
@@ -95,4 +94,4 @@ const BlockSummary = () => {
   );
 };
 
-export default BlockSummary;
+export default SolverListing;
