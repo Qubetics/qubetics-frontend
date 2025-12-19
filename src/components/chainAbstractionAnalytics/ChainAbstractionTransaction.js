@@ -135,7 +135,7 @@ const ChainAbstractionTransaction = () => {
       render: (_, record) => {
         const rawValue = record?.amount;
         const formatted = formatToken(
-          record?.target_token?.toLowerCase(),
+          record?.target_token,
           noExponential(rawValue)
         );
 

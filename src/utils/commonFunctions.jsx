@@ -3,6 +3,7 @@ import {
   CHAIN_ASSET_MAP,
   ETH_EXPLORER_URL,
   TICS_EXPLORER_URL,
+  toFixedWithoutRounding,
 } from "@/constant/constant";
 
 Number.prototype.noExponents = function () {
@@ -14,20 +15,28 @@ Number.prototype.noExponents = function () {
   const negative = this < 0 ? "-" : "";
   const [integerPart, decimalPart = ""] = base.replace("-", "").split(".");
 
-  let digits = integerPart + decimalPart;
-
   if (exponent < 0) {
     const zeroCount = Math.abs(exponent) - integerPart.length;
-    return negative + "0." + "0".repeat(zeroCount > 0 ? zeroCount : 0) + digits;
-  } else {
-    const decimalShift = exponent - decimalPart.length;
     return (
       negative +
-      digits +
-      (decimalShift >= 0 ? "0".repeat(decimalShift) : "")
-        .padEnd(exponent + 1, "0")
-        .slice(0, exponent + 1)
+      "0." +
+      "0".repeat(Math.max(0, zeroCount)) +
+      integerPart +
+      decimalPart
     );
+  } else {
+    if (exponent >= decimalPart.length) {
+      const zeros = exponent - decimalPart.length;
+      return negative + integerPart + decimalPart + "0".repeat(zeros);
+    } else {
+      return (
+        negative +
+        integerPart +
+        decimalPart.slice(0, exponent) +
+        "." +
+        decimalPart.slice(exponent)
+      );
+    }
   }
 };
 
@@ -41,7 +50,7 @@ export function noExponentsValue(number) {
 
   // If the number is very small or very large, handle it as a fixed-point number
   if (Math.abs(number) < 1e-6 || Math.abs(number) > 1e21) {
-    return parseFloat(number.toFixed(6)); // Convert to fixed-point with 18 decimals
+    return number; // Convert to fixed-point with 18 decimals
   }
 
   // Convert number to string and split into coefficient and exponent parts
@@ -280,7 +289,7 @@ export const formatToken = (type, value) => {
       return "-";
   }
 
-  const formatted = parseFloat(calValue.toFixed(10));
+  const formatted = toFixedWithoutRounding(calValue, 10);
   return noExponential(formatted);
 };
 
