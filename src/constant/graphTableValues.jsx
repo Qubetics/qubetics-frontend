@@ -17,12 +17,7 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
-import {
-  currencyName,
-  formatValue,
-  Routes,
-  typesOfTransactions,
-} from "./constant";
+import { currencyName, formatValue, Routes, typesOfTransactions } from "./constant";
 import { Tokenicons } from "../../public/SvgIcons";
 import { render } from "sass";
 const { Panel } = Collapse;
@@ -146,11 +141,7 @@ export const blockColumn = [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -214,11 +205,7 @@ export const transactionSummarycolumn = [
     key: "txhash",
     render: (text) => (
       <div className="txnHashcopy addressText">
-        <Link
-          className="bghash"
-          href={`${Routes.Tx_Hash}${text}`}
-          rel="noopener noreferrer"
-        >
+        <Link className="bghash" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
           {getAddress(text)}
         </Link>
         <span className="spancopy">
@@ -237,11 +224,7 @@ export const transactionSummarycolumn = [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className=""
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -255,11 +238,7 @@ export const transactionSummarycolumn = [
         {" "}
         {text?.fromAddress && text?.fromAddress !== "N/A" ? (
           <div className="iconandlink blockLinkItems">
-            <Link
-              className="fromicon"
-              href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`} rel="noopener noreferrer">
               {getAddress(text?.fromAddress)}
             </Link>{" "}
             <span>
@@ -278,11 +257,8 @@ export const transactionSummarycolumn = [
     key: "toAddress",
     render: (text) => (
       <>
-        {text?.toAddress !== "N/A" &&
-        text?.toAddress !== "" &&
-        text?.toAddress !== null ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+        {text?.toAddress !== "N/A" && text?.toAddress !== "" && text?.toAddress !== null ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
               text?.type === typesOfTransactions.contractCreation ||
@@ -310,10 +286,7 @@ export const transactionSummarycolumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link
-                href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                className="blockLink"
-              >
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} className="blockLink">
                 {getAddress(text?.toAddress)}
               </Link>
               <span>
@@ -362,14 +335,7 @@ export const transactionSummarycolumn = [
     title: "Txn Fee",
     key: "txFee",
     render: (text) =>
-      text?.value ? (
-        <Tooltip title={noExponential(text?.txFee)}>
-          {" "}
-          {noExponential(toFixed(text?.txFee, 6))}
-        </Tooltip>
-      ) : (
-        0
-      ),
+      text?.value ? <Tooltip title={noExponential(text?.txFee)}> {noExponential(toFixed(text?.txFee, 6))}</Tooltip> : 0,
   },
   {
     title: `Value(${currencyName})`,
@@ -405,11 +371,7 @@ export const TransactionDetailsColumns = [
     key: "txhash",
     render: (text) => (
       <div className="iconandlink">
-        <Link
-          className="fromicon"
-          href={`${Routes.Tx_Hash}${text}`}
-          rel="noopener noreferrer"
-        >
+        <Link className="fromicon" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
           {getAddress(text)}
         </Link>
         <span>
@@ -426,11 +388,7 @@ export const TransactionDetailsColumns = [
     render: (text) => (
       <>
         <div className="iconandlink">
-          <Link
-            className="fromicon"
-            href={`${Routes.Tx_ADDRESS}${text}`}
-            rel="noopener noreferrer"
-          >
+          <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text}`} rel="noopener noreferrer">
             {getAddress(text)}
           </Link>
           <span>
@@ -454,13 +412,10 @@ export const TransactionDetailsColumns = [
         typesOfTransactions.contractExecute,
         typesOfTransactions.contractUpload,
       ].includes(text?.type);
-      const isSpecialPrefix =
-        toAddress?.startsWith("0x") || toAddress?.startsWith("Qubetics");
+      const isSpecialPrefix = toAddress?.startsWith("0x") || toAddress?.startsWith("Qubetics");
 
       if (isValidAddress && isSpecialPrefix) {
-        const link = isContractType
-          ? `${Routes.CONTRACT_DETAIL}${toAddress}`
-          : `${Routes.Tx_ADDRESS}${toAddress}`;
+        const link = isContractType ? `${Routes.CONTRACT_DETAIL}${toAddress}` : `${Routes.Tx_ADDRESS}${toAddress}`;
 
         return (
           <div className="iconandlink">
@@ -477,10 +432,7 @@ export const TransactionDetailsColumns = [
       if (isValidAddress) {
         return (
           <div className="iconandlink">
-            <Link
-              href={`${Routes.Tx_ADDRESS}${toAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link href={`${Routes.Tx_ADDRESS}${toAddress}`} rel="noopener noreferrer">
               {getAddress(toAddress)}
             </Link>
             <span>
@@ -493,11 +445,7 @@ export const TransactionDetailsColumns = [
       if (contractAddress && contractAddress !== "N/A") {
         return (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.CONTRACT_DETAIL}${contractAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.CONTRACT_DETAIL}${contractAddress}`} rel="noopener noreferrer">
               {getAddress(contractAddress)}
             </Link>
             <span>
@@ -553,11 +501,7 @@ export const addressDetailColumn = (address) => [
     key: "txhash",
     render: (text) => (
       <div className="iconandlink addressText">
-        <Link
-          className="fromicon"
-          href={`${Routes.Tx_Hash}${text}`}
-          rel="noopener noreferrer"
-        >
+        <Link className="fromicon" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
           {getAddress(text)}
         </Link>
         <span>
@@ -571,11 +515,7 @@ export const addressDetailColumn = (address) => [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -608,8 +548,7 @@ export const addressDetailColumn = (address) => [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
               text?.type === typesOfTransactions.contractCreation ||
@@ -623,11 +562,7 @@ export const addressDetailColumn = (address) => [
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+                <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -637,9 +572,7 @@ export const addressDetailColumn = (address) => [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
-                {getAddress(text?.toAddress)}
-              </Link>
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>{getAddress(text?.toAddress)}</Link>
               <span>
                 <CopyText text={text?.toAddress} />
               </span>
@@ -671,15 +604,9 @@ export const addressDetailColumn = (address) => [
     render: (text) => {
       return (
         <span
-          className={`transferStatus-box ${
-            text?.toAddress.toLowerCase() === address.toLowerCase()
-              ? "green"
-              : "red"
-          }`}
+          className={`transferStatus-box ${text?.toAddress.toLowerCase() === address.toLowerCase() ? "green" : "red"}`}
         >
-          {text?.toAddress.toLowerCase() === address.toLowerCase()
-            ? "IN"
-            : "OUT"}
+          {text?.toAddress.toLowerCase() === address.toLowerCase() ? "IN" : "OUT"}
         </span>
       );
     },
@@ -738,10 +665,7 @@ export const nodesColumns = (totalNodeAddress) => [
     key: "peerId",
     render: (text) => {
       return (
-        <span
-          style={{ display: "flex", alignItems: "center" }}
-          className="iconandlink"
-        >
+        <span style={{ display: "flex", alignItems: "center" }} className="iconandlink">
           {text.peerId ? text?.peerId : "-"}
           {/* <CopyText text={text?.peerId} /> */}
         </span>
@@ -752,8 +676,7 @@ export const nodesColumns = (totalNodeAddress) => [
   {
     title: "Location",
     key: "location",
-    render: (text) =>
-      text?.location?.country ? capitalizeWord(text?.location?.country) : "-",
+    render: (text) => (text?.location?.country ? capitalizeWord(text?.location?.country) : "-"),
   },
 ];
 
@@ -785,9 +708,7 @@ export const contractTableColumn = (currentChain) => [
             />
           )} */}
           <Link href={`/contract/${text?.address}`}>
-            {capitalizeWord(
-              text?.contractname || text?.contractName || text?.tokenName || "-"
-            )}
+            {capitalizeWord(text?.contractname || text?.contractName || text?.tokenName || "-")}
           </Link>
         </span>
       );
@@ -797,9 +718,7 @@ export const contractTableColumn = (currentChain) => [
     id: "type",
     title: "Type",
     key: "type",
-    render: (text) => (
-      <span className="">{text?.contractType ? text?.contractType : "-"}</span>
-    ),
+    render: (text) => <span className="">{text?.contractType ? text?.contractType : "-"}</span>,
   },
   {
     id: "contractAddress",
@@ -845,21 +764,13 @@ export const contractTableColumn = (currentChain) => [
     id: "lastExecuted",
     title: "Last Executed At ",
     key: "lastExecuted",
-    render: (text) => (
-      <span className="">
-        {text?.updatedAt ? convertToDateTime(text?.updatedAt) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.updatedAt ? convertToDateTime(text?.updatedAt) : "-"}</span>,
   },
   {
     id: "deployedAt",
     title: "Deployed At",
     key: "deployedAt",
-    render: (text) => (
-      <span className="">
-        {text?.createdAt ? convertToDateTime(text?.createdAt) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.createdAt ? convertToDateTime(text?.createdAt) : "-"}</span>,
   },
   {
     id: "status",
@@ -873,8 +784,7 @@ export const contractTableColumn = (currentChain) => [
         ) : text?.verificationType && text?.verificationType == -1 ? (
           // <CloseCircleFilled className="red-icon" />
           <p className="red-icon">Unverified</p>
-        ) : (text?.verificationType && text?.verificationType == 0) ||
-          text?.verificationType === null ? (
+        ) : (text?.verificationType && text?.verificationType == 0) || text?.verificationType === null ? (
           <p className="yellow-icon">Pending</p>
         ) : (
           // <ClockCircleFilled className="yellow-icon" />
@@ -895,13 +805,9 @@ export const contractTransactionsColumn = [
       <div className="iconandlink">
         <Tooltip title={text?.txHash}>
           {text?.txHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-              {getAddress(text?.txHash)}
-            </Link>
+            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>{getAddress(text?.txHash)}</Link>
           ) : text?.txhash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
-              {getAddress(text?.txhash)}
-            </Link>
+            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>{getAddress(text?.txhash)}</Link>
           ) : (
             "-"
           )}
@@ -935,9 +841,7 @@ export const contractTransactionsColumn = [
       <div className="iconandlink">
         <Tooltip title={text?.fromAddress}>
           {text?.fromAddress ? (
-            <Link href={`/address/${text?.fromAddress}`}>
-              {getAddress(text?.fromAddress)}{" "}
-            </Link>
+            <Link href={`/address/${text?.fromAddress}`}>{getAddress(text?.fromAddress)} </Link>
           ) : (
             "-"
           )}
@@ -955,8 +859,7 @@ export const contractTransactionsColumn = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
               text?.type === typesOfTransactions.contractCreation ||
@@ -973,11 +876,7 @@ export const contractTransactionsColumn = [
                 </Tooltip>
               ) : (
                 <Tooltip title={text?.toAddress}>
-                  <Link
-                    className="fromicon"
-                    href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                    rel="noopener noreferrer"
-                  >
+                  <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                     {getAddress(text?.toAddress)}
                   </Link>
                 </Tooltip>
@@ -1035,16 +934,8 @@ export const contractTransactionsColumn = [
     key: "fee",
     render: (text) => (
       <span className="">
-        <Tooltip
-          title={
-            text?.txFee
-              ? Number(noExponential(Number(text?.txFee))).toFixed(18)
-              : "0"
-          }
-        >
-          {text?.txFee
-            ? Number(noExponential(Number(text?.txFee))).toFixed(6)
-            : "0"}
+        <Tooltip title={text?.txFee ? Number(noExponential(Number(text?.txFee))).toFixed(18) : "0"}>
+          {text?.txFee ? Number(noExponential(Number(text?.txFee))).toFixed(6) : "0"}
         </Tooltip>
       </span>
     ),
@@ -1079,13 +970,9 @@ export const contractTransactionsColumn = [
     render: (text) => (
       <span className="">
         {text?.blockNumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>
-            {text?.blockNumber}
-          </Link>
+          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>{text?.blockNumber}</Link>
         ) : text?.blocknumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>
-            {text?.blocknumber}
-          </Link>
+          <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>{text?.blocknumber}</Link>
         ) : (
           "-"
         )}
@@ -1117,13 +1004,9 @@ export const internalTxns = [
       <div className="iconandlink">
         <Tooltip title={text?.txnHash}>
           {text?.txnHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-              {getAddress(text?.txnHash)}
-            </Link>
+            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>{getAddress(text?.txnHash)}</Link>
           ) : text?.txnHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txnHash}`}>
-              {getAddress(text?.txnHash)}
-            </Link>
+            <Link href={`${Routes.Tx_Hash}${text?.txnHash}`}>{getAddress(text?.txnHash)}</Link>
           ) : (
             "-"
           )}
@@ -1157,9 +1040,7 @@ export const internalTxns = [
       <div className="iconandlink">
         <Tooltip title={text?.fromAddress}>
           {text?.fromAddress ? (
-            <Link href={`/address/${text?.fromAddress}`}>
-              {getAddress(text?.fromAddress)}{" "}
-            </Link>
+            <Link href={`/address/${text?.fromAddress}`}>{getAddress(text?.fromAddress)} </Link>
           ) : (
             "-"
           )}
@@ -1177,8 +1058,7 @@ export const internalTxns = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
               text?.type === typesOfTransactions.contractCreation ||
@@ -1195,11 +1075,7 @@ export const internalTxns = [
                 </Tooltip>
               ) : (
                 <Tooltip title={text?.toAddress}>
-                  <Link
-                    className="fromicon"
-                    href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                    rel="noopener noreferrer"
-                  >
+                  <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                     {getAddress(text?.toAddress)}
                   </Link>
                 </Tooltip>
@@ -1278,19 +1154,9 @@ export const internalTxns = [
     render: (text) => (
       <span className="">
         <Tooltip
-          title={
-            text?.value
-              ? formatMillionNumber(
-                  Number(noExponential(Number(text?.value) / 10 ** Number(18)))
-                )
-              : "0"
-          }
+          title={text?.value ? formatMillionNumber(Number(noExponential(Number(text?.value) / 10 ** Number(18)))) : "0"}
         >
-          {text?.value
-            ? formatMillionNumber(
-                noExponential(Number(text?.value) / 10 ** Number(18))
-              )
-            : "0"}
+          {text?.value ? formatMillionNumber(noExponential(Number(text?.value) / 10 ** Number(18))) : "0"}
         </Tooltip>
       </span>
     ),
@@ -1302,13 +1168,9 @@ export const internalTxns = [
     render: (text) => (
       <span className="">
         {text?.blockNumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>
-            {text?.blockNumber}
-          </Link>
+          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>{text?.blockNumber}</Link>
         ) : text?.blocknumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>
-            {text?.blocknumber}
-          </Link>
+          <Link href={`${Routes.BLOCK_NO}${text?.blocknumber}`}>{text?.blocknumber}</Link>
         ) : (
           "-"
         )}
@@ -1345,9 +1207,7 @@ export const HolderColumn = [
     id: "token",
     title: "Token Name",
     key: "token",
-    render: (text) => (
-      <span className="">{text?.tokenName ? text?.tokenName : "-"}</span>
-    ),
+    render: (text) => <span className="">{text?.tokenName ? text?.tokenName : "-"}</span>,
   },
   {
     id: "type",
@@ -1364,9 +1224,7 @@ export const HolderColumn = [
       <div className="iconandlink">
         {text?.address ? (
           <Tooltip title={text?.address}>
-            <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
-              {getAddress(text?.address)}{" "}
-            </Link>
+            <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>{getAddress(text?.address)} </Link>
           </Tooltip>
         ) : (
           "-"
@@ -1382,9 +1240,7 @@ export const HolderColumn = [
     title: "Quantity",
     key: "quantity",
     render: (text) => (
-      <Tooltip title={text?.tokenBalance}>
-        {text?.tokenBalance ? noExponential(text?.tokenBalance) : "-"}
-      </Tooltip>
+      <Tooltip title={text?.tokenBalance}>{text?.tokenBalance ? noExponential(text?.tokenBalance) : "-"}</Tooltip>
     ),
   },
   {
@@ -1392,13 +1248,9 @@ export const HolderColumn = [
     title: "Percentage(%)",
     key: "percentage",
     render: (text) => (
-      <Tooltip
-        title={(Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)}
-      >
+      <Tooltip title={(Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)}>
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
-          ? noExponential(
-              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
-            ) + " %"
+          ? noExponential((Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)) + " %"
           : "0%"}
       </Tooltip>
     ),
@@ -1414,13 +1266,7 @@ export const EventsColumn = [
     key: "txHash",
     render: (text) => (
       <div className="iconandlink" style={{ verticalAlign: "top" }}>
-        {text?.txHash ? (
-          <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
-            {getAddress(text?.txHash)}
-          </Link>
-        ) : (
-          "-"
-        )}
+        {text?.txHash ? <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>{getAddress(text?.txHash)}</Link> : "-"}
         <span>
           <CopyText text={text?.contractAddress} />
         </span>
@@ -1433,13 +1279,7 @@ export const EventsColumn = [
     key: "block",
     render: (text) => (
       <span className="">
-        {text?.blockNumber ? (
-          <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>
-            {text?.blockNumber}
-          </Link>
-        ) : (
-          "-"
-        )}
+        {text?.blockNumber ? <Link href={`${Routes.BLOCK_NO}${text?.blockNumber}`}>{text?.blockNumber}</Link> : "-"}
       </span>
     ),
   },
@@ -1461,11 +1301,7 @@ export const EventsColumn = [
     id: "method",
     title: "Method",
     key: "method",
-    render: (text) => (
-      <span className="">
-        {text?.method && text?.method !== "N/A" ? text?.method : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.method && text?.method !== "N/A" ? text?.method : "-"}</span>,
   },
   {
     id: "logs",
@@ -1482,14 +1318,7 @@ export const EventsColumn = [
         <p className="logEvent">
           {decodedLogs != undefined && decodedLogs[0] && (
             <Collapse accordion>
-              <Panel
-                header={
-                  text?.method
-                    ? capitalizeWord(text?.method)
-                    : decodedLogs[0]?.name
-                }
-                key="1"
-              >
+              <Panel header={text?.method ? capitalizeWord(text?.method) : decodedLogs[0]?.name} key="1">
                 <p>
                   {decodedLogs[0]?.events?.map((res) => {
                     return (
@@ -1498,13 +1327,10 @@ export const EventsColumn = [
                           <span className="">{res?.type} </span>
                           {res?.name}
                         </p>
-                        {res?.type?.includes("uint") &&
-                        res?.value?.includes("0x") ? (
+                        {res?.type?.includes("uint") && res?.value?.includes("0x") ? (
                           <span>{Number(res?.value)}</span>
                         ) : !res?.value && res?.value?.includes("0x") ? (
-                          <Link href={`/address/${res?.value}`}>
-                            {res?.value}
-                          </Link>
+                          <Link href={`/address/${res?.value}`}>{res?.value}</Link>
                         ) : (
                           res?.value
                         )}
@@ -1560,16 +1386,13 @@ export const TokenColumn = [
     render: (text) => (
       <div>
         {text?.contractAddress ? (
-          <>
-            <Link
-              href={`/contract/${text?.contractAddress}`}
-              className="contAdd"
-            >
+          <div className="flexedItemsCenter">
+            <Link href={`/contract/${text?.contractAddress}`} className="contAdd">
               {" "}
               {getAddress(text?.contractAddress)}{" "}
             </Link>
             <CopyText text={text?.contractAddress} />
-          </>
+          </div>
         ) : (
           "-"
         )}
@@ -1585,11 +1408,7 @@ export const TokenColumn = [
         {text?.totalSupply
           ? text?.native == true
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
-            : formateTotalSupply(
-                noExponential(
-                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
-                )
-              )
+            : formateTotalSupply(noExponential(Number(text?.totalSupply) / 10 ** Number(text?.decimal)))
           : "-"}
       </span>
     ),
@@ -1613,6 +1432,7 @@ export const TokenTransfers = [
       <div>
         {text?.txhash ? (
           <>
+
             <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
               {" "}
               {getAddress(text?.txhash)}{" "}
@@ -1637,11 +1457,7 @@ export const TokenTransfers = [
     id: "input",
     title: "Method",
     key: "input",
-    render: (text) => (
-      <span className="">
-        {text?.input ? JSON.parse(text.input)?.name ?? "-" : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.input ? JSON.parse(text.input)?.name ?? "-" : "-"}</span>,
   },
 
   {
@@ -1652,10 +1468,7 @@ export const TokenTransfers = [
       <div>
         {text?.fromAddress ? (
           <>
-            <Link href={`/address/${text?.fromAddress}`}>
-              {" "}
-              {getAddress(text?.fromAddress)}{" "}
-            </Link>
+            <Link href={`/address/${text?.fromAddress}`}> {getAddress(text?.fromAddress)} </Link>
             <CopyText text={text?.fromAddress} />
           </>
         ) : (
@@ -1674,14 +1487,9 @@ export const TokenTransfers = [
 
       if (text?.input) {
         const parsedData = JSON.parse(text?.input);
-        if (
-          parsedData?.name === "transfer" ||
-          parsedData?.name === "transferFrom"
-        ) {
+        if (parsedData?.name === "transfer" || parsedData?.name === "transferFrom") {
           const filteredData = parsedData?.params.filter(
-            (e) =>
-              (e?.name === "to" || e?.name === "recipient") &&
-              e?.type === "address"
+            (e) => (e?.name === "to" || e?.name === "recipient") && e?.type === "address"
           );
           address = filteredData[0]?.value ?? null;
         }
@@ -1713,9 +1521,7 @@ export const TokenTransfers = [
         const parsedData = JSON.parse(text?.input);
         if (parsedData) {
           const amtArr = parsedData?.params.filter(
-            (e) =>
-              (e.name === "amount" || e.name === "value") &&
-              e.type.includes("uint")
+            (e) => (e.name === "amount" || e.name === "value") && e.type.includes("uint")
           );
           amount = amtArr[0]?.value;
         }
@@ -1735,11 +1541,7 @@ export const TokenTransfers = [
     id: "age",
     title: "Timestamp",
     key: "timestamp",
-    render: (text) => (
-      <span className="">
-        {text?.timestamp ? renderTime(text?.timestamp) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.timestamp ? renderTime(text?.timestamp) : "-"}</span>,
   },
 ];
 
@@ -1752,11 +1554,7 @@ export const TokenTransferColumn = [
     render: (text) => (
       <span className="assetnamedetail">
         {text?.txhash ? (
-          <Link
-            className="bghash"
-            href={`${Routes.Tx_Hash}${text?.txhash}`}
-            rel="noopener noreferrer"
-          >
+          <Link className="bghash" href={`${Routes.Tx_Hash}${text?.txhash}`} rel="noopener noreferrer">
             {getAddress(text?.txhash)}
           </Link>
         ) : (
@@ -1783,19 +1581,13 @@ export const TokenTransferColumn = [
     id: "block",
     title: "Block",
     key: "block",
-    render: (text) => (
-      <span>{text?.blocknumber ? text?.blocknumber : "-"}</span>
-    ),
+    render: (text) => <span>{text?.blocknumber ? text?.blocknumber : "-"}</span>,
   },
   {
     id: "age",
     title: "Timestamp",
     key: "age",
-    render: (text) => (
-      <span className="">
-        {text?.createdAt ? renderTime(text?.createdAt) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.createdAt ? renderTime(text?.createdAt) : "-"}</span>,
   },
   {
     id: "from",
@@ -1805,11 +1597,7 @@ export const TokenTransferColumn = [
       <span>
         {text?.fromAddress ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.fromAddress}`} rel="noopener noreferrer">
               {getAddress(text?.fromAddress)}
             </Link>
             <span>
@@ -1831,11 +1619,7 @@ export const TokenTransferColumn = [
       <span>
         {text?.toAddress ? (
           <div className="iconandlink">
-            <Link
-              className="fromicon"
-              href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-              rel="noopener noreferrer"
-            >
+            <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
               {getAddress(text?.toAddress)}
             </Link>
 
@@ -1855,9 +1639,7 @@ export const TokenTransferColumn = [
     key: "value",
     render: (text) => (
       <span>
-        {text?.input && JSON.parse(text?.input)?.params[1]?.value
-          ? JSON.parse(text?.input)?.params[1]?.value
-          : "0"}
+        {text?.input && JSON.parse(text?.input)?.params[1]?.value ? JSON.parse(text?.input)?.params[1]?.value : "0"}
       </span>
     ),
   },
@@ -1865,13 +1647,7 @@ export const TokenTransferColumn = [
     id: "tokens",
     title: "Tokens",
     key: "tokens",
-    render: (text) => (
-      <span>
-        {text?.tokenName
-          ? text?.tokenName + " (" + text?.tokenSymbol + " )"
-          : "-"}
-      </span>
-    ),
+    render: (text) => <span>{text?.tokenName ? text?.tokenName + " (" + text?.tokenSymbol + " )" : "-"}</span>,
   },
 ];
 
@@ -1881,37 +1657,23 @@ export const validatorsColumn = [
   {
     title: "Validator Name",
     key: "name",
-    render: (text) => (
-      <span className="">{text?.name ? capitalizeWord(text?.name) : "-"}</span>
-    ),
+    render: (text) => <span className="">{text?.name ? capitalizeWord(text?.name) : "-"}</span>,
   },
   {
     title: "Voting Power",
     key: "votingPower",
-    render: (text) => (
-      <span className="">
-        {text?.votingPower ? noExponential(text?.votingPower) : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.votingPower ? noExponential(text?.votingPower) : "-"}</span>,
   },
   {
     title: "Delegators",
     key: "delegators",
-    render: (text) => (
-      <span className="">
-        {text?.delegatorCount ? text?.delegatorCount : "-"}
-      </span>
-    ),
+    render: (text) => <span className="">{text?.delegatorCount ? text?.delegatorCount : "-"}</span>,
   },
   {
     title: "Self Bonded",
     key: "selfStake",
     render: (text) => (
-      <span className="">
-        {text?.selfStake
-          ? noExponential(Number(text?.selfStake) / 10 ** 18)
-          : "-"}
-      </span>
+      <span className="">{text?.selfStake ? noExponential(Number(text?.selfStake) / 10 ** 18) : "-"}</span>
     ),
   },
   {
@@ -1970,11 +1732,7 @@ export const tokensByAddressColumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
         {getAddress(text)}
       </Link>
     ),
@@ -2021,8 +1779,7 @@ export const tokensByAddressColumn = [
     render: (text) => (
       <>
         {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
-          text?.toAddress?.startsWith("0x") ||
-          text?.toAddress?.startsWith("Qubetics") ? (
+          text?.toAddress?.startsWith("0x") || text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
               {text?.type === typesOfTransactions.contractTransfer ||
               text?.type === typesOfTransactions.contractCreation ||
@@ -2036,11 +1793,7 @@ export const tokensByAddressColumn = [
                   {getAddress(text?.toAddress)}
                 </Link>
               ) : (
-                <Link
-                  className="fromicon"
-                  href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}
-                  rel="noopener noreferrer"
-                >
+                <Link className="fromicon" href={`${Routes.Tx_ADDRESS}${text?.toAddress}`} rel="noopener noreferrer">
                   {getAddress(text?.toAddress)}
                 </Link>
               )}
@@ -2050,9 +1803,7 @@ export const tokensByAddressColumn = [
             </div>
           ) : (
             <div className="iconandlink">
-              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>
-                {getAddress(text?.toAddress)}
-              </Link>
+              <Link href={`${Routes.Tx_ADDRESS}${text?.toAddress}`}>{getAddress(text?.toAddress)}</Link>
               <span>
                 <CopyText text={text?.toAddress} />
               </span>
@@ -2124,11 +1875,7 @@ export const dVPNColumn = [
     key: "txhash",
     render: (text) => (
       <div className="addressText">
-        <Link
-          className="bghash"
-          href={`${Routes.Tx_Hash}${text}`}
-          rel="noopener noreferrer"
-        >
+        <Link className="bghash" href={`${Routes.Tx_Hash}${text}`} rel="noopener noreferrer">
           {getAddress(text)}
         </Link>
         <CopyText text={text} />
@@ -2140,11 +1887,7 @@ export const dVPNColumn = [
     dataIndex: "blocknumber",
     key: "blocknumber",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.BLOCK_NO}${text}`}
-        rel="noopener noreferrer"
-      >
+      <Link className="bghash" href={`${Routes.BLOCK_NO}${text}`} rel="noopener noreferrer">
         {text}
       </Link>
     ),
@@ -2210,10 +1953,7 @@ export const accountsColumns = (currentPage = 1, tableLimit) => [
       <div className="txnHashcopy">
         {text?.accAddress ? (
           <Tooltip title={text?.accAddress}>
-            <Link
-              href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}
-              className="addressWidth"
-            >
+            <Link href={`${Routes.Tx_ADDRESS}${text?.accAddress}`} className="addressWidth">
               {text?.accAddress}{" "}
             </Link>
           </Tooltip>
@@ -2272,10 +2012,7 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
       return (
         <div className="iconandlink activeSessionAddress">
           <Tooltip title={accAddress}>
-            <Link
-              style={{ minWidth: 420 }}
-              href={`${Routes.Tx_ADDRESS}${accAddress}`}
-            >
+            <Link style={{ minWidth: 420 }} href={`${Routes.Tx_ADDRESS}${accAddress}`}>
               {accAddress}
             </Link>
           </Tooltip>
@@ -2291,9 +2028,7 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
     dataIndex: "base_session",
     key: "bandwidth",
     render: (base_session) => {
-      const totalUsed =
-        Number(base_session?.download_bytes || 0) +
-        Number(base_session?.upload_bytes || 0);
+      const totalUsed = Number(base_session?.download_bytes || 0) + Number(base_session?.upload_bytes || 0);
 
       const maxBytes = Number(base_session?.max_bytes || 0);
 
@@ -2301,10 +2036,7 @@ export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
 
       const consumed = (totalUsed / maxBytes) * 100;
       return (
-        <Tooltip
-          overlayClassName="Bandwidth"
-          title={`${noExponential(consumed)}%`}
-        >
+        <Tooltip overlayClassName="Bandwidth" title={`${noExponential(consumed)}%`}>
           {`${consumed.toFixed(2)}% `}
         </Tooltip>
       );
@@ -2369,11 +2101,7 @@ export const solverColumn = [
     dataIndex: "status",
     key: "status",
     render: (text) => (
-      <span
-        className={`${text === "active" ? "activeStatus" : "inactiveStatus"}`}
-      >
-        {capitalizeFirstLetter(text)}
-      </span>
+      <span className={`${text === "active" ? "activeStatus" : "inactiveStatus"}`}>{capitalizeFirstLetter(text)}</span>
     ),
   },
 ];

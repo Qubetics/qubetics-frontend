@@ -1,13 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
 import { SkeletonTableWrapper } from "../SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "../Pagination/Pagination";
 import { Datnotfound } from "../../../public/SvgIcons";
@@ -94,7 +88,7 @@ const DVPNListView = () => {
   }, [currentPage]);
   const nodesColumns = (totalNodes) => [
     {
-      title: `dVPN Address (${totalNodes || 0})`,
+      title: `Node Address (${totalNodes || 0})`,
       dataIndex: "address",
       key: "address",
       render: (address) => (
@@ -109,6 +103,7 @@ const DVPNListView = () => {
           </span>
         </div>
       ),
+      width: "45%",
     },
     { title: "Country", dataIndex: "country", key: "country" },
     {
@@ -116,11 +111,7 @@ const DVPNListView = () => {
       dataIndex: "city",
       key: "city",
       render: (city, record) => {
-        return city !== "Unknown"
-          ? city
-          : record.country
-          ? record.country
-          : "Unknown";
+        return city !== "Unknown" ? city : record.country ? record.country : "Unknown";
       },
     },
     {

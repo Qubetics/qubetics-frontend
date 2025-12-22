@@ -1,11 +1,5 @@
 import { useGetNetwork } from "@/components/contexts/networkChanged";
-import {
-  ErrorStatus,
-  FetchingStatus,
-  InitStatus,
-  SuccessStatus,
-  tableLimit,
-} from "@/constant/constant";
+import { ErrorStatus, FetchingStatus, InitStatus, SuccessStatus, tableLimit } from "@/constant/constant";
 import { transactionSummarycolumn } from "@/constant/graphTableValues";
 import getTransactions from "@/services/getTransactions";
 import { formatMillionNumber } from "@/utils/commonFunctions";
@@ -30,13 +24,12 @@ export default function Transactions({ setTxnData }) {
   const pageid = searchParams.get("id") || 1;
   const order = searchParams.get("order") || "desc";
 
-  let chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
+  let chainType = typeof window !== "undefined" && localStorage.getItem("chainType");
 
   const fetchData = async () => {
     try {
       setTransactionStatus(FetchingStatus);
-      let response = await getTransactions(page, tableLimit, order);
+      let response = await getTransactions(pageid, tableLimit, order);
       if (response?.error === false) {
         setTransactionData(response?.data?.transactions);
         setTxCount(response?.data?.count);
@@ -123,22 +116,20 @@ export default function Transactions({ setTxnData }) {
 
   return (
     <>
-      <div className="totalTransactions">
+      <div className='totalTransactions'>
         {txCount && (
           <>
-            <h2>{`Total of ${formatMillionNumber(
-              Number(txCount)
-            )} transactions`}</h2>
+            <h2>{`Total of ${formatMillionNumber(Number(txCount))} transactions`}</h2>
             <Space wrap>
               <Select
-                title=""
+                title=''
                 defaultValue={order}
                 value={order}
                 style={{
                   width: 123,
                 }}
                 onChange={handleChange}
-                className="innerSelect"
+                className='innerSelect'
                 options={[
                   {
                     value: "desc",
@@ -161,12 +152,9 @@ export default function Transactions({ setTxnData }) {
       <>
         <SkeletonTableWrapper
           columns={transactionSummarycolumn}
-          isSkeleton={
-            transactionStatus === FetchingStatus ||
-            transactionStatus === InitStatus
-          }
+          isSkeleton={transactionStatus === FetchingStatus || transactionStatus === InitStatus}
           dataSource={transactionData}
-          className="commontable"
+          className='commontable'
           pagination={false}
           // locale={{
           //   emptyText: (
