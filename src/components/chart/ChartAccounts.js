@@ -83,7 +83,7 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         max: maximum?.count > 0.000001 ? maximum?.count : 1,
         tickInterval: maximum?.count > 0.000001 ? undefined : 0.25,
         title: {
-          text: "",
+          text: "", 
         },
         gridLineWidth: 0,
         gridLineColor: "#9F53FF",

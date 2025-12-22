@@ -1,5 +1,8 @@
 "use client";
+
+import { getTXNRoute } from "@/utils/commonFunctions";
 import { trackEvent } from "@/utils/eventTrack";
+import { N } from "ethers";
 import Link from "next/link";
 
 export const currencyName = "TICS";
@@ -144,7 +147,7 @@ export const Routes = {
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
-  Tx_Hash: "/tx/",
+  Tx_Hash: getTXNRoute(),
   FAUCET: "/faucet",
   NODES: "/nodes",
   SYNC: "/sync",

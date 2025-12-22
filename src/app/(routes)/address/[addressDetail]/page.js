@@ -1,12 +1,9 @@
 /* eslint-disable */
 "use client";
-import { useEffect, useState } from "react";
-import "../../blocks/blocksummary.scss";
 import CustomDropdown from "@/components/commonComps/CustomDropdown/CustomDropdown";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import Heading from "@/components/heading/Heading";
 import {
-  currencyName,
   ErrorStatus,
   EXPLORER_CURRENCY_NAME,
   FetchingStatus,
@@ -15,27 +12,27 @@ import {
   Routes,
   SuccessStatus,
   tableLimit,
-  WEB_PROVIDER_URL,
+  WEB_PROVIDER_URL
 } from "@/constant/constant";
 import { addressDetailColumn } from "@/constant/graphTableValues";
 import getAddressDetails from "@/services/getAddressDetails";
 import getTransactionsByAddress from "@/services/getTransactionByAddress";
 import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
 import { Tabs, Tooltip } from "antd";
+import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 
+import CopyText from "@/components/DoCopy/CopyText";
+import DvpnTransactions from "@/components/dVPN Transactions/DvpnTransactions";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Pagination from "@/components/Pagination/Pagination";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
+import useGetBalance from "@/hooks/useGetBalance";
 import getTokenByAddress from "@/services/getTokenByAddress";
 import { useRouter } from "next/navigation";
 import { CSVLink } from "react-csv";
 import { ExportIcon } from "../../../../../public/SvgIcons";
-import CopyText from "@/components/DoCopy/CopyText";
-import TokenTransactions from "@/components/tokenTransaction.js/TokenTransactions";
-import useEthereumBalance from "@/hooks/useGetBalance";
-import DvpnTransactions from "@/components/dVPN Transactions/DvpnTransactions";
-import useGetBalance from "@/hooks/useGetBalance";
 
 const page = ({ params }) => {
   const generateFileName = (activeTab) => {

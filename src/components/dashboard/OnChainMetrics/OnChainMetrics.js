@@ -21,7 +21,6 @@ import {
 
 import { useThemeData } from "@/components/contexts/theme_context";
 import getQubeticsPrice from "@/services/getQubeticsPrice";
-// import { useMediaQuery } from "react-responsive";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
 import { currencyName } from "@/constant/constant";

@@ -2,13 +2,12 @@
 import Commonbtn from "@/components/commonbtn/CommonBluebtn";
 import SearchbarComponent from "@/components/search/SearchbarComponent";
 import { InitStatus, Routes } from "@/constant/constant";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Datnotfound } from "../../../../public/SvgIcons";
+import notFound from "../../../assets/svg/notFount.svg";
 import "../blocks/blocksummary.scss";
 import "./pagenotfund.scss";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import notFound from "../../../assets/svg/notFount.svg";
 
 function Page({ dashnotfound }) {
   const [searchStatus, setSerachStatus] = useState(InitStatus);
