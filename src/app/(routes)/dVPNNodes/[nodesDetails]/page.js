@@ -16,7 +16,6 @@ import UptimeHistory from "./UptimeHistory";
 import DVPNNodesDetails from "@/components/dVPNNodesList/DVPNNodesDetails";
 import { currencyName, ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import getNodeDetailSummary from "@/services/getNodeDetailSummary";
-import getNodeEarnings from "@/services/getNodeEarnings";
 import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
 import Loader from "@/components/loader/Loader";
@@ -24,6 +23,7 @@ import FilterResult from "@/components/FilterResult/FilterResult";
 import { formatToTwoDecimals } from "@/utils/commonFunctions";
 import { Tooltip } from "antd";
 import CopyText from "@/components/DoCopy/CopyText";
+import getEarnings from "@/services/getEarnings";
 
 const Page = () => {
   const { nodesDetails: nodeName } = useParams();
@@ -46,7 +46,7 @@ const Page = () => {
 
   const fetchNodeEarnings = async () => {
     try {
-      let response = await getNodeEarnings(nodeName);
+      let response = await getEarnings(nodeName);
       setNodeEarning(response?.data);
     } catch (err) {
       return err;
