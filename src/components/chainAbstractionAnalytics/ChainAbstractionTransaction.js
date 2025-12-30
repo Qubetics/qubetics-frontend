@@ -90,10 +90,9 @@ const ChainAbstractionTransaction = () => {
   const explorerHyperLInk = (value, txn) => {
     let hyperLink;
     let text;
-
     switch (value.toLowerCase()) {
       case "btc":
-        hyperLink = `${BTC_EXPLORER_URL}${txn}`;
+        hyperLink = `${BTC_EXPLORER_URL}tx/${txn}`;
         text = "Bitcoin";
         break;
       case "tics":
@@ -107,7 +106,7 @@ const ChainAbstractionTransaction = () => {
     }
 
     return txn ? (
-      <Link className="chain-tag" href={hyperLink}>
+      <Link className="chain-tag" href={hyperLink} target="_blank">
         <h3>{text}</h3>
         <ArrowUpicon />
       </Link>
@@ -247,9 +246,9 @@ const ChainAbstractionTransaction = () => {
               >
                 {getAddress(record?.solver_tx_hash)}
               </a>
-              <button className="copy_btn">
+              {/* <button className="copy_btn">
                 <CopyText text={record?.solver_tx_hash} />
-              </button>
+              </button> */}
             </span>
             <div className="tx-date">
               {convertToDateTime(record?.updated_at)}

@@ -73,11 +73,11 @@ const truncateDecimals = (value, decimals = 4) => {
   return Math.trunc(value * factor) / factor;
 };
 
-export const formatMillionNumber = (num) => {
+export const formatMillionNumber = (num, precision = 3) => {
   if (num === null || num === undefined || isNaN(num)) return "0";
 
   const format = (value, suffix) => {
-    const truncated = truncateDecimals(value, 4);
+    const truncated = truncateDecimals(value, precision);
     return `${truncated}${suffix}`;
   };
 
@@ -86,7 +86,7 @@ export const formatMillionNumber = (num) => {
   if (num >= 1e6) return format(num / 1e6, " M");
   if (num >= 1e3) return format(num / 1e3, " K");
   if (num > 0 && num < 1) return num.toString();
-  return `${truncateDecimals(num, 4)}`;
+  return `${truncateDecimals(num, precision)}`;
 };
 
 const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
@@ -359,14 +359,12 @@ export const getTooltipContent = (token, rawValue, formatted) => {
 };
 
 export const BLOCKCHAIN_EXPLORER_URLS = {
-  bitcoin: "https://mempool.space/testnet/tx/",
-  qubetics: "https://testnet-v2.qubetics.work/tx/",
+  bitcoin: `${BTC_EXPLORER_URL}tx/`,
+  qubetics: `${TICS_EXPLORER_URL}tx/`,
 };
 
 export const getExplorerUrl = (network, transactionHash) => {
   const normalizedNetwork = (network || "").toLowerCase();
-
-  console.log("normalizedNetwork", normalizedNetwork);
 
   if (normalizedNetwork === "bitcoin") {
     return `${BLOCKCHAIN_EXPLORER_URLS.bitcoin}${transactionHash}`;
@@ -381,15 +379,3 @@ export const isValidAlphaNumeric = (value) => {
   const isAlphaNumeric = /^[a-zA-Z0-9]+$/.test(value);
   return value.length >= 7 && isAlphaNumeric;
 };
-
-export const getTXNRoute=()=>{
-  const chainType =
-    typeof window !== "undefined"
-      ? localStorage.getItem("chainType")
-      : "EVM Chain";
-  if (chainType === "EVM Chain") {
-    return "/tx/";
-  } else {
-    return "/txn/";
-  }
-}

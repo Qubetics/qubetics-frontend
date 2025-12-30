@@ -1,34 +1,57 @@
 "use client";
 
-import { getTXNRoute } from "@/utils/commonFunctions";
 import { trackEvent } from "@/utils/eventTrack";
-import { N } from "ethers";
 import Link from "next/link";
+
+export const getTXNRoute = () => {
+  const chainType =
+    typeof globalThis !== "undefined" && globalThis.window
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+};
 
 export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
-export const EXPLORER_CONTRACT_VERIFY_URL = process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
+export const EXPLORER_CONTRACT_VERIFY_URL =
+  process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const NATIVE_EXPLORER_API_URL = process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
+export const NATIVE_EXPLORER_API_URL =
+  process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
-export const NATIVE_EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
-export const EXPLORER_METAMASK_NAVIGATION = process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
-export const EXPLORER_METAMASK_NETWORK_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_QUBETICS_CHAINID, 16);
-export const EXPLORER_CURRENCY_NAME = process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
+export const NATIVE_EXPLORER_SOCKET_URL =
+  process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
+export const EXPLORER_METAMASK_NAVIGATION =
+  process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
+export const EXPLORER_METAMASK_NETWORK_URL =
+  process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
+export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
+  process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
+  16
+);
+export const EXPLORER_CURRENCY_NAME =
+  process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
 export const BLOCK_TIME = process.env.NEXT_PUBLIC_EXPLORER_BLOCK_TIME;
-export const EXPLORER_VIDEO_LINKS = process.env.NEXT_PUBLIC_EXPLORER_VIDEO_LINKS;
+export const EXPLORER_VIDEO_LINKS =
+  process.env.NEXT_PUBLIC_EXPLORER_VIDEO_LINKS;
 export const EXPLORER_CHAIN_NAME = process.env.NEXT_PUBLIC_QUBETICS_CHAIN_NAME;
 export const EXPLORER_NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME;
 export const METAMASK_CHAIN_NAME =
-  process.env.NEXT_PUBLIC_QUBETICS_CHAIN_NAME + " " + process.env.NEXT_PUBLIC_NETWORK_NAME;
+  process.env.NEXT_PUBLIC_QUBETICS_CHAIN_NAME +
+  " " +
+  process.env.NEXT_PUBLIC_NETWORK_NAME;
 export const SHOW_FAUCET = process.env.NEXT_PUBLIC_SHOW_FAUCET;
 export const FAUCET_AMOUNT = process.env.NEXT_PUBLIC_FAUCET_AMOUNT;
 export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
 export const G_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_G_TAG_MANAGER_ID;
-export const CHAIN_ABSTRACTION_API_URL = process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
+export const CHAIN_ABSTRACTION_API_URL =
+  process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
 export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
 export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
@@ -96,7 +119,12 @@ export const BUGFORM_APPS = [
   "Chain Abstraction - Mobile Application",
 ];
 
-export const BUG_TYPE = ["Minor Bug", "Major Bug", "UI/UX Improvement", "Feature Suggestion"];
+export const BUG_TYPE = [
+  "Minor Bug",
+  "Major Bug",
+  "UI/UX Improvement",
+  "Feature Suggestion",
+];
 
 export const Messages = {
   //Metamask
@@ -147,7 +175,7 @@ export const Routes = {
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
-  Tx_Hash: getTXNRoute(),
+  Tx_Hash: () => getTXNRoute(), // Make it a function
   FAUCET: "/faucet",
   NODES: "/nodes",
   SYNC: "/sync",
@@ -202,7 +230,8 @@ export const solidityFile = {
   MULTI_PART_FILES: "solidity-multi-part-files",
 };
 
-export const CONTARCT_NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const CONTARCT_NULL_ADDRESS =
+  "0x0000000000000000000000000000000000000000";
 
 export const nodePerformanceData = (blockHeight) => {
   [
@@ -213,12 +242,17 @@ export const nodePerformanceData = (blockHeight) => {
   ];
 };
 export const tooltipContent = {
-  total_Dvpn_Provider: "The total count of all node providers participating in the dVPN network.",
-  active_provider: "Number of providers currently online and serving users in real time",
-  total_dvpn_user: "The overall number of unique users who have ever connected to the dVPN",
+  total_Dvpn_Provider:
+    "The total count of all node providers participating in the dVPN network.",
+  active_provider:
+    "Number of providers currently online and serving users in real time",
+  total_dvpn_user:
+    "The overall number of unique users who have ever connected to the dVPN",
   active_user: "Users who are currently connected and using the dVPN service.",
-  total_Dvpn_Transactions: "The cumulative number of transactions processed through the dVPN network.",
-  Current_Session_Count: "Total sessions started by users within the last 24 hours.",
+  total_Dvpn_Transactions:
+    "The cumulative number of transactions processed through the dVPN network.",
+  Current_Session_Count:
+    "Total sessions started by users within the last 24 hours.",
   block_Height:
     "The number of blocks added to the blockchain since its inception, indicating the blockchain’s current length.",
   bonded_Coins: `The total amount of  ${currencyName} token bonded or staked in the network to secure it and earn rewards."`,
@@ -251,9 +285,14 @@ export function BlockchainHeaderFunction(currentPath) {
     {
       key: "2",
       value: "Transactions",
-      className: currentPath.startsWith(Routes.TRANSACTIONS) ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.TRANSACTIONS)
+        ? "activeOptions"
+        : "",
       label: (
-        <Link onClick={() => onLinkClick("NavTransactions", "Transactions")} href="/tx">
+        <Link
+          onClick={() => onLinkClick("NavTransactions", "Transactions")}
+          href="/tx"
+        >
           Transactions
         </Link>
       ),
@@ -261,7 +300,8 @@ export function BlockchainHeaderFunction(currentPath) {
     {
       key: "3",
       value: "Chain Abstraction",
-      className: currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+      className:
+        currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
       label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
     },
     {
@@ -315,9 +355,14 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
     {
       key: "1",
       value: "Node",
-      className: currentPath.startsWith(Routes.DVPNNODES) ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.DVPNNODES)
+        ? "activeOptions"
+        : "",
       label: (
-        <Link onClick={() => onClick("Nav_Nodes", "dVPNNodes")} href="/dVPNNodes">
+        <Link
+          onClick={() => onClick("Nav_Nodes", "dVPNNodes")}
+          href="/dVPNNodes"
+        >
           Nodes
         </Link>
       ),
@@ -325,9 +370,16 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
     {
       key: "2",
       value: "Accounts",
-      className: currentPath === Routes.ACCOUNTS || currentPath.startsWith(Routes.Tx_ADDRESS) ? "activeOptions" : "",
+      className:
+        currentPath === Routes.ACCOUNTS ||
+        currentPath.startsWith(Routes.Tx_ADDRESS)
+          ? "activeOptions"
+          : "",
       label: (
-        <Link onClick={() => onClick("Nav_Accounts", "Accounts")} href="/accounts">
+        <Link
+          onClick={() => onClick("Nav_Accounts", "Accounts")}
+          href="/accounts"
+        >
           Accounts
         </Link>
       ),
@@ -335,9 +387,14 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
     {
       key: "3",
       value: "Providers",
-      className: currentPath.startsWith(Routes.PROVIDERS) ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.PROVIDERS)
+        ? "activeOptions"
+        : "",
       label: (
-        <Link onClick={() => onClick("Nav_Providers", "Providers")} href="/providers">
+        <Link
+          onClick={() => onClick("Nav_Providers", "Providers")}
+          href="/providers"
+        >
           Providers
         </Link>
       ),
@@ -378,7 +435,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "AllContracts",
       className: currentPath === Routes.CONTRACTS ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_Contract", "All Contracts")} href="/contract">
+        <Link
+          onClick={() => onClick("Nav_Contract", "All Contracts")}
+          href="/contract"
+        >
           All Contracts
         </Link>
       ),
@@ -389,7 +449,10 @@ export const contractHeaderFunction = (currentPath, onClick) => {
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_TokenIcon", "Token Icon")} href="/tokenicon">
+        <Link
+          onClick={() => onClick("Nav_TokenIcon", "Token Icon")}
+          href="/tokenicon"
+        >
           Token Icon
         </Link>
       ),
@@ -398,9 +461,13 @@ export const contractHeaderFunction = (currentPath, onClick) => {
     {
       key: "2",
       value: "Verifiedcontract",
-      className: currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
+      className:
+        currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
       label: (
-        <Link onClick={() => onClick("Nav_VerifyContract", "Verify Contract")} href="/contract/verify">
+        <Link
+          onClick={() => onClick("Nav_VerifyContract", "Verify Contract")}
+          href="/contract/verify"
+        >
           Verify Contract
         </Link>
       ),
@@ -551,7 +618,9 @@ export const toFixedWithoutRounding = (value, precision) => {
       return integerPart;
     }
 
-    const truncatedDecimal = decimalPart.substring(0, Math.min(precision, 6)).padEnd(Math.min(precision, 6));
+    const truncatedDecimal = decimalPart
+      .substring(0, Math.min(precision, 6))
+      .padEnd(Math.min(precision, 6));
     return `${integerPart}.${truncatedDecimal}`;
   }
 
@@ -674,11 +743,13 @@ export const firstCapitalLetter = (input) => {
 export const KeyNotes = [
   {
     id: 1,
-    title: "Participants must agree to the terms and conditions of the Testnet Rewards Program when submitting.",
+    title:
+      "Participants must agree to the terms and conditions of the Testnet Rewards Program when submitting.",
   },
   {
     id: 2,
-    title: "Submissions that do not follow the guidelines will be marked as invalid and will not qualify for rewards.",
+    title:
+      "Submissions that do not follow the guidelines will be marked as invalid and will not qualify for rewards.",
   },
   {
     id: 3,
@@ -690,12 +761,14 @@ export const guidelinesList = [
   {
     id: 1,
     title: "Validation",
-    description: "Submissions will be reviewed for completeness, accuracy, and adherence to guidelines.",
+    description:
+      "Submissions will be reviewed for completeness, accuracy, and adherence to guidelines.",
   },
   {
     id: 2,
     title: "Testing",
-    description: "The reported bug will be tested and verified by the development team.",
+    description:
+      "The reported bug will be tested and verified by the development team.",
   },
   {
     id: 3,
@@ -730,8 +803,9 @@ export const guidelinesData = [
     title: "Mandatory Attachments",
     description: (
       <p>
-        Every bug submission must include at least one supporting file (screenshot or screen-recorded video) as evidence
-        of the reported issue. <br /> <br />
+        Every bug submission must include at least one supporting file
+        (screenshot or screen-recorded video) as evidence of the reported issue.{" "}
+        <br /> <br />
         Ensure the uploaded file is clear, relevant, and demonstrates the bug.
       </p>
     ),
@@ -750,7 +824,10 @@ export const guidelinesData = [
             </div>
           ))}
         </div>
-        <p>Incorrect categorization may delay the review process or affect reward eligibility.</p>
+        <p>
+          Incorrect categorization may delay the review process or affect reward
+          eligibility.
+        </p>
       </div>
     ),
   },
@@ -787,7 +864,8 @@ export const guidelinesData = [
   {
     id: 8,
     title: "Maintain Professionalism",
-    description: "Feedback and suggestions should be constructive, actionable, and respectful.",
+    description:
+      "Feedback and suggestions should be constructive, actionable, and respectful.",
   },
 ];
 
@@ -820,7 +898,9 @@ const maxDecimalPrecision = 5;
 export const formatPrecision = (num, minDecimals, maxPrecision) => {
   if (!num) return "0";
 
-  num = Math.floor(num * Math.pow(10, maxDecimalPrecision) + 0.5) / Math.pow(10, maxDecimalPrecision);
+  num =
+    Math.floor(num * Math.pow(10, maxDecimalPrecision) + 0.5) /
+    Math.pow(10, maxDecimalPrecision);
   let numStr = num.toString();
   let decimals = 0;
   if (numStr.includes(".")) {
@@ -845,7 +925,10 @@ export const formatPrecision = (num, minDecimals, maxPrecision) => {
       numStr = `${integerStr}.${removeTrailingZeros(decimals, minDecimals)}`;
     } else if (maxPrecision && nonZeroDecimalCount > maxPrecision) {
       nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
-      numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(nonZeroDecimals, minDecimals)}`;
+      numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
+        nonZeroDecimals,
+        minDecimals
+      )}`;
     }
   }
 
@@ -865,7 +948,8 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   const precisionDecimalStr = decimalStr.substring(0, trailingZerosMatch.index);
   trailingZerosStr = trailingZerosStr.substring(
     0,
-    (minDecimals ? minDecimals : 0) - (decimalStr.length - trailingZerosStr.length)
+    (minDecimals ? minDecimals : 0) -
+      (decimalStr.length - trailingZerosStr.length)
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };

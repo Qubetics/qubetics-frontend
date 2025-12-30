@@ -90,7 +90,7 @@ const SearchbarComponent = ({
                   updatedSearchValue?.toLowerCase()):
               setSearchData(res?.data?.transaction);
               router.push(
-                `${Routes.Tx_Hash}${
+                `${Routes.Tx_Hash()}${
                   updatedSearchValue ? updatedSearchValue : searchValue
                 }`
               );
@@ -151,10 +151,10 @@ const SearchbarComponent = ({
   useEffect(() => {
     if (
       Routes.BLOCK_NO + searchValue == pathname ||
-      Routes.Tx_Hash + searchValue == pathname ||
+      Routes.Tx_Hash() + searchValue == pathname ||
       Routes.CONTRACT_DETAIL + searchValue == pathname ||
       Routes.Tx_ADDRESS + searchValue == pathname ||
-      Routes.Tx_Hash + searchValues == pathname ||
+      Routes.Tx_Hash() + searchValues == pathname ||
       Routes.BLOCK_NO + searchValues == pathname ||
       Routes.CONTRACT_DETAIL + searchValues == pathname ||
       Routes.Tx_ADDRESS + searchValues == pathname

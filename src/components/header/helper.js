@@ -47,7 +47,12 @@ export const navItems = (isEVM) => {
     {
       type: "select",
       label: "dVPN",
-      matchRoutes: [Routes.DVPNNODES, Routes.ACCOUNTS, Routes.Tx_ADDRESS, Routes.PROVIDERS],
+      matchRoutes: [
+        Routes.DVPNNODES,
+        Routes.ACCOUNTS,
+        Routes.Tx_ADDRESS,
+        Routes.PROVIDERS,
+      ],
       optionsFn: DvpnNodeHeaderFunction,
       showIfNative: !isEVM,
     },
@@ -68,8 +73,8 @@ export const navItems = (isEVM) => {
       href: Routes.FAUCET,
       matchRoutes: [Routes.FAUCET],
       showIfEVM: isEVM,
-      showIfFaucet: isEVM,
-      // showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
+      // showIfFaucet: isEVM,
+      showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
     },
   ];
 };

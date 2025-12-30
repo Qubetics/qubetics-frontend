@@ -25,7 +25,7 @@ export default function CopyText({ text, hoverText }) {
     return null;
   }
   return (
-    <span className="pointer flexedItems">
+    <span className="flexedItems">
       <Tooltip
         title={
           copied
