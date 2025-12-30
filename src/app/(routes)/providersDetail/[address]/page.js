@@ -15,6 +15,7 @@ import { useParams, useRouter } from "next/navigation";
 import getProvidersDetailSummary from "@/services/getProvidersDetailSummary";
 import Loader from "@/components/loader/Loader";
 import { formatToTwoDecimals } from "@/utils/commonFunctions";
+import getNodeEarnings from "@/services/getNodeEarnings";
 
 function ProvidersDetail() {
   const [providersDetail, setProvidersDetail] = useState([]);
@@ -26,6 +27,8 @@ function ProvidersDetail() {
   const { address } = useParams();
   const [nodeSummaryStatus, setNodeSummaryStatus] = useState(true);
   const [nodeSummary, setNodeSummary] = useState(null);
+  const [providerEarning,setProviderEarning] = useState(null);
+  console.log("🚀 ~ ProvidersDetail ~ providerEarning:", providerEarning)
   const router = useRouter();
 
   const providerDetailsColumns = [
@@ -60,6 +63,15 @@ function ProvidersDetail() {
       setNodeSummaryStatus(false);
     }
   };
+
+  const fetchProviderEarning = async () =>{
+    try{
+      const response = await getNodeEarnings(address);
+      setProviderEarning(response?.data);
+    } catch (err){
+      console.log("Error failed to fetch earning")
+    }
+  }
 
   const fetchData = async () => {
     try {
@@ -106,6 +118,7 @@ function ProvidersDetail() {
     if (address) {
       setNodeSummaryStatus(true);
       fetchNodeSummary();
+      fetchProviderEarning();
     }
   }, [address]);
 
@@ -138,8 +151,8 @@ function ProvidersDetail() {
             <CardsOnchain
               text="Total Earnings"
               balance={
-                <Tooltip title={`${nodeSummary?.totalEarning || 0} ${currencyName}`}>
-                  <span>{`${formatToTwoDecimals(nodeSummary?.totalEarning || 0)} ${currencyName}`}</span>
+                <Tooltip title={`${providerEarning?.totalEarning || 0} ${currencyName}`}>
+                  <span>{`${formatToTwoDecimals(providerEarning?.totalEarning || 0)} ${currencyName}`}</span>
                 </Tooltip>
               }
               img={<TotalEarnings />}
@@ -153,8 +166,8 @@ function ProvidersDetail() {
             <CardsOnchain
               text="Hourly Earnings"
               balance={
-                <Tooltip title={`${nodeSummary?.dailyEarning || 0} ${currencyName}`}>
-                  <span>{`${formatToTwoDecimals(nodeSummary?.dailyEarning || 0)} ${currencyName}`}</span>
+                <Tooltip title={`${providerEarning?.dailyEarning || 0} ${currencyName}`}>
+                  <span>{`${formatToTwoDecimals(providerEarning?.dailyEarning || 0)} ${currencyName}`}</span>
                 </Tooltip>
               }
               img={<HrsEarnings />}
