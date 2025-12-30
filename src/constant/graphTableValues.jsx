@@ -4,9 +4,7 @@ import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeFirstLetter,
   capitalizeWord,
-  checkStatus,
   formateTotalSupply,
-  formatText,
   formatToTwoDecimals,
   formatMillionNumber,
   noExponential,
@@ -19,7 +17,7 @@ import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
 import { currencyName, formatValue, Routes, typesOfTransactions } from "./constant";
 import { Tokenicons } from "../../public/SvgIcons";
-import { render } from "sass";
+
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -2081,7 +2079,7 @@ export const solverColumn = [
     render: (text) => (
       <>
         <div className="iconandlink blockLinkItems">
-          <a>{getAddress(text)}</a>
+          <Tooltip title={text}>{getAddress(text)}</Tooltip>
           <span>
             <CopyText hoverText={"Node Address"} text={text}></CopyText>
           </span>

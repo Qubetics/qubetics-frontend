@@ -20,8 +20,7 @@ const FilterResult = () => {
     setIsLoading,
     searchResult,
     dynamicTab,
-    setDynamicTab,
-    setSearchResult,
+
     err,
   } = useGlobalSearch();
 
@@ -29,7 +28,6 @@ const FilterResult = () => {
   const inputRef = useRef();
   const wrapperRef = useRef();
   const containerRef = useRef();
-  const countRef = useRef(0);
 
   const customRef = useRef({});
   const [open, setOpen] = useState(1);

@@ -1,4 +1,3 @@
-// components/ErrorBoundary.tsx
 "use client";
 
 import Page from "@/app/(routes)/notfound/page";
