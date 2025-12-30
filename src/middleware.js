@@ -13,7 +13,7 @@ export function middleware(request) {
   if (
     pathname === "/faucet" &&
     SHOW_FAUCET == 0 &&
-    EXPLORER_NETWORK_NAME === "Mainnet"
+    EXPLORER_NETWORK_NAME?.toLowerCase() === "mainnet"
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }

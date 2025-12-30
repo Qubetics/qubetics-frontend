@@ -19,6 +19,8 @@ export const footerLinks = [
       { label: "Blockchain", href: "/blocks" },
       { label: "Validators", href: "/validators" },
       { label: "Nodes", href: "/nodes" },
+      { label: "Chain Abstraction", href: "/chain-abstraction" },
+      { label: "Solver Listing", href: "/solver-listing" },
     ],
   },
   {
@@ -60,6 +62,15 @@ export const footerLinks = [
         label: "QubeQode",
         href: "https://qubeqode.qubetics.com",
         external: true,
+      },
+      {
+        label: "Node Operator",
+        href: "http://prod-dvpn-service-provider.qubetics.work",
+      },
+
+      {
+        label: "Node Provider",
+        href: "http://prod-dvpn-node-operator.qubetics.work/",
       },
     ],
   },

@@ -371,7 +371,7 @@ export const getExplorerUrl = (network, transactionHash) => {
   const normalizedNetwork = (network || "").toLowerCase();
 
   if (normalizedNetwork === "bitcoin") {
-    return `${BTC_EXPLORER_URL}tx/${transactionHash}`;
+    return `${BTC_EXPLORER_URL}testnet4/tx/${transactionHash}`;
   } else if (normalizedNetwork === "qubetics") {
     return `${TICS_EXPLORER_URL}tx/${transactionHash}`;
   }
