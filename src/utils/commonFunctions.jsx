@@ -359,7 +359,7 @@ export const getTooltipContent = (token, rawValue, formatted) => {
 };
 
 export const BLOCKCHAIN_EXPLORER_URLS = {
-  bitcoin: "https://mempool.space/testnet/tx/",
+  bitcoin: "https://mempool.space/testnet4/tx/",
   qubetics: "https://testnet-v2.qubetics.work/tx/",
 };
 
