@@ -201,7 +201,7 @@ const FilterResult = () => {
 
       switch (activeTab) {
         case "transaction":
-          return router.push(`${Routes.Tx_Hash}${redirectAddress}`);
+          return router.push(`${Routes.Tx_Hash()}${redirectAddress}`);
 
         case "block":
           return router.push(`/blocks/${redirectAddress}`);
@@ -223,7 +223,7 @@ const FilterResult = () => {
     } else {
       switch (activeTab) {
         case "transaction":
-          return `${Routes.Tx_Hash}${selectedAddress}`;
+          return `${Routes.Tx_Hash()}${selectedAddress}`;
 
         case "block":
           return `/blocks/${selectedAddress}`;

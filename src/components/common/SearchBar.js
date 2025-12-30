@@ -75,7 +75,7 @@ const SearchbarComponent = ({
                   searchValues?.toLowerCase()):
               setSearchData(res?.data?.transaction);
               router.push(
-                `${Routes.Tx_Hash}${searchValues ? searchValues : searchValue}`
+                `${Routes.Tx_Hash()}${searchValues ? searchValues : searchValue}`
               );
               setIsSearchClicked(false);
               break;
@@ -122,7 +122,7 @@ const SearchbarComponent = ({
   useEffect(() => {
     if (
       Routes.BLOCK_NO + searchValue == pathname ||
-      Routes.Tx_Hash + searchValue == pathname ||
+      Routes.Tx_Hash() + searchValue == pathname ||
       Routes.CONTRACT_DETAIL + searchValue == pathname ||
       Routes.Tx_ADDRESS + searchValue === pathname
     ) {

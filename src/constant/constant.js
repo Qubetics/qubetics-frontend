@@ -1,9 +1,20 @@
 "use client";
 
-import { getTXNRoute } from "@/utils/commonFunctions";
 import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 import { ArrowUpicon } from "../../public/SvgIcons";
+
+export const getTXNRoute = () => {
+  const chainType =
+    typeof globalThis !== "undefined" && globalThis.window
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+};
 
 export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
@@ -165,7 +176,7 @@ export const Routes = {
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
-  Tx_Hash: getTXNRoute(),
+  Tx_Hash: () => getTXNRoute(), // Make it a function
   FAUCET: "/faucet",
   NODES: "/nodes",
   SYNC: "/sync",

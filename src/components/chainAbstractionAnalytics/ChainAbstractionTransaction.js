@@ -199,9 +199,9 @@ const ChainAbstractionTransaction = () => {
               >
                 {getAddress(record?.solver_tx_hash)}
               </a>
-              <button className="copy_btn">
+              {/* <button className="copy_btn">
                 <CopyText text={record?.solver_tx_hash} />
-              </button>
+              </button> */}
             </span>
             <div className="tx-date">
               {convertToDateTime(record?.updated_at)}
