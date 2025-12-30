@@ -7,7 +7,6 @@ import {
   formateTotalSupply,
   formatToTwoDecimals,
   formatMillionNumber,
-  formatToTwoDecimals,
   noExponential,
   toFixed,
 } from "@/utils/commonFunctions";

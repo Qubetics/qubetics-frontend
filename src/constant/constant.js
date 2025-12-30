@@ -1016,7 +1016,7 @@ export const explorerHyperLInk = (value, txn) => {
   }
 
   return (
-    <Link className="chain-tag" href={hyperLink}>
+    <Link className="chain-tag" href={hyperLink} target="_blank">
       <h3>{text}</h3>
       <ArrowUpicon />
     </Link>
