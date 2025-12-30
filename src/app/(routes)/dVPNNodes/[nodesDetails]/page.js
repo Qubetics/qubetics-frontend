@@ -16,6 +16,7 @@ import UptimeHistory from "./UptimeHistory";
 import DVPNNodesDetails from "@/components/dVPNNodesList/DVPNNodesDetails";
 import { currencyName, ErrorStatus, FetchingStatus, InitStatus, SuccessStatus } from "@/constant/constant";
 import getNodeDetailSummary from "@/services/getNodeDetailSummary";
+import getNodeEarnings from "@/services/getNodeEarnings";
 import { useEffect, useState } from "react";
 import { formatDateTime } from "@/components/header/helper";
 import Loader from "@/components/loader/Loader";
@@ -30,6 +31,7 @@ const Page = () => {
   const nodeStatus = searchParams.get("status") || "active";
   const [nodeSummaryStatus, setsetNodeSummaryStatus] = useState(InitStatus);
   const [nodeSummary, setNodeSummary] = useState();
+  const [nodeEarning,setNodeEarning] = useState();
 
   const fetchNodeSummary = async () => {
     try {
@@ -42,10 +44,20 @@ const Page = () => {
     }
   };
 
+  const fetchNodeEarnings = async () => {
+    try {
+      let response = await getNodeEarnings(nodeName);
+      setNodeEarning(response?.data);
+    } catch (err) {
+      return err;
+    }
+  };
+
   useEffect(() => {
     if (nodeName) {
       setsetNodeSummaryStatus(FetchingStatus);
       fetchNodeSummary();
+      fetchNodeEarnings();
     }
   }, [nodeName]);
 
@@ -75,8 +87,8 @@ const Page = () => {
               <CardsOnchain
                 text="Total Earnings"
                 balance={
-                  <Tooltip title={`${nodeSummary?.total_earning || 0} ${currencyName}`}>
-                    <span>{`${formatToTwoDecimals(nodeSummary?.total_earning || 0)} ${currencyName}`}</span>
+                  <Tooltip title={`${nodeEarning?.totalEarning || 0} ${currencyName}`}>
+                    <span>{`${formatToTwoDecimals(nodeEarning?.totalEarning || 0)} ${currencyName}`}</span>
                   </Tooltip>
                 }
                 img={<TotalEarnings />}
@@ -85,8 +97,8 @@ const Page = () => {
               <CardsOnchain
                 text="24hrs Earnings"
                 balance={
-                  <Tooltip title={`${nodeSummary?.daily_earnings || 0} ${currencyName}`}>
-                    <span>{`${formatToTwoDecimals(nodeSummary?.daily_earnings || 0)} ${currencyName}`}</span>
+                  <Tooltip title={`${nodeEarning?.dailyEarning || 0} ${currencyName}`}>
+                    <span>{`${formatToTwoDecimals(nodeEarning?.dailyEarning || 0)} ${currencyName}`}</span>
                   </Tooltip>
                 }
                 img={<HrsEarnings />}
