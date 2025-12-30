@@ -258,7 +258,7 @@ export const transferType = (value) => {
 export const destinationTxn = (type, value) => {
   switch (type) {
     case "btc":
-      return `${BTC_EXPLORER_URL}tx/${value}`;
+      return `${BTC_EXPLORER_URL}testnet4/tx/${value}`;
     case "tics":
       return `${TICS_EXPLORER_URL}tx/${value}`;
     case "usdt":

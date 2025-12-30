@@ -1002,7 +1002,7 @@ export const explorerHyperLInk = (value, txn) => {
 
   switch (value.toLowerCase()) {
     case "btc":
-      hyperLink = `${BTC_EXPLORER_URL}tx/${txn}`;
+      hyperLink = `${BTC_EXPLORER_URL}testnet4/tx/${txn}`;
       text = "Bitcoin";
       break;
     case "tics":
