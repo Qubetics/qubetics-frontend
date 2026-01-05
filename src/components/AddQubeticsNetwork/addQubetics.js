@@ -3,7 +3,6 @@ import {
   EXPLORER_CURRENCY_NAME,
   EXPLORER_METAMASK_NAVIGATION,
   EXPLORER_METAMASK_NETWORK_URL,
-  EXPLORER_META_NETWORK_CHAIN_ID,
   METAMASK_CHAIN_NAME,
   Messages,
 } from "@/constant/constant";
@@ -144,7 +143,6 @@ export const addQubetic = async () => {
 
     const chainId = await provider.request({ method: "eth_chainId" });
 
-    const ChainIdQubetic = EXPLORER_META_NETWORK_CHAIN_ID;
     if (!provider) {
       toast.error(Messages.Install_Metamask);
     } else {
@@ -189,7 +187,10 @@ export const addQubetic = async () => {
             ) {
               return toast.success(Messages.Network_Added);
             }
-            throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
+            let errorMessage = err.message;
+            if ((err.code = -32002)) errorMessage = Messages.Pending_Request;
+
+            throw new Error(errorMessage);
           }
         } else {
           if (deviceType !== "Desktop") {

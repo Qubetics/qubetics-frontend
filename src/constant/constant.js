@@ -136,7 +136,8 @@ export const Messages = {
   Network_Added: `You have successfully switched to ${EXPLORER_CHAIN_NAME} network.`,
   Network_Add_Error: `Error adding ${EXPLORER_CHAIN_NAME} network: `,
   isTrust: "Kindly use Metamask as your default wallet",
-
+  Pending_Request:
+    "You already have a pending request. Please open your wallet to check it.",
   //faucet
   ENTER_WALLET_ADDRESS: "Please Enter Wallet Address",
   INVALID_ADDRESS: "Invalid Wallet Address",
