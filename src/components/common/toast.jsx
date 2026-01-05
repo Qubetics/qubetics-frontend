@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 
-let timer = null;
 let counter = 0;
 
 class Toaster {

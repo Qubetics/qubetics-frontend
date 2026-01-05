@@ -1,6 +1,12 @@
 "use client";
-import { TERMS_AND_CONDITIONS, verifyContractConstant } from "@/constant/constant";
-import { CONTRACT_COMPILER_TYPE, CONTRACT_LICENSES } from "@/constant/dropDownConstant";
+import {
+  TERMS_AND_CONDITIONS,
+  verifyContractConstant,
+} from "@/constant/constant";
+import {
+  CONTRACT_COMPILER_TYPE,
+  CONTRACT_LICENSES,
+} from "@/constant/dropDownConstant";
 import getCompilerVersion from "@/services/getCompilerVersion";
 import getContractDetails from "@/services/getContractDetails";
 import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
@@ -130,7 +136,9 @@ function PublishContract({ steps, current, prev, next }) {
       return;
     }
     setIsLoading(true);
-    const isContractVerified = await getContractVerificationDetail(contractAddress || verifyAddress);
+    const isContractVerified = await getContractVerificationDetail(
+      contractAddress || verifyAddress
+    );
     if (isContractVerified) {
       setIsLoading(false);
       const verificationType = isContractVerified.verificationType;
@@ -161,7 +169,9 @@ function PublishContract({ steps, current, prev, next }) {
           disabled={verifyAddress}
           onChange={handleCustomInputChange}
         />
-        {isContractExist && <p style={{ color: "red", paddingBottom: "20px" }}>{errorMessage}</p>}
+        {isContractExist && (
+          <p style={{ color: "red", paddingBottom: "20px" }}>{errorMessage}</p>
+        )}
         <CustomSelect
           label={verifyContractConstant.SELECT_COMPILE_TYPE}
           options={CONTRACT_COMPILER_TYPE}
@@ -200,13 +210,21 @@ function PublishContract({ steps, current, prev, next }) {
             <p>
               <Checkbox onChange={onChange}></Checkbox> I agree to the{" "}
               <span>
-                <Link href={TERMS_AND_CONDITIONS} target="_blank" style={{ color: "white" }}>
+                <Link
+                  href={TERMS_AND_CONDITIONS}
+                  target="_blank"
+                  style={{ color: "white" }}
+                >
                   Terms Of Service
                 </Link>
               </span>
             </p>
           </div>
-          {isCheckedMessage && <p style={{ color: "red", marginBottom: "31px" }}>{isCheckedMessage}</p>}
+          {isCheckedMessage && (
+            <p style={{ color: "red", marginBottom: "31px" }}>
+              {isCheckedMessage}
+            </p>
+          )}
           {steps && current < steps.length - 1 && (
             <button
               onClick={validateAndProceed}
@@ -217,7 +235,10 @@ function PublishContract({ steps, current, prev, next }) {
             </button>
           )}
           {steps && current === steps.length - 1 && (
-            <button className="headermetaBtn preNextbtn" onClick={() => message.success("Processing complete!")}>
+            <button
+              className="headermetaBtn preNextbtn"
+              onClick={() => message.success("Processing complete!")}
+            >
               Done
             </button>
           )}

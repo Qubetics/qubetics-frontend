@@ -7,26 +7,22 @@ import dynamic from "next/dynamic";
 import { DM_Sans } from "next/font/google";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
-
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
 });
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata() {
   return {
     title: "TicsScan | Explore TICS Transactions, Wallets & Blocks",
     description:
       "Track real-time TICS transactions, wallet balances, token transfers, and block data with TicsScan — the official explorer for the Qubetics Network.",
   };
 }
-const ZohoDesk = dynamic(() => import("@/components/ZohoDesk/ZohoDesk"), {
-  ssr: false,
-});
+
 const ErrorBoundary = dynamic(
   () => import("@/components/ErrorBoundry/ErrorBoundry"),
   { ssr: false }
@@ -101,7 +97,6 @@ export default function RootLayout({ children }) {
                       </Suspense>
                     </StyledComponentsRegistry>
                   </ContractVerificationProvider>
-                  <ToastContainer />
                 </SerachingValueProvider>
               </LatestDataProvider>
             </ThemeProvider>

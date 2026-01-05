@@ -5,7 +5,7 @@ const {
   contractHeaderFunction,
   DvpnNodeHeaderFunction,
   DVPN_TYPE,
-  EXPLORER_NETWORK_NAME,
+  SHOW_FAUCET,
 } = require("@/constant/constant");
 
 export const navItems = (isEVM) => {
@@ -74,7 +74,7 @@ export const navItems = (isEVM) => {
       matchRoutes: [Routes.FAUCET],
       showIfEVM: isEVM,
       // showIfFaucet: isEVM,
-      showIfFaucet: EXPLORER_NETWORK_NAME.toLowerCase() === "testnet" ?? false,
+      showIfFaucet: SHOW_FAUCET != 0,
     },
   ];
 };

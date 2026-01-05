@@ -9,12 +9,7 @@ export function middleware(request) {
   if (cookies === "false" && isEvmPath) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-
-  if (
-    pathname === "/faucet" &&
-    SHOW_FAUCET == 0 &&
-    EXPLORER_NETWORK_NAME?.toLowerCase() === "mainnet"
-  ) {
+  if (pathname === "/faucet" && SHOW_FAUCET == 0) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
