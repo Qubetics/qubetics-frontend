@@ -5,7 +5,7 @@ import {
 } from "@/constant/constant";
 import postContractVerify from "@/services/postContractVerify";
 import postUploadVerifyContract from "@/services/postUploadVerifyContract";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 
 export const verifyContractApi = async (
   formData,
@@ -60,16 +60,16 @@ export const verifyContractApi = async (
 
     if (res.status == 1) {
       setVerifyStatus(SuccessStatus);
-      toast.success("Verification Initiated");
+      customToast.success("Verification Initiated");
       setResetState(true);
       prev();
     } else {
-      toast.error(res?.message || "Unknown error occurred");
+      customToast.error(res?.message || "Unknown error occurred");
       setResetState(true);
       prev();
     }
   } catch (error) {
-    toast.error("An error occurred while verifying contract");
+    customToast.error("An error occurred while verifying contract");
     setResetState(true);
     setVerifyStatus(SuccessStatus);
   }

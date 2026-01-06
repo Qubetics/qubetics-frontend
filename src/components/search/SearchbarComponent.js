@@ -9,7 +9,7 @@ import {
 import getSearchingValue from "@/services/search";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { customToast } from "../common/toast";
 import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
 import { useSearchData } from "../contexts/searchingData";
 import Loader from "../loader/Loader";
@@ -21,8 +21,7 @@ const SearchbarComponent = ({
   onBlur,
 }) => {
   const { isLight } = useThemeData();
-  const { searchData, searchValue, setSearchValue, setSearchData } =
-    useSearchData();
+  const { searchValue, setSearchValue, setSearchData } = useSearchData();
   const router = useRouter();
   let searchValueRegex = /^[a-zA-Z0-9]*$/;
   const pathname = usePathname();
@@ -57,7 +56,7 @@ const SearchbarComponent = ({
     }
     try {
       if (!searchValue) {
-        toast.error("Enter search item");
+        customToast.error("Enter search item");
       } else {
         setSerachStatus(FetchingStatus);
         const res = await getSearchingValue(
@@ -90,7 +89,7 @@ const SearchbarComponent = ({
                   updatedSearchValue?.toLowerCase()):
               setSearchData(res?.data?.transaction);
               router.push(
-                `${Routes.Tx_Hash}${
+                `${Routes.Tx_Hash()}${
                   updatedSearchValue ? updatedSearchValue : searchValue
                 }`
               );
@@ -151,10 +150,10 @@ const SearchbarComponent = ({
   useEffect(() => {
     if (
       Routes.BLOCK_NO + searchValue == pathname ||
-      Routes.Tx_Hash + searchValue == pathname ||
+      Routes.Tx_Hash() + searchValue == pathname ||
       Routes.CONTRACT_DETAIL + searchValue == pathname ||
       Routes.Tx_ADDRESS + searchValue == pathname ||
-      Routes.Tx_Hash + searchValues == pathname ||
+      Routes.Tx_Hash() + searchValues == pathname ||
       Routes.BLOCK_NO + searchValues == pathname ||
       Routes.CONTRACT_DETAIL + searchValues == pathname ||
       Routes.Tx_ADDRESS + searchValues == pathname

@@ -22,10 +22,10 @@ import Link from "next/link";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [currentPage, setCurrentPage] = useState(pageNo); // Track witch page we're on
-  const [totalPages, setTotalPages] = useState(1); // total number of pages
-  const router = useRouter(); // for navigation
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(pageNo);
+  const [totalPages, setTotalPages] = useState(1);
+  const router = useRouter();
 
   useEffect(() => {
     fetchIntents();
@@ -199,9 +199,9 @@ const ChainAbstractionTransaction = () => {
               >
                 {getAddress(record?.solver_tx_hash)}
               </a>
-              <button className="copy_btn">
+              {/* <button className="copy_btn">
                 <CopyText text={record?.solver_tx_hash} />
-              </button>
+              </button> */}
             </span>
             <div className="tx-date">
               {convertToDateTime(record?.updated_at)}

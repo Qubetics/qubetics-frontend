@@ -1,7 +1,6 @@
 import {
   EXPLORER_CHAIN_NAME,
   EXPLORER_METAMASK_NETWORK_URL,
-  SHOW_FAUCET,
 } from "@/constant/constant";
 import { trackEvent } from "@/utils/eventTrack";
 import { Select, Space } from "antd";
@@ -10,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Web3, { eth } from "web3";
+import Web3 from "web3";
 import CheckIcon from "../../../public/SvgIcons";
 import { addQubetic } from "../AddQubeticsNetwork/addQubetics";
 import { useGetNetwork } from "../contexts/networkChanged";
@@ -96,6 +95,7 @@ function HeaderMenu({ onCloseDrawer }) {
 
   const getContainer = (triggerNode) => triggerNode.parentNode;
   const navItem = navItems(chainType == "EVM Chain");
+
   return (
     <>
       <ul className="mob__List">
@@ -111,8 +111,7 @@ function HeaderMenu({ onCloseDrawer }) {
           if (item?.showIfNative == false && chainType !== "Native Chain") {
             return null;
           }
-
-          if (item.showIfFaucet === false && SHOW_FAUCET !== 1) return null;
+          if (item.showIfFaucet === false) return null;
 
           if (item.type === "link") {
             return (

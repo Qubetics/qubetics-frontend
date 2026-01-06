@@ -2,7 +2,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { BlockIcon, Searchicon } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
 import Page from "@/app/(routes)/notfound/page";
-import { firstCapitalLetter } from "@/constant/constant";
+import { firstCapitalLetter, Routes } from "@/constant/constant";
 import useGlobalSearch from "@/hooks/useGlobalSearch";
 import useOnClickOutside from "@/hooks/useoutsideClick";
 import Link from "next/link";
@@ -201,7 +201,7 @@ const FilterResult = () => {
 
       switch (activeTab) {
         case "transaction":
-          return router.push(`/tx/${redirectAddress}`);
+          return router.push(`${Routes.Tx_Hash()}${redirectAddress}`);
 
         case "block":
           return router.push(`/blocks/${redirectAddress}`);
@@ -223,7 +223,7 @@ const FilterResult = () => {
     } else {
       switch (activeTab) {
         case "transaction":
-          return `/tx/${selectedAddress}`;
+          return `${Routes.Tx_Hash()}${selectedAddress}`;
 
         case "block":
           return `/blocks/${selectedAddress}`;

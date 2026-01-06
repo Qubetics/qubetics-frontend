@@ -1,13 +1,14 @@
 "use client";
 import { useSearchData } from "@/components/contexts/searchingData";
+import InternalTxns from "@/components/contracts/InternalTxns";
+import EventLogs from "@/components/eventLogs/eventLogs";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import LogsDetail from "@/components/logsDetail/LogsDetail";
+import MessageAction from "@/components/messgaeInfo/MessageAction";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
-import MessageAction from "@/components/messgaeInfo/MessageAction";
-import MessageInfo from "@/components/messgaeInfo/MessageInfo";
 import {
   DVPN_TRANSACTION_TYPE,
   ErrorStatus,
@@ -15,15 +16,13 @@ import {
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
-import getSearchingValue from "@/services/search";
+import getMessages from "@/services/getMessages";
+import getTxnDetails from "@/services/getTxnDetails";
 import { Tabs } from "antd";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "../../blocks/blocksummary.scss";
 import Page from "../../notfound/page";
-import getMessages from "@/services/getMessages";
-import EventLogs from "@/components/eventLogs/eventLogs";
-import InternalTxns from "@/components/contracts/InternalTxns";
 
 const page = () => {
   const searchParam = useSearchParams();
@@ -41,7 +40,9 @@ const page = () => {
   const values = Object.values(DVPN_TRANSACTION_TYPE);
   const [data, setData] = useState();
 
-  let updateTx = "";
+  useEffect(() => {
+    fetchData();
+  }, [params?.transactionDetails]);
 
   const fetchData = async () => {
     try {
@@ -58,7 +59,7 @@ const page = () => {
           updateTx = `0x${updateTx}`;
         }
 
-        const response = await getSearchingValue(updateTx);
+        const response = await getTxnDetails(updateTx);
 
         // Handle internal transactions
         if (response?.data?.internalTxns) {
@@ -72,7 +73,6 @@ const page = () => {
 
         // Handle transaction details
         if (response?.error === false) {
-          console.log("hello");
           setTransactionDetails(response.data.transaction);
           setTopics(response.data.contractLogs?.[0]?.topics || []);
           setContractLogs(JSON.parse(response.data.transaction?.logs || "[]"));
@@ -92,7 +92,6 @@ const page = () => {
     }
   };
 
-  console.log(transactionDetails, "transactionDetails");
   const tabItems = [
     {
       label: "Overview",
@@ -119,11 +118,7 @@ const page = () => {
       ? {
           label: "Messages",
           key: "1",
-          children: (
-            <>
-              <MessageAction data={data} />
-            </>
-          ),
+          children: <MessageAction data={data} />,
         }
       : [],
     contractLogs?.length > 0
@@ -145,22 +140,18 @@ const page = () => {
       ? {
           label: "Event Logs",
           key: "3",
+          children: <EventLogs logs={JSON.parse(data?.[0]?.logs)} />,
+        }
+      : [],
+    internalTxns.length > 0
+      ? {
+          label: "Internal Transactions",
+          key: "2",
           children: (
-            <>
-              <EventLogs logs={JSON.parse(data?.[0]?.logs)} />
-            </>
+            <InternalTxns hash={params?.transactionDetails} tab={tab} />
           ),
         }
       : [],
-      internalTxns.length > 0 ? {
-        label: "Internal Transactions",
-        key: "2",
-        children: (
-          <>
-            <InternalTxns hash={params?.transactionDetails} tab={tab} />
-          </>
-        ),
-      }:[],
   ];
 
   const handleTabSelect = (e) => {

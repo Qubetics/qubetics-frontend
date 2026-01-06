@@ -1,8 +1,6 @@
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
-let timer = null;
 let counter = 0;
-
 class Toaster {
   showToast(message, type) {
     if (counter === 0) {
@@ -11,8 +9,9 @@ class Toaster {
         style: {
           textTransform: "capitalize",
         },
+        duration: 4000,
       });
-      timer = setTimeout(() => {
+      setTimeout(() => {
         counter = 0;
       }, 4000);
     }

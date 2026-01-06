@@ -82,11 +82,11 @@ const truncateDecimals = (value, decimals = 4) => {
   return Math.trunc(value * factor) / factor;
 };
 
-export const formatMillionNumber = (num) => {
+export const formatMillionNumber = (num, precision = 3) => {
   if (num === null || num === undefined || isNaN(num)) return "0";
 
   const format = (value, suffix) => {
-    const truncated = truncateDecimals(value, 4);
+    const truncated = truncateDecimals(value, precision);
     return `${truncated}${suffix}`;
   };
 
@@ -95,7 +95,7 @@ export const formatMillionNumber = (num) => {
   if (num >= 1e6) return format(num / 1e6, " M");
   if (num >= 1e3) return format(num / 1e3, " K");
   if (num > 0 && num < 1) return num.toString();
-  return `${truncateDecimals(num, 4)}`;
+  return `${truncateDecimals(num, precision)}`;
 };
 
 const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
@@ -258,7 +258,7 @@ export const transferType = (value) => {
 export const destinationTxn = (type, value) => {
   switch (type) {
     case "btc":
-      return `${BTC_EXPLORER_URL}tx/${value}`;
+      return `${BTC_EXPLORER_URL}testnet4/tx/${value}`;
     case "tics":
       return `${TICS_EXPLORER_URL}tx/${value}`;
     case "usdt":
@@ -371,7 +371,7 @@ export const getExplorerUrl = (network, transactionHash) => {
   const normalizedNetwork = (network || "").toLowerCase();
 
   if (normalizedNetwork === "bitcoin") {
-    return `${BTC_EXPLORER_URL}tx/${transactionHash}`;
+    return `${BTC_EXPLORER_URL}testnet4/tx/${transactionHash}`;
   } else if (normalizedNetwork === "qubetics") {
     return `${TICS_EXPLORER_URL}tx/${transactionHash}`;
   }
@@ -382,4 +382,16 @@ export const getExplorerUrl = (network, transactionHash) => {
 export const isValidAlphaNumeric = (value) => {
   const isAlphaNumeric = /^[a-zA-Z0-9]+$/.test(value);
   return value.length >= 7 && isAlphaNumeric;
+};
+
+export const getTXNRoute = () => {
+  const chainType =
+    typeof window !== "undefined"
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
 };

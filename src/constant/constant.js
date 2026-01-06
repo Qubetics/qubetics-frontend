@@ -4,6 +4,18 @@ import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 import { ArrowUpicon } from "../../public/SvgIcons";
 
+export const getTXNRoute = () => {
+  const chainType =
+    typeof globalThis !== "undefined" && globalThis.window
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+};
+
 export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
 export const EXPLORER_CONTRACT_VERIFY_URL =
@@ -45,6 +57,7 @@ export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
 export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
+export const OPERATOR_API_URL = process.env.NEXT_PUBLIC_OPERATOR_API_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -123,7 +136,8 @@ export const Messages = {
   Network_Added: `You have successfully switched to ${EXPLORER_CHAIN_NAME} network.`,
   Network_Add_Error: `Error adding ${EXPLORER_CHAIN_NAME} network: `,
   isTrust: "Kindly use Metamask as your default wallet",
-
+  Pending_Request:
+    "You already have a pending request. Please open your wallet to check it.",
   //faucet
   ENTER_WALLET_ADDRESS: "Please Enter Wallet Address",
   INVALID_ADDRESS: "Invalid Wallet Address",
@@ -163,7 +177,7 @@ export const Routes = {
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
-  Tx_Hash: "/tx/",
+  Tx_Hash: () => getTXNRoute(), // Make it a function
   FAUCET: "/faucet",
   NODES: "/nodes",
   SYNC: "/sync",
@@ -178,6 +192,8 @@ export const Routes = {
   TOKEN_ICON: "/tokenicon",
   DVPNNODES: "/dVPNNodes",
   ACCOUNTS: "/accounts",
+  PROVIDERS: "/providers",
+  PROVIDERS_DETAIL: "/providersDetail",
   SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
@@ -370,6 +386,21 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
           href="/accounts"
         >
           Accounts
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      value: "Providers",
+      className: currentPath.startsWith(Routes.PROVIDERS)
+        ? "activeOptions"
+        : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Providers", "Providers")}
+          href="/providers"
+        >
+          Providers
         </Link>
       ),
     },
@@ -957,6 +988,13 @@ export const CHAIN_ASSET_MAP = {
   9029: "tics",
 };
 
+export const Network = {
+  Native: "Native Chain",
+  Evm: "EVM Chain",
+};
+
+export const TERMS_AND_CONDITIONS =
+  process.env.NEXT_PUBLIC_TERMS_AND_CONDITIONS;
 export const explorerHyperLInk = (value, txn) => {
   if (!txn) return null;
 
@@ -965,7 +1003,7 @@ export const explorerHyperLInk = (value, txn) => {
 
   switch (value.toLowerCase()) {
     case "btc":
-      hyperLink = `${BTC_EXPLORER_URL}tx/${txn}`;
+      hyperLink = `${BTC_EXPLORER_URL}testnet4/tx/${txn}`;
       text = "Bitcoin";
       break;
     case "tics":
@@ -979,7 +1017,7 @@ export const explorerHyperLInk = (value, txn) => {
   }
 
   return (
-    <Link className="chain-tag" href={hyperLink}>
+    <Link className="chain-tag" href={hyperLink} target="_blank">
       <h3>{text}</h3>
       <ArrowUpicon />
     </Link>

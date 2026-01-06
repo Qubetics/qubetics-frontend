@@ -29,7 +29,7 @@ const txnColumns = [
       <div className="addressText">
         <Link
           className="bghash"
-          href={`${Routes.Tx_Hash}${text}`}
+          href={`${Routes.Tx_Hash()}${text}`}
           rel="noopener noreferrer"
         >
           {getAddress(text)}
