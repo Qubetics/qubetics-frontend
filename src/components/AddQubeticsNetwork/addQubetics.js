@@ -7,14 +7,12 @@ import {
   Messages,
 } from "@/constant/constant";
 import { trackEvent } from "@/utils/eventTrack";
-import toast from "react-hot-toast";
+import { customToast } from "../common/toast";
 import Web3 from "web3";
 
 export const addQubeticForVerifyContract = async (setConnectAddress) => {
   const web3 = new Web3(
-    new Web3.providers.HttpProvider(
-      EXPLORER_METAMASK_NETWORK_URL ? EXPLORER_METAMASK_NETWORK_URL : ""
-    )
+    new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL ?? "")
   );
   const chain_Id = await web3.eth.getChainId();
   const chainIdHex = `0x${chain_Id.toString(16)}`;
@@ -32,7 +30,7 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
     }
   }
   if (!provider) {
-    return toast.error(Messages.Install_Metamask);
+    return customToast.error(Messages.Install_Metamask);
   }
   try {
     await provider.request({
@@ -86,7 +84,7 @@ export const addQubeticForVerifyContract = async (setConnectAddress) => {
               },
             ],
           });
-          toast.success(Messages.Network_Added);
+          customToast.success(Messages.Network_Added);
         } catch (err) {
           throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
         }
@@ -144,14 +142,14 @@ export const addQubetic = async () => {
     const chainId = await provider.request({ method: "eth_chainId" });
 
     if (!provider) {
-      toast.error(Messages.Install_Metamask);
+      customToast.error(Messages.Install_Metamask);
     } else {
       if (!chainId) {
         throw new Error(Messages.Retrive_Meta_Account);
       }
 
       if (chainId === chainIdHex) {
-        toast.success(Messages.Same_Network);
+        customToast.success(Messages.Same_Network);
         return;
       }
 
@@ -160,7 +158,7 @@ export const addQubetic = async () => {
           method: "wallet_switchEthereumChain",
           params: [{ chainId: chainIdHex }],
         });
-        toast.success(Messages.Successfully_Switched);
+        customToast.success(Messages.Successfully_Switched);
       } catch (switchError) {
         if (switchError.code === 4902) {
           try {
@@ -179,13 +177,13 @@ export const addQubetic = async () => {
                 },
               ],
             });
-            toast.success(Messages.Network_Added);
+            customToast.success(Messages.Network_Added);
           } catch (err) {
             if (
               err.code == -32603 ||
               err.message.includes("is not a function")
             ) {
-              return toast.success(Messages.Network_Added);
+              return customToast.success(Messages.Network_Added);
             }
             let errorMessage = err.message;
             if ((err.code = -32002)) errorMessage = Messages.Pending_Request;
@@ -210,7 +208,7 @@ export const addQubetic = async () => {
                   },
                 ],
               });
-              toast.success(Messages.Network_Added);
+              customToast.success(Messages.Network_Added);
             } catch (err) {
               throw new Error(`${Messages.Network_Add_Error} ${err.message}`);
             }
@@ -220,6 +218,6 @@ export const addQubetic = async () => {
     }
   } catch (error) {
     console.log("error", "error");
-    toast.error(error.message);
+    customToast.error(error.message);
   }
 };

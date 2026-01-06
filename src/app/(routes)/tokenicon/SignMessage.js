@@ -1,7 +1,7 @@
 import { Messages } from "@/constant/constant";
 import postContractVerifictaionIcon from "@/services/postContractVerifictaionIcon";
 import { ethers } from "ethers";
-import toast from "react-hot-toast";
+import { customToast } from "@/components/common/toast";
 
 export const signMessage = async (
   contractAdress,
@@ -29,10 +29,10 @@ export const signMessage = async (
       const res = await postContractVerifictaionIcon(data);
       if ((res && res.status == "401") || (res && res.status == "404")) {
         setIsLoading(false);
-        toast.error(res?.message);
+        customToast.error(res?.message);
       } else if (res && res?.isVerified) {
         setIsLoading(false);
-        toast.success(res?.message);
+        customToast.success(res?.message);
       } else {
         return;
       }
@@ -45,7 +45,7 @@ export const signMessage = async (
     setIsLoading(false);
     const errParsed = JSON.parse(JSON.stringify(err));
     if (errParsed?.info?.error?.code == 4001)
-      return toast.error("User rejected the request");
-    toast.error(errParsed?.shortMessage);
+      return customToast.error("User rejected the request");
+    customToast.error(errParsed?.shortMessage);
   }
 };

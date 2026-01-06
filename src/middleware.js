@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { EXPLORER_NETWORK_NAME, SHOW_FAUCET } from "./constant/constant";
+import { SHOW_FAUCET } from "./constant/constant";
 
 export function middleware(request) {
   const cookies = request.cookies.get("isEVM")?.value;

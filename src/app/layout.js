@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import { DM_Sans } from "next/font/google";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
-import "react-toastify/dist/ReactToastify.css";
 import "../index.scss";
 import "./(routes)/dashboard/dashboard.scss";
 

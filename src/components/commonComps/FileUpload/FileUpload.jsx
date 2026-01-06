@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./FileUpload.scss";
 import { DeleteOutlined } from "@ant-design/icons";
-import { toast } from "react-hot-toast";
+import { customToast } from "@/components/common/toast";
 
 const FileUpload = ({
   label = "Upload Files",
@@ -9,9 +9,9 @@ const FileUpload = ({
   setSelectedFiles,
   selectedFiles,
 }) => {
-  const maxFiles = 4; 
-  const maxSize = 2 * 1024 * 1024; 
-  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; 
+  const maxFiles = 4;
+  const maxSize = 2 * 1024 * 1024;
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -19,18 +19,18 @@ const FileUpload = ({
 
     files.forEach((file) => {
       if (!allowedTypes.includes(file.type)) {
-        toast.error(
+        customToast.error(
           `${file.name} is not a valid image format (JPEG, JPG, PNG).`
         );
       } else if (file.size > maxSize) {
-        toast.error(`${file.name} exceeds the 2MB size limit.`);
+        customToast.error(`${file.name} exceeds the 2MB size limit.`);
       } else {
         validFiles.push(file);
       }
     });
 
     if (validFiles.length > maxFiles) {
-      toast.error(`You can only upload up to ${maxFiles} files.`);
+      customToast.error(`You can only upload up to ${maxFiles} files.`);
       return;
     }
 

@@ -12,7 +12,7 @@ import getContractDetails from "@/services/getContractDetails";
 import getContractVerificationDetail from "@/services/getContractVeriicationDetail";
 import { Button, Checkbox, message } from "antd";
 import { useCallback, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { customToast } from "../common/toast";
 import "../../app/(routes)/contract/verify/verifyContract.scss";
 import { useContractData } from "../contexts/contractContext";
 import CustomInput from "../customInput/CustomInput";
@@ -128,7 +128,7 @@ function PublishContract({ steps, current, prev, next }) {
       !formData?.compilerVersion ||
       !formData?.licenseType
     ) {
-      toast.error("Please fill in all required fields");
+      customToast.error("Please fill in all required fields");
       return;
     }
     if (!isCheck) {
@@ -143,10 +143,10 @@ function PublishContract({ steps, current, prev, next }) {
       setIsLoading(false);
       const verificationType = isContractVerified.verificationType;
       if (verificationType === 1 || verificationType === 2) {
-        toast.success("Contract Already Verified");
+        customToast.success("Contract Already Verified");
         return;
       } else if (verificationType === 0) {
-        toast.success("Contract Verification in Process");
+        customToast.success("Contract Verification in Process");
         return;
       }
     }

@@ -4,9 +4,10 @@ import {
   ErrorStatus,
   FetchingStatus,
   Routes,
-  SuccessStatus
+  SuccessStatus,
 } from "@/constant/constant";
 import getSearchingValue from "@/services/search";
+import { customToast } from "./toast";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Searchicon, Searchicondark } from "../../../public/SvgIcons";
@@ -48,7 +49,7 @@ const SearchbarComponent = ({
     }
     try {
       if (!searchValue) {
-        toast.error("Enter search item");
+        customToast.error("Enter search item");
       } else {
         setSerachStatus(FetchingStatus);
         const res = await getSearchingValue(
@@ -75,7 +76,9 @@ const SearchbarComponent = ({
                   searchValues?.toLowerCase()):
               setSearchData(res?.data?.transaction);
               router.push(
-                `${Routes.Tx_Hash()}${searchValues ? searchValues : searchValue}`
+                `${Routes.Tx_Hash()}${
+                  searchValues ? searchValues : searchValue
+                }`
               );
               setIsSearchClicked(false);
               break;
