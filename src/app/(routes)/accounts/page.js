@@ -15,31 +15,19 @@ const Page = () => {
   const [activeUsersCount, setActiveUsersCount] = useState(0);
   const [order, setOrder] = useState("desc");
 
+  const fetchActiveUsersCount = async () => {
+    const res = await getActiveUsers(1, tableLimit);
+
+    if (res?.data) {
+      setActiveUsersCount(
+        Number(res.data?.pagination?.total ?? res.data?.sessions?.length ?? 0)
+      );
+    }
+  };
+
   useEffect(() => {
-    const fetchCounts = async () => {
-      try {
-        const activeUsersRes = await getActiveUsers(
-          1,
-          tableLimit,
-          order === "desc"
-        );
-
-        if (activeUsersRes?.data) {
-          setActiveUsersCount(
-            Number(
-              activeUsersRes.data.pagination?.total ??
-                activeUsersRes.data.sessions?.length ??
-                0
-            )
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching counts:", error);
-      }
-    };
-
-    fetchCounts();
-  }, [order]);
+    fetchActiveUsersCount();
+  },[]);
 
   const handleTabChange = (key) => {
     setActiveTab(key);
