@@ -1,17 +1,45 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, Tabs } from "antd";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import AccountSummary from "./AccountSummary";
 import "./account.scss";
 import AccountsTxn from "./AccountsTxn";
 import ActiveUsers from "./ActiveUsers";
+import getActiveUsers from "@/services/getActiveUsers";
+import { tableLimit } from "@/constant/constant";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("0");
   const [txnCount, setTxnCount] = useState(0);
   const [activeUsersCount, setActiveUsersCount] = useState(0);
   const [order, setOrder] = useState("desc");
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const activeUsersRes = await getActiveUsers(
+          1,
+          tableLimit,
+          order === "desc"
+        );
+
+        if (activeUsersRes?.data) {
+          setActiveUsersCount(
+            Number(
+              activeUsersRes.data.pagination?.total ??
+                activeUsersRes.data.sessions?.length ??
+                0
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching counts:", error);
+      }
+    };
+
+    fetchCounts();
+  }, [order]);
 
   const handleTabChange = (key) => {
     setActiveTab(key);
