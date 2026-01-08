@@ -19,7 +19,7 @@ import {
 } from "@/constant/constant";
 import ReCAPTCHA from "react-google-recaptcha";
 import postBugReport from "@/services/postBugReport";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 import { LoadingOutlined } from "@ant-design/icons";
 import { isValidEthereumAddress } from "./isValidEthAddress";
 
@@ -146,7 +146,7 @@ const BugForm = () => {
       selectedFiles
     ).then((res) => {
       if (res?.status == "201") {
-        toast.success("Bug submitted successfully.");
+        customToast.success("Bug submitted successfully.");
         setFieldData({
           name: "",
           email_address: "",
@@ -173,7 +173,7 @@ const BugForm = () => {
         if (recaptchaRef.current) recaptchaRef.current.reset();
         setLoading(false);
       } else {
-        toast.error("Something went wrong");
+        customToast.error("Something went wrong");
         setCaptchaToken("");
         if (recaptchaRef.current) recaptchaRef.current.reset();
         setLoading(false);

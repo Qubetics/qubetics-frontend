@@ -3,7 +3,7 @@ import CustomInput from "@/components/customInput/CustomInput";
 import useDebounce from "@/hooks/useDebounce";
 import getContractDetails from "@/services/getContractDetails";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { customToast } from "@/components/common/toast";
 import { isImageUrlValid } from "./isImageUrlValid";
 import { signMessage } from "./SignMessage";
 import "./token.scss";
@@ -38,11 +38,11 @@ const TokenIcon = () => {
   };
   const submitUrl = async () => {
     if (!contractAddress) {
-      toast.error("Enter Contract Address");
+      customToast.error("Enter Contract Address");
       return;
     }
     if (!url) {
-      toast.error("Enter Image Url");
+      customToast.error("Enter Image Url");
       return;
     }
 
@@ -103,7 +103,6 @@ const TokenIcon = () => {
                   label="Enter URL"
                   placeholder="Enter URL"
                   name="url"
-                  
                   onChange={(e) => handleImageChange(e)}
                   value={url}
                 />

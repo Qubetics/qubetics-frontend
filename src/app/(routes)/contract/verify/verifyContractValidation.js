@@ -1,5 +1,5 @@
 import { solidityFile } from "@/constant/constant";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 import { verifyContractApi } from "./verifyContractApi";
 
 export const verifyContractValidation = async (
@@ -21,7 +21,7 @@ export const verifyContractValidation = async (
 ) => {
   if (formData?.compilerType == solidityFile.SINGLE_FILE) {
     if (!solidityCode) {
-      toast.error("Enter Solidity code");
+      customToast.error("Enter Solidity code");
       return;
     }
   }
@@ -30,7 +30,7 @@ export const verifyContractValidation = async (
       fileList.length <= 0) ||
     (formData?.compilerType == solidityFile.JSON_INPUT && fileList.length <= 0)
   ) {
-    toast.error("Please select  file");
+    customToast.error("Please select  file");
     return;
   }
   for (let i = 0; i < inputs.length; i++) {
@@ -38,12 +38,12 @@ export const verifyContractValidation = async (
       (isChecked && inputs[i]?.libraryName == "") ||
       (isChecked && inputs[i]?.libraryAddress == "")
     ) {
-      toast.error("Enter All fields of contract library");
+      customToast.error("Enter All fields of contract library");
       return;
     }
   }
   if (runsCheck && runsOptimizer <= 0) {
-    toast.error("Minimum runs optimizer 1");
+    customToast.error("Minimum runs optimizer 1");
     return;
   }
 

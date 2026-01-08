@@ -7,11 +7,10 @@ import Heading from "@/components/heading/Heading";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
 import Pagination from "@/components/Pagination/Pagination";
 import { solverColumn } from "@/constant/graphTableValues";
-import { SolverInfo } from "./SolverInfo";
 import "./solverListing.scss";
 import GetSolverListing from "@/services/getSolverListing";
 
-const BlockSummary = () => {
+const SolverListing = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [solverListing, setSolverListing] = useState([]);
@@ -46,7 +45,6 @@ const BlockSummary = () => {
     try {
       setLoading(true);
       const result = await GetSolverListing(currentPage, tableLimit, "active");
-      setLoading(false);
 
       if (result?.data?.solver_list?.length) {
         const count = Number(result?.data?.total || 0);
@@ -56,6 +54,8 @@ const BlockSummary = () => {
       }
     } catch (err) {
       console.error("Error", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,7 +68,7 @@ const BlockSummary = () => {
       <div className="container">
         <FilterResult />
         <Heading heading={"Solver Summary"} />
-        <SolverInfo />
+        {/* <SolverInfo /> */}
         <SkeletonTableWrapper
           columns={solverColumn}
           dataSource={solverListing}
@@ -94,4 +94,4 @@ const BlockSummary = () => {
   );
 };
 
-export default BlockSummary;
+export default SolverListing;

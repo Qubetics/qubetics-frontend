@@ -1,9 +1,20 @@
 "use client";
 
-import { getTXNRoute } from "@/utils/commonFunctions";
 import { trackEvent } from "@/utils/eventTrack";
-import { N } from "ethers";
 import Link from "next/link";
+import { ArrowUpicon } from "../../public/SvgIcons";
+
+export const getTXNRoute = () => {
+  const chainType =
+    typeof globalThis !== "undefined" && globalThis.window
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+};
 
 export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
@@ -46,6 +57,7 @@ export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
 export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
+export const OPERATOR_API_URL = process.env.NEXT_PUBLIC_OPERATOR_API_URL;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -105,14 +117,15 @@ export const BUGFORM_APPS = [
   "dVPN Node Operator",
   "Chain Abstraction - Solver Node Setup",
   "Solver Dashboard",
-  "Chain Abstraction - Mobile Application"];
+  "Chain Abstraction - Mobile Application",
+];
 
-  export const BUG_TYPE = [
-            "Minor Bug",
-            "Major Bug",
-            "UI/UX Improvement",
-            "Feature Suggestion",
-          ];
+export const BUG_TYPE = [
+  "Minor Bug",
+  "Major Bug",
+  "UI/UX Improvement",
+  "Feature Suggestion",
+];
 
 export const Messages = {
   //Metamask
@@ -123,7 +136,8 @@ export const Messages = {
   Network_Added: `You have successfully switched to ${EXPLORER_CHAIN_NAME} network.`,
   Network_Add_Error: `Error adding ${EXPLORER_CHAIN_NAME} network: `,
   isTrust: "Kindly use Metamask as your default wallet",
-
+  Pending_Request:
+    "You already have a pending request. Please open your wallet to check it.",
   //faucet
   ENTER_WALLET_ADDRESS: "Please Enter Wallet Address",
   INVALID_ADDRESS: "Invalid Wallet Address",
@@ -163,7 +177,7 @@ export const Routes = {
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
-  Tx_Hash: getTXNRoute(),
+  Tx_Hash: () => getTXNRoute(), // Make it a function
   FAUCET: "/faucet",
   NODES: "/nodes",
   SYNC: "/sync",
@@ -178,6 +192,8 @@ export const Routes = {
   TOKEN_ICON: "/tokenicon",
   DVPNNODES: "/dVPNNodes",
   ACCOUNTS: "/accounts",
+  PROVIDERS: "/providers",
+  PROVIDERS_DETAIL: "/providersDetail",
   SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
@@ -227,6 +243,7 @@ export const nodePerformanceData = (blockHeight) => {
     { value: "6", label: "Countries" },
   ];
 };
+
 export const tooltipContent = {
   total_Dvpn_Provider:
     "The total count of all node providers participating in the dVPN network.",
@@ -249,6 +266,7 @@ export const tooltipContent = {
   finalized_Block:
     "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
 };
+
 export function BlockchainHeaderFunction(currentPath) {
   const onLinkClick = (category, label) => {
     trackEvent({
@@ -309,6 +327,7 @@ export function BlockchainHeaderFunction(currentPath) {
   ];
   return blockchainHeader;
 }
+
 //Node header Function
 export function NodeHeaderFunction(currentPath, onClick) {
   const NodeHeader = [
@@ -370,9 +389,25 @@ export function DvpnNodeHeaderFunction(currentPath, onClick) {
         </Link>
       ),
     },
+    {
+      key: "3",
+      value: "Providers",
+      className: currentPath.startsWith(Routes.PROVIDERS)
+        ? "activeOptions"
+        : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Providers", "Providers")}
+          href="/providers"
+        >
+          Providers
+        </Link>
+      ),
+    },
   ];
   return NodeHeader;
 }
+
 /*BlockChain Header*/
 export const blockchainHeader = [
   {
@@ -508,6 +543,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
     ];
   }
 };
+
 export const generateData = (timeRange) => {
   const data = [];
   const now = new Date();
@@ -540,6 +576,7 @@ export const generateData = (timeRange) => {
   }
   return data;
 };
+
 export const convertArray = (writeObj) => {
   let outPutArray = Object.keys(writeObj).map((t) => {
     if (typeof writeObj[t] == "object") {
@@ -549,6 +586,7 @@ export const convertArray = (writeObj) => {
 
   return outPutArray;
 };
+
 export const createTupleObject = (input) => {
   const newObj = {};
 
@@ -579,6 +617,7 @@ export const createTupleObject = (input) => {
 
   return newObj;
 };
+
 export const toFixedWithoutRounding = (value, precision) => {
   if (value === 0 || value === "0") return "0";
 
@@ -597,6 +636,7 @@ export const toFixedWithoutRounding = (value, precision) => {
 
   return "0";
 };
+
 export const formatValue = (num) => {
   let result;
   switch (true) {
@@ -705,6 +745,7 @@ export const defaultChainOptions = [
     rpcUrl: "https://rpc.mantle.xyz",
   },
 ];
+
 export const firstCapitalLetter = (input) => {
   if (typeof input === "number") return input;
   if (!input) return "";
@@ -945,4 +986,40 @@ export const statusClass = (value) => {
 export const CHAIN_ASSET_MAP = {
   0: "btc",
   9029: "tics",
+};
+
+export const Network = {
+  Native: "Native Chain",
+  Evm: "EVM Chain",
+};
+
+export const TERMS_AND_CONDITIONS =
+  process.env.NEXT_PUBLIC_TERMS_AND_CONDITIONS;
+export const explorerHyperLInk = (value, txn) => {
+  if (!txn) return null;
+
+  let hyperLink;
+  let text;
+
+  switch (value.toLowerCase()) {
+    case "btc":
+      hyperLink = `${BTC_EXPLORER_URL}testnet4/tx/${txn}`;
+      text = "Bitcoin";
+      break;
+    case "tics":
+      hyperLink = `${TICS_EXPLORER_URL}tx/${txn}`;
+      text = "Qubetics";
+      break;
+    default:
+      hyperLink = "";
+      text = "";
+      break;
+  }
+
+  return (
+    <Link className="chain-tag" href={hyperLink} target="_blank">
+      <h3>{text}</h3>
+      <ArrowUpicon />
+    </Link>
+  );
 };

@@ -1,10 +1,10 @@
 const getAddress = (address = "", startLen = 7, endLen = 7) => {
-  // if(address === undefined || address === null || address === "" || address ==="N/A") {
-  //   return "";
-  // }
-  return `${address?.substring(0, startLen)}...${address?.substring(
-    address.length - endLen,
-    address.length
+  if (!address) return "";
+
+  if (address.length <= startLen + endLen) return address;
+
+  return `${address.substring(0, startLen)}...${address.substring(
+    address.length - endLen
   )}`;
 };
 

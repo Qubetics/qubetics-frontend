@@ -1,19 +1,29 @@
-FROM node:18.17.1
-
+FROM node:18-alpine AS deps
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json package-lock.json* ./
+RUN npm ci
 
+FROM node:18-alpine AS builder
+WORKDIR /app
 
-RUN npm install --force
-
-
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# COPY package*.json ./
-
 
 RUN npm run build
 
+FROM node:18-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+RUN addgroup -S nextjs && adduser -S nextjs -G nextjs
+
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+USER nextjs
 EXPOSE 3000
 
-CMD ["npm","run","start"]
+CMD ["node", "server.js"]

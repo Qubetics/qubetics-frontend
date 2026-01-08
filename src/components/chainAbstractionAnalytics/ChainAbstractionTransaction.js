@@ -6,18 +6,12 @@ import { useRouter } from "next/navigation";
 import "./ChainAbstractionAnalytics.scss";
 import GetChainAbstractionTransaction from "@/services/getChainAbstractionTx"; // API call
 import Pagination from "@/components/Pagination/Pagination"; // custom Pagination component
-import {
-  BTC_EXPLORER_URL,
-  pageNo,
-  tableLimit,
-  TICS_EXPLORER_URL,
-} from "@/constant/constant"; // Default pagination constants
+import { explorerHyperLInk, pageNo, tableLimit } from "@/constant/constant"; // Default pagination constants
 import CopyText from "../DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
 import getAddress from "@/utils/getAddress";
 import {
   checkStatus,
-  destinationTxn,
   formatToken,
   getExplorerUrl,
   getTokenIcon,
@@ -25,7 +19,6 @@ import {
   noExponential,
 } from "@/utils/commonFunctions";
 import Link from "next/link";
-import { ArrowUpicon } from "../../../public/SvgIcons";
 
 const ChainAbstractionTransaction = () => {
   const [transactions, setTransactions] = useState([]);
@@ -59,66 +52,25 @@ const ChainAbstractionTransaction = () => {
 
   // ✅ Custom Pagination Handlers
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
   };
 
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    currentPage > 1 && setCurrentPage(currentPage - 1);
   };
 
   const handleLast = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(totalPages);
-    }
+    currentPage < totalPages && setCurrentPage(totalPages);
   };
+  const handleFirst = () => currentPage > 1 && setCurrentPage(1);
 
-  const handleFirst = () => {
-    if (currentPage > 1) {
-      setCurrentPage(1);
-    }
-  };
-
-  const destinationClick = (type, value) => {
-    const routeTo = destinationTxn(type?.toLowerCase(), value);
-    routeTo && router.push(routeTo);
-  };
-
-  const explorerHyperLInk = (value, txn) => {
-    let hyperLink;
-    let text;
-
-    switch (value.toLowerCase()) {
-      case "btc":
-        hyperLink = `${BTC_EXPLORER_URL}${txn}`;
-        text = "Bitcoin";
-        break;
-      case "tics":
-        hyperLink = `${TICS_EXPLORER_URL}tx/${txn}`;
-        text = "Qubetics";
-        break;
-      default:
-        hyperLink = "";
-        text = "";
-        break;
-    }
-
-    return txn ? (
-      <Link className="chain-tag" href={hyperLink}>
-        <h3>{text}</h3>
-        <ArrowUpicon />
-      </Link>
-    ) : null;
-  };
   const handleTransactionClick = (network, transactionHash) => {
     const explorerUrl = getExplorerUrl(network, transactionHash);
     if (explorerUrl) {
       window.open(explorerUrl, "_blank", "noopener,noreferrer");
     }
   };
+
   const columns = [
     {
       title: "Intent Transaction",
@@ -183,7 +135,7 @@ const ChainAbstractionTransaction = () => {
       render: (_, record) => {
         const rawValue = record?.amount;
         const formatted = formatToken(
-          record?.target_token?.toLowerCase(),
+          record?.target_token,
           noExponential(rawValue)
         );
 
@@ -247,9 +199,9 @@ const ChainAbstractionTransaction = () => {
               >
                 {getAddress(record?.solver_tx_hash)}
               </a>
-              <button className="copy_btn">
+              {/* <button className="copy_btn">
                 <CopyText text={record?.solver_tx_hash} />
-              </button>
+              </button> */}
             </span>
             <div className="tx-date">
               {convertToDateTime(record?.updated_at)}

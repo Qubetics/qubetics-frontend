@@ -4,9 +4,7 @@ import CopyText from "@/components/DoCopy/CopyText";
 import {
   capitalizeFirstLetter,
   capitalizeWord,
-  checkStatus,
   formateTotalSupply,
-  formatText,
   formatToTwoDecimals,
   formatMillionNumber,
   noExponential,
@@ -17,14 +15,13 @@ import { convertToDateTime, renderTime } from "@/utils/renderTime";
 import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
+import { Tokenicons } from "../../public/SvgIcons";
 import {
   currencyName,
   formatValue,
   Routes,
   typesOfTransactions,
 } from "./constant";
-import { Tokenicons } from "../../public/SvgIcons";
-import { render } from "sass";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -216,7 +213,7 @@ export const transactionSummarycolumn = [
       <div className="txnHashcopy addressText">
         <Link
           className="bghash"
-          href={`${Routes.Tx_Hash}${text}`}
+          href={`${Routes.Tx_Hash()}${text}`}
           rel="noopener noreferrer"
         >
           {getAddress(text)}
@@ -407,7 +404,7 @@ export const TransactionDetailsColumns = [
       <div className="iconandlink">
         <Link
           className="fromicon"
-          href={`${Routes.Tx_Hash}${text}`}
+          href={`${Routes.Tx_Hash()}${text}`}
           rel="noopener noreferrer"
         >
           {getAddress(text)}
@@ -555,7 +552,7 @@ export const addressDetailColumn = (address) => [
       <div className="iconandlink addressText">
         <Link
           className="fromicon"
-          href={`${Routes.Tx_Hash}${text}`}
+          href={`${Routes.Tx_Hash()}${text}`}
           rel="noopener noreferrer"
         >
           {getAddress(text)}
@@ -830,7 +827,10 @@ export const contractTableColumn = (currentChain) => [
         {text?.txHash ? (
           <>
             {" "}
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`} className="contAdd">
+            <Link
+              href={`${Routes.Tx_Hash()}${text?.txHash}`}
+              className="contAdd"
+            >
               {getAddress(text?.txHash)}
             </Link>{" "}
             <CopyText text={text?.txHash}></CopyText>
@@ -895,11 +895,11 @@ export const contractTransactionsColumn = [
       <div className="iconandlink">
         <Tooltip title={text?.txHash}>
           {text?.txHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txHash}`}>
               {getAddress(text?.txHash)}
             </Link>
           ) : text?.txhash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txhash}`}>
               {getAddress(text?.txhash)}
             </Link>
           ) : (
@@ -1117,11 +1117,11 @@ export const internalTxns = [
       <div className="iconandlink">
         <Tooltip title={text?.txnHash}>
           {text?.txnHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txHash}`}>
               {getAddress(text?.txnHash)}
             </Link>
           ) : text?.txnHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txnHash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txnHash}`}>
               {getAddress(text?.txnHash)}
             </Link>
           ) : (
@@ -1365,15 +1365,13 @@ export const HolderColumn = [
         {text?.address ? (
           <Tooltip title={text?.address}>
             <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
-              {getAddress(text?.address)}{" "}
+              {getAddress(text?.address)}
             </Link>
           </Tooltip>
         ) : (
           "-"
         )}
-        <span>
-          <CopyText text={text?.address} />
-        </span>
+        <CopyText text={text?.address} />
       </div>
     ),
   },
@@ -1415,7 +1413,7 @@ export const EventsColumn = [
     render: (text) => (
       <div className="iconandlink" style={{ verticalAlign: "top" }}>
         {text?.txHash ? (
-          <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+          <Link href={`${Routes.Tx_Hash()}${text?.txHash}`}>
             {getAddress(text?.txHash)}
           </Link>
         ) : (
@@ -1560,7 +1558,7 @@ export const TokenColumn = [
     render: (text) => (
       <div>
         {text?.contractAddress ? (
-          <>
+          <div className="flexedItemsCenter">
             <Link
               href={`/contract/${text?.contractAddress}`}
               className="contAdd"
@@ -1569,7 +1567,7 @@ export const TokenColumn = [
               {getAddress(text?.contractAddress)}{" "}
             </Link>
             <CopyText text={text?.contractAddress} />
-          </>
+          </div>
         ) : (
           "-"
         )}
@@ -1613,7 +1611,7 @@ export const TokenTransfers = [
       <div>
         {text?.txhash ? (
           <>
-            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txhash}`}>
               {" "}
               {getAddress(text?.txhash)}{" "}
             </Link>
@@ -1754,7 +1752,7 @@ export const TokenTransferColumn = [
         {text?.txhash ? (
           <Link
             className="bghash"
-            href={`${Routes.Tx_Hash}${text?.txhash}`}
+            href={`${Routes.Tx_Hash()}${text?.txhash}`}
             rel="noopener noreferrer"
           >
             {getAddress(text?.txhash)}
@@ -1972,7 +1970,7 @@ export const tokensByAddressColumn = [
     render: (text) => (
       <Link
         className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
+        href={`${Routes.Tx_Hash()}${text}`}
         rel="noopener noreferrer"
       >
         {getAddress(text)}
@@ -2126,7 +2124,7 @@ export const dVPNColumn = [
       <div className="addressText">
         <Link
           className="bghash"
-          href={`${Routes.Tx_Hash}${text}`}
+          href={`${Routes.Tx_Hash()}${text}`}
           rel="noopener noreferrer"
         >
           {getAddress(text)}
@@ -2349,7 +2347,7 @@ export const solverColumn = [
     render: (text) => (
       <>
         <div className="iconandlink blockLinkItems">
-          <a>{getAddress(text)}</a>
+          <Tooltip title={text}>{getAddress(text)}</Tooltip>
           <span>
             <CopyText hoverText={"Node Address"} text={text}></CopyText>
           </span>

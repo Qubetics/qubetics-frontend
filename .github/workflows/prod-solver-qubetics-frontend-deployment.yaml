@@ -1,0 +1,22 @@
+name: '[prod] Frontend deployment'
+
+on: 
+  push:
+    branches: 
+      - mainnet
+
+jobs:
+  deploy_solver_chain_abstraction_backend:
+    uses: Qubetics/argocd-qubetics/.github/workflows/deployment.yaml@prod
+    with:
+      SWR_ORGANIZATION: prod-qubetics
+      ARGOCD_BRANCH: prod
+      HUAWEI_REGION: 'ap-southeast-1'
+      ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
+      DEPLOYMENT_PATH: prod-solver-chain-abstraction-frontend/deployment.yaml
+      HUAWEI_IMAGE: prod-solver-chain-abstraction-frontend
+      DOCKER_USERNAME: ap-southeast-1@HPUAJWWFSLCMD312AZSR
+      ENV: ${{ vars.PROD_SOLVER_CHAIN_ABSTRACTION_FRONTEND }}
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD_NEW }}
+      GIT_SSH_KEY: ${{ secrets.ARGOCD_SSH_KEY_NEW }}

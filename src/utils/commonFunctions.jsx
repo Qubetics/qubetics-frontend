@@ -3,6 +3,7 @@ import {
   CHAIN_ASSET_MAP,
   ETH_EXPLORER_URL,
   TICS_EXPLORER_URL,
+  toFixedWithoutRounding,
 } from "@/constant/constant";
 
 Number.prototype.noExponents = function () {
@@ -14,20 +15,28 @@ Number.prototype.noExponents = function () {
   const negative = this < 0 ? "-" : "";
   const [integerPart, decimalPart = ""] = base.replace("-", "").split(".");
 
-  let digits = integerPart + decimalPart;
-
   if (exponent < 0) {
     const zeroCount = Math.abs(exponent) - integerPart.length;
-    return negative + "0." + "0".repeat(zeroCount > 0 ? zeroCount : 0) + digits;
-  } else {
-    const decimalShift = exponent - decimalPart.length;
     return (
       negative +
-      digits +
-      (decimalShift >= 0 ? "0".repeat(decimalShift) : "")
-        .padEnd(exponent + 1, "0")
-        .slice(0, exponent + 1)
+      "0." +
+      "0".repeat(Math.max(0, zeroCount)) +
+      integerPart +
+      decimalPart
     );
+  } else {
+    if (exponent >= decimalPart.length) {
+      const zeros = exponent - decimalPart.length;
+      return negative + integerPart + decimalPart + "0".repeat(zeros);
+    } else {
+      return (
+        negative +
+        integerPart +
+        decimalPart.slice(0, exponent) +
+        "." +
+        decimalPart.slice(exponent)
+      );
+    }
   }
 };
 
@@ -41,7 +50,7 @@ export function noExponentsValue(number) {
 
   // If the number is very small or very large, handle it as a fixed-point number
   if (Math.abs(number) < 1e-6 || Math.abs(number) > 1e21) {
-    return parseFloat(number.toFixed(6)); // Convert to fixed-point with 18 decimals
+    return number; // Convert to fixed-point with 18 decimals
   }
 
   // Convert number to string and split into coefficient and exponent parts
@@ -73,11 +82,11 @@ const truncateDecimals = (value, decimals = 4) => {
   return Math.trunc(value * factor) / factor;
 };
 
-export const formatMillionNumber = (num) => {
+export const formatMillionNumber = (num, precision = 3) => {
   if (num === null || num === undefined || isNaN(num)) return "0";
 
   const format = (value, suffix) => {
-    const truncated = truncateDecimals(value, 4);
+    const truncated = truncateDecimals(value, precision);
     return `${truncated}${suffix}`;
   };
 
@@ -86,7 +95,7 @@ export const formatMillionNumber = (num) => {
   if (num >= 1e6) return format(num / 1e6, " M");
   if (num >= 1e3) return format(num / 1e3, " K");
   if (num > 0 && num < 1) return num.toString();
-  return `${truncateDecimals(num, 4)}`;
+  return `${truncateDecimals(num, precision)}`;
 };
 
 const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
@@ -249,7 +258,7 @@ export const transferType = (value) => {
 export const destinationTxn = (type, value) => {
   switch (type) {
     case "btc":
-      return `${BTC_EXPLORER_URL}tx/${value}`;
+      return `${BTC_EXPLORER_URL}testnet4/tx/${value}`;
     case "tics":
       return `${TICS_EXPLORER_URL}tx/${value}`;
     case "usdt":
@@ -280,7 +289,7 @@ export const formatToken = (type, value) => {
       return "-";
   }
 
-  const formatted = parseFloat(calValue.toFixed(10));
+  const formatted = toFixedWithoutRounding(calValue, 10);
   return noExponential(formatted);
 };
 
@@ -358,20 +367,13 @@ export const getTooltipContent = (token, rawValue, formatted) => {
   return `${formatted} ${token.toUpperCase()}`;
 };
 
-export const BLOCKCHAIN_EXPLORER_URLS = {
-  bitcoin: "https://mempool.space/testnet/tx/",
-  qubetics: "https://testnet-v2.qubetics.work/tx/",
-};
-
 export const getExplorerUrl = (network, transactionHash) => {
   const normalizedNetwork = (network || "").toLowerCase();
 
-  console.log("normalizedNetwork", normalizedNetwork);
-
   if (normalizedNetwork === "bitcoin") {
-    return `${BLOCKCHAIN_EXPLORER_URLS.bitcoin}${transactionHash}`;
+    return `${BTC_EXPLORER_URL}testnet4/tx/${transactionHash}`;
   } else if (normalizedNetwork === "qubetics") {
-    return `${BLOCKCHAIN_EXPLORER_URLS.qubetics}${transactionHash}`;
+    return `${TICS_EXPLORER_URL}tx/${transactionHash}`;
   }
 
   // fallback
@@ -382,7 +384,7 @@ export const isValidAlphaNumeric = (value) => {
   return value.length >= 7 && isAlphaNumeric;
 };
 
-export const getTXNRoute=()=>{
+export const getTXNRoute = () => {
   const chainType =
     typeof window !== "undefined"
       ? localStorage.getItem("chainType")
@@ -392,4 +394,4 @@ export const getTXNRoute=()=>{
   } else {
     return "/txn/";
   }
-}
+};

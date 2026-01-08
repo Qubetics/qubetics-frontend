@@ -1,0 +1,19 @@
+@import "../../../../_mixins.scss";
+@import "../../../../_var.scss";
+.providersDetailSec {
+  .headerButton {
+    margin-top: 40px;
+  }
+  .analytictext {
+    @include fluid-type(320px, 1920px, 16px, 24px);
+    font-weight: 600;
+  }
+  .providersDetailTable {
+    .active {
+      color: #34c759;
+    }
+    .inActive {
+      color: #ff4e4e;
+    }
+  }
+}
