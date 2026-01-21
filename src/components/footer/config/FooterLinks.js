@@ -65,12 +65,12 @@ export const footerLinks = [
       },
       {
         label: "Node Operator",
-        href: "http://prod-dvpn-service-provider.qubetics.work",
+        href: "https://dvpn-node-operator.qubetics.work",
       },
 
       {
         label: "Node Provider",
-        href: "http://prod-dvpn-node-operator.qubetics.work/",
+        href: "https://dvpn-provider.qubetics.work",
       },
     ],
   },
