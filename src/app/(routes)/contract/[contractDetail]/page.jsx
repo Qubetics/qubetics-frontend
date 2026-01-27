@@ -71,9 +71,6 @@ const ContractDetail = () => {
   const params = useParams();
   const router = useRouter();
 
-  let chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
-
   const { isNetworkChanged } = useGetNetwork();
 
   const fetchContractDetails = async () => {
@@ -235,7 +232,7 @@ const ContractDetail = () => {
     {
       label: "Internal Txns",
       key: "5",
-      children: <InternalTxns   hash={params?.contractDetail} />,
+      children: <InternalTxns hash={params?.contractDetail} />,
     },
     {
       label: "Analytics",

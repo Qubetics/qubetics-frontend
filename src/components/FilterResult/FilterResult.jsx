@@ -110,7 +110,7 @@ const FilterResult = () => {
 
   const redirectOnEnter = (selectedItems) => {
     const targetedItem = selectedItems?.filter(
-      (items, id) => id === selectedIndex
+      (items, id) => id === selectedIndex,
     );
 
     targetedItem?.map((ele) => {
@@ -217,6 +217,10 @@ const FilterResult = () => {
           return router.push(`/account/${redirectAddress}`);
         case "intentList":
           return router.push(`/chain-abstraction/${redirectAddress}`);
+        case "nodeAddress":
+          return router.push(`/dVPNNodes/${redirectAddress}`);
+        case "provider":
+          return router.push(`/providersDetail/${redirectAddress}`);
         default:
           return router.push(`/address/${redirectAddress}`);
       }
@@ -239,6 +243,10 @@ const FilterResult = () => {
           return `/account/${selectedAddress}`;
         case "intentList":
           return `/chain-abstraction/${selectedAddress}`;
+        case "nodeAddress":
+          return `/dVPNNodes/${selectedAddress}`;
+        case "provider":
+          return `/providersDetail/${selectedAddress}`;
         default:
           return `/address/${selectedAddress}`;
       }
@@ -259,6 +267,7 @@ const FilterResult = () => {
       window.removeEventListener("scroll", preventOuterScroll);
     };
   }, [open]);
+
   return (
     <div class="filter-result">
       <div className="searchbar searchFilter">
@@ -355,15 +364,21 @@ const FilterResult = () => {
                               href={
                                 items?.address ||
                                 items?.contractAddress ||
-                                items?.contract_address
+                                items?.contract_address ||
+                                items?.nodeAddress ||
+                                items?.provider
                                   ? (items?.address ||
                                       items?.contractAddress ||
-                                      items?.contract_address) &&
+                                      items?.contract_address ||
+                                      items?.nodeAddress ||
+                                      items?.provider) &&
                                     handleKeyEnter(
                                       undefined,
                                       items?.address ||
                                         items?.contractAddress ||
-                                        items?.contract_address
+                                        items?.contract_address ||
+                                        items?.nodeAddress ||
+                                        items?.provider,
                                     )
                                   : ""
                               }
@@ -388,7 +403,8 @@ const FilterResult = () => {
                                     //   :
                                     items.address ||
                                       items?.contractAddress ||
-                                      items?.contract_address
+                                      items?.contract_address ||
+                                      items?.nodeAddress
                                   }
                                 </p>
                               </div>

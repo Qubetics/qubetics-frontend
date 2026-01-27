@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import VerifySecondStep from "@/app/(routes)/contract/verify/VerifySecondStep";
-import { Steps, theme } from "antd";
+import { Steps } from "antd";
 import PublishContract from "../publishContract/PublishContract";
-import { InitStatus, verifyContractConstant } from "@/constant/constant";
-import SearchbarComponent from "../search/SearchbarComponent";
+import {  verifyContractConstant } from "@/constant/constant";
 import FilterResult from "../FilterResult/FilterResult";
 
 const steps = [
@@ -28,9 +27,7 @@ const steps = [
  */
 
 const App = () => {
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
 
-  const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
   const next = () => {
