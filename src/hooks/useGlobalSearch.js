@@ -1,9 +1,9 @@
 "use client";
 import getSearchingValue from "@/services/getGlobalSearch";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
 import getChainAbstractionSearch from "@/services/getChainAbstractionSearch";
+import getSpecificProviderSearch from "@/services/getSpecificProviderSearch";
 import { isValidAlphaNumeric } from "@/utils/commonFunctions";
 // import useToggleChainContext from "./useToggleChainContext";
 
@@ -14,7 +14,6 @@ export default function useGlobalSearch(page = 1) {
   const [searchResult, setSearchResult] = useState([]);
   const [err, setErr] = useState(false);
   const [dynamicTab, setDynamicTab] = useState([]);
-  const router = useRouter();
   // const { isEVM } = useToggleChainContext();
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -36,6 +35,10 @@ export default function useGlobalSearch(page = 1) {
       ? ["addresses"]
       : data?.intentList
       ? ["intentList"]
+      : data?.nodeAddress
+      ? ["nodeAddress"]
+      : data?.provider
+      ? ["provider"]
       : [];
   };
 
@@ -94,13 +97,33 @@ export default function useGlobalSearch(page = 1) {
             ],
           },
         };
-        
-        case "intentList":
+
+      case "nodeAddress":
+        return {
+          results: {
+            [key]: [
+              {
+                nodeAddress: dataKey?.address,
+              },
+            ],
+          },
+        };
+      case "intentList":
         return {
           results: {
             [key]: [
               {
                 address: dataKey[0]?.intent_hash,
+              },
+            ],
+          },
+        };
+      case "provider":
+        return {
+          results: {
+            [key]: [
+              {
+                address: dataKey,
               },
             ],
           },
@@ -111,6 +134,19 @@ export default function useGlobalSearch(page = 1) {
   async function getSearchResult() {
     // setIsLoading(true);
     try {
+      if (debounce.startsWith("qubeticsprov")) {
+        const response = await getSpecificProviderSearch(debounce);
+        if (response.error) {
+          setErr(true);
+          setSearchResult([]);
+          setDynamicTab([]);
+        } else {
+          setErr(false);
+          setSearchResult(response?.data ? getResponse(response?.data) : []);
+          setDynamicTab(getType(response?.data));
+        }
+        return;
+      }
       const response = await getSearchingValue(debounce);
       if (response.error) {
         if (isValidAlphaNumeric(debounce)) {
@@ -121,7 +157,7 @@ export default function useGlobalSearch(page = 1) {
             setDynamicTab([]);
           } else {
             setErr(false);
-            setSearchResult(result?.data ?getResponse(result?.data) :[]);
+            setSearchResult(result?.data ? getResponse(result?.data) : []);
             setDynamicTab(getType(result?.data));
           }
         } else {
@@ -150,7 +186,7 @@ export default function useGlobalSearch(page = 1) {
       }
     } catch (err) {
       setIsLoading(false);
-      console.log(err);
+      console.error(err);
       throw err;
     } finally {
       setIsLoading(false);
