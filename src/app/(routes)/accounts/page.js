@@ -1,17 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, Tabs } from "antd";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import AccountSummary from "./AccountSummary";
 import "./account.scss";
 import AccountsTxn from "./AccountsTxn";
 import ActiveUsers from "./ActiveUsers";
+import getActiveUsers from "@/services/getActiveUsers";
+import { tableLimit } from "@/constant/constant";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("0");
   const [txnCount, setTxnCount] = useState(0);
   const [activeUsersCount, setActiveUsersCount] = useState(0);
   const [order, setOrder] = useState("desc");
+
+  const fetchActiveUsersCount = async () => {
+    const res = await getActiveUsers(1, tableLimit);
+
+    if (res?.data) {
+      setActiveUsersCount(
+        Number(res.data?.pagination?.total ?? res.data?.sessions?.length ?? 0)
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchActiveUsersCount();
+  },[]);
 
   const handleTabChange = (key) => {
     setActiveTab(key);
