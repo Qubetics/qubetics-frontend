@@ -1,6 +1,6 @@
-"use-client";
+"use client";
 import React from "react";
-import Steps from "@/components/steps/Steps"
+import Steps from "@/components/steps/Steps";
 import "./verifyContract.scss";
 const Page = () => {
   return (

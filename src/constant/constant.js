@@ -32,7 +32,7 @@ export const EXPLORER_METAMASK_NETWORK_URL =
   process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
 export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
   process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
-  16
+  16,
 );
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
@@ -465,7 +465,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
     },
 
     {
-      key: "2",
+      key: "3",
       value: "Verifiedcontract",
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
@@ -939,7 +939,7 @@ export const formatPrecision = (num, minDecimals, maxPrecision) => {
       nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
       numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
         nonZeroDecimals,
-        minDecimals
+        minDecimals,
       )}`;
     }
   }
@@ -961,7 +961,7 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   trailingZerosStr = trailingZerosStr.substring(
     0,
     (minDecimals ? minDecimals : 0) -
-      (decimalStr.length - trailingZerosStr.length)
+      (decimalStr.length - trailingZerosStr.length),
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };
