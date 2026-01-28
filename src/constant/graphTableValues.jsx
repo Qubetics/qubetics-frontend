@@ -783,7 +783,10 @@ export const contractTableColumn = (currentChain) => [
           )} */}
           <Link href={`/contract/${text?.address}`}>
             {capitalizeWord(
-              text?.contractname || text?.contractName || text?.tokenName || "-"
+              text?.contractname ||
+                text?.contractName ||
+                text?.tokenName ||
+                "-",
             )}
           </Link>
         </span>
@@ -921,8 +924,8 @@ export const contractTransactionsColumn = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord(text?.method)
           : text?.type
-          ? capitalizeWord(text?.type)
-          : "-"}
+            ? capitalizeWord(text?.type)
+            : "-"}
       </span>
     ),
   },
@@ -1143,8 +1146,8 @@ export const internalTxns = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord("transfer")
           : "Transfer"
-          ? capitalizeWord("Transfer")
-          : "-"}
+            ? capitalizeWord("Transfer")
+            : "-"}
       </span>
     ),
   },
@@ -1281,14 +1284,14 @@ export const internalTxns = [
           title={
             text?.value
               ? formatMillionNumber(
-                  Number(noExponential(Number(text?.value) / 10 ** Number(18)))
+                  Number(noExponential(Number(text?.value) / 10 ** Number(18))),
                 )
               : "0"
           }
         >
           {text?.value
             ? formatMillionNumber(
-                noExponential(Number(text?.value) / 10 ** Number(18))
+                noExponential(Number(text?.value) / 10 ** Number(18)),
               )
             : "0"}
         </Tooltip>
@@ -1395,7 +1398,7 @@ export const HolderColumn = [
       >
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
           ? noExponential(
-              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
+              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply),
             ) + " %"
           : "0%"}
       </Tooltip>
@@ -1498,8 +1501,8 @@ export const EventsColumn = [
                         </p>
                         {res?.type?.includes("uint") &&
                         res?.value?.includes("0x") ? (
-                          <span>{Number(res?.value)}</span>
-                        ) : !res?.value && res?.value?.includes("0x") ? (
+                          <span>{noExponential(res?.value)}</span>
+                        ) : res?.value?.includes("0x") ? (
                           <Link href={`/address/${res?.value}`}>
                             {res?.value}
                           </Link>
@@ -1585,8 +1588,8 @@ export const TokenColumn = [
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
             : formateTotalSupply(
                 noExponential(
-                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
-                )
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal),
+                ),
               )
           : "-"}
       </span>
@@ -1637,7 +1640,7 @@ export const TokenTransfers = [
     key: "input",
     render: (text) => (
       <span className="">
-        {text?.input ? JSON.parse(text.input)?.name ?? "-" : "-"}
+        {text?.input ? (JSON.parse(text.input)?.name ?? "-") : "-"}
       </span>
     ),
   },
@@ -1679,7 +1682,7 @@ export const TokenTransfers = [
           const filteredData = parsedData?.params.filter(
             (e) =>
               (e?.name === "to" || e?.name === "recipient") &&
-              e?.type === "address"
+              e?.type === "address",
           );
           address = filteredData[0]?.value ?? null;
         }
@@ -1713,7 +1716,7 @@ export const TokenTransfers = [
           const amtArr = parsedData?.params.filter(
             (e) =>
               (e.name === "amount" || e.name === "value") &&
-              e.type.includes("uint")
+              e.type.includes("uint"),
           );
           amount = amtArr[0]?.value;
         }
@@ -1772,8 +1775,8 @@ export const TokenTransferColumn = [
         {text?.input
           ? capitalizeWord(JSON.parse(text?.input)?.name)
           : text?.logs?.length > 0
-          ? JSON.parse(text?.logs)[0]?.name
-          : "-"}
+            ? JSON.parse(text?.logs)[0]?.name
+            : "-"}
       </div>
     ),
   },

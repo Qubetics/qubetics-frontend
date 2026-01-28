@@ -20,14 +20,14 @@ const Page = () => {
 
     if (res?.data) {
       setActiveUsersCount(
-        Number(res.data?.pagination?.total ?? res.data?.sessions?.length ?? 0)
+        Number(res.data?.pagination?.total ?? res.data?.sessions?.length ?? 0),
       );
     }
   };
 
   useEffect(() => {
     fetchActiveUsersCount();
-  },[]);
+  }, []);
 
   const handleTabChange = (key) => {
     setActiveTab(key);

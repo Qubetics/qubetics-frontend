@@ -5,6 +5,7 @@ import {
   TICS_EXPLORER_URL,
   toFixedWithoutRounding,
 } from "@/constant/constant";
+import BigNumber from "bignumber.js";
 
 Number.prototype.noExponents = function () {
   const value = this.toString();
@@ -41,40 +42,22 @@ Number.prototype.noExponents = function () {
 };
 
 export const noExponential = (num) => {
-  return Number(num).noExponents();
+  if (num === null || num === undefined || num === "") return "0";
+  return new BigNumber(num).toFixed().replace(/\.?0+$/, "");
 };
 
 export function noExponentsValue(number) {
-  if (number == 0) return 0;
-  if (isNaN(number)) return 0; // Handle invalid input
+  if (number === 0 || number === "0" || number === "0x0") return "0";
+  if (!number) return "0";
 
-  // If the number is very small or very large, handle it as a fixed-point number
-  if (Math.abs(number) < 1e-6 || Math.abs(number) > 1e21) {
-    return number; // Convert to fixed-point with 18 decimals
+  try {
+    const bn = new BigNumber(number);
+    if (bn.isNaN()) return "0";
+    // Using toFixed(18) to match the "up to 18" requirement while stripping trailing zeros
+    return bn.toFixed(18).replace(/\.?0+$/, "");
+  } catch (e) {
+    return "0";
   }
-
-  // Convert number to string and split into coefficient and exponent parts
-  const [coefficient, exponent] = String(number).split(/[eE]/);
-
-  // If there's no exponent part, return the original number
-  if (!exponent) return Number(number);
-
-  // Handle cases with exponents
-  const mag = Number(exponent);
-  const sign = number < 0 ? -1 : 1; // Retain the original sign
-
-  // Calculate the value without exponential notation
-  const coefficientValue = parseFloat(coefficient.replace(".", ""));
-  const decimalPlaces = coefficient.includes(".")
-    ? coefficient.split(".")[1].length
-    : 0;
-
-  const numericValue =
-    mag > 0
-      ? coefficientValue * 10 ** (mag - decimalPlaces)
-      : coefficientValue / 10 ** (Math.abs(mag) + decimalPlaces);
-
-  return sign * numericValue;
 }
 
 const truncateDecimals = (value, decimals = 4) => {
