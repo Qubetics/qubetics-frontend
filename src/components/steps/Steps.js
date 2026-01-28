@@ -4,7 +4,6 @@ import { Steps } from "antd";
 import PublishContract from "../publishContract/PublishContract";
 import { verifyContractConstant } from "@/constant/constant";
 import FilterResult from "../FilterResult/FilterResult";
-import PublishContract from "../publishContract/PublishContract";
 
 const steps = [
   {
