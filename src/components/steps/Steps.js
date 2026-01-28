@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
 import VerifySecondStep from "@/app/(routes)/contract/verify/VerifySecondStep";
 import { Steps } from "antd";
 import PublishContract from "../publishContract/PublishContract";
-import {  verifyContractConstant } from "@/constant/constant";
+import { verifyContractConstant } from "@/constant/constant";
 import FilterResult from "../FilterResult/FilterResult";
+import PublishContract from "../publishContract/PublishContract";
 
 const steps = [
   {
@@ -27,7 +27,6 @@ const steps = [
  */
 
 const App = () => {
-
   const [current, setCurrent] = useState(0);
 
   const next = () => {

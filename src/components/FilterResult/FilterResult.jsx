@@ -110,7 +110,7 @@ const FilterResult = () => {
 
   const redirectOnEnter = (selectedItems) => {
     const targetedItem = selectedItems?.filter(
-      (items, id) => id === selectedIndex,
+      (items, id) => id === selectedIndex
     );
 
     targetedItem?.map((ele) => {
@@ -378,7 +378,7 @@ const FilterResult = () => {
                                         items?.contractAddress ||
                                         items?.contract_address ||
                                         items?.nodeAddress ||
-                                        items?.provider,
+                                        items?.provider
                                     )
                                   : ""
                               }
@@ -404,7 +404,8 @@ const FilterResult = () => {
                                     items.address ||
                                       items?.contractAddress ||
                                       items?.contract_address ||
-                                      items?.nodeAddress
+                                      items?.nodeAddress ||
+                                      items?.provider
                                   }
                                 </p>
                               </div>
