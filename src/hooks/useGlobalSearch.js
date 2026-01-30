@@ -6,6 +6,7 @@ import getChainAbstractionSearch from "@/services/getChainAbstractionSearch";
 import getSpecificProviderSearch from "@/services/getSpecificProviderSearch";
 import { isValidAlphaNumeric } from "@/utils/commonFunctions";
 // import useToggleChainContext from "./useToggleChainContext";
+import { HIDE_CHAIN_ABSTRACTION } from "@/constant/constant";
 
 export default function useGlobalSearch(page = 1) {
   const [searchText, setSearchText] = useState("");
@@ -24,22 +25,22 @@ export default function useGlobalSearch(page = 1) {
     return data?.transaction
       ? ["transaction"]
       : data?.block
-      ? ["block"]
-      : data?.contract
-      ? ["contract"]
-      : data?.transactions
-      ? ["transactions"]
-      : data?.account
-      ? ["account"]
-      : data?.addresses
-      ? ["addresses"]
-      : data?.intentList
-      ? ["intentList"]
-      : data?.nodeAddress
-      ? ["nodeAddress"]
-      : data?.provider
-      ? ["provider"]
-      : [];
+        ? ["block"]
+        : data?.contract
+          ? ["contract"]
+          : data?.transactions
+            ? ["transactions"]
+            : data?.account
+              ? ["account"]
+              : data?.addresses
+                ? ["addresses"]
+                : data?.intentList && HIDE_CHAIN_ABSTRACTION != 1
+                  ? ["intentList"]
+                  : data?.nodeAddress
+                    ? ["nodeAddress"]
+                    : data?.provider
+                      ? ["provider"]
+                      : [];
   };
 
   const getResponse = (data) => {
@@ -109,6 +110,7 @@ export default function useGlobalSearch(page = 1) {
           },
         };
       case "intentList":
+        if (HIDE_CHAIN_ABSTRACTION == 1) return {};
         return {
           results: {
             [key]: [
@@ -149,7 +151,7 @@ export default function useGlobalSearch(page = 1) {
       }
       const response = await getSearchingValue(debounce);
       if (response.error) {
-        if (isValidAlphaNumeric(debounce)) {
+        if (isValidAlphaNumeric(debounce) && HIDE_CHAIN_ABSTRACTION != 1) {
           const result = await getChainAbstractionSearch(debounce);
           if (result.error) {
             setErr(true);
@@ -170,8 +172,8 @@ export default function useGlobalSearch(page = 1) {
           chain === "EVM Chain"
             ? response?.data?.tabs || getType(response?.data)
             : response?.data
-            ? getType(response?.data)
-            : []
+              ? getType(response?.data)
+              : [],
         );
         setSearchResult(
           chain === "EVM Chain"
@@ -179,8 +181,8 @@ export default function useGlobalSearch(page = 1) {
               ? response?.data
               : getResponse(response?.data)
             : response?.data
-            ? getResponse(response?.data)
-            : {}
+              ? getResponse(response?.data)
+              : {},
         );
         setErr(false);
       }

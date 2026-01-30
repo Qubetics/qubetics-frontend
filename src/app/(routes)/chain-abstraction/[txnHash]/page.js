@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import GetTransactionOverview from "@/services/getTransactionOverview"; // API call
 import "./TransactionOverview.scss";
 import { RightArrowIcon } from "../../../../../public/SvgIcons";
 
-import { isStringValue, Routes, statusClass } from "@/constant/constant";
+import {
+  HIDE_CHAIN_ABSTRACTION,
+  isStringValue,
+  Routes,
+  statusClass,
+} from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import CopyText from "@/components/DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
@@ -22,6 +27,8 @@ import { Col, Row } from "antd";
 import FilterResult from "@/components/FilterResult/FilterResult";
 
 const TransactionOverview = () => {
+  if (HIDE_CHAIN_ABSTRACTION == 1) notFound();
+
   const { txnHash } = useParams();
   const [intentData, setIntentData] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
@@ -67,7 +74,7 @@ const TransactionOverview = () => {
               {intentData?.status || intentData?.status == 0 ? (
                 <h3
                   className={`status${checkStatus(
-                    intentData.intent_update_status
+                    intentData.intent_update_status,
                   )}`}
                 >
                   {checkStatus(intentData.intent_update_status)}
@@ -75,10 +82,6 @@ const TransactionOverview = () => {
               ) : null}
             </h2>
           </div>
-          {/* <div className="transaction_overview_head_buttons">
-            <Commonbtn text="View to base Explorer" />
-            <Commonbtn text="View to Arbitrum Explorer" />
-          </div> */}
         </div>
 
         <div className="transacton_overview_card overview_listing">
@@ -95,9 +98,6 @@ const TransactionOverview = () => {
                           <span>
                             <CopyText text={intentData?.intent_hash} />
                           </span>
-                          {/* <span>
-                    <ExternalArrowIcon />
-                  </span> */}
                         </div>
                       </>
                     ) : (
@@ -111,16 +111,14 @@ const TransactionOverview = () => {
                     {getTokenIcon(intentData?.source_token)}{" "}
                     {formatToken(
                       intentData?.source_token?.toLowerCase(),
-                      intentData?.source_amount
+                      intentData?.source_amount,
                     )}{" "}
-                    {/* {formatPrecision(intentData?.sourceAmount)} */}
                     {intentData?.source_token?.toUpperCase() || "-"}
                   </h5>
                 </div>
                 <div className="list_item">
                   <h4>Source Chain</h4>
                   <div className="chain">
-                    {/* <Image src={baseImg} alt="" /> */}
                     <h5>
                       {isStringValue(intentData?.source_chain?.toUpperCase())}
                     </h5>
@@ -161,7 +159,7 @@ const TransactionOverview = () => {
                           onClick={() =>
                             handleTransactionClick(
                               intentData?.target_chain,
-                              intentData?.solver_tx_hash
+                              intentData?.solver_tx_hash,
                             )
                           }
                         >
@@ -171,9 +169,6 @@ const TransactionOverview = () => {
                           <span>
                             <CopyText text={intentData?.solver_tx_hash} />
                           </span>
-                          {/* <span>
-                      <ExternalArrowIcon />
-                    </span> */}
                         </div>
                       </>
                     ) : (
@@ -187,16 +182,14 @@ const TransactionOverview = () => {
                     {getTokenIcon(intentData?.target_token)}{" "}
                     {formatToken(
                       intentData?.target_token?.toLowerCase(),
-                      intentData?.amount
+                      intentData?.amount,
                     )}{" "}
-                    {/* {formatPrecision(intentData?.amount)} */}
                     {intentData?.target_token?.toUpperCase() || "-"}
                   </h5>
                 </div>
                 <div className="list_item">
                   <h4>Target Chain</h4>
                   <div className="chain">
-                    {/* <Image src={Arbitrum} alt="" /> */}
                     <h5>
                       {isStringValue(intentData?.target_chain?.toUpperCase())}
                     </h5>
@@ -313,66 +306,10 @@ const TransactionOverview = () => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="list_item">
-              <h4>Token Contract</h4>
-              <h5>
-                {isStringValue(intentData.sourceToken)}
-                <div className="action_btns_copy">
-                  <span>
-                    <CopyIcons />
-                  </span>
-                </div>
-              </h5>
-            </div> */}
               </div>
             </Col>
           </Row>
         </div>
-
-        {/* <h2 className="sub_heading">Fee & Logs</h2> */}
-        {/* <div className="transacton_overview_card">
-          <div className="listing">
-            <div className="list_item">
-              <h4>Fees</h4>
-              <h5>{isStringValue(intentData?.gas_metadata?.platform_fees)}</h5>
-            </div>
-            <div className="list_item">
-              <h4>Gas Used</h4>
-              <h5>{isStringValue(intentData?.gas_metadata?.gas_used)}</h5>
-            </div>
-          </div>
-
-          <div className="status-log">
-            <h4>Status Log</h4>
-            <div className="timeline">
-              <div className="timeline-item active">
-                <span></span>
-                <div className="list_item">
-                  <h4>Submitted</h4>
-                  <h5>{convertToDateTime(intentData?.created_at)}</h5>
-                </div>
-              </div>
-              <div className="timeline-item">
-                <span></span>
-                <div className="list_item">
-                  <h4>Executed</h4>
-                  <h5>{convertToDateTime(intentData?.solverTxExecuted)}</h5>
-                </div>
-              </div>
-              <div className="timeline-item active">
-                <span></span>
-                <div>
-                  <h4>{checkStatus(intentData.status)}</h4>
-                  <h5>
-                    {intentData?.status !== 2
-                      ? convertToDateTime(intentData?.updated_at)
-                      : "-"}
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

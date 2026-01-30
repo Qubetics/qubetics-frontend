@@ -8,20 +8,34 @@ import {
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
 
+import { HIDE_CHAIN_ABSTRACTION } from "../../../constant/constant";
+
+const quickLinks = [
+  {
+    label: "Tokens",
+    href: "/token",
+  },
+  { label: "Blockchain", href: "/blocks" },
+  { label: "Validators", href: "/validators" },
+  { label: "Nodes", href: "/nodes" },
+  ...(HIDE_CHAIN_ABSTRACTION == 1
+    ? []
+    : [
+        {
+          label: "Chain Abstraction",
+          href: "/chain-abstraction",
+        },
+        {
+          label: "Solver Listing",
+          href: "/solver-listing",
+        },
+      ]),
+];
+
 export const footerLinks = [
   {
     title: "Quick Links",
-    items: [
-      {
-        label: "Tokens",
-        href: "/token",
-      },
-      { label: "Blockchain", href: "/blocks" },
-      { label: "Validators", href: "/validators" },
-      { label: "Nodes", href: "/nodes" },
-      { label: "Chain Abstraction", href: "/chain-abstraction" },
-      { label: "Solver Listing", href: "/solver-listing" },
-    ],
+    items: quickLinks,
   },
   {
     title: "About Us",

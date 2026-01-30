@@ -58,6 +58,8 @@ export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
 export const OPERATOR_API_URL = process.env.NEXT_PUBLIC_OPERATOR_API_URL;
+export const HIDE_CHAIN_ABSTRACTION =
+  process.env.NEXT_PUBLIC_HIDE_CHAIN_ABSTRACTION;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -301,19 +303,24 @@ export function BlockchainHeaderFunction(currentPath) {
         </Link>
       ),
     },
-    {
-      key: "3",
-      value: "Chain Abstraction",
-      className:
-        currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
-      label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
-    },
-    {
-      key: "4",
-      value: "Solver Listing",
-      className: currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
-      label: <Link href="/solver-listing">Solver Listing</Link>,
-    },
+    ...(HIDE_CHAIN_ABSTRACTION == 1
+      ? []
+      : [
+          {
+            key: "3",
+            value: "Chain Abstraction",
+            className:
+              currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+            label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
+          },
+          {
+            key: "4",
+            value: "Solver Listing",
+            className:
+              currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
+            label: <Link href="/solver-listing">Solver Listing</Link>,
+          },
+        ]),
     // {
     //   key: "3",
     //   value: "Validator",

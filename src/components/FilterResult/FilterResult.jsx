@@ -2,7 +2,11 @@ import { memo, useEffect, useRef, useState } from "react";
 import { BlockIcon, Searchicon } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
 import Page from "@/app/(routes)/notfound/page";
-import { firstCapitalLetter, Routes } from "@/constant/constant";
+import {
+  firstCapitalLetter,
+  Routes,
+  HIDE_CHAIN_ABSTRACTION,
+} from "@/constant/constant";
 import useGlobalSearch from "@/hooks/useGlobalSearch";
 import useOnClickOutside from "@/hooks/useoutsideClick";
 import Link from "next/link";
@@ -110,7 +114,7 @@ const FilterResult = () => {
 
   const redirectOnEnter = (selectedItems) => {
     const targetedItem = selectedItems?.filter(
-      (items, id) => id === selectedIndex
+      (items, id) => id === selectedIndex,
     );
 
     targetedItem?.map((ele) => {
@@ -216,6 +220,7 @@ const FilterResult = () => {
         case "account":
           return router.push(`/account/${redirectAddress}`);
         case "intentList":
+          if (HIDE_CHAIN_ABSTRACTION == 1) return;
           return router.push(`/chain-abstraction/${redirectAddress}`);
         case "nodeAddress":
           return router.push(`/dVPNNodes/${redirectAddress}`);
@@ -242,6 +247,7 @@ const FilterResult = () => {
         case "account":
           return `/account/${selectedAddress}`;
         case "intentList":
+          if (HIDE_CHAIN_ABSTRACTION == 1) return "";
           return `/chain-abstraction/${selectedAddress}`;
         case "nodeAddress":
           return `/dVPNNodes/${selectedAddress}`;
@@ -378,7 +384,7 @@ const FilterResult = () => {
                                         items?.contractAddress ||
                                         items?.contract_address ||
                                         items?.nodeAddress ||
-                                        items?.provider
+                                        items?.provider,
                                     )
                                   : ""
                               }
