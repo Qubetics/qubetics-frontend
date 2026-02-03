@@ -3,6 +3,7 @@
 import { trackEvent } from "@/utils/eventTrack";
 import Link from "next/link";
 import { ArrowUpicon } from "../../public/SvgIcons";
+import { toFixed } from "@/utils/commonFunctions";
 
 export const getTXNRoute = () => {
   const chainType =
@@ -638,31 +639,19 @@ export const toFixedWithoutRounding = (value, precision) => {
 };
 
 export const formatValue = (num) => {
-  let result;
-  switch (true) {
-    case num >= 1e24:
-      result = (num / 1e24).toFixed(2) + " S"; // Septillion (1e24)
-      break;
-    case num >= 1e18:
-      result = (num / 1e18).toFixed(2) + " Q";
-      break;
-    case num >= 1e12:
-      result = (num / 1e12).toFixed(2) + " T";
-      break;
-    case num >= 1e9:
-      result = (num / 1e9).toFixed(2) + " B";
-      break;
-    case num >= 1e6:
-      result = (num / 1e6).toFixed(2) + " M";
-      break;
-    case num >= 1e3:
-      result = (num / 1e3).toFixed(2) + " K";
-      break;
-    default:
-      result = num?.toString();
-      break;
-  }
-  return result;
+  if (num === null || num === undefined) return "0";
+  const units = [
+    { value: 1e24, suffix: " S" },
+    { value: 1e18, suffix: " Q" },
+    { value: 1e12, suffix: " T" },
+    { value: 1e9, suffix: " B" },
+    { value: 1e6, suffix: " M" },
+    { value: 1e3, suffix: " K" },
+  ];
+  const unit = units.find((u) => num >= u.value);
+  if (!unit) return num.toString();
+
+  return toFixed(num / unit.value, 2) + unit.suffix;
 };
 
 export const defaultChainOptions = [
