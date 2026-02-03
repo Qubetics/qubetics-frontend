@@ -2,12 +2,10 @@ import { NATIVE_EXPLORER_API_URL } from "@/constant/constant";
 import {
   TRANS_HISTORY_CHART_7_DAYS,
   TRANS_HISTORY_CHART_30_DAYS,
-  TRANS_HISTORY_CHART_365_DAYS,
   TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
 
 export default async function getUpTimeHistory(chartType, nodeName) {
-  console.log(chartType, chartType === TRANS_HISTORY_CHART_YEAR, "chartType");
   try {
     const customChart = (chartType) => {
       if (chartType === TRANS_HISTORY_CHART_7_DAYS) {

@@ -32,7 +32,7 @@ export const BlockInfo = ({ blocksData }) => {
         return res;
       }
     } catch (error) {
-      console.log(
+      console.error(
         "error while converting validator address to native : ",
         error
       );

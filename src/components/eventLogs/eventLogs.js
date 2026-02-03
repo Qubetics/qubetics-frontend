@@ -1,5 +1,5 @@
 import React from "react";
-import { Collapse, ConfigProvider, Space } from "antd";
+import { Collapse, ConfigProvider } from "antd";
 import "./event_log.scss";
 
 const EventLogs = ({ logs }) => {
@@ -21,10 +21,6 @@ const EventLogs = ({ logs }) => {
         </div>
       ),
     })) || [];
-
-  const onChange = (key) => {
-    console.log("Active panel key:", key);
-  };
 
   return (
     <ConfigProvider
@@ -48,7 +44,7 @@ const EventLogs = ({ logs }) => {
       }}
     >
       <div className="customCollapse">
-        <Collapse items={items} onChange={onChange} expandIconPosition="end" />
+        <Collapse items={items} expandIconPosition="end" />
       </div>
     </ConfigProvider>
   );

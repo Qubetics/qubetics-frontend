@@ -85,14 +85,20 @@ const QubeticNetworkNode = ({ nodesData }) => {
                     <Col key={index} xs={12} sm={12} md={12} lg={8}>
                       <div className="innerNode">
                         <h4>{item.value}</h4>
-                        <span
+                        <div
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "5px",
+                            gap: "1px",
                           }}
                         >
-                          <p>{item.label}</p>
+                          <div
+                            style={{
+                              color: "#A0A0A0",
+                            }}
+                          >
+                            {item.label}
+                          </div>
                           {/* <InfoCircleOutlined
                           style={{ color: "#A0A0A0" }}
                           className="infoIcon"
@@ -103,7 +109,7 @@ const QubeticNetworkNode = ({ nodesData }) => {
                               className="infoIcon"
                             />
                           </Tooltip>
-                        </span>
+                        </div>
                       </div>
                     </Col>
                   ))}

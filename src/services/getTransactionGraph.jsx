@@ -4,7 +4,6 @@ import {
   TRANS_HISTORY_CHART_SECONDS,
   TRANS_HISTORY_CHART_YEAR,
 } from "@/constant/graphTableValues";
-import { is } from "date-fns/esm/locale";
 
 export default async function getTransactionGraph(chartType) {
   let chain =
@@ -18,20 +17,20 @@ export default async function getTransactionGraph(chartType) {
       return chartType === TRANS_HISTORY_CHART_SECONDS
         ? { interval: isEVM ? 24 : 1, time: "hourly" }
         : chartType === TRANS_HISTORY_CHART_YEAR
-        ? { interval: isEVM ? 12 : 1, time: isEVM ? "monthly" : "y" }
-        : chartType === TRANS_HISTORY_CHART_MINUTES
-        ? { interval: 7, time: isEVM ? "daily" : "d" }
-        : { interval: 30, time: isEVM ? "daily" : "d" };
+          ? { interval: isEVM ? 12 : 1, time: isEVM ? "monthly" : "y" }
+          : chartType === TRANS_HISTORY_CHART_MINUTES
+            ? { interval: 7, time: isEVM ? "daily" : "d" }
+            : { interval: 30, time: isEVM ? "daily" : "d" };
     };
     const data = getData(chartType);
 
     const response =
       chain == "EVM Chain"
         ? await fetch(
-            `${EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`
+            `${EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`,
           )
         : await fetch(
-            `${NATIVE_EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`
+            `${NATIVE_EXPLORER_API_URL}explorer/graph/tps?interval=${data?.interval}&time=${data?.time}`,
           );
     const result = await response.json();
     return result;
