@@ -43,7 +43,7 @@ Number.prototype.noExponents = function () {
 
 export const noExponential = (num) => {
   if (num === null || num === undefined || num === "") return "0";
-  return new BigNumber(num).toFixed().replace(/\.?0+$/, "");
+  return new BigNumber(num).toFixed();
 };
 
 export function noExponentsValue(number) {
@@ -85,7 +85,7 @@ const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
   if (apr?.length > 9) {
     return `${apr?.substring(0, startLen)}...${apr?.substring(
       apr?.length - endLen,
-      apr?.length
+      apr?.length,
     )}`;
   } else {
     return apr;
@@ -143,8 +143,9 @@ export const capitalizeWord = (str) => {
 };
 
 export function toFixed(num = 0, fixed = 0) {
-  const fixedVal = Math.pow(10, fixed);
-  return noExponential(Math.floor(num * fixedVal) / fixedVal);
+  return new BigNumber(num)
+    .decimalPlaces(fixed, BigNumber.ROUND_FLOOR)
+    .toFixed();
 }
 
 export const randomNoGenerator = () => {
@@ -152,10 +153,11 @@ export const randomNoGenerator = () => {
   return num.toFixed(2);
 };
 export const formatDecimal = (number) => {
-  let [beforeDecimal, afterDecimal] = number.toString().split(".");
-  let afterDecimalFive = afterDecimal ? afterDecimal.slice(0, 5) : "";
-  if (afterDecimal === undefined) return beforeDecimal;
-  return beforeDecimal + "." + afterDecimalFive;
+  if (!number || isNaN(number)) return "0";
+
+  return new BigNumber(number)
+    .decimalPlaces(5, BigNumber.ROUND_FLOOR)
+    .toFixed();
 };
 export const formateTotalSupply = (num) => {
   if (!num || num === null || num === undefined) return 0;
@@ -182,7 +184,7 @@ export const formateTotalSupply = (num) => {
 };
 
 export function noExponentialFixed(num) {
-  return num.toFixed(5).replace(/\.?0+$/, "");
+  return new BigNumber(num).decimalPlaces(5, BigNumber.ROUND_FLOOR).toFixed();
 }
 
 export const getOffset = (page = 1, limit = 10) => {
@@ -284,7 +286,7 @@ export function capitalizeFirstLetter(str) {
 export const fetchTokenPrices = async () => {
   try {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd"
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd",
     );
 
     if (response.ok) {
