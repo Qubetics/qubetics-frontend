@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import VerifySecondStep from "@/app/(routes)/contract/verify/VerifySecondStep";
 import { Steps } from "antd";
 import PublishContract from "../publishContract/PublishContract";
