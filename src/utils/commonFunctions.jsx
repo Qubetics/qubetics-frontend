@@ -85,7 +85,7 @@ const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
   if (apr?.length > 9) {
     return `${apr?.substring(0, startLen)}...${apr?.substring(
       apr?.length - endLen,
-      apr?.length,
+      apr?.length
     )}`;
   } else {
     return apr;
@@ -286,7 +286,7 @@ export function capitalizeFirstLetter(str) {
 export const fetchTokenPrices = async () => {
   try {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd",
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd"
     );
 
     if (response.ok) {
