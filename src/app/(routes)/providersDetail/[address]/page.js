@@ -1,7 +1,11 @@
 "use client";
 import { Col, Row, Tooltip } from "antd";
 import React, { useState, useEffect } from "react";
-import { HrsEarnings, TotalEarnings, TotalUsers } from "../../../../../public/SvgIcons";
+import {
+  HrsEarnings,
+  TotalEarnings,
+  TotalUsers,
+} from "../../../../../public/SvgIcons";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import CopyText from "@/components/DoCopy/CopyText";
@@ -27,8 +31,7 @@ function ProvidersDetail() {
   const { address } = useParams();
   const [nodeSummaryStatus, setNodeSummaryStatus] = useState(true);
   const [nodeSummary, setNodeSummary] = useState(null);
-  const [providerEarning,setProviderEarning] = useState(null);
-  console.log("🚀 ~ ProvidersDetail ~ providerEarning:", providerEarning)
+  const [providerEarning, setProviderEarning] = useState(null);
   const router = useRouter();
 
   const providerDetailsColumns = [
@@ -39,7 +42,12 @@ function ProvidersDetail() {
       render: (text, record) => (
         <span
           onClick={() => router.push(`/dVPNNodes/${record?.dvpnName}`)}
-          style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
+          style={{
+            cursor: "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "4px",
+          }}
         >
           {record?.dvpnName || "-"}
           <span>
@@ -64,19 +72,19 @@ function ProvidersDetail() {
     }
   };
 
-  const fetchProviderEarning = async () =>{
-    try{
-      const response = await getNodeEarnings(address);
-      setProviderEarning(response?.data);
-    } catch (err){
-      console.log("Error failed to fetch earning")
-    }
-  }
+  const fetchProviderEarning = async () => {
+    const response = await getNodeEarnings(address);
+    setProviderEarning(response?.data);
+  };
 
   const fetchData = async () => {
     try {
       setProvidersDetailStatus(true);
-      const response = await getProvidersDetail(currentPage, tableLimit, address);
+      const response = await getProvidersDetail(
+        currentPage,
+        tableLimit,
+        address
+      );
 
       if (response && response?.data) {
         const details = response?.data?.nodes || [];
@@ -109,9 +117,12 @@ function ProvidersDetail() {
     }
   };
 
-  const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
-  const handlePrevious = () => currentPage > 1 && setCurrentPage(currentPage - 1);
-  const handleLast = () => currentPage < totalPages && setCurrentPage(totalPages);
+  const handleNext = () =>
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const handlePrevious = () =>
+    currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleLast = () =>
+    currentPage < totalPages && setCurrentPage(totalPages);
   const handleFirst = () => setCurrentPage(1);
 
   useEffect(() => {
@@ -151,8 +162,14 @@ function ProvidersDetail() {
             <CardsOnchain
               text="Total Earnings"
               balance={
-                <Tooltip title={`${providerEarning?.totalEarning || 0} ${currencyName}`}>
-                  <span>{`${formatToTwoDecimals(providerEarning?.totalEarning || 0)} ${currencyName}`}</span>
+                <Tooltip
+                  title={`${
+                    providerEarning?.totalEarning || 0
+                  } ${currencyName}`}
+                >
+                  <span>{`${formatToTwoDecimals(
+                    providerEarning?.totalEarning || 0
+                  )} ${currencyName}`}</span>
                 </Tooltip>
               }
               img={<TotalEarnings />}
@@ -160,14 +177,25 @@ function ProvidersDetail() {
             />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
-            <CardsOnchain text="Total Node Operators" balance={totalProviders} img={<TotalUsers />} hideTooltip />
+            <CardsOnchain
+              text="Total Node Operators"
+              balance={totalProviders}
+              img={<TotalUsers />}
+              hideTooltip
+            />
           </Col>
           <Col xs={24} md={12} lg={12} xl={8} xxl={8}>
             <CardsOnchain
               text="Hourly Earnings"
               balance={
-                <Tooltip title={`${providerEarning?.dailyEarning || 0} ${currencyName}`}>
-                  <span>{`${formatToTwoDecimals(providerEarning?.dailyEarning || 0)} ${currencyName}`}</span>
+                <Tooltip
+                  title={`${
+                    providerEarning?.dailyEarning || 0
+                  } ${currencyName}`}
+                >
+                  <span>{`${formatToTwoDecimals(
+                    providerEarning?.dailyEarning || 0
+                  )} ${currencyName}`}</span>
                 </Tooltip>
               }
               img={<HrsEarnings />}
