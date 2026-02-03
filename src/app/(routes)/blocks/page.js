@@ -59,7 +59,6 @@ const BlockSummary = () => {
         throw new Error("Blocks not found");
       }
     } catch (err) {
-      console.log("Error while getting blocks data : ", err);
       setBlockSummaryStatus(ErrorStatus);
       setLoading(false);
       return err;

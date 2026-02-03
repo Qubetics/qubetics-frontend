@@ -217,7 +217,6 @@ export const addQubetic = async () => {
       }
     }
   } catch (error) {
-    console.log("error", "error");
     customToast.error(error.message);
   }
 };

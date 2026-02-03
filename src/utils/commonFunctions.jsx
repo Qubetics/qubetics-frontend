@@ -66,7 +66,7 @@ const truncateDecimals = (value, decimals = 4) => {
 };
 
 export const formatMillionNumber = (num, precision = 3) => {
-  if (num === null || num === undefined || isNaN(num)) return "0";
+  if (!num || isNaN(num)) return "0";
 
   const format = (value, suffix) => {
     const truncated = truncateDecimals(value, precision);

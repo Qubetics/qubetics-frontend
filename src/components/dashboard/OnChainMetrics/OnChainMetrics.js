@@ -1,13 +1,7 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
-import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
-import {
-  formateTotalSupply,
-  formatMillionNumber,
-  formatToTwoDecimals,
-  noExponentsValue,
-} from "@/utils/commonFunctions";
+import { formatMillionNumber, noExponentsValue } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
@@ -28,7 +22,6 @@ import { currencyName } from "@/constant/constant";
 const OnChainMetrics = ({ stats }) => {
   const [price, setPrice] = useState("");
   const webSocketData = useLatestData();
-  const { diffs } = useAverageBlockTime();
   const { isLight } = useThemeData();
 
   useEffect(() => {
@@ -40,7 +33,7 @@ const OnChainMetrics = ({ stats }) => {
       let response = await getQubeticsPrice();
       setPrice(response?.data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -98,8 +91,7 @@ const OnChainMetrics = ({ stats }) => {
                   {formatMillionNumber(
                     noExponentsValue(
                       Number(stats?.community_pool) / 10 ** Number(18)
-                    ) || 0,
-                    
+                    ) || 0
                   )}{" "}
                   {currencyName}
                 </Tooltip>
