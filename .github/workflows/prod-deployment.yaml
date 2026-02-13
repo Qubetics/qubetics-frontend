@@ -7,7 +7,7 @@ on:
 
 jobs:
   prod_deploy_explorer_frontend:
-    uses: ./.github/workflows/explorer-frontend.yaml
+    uses: Qubetics/argocd-qubetics/.github/workflows/deployment.yaml@prod
     with:
       SWR_ORGANIZATION: prod-qubetics
       ARGOCD_BRANCH: prod
