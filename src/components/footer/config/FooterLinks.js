@@ -79,12 +79,12 @@ export const footerLinks = [
       },
       {
         label: "Node Operator",
-        href: "http://prod-dvpn-node-operator.qubetics.work",
+        href: "https://ticsdvpn.com",
       },
 
       {
-        label: "Node Provider",
-        href: "http://prod-dvpn-service-provider.qubetics.work",
+        label: "Service Provider",
+        href: "https://ticsdvpn.com/provider",
       },
     ],
   },
