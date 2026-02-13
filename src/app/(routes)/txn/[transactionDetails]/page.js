@@ -8,10 +8,10 @@ import LogsDetail from "@/components/logsDetail/LogsDetail";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
 import {
-    ErrorStatus,
-    FetchingStatus,
-    InitStatus,
-    SuccessStatus,
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
 } from "@/constant/constant";
 import getNativeTxnDetails from "@/services/getNativeTxnDetails";
 import { Tabs } from "antd";
@@ -123,11 +123,7 @@ const page = () => {
     internalTxns.length > 0 && {
       label: "Internal Transactions",
       key: "2",
-      children: (
-        <>
-          <InternalTxns hash={params?.transactionDetails} tab={tab} />
-        </>
-      ),
+      children: <InternalTxns hash={params?.transactionDetails} tab={tab} />,
     },
   ].filter(Boolean);
 

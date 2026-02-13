@@ -33,7 +33,7 @@ export default function LayoutProvider({ children }) {
           pathName === Routes.DASHBOARD ? "dashboardmaindiv" : ""
         }`}
       >
-        {(pathName !== "/bug-submission" && SHOW_FAUCET !== "0" )&& (
+        {pathName !== "/bug-submission" && SHOW_FAUCET !== "0" && (
           <div className="bugSubButton">
             <button
               className="headermetaBtn"

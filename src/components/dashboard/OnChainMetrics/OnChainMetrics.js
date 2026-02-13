@@ -1,8 +1,7 @@
 "use client";
 import CardsOnchain from "@/components/cardOnChain/CardsOnchain";
-import useAverageBlockTime from "@/components/common/useAverageBlockTime";
 import { useLatestData } from "@/components/contexts/latest_data";
-import { formatMillionNumber } from "@/utils/commonFunctions";
+import { formatMillionNumber, noExponentsValue } from "@/utils/commonFunctions";
 import { Col, Row, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import {
@@ -16,14 +15,13 @@ import {
 
 import { useThemeData } from "@/components/contexts/theme_context";
 import getQubeticsPrice from "@/services/getQubeticsPrice";
-import { useMediaQuery } from "react-responsive";
 import "../../../app/(routes)/dashboard/dashboard.scss";
 import "../../../index.scss";
+import { currencyName } from "@/constant/constant";
 
 const OnChainMetrics = ({ stats }) => {
   const [price, setPrice] = useState("");
   const webSocketData = useLatestData();
-  const { diffs } = useAverageBlockTime();
   const { isLight } = useThemeData();
 
   useEffect(() => {
@@ -35,7 +33,7 @@ const OnChainMetrics = ({ stats }) => {
       let response = await getQubeticsPrice();
       setPrice(response?.data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -45,7 +43,7 @@ const OnChainMetrics = ({ stats }) => {
         <Row gutter={[10, 16]} className="onchainrowdata">
           <Col xs={24} md={12} lg={12} xl={2} xxl={2}>
             <CardsOnchain
-              text="TICS Price"
+              text={`${currencyName} Price`}
               balance={price ? "$" + Number(price).toFixed(6) + " " : "$0"}
               img={<TickPriceIcon />}
               title="The current market price of 1 Qubetics (TICS) in USD."
@@ -86,12 +84,16 @@ const OnChainMetrics = ({ stats }) => {
               text="Community Pool"
               balance={
                 <Tooltip
-                  title={Number(stats?.community_pool) / 10 ** Number(18)}
+                  title={noExponentsValue(
+                    Number(stats?.community_pool) / 10 ** Number(18)
+                  )}
                 >
                   {formatMillionNumber(
-                    Number(stats?.community_pool) / 10 ** Number(18)
-                  ) || 0}{" "}
-                  TICS
+                    noExponentsValue(
+                      Number(stats?.community_pool) / 10 ** Number(18)
+                    ) || 0
+                  )}{" "}
+                  {currencyName}
                 </Tooltip>
               }
               img={<TotalAccountIcon />}

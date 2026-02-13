@@ -19,9 +19,6 @@ const ContractTransactions = ({ hash, tab }) => {
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
 
   const fetchTransactions = async () => {
     try {

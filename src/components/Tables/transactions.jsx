@@ -19,24 +19,16 @@ export default function Transactions({ setTxnData }) {
   const { isNetworkChanged } = useGetNetwork();
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  const [pageToSend, setPageToSend] = useState(1);
   const [txCount, setTxCount] = useState();
   const [nextCursor, setNextCursor] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState();
   const [previousCursor, setPreviousCursor] = useState(1);
   const [transactionData, setTransactionData] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState(InitStatus);
-  // const [orderval, setOrderVal] = useState(searchParams.get("order") || "desc");
-  const page = searchParams.get("page") || 1;
+  const page = Number(searchParams.get("page") || 1);
   const pageid = searchParams.get("id") || 1;
   const order = searchParams.get("order") || "desc";
-  const [filterVal, setFilterVal] = useState("desc");
-
-  let chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
 
   const fetchData = async () => {
     try {
@@ -62,7 +54,6 @@ export default function Transactions({ setTxnData }) {
       }
     } catch (err) {
       setTransactionData([]);
-      console.log("Error while getting tx ", err);
       setTransactionStatus(ErrorStatus);
       return err;
     }
@@ -71,30 +62,27 @@ export default function Transactions({ setTxnData }) {
   useEffect(() => {
     if (isNetworkChanged) {
       fetchData();
-      setPageToSend(1);
-      setCurrentPage(1);
     }
   }, [isNetworkChanged]);
 
   useEffect(() => {
     fetchData();
-  }, [pageid, order]);
+  }, [page, pageid, order]);
 
   const handleChange = (value) => {
-    setFilterVal(value);
-    setCurrentPage(1);
     const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set("page", 1);
-    newSearchParams.set("id", 1);
+    newSearchParams.set("page", "1");
+    newSearchParams.set("id", "1");
     newSearchParams.set("order", value);
     router.push(`?${newSearchParams.toString()}`);
   };
+
   const handleNext = () => {
     if (page < totalPages) {
       // Create a new URLSearchParams object to modify query parameters
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", Number(page) + 1);
-      newSearchParams.set("id", nextCursor);
+      newSearchParams.set("page", String(page + 1));
+      newSearchParams.set("id", String(nextCursor));
       newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
@@ -102,8 +90,8 @@ export default function Transactions({ setTxnData }) {
   const handlePrevious = () => {
     if (page > 1) {
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", Number(page) - 1);
-      newSearchParams.set("id", previousCursor);
+      newSearchParams.set("page", String(page - 1));
+      newSearchParams.set("id", String(previousCursor));
       newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
@@ -112,18 +100,18 @@ export default function Transactions({ setTxnData }) {
   const handleLast = () => {
     if (page < totalPages) {
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", totalPages);
-      newSearchParams.set("id", lastPage);
+      newSearchParams.set("page", String(totalPages));
+      newSearchParams.set("id", String(lastPage));
       newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
   };
 
   const handleFirst = () => {
-    if (page <= totalPages) {
+    if (page > 1) {
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set("page", 1);
-      newSearchParams.set("id", 1);
+      newSearchParams.set("page", "1");
+      newSearchParams.set("id", "1");
       newSearchParams.set("order", order);
       router.push(`?${newSearchParams.toString()}`);
     }
@@ -134,13 +122,12 @@ export default function Transactions({ setTxnData }) {
       <div className="totalTransactions">
         {txCount && (
           <>
-            <h2>{`Total of ${formatMillionNumber(
-              Number(txCount)
-            )} transactions`}</h2>
+            <h2>{`Total of ${formatMillionNumber(txCount)} transactions`}</h2>
             <Space wrap>
               <Select
-              title=""
+                title=""
                 defaultValue={order}
+                value={order}
                 style={{
                   width: 123,
                 }}

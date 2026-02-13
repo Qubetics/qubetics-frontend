@@ -1,9 +1,12 @@
 "use client";
 import getSearchingValue from "@/services/getGlobalSearch";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
+import getChainAbstractionSearch from "@/services/getChainAbstractionSearch";
+import getSpecificProviderSearch from "@/services/getSpecificProviderSearch";
+import { isValidAlphaNumeric } from "@/utils/commonFunctions";
 // import useToggleChainContext from "./useToggleChainContext";
+import { HIDE_CHAIN_ABSTRACTION } from "@/constant/constant";
 
 export default function useGlobalSearch(page = 1) {
   const [searchText, setSearchText] = useState("");
@@ -12,7 +15,6 @@ export default function useGlobalSearch(page = 1) {
   const [searchResult, setSearchResult] = useState([]);
   const [err, setErr] = useState(false);
   const [dynamicTab, setDynamicTab] = useState([]);
-  const router = useRouter();
   // const { isEVM } = useToggleChainContext();
   let chain =
     typeof window !== "undefined" && localStorage.getItem("chainType");
@@ -23,16 +25,22 @@ export default function useGlobalSearch(page = 1) {
     return data?.transaction
       ? ["transaction"]
       : data?.block
-      ? ["block"]
-      : data?.contract
-      ? ["contract"]
-      : data?.transactions
-      ? ["transactions"]
-      : data?.account
-      ? ["account"]
-      : data?.addresses
-      ? ["addresses"]
-      : [];
+        ? ["block"]
+        : data?.contract
+          ? ["contract"]
+          : data?.transactions
+            ? ["transactions"]
+            : data?.account
+              ? ["account"]
+              : data?.addresses
+                ? ["addresses"]
+                : data?.intentList && HIDE_CHAIN_ABSTRACTION != 1
+                  ? ["intentList"]
+                  : data?.nodeAddress
+                    ? ["nodeAddress"]
+                    : data?.provider
+                      ? ["provider"]
+                      : [];
   };
 
   const getResponse = (data) => {
@@ -90,24 +98,82 @@ export default function useGlobalSearch(page = 1) {
             ],
           },
         };
+
+      case "nodeAddress":
+        return {
+          results: {
+            [key]: [
+              {
+                nodeAddress: dataKey?.address,
+              },
+            ],
+          },
+        };
+      case "intentList":
+        if (HIDE_CHAIN_ABSTRACTION == 1) return {};
+        return {
+          results: {
+            [key]: [
+              {
+                address: dataKey[0]?.intent_hash,
+              },
+            ],
+          },
+        };
+      case "provider":
+        return {
+          results: {
+            [key]: [
+              {
+                address: dataKey,
+              },
+            ],
+          },
+        };
     }
   };
 
   async function getSearchResult() {
     // setIsLoading(true);
     try {
+      if (debounce.startsWith("qubeticsprov")) {
+        const response = await getSpecificProviderSearch(debounce);
+        if (response.error) {
+          setErr(true);
+          setSearchResult([]);
+          setDynamicTab([]);
+        } else {
+          setErr(false);
+          setSearchResult(response?.data ? getResponse(response?.data) : []);
+          setDynamicTab(getType(response?.data));
+        }
+        return;
+      }
       const response = await getSearchingValue(debounce);
       if (response.error) {
-        setErr(true);
-        setSearchResult([]);
-        setDynamicTab([]);
+        if (isValidAlphaNumeric(debounce) && HIDE_CHAIN_ABSTRACTION != 1) {
+          const result = await getChainAbstractionSearch(debounce);
+          if (result.error) {
+            setErr(true);
+            setSearchResult([]);
+            setDynamicTab([]);
+          } else {
+            setErr(false);
+            setSearchResult(result?.data ? getResponse(result?.data) : []);
+            setDynamicTab(getType(result?.data));
+          }
+        } else {
+          setErr(true);
+          setSearchResult([]);
+          setDynamicTab([]);
+        }
       } else {
         setDynamicTab(
           chain === "EVM Chain"
             ? response?.data?.tabs || getType(response?.data)
             : response?.data
-            ? getType(response?.data)
-            : []
+              ? getType(response?.data)
+              : [],
         );
         setSearchResult(
           chain === "EVM Chain"
@@ -115,14 +181,14 @@ export default function useGlobalSearch(page = 1) {
               ? response?.data
               : getResponse(response?.data)
             : response?.data
-            ? getResponse(response?.data)
-            : {}
+              ? getResponse(response?.data)
+              : {},
         );
         setErr(false);
       }
     } catch (err) {
       setIsLoading(false);
-      console.log(err);
+      console.error(err);
       throw err;
     } finally {
       setIsLoading(false);

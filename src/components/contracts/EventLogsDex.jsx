@@ -24,7 +24,7 @@ export const EventLogsDex = ({ text, decodedLogs }) => {
           {text?.topics?.map((item, index) => (
             <p key={index}>
               {`[topic${index}]`}{" "}
-              {selectedVal === "hex" ? item : noExponentsValue(Number(item))}
+              {selectedVal === "hex" ? item : noExponentsValue(item)}
             </p>
           ))}
           <div className="logsInnerSelect">

@@ -44,10 +44,6 @@ function VerifySecondStep({ steps, current, prev }) {
     }
   }, [resetState]);
 
-  const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-  };
-
   useEffect(() => {
     if (
       formData?.compilerType == solidityFile.JSON_INPUT &&

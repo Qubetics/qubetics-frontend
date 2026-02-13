@@ -28,7 +28,6 @@ const Contract = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [contractData, setContractData] = useState([]);
   const [previousCursor, setPreviousCursor] = useState(1);
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [contractStatus, SetContractStatus] = useState(InitStatus);
   const [searchText, setSearchText] = useState("");
   const [order, setOrder] = useState("");

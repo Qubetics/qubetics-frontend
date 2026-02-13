@@ -1,15 +1,29 @@
 "use client";
 
-import { getTXNRoute } from "@/utils/commonFunctions";
 import { trackEvent } from "@/utils/eventTrack";
-import { N } from "ethers";
 import Link from "next/link";
+import { ArrowUpicon } from "../../public/SvgIcons";
+import { toFixed } from "@/utils/commonFunctions";
 
+export const getTXNRoute = () => {
+  const chainType =
+    typeof globalThis !== "undefined" && globalThis.window
+      ? localStorage.getItem("chainType")
+      : "EVM Chain";
+  if (chainType === "EVM Chain") {
+    return "/tx/";
+  } else {
+    return "/txn/";
+  }
+};
+
+export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
 export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const NATIVE_EXPLORER_API_URL = `${process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL}qubetics/`;
+export const NATIVE_EXPLORER_API_URL =
+  process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
 export const NATIVE_EXPLORER_SOCKET_URL =
   process.env.NEXT_PUBLIC_NATIVE_SOCKET_URL;
@@ -17,8 +31,10 @@ export const EXPLORER_METAMASK_NAVIGATION =
   process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
 export const EXPLORER_METAMASK_NETWORK_URL =
   process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
-export const EXPLORER_META_NETWORK_CHAIN_ID =
-  process.env.NEXT_PUBLIC_QUBETICS_CHAINID;
+export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
+  process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
+  16
+);
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
 export const BLOCK_TIME = process.env.NEXT_PUBLIC_EXPLORER_BLOCK_TIME;
@@ -36,6 +52,15 @@ export const GoogleKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_KEY;
 export const METAMASK_DAPP_URL = process.env.NEXT_PUBLIC_METAMASK_DAPP_URL;
 export const BUG_REPORT_API = process.env.NEXT_PUBLIC_BUG_REPORT_API_URL;
 export const G_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_G_TAG_MANAGER_ID;
+export const CHAIN_ABSTRACTION_API_URL =
+  process.env.NEXT_PUBLIC_CHAIN_ABSTRACTION_API_URL;
+export const SOLVER_API_URL = process.env.NEXT_PUBLIC_SOLVER_API_URL;
+export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
+export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
+export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
+export const OPERATOR_API_URL = process.env.NEXT_PUBLIC_OPERATOR_API_URL;
+export const HIDE_CHAIN_ABSTRACTION =
+  process.env.NEXT_PUBLIC_HIDE_CHAIN_ABSTRACTION;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -49,7 +74,6 @@ export const HTTP_METHODS = {
   PATCH: "PATCH",
 };
 
-/*Blocks & Transactions Page Size */
 export const tableLimit = 10;
 export const totalTableDataLength = 50;
 
@@ -69,7 +93,7 @@ export const typesOfTransactions = {
 export const validationtValue = {
   START_ADDRESS: "0x",
   FAUCET_PLACEHOLDER: "Enter your wallet address",
-  FACUCET_AMOUNT_UPTO: 20,
+  FACUCET_AMOUNT_UPTO: 105,
   BLOCKCHAIN: "Blockchain",
 };
 
@@ -83,6 +107,28 @@ export const chain = {
   NATIVE: "Native Chain",
   EVM: "EVM Chain",
 };
+export const DVPN_TRANSACTION_TYPE = {
+  START_SUBSCRIPTION: "START_SUBSCRIPTION",
+  END_SUBSCRIPTION: "END_SUBSCRIPTION",
+  START_REQUEST: "START_REQUEST",
+  END_REQUEST: "END_REQUEST",
+};
+
+export const BUGFORM_APPS = [
+  "Explorer",
+  "dVPN Application",
+  "dVPN Node Operator",
+  "Chain Abstraction - Solver Node Setup",
+  "Solver Dashboard",
+  "Chain Abstraction - Mobile Application",
+];
+
+export const BUG_TYPE = [
+  "Minor Bug",
+  "Major Bug",
+  "UI/UX Improvement",
+  "Feature Suggestion",
+];
 
 export const Messages = {
   //Metamask
@@ -93,7 +139,8 @@ export const Messages = {
   Network_Added: `You have successfully switched to ${EXPLORER_CHAIN_NAME} network.`,
   Network_Add_Error: `Error adding ${EXPLORER_CHAIN_NAME} network: `,
   isTrust: "Kindly use Metamask as your default wallet",
-
+  Pending_Request:
+    "You already have a pending request. Please open your wallet to check it.",
   //faucet
   ENTER_WALLET_ADDRESS: "Please Enter Wallet Address",
   INVALID_ADDRESS: "Invalid Wallet Address",
@@ -129,10 +176,11 @@ export const Routes = {
   HOME: "/",
   DASHBOARD: "/dashboard",
   BLOCKS: "/blocks",
+  CHAIN_ABSTRACTION: "/chain-abstraction",
   BLOCK_NO: "/blocks/",
   TRANSACTIONS: "/tx",
   Tx_ADDRESS: "/address/",
-  Tx_Hash: getTXNRoute(),
+  Tx_Hash: () => getTXNRoute(), // Make it a function
   FAUCET: "/faucet",
   NODES: "/nodes",
   SYNC: "/sync",
@@ -145,6 +193,11 @@ export const Routes = {
   STATS: "/charts",
   TOKEN_TXNS: "/tokentxns",
   TOKEN_ICON: "/tokenicon",
+  DVPNNODES: "/dVPNNodes",
+  ACCOUNTS: "/accounts",
+  PROVIDERS: "/providers",
+  PROVIDERS_DETAIL: "/providersDetail",
+  SOLVER_LIST: "/solver-listing",
 };
 export const graphUrl = {
   coin_transfer: "explorer/graph/coin-transfer",
@@ -193,11 +246,22 @@ export const nodePerformanceData = (blockHeight) => {
     { value: "6", label: "Countries" },
   ];
 };
+
 export const tooltipContent = {
+  total_Dvpn_Provider:
+    "The total count of all node providers participating in the dVPN network.",
+  active_provider:
+    "Number of providers currently online and serving users in real time",
+  total_dvpn_user:
+    "The overall number of unique users who have ever connected to the dVPN",
+  active_user: "Users who are currently connected and using the dVPN service.",
+  total_Dvpn_Transactions:
+    "The cumulative number of transactions processed through the dVPN network.",
+  Current_Session_Count:
+    "Total sessions started by users within the last 24 hours.",
   block_Height:
     "The number of blocks added to the blockchain since its inception, indicating the blockchain’s current length.",
-  bonded_Coins:
-    "The total amount of TICS token bonded or staked in the network to secure it and earn rewards.",
+  bonded_Coins: `The total amount of  ${currencyName} token bonded or staked in the network to secure it and earn rewards."`,
   total_Nodes: "The total number of nodes connected to the Qubetics network.",
   last_Block: "The most recent block added to the blockchain.",
   TPB: "Transactions per block. Display the average number of transactions recorded in a block during the last six seconds.",
@@ -205,6 +269,7 @@ export const tooltipContent = {
   finalized_Block:
     "A block confirmed by the network as permanent and immutable, ensuring it cannot be altered or reversed.",
 };
+
 export function BlockchainHeaderFunction(currentPath) {
   const onLinkClick = (category, label) => {
     trackEvent({
@@ -227,7 +292,9 @@ export function BlockchainHeaderFunction(currentPath) {
     {
       key: "2",
       value: "Transactions",
-      className: currentPath === Routes.TRANSACTIONS ? "activeOptions" : "",
+      className: currentPath.startsWith(Routes.TRANSACTIONS)
+        ? "activeOptions"
+        : "",
       label: (
         <Link
           onClick={() => onLinkClick("NavTransactions", "Transactions")}
@@ -237,9 +304,38 @@ export function BlockchainHeaderFunction(currentPath) {
         </Link>
       ),
     },
+    ...(HIDE_CHAIN_ABSTRACTION == 1
+      ? []
+      : [
+          {
+            key: "3",
+            value: "Chain Abstraction",
+            className:
+              currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+            label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
+          },
+          {
+            key: "4",
+            value: "Solver Listing",
+            className:
+              currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
+            label: <Link href="/solver-listing">Solver Listing</Link>,
+          },
+        ]),
+    // {
+    //   key: "3",
+    //   value: "Validator",
+    //   className: currentPath === Routes.VALIDATORS ? "activeOptions" : "",
+    //   label: (
+    //     <Link onClick={onClick} href="/validators">
+    //       Validators
+    //     </Link>
+    //   ),
+    // },
   ];
   return blockchainHeader;
 }
+
 //Node header Function
 export function NodeHeaderFunction(currentPath, onClick) {
   const NodeHeader = [
@@ -260,6 +356,59 @@ export function NodeHeaderFunction(currentPath, onClick) {
       label: (
         <Link onClick={() => onClick("Nav_Sync", "Sync")} href="/sync">
           Sync
+        </Link>
+      ),
+    },
+  ];
+  return NodeHeader;
+}
+
+export function DvpnNodeHeaderFunction(currentPath, onClick) {
+  const NodeHeader = [
+    {
+      key: "1",
+      value: "Node",
+      className: currentPath.startsWith(Routes.DVPNNODES)
+        ? "activeOptions"
+        : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Nodes", "dVPNNodes")}
+          href="/dVPNNodes"
+        >
+          Nodes
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      value: "Accounts",
+      className:
+        currentPath === Routes.ACCOUNTS ||
+        currentPath.startsWith(Routes.Tx_ADDRESS)
+          ? "activeOptions"
+          : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Accounts", "Accounts")}
+          href="/accounts"
+        >
+          Accounts
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      value: "Providers",
+      className: currentPath.startsWith(Routes.PROVIDERS)
+        ? "activeOptions"
+        : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_Providers", "Providers")}
+          href="/providers"
+        >
+          Providers
         </Link>
       ),
     },
@@ -324,7 +473,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
     },
 
     {
-      key: "2",
+      key: "3",
       value: "Verifiedcontract",
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",
@@ -402,6 +551,7 @@ export const statsChartsFunction = (currentPath, isEvm, onClick) => {
     ];
   }
 };
+
 export const generateData = (timeRange) => {
   const data = [];
   const now = new Date();
@@ -434,6 +584,7 @@ export const generateData = (timeRange) => {
   }
   return data;
 };
+
 export const convertArray = (writeObj) => {
   let outPutArray = Object.keys(writeObj).map((t) => {
     if (typeof writeObj[t] == "object") {
@@ -443,6 +594,7 @@ export const convertArray = (writeObj) => {
 
   return outPutArray;
 };
+
 export const createTupleObject = (input) => {
   const newObj = {};
 
@@ -473,6 +625,7 @@ export const createTupleObject = (input) => {
 
   return newObj;
 };
+
 export const toFixedWithoutRounding = (value, precision) => {
   if (value === 0 || value === "0") return "0";
 
@@ -491,32 +644,21 @@ export const toFixedWithoutRounding = (value, precision) => {
 
   return "0";
 };
+
 export const formatValue = (num) => {
-  let result;
-  switch (true) {
-    case num >= 1e24:
-      result = (num / 1e24).toFixed(2) + " S"; // Septillion (1e24)
-      break;
-    case num >= 1e18:
-      result = (num / 1e18).toFixed(2) + " Q";
-      break;
-    case num >= 1e12:
-      result = (num / 1e12).toFixed(2) + " T";
-      break;
-    case num >= 1e9:
-      result = (num / 1e9).toFixed(2) + " B";
-      break;
-    case num >= 1e6:
-      result = (num / 1e6).toFixed(2) + " M";
-      break;
-    case num >= 1e3:
-      result = (num / 1e3).toFixed(2) + " K";
-      break;
-    default:
-      result = num?.toString();
-      break;
-  }
-  return result;
+  if (num === null || num === undefined) return "0";
+  const units = [
+    { value: 1e24, suffix: " S" },
+    { value: 1e18, suffix: " Q" },
+    { value: 1e12, suffix: " T" },
+    { value: 1e9, suffix: " B" },
+    { value: 1e6, suffix: " M" },
+    { value: 1e3, suffix: " K" },
+  ];
+  const unit = units.find((u) => num >= u.value);
+  if (!unit) return num.toString();
+
+  return toFixed(num / unit.value, 2) + unit.suffix;
 };
 
 export const defaultChainOptions = [
@@ -599,6 +741,7 @@ export const defaultChainOptions = [
     rpcUrl: "https://rpc.mantle.xyz",
   },
 ];
+
 export const firstCapitalLetter = (input) => {
   if (typeof input === "number") return input;
   if (!input) return "";
@@ -700,7 +843,7 @@ export const guidelinesData = [
     id: 5,
     title: "Detail the Application Tested",
     description:
-      "Specify the application where the bug or issue was encountered (e.g., TICSScan, Qubetics Delegator & Validator Interfaces, Qubetics IDE, or QubeQode).",
+      "Specify the application where the bug or issue was encountered (e.g., TICSScan, Chain Abstraction, Solver Listing, or dVPN).",
   },
   {
     id: 6,
@@ -745,3 +888,134 @@ export const handleValidValue = (value) => validateInput(value, 20);
 export const handleValidEmail = (value) => validateInput(value, 50);
 export const WalletValidValue = (value) => validateInput(value, 42);
 export const descriptionValidValue = (value) => validateInput(value, 500);
+
+export const DVPN_TYPE = {
+  START_SUBSCRIPTION: "/qubetics.subscription.v3.MsgStartSubscriptionRequest",
+  END_SUBSCRIPTION: "/qubetics.subscription.v3.MsgCancelSubscriptionRequest",
+  START_SESSION: "/qubetics.subscription.v3.MsgStartSessionRequest",
+  END_SESSION: "/qubetics.session.v3.MsgCancelSessionRequest",
+};
+export const isStringValue = (value) => {
+  if (!value) return "-";
+
+  return value;
+};
+
+const maxDecimalPrecision = 5;
+
+export const formatPrecision = (num, minDecimals, maxPrecision) => {
+  if (!num) return "0";
+
+  num =
+    Math.floor(num * Math.pow(10, maxDecimalPrecision) + 0.5) /
+    Math.pow(10, maxDecimalPrecision);
+  let numStr = num.toString();
+  let decimals = 0;
+  if (numStr.includes(".")) {
+    decimals = numStr.split(".")[1].length;
+  }
+  if (minDecimals && decimals < minDecimals) {
+    if (decimals === 0) numStr = numStr + ".";
+    for (let i = decimals; i < minDecimals; i++) {
+      numStr = numStr + "0";
+    }
+  }
+  if (decimals > 0) {
+    const numSplit = numStr.split(".");
+    const integerStr = numSplit[0];
+    const decimalStr = numSplit[1];
+    let nonZeroDecimals = (decimalStr.match(/[1-9][0-9]*/) || [""])[0];
+    const nonZeroDecimalCount = nonZeroDecimals.length;
+    const zeroDecimals = (decimalStr.match(/0*/) || [""])[0];
+    let decimals = zeroDecimals + nonZeroDecimals;
+    if (maxPrecision && integerStr !== "0" && decimals.length > maxPrecision) {
+      decimals = decimals.substring(0, maxPrecision);
+      numStr = `${integerStr}.${removeTrailingZeros(decimals, minDecimals)}`;
+    } else if (maxPrecision && nonZeroDecimalCount > maxPrecision) {
+      nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
+      numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
+        nonZeroDecimals,
+        minDecimals
+      )}`;
+    }
+  }
+
+  return numStr;
+};
+
+export const removeTrailingZeros = (numStr, minDecimals) => {
+  numStr = numStr.toString();
+  const numSplit = numStr.split(".");
+  if (numSplit.length < 2) return numStr;
+  const integerStr = numSplit[0];
+  const decimalStr = numSplit[1];
+  if (minDecimals && decimalStr.length <= minDecimals) return "";
+  const trailingZerosMatch = decimalStr.match(/0*$/);
+  if (!trailingZerosMatch) return "";
+  let trailingZerosStr = trailingZerosMatch[0];
+  const precisionDecimalStr = decimalStr.substring(0, trailingZerosMatch.index);
+  trailingZerosStr = trailingZerosStr.substring(
+    0,
+    (minDecimals ? minDecimals : 0) -
+      (decimalStr.length - trailingZerosStr.length)
+  );
+  return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
+};
+
+export const noExponential = (num) => {
+  return Number(num).noExponents();
+};
+
+export const statusClass = (value) => {
+  switch (value) {
+    case 0:
+      return "failed";
+    case 1:
+    case 3:
+      return "active";
+    case 2:
+    default:
+      return "";
+  }
+};
+
+export const CHAIN_ASSET_MAP = {
+  0: "btc",
+  9029: "tics",
+};
+
+export const Network = {
+  Native: "Native Chain",
+  Evm: "EVM Chain",
+};
+
+export const TERMS_AND_CONDITIONS =
+  process.env.NEXT_PUBLIC_TERMS_AND_CONDITIONS;
+export const explorerHyperLInk = (value, txn) => {
+  if (!txn) return null;
+
+  let hyperLink;
+  let text;
+
+  switch (value.toLowerCase()) {
+    case "btc":
+      hyperLink = `${BTC_EXPLORER_URL}testnet4/tx/${txn}`;
+      text = "Bitcoin";
+      break;
+    case "tics":
+      hyperLink = `${TICS_EXPLORER_URL}tx/${txn}`;
+      text = "Qubetics";
+      break;
+    default:
+      hyperLink = "";
+      text = "";
+      break;
+  }
+
+  return (
+    <Link className="chain-tag" href={hyperLink} target="_blank">
+      <h3>{text}</h3>
+      <ArrowUpicon />
+    </Link>
+  );
+};

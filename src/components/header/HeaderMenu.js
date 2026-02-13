@@ -1,7 +1,6 @@
 import {
   EXPLORER_CHAIN_NAME,
   EXPLORER_METAMASK_NETWORK_URL,
-  SHOW_FAUCET,
 } from "@/constant/constant";
 import { trackEvent } from "@/utils/eventTrack";
 import { Select, Space } from "antd";
@@ -52,16 +51,17 @@ function HeaderMenu({ onCloseDrawer }) {
   };
 
   const isNetworkAdded = async () => {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
-    );
-    const chain_Id = await web3?.eth?.getChainId();
-    const chainIdHex = `0x${chain_Id.toString(16)}`;
-    const { ethereum } = window;
-
-    if (!ethereum) return;
-
     try {
+      const web3 = new Web3(
+        new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
+      );
+
+      const chain_Id = await web3?.eth?.getChainId();
+      const chainIdHex = `0x${chain_Id.toString(16)}`;
+      const { ethereum } = window;
+
+      if (!ethereum) return;
+
       const chainId = await ethereum.request({ method: "eth_chainId" });
       setIsMetaMaskAdded(chainId === chainIdHex);
       ethereum.on("chainChanged", (id) => {
@@ -71,6 +71,7 @@ function HeaderMenu({ onCloseDrawer }) {
       console.error(error);
     }
   };
+
   const onEventTrackClick = (label, category) => {
     trackEvent({
       action: "link_click",
@@ -94,6 +95,7 @@ function HeaderMenu({ onCloseDrawer }) {
 
   const getContainer = (triggerNode) => triggerNode.parentNode;
   const navItem = navItems(chainType == "EVM Chain");
+
   return (
     <>
       <ul className="mob__List">
@@ -102,9 +104,14 @@ function HeaderMenu({ onCloseDrawer }) {
             pathname.includes(route)
           );
 
-          if (item.showIfEVM === false && chainType !== "EVM Chain")
+          if (item?.showIfEVM === false && chainType !== "EVM Chain") {
             return null;
-          if (item.showIfFaucet === false && SHOW_FAUCET !== 1) return null;
+          }
+
+          if (item?.showIfNative == false && chainType !== "Native Chain") {
+            return null;
+          }
+          if (item.showIfFaucet === false) return null;
 
           if (item.type === "link") {
             return (

@@ -25,14 +25,16 @@ export default function CopyText({ text, hoverText }) {
     return null;
   }
   return (
-    <>
+    <span className="flexedItems">
       <Tooltip
         title={
           copied
             ? " Copied"
-            : hoverText == "hash"
+            : hoverText === "Node Address"
+            ? "Copy Node Address"
+            : hoverText === "hash"
             ? "Copy Hash"
-            : hoverText == "block"
+            : hoverText === "block"
             ? "Copy Block"
             : "Copy"
         }
@@ -41,11 +43,11 @@ export default function CopyText({ text, hoverText }) {
         {copied ? (
           <CheckOutlined />
         ) : (
-          <span>
+          <span className="flexedItems">
             <CopyIcons />
           </span>
         )}
       </Tooltip>
-    </>
+    </span>
   );
 }

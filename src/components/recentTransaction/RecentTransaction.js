@@ -1,4 +1,4 @@
-import { Routes, toFixedWithoutRounding } from "@/constant/constant";
+import { currencyName, Routes, toFixedWithoutRounding } from "@/constant/constant";
 import { noExponentsValue } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { renderTime } from "@/utils/renderTime";
@@ -22,7 +22,7 @@ const RecentTransaction = ({ data, customClass }, props) => {
           <div>
             <p
               style={{ cursor: "pointer" }}
-              onClick={() => router.push(`${Routes.Tx_Hash}${data?.txhash}`)}
+              onClick={() => router.push(`${Routes.Tx_Hash()}${data?.txhash}`)}
             >
               {" "}
               {data?.txhash ? getAddress(data?.txhash) : "-"}
@@ -53,8 +53,8 @@ const RecentTransaction = ({ data, customClass }, props) => {
                     noExponentsValue(Number(data?.value)),
                     6
                   )
-                : "-"}{" "}
-              TICS
+                : 0}{" "}
+              {currencyName}
             </p>
           </p>
           <p className="secTime">

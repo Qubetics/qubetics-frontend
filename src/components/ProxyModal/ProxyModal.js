@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import React from "react";
+import { Modal } from "antd";
 import Link from "next/link";
 import saveProxy from "@/services/saveProxy";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 import { CONTARCT_NULL_ADDRESS } from "@/constant/constant";
 const ProxyModal = ({
   isModalOpen,
@@ -15,7 +15,7 @@ const ProxyModal = ({
     if (proxyVerified == 1) {
       const isProxySave = await saveProxy(hash);
       if (isProxySave) {
-        toast.success("Successfully Saved");
+        customToast.success("Successfully Saved");
         setIsModalOpen(false);
       }
     } else {

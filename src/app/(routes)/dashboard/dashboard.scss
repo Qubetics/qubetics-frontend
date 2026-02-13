@@ -105,6 +105,7 @@
           height: 66px;
           @media (max-width: 1070px) {
             height: unset;
+            align-items: center;
           }
         }
         @media (max-width: 1070px) {
@@ -669,6 +670,7 @@
   width: 100%;
   margin-top: -4px !important;
   z-index: 9 !important;
+  min-width: 180px !important;
   @include theme() {
     background: theme-get("dropdownBg");
   }

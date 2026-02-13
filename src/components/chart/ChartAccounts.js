@@ -1,20 +1,23 @@
-import { generateData } from "@/constant/constant";
+import { currencyName, generateData, noExponential } from "@/constant/constant";
 import { chartMenu, chartSeriesValue } from "@/utils/chartMenu";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
+import BigNumber from "bignumber.js";
 import "./chart.scss";
 
-const ChartAccount = ({ data, chartType, name, title }) => {
+const ChartAccount = ({ data, chartType, name }) => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     let chartValue = chartMenu(data, chartType);
-
-    let maxLength =
-      data?.length > 0 ? data?.length : generateData(chartType).length;
-
+    let maxLength = data?.length || generateData(chartType)?.length;
     let { seriesData, maximum } = chartSeriesValue(data, chartType);
+
+    const numericSeriesData = seriesData.map((v) =>
+      typeof v === "number" ? v : new BigNumber(v)?.toNumber()
+    );
+
     const options = {
       chart: {
         type: "area",
@@ -29,34 +32,26 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       },
       tooltip: {
         hideDelay: 0,
-        useHTML: true, // Enable HTML for custom styling
+        useHTML: true,
         formatter: function () {
           const xAxisData = this.series.xAxis.categories[this.x];
-
           return `
-            <div style="  white-space: normal; 
-        font-size: 15px;
-        text-align: center;
-        padding: 0 28px 12px;
-        min-height:50px;
-        min-width: 160px;
-        display:flex;
-        align-items: center;">
-        ${xAxisData}<br>
-        ${name}: ${this.y} 
-        </div>`;
+            <div style="white-space: normal; font-size: 15px; text-align: center; padding: 0 28px 12px; min-height:50px; min-width: 160px; display:flex; align-items: center;">
+              ${xAxisData}<br>
+              ${name === "Uptime" ? currencyName : name}: ${noExponential(
+            this.y
+          )}
+            </div>`;
         },
         positioner: function (labelWidth, labelHeight, point) {
           const chart = this.chart;
           const tooltipX = point.plotX + chart.plotLeft - labelWidth / 2;
           const tooltipY = point.plotY + chart.plotTop - labelHeight - 10;
-
-          // Adjust for edges
           const x = Math.max(
             Math.min(tooltipX, chart.chartWidth - labelWidth - 10),
             10
           );
-          const y = Math.max(tooltipY, 10); // Avoid overlapping the top of the chart
+          const y = Math.max(tooltipY, 10);
           return { x, y };
         },
         backgroundColor: "#19181a",
@@ -91,14 +86,11 @@ const ChartAccount = ({ data, chartType, name, title }) => {
         categories: [...chartValue],
       },
       yAxis: {
-        min: title === "Qubetics Price" ? Math.min(0, maximum?.count) : 0,
-        // max: maximum?.count < 4 ? 4 : maximum?.count,
-        max:
-          title === "Qubetics Price" && maximum?.count < 0
-            ? Math.min(0, maximum?.count) + 4
-            : Math.min(0, maximum?.count) + maximum?.count,
+        min: 0,
+        max: Number(maximum?.count) > 0.000001 ? Number(maximum?.count) : 1,
+        tickInterval: Number(maximum?.count) > 0.000001 ? undefined : 0.25,
         title: {
-          text: "", 
+          text: "",
         },
         gridLineWidth: 0,
         gridLineColor: "#9F53FF",
@@ -138,14 +130,15 @@ const ChartAccount = ({ data, chartType, name, title }) => {
       series: [
         {
           name: name,
-          data: seriesData && [...seriesData],
-          color: "rgba(126, 66, 202, 0.7)", // Color of the line
+          data: numericSeriesData,
+          color: "rgba(126, 66, 202, 0.7)",
         },
       ],
       accessibility: {
         enabled: false,
       },
     };
+
     setChartData(options);
   }, [data, chartType]);
 

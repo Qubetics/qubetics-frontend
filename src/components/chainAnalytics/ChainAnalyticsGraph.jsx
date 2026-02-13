@@ -1,6 +1,5 @@
 import Page from "@/app/(routes)/notfound/page";
 import ChartAccounts from "@/components/chart/ChartAccounts";
-import { useLatestData } from "@/components/contexts/latest_data";
 import { useGetNetwork } from "@/components/contexts/networkChanged";
 import GraphLoading from "@/components/loader/GraphLoading";
 import {
@@ -21,15 +20,7 @@ import "./ChainAnalytics.scss";
 import { trackEvent } from "@/utils/eventTrack";
 
 const ChainAnalyticsGraph = (props) => {
-  const {
-    title,
-    discription,
-    fetchUrl,
-    tooltipTitle = "Txn Count",
-    isNative,
-    setTotalAccount,
-  } = props;
-  const webSocketData = useLatestData();
+  const { title, discription, fetchUrl, tooltipTitle = "Txn Count" } = props;
   const [transactionHisChart, setTransactionHisChart] = useState({
     data: [],
     type: ALL_CHART_SEVEN_DAY,
@@ -48,10 +39,9 @@ const ChainAnalyticsGraph = (props) => {
         setTransactionStatus(SuccessStatus);
         const convertedData = res?.data?.finalData?.map((item) => ({
           ...item,
-          count:
-            title === "Qubetics Price"
-              ? noExponentsValue(Number(item.value)) // Convert and fix to 6 decimal places
-              : noExponentsValue(Number(item.count)), // Keep it as a number
+          count: noExponentsValue(
+            title === "Qubetics Price" ? item?.value : item?.count
+          ),
         }));
 
         setTransactionHisChart({
@@ -75,9 +65,10 @@ const ChainAnalyticsGraph = (props) => {
 
   useEffect(() => {
     if (isNetworkChanged == true) {
-      fetchChartData();
+      fetchChartData(title);
     }
   }, [isNetworkChanged]);
+
   return (
     <>
       <div style={{ position: "relative", width: "100%" }}>

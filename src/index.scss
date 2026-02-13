@@ -437,6 +437,14 @@ html {
   width: 100%;
   background-color: $black;
   position: relative;
+  height: 40px;
+  @include fluid-type(320px, 1920px, 12px, 14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 0 10px;
+  letter-spacing: 0.28px;
+  color: $white !important;
   cursor: pointer;
   @include fluid-type(320px, 1920px, 14px, 16px);
 
@@ -821,6 +829,35 @@ html {
       }
     }
 
+    .transferStatus-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      min-width: 50px;
+      text-align: center;
+      border: 1px solid transparent;
+
+      &.green {
+        // background-color: #e6f4ea; // light green background
+        color: #1b7f3b; // dark green text
+        border-color: #93d4a4; // green border
+        box-shadow: inset 2px 2px 4px rgba(27, 127, 59, 0.18),
+          inset -2px -2px 4px rgba(27, 127, 59, 0.15);
+      }
+
+      &.red {
+        // background-color: #fde8e8; // light red background
+        color: #b91c1c; // dark red text
+        border-color: #f5a3a3; // red border
+        box-shadow: inset 2px 2px 4px rgba(185, 28, 28, 0.15),
+          inset -2px -2px 4px rgba(185, 28, 28, 0.15);
+      }
+    }
+
     a {
       color: $grayA0A0A0;
 
@@ -897,6 +934,7 @@ html {
 .eventTable {
   td {
     vertical-align: top;
+
     .ant-collapse-header {
       padding-top: 0 !important;
     }
@@ -1820,6 +1858,10 @@ input[type="number"] {
   }
 }
 
+.ant-select-single.ant-select-open .ant-select-selection-item {
+  color: #fff !important;
+}
+
 .ant-select-item-option-disabled {
   .ant-select-item-option-content {
     color: #fff !important;
@@ -2285,8 +2327,8 @@ input[type="number"] {
       width: 100% !important;
     }
 
-    max-width: 150px !important;
-    width: 150px !important;
+    max-width: 165px !important;
+    width: 165px !important;
     border-radius: 10px !important;
   }
 
@@ -2389,6 +2431,7 @@ input[type="number"] {
     display: flex;
     align-items: center;
     gap: 20px;
+    flex-wrap: wrap;
 
     h3 {
       color: $grayA0A0A0;
@@ -2403,6 +2446,7 @@ input[type="number"] {
       display: flex;
       align-items: center;
       gap: 10px;
+
       span {
         height: 15px;
         cursor: pointer;
@@ -2498,6 +2542,12 @@ input[type="number"] {
   td,
   th {
     width: 25%;
+  }
+
+  .pointer {
+    height: auto;
+    display: inline-flex;
+    align-items: center;
   }
 }
 
@@ -2780,6 +2830,7 @@ input[type="number"] {
   @media (max-width: 1199px) {
     text-align: center;
   }
+
   .ant-select-selector {
     &::before {
       content: "";
@@ -2814,6 +2865,7 @@ input[type="number"] {
     }
   }
 }
+
 body::-webkit-scrollbar {
   width: 3px;
   background-color: var(--mainBg);
@@ -2843,6 +2895,7 @@ body::-webkit-scrollbar-thumb {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -2887,9 +2940,23 @@ input:-webkit-autofill:active {
   }
 }
 
+.txnHashcopy,
+.fromCopy,
+.dvpnAddressCopy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
 .blockLinkItems {
   a {
-    min-width: 140px !important;
+    width: 150px !important;
     display: inline-block;
   }
 }
@@ -2900,8 +2967,11 @@ input:-webkit-autofill:active {
 }
 
 .contAdd {
-  min-width: 150px !important;
+  min-width: 140px !important;
   display: inline-block;
+  @media (max-width: 767px) {
+    min-width: 120px !important;
+  }
 }
 
 .blockLinks {
@@ -2958,10 +3028,81 @@ input:-webkit-autofill:active {
     }
   }
 }
+
 .highcharts-axis-title {
   display: block !important;
   opacity: 1 !important;
 }
+
 .highcharts-legend-item {
   display: block !important;
+}
+
+.pointer {
+  cursor: pointer;
+  height: 50px;
+}
+
+.addressText {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  a {
+    width: 148px;
+    text-decoration: none;
+
+    @media (max-width: 767px) {
+      width: 130px;
+    }
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.addressWidth {
+  width: 414px;
+
+  @media (max-width: 767px) {
+    width: 370px;
+  }
+}
+
+.activeSessionAddress {
+  a {
+    width: 410px;
+
+    @media (max-width: 767px) {
+      width: 370px;
+    }
+  }
+}
+.flexedItems {
+  display: flex;
+  align-items: center;
+  justify-self: baseline;
+}
+.flexedItemsCenter {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.Bandwidth .ant-tooltip-inner {
+  min-width: 28px;
+  min-height: 32px;
+  padding: 6px 4px;
+  color: var(--ant-tooltip-color, #fff);
+  text-align: start;
+  text-decoration: none;
+  word-wrap: break-word;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  white-space: nowrap;
 }

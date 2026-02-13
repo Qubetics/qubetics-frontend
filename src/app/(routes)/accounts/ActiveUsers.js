@@ -1,0 +1,87 @@
+import {
+  ErrorStatus,
+  FetchingStatus,
+  InitStatus,
+  SuccessStatus,
+  tableLimit,
+} from "@/constant/constant";
+import { activeUsersColumns } from "@/constant/graphTableValues";
+import { useEffect, useState } from "react";
+import getActiveUsers from "@/services/getActiveUsers";
+import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
+import Pagination from "@/components/Pagination/Pagination";
+
+const ActiveUsers = ({ reverse, activeTab, onCountChange }) => {
+  const [tokensTxData, setTokensTxData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [tokenStatus, setTokenStatus] = useState(InitStatus);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchData = async () => {
+    try {
+      setTokenStatus(FetchingStatus);
+      const response = await getActiveUsers(currentPage, tableLimit, reverse);
+
+      if (response && response?.data) {
+        const sessions = response?.data?.sessions || [];
+        const totalCount = Number(
+          response?.data?.pagination?.total ?? sessions?.length
+        );
+
+        setTokensTxData(sessions);
+        setTotalPages(Math.ceil(totalCount / tableLimit));
+        setTokenStatus(SuccessStatus);
+        onCountChange?.(totalCount);
+      } else {
+        setTokenStatus(ErrorStatus);
+        setTokensTxData([]);
+      }
+    } catch (err) {
+      console.error("Error fetching active users data:", err);
+      setTokenStatus(ErrorStatus);
+      setTokensTxData([]);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "1") {
+      fetchData();
+    }
+  }, [currentPage, reverse]);
+
+  const handleNext = () =>
+    currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const handlePrevious = () =>
+    currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleLast = () =>
+    currentPage < totalPages && setCurrentPage(totalPages);
+  const handleFirst = () => setCurrentPage(1);
+
+  return (
+    <>
+      <SkeletonTableWrapper
+        columns={activeUsersColumns(currentPage, tableLimit)}
+        dataSource={tokensTxData}
+        className="commontable"
+        isSkeleton={
+          tokenStatus === FetchingStatus || tokenStatus === InitStatus
+        }
+        pagination={false}
+      />
+      {totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handleNext={handleNext}
+          handlePrevious={handlePrevious}
+          handleLast={handleLast}
+          handleFirst={handleFirst}
+          disablePrev={currentPage === 1}
+          disableNext={currentPage === totalPages}
+        />
+      )}
+    </>
+  );
+};
+
+export default ActiveUsers;

@@ -24,23 +24,23 @@ import InternalTxns from "@/components/contracts/InternalTxns";
 
 const BlockDetail = dynamic(
   () => import("@/components/blockDetail/BlockDetail"),
-  { ssr: false }
+  { ssr: false },
 );
 const ContractDtlTabs = dynamic(
   () => import("@/components/contractDetailTabs/ContractDtlTabs"),
-  { ssr: false }
+  { ssr: false },
 );
 const AnalyticTab = dynamic(
   () => import("@/components/contracts/AnalyticTab"),
-  { ssr: false }
+  { ssr: false },
 );
 const ContractDetails = dynamic(
   () => import("@/components/contracts/ContractDetails"),
-  { ssr: false }
+  { ssr: false },
 );
 const ContractTransactions = dynamic(
   () => import("@/components/contracts/ContractTransactions"),
-  { ssr: false }
+  { ssr: false },
 );
 
 const Events = dynamic(() => import("@/components/contracts/Events"), {
@@ -51,7 +51,7 @@ const Holder = dynamic(() => import("@/components/contracts/Holder"), {
 });
 const FilterResult = dynamic(
   () => import("@/components/FilterResult/FilterResult"),
-  { ssr: false }
+  { ssr: false },
 );
 const Heading = dynamic(() => import("@/components/heading/Heading"), {
   ssr: false,
@@ -70,9 +70,6 @@ const ContractDetail = () => {
   const [tab, setTab] = useState(searchParam.get("tab") || "0");
   const params = useParams();
   const router = useRouter();
-
-  let chainType =
-    typeof window !== "undefined" && localStorage.getItem("chainType");
 
   const { isNetworkChanged } = useGetNetwork();
 
@@ -108,7 +105,7 @@ const ContractDetail = () => {
         contractDetail?.ContractVerification?.contractname
           ? capitalizeWord(
               contractDetail?.tokenName ||
-                contractDetail?.ContractVerification?.contractname
+                contractDetail?.ContractVerification?.contractname,
             )
           : "-",
       img:
@@ -180,8 +177,8 @@ const ContractDetail = () => {
         ? formateTotalSupply(
             noExponentsValue(
               Number(contractDetail?.totalSupply) /
-                10 ** Number(contractDetail?.decimal)
-            )
+                10 ** Number(contractDetail?.decimal),
+            ),
           )
         : "0",
       img: (
@@ -235,7 +232,7 @@ const ContractDetail = () => {
     {
       label: "Internal Txns",
       key: "5",
-      children: <InternalTxns   hash={params?.contractDetail} />,
+      children: <InternalTxns hash={params?.contractDetail} />,
     },
     {
       label: "Analytics",

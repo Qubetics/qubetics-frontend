@@ -2,8 +2,10 @@
 import { EventLogsDex } from "@/components/contracts/EventLogsDex";
 import CopyText from "@/components/DoCopy/CopyText";
 import {
+  capitalizeFirstLetter,
   capitalizeWord,
   formateTotalSupply,
+  formatToTwoDecimals,
   formatMillionNumber,
   noExponential,
   toFixed,
@@ -14,7 +16,12 @@ import isOptionDisable from "@/utils/tookenGraphKey";
 import { Collapse, Tooltip } from "antd";
 import Link from "next/link";
 import { Tokenicons } from "../../public/SvgIcons";
-import { formatValue, Routes, typesOfTransactions } from "./constant";
+import {
+  currencyName,
+  formatValue,
+  Routes,
+  typesOfTransactions,
+} from "./constant";
 const { Panel } = Collapse;
 /*Graph Values */
 export const TRANS_HISTORY_CHART_SECONDS = "1 Day";
@@ -26,6 +33,9 @@ export const ALL_CHARTS_HOUR = "1 Hour";
 export const ALL_CHART_ONE_DAY = "1 Day";
 export const ALL_CHART_SEVEN_DAY = "7 Days";
 export const ALL_CHART_THRITY_DAYS = "30 Days";
+export const TRANS_HISTORY_CHART_365_DAYS = "365 Days";
+export const TRANS_HISTORY_CHART_7_DAYS = "7 Days";
+export const TRANS_HISTORY_CHART_30_DAYS = "30 Days";
 
 let deploymentDate = "2024-03-30";
 const activationDate = deploymentDate; // Replace with the actual activation date
@@ -200,13 +210,18 @@ export const transactionSummarycolumn = [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
-        {getAddress(text)}
-      </Link>
+      <div className="txnHashcopy addressText">
+        <Link
+          className="bghash"
+          href={`${Routes.Tx_Hash()}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+        </Link>
+        <span className="spancopy">
+          <CopyText text={text} />
+        </span>
+      </div>
     ),
   },
   {
@@ -260,7 +275,9 @@ export const transactionSummarycolumn = [
     key: "toAddress",
     render: (text) => (
       <>
-        {text?.toAddress !== "N/A" && text?.toAddress !== "" ? (
+        {text?.toAddress !== "N/A" &&
+        text?.toAddress !== "" &&
+        text?.toAddress !== null ? (
           text?.toAddress?.startsWith("0x") ||
           text?.toAddress?.startsWith("Qubetics") ? (
             <div className="iconandlink">
@@ -352,18 +369,16 @@ export const transactionSummarycolumn = [
       ),
   },
   {
-    title: "Value(TICS)",
+    title: `Value(${currencyName})`,
     key: "value",
-    render: (text) =>
-      text?.value ? (
-        <Tooltip title={`${noExponential(text?.value)} TICS`}>
-          {/* {noExponential(toFixed(text?.value, 6))}
-           */}
-          {formatMillionNumber(text?.value)}
+    render: (text) => {
+      const value = text?.value || 0;
+      return (
+        <Tooltip title={`${value} ${currencyName}`}>
+          <span>{`${formatToTwoDecimals(value)} ${currencyName}`}</span>
         </Tooltip>
-      ) : (
-        0
-      ),
+      );
+    },
   },
   {
     title: "Status",
@@ -389,7 +404,7 @@ export const TransactionDetailsColumns = [
       <div className="iconandlink">
         <Link
           className="fromicon"
-          href={`${Routes.Tx_Hash}${text}`}
+          href={`${Routes.Tx_Hash()}${text}`}
           rel="noopener noreferrer"
         >
           {getAddress(text)}
@@ -494,12 +509,12 @@ export const TransactionDetailsColumns = [
   },
 
   {
-    title: "Value (TICS)",
+    title: `Value (${currencyName})`,
     dataIndex: "value",
     key: "value",
     render: (text) => (
       <span>
-        <Tooltip title={`${noExponential(toFixed(text, 2))} TICS`}>
+        <Tooltip title={`${noExponential(toFixed(text, 2))}  ${currencyName}`}>
           {text ? noExponential(toFixed(text, 2)) : "0"}
         </Tooltip>
       </span>
@@ -534,13 +549,18 @@ export const addressDetailColumn = (address) => [
     dataIndex: "txhash",
     key: "txhash",
     render: (text) => (
-      <Link
-        className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
-        rel="noopener noreferrer"
-      >
-        {getAddress(text)}
-      </Link>
+      <div className="iconandlink addressText">
+        <Link
+          className="fromicon"
+          href={`${Routes.Tx_Hash()}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+        </Link>
+        <span>
+          <CopyText text={text} />
+        </span>
+      </div>
     ),
   },
   {
@@ -558,7 +578,7 @@ export const addressDetailColumn = (address) => [
     ),
   },
   {
-    title: "Method ",
+    title: "Type ",
     key: "type",
     render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
   },
@@ -684,7 +704,11 @@ export const addressDetailColumn = (address) => [
     title: "Value",
     dataIndex: "value",
     key: "value",
-    render: (text) => formatMillionNumber(text),
+    render: (text) => (
+      <Tooltip title={`${text || 0} TICS`}>
+        <span>{`${formatToTwoDecimals(text || 0)} TICS`}</span>
+      </Tooltip>
+    ),
   },
   {
     title: "Status",
@@ -698,23 +722,15 @@ export const addressDetailColumn = (address) => [
       ),
   },
 ];
-
 /* nodes list views table */
-export const nodesColumns = [
-  {
-    title: "Sr. No",
-    // dataIndex: "index",
-    key: "index",
-    render: (text) => text?.index,
-  },
-
+export const nodesColumns = (totalNodeAddress) => [
   {
     title: "Node Name",
     key: "nodeName",
     render: (text) => (text?.nodeName ? capitalizeWord(text?.nodeName) : "-"),
   },
   {
-    title: "Node Address",
+    title: `Node Address (${totalNodeAddress})`,
     // dataIndex: "peerId",
     key: "peerId",
     render: (text) => {
@@ -767,7 +783,10 @@ export const contractTableColumn = (currentChain) => [
           )} */}
           <Link href={`/contract/${text?.address}`}>
             {capitalizeWord(
-              text?.contractname || text?.contractName || text?.tokenName || "-"
+              text?.contractname ||
+                text?.contractName ||
+                text?.tokenName ||
+                "-",
             )}
           </Link>
         </span>
@@ -811,7 +830,10 @@ export const contractTableColumn = (currentChain) => [
         {text?.txHash ? (
           <>
             {" "}
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`} className="contAdd">
+            <Link
+              href={`${Routes.Tx_Hash()}${text?.txHash}`}
+              className="contAdd"
+            >
               {getAddress(text?.txHash)}
             </Link>{" "}
             <CopyText text={text?.txHash}></CopyText>
@@ -876,11 +898,11 @@ export const contractTransactionsColumn = [
       <div className="iconandlink">
         <Tooltip title={text?.txHash}>
           {text?.txHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txHash}`}>
               {getAddress(text?.txHash)}
             </Link>
           ) : text?.txhash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txhash}`}>
               {getAddress(text?.txhash)}
             </Link>
           ) : (
@@ -902,8 +924,8 @@ export const contractTransactionsColumn = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord(text?.method)
           : text?.type
-          ? capitalizeWord(text?.type)
-          : "-"}
+            ? capitalizeWord(text?.type)
+            : "-"}
       </span>
     ),
   },
@@ -1012,7 +1034,7 @@ export const contractTransactionsColumn = [
   },
   {
     id: "fee",
-    title: "Fee(TICS)",
+    title: `Fee( ${currencyName})`,
     key: "fee",
     render: (text) => (
       <span className="">
@@ -1098,11 +1120,11 @@ export const internalTxns = [
       <div className="iconandlink">
         <Tooltip title={text?.txnHash}>
           {text?.txnHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txHash}`}>
               {getAddress(text?.txnHash)}
             </Link>
           ) : text?.txnHash ? (
-            <Link href={`${Routes.Tx_Hash}${text?.txnHash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txnHash}`}>
               {getAddress(text?.txnHash)}
             </Link>
           ) : (
@@ -1124,8 +1146,8 @@ export const internalTxns = [
         {text?.method && text?.method !== "N/A"
           ? capitalizeWord("transfer")
           : "Transfer"
-          ? capitalizeWord("Transfer")
-          : "-"}
+            ? capitalizeWord("Transfer")
+            : "-"}
       </span>
     ),
   },
@@ -1262,14 +1284,14 @@ export const internalTxns = [
           title={
             text?.value
               ? formatMillionNumber(
-                  Number(noExponential(Number(text?.value) / 10 ** Number(18)))
+                  Number(noExponential(Number(text?.value) / 10 ** Number(18))),
                 )
               : "0"
           }
         >
           {text?.value
             ? formatMillionNumber(
-                noExponential(Number(text?.value) / 10 ** Number(18))
+                noExponential(Number(text?.value) / 10 ** Number(18)),
               )
             : "0"}
         </Tooltip>
@@ -1346,15 +1368,13 @@ export const HolderColumn = [
         {text?.address ? (
           <Tooltip title={text?.address}>
             <Link href={`${Routes.Tx_ADDRESS}${text?.address}`}>
-              {getAddress(text?.address)}{" "}
+              {getAddress(text?.address)}
             </Link>
           </Tooltip>
         ) : (
           "-"
         )}
-        <span>
-          <CopyText text={text?.address} />
-        </span>
+        <CopyText text={text?.address} />
       </div>
     ),
   },
@@ -1378,7 +1398,7 @@ export const HolderColumn = [
       >
         {Number(text?.tokenBalance) && Number(text?.totalSupply)
           ? noExponential(
-              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply)
+              (Number(text?.tokenBalance) * 100) / Number(text?.totalSupply),
             ) + " %"
           : "0%"}
       </Tooltip>
@@ -1396,7 +1416,7 @@ export const EventsColumn = [
     render: (text) => (
       <div className="iconandlink" style={{ verticalAlign: "top" }}>
         {text?.txHash ? (
-          <Link href={`${Routes.Tx_Hash}${text?.txHash}`}>
+          <Link href={`${Routes.Tx_Hash()}${text?.txHash}`}>
             {getAddress(text?.txHash)}
           </Link>
         ) : (
@@ -1481,8 +1501,8 @@ export const EventsColumn = [
                         </p>
                         {res?.type?.includes("uint") &&
                         res?.value?.includes("0x") ? (
-                          <span>{Number(res?.value)}</span>
-                        ) : !res?.value && res?.value?.includes("0x") ? (
+                          <span>{noExponential(res?.value)}</span>
+                        ) : res?.value?.includes("0x") ? (
                           <Link href={`/address/${res?.value}`}>
                             {res?.value}
                           </Link>
@@ -1541,7 +1561,7 @@ export const TokenColumn = [
     render: (text) => (
       <div>
         {text?.contractAddress ? (
-          <>
+          <div className="flexedItemsCenter">
             <Link
               href={`/contract/${text?.contractAddress}`}
               className="contAdd"
@@ -1550,7 +1570,7 @@ export const TokenColumn = [
               {getAddress(text?.contractAddress)}{" "}
             </Link>
             <CopyText text={text?.contractAddress} />
-          </>
+          </div>
         ) : (
           "-"
         )}
@@ -1568,8 +1588,8 @@ export const TokenColumn = [
             ? formatValue(noExponential(toFixed(Number(text?.totalSupply))))
             : formateTotalSupply(
                 noExponential(
-                  Number(text?.totalSupply) / 10 ** Number(text?.decimal)
-                )
+                  Number(text?.totalSupply) / 10 ** Number(text?.decimal),
+                ),
               )
           : "-"}
       </span>
@@ -1594,7 +1614,7 @@ export const TokenTransfers = [
       <div>
         {text?.txhash ? (
           <>
-            <Link href={`${Routes.Tx_Hash}${text?.txhash}`}>
+            <Link href={`${Routes.Tx_Hash()}${text?.txhash}`}>
               {" "}
               {getAddress(text?.txhash)}{" "}
             </Link>
@@ -1620,7 +1640,7 @@ export const TokenTransfers = [
     key: "input",
     render: (text) => (
       <span className="">
-        {text?.input ? JSON.parse(text.input)?.name ?? "-" : "-"}
+        {text?.input ? (JSON.parse(text.input)?.name ?? "-") : "-"}
       </span>
     ),
   },
@@ -1662,7 +1682,7 @@ export const TokenTransfers = [
           const filteredData = parsedData?.params.filter(
             (e) =>
               (e?.name === "to" || e?.name === "recipient") &&
-              e?.type === "address"
+              e?.type === "address",
           );
           address = filteredData[0]?.value ?? null;
         }
@@ -1696,7 +1716,7 @@ export const TokenTransfers = [
           const amtArr = parsedData?.params.filter(
             (e) =>
               (e.name === "amount" || e.name === "value") &&
-              e.type.includes("uint")
+              e.type.includes("uint"),
           );
           amount = amtArr[0]?.value;
         }
@@ -1735,7 +1755,7 @@ export const TokenTransferColumn = [
         {text?.txhash ? (
           <Link
             className="bghash"
-            href={`${Routes.Tx_Hash}${text?.txhash}`}
+            href={`${Routes.Tx_Hash()}${text?.txhash}`}
             rel="noopener noreferrer"
           >
             {getAddress(text?.txhash)}
@@ -1755,8 +1775,8 @@ export const TokenTransferColumn = [
         {text?.input
           ? capitalizeWord(JSON.parse(text?.input)?.name)
           : text?.logs?.length > 0
-          ? JSON.parse(text?.logs)[0]?.name
-          : "-"}
+            ? JSON.parse(text?.logs)[0]?.name
+            : "-"}
       </div>
     ),
   },
@@ -1953,7 +1973,7 @@ export const tokensByAddressColumn = [
     render: (text) => (
       <Link
         className="bghash"
-        href={`${Routes.Tx_Hash}${text}`}
+        href={`${Routes.Tx_Hash()}${text}`}
         rel="noopener noreferrer"
       >
         {getAddress(text)}
@@ -2095,5 +2115,266 @@ export const tokensByAddressColumn = [
       ) : (
         <span className="failedtrans">{capitalizeWord(text)}</span>
       ),
+  },
+];
+
+export const dVPNColumn = [
+  {
+    title: "Txn Hash ",
+    dataIndex: "txhash",
+    key: "txhash",
+    render: (text) => (
+      <div className="addressText">
+        <Link
+          className="bghash"
+          href={`${Routes.Tx_Hash()}${text}`}
+          rel="noopener noreferrer"
+        >
+          {getAddress(text)}
+        </Link>
+        <CopyText text={text} />
+      </div>
+    ),
+  },
+  {
+    title: "Block",
+    dataIndex: "blocknumber",
+    key: "blocknumber",
+    render: (text) => (
+      <Link
+        className="bghash"
+        href={`${Routes.BLOCK_NO}${text}`}
+        rel="noopener noreferrer"
+      >
+        {text}
+      </Link>
+    ),
+  },
+  {
+    title: "Type ",
+    key: "type",
+    render: (text) => (text?.type ? capitalizeWord(text?.type) : "-"),
+  },
+  {
+    title: "Amount",
+    key: "value",
+    render: (text) => {
+      return `${text?.value ? formatValue(text?.value) : "0"} ${currencyName}`;
+    },
+  },
+  {
+    title: "Fee",
+    key: "txFee",
+    render: (text) => (
+      <span className="">
+        {text?.txFee ? `${text.txFee}` : "0"} {currencyName}
+      </span>
+    ),
+  },
+  {
+    title: "Timestamp ",
+    // dataIndex: "timestamp",
+    key: "timestamp",
+    render: (text) =>
+      text?.timestamp ? (
+        <span className="timestamp">
+          {renderTime(text?.timestamp)}
+          <span>{convertToDateTime(text?.timestamp)}</span>
+        </span>
+      ) : text?.createdAt ? (
+        <span className="timestamp">
+          {renderTime(text?.createdAt)}
+          <span>{convertToDateTime(text?.createdAt)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (text) =>
+      text === "SUCCESS" ? (
+        <span className="successtrans">{capitalizeWord(text)}</span>
+      ) : (
+        <span className="failedtrans">{capitalizeWord(text)}</span>
+      ),
+  },
+];
+export const accountsColumns = (currentPage = 1, tableLimit) => [
+  {
+    id: "accAddress",
+    title: "Address",
+    key: "accAddress",
+    render: (text) => (
+      <div className="txnHashcopy">
+        {text?.accAddress ? (
+          <Tooltip title={text?.accAddress}>
+            <Link
+              href={`${Routes.Tx_ADDRESS}${text?.accAddress}`}
+              className="addressWidth"
+            >
+              {text?.accAddress}{" "}
+            </Link>
+          </Tooltip>
+        ) : (
+          "-"
+        )}
+        <span>
+          <CopyText text={text?.accAddress} />
+        </span>
+      </div>
+    ),
+  },
+  {
+    title: "Amount",
+    key: "price",
+    render: (text) => {
+      if (!text?.price) return "-";
+
+      const fullAmount = text.price;
+      const formatted = formatToTwoDecimals(text.price);
+
+      return (
+        <Tooltip title={`${fullAmount} ${currencyName}`}>
+          <span>{`${formatted} ${currencyName}`}</span>
+        </Tooltip>
+      );
+    },
+  },
+  {
+    id: "createdAt",
+    title: "Timestamp",
+    key: "createdAt",
+    render: (text) =>
+      text?.createdAt ? (
+        <span className="timestamp">
+          {renderTime(text?.createdAt)}
+          <span>{convertToDateTime(text?.createdAt)}</span>
+        </span>
+      ) : (
+        "-"
+      ),
+  },
+];
+
+export const activeUsersColumns = (currentPage = 1, tableLimit = 10) => [
+  {
+    title: "Address",
+    key: "accAddress",
+    render: (_text, record) => {
+      const accAddress = record?.base_session?.acc_address;
+
+      if (!accAddress) {
+        return "-";
+      }
+
+      return (
+        <div className="iconandlink activeSessionAddress">
+          <Tooltip title={accAddress}>
+            <Link
+              style={{ minWidth: 420 }}
+              href={`${Routes.Tx_ADDRESS}${accAddress}`}
+            >
+              {accAddress}
+            </Link>
+          </Tooltip>
+          <span>
+            <CopyText text={accAddress} />
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    title: "Bandwidth Consumed",
+    dataIndex: "base_session",
+    key: "bandwidth",
+    render: (base_session) => {
+      const totalUsed =
+        Number(base_session?.download_bytes || 0) +
+        Number(base_session?.upload_bytes || 0);
+
+      const maxBytes = Number(base_session?.max_bytes || 0);
+
+      if (!maxBytes) return "0%";
+
+      const consumed = (totalUsed / maxBytes) * 100;
+      return (
+        <Tooltip
+          overlayClassName="Bandwidth"
+          title={`${noExponential(consumed)}%`}
+        >
+          {`${consumed.toFixed(2)}% `}
+        </Tooltip>
+      );
+    },
+  },
+  {
+    title: "Duration",
+    dataIndex: "base_session",
+    key: "duration",
+    render: (base_session) => {
+      if (!base_session?.duration) return "-";
+
+      // remove "s" and convert to number
+      const totalSeconds = parseFloat(base_session?.duration.replace("s", ""));
+
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+
+      return `${hours}h ${minutes}m ${seconds}s`;
+    },
+  },
+];
+export const solverColumn = [
+  {
+    id: "number",
+    title: "No.",
+    key: "number",
+    render: (_text, _record, index) => index + 1,
+  },
+  {
+    id: "solvername",
+    title: "Solver Name",
+    dataIndex: "solver_name",
+    key: "solver_name",
+  },
+  {
+    id: "nodeaddress",
+    title: "Node Address",
+    dataIndex: "solver_id",
+    key: "solver_id",
+    render: (text) => (
+      <>
+        <div className="iconandlink blockLinkItems">
+          <Tooltip title={text}>{getAddress(text)}</Tooltip>
+          <span>
+            <CopyText hoverText={"Node Address"} text={text}></CopyText>
+          </span>
+        </div>
+      </>
+    ),
+  },
+  // {
+  //   id: "location",
+  //   title: "Location",
+  //   dataIndex: "location",
+  //   key: "location",
+  // },
+  {
+    id: "status",
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (text) => (
+      <span
+        className={`${text === "active" ? "activeStatus" : "inactiveStatus"}`}
+      >
+        {capitalizeFirstLetter(text)}
+      </span>
+    ),
   },
 ];

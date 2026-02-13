@@ -9,8 +9,7 @@ export default async function getBlocks(currentPage, limit, filterVal, order) {
     }
     const response =
       chain == "EVM Chain"
-        ? 
-        await fetch(
+        ? await fetch(
             `${EXPLORER_API_URL}blocks/get-all-blocks?page=${currentPage}&limit=${limit}&order=${order}&filterBy=${filterVal}`
           )
         : await fetch(

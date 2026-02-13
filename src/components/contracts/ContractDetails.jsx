@@ -12,10 +12,10 @@ import {
 } from "@/utils/commonFunctions";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime } from "@/utils/renderTime";
+import { Tooltip } from "antd";
 import Link from "next/link";
 import CopyText from "../DoCopy/CopyText";
 import "../transferInfo/TransferInformation.scss";
-import { Tooltip } from "antd";
 
 const ContractDetails = ({ data, status }) => {
   return (
@@ -40,14 +40,12 @@ const ContractDetails = ({ data, status }) => {
               <div className="information">
                 <p> Contract Address </p>
 
-                <h6>
-                  <span className="copyText   ">
+                <h6 className="">
+                  <span className="copyText">
                     {data?.address ? (
-                      <>
-                        <Tooltip title={data?.address}>
-                          {getAddress(data?.address)}
-                        </Tooltip>
-                      </>
+                      <Tooltip title={data?.address}>
+                        {getAddress(data?.address)}
+                      </Tooltip>
                     ) : (
                       "-"
                     )}
@@ -64,6 +62,7 @@ const ContractDetails = ({ data, status }) => {
               <div className="information">
                 <p>Balance </p>
                 <span className="">
+                  {/* {data?.balance || 0} ${currencyName} */}
                   {formatMillionNumber(
                     noExponential(Number(data?.balance) / 10 ** 18 || 0)
                   )}{" "}
@@ -115,7 +114,7 @@ const ContractDetails = ({ data, status }) => {
                     {data?.txHash ? (
                       <Link
                         className="hoverTrans"
-                        href={`${Routes.Tx_Hash}${data?.txHash}`}
+                        href={`${Routes.Tx_Hash()}${data?.txHash}`}
                       >
                         <Tooltip title={data?.txHash}>
                           {getAddress(data?.txHash)}

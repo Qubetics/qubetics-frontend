@@ -8,19 +8,34 @@ import {
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
 
+import { HIDE_CHAIN_ABSTRACTION } from "../../../constant/constant";
+
+const quickLinks = [
+  {
+    label: "Tokens",
+    href: "/token",
+  },
+  { label: "Blockchain", href: "/blocks" },
+  { label: "Validators", href: "/validators" },
+  { label: "Nodes", href: "/nodes" },
+  ...(HIDE_CHAIN_ABSTRACTION == 1
+    ? []
+    : [
+        {
+          label: "Chain Abstraction",
+          href: "/chain-abstraction",
+        },
+        {
+          label: "Solver Listing",
+          href: "/solver-listing",
+        },
+      ]),
+];
 
 export const footerLinks = [
   {
     title: "Quick Links",
-    items: [
-      {
-        label: "Tokens",
-        href: "/token",
-      },
-      { label: "Blockchain", href: "/blocks" },
-      { label: "Validators", href: "/validators" },
-      { label: "Nodes", href: "/nodes" },
-    ],
+    items: quickLinks,
   },
   {
     title: "About Us",
@@ -42,12 +57,12 @@ export const footerLinks = [
     items: [
       {
         label: "Qubetics Validator App",
-        href: "https://validator.qubetics.com/",
+        href: "https://validator-testnet.qubetics.work/",
         external: true,
       },
       {
         label: "Qubetics Delegator App",
-        href: "https://delegator.qubetics.com/",
+        href: "https://delegator-testnet.qubetics.work/",
         external: true,
       },
       { label: "Qubetics DEX", disabled: true },
@@ -61,6 +76,15 @@ export const footerLinks = [
         label: "QubeQode",
         href: "https://qubeqode.qubetics.com",
         external: true,
+      },
+      {
+        label: "Node Operator",
+        href: "http://prod-dvpn-node-operator.qubetics.work",
+      },
+
+      {
+        label: "Node Provider",
+        href: "http://prod-dvpn-service-provider.qubetics.work",
       },
     ],
   },

@@ -19,6 +19,8 @@
     "@web3-onboard/metamask": "^2.2.0",
     "@web3-onboard/react": "^2.10.0",
     "antd": "^5.10.2",
+    "bech32": "^2.0.0",
+    "bignumber.js": "^9.3.1",
     "cookies-next": "^4.3.0",
     "date-fns": "^2.30.0",
     "ethers": "^6.13.4",

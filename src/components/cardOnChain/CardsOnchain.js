@@ -25,7 +25,9 @@ const CardsOnchain = (props) => {
                   title={props?.title}
                   trigger="hover"
                 >
-                  <InfoCircleOutlined className="infoIcon" />
+                  {props.hideTooltip ? null : (
+                    <InfoCircleOutlined className="infoIcon" />
+                  )}
                 </Tooltip>
                 {/* ) : (
                   ""

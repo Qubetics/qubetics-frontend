@@ -1,0 +1,22 @@
+name: '[dev] Deploy dvpn explorer frontend'
+
+on:
+  push:
+    branches: 
+      - feature/dvpn_module
+
+jobs:
+  dev_deploy_dvpn_explorer_frontend:
+    uses: ./.github/workflows/dvpn-explorer-service.yaml
+    with:
+      SWR_ORGANIZATION: dev-qubetics
+      ARGOCD_BRANCH: dev
+      HUAWEI_REGION: 'ap-southeast-3'
+      ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
+      DEPLOYMENT_PATH: Dvpn-frontend/frontend-deployment.yaml
+      HUAWEI_IMAGE: dvpn-qubetics-frontend
+      DOCKER_USERNAME: ap-southeast-3@BQG9INQF0BKVHSNQOLJG
+      ENV: ${{ vars.DVPN_QUBETICS_FRONTEND_ENV }}
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      GIT_SSH_KEY: ${{ secrets.ARGOCD_SSH_KEY }}

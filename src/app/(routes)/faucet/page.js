@@ -1,6 +1,7 @@
 "use client";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import {
+  currencyName,
   ErrorStatus,
   FAUCET_AMOUNT,
   FetchingStatus,
@@ -15,7 +16,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Input, Spin } from "antd";
 import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import toast from "react-hot-toast";
+import { customToast } from "@/components/common/toast";
 import "../faucet/faucet.scss";
 import { handleValidation } from "./handleValidation";
 function Page() {
@@ -75,24 +76,25 @@ function Page() {
         .then((res) => {
           if (res?.error == false) {
             setTxHash(res?.data?.txHash);
-            toast.success(res?.message);
+            customToast.success(res?.message);
             setTransferStatus(SuccessStatus);
             setFaucetField({ address: "", amount: "" });
             handleReset();
           } else if (res?.error == true) {
-            toast.error(res?.message);
+            customToast.error(res?.message);
             setTransferStatus(ErrorStatus);
             handleReset();
           }
         })
         .catch((err) => {
-          toast.error(err?.message);
+          customToast.error(err?.message);
           setTransferStatus(ErrorStatus);
           handleReset();
         });
     }
     handleReset();
   };
+
   const handleReset = () => {
     if (recaptchaRef.current) recaptchaRef.current.reset();
     setCaptchaToken("");
@@ -107,7 +109,10 @@ function Page() {
             <div className="left">
               <h3>Testnet Chain Faucet</h3>
               <p className="discription">
-                Each address is eligible to receive <span>20 TICS Coins</span>{" "}
+                Each address is eligible to receive{" "}
+                <span>
+                  {validationtValue.FACUCET_AMOUNT_UPTO} {currencyName} Coins
+                </span>{" "}
                 per day.
               </p>
 

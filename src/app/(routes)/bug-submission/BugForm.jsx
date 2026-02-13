@@ -8,15 +8,18 @@ import TextArea from "../../../components/commonComps/TextArea/TextArea";
 import "./SubmissionForm.scss";
 import CustomInput from "@/components/customInput/CustomInput";
 import {
+  BUGFORM_APPS,
+  BUG_TYPE,
   GoogleKey,
   WalletValidValue,
+  currencyName,
   descriptionValidValue,
   handleValidEmail,
   handleValidValue,
 } from "@/constant/constant";
 import ReCAPTCHA from "react-google-recaptcha";
 import postBugReport from "@/services/postBugReport";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 import { LoadingOutlined } from "@ant-design/icons";
 import { isValidEthereumAddress } from "./isValidEthAddress";
 
@@ -143,7 +146,7 @@ const BugForm = () => {
       selectedFiles
     ).then((res) => {
       if (res?.status == "201") {
-        toast.success("Bug submitted successfully.");
+        customToast.success("Bug submitted successfully.");
         setFieldData({
           name: "",
           email_address: "",
@@ -170,7 +173,7 @@ const BugForm = () => {
         if (recaptchaRef.current) recaptchaRef.current.reset();
         setLoading(false);
       } else {
-        toast.error("Something went wrong");
+        customToast.error("Something went wrong");
         setCaptchaToken("");
         if (recaptchaRef.current) recaptchaRef.current.reset();
         setLoading(false);
@@ -255,12 +258,7 @@ const BugForm = () => {
 
         <CustomDropdown
           label="Application Tested*"
-          options={[
-            "TICS Scan (Blockchain Explorer)",
-            "Qubetics Delegator & Validator Interfaces",
-            "Qubetics IDE",
-            "QubeQode",
-          ]}
+          options={BUGFORM_APPS}
           placeholder="Enter Application Name"
           value={selectedApplication}
           onSelect={handleSelectApplication}
@@ -268,12 +266,7 @@ const BugForm = () => {
 
         <CustomDropdown
           label="Bug/Feedback Type*"
-          options={[
-            "Minor Bug",
-            "Major Bug",
-            "UI/UX Improvement",
-            "Feature Suggestion",
-          ]}
+          options={BUG_TYPE}
           placeholder="Select the category that best describes your submission"
           value={selectedBugType}
           onSelect={handleSelectBugType}

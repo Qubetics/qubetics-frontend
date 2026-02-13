@@ -1,5 +1,5 @@
 import { EXPLORER_CONTRACT_VERIFY_URL } from "@/constant/constant";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 
 export default async function postContractVerify(
   contractAddress,
@@ -33,7 +33,7 @@ export default async function postContractVerify(
     let result = await response.json();
     return result;
   } catch (error) {
-    toast.error(error);
+    customToast.error(error);
     return error;
   }
 }

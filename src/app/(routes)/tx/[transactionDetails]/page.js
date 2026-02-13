@@ -1,18 +1,22 @@
 "use client";
 import { useSearchData } from "@/components/contexts/searchingData";
 import InternalTxns from "@/components/contracts/InternalTxns";
+import EventLogs from "@/components/eventLogs/eventLogs";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import LogsDetail from "@/components/logsDetail/LogsDetail";
+import MessageAction from "@/components/messgaeInfo/MessageAction";
 import TransactionAction from "@/components/transferInfo/TransectionAction";
 import TransferInfo from "@/components/transferInfo/TransferInfo";
 import {
+  DVPN_TRANSACTION_TYPE,
   ErrorStatus,
   FetchingStatus,
   InitStatus,
   SuccessStatus,
 } from "@/constant/constant";
+import getMessages from "@/services/getMessages";
 import getTxnDetails from "@/services/getTxnDetails";
 import { Tabs } from "antd";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -33,6 +37,8 @@ const page = () => {
   const [txDetailStatus, setTxDetailStatus] = useState(InitStatus); //init,fetching,success,error
   const params = useParams();
   const { searchData } = useSearchData();
+  const values = Object.values(DVPN_TRANSACTION_TYPE);
+  const [data, setData] = useState();
 
   useEffect(() => {
     fetchData();
@@ -108,28 +114,45 @@ const page = () => {
         </>
       ),
     },
-    contractLogs?.length > 0 && {
-      label: "Logs",
-      key: "1",
-      children: contractLogs.map((e, i) => (
-        <LogsDetail
-          key={i + "logDetails"}
-          contractLogs={e}
-          index={i}
-          topics={topics}
-        />
-      )),
-    },
-    internalTxns.length > 0 && {
-      label: "Internal Transactions",
-      key: "2",
-      children: (
-        <>
-          <InternalTxns hash={params?.transactionDetails} tab={tab} />
-        </>
-      ),
-    },
-  ].filter(Boolean);
+    values.includes(transactionDetails?.type)
+      ? {
+          label: "Messages",
+          key: "1",
+          children: <MessageAction data={data} />,
+        }
+      : [],
+    contractLogs?.length > 0
+      ? {
+          label: "Logs",
+          key: "2",
+          children: contractLogs?.map((e, i) => (
+            <LogsDetail
+              key={i + "logDetails"}
+              contractLogs={e}
+              index={i}
+              topics={topics}
+            />
+          )),
+        }
+      : [],
+
+    data?.[0]?.logs
+      ? {
+          label: "Event Logs",
+          key: "3",
+          children: <EventLogs logs={JSON.parse(data?.[0]?.logs)} />,
+        }
+      : [],
+    internalTxns.length > 0
+      ? {
+          label: "Internal Transactions",
+          key: "2",
+          children: (
+            <InternalTxns hash={params?.transactionDetails} tab={tab} />
+          ),
+        }
+      : [],
+  ];
 
   const handleTabSelect = (e) => {
     setTab(e);
@@ -140,6 +163,18 @@ const page = () => {
       scroll: false,
     });
   };
+
+  useEffect(() => {
+    if (params?.transactionDetails) {
+      const fetchMessages = async () => {
+        const response = await getMessages(params?.transactionDetails);
+        setData(response?.data?.sessionEntries);
+      };
+
+      fetchData();
+      fetchMessages();
+    }
+  }, [params?.transactionDetails]);
 
   return (
     <div className="blocksummary transferInfo">

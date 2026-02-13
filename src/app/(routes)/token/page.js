@@ -14,7 +14,6 @@ import {
   tableLimit,
 } from "@/constant/constant";
 import { TokenColumn } from "@/constant/graphTableValues";
-import useDebounce from "@/hooks/useDebounce";
 import getAllTokens from "@/services/getAllTokens";
 import getInternalSearch from "@/services/getInternalSearchData";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -24,15 +23,12 @@ import { TotalContrat } from "../../../../public/SvgIcons";
 function page() {
   const searchParams = useSearchParams();
   const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
   const [tokensData, setTokensData] = useState([]);
   const [totalErcCount, setErcCount] = useState(0);
   const [tokenStatus, setTokenStatus] = useState(InitStatus);
   const { isNetworkChanged } = useGetNetwork();
-  const [searchStatus, setSerachStatus] = useState(InitStatus);
   const [searchText, setSearchText] = useState("");
   const [paginationdata, setPaginationData] = useState({});
-  const { debounce } = useDebounce(searchText, 1500);
   const pageNo = searchParams.get("page") || 1;
   const pageid = searchParams.get("id") || 1;
   const router = useRouter();
@@ -53,6 +49,7 @@ function page() {
       return err;
     }
   };
+
   const getSearchData = async (debounce) => {
     try {
       setTokenStatus(FetchingStatus);
@@ -60,7 +57,7 @@ function page() {
         pageid,
         tableLimit,
         debounce,
-        order
+        order,
       );
       setTokensData(response?.data?.contracts);
       setPaginationData(response?.data);
@@ -156,6 +153,7 @@ function page() {
       }
     }
   };
+
   return (
     <div className="popularPage tokenListSec">
       <div className="container">

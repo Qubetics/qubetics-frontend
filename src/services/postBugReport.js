@@ -1,5 +1,5 @@
 import { BUG_REPORT_API } from "@/constant/constant";
-import { toast } from "react-toastify";
+import { customToast } from "@/components/common/toast";
 
 export default async function postBugReport(
   fieldData,
@@ -31,7 +31,7 @@ export default async function postBugReport(
 
     return response;
   } catch (error) {
-    toast.error(error);
+    customToast.error(error);
     return error;
   }
 }

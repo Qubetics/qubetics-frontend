@@ -3,14 +3,15 @@ import LatestTxIcon from "@/assets/svg/svgs";
 import { EXPLORER_CURRENCY_NAME } from "@/constant/constant";
 import {
   capitalizeWord,
-  formatMillionNumber,
-  noExponential,
+  formatToTwoDecimals,
+  noExponential
 } from "@/utils/commonFunctions";
 import { convertToDateTime, renderTime } from "@/utils/renderTime";
+import { Tooltip } from "antd";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import CopyText from "../DoCopy/CopyText";
 import "./TransferInformation.scss";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
   const searchParam = useSearchParams();
@@ -175,7 +176,7 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
             </div>
           </div>
         ) : (
-          "-"
+          ""
         )}
 
         <div className="information">
@@ -195,13 +196,17 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
           )}
         </div>
         <div className="information">
-          <p> Amount </p>
-          <span>
-            {data?.value
-              ? formatMillionNumber(noExponential(data?.value))
-              : "0 "}{" "}
-            {" " + EXPLORER_CURRENCY_NAME.toLocaleUpperCase()}
-          </span>
+          <p>Amount</p>
+          <Tooltip
+            title={`${
+              data?.value ? data?.value : 0
+            } ${EXPLORER_CURRENCY_NAME.toUpperCase()}`}
+          >
+            <span>
+              {data?.value ? formatToTwoDecimals(data?.value) : "0"}{" "}
+              {EXPLORER_CURRENCY_NAME.toUpperCase()}
+            </span>
+          </Tooltip>
         </div>
       </div>
       <div className="transferinfo">
@@ -231,7 +236,7 @@ const TransferInfo = ({ data, internalTxns, internalTxnCount, setTab }) => {
           </span>
         </div>
         <div className="information">
-          <p> Method</p>
+          <p>Type</p>
           <span>{data?.type ? capitalizeWord(data?.type) : "-"}</span>
         </div>
         {
