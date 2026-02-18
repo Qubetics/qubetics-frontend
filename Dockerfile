@@ -7,8 +7,14 @@ RUN npm ci
 FROM node:18-alpine AS builder
 WORKDIR /app
 
+# Capture the build argument from the workflow
+ARG ENV_DATA
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Write the argument content into the .env file
+RUN echo "$ENV_DATA" > .env
 
 RUN npm run build
 
