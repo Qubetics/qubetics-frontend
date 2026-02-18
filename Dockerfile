@@ -7,14 +7,10 @@ RUN npm ci
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Capture the build argument from the workflow
-ARG ENV_DATA
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Write the argument content into the .env file
-RUN echo "$ENV_DATA" > .env
 
 RUN npm run build
 
@@ -28,7 +24,7 @@ RUN addgroup -S nextjs && adduser -S nextjs -G nextjs
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.env ./.env
+
 
 USER nextjs
 EXPOSE 3000
