@@ -19,55 +19,55 @@ export const chartMenu = (data, chartType) => {
   ) {
     labelIndex = data?.length
       ? data?.map((item) =>
-          moment(item?.createdAt || item?.date).format("hh:mm:ss a")
+          moment(item?.createdAt || item?.date).format("hh:mm:ss a"),
         )
       : generateData(chartType).map((item) =>
-          moment(item?.createdAt || item?.date).format("hh:mm:ss a")
+          moment(item?.createdAt || item?.date).format("hh:mm:ss a"),
         );
   } else if (chartType === ALL_CHART_ONE_DAY || chartType === ALL_CHARTS_HOUR) {
     labelIndex =
       data?.length > 0
         ? data?.map((item) =>
-            moment(item?.createdAt || item?.date).format("hh:mm a")
+            moment(item?.createdAt || item?.date).format("hh:mm a"),
           )
         : generateData(chartType).map((item) =>
-            moment(item?.createdAt || item?.date).format("hh:mm a")
+            moment(item?.createdAt || item?.date).format("hh:mm a"),
           );
   } else if (chartType === TRANS_HISTORY_CHART_MINUTES) {
     labelIndex =
       data?.length > 0
         ? data?.map((item) =>
-            moment(item?.createdAt || item?.date).format("DD MMM ")
+            moment(item?.createdAt || item?.date).format("DD MMM "),
           )
         : generateData(chartType).map((item) =>
-            moment(item?.createdAt || item?.date).format("DD MMM ")
+            moment(item?.createdAt || item?.date).format("DD MMM "),
           );
   } else if (chartType === ALL_CHART_THRITY_DAYS) {
     labelIndex =
       data?.length > 0
         ? data?.map((item) =>
-            moment(item?.createdAt || item?.date).format("DD MMM ")
+            moment(item?.createdAt || item?.date).format("DD MMM "),
           )
         : generateData(chartType).map((item) =>
-            moment(item?.createdAt || item?.date).format("DD MMM ")
+            moment(item?.createdAt || item?.date).format("DD MMM "),
           );
   } else if (chartType === TRANS_HISTORY_CHART_YEAR) {
     labelIndex =
       data?.length > 0
         ? data?.map((item) =>
-            moment(item?.createdAt || item?.date)?.format(" MMM YYYY ")
+            moment(item?.createdAt || item?.date)?.format(" MMM YYYY "),
           )
         : generateData(chartType).map((item) =>
-            moment(item?.createdAt || item?.date).format(" MMM YYYY ")
+            moment(item?.createdAt || item?.date).format(" MMM YYYY "),
           );
   } else {
     labelIndex =
       data?.length > 0
         ? data?.map((item) =>
-            moment(item?.createdAt || item?.date)?.format("DD MMM YYYY")
+            moment(item?.createdAt || item?.date)?.format("DD MMM YYYY"),
           )
         : generateData(chartType).map((item) =>
-            moment(item?.createdAt || item?.date).format("DD MMM YYYY")
+            moment(item?.createdAt || item?.date).format("DD MMM YYYY"),
           );
   }
 
@@ -81,7 +81,7 @@ export const chartSeriesValue = (data, chartType) => {
   maximum = finalResult?.reduce(
     (max, obj) =>
       Number(obj.count || 0) > Number(max?.count || 0) ? obj : max,
-    finalResult[0]
+    finalResult[0],
   );
 
   let seriesData = finalResult?.map((e) => {

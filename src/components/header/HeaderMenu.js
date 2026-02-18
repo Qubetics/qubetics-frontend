@@ -53,7 +53,7 @@ function HeaderMenu({ onCloseDrawer }) {
   const isNetworkAdded = async () => {
     try {
       const web3 = new Web3(
-        new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || "")
+        new Web3.providers.HttpProvider(EXPLORER_METAMASK_NETWORK_URL || ""),
       );
 
       const chain_Id = await web3?.eth?.getChainId();
@@ -101,7 +101,7 @@ function HeaderMenu({ onCloseDrawer }) {
       <ul className="mob__List">
         {navItem.map((item, index) => {
           const isActive = item.matchRoutes?.some((route) =>
-            pathname.includes(route)
+            pathname.includes(route),
           );
 
           if (item?.showIfEVM === false && chainType !== "EVM Chain") {

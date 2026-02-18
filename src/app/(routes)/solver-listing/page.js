@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { notFound } from "next/navigation";
-import { HIDE_CHAIN_ABSTRACTION, tableLimit } from "@/constant/constant";
+import { tableLimit } from "@/constant/constant";
 import FilterResult from "@/components/FilterResult/FilterResult";
 import Heading from "@/components/heading/Heading";
 import { SkeletonTableWrapper } from "@/components/SkeletonTableWrapper/SkeletonTableWrapper";
@@ -12,8 +11,6 @@ import "./solverListing.scss";
 import GetSolverListing from "@/services/getSolverListing";
 
 const SolverListing = () => {
-  if (HIDE_CHAIN_ABSTRACTION == 1) notFound();
-
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [solverListing, setSolverListing] = useState([]);

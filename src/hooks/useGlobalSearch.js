@@ -6,7 +6,6 @@ import getChainAbstractionSearch from "@/services/getChainAbstractionSearch";
 import getSpecificProviderSearch from "@/services/getSpecificProviderSearch";
 import { isValidAlphaNumeric } from "@/utils/commonFunctions";
 // import useToggleChainContext from "./useToggleChainContext";
-import { HIDE_CHAIN_ABSTRACTION } from "@/constant/constant";
 
 export default function useGlobalSearch(page = 1) {
   const [searchText, setSearchText] = useState("");
@@ -34,7 +33,7 @@ export default function useGlobalSearch(page = 1) {
               ? ["account"]
               : data?.addresses
                 ? ["addresses"]
-                : data?.intentList && HIDE_CHAIN_ABSTRACTION != 1
+                : data?.intentList
                   ? ["intentList"]
                   : data?.nodeAddress
                     ? ["nodeAddress"]
@@ -110,12 +109,11 @@ export default function useGlobalSearch(page = 1) {
           },
         };
       case "intentList":
-        if (HIDE_CHAIN_ABSTRACTION == 1) return {};
         return {
           results: {
             [key]: [
               {
-                address: dataKey[0]?.intent_hash,
+                address: dataKey[0]?.intent_id,
               },
             ],
           },
@@ -151,7 +149,7 @@ export default function useGlobalSearch(page = 1) {
       }
       const response = await getSearchingValue(debounce);
       if (response.error) {
-        if (isValidAlphaNumeric(debounce) && HIDE_CHAIN_ABSTRACTION != 1) {
+        if (isValidAlphaNumeric(debounce)) {
           const result = await getChainAbstractionSearch(debounce);
           if (result.error) {
             setErr(true);

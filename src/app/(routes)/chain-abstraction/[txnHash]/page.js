@@ -1,17 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { notFound, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import GetTransactionOverview from "@/services/getTransactionOverview"; // API call
 import "./TransactionOverview.scss";
 import { RightArrowIcon } from "../../../../../public/SvgIcons";
 
-import {
-  HIDE_CHAIN_ABSTRACTION,
-  isStringValue,
-  Routes,
-  statusClass,
-} from "@/constant/constant";
+import { isStringValue, Routes, statusClass } from "@/constant/constant";
 import { useRouter } from "next/navigation";
 import CopyText from "@/components/DoCopy/CopyText";
 import { convertToDateTime } from "@/utils/renderTime";
@@ -27,8 +22,6 @@ import { Col, Row } from "antd";
 import FilterResult from "@/components/FilterResult/FilterResult";
 
 const TransactionOverview = () => {
-  if (HIDE_CHAIN_ABSTRACTION == 1) notFound();
-
   const { txnHash } = useParams();
   const [intentData, setIntentData] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
@@ -72,12 +65,8 @@ const TransactionOverview = () => {
             <h2 className="sub_heading top_heading">
               Intent Details{" "}
               {intentData?.status || intentData?.status == 0 ? (
-                <h3
-                  className={`status${checkStatus(
-                    intentData.intent_update_status,
-                  )}`}
-                >
-                  {checkStatus(intentData.intent_update_status)}
+                <h3 className={`status${checkStatus(intentData.status)}`}>
+                  {checkStatus(intentData.status)}
                 </h3>
               ) : null}
             </h2>
@@ -91,12 +80,12 @@ const TransactionOverview = () => {
                 <div className="list_item">
                   <h4>Intent Transaction Hash</h4>
                   <h5>
-                    {intentData?.intent_hash ? (
+                    {intentData?.source_tx_hash ? (
                       <>
-                        {truncateWithTooltip(intentData?.intent_hash)}
+                        {truncateWithTooltip(intentData?.source_tx_hash)}
                         <div className="action_btns_copy">
                           <span>
-                            <CopyText text={intentData?.intent_hash} />
+                            <CopyText text={intentData?.source_tx_hash} />
                           </span>
                         </div>
                       </>
@@ -152,22 +141,22 @@ const TransactionOverview = () => {
                 <div className="list_item">
                   <h4>Destination Tx Hash</h4>
                   <h5>
-                    {intentData?.solver_tx_hash ? (
+                    {intentData?.withdraw_tx_hash ? (
                       <>
                         <span
                           className="list_item_pointer"
                           onClick={() =>
                             handleTransactionClick(
                               intentData?.target_chain,
-                              intentData?.solver_tx_hash,
+                              intentData?.withdraw_tx_hash,
                             )
                           }
                         >
-                          {truncateWithTooltip(intentData?.solver_tx_hash)}
+                          {truncateWithTooltip(intentData?.withdraw_tx_hash)}
                         </span>
                         <div className="action_btns_copy">
                           <span>
-                            <CopyText text={intentData?.solver_tx_hash} />
+                            <CopyText text={intentData?.withdraw_tx_hash} />
                           </span>
                         </div>
                       </>
@@ -182,7 +171,7 @@ const TransactionOverview = () => {
                     {getTokenIcon(intentData?.target_token)}{" "}
                     {formatToken(
                       intentData?.target_token?.toLowerCase(),
-                      intentData?.amount,
+                      intentData?.target_amount,
                     )}{" "}
                     {intentData?.target_token?.toUpperCase() || "-"}
                   </h5>
@@ -249,56 +238,33 @@ const TransactionOverview = () => {
                   <div className="timeline ">
                     <div
                       className={`timeline-item ${
-                        ![2].includes(intentData?.intent_update_status)
-                          ? statusClass(intentData?.intent_update_status)
+                        ![2].includes(intentData?.status)
+                          ? statusClass(intentData?.status)
                           : ""
                       }`}
                     >
-                      <span
-                        className={`${intentData?.status == 2 ? "green" : ""}`}
-                      ></span>
+                      <span className="green"></span>
                       <div className="list_item">
                         <h4>Submitted</h4>
                         <h5>{convertToDateTime(intentData?.created_at)}</h5>
                       </div>
                     </div>
                     <div
-                      className={`timeline-item ${
-                        ![2, 3].includes(intentData?.intent_update_status)
-                          ? statusClass(intentData?.status)
-                          : ""
-                      }`}
+                      className={`timeline-item ${statusClass(intentData?.status)}`}
                     >
-                      <span></span>
+                      <span className="green"></span>
                       <div className="list_item">
                         <h4>Executed</h4>
-                        <h5>
-                          {![2].includes(intentData?.intent_update_status)
-                            ? convertToDateTime(intentData?.solver_tx_executed)
-                            : null}
-                        </h5>
                       </div>
                     </div>
                     <div
-                      className={`timeline-item ${
-                        ![2, 3].includes(intentData?.intent_update_status)
-                          ? statusClass(intentData?.status)
-                          : ""
-                      }`}
+                      className={`timeline-item ${statusClass(intentData?.status)}`}
                     >
                       <span></span>
                       <div>
-                        <h4
-                          className={`${
-                            ![2, 3].includes(intentData?.intent_update_status)
-                              ? statusClass(intentData?.intent_update_status)
-                              : ""
-                          }`}
-                        >
-                          {checkStatus(intentData?.intent_update_status)}
-                        </h4>
+                        <h4>{checkStatus(intentData?.status)}</h4>
                         <h5>
-                          {![2, 3].includes(intentData?.intent_update_status)
+                          {![2].includes(intentData?.status)
                             ? convertToDateTime(intentData?.updated_at)
                             : null}
                         </h5>

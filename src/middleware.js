@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { SHOW_FAUCET, HIDE_CHAIN_ABSTRACTION } from "./constant/constant";
+import { SHOW_FAUCET } from "./constant/constant";
 
 export function middleware(request) {
   const cookies = request.cookies.get("isEVM")?.value;
@@ -13,12 +13,6 @@ export function middleware(request) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  const blockedPaths = ["/solver-listing", "/chain-abstraction"];
-  const isBlockedPath = blockedPaths.some((path) => pathname.startsWith(path));
-  if (isBlockedPath && HIDE_CHAIN_ABSTRACTION == 1) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
   return NextResponse.next();
 }
 
@@ -29,7 +23,5 @@ export const config = {
     "/token",
     "/contract/:address*",
     "/faucet",
-    "/solver-listing/:path*",
-    "/chain-abstraction/:path*",
   ],
 };

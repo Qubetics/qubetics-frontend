@@ -33,7 +33,7 @@ export const EXPLORER_METAMASK_NETWORK_URL =
   process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
 export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
   process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
-  16
+  16,
 );
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
@@ -59,8 +59,7 @@ export const TICS_EXPLORER_URL = process.env.NEXT_PUBLIC_EXPLORER_URL;
 export const BTC_EXPLORER_URL = process.env.NEXT_PUBLIC_BTC_EXPLORER_URL;
 export const ETH_EXPLORER_URL = process.env.NEXT_PUBLIC_ETH_EXPLORER_URL;
 export const OPERATOR_API_URL = process.env.NEXT_PUBLIC_OPERATOR_API_URL;
-export const HIDE_CHAIN_ABSTRACTION =
-  process.env.NEXT_PUBLIC_HIDE_CHAIN_ABSTRACTION;
+export const TOKEN_PRICE_API = process.env.NEXT_PUBLIC_TOKEN_PRICE_API;
 //  Api Data status
 export const InitStatus = "Init";
 export const FetchingStatus = "Fetching";
@@ -304,24 +303,19 @@ export function BlockchainHeaderFunction(currentPath) {
         </Link>
       ),
     },
-    ...(HIDE_CHAIN_ABSTRACTION == 1
-      ? []
-      : [
-          {
-            key: "3",
-            value: "Chain Abstraction",
-            className:
-              currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
-            label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
-          },
-          {
-            key: "4",
-            value: "Solver Listing",
-            className:
-              currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
-            label: <Link href="/solver-listing">Solver Listing</Link>,
-          },
-        ]),
+    {
+      key: "3",
+      value: "Chain Abstraction",
+      className:
+        currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+      label: <Link href="/chain-abstraction">Chain Abstraction</Link>,
+    },
+    {
+      key: "4",
+      value: "Solver Listing",
+      className: currentPath === Routes.SOLVER_LIST ? "activeOptions" : "",
+      label: <Link href="/solver-listing">Solver Listing</Link>,
+    },
     // {
     //   key: "3",
     //   value: "Validator",
@@ -935,7 +929,7 @@ export const formatPrecision = (num, minDecimals, maxPrecision) => {
       nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
       numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
         nonZeroDecimals,
-        minDecimals
+        minDecimals,
       )}`;
     }
   }
@@ -957,7 +951,7 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   trailingZerosStr = trailingZerosStr.substring(
     0,
     (minDecimals ? minDecimals : 0) -
-      (decimalStr.length - trailingZerosStr.length)
+      (decimalStr.length - trailingZerosStr.length),
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };
@@ -971,9 +965,9 @@ export const statusClass = (value) => {
     case 0:
       return "failed";
     case 1:
-    case 3:
       return "active";
     case 2:
+      return "pending";
     default:
       return "";
   }
