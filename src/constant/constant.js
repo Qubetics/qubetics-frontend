@@ -33,7 +33,7 @@ export const EXPLORER_METAMASK_NETWORK_URL =
   process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
 export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
   process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
-  16,
+  16
 );
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
@@ -929,7 +929,7 @@ export const formatPrecision = (num, minDecimals, maxPrecision) => {
       nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
       numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
         nonZeroDecimals,
-        minDecimals,
+        minDecimals
       )}`;
     }
   }
@@ -951,7 +951,7 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   trailingZerosStr = trailingZerosStr.substring(
     0,
     (minDecimals ? minDecimals : 0) -
-      (decimalStr.length - trailingZerosStr.length),
+      (decimalStr.length - trailingZerosStr.length)
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };
@@ -993,7 +993,7 @@ export const explorerHyperLInk = (value, txn) => {
 
   switch (value.toLowerCase()) {
     case "btc":
-      hyperLink = `${BTC_EXPLORER_URL}testnet4/tx/${txn}`;
+      hyperLink = `${BTC_EXPLORER_URL}/tx/${txn}`;
       text = "Bitcoin";
       break;
     case "tics":
