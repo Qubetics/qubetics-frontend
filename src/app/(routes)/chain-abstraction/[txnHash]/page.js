@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import GetTransactionOverview from "@/services/getTransactionOverview"; // API call
 import "./TransactionOverview.scss";
-import { RightArrowIcon } from "../../../../../public/SvgIcons";
+import { InfoIcon, RightArrowIcon } from "../../../../../public/SvgIcons";
 
 import { isStringValue, Routes, statusClass } from "@/constant/constant";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ import {
   transferType,
 } from "@/utils/commonFunctions";
 import { truncateWithTooltip } from "@/components/commonComps/truncateWithTooltip/truncateWithTooltip";
-import { Col, Row } from "antd";
+import { Col, Row, Tooltip } from "antd";
 import FilterResult from "@/components/FilterResult/FilterResult";
 
 const TransactionOverview = () => {
@@ -139,24 +139,33 @@ const TransactionOverview = () => {
             <Col lg={12} md={12} sm={12} xs={24}>
               <div className="listing">
                 <div className="list_item">
-                  <h4>Destination Tx Hash</h4>
+                  <h4>
+                    Destination Tx Hash{" "}
+                    {intentData?.target_token?.toLowerCase() === "btc" && (
+                      <Tooltip title="Intent completed. Please confirm the transaction on the BTC explorer.">
+                        <span className="btc-info-icon">
+                          <InfoIcon />
+                        </span>
+                      </Tooltip>
+                    )}
+                  </h4>
                   <h5>
-                    {intentData?.withdraw_tx_hash ? (
+                    {intentData?.destination_tx_hash ? (
                       <>
                         <span
                           className="list_item_pointer"
                           onClick={() =>
                             handleTransactionClick(
                               intentData?.target_chain,
-                              intentData?.withdraw_tx_hash,
+                              intentData?.destination_tx_hash,
                             )
                           }
                         >
-                          {truncateWithTooltip(intentData?.withdraw_tx_hash)}
+                          {truncateWithTooltip(intentData?.destination_tx_hash)}
                         </span>
                         <div className="action_btns_copy">
                           <span>
-                            <CopyText text={intentData?.withdraw_tx_hash} />
+                            <CopyText text={intentData?.destination_tx_hash} />
                           </span>
                         </div>
                       </>

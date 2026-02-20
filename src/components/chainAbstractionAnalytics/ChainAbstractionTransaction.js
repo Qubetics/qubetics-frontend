@@ -159,7 +159,7 @@ const ChainAbstractionTransaction = () => {
                 </Tooltip>
                 {explorerHyperLInk(
                   record?.target_token,
-                  record?.withdraw_tx_hash,
+                  record?.destination_tx_hash,
                 )}
               </div>
             </div>
@@ -181,7 +181,7 @@ const ChainAbstractionTransaction = () => {
       title: "Destination Transaction",
       key: "destTx",
       render: (_, record) =>
-        record?.withdraw_tx_hash ? (
+        record?.destination_tx_hash ? (
           <div className="tx-cell">
             <span className="tx-link addressText">
               <a
@@ -193,14 +193,14 @@ const ChainAbstractionTransaction = () => {
                 onClick={() => {
                   handleTransactionClick(
                     record?.target_chain,
-                    record?.withdraw_tx_hash,
+                    record?.destination_tx_hash,
                   );
                 }}
               >
-                {getAddress(record?.withdraw_tx_hash)}
+                {getAddress(record?.destination_tx_hash)}
               </a>
               {/* <button className="copy_btn">
-                <CopyText text={record?.withdraw_tx_hash} />
+                <CopyText text={record?.destination_tx_hash} />
               </button> */}
             </span>
             <div className="tx-date">
