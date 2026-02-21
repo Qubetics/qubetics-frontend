@@ -21,7 +21,7 @@ export const currencyName = "TICS";
 export const EXPLORER_API_URL = process.env.NEXT_PUBLIC_EXPLORER_API_URL;
 export const EXPLORER_CONTRACT_VERIFY_URL =
   process.env.NEXT_PUBLIC_CONTRACT_VERIFY_URL;
-export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
+export const WEB_PROVIDER_URL = process.env.NEXT_PUBLIC_METAMASK_NETWORK_URL;
 export const NATIVE_EXPLORER_API_URL =
   process.env.NEXT_PUBLIC_NATIVE_EXPLORER_API_URL;
 export const EXPLORER_SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
@@ -30,10 +30,10 @@ export const NATIVE_EXPLORER_SOCKET_URL =
 export const EXPLORER_METAMASK_NAVIGATION =
   process.env.NEXT_PUBLIC_METAMASK_EXPLORER_NAVIGATE;
 export const EXPLORER_METAMASK_NETWORK_URL =
-  process.env.NEXT_PUBLIC_METAMASK_NETWROK_URL;
+  process.env.NEXT_PUBLIC_METAMASK_NETWORK_URL;
 export const EXPLORER_META_NETWORK_CHAIN_ID = parseInt(
   process.env.NEXT_PUBLIC_QUBETICS_CHAINID,
-  16
+  16,
 );
 export const EXPLORER_CURRENCY_NAME =
   process.env.NEXT_PUBLIC_QUBETICS_CURRENCY_NAME;
@@ -929,7 +929,7 @@ export const formatPrecision = (num, minDecimals, maxPrecision) => {
       nonZeroDecimals = nonZeroDecimals.substring(0, maxPrecision);
       numStr = `${integerStr}.${zeroDecimals}${removeTrailingZeros(
         nonZeroDecimals,
-        minDecimals
+        minDecimals,
       )}`;
     }
   }
@@ -951,7 +951,7 @@ export const removeTrailingZeros = (numStr, minDecimals) => {
   trailingZerosStr = trailingZerosStr.substring(
     0,
     (minDecimals ? minDecimals : 0) -
-      (decimalStr.length - trailingZerosStr.length)
+      (decimalStr.length - trailingZerosStr.length),
   );
   return `${integerStr}.${precisionDecimalStr}${trailingZerosStr}`;
 };
