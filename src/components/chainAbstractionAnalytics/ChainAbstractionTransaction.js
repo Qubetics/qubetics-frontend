@@ -37,7 +37,7 @@ const ChainAbstractionTransaction = () => {
 
     const result = await GetChainAbstractionTransaction(
       currentPage,
-      tableLimit,
+      tableLimit
     );
 
     if (result?.data?.intentList) {
@@ -77,14 +77,14 @@ const ChainAbstractionTransaction = () => {
       dataIndex: "intentTx",
       key: "intentTx",
       render: (_, record) =>
-        record?.intent_id ? (
+        record?.source_tx_hash ? (
           <div className="tx-cell">
             <span className="tx-link addressText">
-              <Link href={`/chain-abstraction/${record?.intent_id}`}>
-                {getAddress(record?.source_tx_hash || record?.intent_id)}
+              <Link href={`/chain-abstraction/${record?.source_tx_hash}`}>
+                {getAddress(record?.source_tx_hash)}
               </Link>
               <button className="copy_btn">
-                <CopyText text={record?.source_tx_hash || record?.intent_id} />
+                <CopyText text={record?.source_tx_hash} />
               </button>
             </span>
             <div className="tx-date">
@@ -102,13 +102,13 @@ const ChainAbstractionTransaction = () => {
         const rawValue = record?.source_amount;
         const formatted = formatToken(
           record?.source_token?.toLowerCase(),
-          noExponential(rawValue),
+          noExponential(rawValue)
         );
 
         const tooltipContent = getTooltipContent(
           record?.source_token,
           rawValue,
-          formatted,
+          formatted
         );
 
         return (
@@ -136,13 +136,13 @@ const ChainAbstractionTransaction = () => {
         const rawValue = record?.target_amount;
         const formatted = formatToken(
           record?.target_token,
-          noExponential(rawValue),
+          noExponential(rawValue)
         );
 
         const tooltipContent = getTooltipContent(
           record?.target_token,
           rawValue,
-          formatted,
+          formatted
         );
 
         return (
@@ -159,7 +159,7 @@ const ChainAbstractionTransaction = () => {
                 </Tooltip>
                 {explorerHyperLInk(
                   record?.target_token,
-                  record?.destination_tx_hash,
+                  record?.destination_tx_hash
                 )}
               </div>
             </div>
@@ -193,7 +193,7 @@ const ChainAbstractionTransaction = () => {
                 onClick={() => {
                   handleTransactionClick(
                     record?.target_chain,
-                    record?.destination_tx_hash,
+                    record?.destination_tx_hash
                   );
                 }}
               >
