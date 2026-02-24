@@ -15,7 +15,7 @@ Tics Scan is a high-performance, modern blockchain explorer built using **Next.j
 - ✅ Block, validator, and token information 
 - ✅ Pagination and search support
 - ✅ Mobile-responsive and fast-loading UI
-- ✅ WebSocket and API integration for live data
+- ✅ WebSocket and API integration for live data 
 - ✅ Theme-friendly design using Tailwind CSS
 
 ---
