@@ -2,11 +2,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { BlockIcon, Searchicon } from "../../../public/SvgIcons";
 import "./FilterResult.scss";
 import Page from "@/app/(routes)/notfound/page";
-import {
-  firstCapitalLetter,
-  Routes,
-  HIDE_CHAIN_ABSTRACTION,
-} from "@/constant/constant";
+import { firstCapitalLetter, Routes } from "@/constant/constant";
 import useGlobalSearch from "@/hooks/useGlobalSearch";
 import useOnClickOutside from "@/hooks/useoutsideClick";
 import Link from "next/link";
@@ -220,7 +216,6 @@ const FilterResult = () => {
         case "account":
           return router.push(`/account/${redirectAddress}`);
         case "intentList":
-          if (HIDE_CHAIN_ABSTRACTION == 1) return;
           return router.push(`/chain-abstraction/${redirectAddress}`);
         case "nodeAddress":
           return router.push(`/dVPNNodes/${redirectAddress}`);
@@ -247,7 +242,6 @@ const FilterResult = () => {
         case "account":
           return `/account/${selectedAddress}`;
         case "intentList":
-          if (HIDE_CHAIN_ABSTRACTION == 1) return "";
           return `/chain-abstraction/${selectedAddress}`;
         case "nodeAddress":
           return `/dVPNNodes/${selectedAddress}`;
@@ -275,7 +269,7 @@ const FilterResult = () => {
   }, [open]);
 
   return (
-    <div class="filter-result">
+    <div className="filter-result">
       <div className="searchbar searchFilter">
         <div className="searchbar_input">
           <input
@@ -320,7 +314,7 @@ const FilterResult = () => {
           className="filter-result__results"
           tabindex="0"
         >
-          <div class="filter-result__tabs">
+          <div className="filter-result__tabs">
             {dynamicTab?.length > 0 &&
               dynamicTab?.map((elem) => (
                 <button
@@ -337,19 +331,19 @@ const FilterResult = () => {
               ))}
           </div>
 
-          <div class="filter-result__divider"></div>
+          <div className="filter-result__divider"></div>
 
-          <div ref={containerRef} class="filter-result__container">
-            <div class="filter-result__container-inner">
+          <div ref={containerRef} className="filter-result__container">
+            <div className="filter-result__container-inner">
               {dynamicTab?.length > 0 &&
                 dynamicTab?.map((item) => (
                   <section
                     key={item}
                     id={item}
                     ref={(ele) => setCustomRef(item, ele)}
-                    class="filter-result__section"
+                    className="filter-result__section"
                   >
-                    <div class="filter-result__section-title">
+                    <div className="filter-result__section-title">
                       {firstCapitalLetter(item)}
                     </div>
 
@@ -418,7 +412,7 @@ const FilterResult = () => {
                             </Link>
                           </div>
                           {id !== searchResult?.results[item].length - 1 && (
-                            <div class="filter-result__divider"></div>
+                            <div className="filter-result__divider"></div>
                           )}
                         </li>
                       ))}
@@ -432,26 +426,26 @@ const FilterResult = () => {
             //   <Image src={notFound} width={150} height={90} />
             // </div>
           )}
-          <div class="filter-result__divider"></div>
+          <div className="filter-result__divider"></div>
 
-          <div class="filter-result__footer">
-            <div class="filter-result__footer-group">
-              <p class="filter-result__footer-text">
+          <div className="filter-result__footer">
+            <div className="filter-result__footer-group">
+              <p className="filter-result__footer-text">
                 {" "}
                 <NavigateUp /> <NavigateDown /> Navigate
               </p>
             </div>
 
-            <div class="filter-result__footer-group">
-              <div class="filter-result__footer-key filter-result__footer-key--esc">
+            <div className="filter-result__footer-group">
+              <div className="filter-result__footer-key filter-result__footer-key--esc">
                 ESC
               </div>
-              <p class="filter-result__footer-text">Close</p>
+              <p className="filter-result__footer-text">Close</p>
             </div>
 
-            <div class="filter-result__footer-group">
-              <div class="filter-result__footer-key filter-result__footer-key--enter"></div>
-              <p class="filter-result__footer-text">
+            <div className="filter-result__footer-group">
+              <div className="filter-result__footer-key filter-result__footer-key--enter"></div>
+              <p className="filter-result__footer-text">
                 {" "}
                 <span className="enterkeyIcon">
                   {" "}

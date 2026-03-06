@@ -67,7 +67,7 @@ NEXT_PUBLIC_EXPLORER_API_URL=         # URL for explorer API (EVM chain)
 NEXT_PUBLIC_SOCKET_URL=               # WebSocket URL for EVM updates
 
 # Metamask & Chain Info
-NEXT_PUBLIC_METAMASK_NETWROK_URL=     # JSON-RPC URL for MetaMask
+NEXT_PUBLIC_METAMASK_NETWORK_URL=     # JSON-RPC URL for MetaMask
 NEXT_PUBLIC_QUBETICS_CURRENCY_NAME=   # Currency symbol
 NEXT_PUBLIC_QUBETICS_CHAIN_NAME=      # Name of the chain
 NEXT_PUBLIC_QUBETICS_CHAINID=         # Chain ID
@@ -121,6 +121,7 @@ Visit [http://localhost:3000](http://localhost:3000)
 ├── .env.local
 └── README.md
 ```
+
 ---
 
 ## 🛡️ Security
@@ -133,7 +134,3 @@ Visit [http://localhost:3000](http://localhost:3000)
 ## 📄 License
 
 This project is licensed under the MIT License.
-
-
-
-

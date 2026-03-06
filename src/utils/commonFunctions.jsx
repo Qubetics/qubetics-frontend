@@ -4,6 +4,7 @@ import {
   ETH_EXPLORER_URL,
   TICS_EXPLORER_URL,
   toFixedWithoutRounding,
+  TOKEN_PRICE_API,
 } from "@/constant/constant";
 import BigNumber from "bignumber.js";
 
@@ -81,17 +82,16 @@ export const formatMillionNumber = (num, precision = 3) => {
   return `${truncateDecimals(num, precision)}`;
 };
 
-const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
+export const reduceValueLength = (apr = "", startLen = 4, endLen = 3) => {
   if (apr?.length > 9) {
     return `${apr?.substring(0, startLen)}...${apr?.substring(
       apr?.length - endLen,
-      apr?.length
+      apr?.length,
     )}`;
   } else {
     return apr;
   }
 };
-export default reduceValueLength;
 
 export function simplifyNumber(input) {
   // Convert input to a number if it's a string
@@ -222,7 +222,6 @@ export const checkStatus = (value) => {
     case 1:
       return "Confirm";
     case 2:
-    case 3:
       return "Pending";
     default:
       return "-";
@@ -243,7 +242,7 @@ export const transferType = (value) => {
 export const destinationTxn = (type, value) => {
   switch (type) {
     case "btc":
-      return `${BTC_EXPLORER_URL}testnet4/tx/${value}`;
+      return `${BTC_EXPLORER_URL}tx/${value}`;
     case "tics":
       return `${TICS_EXPLORER_URL}tx/${value}`;
     case "usdt":
@@ -285,9 +284,7 @@ export function capitalizeFirstLetter(str) {
 
 export const fetchTokenPrices = async () => {
   try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,qubetics&vs_currencies=usd"
-    );
+    const response = await fetch(TOKEN_PRICE_API);
 
     if (response.ok) {
       const data = await response.json();
@@ -356,7 +353,7 @@ export const getExplorerUrl = (network, transactionHash) => {
   const normalizedNetwork = (network || "").toLowerCase();
 
   if (normalizedNetwork === "bitcoin") {
-    return `${BTC_EXPLORER_URL}testnet4/tx/${transactionHash}`;
+    return `${BTC_EXPLORER_URL}tx/${transactionHash}`;
   } else if (normalizedNetwork === "qubetics") {
     return `${TICS_EXPLORER_URL}tx/${transactionHash}`;
   }

@@ -77,14 +77,14 @@ const ChainAbstractionTransaction = () => {
       dataIndex: "intentTx",
       key: "intentTx",
       render: (_, record) =>
-        record?.intent_hash ? (
+        record?.source_tx_hash ? (
           <div className="tx-cell">
             <span className="tx-link addressText">
-              <Link href={`/chain-abstraction/${record?.intent_hash}`}>
-                {getAddress(record?.intent_hash)}
+              <Link href={`/chain-abstraction/${record?.source_tx_hash}`}>
+                {getAddress(record?.source_tx_hash)}
               </Link>
               <button className="copy_btn">
-                <CopyText text={record?.intent_hash} />
+                <CopyText text={record?.source_tx_hash} />
               </button>
             </span>
             <div className="tx-date">
@@ -133,7 +133,7 @@ const ChainAbstractionTransaction = () => {
       title: "Destination Token",
       key: "destination",
       render: (_, record) => {
-        const rawValue = record?.amount;
+        const rawValue = record?.target_amount;
         const formatted = formatToken(
           record?.target_token,
           noExponential(rawValue)
@@ -159,7 +159,7 @@ const ChainAbstractionTransaction = () => {
                 </Tooltip>
                 {explorerHyperLInk(
                   record?.target_token,
-                  record?.solver_tx_hash
+                  record?.destination_tx_hash
                 )}
               </div>
             </div>
@@ -169,8 +169,8 @@ const ChainAbstractionTransaction = () => {
     },
     {
       title: "Status",
-      dataIndex: "intent_update_status",
-      key: "intent_update_status",
+      dataIndex: "status",
+      key: "status",
       render: (status) => (
         <p className={`status-tag-${checkStatus(status)}`}>
           {checkStatus(status)}
@@ -181,7 +181,7 @@ const ChainAbstractionTransaction = () => {
       title: "Destination Transaction",
       key: "destTx",
       render: (_, record) =>
-        record?.solver_tx_hash ? (
+        record?.destination_tx_hash ? (
           <div className="tx-cell">
             <span className="tx-link addressText">
               <a
@@ -193,14 +193,14 @@ const ChainAbstractionTransaction = () => {
                 onClick={() => {
                   handleTransactionClick(
                     record?.target_chain,
-                    record?.solver_tx_hash
+                    record?.destination_tx_hash
                   );
                 }}
               >
-                {getAddress(record?.solver_tx_hash)}
+                {getAddress(record?.destination_tx_hash)}
               </a>
               {/* <button className="copy_btn">
-                <CopyText text={record?.solver_tx_hash} />
+                <CopyText text={record?.destination_tx_hash} />
               </button> */}
             </span>
             <div className="tx-date">
@@ -218,7 +218,7 @@ const ChainAbstractionTransaction = () => {
         <span
           className="view-action pointer"
           onClick={() => {
-            router.push(`/chain-abstraction/${record?.intent_hash}`);
+            router.push(`/chain-abstraction/${record?.intent_id}`);
           }}
         >
           View

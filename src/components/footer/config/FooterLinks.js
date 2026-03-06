@@ -8,8 +8,6 @@ import {
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
 
-import { HIDE_CHAIN_ABSTRACTION } from "../../../constant/constant";
-
 const quickLinks = [
   {
     label: "Tokens",
@@ -18,18 +16,14 @@ const quickLinks = [
   { label: "Blockchain", href: "/blocks" },
   { label: "Validators", href: "/validators" },
   { label: "Nodes", href: "/nodes" },
-  ...(HIDE_CHAIN_ABSTRACTION == 1
-    ? []
-    : [
-        {
-          label: "Chain Abstraction",
-          href: "/chain-abstraction",
-        },
-        {
-          label: "Solver Listing",
-          href: "/solver-listing",
-        },
-      ]),
+  {
+    label: "Chain Abstraction",
+    href: "/chain-abstraction",
+  },
+  {
+    label: "Solver Listing",
+    href: "/solver-listing",
+  },
 ];
 
 export const footerLinks = [

@@ -302,6 +302,9 @@
         color: #a0a0a0;
         font-weight: 300;
         font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
 
         @media (max-width: 1679px) {
           font-size: 14px;
@@ -313,6 +316,27 @@
 
         @media (max-width: 575px) {
           font-size: 11px;
+        }
+
+        .btc-info-icon {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          svg {
+            width: 14px;
+            height: 14px;
+            path {
+              fill: #ff8c00;
+            }
+          }
+
+          @media (max-width: 575px) {
+            svg {
+              width: 12px;
+              height: 12px;
+            }
+          }
         }
       }
 
@@ -346,6 +370,7 @@
           font-size: 11px;
         }
       }
+
     }
 
     .status-log {
