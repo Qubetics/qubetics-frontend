@@ -1,6 +1,6 @@
 # Tics Scan - Qubetics Blockchain Explorer
 
-Tics Scan is a high-performance, modern blockchain explorer built using **Next.js**. It allows users to explore qubetics blockchain data such as transactions, blocks, accounts, validators, and more in real-time.
+Tics Scan is a high-performance, modern blockchain explorer built using **Next.js**. It allows users to explore qubetics blockchain data such as transactions, blocks, accounts, validators, and more in real-time. 
 
 ## 🌐 Live Demo
 
