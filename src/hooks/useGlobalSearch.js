@@ -132,7 +132,7 @@ export default function useGlobalSearch(page = 1) {
   };
 
   async function getSearchResult() {
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       if (debounce.startsWith("qubeticsprov")) {
         const response = await getSpecificProviderSearch(debounce);
@@ -157,8 +157,10 @@ export default function useGlobalSearch(page = 1) {
             setDynamicTab([]);
           } else {
             setErr(false);
-            setSearchResult(result?.data ? getResponse(result?.data) : []);
-            setDynamicTab(getType(result?.data));
+            setSearchResult(
+              result?.data?.total ? getResponse(result?.data) : [],
+            );
+            setDynamicTab(getType(result?.data?.total ? result?.data : []));
           }
         } else {
           setErr(true);
