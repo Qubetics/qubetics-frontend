@@ -1,0 +1,22 @@
+name: '[v2-stable] Deploy qubetics-frontend-v2 testnet'
+
+on:
+  push:
+    branches:
+      - 'v2-stable'
+
+jobs:
+  v2-stable-frontend:
+    uses: Qubetics/argocd-qubetics/.github/workflows/deployment.yaml@testnet
+    with:
+      SWR_ORGANIZATION: testnet-qubetics
+      ARGOCD_BRANCH: testnet
+      HUAWEI_REGION: 'ap-southeast-3'
+      ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
+      DEPLOYMENT_PATH: qubetics-frontend-v2/deployment.yaml
+      HUAWEI_IMAGE: qubetics-frontend-v2
+      DOCKER_USERNAME: ap-southeast-3@${{ vars.DOCKER_USERNAME_V2 }}
+      ENV: ${{ vars.DEV_QUBETICS_FRONTEND_ENV }}
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD_V2 }}
+      GIT_SSH_KEY: ${{ secrets.ARGOCD_SSH_KEY_NEW }}
