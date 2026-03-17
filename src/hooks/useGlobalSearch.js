@@ -24,22 +24,22 @@ export default function useGlobalSearch(page = 1) {
     return data?.transaction
       ? ["transaction"]
       : data?.block
-      ? ["block"]
-      : data?.contract
-      ? ["contract"]
-      : data?.transactions
-      ? ["transactions"]
-      : data?.account
-      ? ["account"]
-      : data?.addresses
-      ? ["addresses"]
-      : data?.intentList
-      ? ["intentList"]
-      : data?.nodeAddress
-      ? ["nodeAddress"]
-      : data?.provider
-      ? ["provider"]
-      : [];
+        ? ["block"]
+        : data?.contract
+          ? ["contract"]
+          : data?.transactions
+            ? ["transactions"]
+            : data?.account
+              ? ["account"]
+              : data?.addresses
+                ? ["addresses"]
+                : data?.intentList
+                  ? ["intentList"]
+                  : data?.nodeAddress
+                    ? ["nodeAddress"]
+                    : data?.provider
+                      ? ["provider"]
+                      : [];
   };
 
   const getResponse = (data) => {
@@ -113,7 +113,7 @@ export default function useGlobalSearch(page = 1) {
           results: {
             [key]: [
               {
-                address: dataKey[0]?.intent_hash,
+                address: dataKey[0]?.intent_id,
               },
             ],
           },
@@ -132,7 +132,7 @@ export default function useGlobalSearch(page = 1) {
   };
 
   async function getSearchResult() {
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       if (debounce.startsWith("qubeticsprov")) {
         const response = await getSpecificProviderSearch(debounce);
@@ -157,8 +157,10 @@ export default function useGlobalSearch(page = 1) {
             setDynamicTab([]);
           } else {
             setErr(false);
-            setSearchResult(result?.data ? getResponse(result?.data) : []);
-            setDynamicTab(getType(result?.data));
+            setSearchResult(
+              result?.data?.total ? getResponse(result?.data) : [],
+            );
+            setDynamicTab(getType(result?.data?.total ? result?.data : []));
           }
         } else {
           setErr(true);
@@ -170,8 +172,8 @@ export default function useGlobalSearch(page = 1) {
           chain === "EVM Chain"
             ? response?.data?.tabs || getType(response?.data)
             : response?.data
-            ? getType(response?.data)
-            : []
+              ? getType(response?.data)
+              : [],
         );
         setSearchResult(
           chain === "EVM Chain"
@@ -179,8 +181,8 @@ export default function useGlobalSearch(page = 1) {
               ? response?.data
               : getResponse(response?.data)
             : response?.data
-            ? getResponse(response?.data)
-            : {}
+              ? getResponse(response?.data)
+              : {},
         );
         setErr(false);
       }

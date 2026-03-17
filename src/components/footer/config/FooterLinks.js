@@ -8,20 +8,28 @@ import {
   YoutubeIcon,
 } from "../../../../public/SvgIcons";
 
+const quickLinks = [
+  {
+    label: "Tokens",
+    href: "/token",
+  },
+  { label: "Blockchain", href: "/blocks" },
+  { label: "Validators", href: "/validators" },
+  { label: "Nodes", href: "/nodes" },
+  {
+    label: "Chain Abstraction",
+    href: "/chain-abstraction",
+  },
+  {
+    label: "Solver Listing",
+    href: "/solver-listing",
+  },
+];
+
 export const footerLinks = [
   {
     title: "Quick Links",
-    items: [
-      {
-        label: "Tokens",
-        href: "/token",
-      },
-      { label: "Blockchain", href: "/blocks" },
-      { label: "Validators", href: "/validators" },
-      { label: "Nodes", href: "/nodes" },
-      { label: "Chain Abstraction", href: "/chain-abstraction" },
-      { label: "Solver Listing", href: "/solver-listing" },
-    ],
+    items: quickLinks,
   },
   {
     title: "About Us",
@@ -65,12 +73,12 @@ export const footerLinks = [
       },
       {
         label: "Node Operator",
-        href: "https://dvpn-node-operator.qubetics.work",
+        href: "https://ticsdvpn.com",
       },
 
       {
-        label: "Node Provider",
-        href: "https://dvpn-provider.qubetics.work",
+        label: "Service Provider",
+        href: "https://ticsdvpn.com/provider",
       },
     ],
   },
