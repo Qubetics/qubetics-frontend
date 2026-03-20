@@ -1,0 +1,22 @@
+name: '[release/dvpn] Deploy dvpn-release frontend'
+
+on:
+  push:
+    branches:
+      - 'release/dvpn'
+
+jobs:
+  dvpn-release-frontend:
+    uses: Qubetics/argocd-qubetics/.github/workflows/deployment.yaml@dev
+    with:
+      SWR_ORGANIZATION: dev-qubetics
+      ARGOCD_BRANCH: dev
+      HUAWEI_REGION: 'ap-southeast-3'
+      ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
+      DEPLOYMENT_PATH: qubetics-frontend-release-dvpn/deployment.yaml
+      HUAWEI_IMAGE: qubetics-frontend-release-dvpn
+      DOCKER_USERNAME: ap-southeast-3@${{ vars.DOCKER_USERNAME_V2 }}
+      ENV: ${{ vars.DEV_QUBETICS_FRONTEND_ENV }}
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD_V2 }}
+      GIT_SSH_KEY: ${{ secrets.ARGOCD_SSH_KEY_NEW }}
