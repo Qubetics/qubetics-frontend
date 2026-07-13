@@ -186,6 +186,7 @@ export const Routes = {
   NOT_FOUND: "/notfound",
   CONTRACTS: "/contract",
   CONTRACT_DETAIL: "/contract/",
+  QCA_CONTRACTS: "/qca-contracts/",
   CONTRACT_VERIFICATOIN: "/contract/verify",
   TOKEN: "/token",
   VALIDATORS: "/validators",
@@ -454,6 +455,20 @@ export const contractHeaderFunction = (currentPath, onClick) => {
 
     {
       key: "2",
+      value: "ChainAbstractionContracts",
+      className: currentPath === Routes.CHAIN_ABSTRACTION ? "activeOptions" : "",
+      label: (
+        <Link
+          onClick={() => onClick("Nav_QcaContracts", "Chain Abstraction Contracts")}
+          href="/chain-abstraction?tab=contracts"
+        >
+          Chain Abstraction Contracts
+        </Link>
+      ),
+    },
+
+    {
+      key: "3",
       value: "Verifiedcontract",
       className: currentPath === Routes.TOKEN_ICON ? "activeOptions" : "",
       label: (
@@ -467,7 +482,7 @@ export const contractHeaderFunction = (currentPath, onClick) => {
     },
 
     {
-      key: "3",
+      key: "4",
       value: "Verifiedcontract",
       className:
         currentPath === Routes.CONTRACT_VERIFICATOIN ? "activeOptions" : "",

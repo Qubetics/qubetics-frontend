@@ -7,3 +7,17 @@
     }
 
 }
+
+.abstraction_contracts {
+    .qcaTag {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        background: $bg-243036;
+        border: 1px solid $borderCard;
+        color: $themetext;
+        white-space: nowrap;
+    }
+}
