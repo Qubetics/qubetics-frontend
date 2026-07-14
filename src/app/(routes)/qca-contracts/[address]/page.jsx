@@ -77,7 +77,7 @@ const QcaContractDetail = () => {
 
   const fetchContractDetails = async () => {
     try {
-      let response = await getContractDetails(params?.address);
+      let response = await getContractDetails(params?.address, true);
       setContractDetail(response?.data?.contracts);
       setContractType(response?.data?.contracts?.contractType);
       setContractDetailStatus(SuccessStatus);

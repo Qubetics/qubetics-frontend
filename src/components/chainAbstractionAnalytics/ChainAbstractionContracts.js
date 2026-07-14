@@ -4,13 +4,16 @@
 import { useEffect, useState } from "react";
 import { Table, Tooltip } from "antd";
 import Link from "next/link";
-import { Routes } from "@/constant/constant";
+import {
+  Routes,
+  pageNo,
+  tableLimit,
+} from "@/constant/constant";
 import { SuccesIcon, PendingIcon } from "../../../public/SvgIcons";
 import CopyText from "../DoCopy/CopyText";
 import getAddress from "@/utils/getAddress";
 import { convertToDateTime } from "@/utils/renderTime";
-import { formatMillionNumber, noExponential } from "@/utils/commonFunctions";
-import getChainAbstractionContracts from "@/services/getChainAbstractionContracts";
+import getAllContracts from "@/services/getAllContracts";
 import "./ChainAbstractionAnalytics.scss";
 
 const ChainAbstractionContracts = () => {
@@ -24,7 +27,12 @@ const ChainAbstractionContracts = () => {
   const fetchContracts = async () => {
     setLoading(true);
     try {
-      const result = await getChainAbstractionContracts();
+      const result = await getAllContracts(
+        pageNo,
+        tableLimit,
+        "",
+        "chain-abstraction",
+      );
       setContracts(result?.data?.contracts || []);
     } catch (err) {
       console.error("Error fetching QCA contracts", err);
@@ -39,7 +47,7 @@ const ChainAbstractionContracts = () => {
       key: "name",
       render: (_, record) => (
         <Link className="fromicon" href={`${Routes.QCA_CONTRACTS}${record?.address}`}>
-          {record?.name || "-"}
+          {record?.contractname || record?.contractName || "-"}
         </Link>
       ),
     },
@@ -62,9 +70,13 @@ const ChainAbstractionContracts = () => {
     },
     {
       title: "Type",
-      key: "tag",
+      key: "contractType",
       render: (_, record) => (
-        <span className="qcaTag">{record?.tag || "Chain Abstraction"}</span>
+        <span className="qcaTag">
+          {record?.contractType && record?.contractType !== "UNKNOWN"
+            ? record?.contractType
+            : "Chain Abstraction"}
+        </span>
       ),
     },
     {
@@ -84,30 +96,11 @@ const ChainAbstractionContracts = () => {
         ),
     },
     {
-      title: "Balance",
-      key: "balance",
-      render: (_, record) => (
-        <span>
-          {formatMillionNumber(
-            noExponential(Number(record?.balance) / 10 ** 18 || 0),
-          )}{" "}
-          TICS
-        </span>
-      ),
-    },
-    {
-      title: "Txn Count",
-      key: "txCount",
-      render: (_, record) => <span>{record?.txCount ?? 0}</span>,
-    },
-    {
       title: "Last Activity",
-      key: "lastActivityAt",
+      key: "timestamp",
       render: (_, record) => (
         <span className="timestamp">
-          {record?.lastActivityAt
-            ? convertToDateTime(record?.lastActivityAt)
-            : "-"}
+          {record?.timestamp ? convertToDateTime(record?.timestamp) : "-"}
         </span>
       ),
     },
