@@ -7,13 +7,13 @@ on:
 
 jobs:
   stage_deploy_qubetics_frontend:
-    uses: Qubetics/argocd-qubetics/.github/workflows/deployment.yaml@dev
+    uses: Qubetics/argocd-qubetics/.github/workflows/helm-deployment.yaml@dev
     with:
       SWR_ORGANIZATION: dev-qubetics
       ARGOCD_BRANCH: dev
       HUAWEI_REGION: 'ap-southeast-3'
       ARGOCD_REPOSITORY: Qubetics/argocd-qubetics
-      DEPLOYMENT_PATH: stage-qubetics-frontend/frontend-deployment.yaml
+      DEPLOYMENT_PATH: services/values/stage-qubetics-frontend.yaml
       HUAWEI_IMAGE: stage-qubetics-frontend
       DOCKER_USERNAME: ap-southeast-3@${{ vars.DOCKER_USERNAME_V2 }}
       ENV: ${{ vars.STAGE_QUBETICS_FRONTEND_ENV }}
