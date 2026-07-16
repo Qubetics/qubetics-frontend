@@ -33,7 +33,7 @@ const ContractDetails = ({ data, status }) => {
                 <p>Name</p>
                 <span className="">
                   {data?.contractName
-                    ? capitalizeWord(data?.contractName)
+                    ? data?.contractName
                     : "-"}
                 </span>
               </div>
